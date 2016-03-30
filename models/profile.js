@@ -1,6 +1,7 @@
 var mongoose   = require('mongoose'),  
-	Schema     = mongoose.Schema,
-	connection = mongoose.connect('mongodb://admin:123@localhost:27017/hive');
+    Schema     = mongoose.Schema,
+    db_lnk          = 'mongodb://admin:123@localhost:27017/hive',
+    db              = mongoose.createConnection(db_lnk);
 
 var profileSchema = new Schema({
   name:  {
@@ -17,4 +18,4 @@ var profileSchema = new Schema({
   timestamps: true
 });
 
-module.exports = connection.model( 'Profile' , profileSchema );
+module.exports = db.model( 'Profile' , profileSchema );
