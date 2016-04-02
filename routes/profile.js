@@ -42,6 +42,7 @@ router.post('/create',multipartMiddleware,  function(req, res) {
 	var token;
 	var profile;
 	User.findOne({ email: email}, function(errUser, user){
+		console.log("Cuenta Buscada");
 		if (!errUser && user){
 			res.json({status: {code: 2 , message: "Este email ya esta siendo usado."} });
 		}else{
@@ -50,8 +51,10 @@ router.post('/create',multipartMiddleware,  function(req, res) {
 				password: password
 			});
 			account.save();
-		
+			
+			console.log("Cuenta Creada");
 			Token.findOne({ user_id: account._id}, function(errToken, guid){
+				console.log("Token Buscada");
 				Profile.findOne({ user_id: account._id}, function(errProfile, perfil){
 					if(!errToken && guid){
 						token = guid;
