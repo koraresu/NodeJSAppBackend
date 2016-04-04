@@ -1,15 +1,17 @@
-var express = require('express');
-var router = express.Router();
-var func = require('../func'); 
-var multipart = require('connect-multiparty');
+var express             = require('express');
+var router              = express.Router();
+var func                = require('../func'); 
+var multipart           = require('connect-multiparty');
 var multipartMiddleware = multipart();
 
-var mongoose   = require('mongoose');
+var mongoose    = require('mongoose');
 
-var Profile  = require('../models/profile');
-var User  = require('../models/user');
-var Token = require('../models/token');
+var Profile     = require('../models/profile');
+var User        = require('../models/user');
+var Token       = require('../models/token');
 var ProfileData = require('../models/profile_data');
+var Job         = require('../models/job');
+var Company     = require('../models/company');
 
 
 
@@ -28,7 +30,40 @@ var ProfileData = require('../models/profile_data');
 *                                                  *
 ****************************************************/
 
+router.post('/login', multipartMiddleware, function(req, res){
+	var email    = req.body.email;
+	var password = req.body.password;
 
+	User.findOne({ email: email, password: password }, function(errUser, user){
+		if (!errUser && user){
+			Token.findOne({ user_id: user._id}, function(errToken, guid){
+				if(!errToken && guid){
+						var verified = false;
+						if(user.verified){
+							verified = true
+						}
+
+
+						res.json({
+							status: 1,
+							email: user.email,
+							token: guid.generated_id,
+							verified: verified,
+							job_set: false,
+							speciality: false,
+							company: false,
+
+						});
+					
+				}else{
+					res.json({status: {code: 2 , message: "Este token ya esta siendo usado."} });
+				}
+			});
+		}else{
+			res.json({status: {code: 3 , message: "Este email ya esta siendo usado."} });
+		}
+	});
+});
 router.post('/create',multipartMiddleware,  function(req, res) {
 
 	var nombre   = req.body.nombre;
@@ -44,11 +79,12 @@ router.post('/create',multipartMiddleware,  function(req, res) {
 	User.findOne({ email: email}, function(errUser, user){
 		console.log("Cuenta Buscada");
 		if (!errUser && user){
-			res.json({status: {code: 2 , message: "Este email ya esta siendo usado."} });
+			res.json({status: 2 });
 		}else{
 			account = new User({
 				email: email,
-				password: password
+				password: password,
+				verified: false
 			});
 			account.save();
 			
@@ -73,31 +109,102 @@ router.post('/create',multipartMiddleware,  function(req, res) {
 								first: nombre, 
 								last: apellido
 							},
-							user_id: account
+							user_id: account,
+							verified: false
 						});
 						profile.save()
 					}
-
-
 					var data = {
-						status: {
-							code: 1,
-							message: "Perfil Creado Correctamente."
-						},
-						item:{
-							profile_id: profile._id,
-							name: {
-								first: profile.name.first, 
-								last: profile.name.last
-							},
-							email: account.email,
-							token: token.generated_id
-						}
+						status: 1,
+						profile_id: profile._id,
+						firstname: profile.name.first, 
+						lastname: profile.name.last,
+						email: account.email,
+						token: token.generated_id
 					};
 
 					res.json(data);
 
 				});
+			});
+		}
+	});
+});
+router.post('/create/job', multipartMiddleware, function(req, res){
+	var guid  = req.body.guid;
+	var jobst = req.body.job;
+
+	Token.findOne({ generated_id: guid }, function(errToken, guid){
+		var token = guid;
+		if(!errToken && guid){
+			User.findOne({ _id: guid.user_id}, function(errUser, user){
+				var account = user;
+				if(!errUser && user){
+					Profile.findOne({ user_id: account._id}, function(errProfile, perfil){
+						var profile = perfil;
+						if(!errProfile && perfil){
+
+							Job.findOne({ name: jobst}, function(errJob, job){
+								if(!errJob && job){
+									j = job;
+								}else{
+									j = new Job({
+										name: jobst
+									});
+									j.save();
+								}
+								perfil.job_id = j;
+								perfil.save();
+
+								var d = {
+									name:  j.name,
+									id: j._id
+								};
+								res.send(d);
+							});
+
+
+							
+							
+							
+							
+						}
+					});
+				}
+			});
+		}
+	});
+});
+router.post('/create/company', multipartMiddleware, function(req, res){
+	var guid      = req.body.guid;
+	var companyst = req.body.company;
+	var jobst     = req.body.job;
+
+	Token.findOne({ generated_id: guid }, function(errToken, guid){
+		var token = guid;
+		if(!errToken && guid){
+			User.findOne({ _id: guid.user_id}, function(errUser, user){
+				var account = user;
+				if(!errUser && user){
+					Profile.findOne({ user_id: account._id}, function(errProfile, perfil){
+						var profile = perfil;
+						if(!errProfile && perfil){
+
+							Company.findOne({ name: companyst}, function(errCompany, company){
+								Job.findOne({ name: jobst}, function(errJob, job){
+									var a = {job: job, company: company};
+									res.json(a);
+								});
+							});
+
+
+							
+							
+							
+							
+						}
+					});
+				}
 			});
 		}
 	});
@@ -119,21 +226,16 @@ router.post('/add/data',multipartMiddleware,  function(req, res) {
 					});
 					data.save();
 					res.json({
-						status: {
-							code: 1 ,
-							message: "Este token existe y usuario existen"
-						},
-						item:{
-							type:  data.tipo,
-							value: data.data
-						}
+						status: 1 ,
+						type:  data.tipo,
+						value: data.data
 					});
 				}else{
-					res.json({status: {code: 2 , message: "Token existe pero usuario no."} });
+					res.json({status: 2});
 				}
 			});
 		}else{
-			res.json({status: {code: 3 , message: "Este token no existe"} });
+			res.json({status: 3 });
 		}
 
 		
