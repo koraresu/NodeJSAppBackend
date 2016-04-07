@@ -48,7 +48,7 @@ router.post('/login', multipartMiddleware, function(req, res){
 							status: 1,
 							email: user.email,
 							token: guid.generated_id,
-							verified: verified,
+							verified: false,
 							job_set: false,
 							speciality: false,
 							company: false,
@@ -130,51 +130,7 @@ router.post('/create',multipartMiddleware,  function(req, res) {
 		}
 	});
 });
-router.post('/create/job', multipartMiddleware, function(req, res){
-	var guid  = req.body.guid;
-	var jobst = req.body.job;
 
-	Token.findOne({ generated_id: guid }, function(errToken, guid){
-		var token = guid;
-		if(!errToken && guid){
-			User.findOne({ _id: guid.user_id}, function(errUser, user){
-				var account = user;
-				if(!errUser && user){
-					Profile.findOne({ user_id: account._id}, function(errProfile, perfil){
-						var profile = perfil;
-						if(!errProfile && perfil){
-
-							Job.findOne({ name: jobst}, function(errJob, job){
-								if(!errJob && job){
-									j = job;
-								}else{
-									j = new Job({
-										name: jobst
-									});
-									j.save();
-								}
-								perfil.job_id = j;
-								perfil.save();
-
-								var d = {
-									name:  j.name,
-									id: j._id
-								};
-								res.send(d);
-							});
-
-
-							
-							
-							
-							
-						}
-					});
-				}
-			});
-		}
-	});
-});
 router.post('/create/company', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 	var companyst = req.body.company;
