@@ -11,6 +11,7 @@ var User        = require('../models/user');
 var Token       = require('../models/token');
 var ProfileData = require('../models/profile_data');
 var Job         = require('../models/job');
+var Speciality  = require('../models/speciality');
 var Company     = require('../models/company');
 
 
@@ -93,5 +94,69 @@ router.post('/create', multipartMiddleware, function(req, res){
 		}
 	});
 });
+router.post('/speciality/get', multipartMiddleware, function(req, res){
+	var guid = req.body.guid;
+	var name = req.body.name;
 
+	Token.findOne({ generated_id: guid }, function(errToken, guid){
+		var token = guid;
+		if(!errToken && guid){
+			var regex = new RegExp(name,"i");
+			Speciality.find({ name: new RegExp(name, "i")},"_id name", function(errEspecialidad, Especialidad){
+				if(!errEspecialidad && Especialidad){
+					res.json(Especialidad);
+				}else{
+
+				}
+			});
+		}else{
+			res.send("No Token");
+		}
+	});
+});
+router.post('/speciality/create', multipartMiddleware, function(req, res){
+	var guid  = req.body.guid;
+	var jobst = req.body.name;
+
+	Token.findOne({ generated_id: guid }, function(errToken, guid){
+		var token = guid;
+		if(!errToken && guid){
+			User.findOne({ _id: guid.user_id}, function(errUser, user){
+				var account = user;
+				if(!errUser && user){
+					Profile.findOne({ user_id: account._id}, function(errProfile, perfil){
+						var profile = perfil;
+						if(!errProfile && perfil){
+
+							Speciality.findOne({ name: jobst}, function(errSpeciality, speciality){
+								if(!errSpeciality && speciality){
+									j = speciality;
+								}else{
+									j = new Speciality({
+										name: jobst
+									});
+									j.save();
+								}
+								perfil._id = j;
+								perfil.save();
+
+								var d = {
+									name:  j.name,
+									id: j._id
+								};
+								res.send(d);
+							});
+
+
+							
+							
+							
+							
+						}
+					});
+				}
+			});
+		}
+	});
+});
 module.exports = router;
