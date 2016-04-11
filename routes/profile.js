@@ -12,7 +12,7 @@ var Token       = require('../models/token');
 var ProfileData = require('../models/profile_data');
 var Job         = require('../models/job');
 var Company     = require('../models/company');
-
+var ProfileHive = require('../models/profile_hive');
 
 
 /***************************************************
@@ -33,27 +33,38 @@ var Company     = require('../models/company');
 router.post('/login', multipartMiddleware, function(req, res){
 	var email    = req.body.email;
 	var password = req.body.password;
-
+	var data = {};
 	User.findOne({ email: email, password: password }, function(errUser, user){
 		if (!errUser && user){
 			Token.findOne({ user_id: user._id}, function(errToken, guid){
 				if(!errToken && guid){
+					
 						var verified = false;
 						if(user.verified){
 							verified = true
 						}
+						Profile.findOne({ user_id: user._id}, function(errProfile, profile){
+							var profile_hive = new ProfileHive({
+								job_id: ObjectId("5702f2e89f5ca26c1cee55ff"),
+
+								company_id: { type: Schema.Types.ObjectId, ref: 'Company'},
+								especiality: ObjectId("57081469f276ccb613382715"),
+							});
+							profile_hive.save();
+							data = {
+								status: 1,
+								email: user.email,
+								token: guid.generated_id,
+								verified: false,
+								nombre: profile.name.first,
+								apellido: profile.name.last,
+							};
 
 
-						res.json({
-							status: 1,
-							email: user.email,
-							token: guid.generated_id,
-							verified: false,
-							job_set: false,
-							speciality: false,
-							company: false,
 
+							res.json(data);
 						});
+						
 					
 				}else{
 					res.json({status: {code: 2 , message: "Este token ya esta siendo usado."} });

@@ -11,6 +11,9 @@ var users = require('./routes/users');
 var token = require('./routes/token');
 var profile = require('./routes/profile');
 var job = require('./routes/job');
+var company = require('./routes/company');
+
+var admin = require('./routes/admin');
 
 var app = express();
 
@@ -36,6 +39,8 @@ app.use('/users', users);
 app.use('/api/token', token);
 app.use('/api/profile', profile);
 app.use('/api/job', job);
+app.use('/api/company', company);
+app.use('/admin', admin);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
