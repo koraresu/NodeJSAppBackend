@@ -19,6 +19,7 @@ exports.getProfile = function(guid, callback){
 						hive: errProfileHive
 					};
 					var data = {
+						hive: profilehive,
 						profile: profile, 
 						user: user,
 						token: guid,
@@ -31,4 +32,29 @@ exports.getProfile = function(guid, callback){
 			});
 		});
 	});
+}
+exports.getProfileHive = function(id, callback){
+	ProfileHive.findOne({ _id: id }, function(errProfileHive, profileHive){
+		Company.findOne({ _id: profileHive.company_id }, function(errCompany, company){
+			Job.findOne({ _id: company.job_id }, function(errJob, job){
+				var err  = {};
+				var data = {
+					hive: profileHive._id,
+					company: {
+						_id: company._id,
+						name: company.name
+						
+					},
+					job: {
+						_id: job._id,
+						name: job.name
+
+					}
+				};
+				callback( err, data );
+			});
+		});	
+	})
+	
+	
 }

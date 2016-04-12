@@ -30,56 +30,30 @@ router.post('/create',multipartMiddleware,  function(req, res) {
 		});
 
 		companyEl.save();
-
-
+		
 		var profilehive = new ProfileHive({
 			job_id: jobEl,
 			company_id: companyEl, 
-			profile_id: data.profile_id
+			profile_id: data.profile,
+
 		});
 		profilehive.save();
-
-		res.json(data);
-	});
-	/*
-	Token.findOne({ generated_id: guid}, function(errToken, guid){
 		
-		if(!errToken && guid){
-			User.findOne({ _id: guid.user_id}, function(errUser, user){
-				if(!errUSer && user){
-					var jobEl = new Job({
-						name: job,
-					});
-					jobEl.save();
-
-					var companyEl = new Company({
-						name:  company, 
-						job_id: job
-					});
-
-					companyEl.save();
-
-
-					var profilehive = new ProfileHive({
-						job_id: jobEl,
-						company_id: companyEl, 
-						
-
-						profile_id: { type: Schema.Types.ObjectId, ref: 'Profile' },
-					});
-
-
-					res.json({
-						job: jobEl, 
-						company: companyEl
-					});
-				}
-			});
-			
-		}
+		func.getProfileHive(profilehive._id, function(err, data){
+			res.json(data);
+		});
+		
 	});
-	*/
 	
+});
+router.post('/get', multipartMiddleware, function(req, res){
+	var guid      = req.body.guid;
+	func.getProfile(guid, function(err, data){
+		var profilehive = data.hive;
+		func.getProfileHive(profilehive._id, function(err, data){
+			res.json(data);
+		});
+	});
 });
 
 
