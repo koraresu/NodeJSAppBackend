@@ -1,3 +1,5 @@
+
+/*
 var Token       = require('./models/token');
 var User        = require('./models/user');
 var Job         = require('./models/job');
@@ -112,3 +114,4 @@ exports.createProfile = function(email, password,nombre, apellido,callback){
 		});
 	});
 }
+*/

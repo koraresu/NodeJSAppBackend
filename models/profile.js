@@ -1,25 +1,11 @@
-var mongoose   = require('mongoose'),  
-    Schema     = mongoose.Schema,
-    //db_lnk          = 'mongodb://admin:123@localhost:27017/hive',
-    db_lnk          = 'mongodb://localhost:27017/hive',
-    db              = mongoose.createConnection(db_lnk);
+var db             = require('monk')('localhost:27017/hive'),
+	Profile        = db.get('profile');
 
-var profileSchema = new Schema({
-  name:  {
-  	first: String, 
-  	last: String
-  },
-  profile: {
-  	pic: String, 
-  	hive: String
-  },
-  qrcode: { type: String },
-  user_id: { type: Schema.Types.ObjectId, ref: 'User' },
-  job_id: { type: Schema.Types.ObjectId, ref: 'Job' },
-  company_id: { type: Schema.Types.ObjectId, ref: 'Company'},
-  lang: String
-},{
-  timestamps: true
-});
-
-module.exports = db.model( 'Profile' , profileSchema );
+exports.create = function(first_name, last_name,callback){
+	var profile = Profile.insert({
+		first_name: first_name, 
+		last_name: last_name
+	}, function(err, doc){
+		callback(err, doc);
+	});
+}
