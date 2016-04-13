@@ -54,7 +54,61 @@ exports.getProfileHive = function(id, callback){
 				callback( err, data );
 			});
 		});	
-	})
+	})	
+}
+exports.getUserLogin = function(email, password, callback){
+	User.findOne({ email: email, password: password }, function(errUser, user){
+		Token.findOne({ user_id: user._id}, function(errToken, guid){
+			Profile.findOne({ user_id: user._id}, function(errProfile, profile){
+				callback(user, guid,  profile);
+			});
+		});
+	});
+}
+exports.createProfile = function(email, password,nombre, apellido,callback){
+	var account;
+	var token;
+	var profile;
 	
-	
+	User.findOne({ email: email}, function(errUser, user){
+		account = new User({
+			email: email,
+			password: password,
+			verified: false
+		});
+		account.save();
+
+		Token.findOne({ user_id: account._id}, function(errToken, guid){
+			Profile.findOne({ user_id: account._id}, function(errProfile, perfil){
+
+				token = new Token({
+					generated_id: mongoose.Types.ObjectId(),
+					user_id: account
+				});
+				token.save();
+				
+				profile = new Profile({
+					name:  {
+						first: nombre, 
+						last: apellido
+					},
+					user_id: account,
+					verified: false
+				});
+				profile.save()
+				
+				var data = {
+					status: 1,
+					profile_id: profile._id,
+					firstname: profile.name.first, 
+					lastname: profile.name.last,
+					email: account.email,
+					token: token.generated_id
+				};
+
+				res.json(data);
+
+			});
+		});
+	});
 }

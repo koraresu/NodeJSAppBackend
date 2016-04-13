@@ -14,6 +14,8 @@ var Job         = require('../models/job');
 var Company     = require('../models/company');
 var ProfileHive = require('../models/profile_hive');
 
+var func = require('../func.js');
+
 
 /***************************************************
 *                                                  *
@@ -34,45 +36,16 @@ router.post('/login', multipartMiddleware, function(req, res){
 	var email    = req.body.email;
 	var password = req.body.password;
 	var data = {};
-	User.findOne({ email: email, password: password }, function(errUser, user){
-		if (!errUser && user){
-			Token.findOne({ user_id: user._id}, function(errToken, guid){
-				if(!errToken && guid){
-					
-						var verified = false;
-						if(user.verified){
-							verified = true
-						}
-						Profile.findOne({ user_id: user._id}, function(errProfile, profile){
-							var profile_hive = new ProfileHive({
-								job_id: ObjectId("5702f2e89f5ca26c1cee55ff"),
-
-								company_id: { type: Schema.Types.ObjectId, ref: 'Company'},
-								especiality: ObjectId("57081469f276ccb613382715"),
-							});
-							profile_hive.save();
-							data = {
-								status: 1,
-								email: user.email,
-								token: guid.generated_id,
-								verified: false,
-								nombre: profile.name.first,
-								apellido: profile.name.last,
-							};
-
-
-
-							res.json(data);
-						});
-						
-					
-				}else{
-					res.json({status: {code: 2 , message: "Este token ya esta siendo usado."} });
-				}
-			});
-		}else{
-			res.json({status: {code: 3 , message: "Este email ya esta siendo usado."} });
-		}
+	func.getUserLogin(email, password, function(user, guid, profile){
+		var data = {
+			status: 1,
+			email: user.email,
+			token: guid.generated_id,
+			verified: false,
+			nombre: profile.name.first,
+			apellido: profile.name.last,
+		};
+		res.json(data);
 	});
 });
 router.post('/create',multipartMiddleware,  function(req, res) {
@@ -81,65 +54,8 @@ router.post('/create',multipartMiddleware,  function(req, res) {
 	var apellido = req.body.apellido;
 	var email    = req.body.email;
 	var password = req.body.password;
+
 	
-
-
-	var account;
-	var token;
-	var profile;
-	User.findOne({ email: email}, function(errUser, user){
-		console.log("Cuenta Buscada");
-		if (!errUser && user){
-			res.json({status: 2 });
-		}else{
-			account = new User({
-				email: email,
-				password: password,
-				verified: false
-			});
-			account.save();
-			
-			console.log("Cuenta Creada");
-			Token.findOne({ user_id: account._id}, function(errToken, guid){
-				console.log("Token Buscada");
-				Profile.findOne({ user_id: account._id}, function(errProfile, perfil){
-					if(!errToken && guid){
-						token = guid;
-					}else{
-						token = new Token({
-							generated_id: mongoose.Types.ObjectId(),
-							user_id: account
-						});
-						token.save();
-					}
-					if(!errProfile && profile){
-						profile = perfil;
-					}else{
-						profile = new Profile({
-							name:  {
-								first: nombre, 
-								last: apellido
-							},
-							user_id: account,
-							verified: false
-						});
-						profile.save()
-					}
-					var data = {
-						status: 1,
-						profile_id: profile._id,
-						firstname: profile.name.first, 
-						lastname: profile.name.last,
-						email: account.email,
-						token: token.generated_id
-					};
-
-					res.json(data);
-
-				});
-			});
-		}
-	});
 });
 
 router.post('/create/company', multipartMiddleware, function(req, res){
