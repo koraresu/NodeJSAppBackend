@@ -16,7 +16,6 @@ var Token       = require('../models/token');
 var ProfileInfo = require('../models/profile_info');
 var Job         = require('../models/job');
 var Company     = require('../models/company');
-var ProfileHive = require('../models/profile_hive');
 
 /*
 Nombre de Objectos de Documentos:
@@ -43,8 +42,8 @@ router.post('/login', multipartMiddleware, function(req, res){
 	});
 });
 router.post('/create', multipartMiddleware, function(req, res){
-	var nombre   = req.body.firstname;
-	var apellido = req.body.lastname;
+	var nombre   = req.body.first_name;
+	var apellido = req.body.last_name;
 	var email    = req.body.email;
 	var password = req.body.password;
 	func.userProfileInsertIfDontExists({
@@ -54,50 +53,58 @@ router.post('/create', multipartMiddleware, function(req, res){
 		password: password,
 		verified: false
 	},{
-		firstname: nombre,
-		lastname: apellido,
+		first_name: nombre,
+		last_name: apellido,
 	}, function(exist, tokenData){
 		if(exist){
-			func.response(112,{
-				token: tokenData.generated_id
-			}, function(response){
-				res.json(response);
+			func.response(112,{}, function(response){
+				res.json( response );
 			});
+		}else{
+			console.log(tokenData);
+			func.response(200,{
+				token: tokenData.generated_id
+			},function(response){
+				res.json( response );
+			} );
 		}
 	});
 });
 router.post('/get', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
-	func.tokenExist(guid, function(errToken, token){
-		if(!errToken && token){
-			func.tokenToProfile(token, function(status, userData, profileData, profileInfoData){
-				switch(status){
-					case 200:
-						func.response(200, { 
-							user: userData,
-							profile: profileData,
-							token: tokenData.generated_id,
-							data: profileInfoData
-						}, function(response){
-							res.json(response);
-						});	
-					break;
-					case 111:
-						func.response(111, {}, function(response){
-							res.json(response);
-						});
-					break;
+	func.tokenExist(guid, function(status, tokenData){
+		if(status){
+			func.tokenToProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
+				if(status){
+					//res.send("True");
+					var data = {
+						user: userData,
+						profile: profileData,
+						profile_info: profileInfoData
+					};
+
+					func.response(200, data, function(response){
+						res.json(response);
+					});
+				}else{
+					func.response(113,{},function(response){
+						res.json(response);
+					});
 				}
 			});
 		}else{
-			func.response('101', function(response){
-				res.json(response);
-			});
+			res.send("No Token");
 		}
 	});
 });
 router.post('/update', multipartMiddleware, function(req, res){
+	var guid      = req.body.guid;
 
+	var nombre    = req.body.nombre;
+	var apellido  = req.body.apellido;
+	var phone     = req.body.phone;
+
+	res.send("Update");
 });
 /*
 router.post('/update', multipartMiddleware, function(req, res){

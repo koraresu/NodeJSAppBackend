@@ -8,16 +8,27 @@ var Token       = require('../models/token');
 var User        = require('../models/user');
 var Job         = require('../models/job');
 var Company     = require('../models/company');
-var CompanyProfile = require('../models/company_profile');
+var Experience  = require('../models/experience');
+var ExperienceCompany = require('../models/experience_company');
+var ExperienceJob     = require('../models/experience_job');
+//var CompanyProfile = require('../models/company_profile');
 
 var CompanyModel    = require('../models/company');
-var Company        = db.get('company');
-var CompanyProfile = db.get('company_profile');
 
 router.post('/create', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 	var company   = req.body.company;
 	var job       = req.body.job;
+	var speciality = req.body.speciality;
+
+	res.send("Hola");
+});
+/*
+router.post('/create', multipartMiddleware, function(req, res){
+	var guid      = req.body.guid;
+	var company   = req.body.company;
+	var job       = req.body.job;
+	var speciality = req.body.speciality;
 	func.tokenExist(guid, function(errToken, token){
 		if(!errToken && token){
 			func.tokenToProfile(token, function(status, userData, profileData, profileInfoData){
@@ -33,23 +44,19 @@ router.post('/create', multipartMiddleware, function(req, res){
 							}, {
 								name: job
 							}, function(errJob, jobData){
-								func.companyProfileExistsOrCreate({
-									company_id: companyData._id,
-									job_id: jobData._id,
-									profile_id: profileData._id
-								}, {
-									company_id: companyData._id,
-									job_id: jobData._id,
-									profile_id: profileData._id
-								}, function(errCompanyProfile, companyProfileData){
-									func.response(200, { 
-										user: userData,
-										profile: profileData,
-										token: tokenData.generated_id,
-										data: profileInfoData
-									}, function(response){
-										res.json(response);
-									});	
+								func.specialityExistsOrCreate({
+									name: speciality
+								},{
+									name: speciality
+								},function(errSpeciality, specialityData){
+									func.experienceExistsOrCreate({
+										profile_id: profileData._id
+									}, {
+										profile_id: profileData._id,
+										speciality_id: specialityData._id
+									}, function(errExperience, experienceData){
+
+									});
 								});
 							});
 						});
@@ -102,4 +109,5 @@ router.post('/get', multipartMiddleware, function(req, res, next){
 	});
 });
 
+*/
 module.exports = router;

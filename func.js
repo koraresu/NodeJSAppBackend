@@ -1,13 +1,17 @@
 
-/*
-var Token       = require('./models/token');
-var User        = require('./models/user');
-var Job         = require('./models/job');
-var Company     = require('./models/company');
-var Speciality  = require('./models/speciality');
-var Profile     = require('./models/profile');
-var ProfileInfo = require('./models/`profile_info');
-var CompanyProfile = require('./models/company_profile');
+var mongoose    = require('mongoose');
+
+var Token              = require('./models/token');
+var User               = require('./models/user');
+var Job                = require('./models/job');
+var Company            = require('./models/company');
+var Speciality         = require('./models/speciality');
+var Profile            = require('./models/profile');
+var ProfileInfo        = require('./models/profile_info');
+//var CompanyProfile     = require('./models/company_profile');
+var Experience         = require('./models/experience');
+var ExperienceCompany  = require('./models/experience_company');
+var ExperienceJob      = require('./models/experience_job');
 
 /*
 type:
@@ -34,6 +38,8 @@ exports.response = function(type,item, callback){
 		case 112:
 			callback({ status: 'error', message: "User Exists", data: item});
 		break;
+		case 113:
+			callback({ status: 'error', message: "Profile No Existe", data: item});
 	}
 }
 exports.tokenToProfile = function(guid, callback){
@@ -44,9 +50,13 @@ exports.tokenToProfile = function(guid, callback){
 					user['password'] = null;
 					delete user['password'];
 					Profile.findOne({ user_id: user._id }, function(errProfile, profile){
-						ProfileInfo.find({ profile_id: profile._id }, function(errProfileInfo, profileinfo){
-							callback(200,user, profile, profileinfo);
-						});
+						if(!errProfile && profile){
+							ProfileInfo.find({ profile_id: profile._id }, function(errProfileInfo, profileinfo){
+								callback(200,user, profile, profileinfo);
+							});
+						}else{
+							callback(101);
+						}
 						
 					});
 				}else{
@@ -58,24 +68,30 @@ exports.tokenToProfile = function(guid, callback){
 		}
 	});
 }
-exports.userProfileInsertIfDontExists = function(searchUser, userInsert, profileInsert,callback){
+exports.userProfileInsertIfDontExists = function(searchUser, userInsert, profileInsert, callback){
 	User.findOne(searchUser, function(errUser, user){
+		console.log(user);
 		if(!errUser && user){
+			console.log("User existe");
 			callback(true,null);
 		}else{
+			console.log("User no existe");
 			var user = new User(userInsert);
 			user.save();
 
-			token = new Token({
+
+			var token = new Token({
 				generated_id: mongoose.Types.ObjectId(),
 				user_id: user
 			});
 			token.save();
-
-			var profile = new Profile(profileInsert);
+			delete user['password'];
+			profileInsert['user_id'] = user._id;
+			var profile = new Profile( profileInsert );
 			profile.save();
 
-			callback(false, token);
+			console.log(profile);
+			callback( false, token );
 		}
 	});
 }
@@ -88,15 +104,48 @@ exports.userProfileLogin = function(email, password, callback){
 		}
 	});
 }
+exports.experienceExistsOrCreate = function(search, insert, callback){
+	Experience.findOne(search, function(err, experience){
+		if(!err && experience){
+			callback(err,experience);
+		}else{
+			var experience = new Experience(insert);
+			experience.save();
+			callback(null, experience);
+		}
+	});
+}
+exports.experienceCompanyExistsOrCreate = function(search, insert, callback){
+	ExperienceCompany.findOne(search, function(err, experiencecompany){
+		if(!err && experiencecompany){
+			callback(err,experiencecompany);
+		}else{
+			var experiencecompany = new ExperienceCompany(insert);
+			experiencecompany.save();
+			callback(null, experiencecompany);
+		}
+	});
+}
+exports.experienceJobExistsOrCreate = function(search, insert, callback){
+	ExperienceJob.findOne(search, function(err, experiencejob){
+		if(!err && experiencejob){
+			callback(err,experiencejob);
+		}else{
+			var experiencejob = new ExperienceJob(insert);
+			experiencejob.save();
+			callback(null, experiencejob);
+		}
+	});
+}
 exports.companyProfileExistsOrCreate = function(company, job, callback){
 	CompanyProfile.findOne(search, function(err, companyprofile){
 		if(!err && companyprofile){
 			callback(companyprofile);
 		}else{
-		var companyprofile = new Job(insert);
-		companyprofile.save();
+			var companyprofile = new Job(insert);
+			companyprofile.save();
 
-		callback(null, companyprofile);
+			callback(null, companyprofile);
 		}
 	});
 }
@@ -105,10 +154,10 @@ exports.jobExistsOrCreate = function(search, insert, callback){
 		if(!err && job){
 			callback(job);
 		}else{
-		var job = new Job(insert);
-		job.save();
+			var job = new Job(insert);
+			job.save();
 
-		callback(null, job);
+			callback(null, job);
 		}
 	});
 }
@@ -117,16 +166,21 @@ exports.companyExistsOrCreate = function(search, insert, callback){
 		if(!err && company){
 			callback(company);
 		}else{
-		var company = new Company(insert);
-		company.save();
+			var company = new Company(insert);
+			company.save();
 
-		callback(null, company);
+			callback(null, company);
 		}
 	});
 }
 exports.tokenExist = function(guid, callback){
-	Token.findOne({ generated_id: guid}, function(errToken, guid){
-		callback(errToken, guid);
+	Token.findOne({ generated_id: guid}, function(errToken, token){
+		if(!errToken && token){
+			callback(true, token);
+		}else{
+			callback(false, null);
+		}
+		
 	});
 }
 

@@ -4,12 +4,11 @@ var mongoose   = require('mongoose'),
     db_lnk          = 'mongodb://localhost:27017/hive',
     db              = mongoose.createConnection(db_lnk);
 
-var jobProfileSchema = new Schema({
-  job_id: { type: Schema.Types.ObjectId, ref: 'Job' },
-  profile_id: { type: Schema.Types.ObjectId, ref: 'Profile' },
-  speciality_id: { type: Schema.Types.ObjectId, ref: 'Speciality' },
+var experienceJobSchema = new Schema({
+  experience_id: { type: Schema.Types.ObjectId, ref: 'Experience' },
+  job_id:    { type: Schema.Types.ObjectId, ref: 'Company' },
 },{
   timestamps: true
 });
 
-module.exports = db.model( 'JobProfile' , jobProfileSchema );
+module.exports = db.model( 'ExperienceJob' , experienceJobSchema );

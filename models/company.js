@@ -1,8 +1,8 @@
-var db             = require('monk')('localhost:27017/hive'),
-	Company        = db.get('company'),
-	Job            = db.get('job'),
-	CompanyProfile = db.get('company_profile'),
-	Profile        = db.get('profile');
+var mongoose   = require('mongoose'),  
+    Schema     = mongoose.Schema,
+    //db_lnk          = 'mongodb://admin:123@localhost:27017/hive',
+    db_lnk          = 'mongodb://localhost:27017/hive',
+    db              = mongoose.createConnection(db_lnk);
 
 var companySchema = new Schema({
   title:  String,
