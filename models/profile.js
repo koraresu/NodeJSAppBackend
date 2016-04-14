@@ -5,14 +5,10 @@ var mongoose   = require('mongoose'),
     db              = mongoose.createConnection(db_lnk);
 
 var profileSchema = new Schema({
-  name:  {
-  	first: String, 
-  	last: String
-  },
-  profile: {
-  	pic: String, 
-  	hive: String
-  },
+  first_name: String,
+  last_name: String,
+  profile_pic: String,
+  profile_hive: String,
   qrcode: { type: String },
   user_id: { type: Schema.Types.ObjectId, ref: 'User' },
   lang: String
