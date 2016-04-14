@@ -3,12 +3,11 @@ var mongoose   = require('mongoose'),
     //db_lnk          = 'mongodb://admin:123@localhost:27017/hive',
     db_lnk          = 'mongodb://localhost:27017/hive',
     db              = mongoose.createConnection(db_lnk);
-
-var tokenSchema = new Schema({  
-  generated_id: { type: String},
-  user_id: { type: Schema.Types.ObjectId, ref: 'User' }
+var skillProfileSchema = new Schema({
+  skill_id: { type: Schema.Types.ObjectId, ref: 'Skill' },
+  profile_id: { type: Schema.Types.ObjectId, ref: 'Profile' },
 },{
   timestamps: true
 });
 
-module.exports = db.model('Token', tokenSchema);
+module.exports = db.model( 'SkillProfile' , skillsProfileSchema );

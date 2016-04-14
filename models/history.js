@@ -4,11 +4,13 @@ var mongoose   = require('mongoose'),
     db_lnk          = 'mongodb://localhost:27017/hive',
     db              = mongoose.createConnection(db_lnk);
 
-var tokenSchema = new Schema({  
-  generated_id: { type: String},
-  user_id: { type: Schema.Types.ObjectId, ref: 'User' }
+var HistorySchema = new Schema({
+  profile_id: { type: Schema.Types.ObjectId, ref: 'Profile' },
+  de_id: { type: Schema.Types.ObjectId, ref: 'Profile' },
+  action: String,
+  action_id: { type: Schema.Types.ObjectId }
 },{
   timestamps: true
 });
 
-module.exports = db.model('Token', tokenSchema);
+module.exports = db.model( 'History' , HistorySchema );
