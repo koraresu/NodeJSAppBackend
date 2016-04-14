@@ -15,8 +15,6 @@ var profileSchema = new Schema({
   },
   qrcode: { type: String },
   user_id: { type: Schema.Types.ObjectId, ref: 'User' },
-  job_id: { type: Schema.Types.ObjectId, ref: 'Job' },
-  company_id: { type: Schema.Types.ObjectId, ref: 'Company'},
   lang: String
 },{
   timestamps: true

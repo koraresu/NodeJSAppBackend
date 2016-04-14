@@ -6,7 +6,6 @@ var mongoose   = require('mongoose'),
 
 var tokenSchema = new Schema({  
   generated_id: { type: String},
-  expire: { type: Date },
   user_id: { type: Schema.Types.ObjectId, ref: 'User' }
 },{
   timestamps: true

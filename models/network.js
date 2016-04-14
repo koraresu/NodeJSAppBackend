@@ -4,16 +4,11 @@ var mongoose   = require('mongoose'),
     db_lnk          = 'mongodb://localhost:27017/hive',
     db              = mongoose.createConnection(db_lnk);
 
-var companySchema = new Schema({
-  title:  String,
-  images: String,
-  description: String,
-  website: String,
-  industry: String,
-  type: String,
-  address: String
+var NetworkSchema = new Schema({
+  profile_a_id: { type: Schema.Types.ObjectId, ref: 'Profile' },
+  profile_b_id: { type: Schema.Types.ObjectId, ref: 'Profile' },
 },{
   timestamps: true
 });
 
-module.exports = db.model( 'Company' , companySchema );
+module.exports = db.model( 'Network' , NetworkSchema );

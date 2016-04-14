@@ -3,11 +3,11 @@ var mongoose   = require('mongoose'),
     //db_lnk          = 'mongodb://admin:123@localhost:27017/hive',
     db_lnk          = 'mongodb://localhost:27017/hive',
     db              = mongoose.createConnection(db_lnk);
-var skillsSchema = new Schema({
+var skillProfileSchema = new Schema({
+  skill_id: { type: Schema.Types.ObjectId, ref: 'Skill' },
   profile_id: { type: Schema.Types.ObjectId, ref: 'Profile' },
-  name:   { type: String },
 },{
   timestamps: true
 });
 
-module.exports = db.model( 'Skills' , skillsSchema );
+module.exports = db.model( 'SkillProfile' , skillsProfileSchema );
