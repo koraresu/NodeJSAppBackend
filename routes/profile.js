@@ -5,30 +5,25 @@ var multipart           = require('connect-multiparty');
 var multipartMiddleware = multipart();
 
 var mongoose    = require('mongoose');
-
+/*
+	Nombre de Modelos:
+		Toda las variables de modelo se nombrara, con el nombre del archivo, eliminando _ 
+		y cambiando la siguiente letras al _ por mayuscula. Iniciando la primera letra en mayuscula.
+*/
 var Profile     = require('../models/profile');
 var User        = require('../models/user');
 var Token       = require('../models/token');
-var ProfileData = require('../models/profile_data');
+var ProfileInfo = require('../models/profile_info');
 var Job         = require('../models/job');
 var Company     = require('../models/company');
 var ProfileHive = require('../models/profile_hive');
 
+/*
+Nombre de Objectos de Documentos:
+	Todo dato recibido por FUNC, que sea un documento de mongo, se le colocara como nombre de varible el nombre del modelo,
+	seguido de la palabra "Data"*Respetando Mayusculas*, se cambio el modelo ProfileData a ProfileInfo para no tener problemas.
 
-/***************************************************
-*                                                  *
-*   Profile Create                                 *
-*   - Code                                         *
-*      - 0:                                        *
-*      - 1: Perfil Creado Correctamente.           *
-*      - 2: El Email ya existe.                    *
-*   Add New Data                                   *
-*   - Create                                       *
-*      - 0:                                        *
-*      - 1:                                        *
-*      - 2:                                        *
-*                                                  *
-****************************************************/
+*/
 router.post('/login', multipartMiddleware, function(req, res){
 	var email    = req.body.email;
 	var password = req.body.password;
