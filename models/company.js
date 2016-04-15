@@ -5,7 +5,7 @@ var mongoose   = require('mongoose'),
     db              = mongoose.createConnection(db_lnk);
 
 var companySchema = new Schema({
-  title:  String,
+  name:  String,
   images: String,
   description: String,
   website: String,

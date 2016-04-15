@@ -43,6 +43,7 @@ exports.response = function(type,item, callback){
 	}
 }
 exports.tokenToProfile = function(guid, callback){
+	console.log(guid);
 	Token.findOne({ generated_id: guid}, function(errToken, token){
 		if(!errToken && token){
 			User.findOne({ _id: token.user_id }, function(errUser, user){
@@ -104,25 +105,41 @@ exports.userProfileLogin = function(email, password, callback){
 		}
 	});
 }
+exports.specialityExistsOrCreate = function(search, insert, callback){
+	Speciality.findOne(search, function(err, speciality){
+		if(!err && speciality){
+			callback(true,speciality);
+		}else{
+			var speciality = new Speciality(insert);
+			speciality.save();
+			callback(false, speciality);
+		}
+	});
+}
 exports.experienceExistsOrCreate = function(search, insert, callback){
 	Experience.findOne(search, function(err, experience){
 		if(!err && experience){
-			callback(err,experience);
+			callback(true,experience);
 		}else{
 			var experience = new Experience(insert);
 			experience.save();
-			callback(null, experience);
+			callback(false, experience);
 		}
+	});
+}
+exports.experienceGet = function(profile, callback){
+	Experience.find({ profile_id: profile}, function(err, experiences){
+		callback(err, experiences);
 	});
 }
 exports.experienceCompanyExistsOrCreate = function(search, insert, callback){
 	ExperienceCompany.findOne(search, function(err, experiencecompany){
 		if(!err && experiencecompany){
-			callback(err,experiencecompany);
+			callback(true,experiencecompany);
 		}else{
 			var experiencecompany = new ExperienceCompany(insert);
 			experiencecompany.save();
-			callback(null, experiencecompany);
+			callback(false, experiencecompany);
 		}
 	});
 }
@@ -152,24 +169,24 @@ exports.companyProfileExistsOrCreate = function(company, job, callback){
 exports.jobExistsOrCreate = function(search, insert, callback){
 	Job.findOne(search, function(err, job){
 		if(!err && job){
-			callback(job);
+			callback(true,job);
 		}else{
 			var job = new Job(insert);
 			job.save();
 
-			callback(null, job);
+			callback(false, job);
 		}
 	});
 }
 exports.companyExistsOrCreate = function(search, insert, callback){
 	Company.findOne(search, function(err, company){
 		if(!err && company){
-			callback(company);
+			callback(true, company);
 		}else{
 			var company = new Company(insert);
 			company.save();
 
-			callback(null, company);
+			callback(false, company);
 		}
 	});
 }
