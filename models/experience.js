@@ -5,7 +5,19 @@ var mongoose   = require('mongoose'),
     db              = mongoose.createConnection(db_lnk);
 
 var experienceSchema = new Schema({
-  speciality_id: { type: Schema.Types.ObjectId, ref: 'Speciality' },
+  //speciality_id: { type: Schema.Types.ObjectId, ref: 'Speciality' },
+  job: {
+  	id: { type: Schema.Types.ObjectId, ref: 'Job' },
+  	name: String
+  },
+  company: {
+  	id: { type: Schema.Types.ObjectId, ref: 'Company' },
+  	name: String
+  },
+  speciality: {
+  	id: { type: Schema.Types.ObjectId, ref: 'Speciality' },
+  	name: String
+  },
   profile_id: { type: Schema.Types.ObjectId, ref: 'Profile' },
 },{
   timestamps: true

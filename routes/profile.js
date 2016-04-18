@@ -27,15 +27,22 @@ router.post('/login', multipartMiddleware, function(req, res){
 	var email    = req.body.email;
 	var password = req.body.password;
 
-	func.userProfileLogin(email, password, function(userData, tokenData){
-		if(userData){
+	func.userProfileLogin(email, password, function(status, tokenData, userData){
+		console.log(tokenData);
+		if(status){
+			var verified = false;
+
+			if(userData.verified){
+				verified = true;
+			}
 			func.response(201,{
-				token: tokenData.generated_id
+				token: tokenData.generated_id,
+				verified: verified
 			}, function(response){
 				res.json(response);
 			});
 		}else{
-			func.reponse(111, function(response){
+			func.reponse(111,{ },function(response){
 				res.json(response);
 			});
 		}

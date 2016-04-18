@@ -9,8 +9,6 @@ var User        = require('../models/user');
 var Job         = require('../models/job');
 var Company     = require('../models/company');
 var Experience  = require('../models/experience');
-var ExperienceCompany = require('../models/experience_company');
-var ExperienceJob     = require('../models/experience_job');
 //var CompanyProfile = require('../models/company_profile');
 
 var CompanyModel    = require('../models/company');
@@ -41,38 +39,30 @@ router.post('/create', multipartMiddleware, function(req, res){
 						},{
 							name: speciality
 						}, function(status, specialityData){
-								func.experienceExistsOrCreate({
+								var data = {
 									profile_id: profileData._id,
-									speciality_id: specialityData._id
-								},{
-									profile_id: profileData._id,
-									speciality_id: specialityData._id
-								}, function(errExperience, experienceData){
-									func.experienceCompanyExistsOrCreate({
-										experience_id: experienceData._id,
-										company_id: company._id
-									},{
-										experience_id: experienceData._id,
-										company_id: company._id
-									}, function(status, experienceCompanyData){
-										func.experienceJobExistsOrCreate({
-											experience_id: experienceData._id,
-											job_id: jobData._id
-										},{
-											experience_id: experienceData._id,
-											job_id: jobData._id
-										}, function(status, experienceJobData){
-											var data = {
-												experience:experienceData,
-												experience_company: experienceCompanyData,
-												experience_job: experienceJobData,
-												speciality: specialityData,
-												job:   jobData,
-												company: companyData
-											};
-											res.json(data);
-										});
-									})
+									speciality: {
+										id: specialityData._id
+
+									},
+									job: {
+										id: jobData._id,
+										name: jobData.name
+									},
+									company: {
+										id: companyData._id,
+										name: companyData.name
+									},
+									speciality: {
+										id: specialityData._id,
+										name: specialityData.name
+									}
+								};
+
+								func.experienceExistsOrCreate(data,data, function(statusExperience, experienceData){
+									func.response(200,experienceData,function(response){
+										res.json(response);
+									});
 								});
 						});
 						
@@ -88,9 +78,30 @@ router.post('/create', multipartMiddleware, function(req, res){
 });
 router.post('/get', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
-	func.experienceGet(guid, function(err, experiences){
-		res.json(experiences);
+	func.tokenExist(guid, function(status, token){
+		if(status){
+			func.tokenToProfile(guid, function(status, userData, profileData, profileInfoData){
+				if(status == 200){
+					func.experienceGet(profileData._id, function(err, experiences){
+						console.log(experiences);
+						func.response(status, experiences, function(response){
+							res.json( response );
+						});
+					});	
+				}else{
+					func.response(status, {}, function(response){
+						res.json( response );
+					});
+				}
+				
+			});
+			
+			
+		}else{
+
+		}
 	});
+	
 });
 
 module.exports = router;

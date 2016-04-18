@@ -9,8 +9,8 @@ var User        = require('../models/user');
 var Job         = require('../models/job');
 var Company     = require('../models/company');
 var Experience  = require('../models/experience');
-var ExperienceCompany = require('../models/experience_company');
-var ExperienceJob     = require('../models/experience_job');
+//var ExperienceCompany = require('../models/experience_company');
+//var ExperienceJob     = require('../models/experience_job');
 //var CompanyProfile = require('../models/company_profile');
 
 var CompanyModel    = require('../models/company');

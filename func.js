@@ -10,8 +10,8 @@ var Profile            = require('./models/profile');
 var ProfileInfo        = require('./models/profile_info');
 //var CompanyProfile     = require('./models/company_profile');
 var Experience         = require('./models/experience');
-var ExperienceCompany  = require('./models/experience_company');
-var ExperienceJob      = require('./models/experience_job');
+//var ExperienceCompany  = require('./models/experience_company');
+//var ExperienceJob      = require('./models/experience_job');
 
 /*
 type:
@@ -30,7 +30,7 @@ exports.response = function(type,item, callback){
 			callback({ status: 'success', message: "Success", data: item});
 		break;
 		case 201:
-			callback({ status: 'logged', message: "Welcome", data: item});
+			callback({ status: 'logged', message: "Welcome", data: item });
 		break;
 		case 111:
 			callback({ status: 'error', message: "User Or Password Does't Exists.", data: item});
@@ -40,10 +40,10 @@ exports.response = function(type,item, callback){
 		break;
 		case 113:
 			callback({ status: 'error', message: "Profile No Existe", data: item});
+		break;
 	}
 }
 exports.tokenToProfile = function(guid, callback){
-	console.log(guid);
 	Token.findOne({ generated_id: guid}, function(errToken, token){
 		if(!errToken && token){
 			User.findOne({ _id: token.user_id }, function(errUser, user){
@@ -71,12 +71,9 @@ exports.tokenToProfile = function(guid, callback){
 }
 exports.userProfileInsertIfDontExists = function(searchUser, userInsert, profileInsert, callback){
 	User.findOne(searchUser, function(errUser, user){
-		console.log(user);
 		if(!errUser && user){
-			console.log("User existe");
 			callback(true,null);
 		}else{
-			console.log("User no existe");
 			var user = new User(userInsert);
 			user.save();
 
@@ -91,7 +88,6 @@ exports.userProfileInsertIfDontExists = function(searchUser, userInsert, profile
 			var profile = new Profile( profileInsert );
 			profile.save();
 
-			console.log(profile);
 			callback( false, token );
 		}
 	});
@@ -99,7 +95,12 @@ exports.userProfileInsertIfDontExists = function(searchUser, userInsert, profile
 exports.userProfileLogin = function(email, password, callback){
 	User.findOne({ email: email, password: password }, function(errUser, user){
 		if(!errUser && user){
-			callback(user);
+			Token.findOne({ user_id: user._id}, function(errToken, token){
+				Profile.findOne({ user_id: user._id}, function(errProfile, profile){
+
+				});
+				callback(true,token, user);
+			});
 		}else{
 			callback(false);
 		}
@@ -128,7 +129,7 @@ exports.experienceExistsOrCreate = function(search, insert, callback){
 	});
 }
 exports.experienceGet = function(profile, callback){
-	Experience.find({ profile_id: profile}, function(err, experiences){
+	Experience.find({ profile_id: profile}).exec( function(err, experiences){
 		callback(err, experiences);
 	});
 }
