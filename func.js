@@ -133,6 +133,17 @@ exports.experienceGet = function(profile, callback){
 		callback(err, experiences);
 	});
 }
+exports.experienceJobGet = function(name,callback) {
+
+	Job.find({ name: new RegExp(name, "i") }, function(errJob, job){
+		callback(errJob, job);
+	});
+}
+exports.experienceSpecialityGet = function(name, callback){
+	Speciality.find({ name: new RegExp(name, "i") }, function(errSpeciality, speciality){
+		callback(errSpeciality, speciality);
+	});
+}
 exports.experienceCompanyExistsOrCreate = function(search, insert, callback){
 	ExperienceCompany.findOne(search, function(err, experiencecompany){
 		if(!err && experiencecompany){

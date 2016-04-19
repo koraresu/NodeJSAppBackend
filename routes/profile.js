@@ -113,6 +113,29 @@ router.post('/update', multipartMiddleware, function(req, res){
 
 	res.send("Update");
 });
+router.post('/verify', multipartMiddleware, function(req, res){
+	var guid      = req.body.guid;
+	func.tokenExist(guid, function(status, tokenData){
+		if(status){
+			func.tokenToProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
+				var verified = false;
+
+				if(userData.verified){
+					verified = true;
+				}
+				func.response(200,{	
+					verified: verified
+				}, function(response){
+					res.json(response);
+				});
+			});
+		}else{
+			func.response(101, {}, function(response){
+				res.json(response);
+			});
+		}
+	});
+});
 /*
 router.post('/update', multipartMiddleware, function(req, res){
 	var guid  = req.body.guid;

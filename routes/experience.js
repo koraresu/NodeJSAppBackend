@@ -95,13 +95,92 @@ router.post('/get', multipartMiddleware, function(req, res){
 				}
 				
 			});
-			
-			
 		}else{
-
+			func.response(101, {}, function(response){
+				res.json(response);
+			});
 		}
 	});
-	
+});
+router.post('/job/create', multipartMiddleware, function(req, res){
+	var guid      = req.body.guid;
+	var name      = req.body.name;
+
+	func.tokenExist(guid, function(status, token){
+		if(status){	
+			func.jobExistsOrCreate ({
+				name: name,
+			},{
+				name: name,
+			}, function(status, jobData){
+				func.response(200, jobData, function(response){
+					res.json(response);
+				});
+			});
+		}else{
+			func.response(101, {}, function(response){
+				res.json(response);
+			});
+		}
+	});
+});
+router.post('/speciality/create', multipartMiddleware, function(req, res){
+	var guid      = req.body.guid;
+	var name      = req.body.name;
+
+	func.tokenExist(guid, function(status, token){
+		if(status){	
+			func.specialityExistsOrCreate ({
+				name: name,
+			},{
+				name: name,
+			}, function(status, jobData){
+				func.response(200, jobData, function(response){
+					res.json(response);
+				});
+			});
+		}else{
+			func.response(101, {}, function(response){
+				res.json(response);
+			});
+		}
+	});
+});
+router.post('/job/get', multipartMiddleware, function(req, res){
+	var guid      = req.body.guid;
+	var name      = req.body.name;
+	func.tokenExist(guid, function(status, token){
+		if(status){
+			func.experienceJobGet(name, function(err, jobData){
+				console.log(jobData);
+				func.response(200,jobData, function(response){
+					res.json(response);
+				})
+			});
+		}else{
+			func.response(101, {}, function(response){
+				res.json(response);
+			});
+		}
+	});
+});
+router.post('/speciality/get', multipartMiddleware, function(req, res){
+	var guid      = req.body.guid;
+	var name      = req.body.name;
+	func.tokenExist(guid, function(status, token){
+		if(status){
+			func.experienceSpecialityGet(name, function(err, specialityData){
+				console.log(specialityData);
+				func.response(200,specialityData, function(response){
+					res.json(response);
+				})
+			});
+		}else{
+			func.response(101, {}, function(response){
+				res.json(response);
+			});
+		}
+	});
 });
 
 module.exports = router;
