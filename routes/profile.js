@@ -27,25 +27,32 @@ router.post('/login', multipartMiddleware, function(req, res){
 	var email    = req.body.email;
 	var password = req.body.password;
 
-	func.userProfileLogin(email, password, function(status, tokenData, userData){
+	func.userProfileLogin(email, password, function(status, tokenData, userData, profileData){
 		console.log(tokenData);
-		if(status){
-			var verified = false;
+		console.log(userData);
+		console.log(profileData);
+		func.experienceGet(profileData._id, function(statusExperience, experiences){
+			var exp = statusExperience;
 
-			if(userData.verified){
-				verified = true;
+			if(status){
+				var verified = false;
+
+				if(userData.verified){
+					verified = true;
+				}
+				func.response(201,{
+					token: tokenData.generated_id,
+					verified: verified,
+					experiences: exp,
+				}, function(response){
+					res.json(response);
+				});
+			}else{
+				func.reponse(111,{ },function(response){
+					res.json(response);
+				});
 			}
-			func.response(201,{
-				token: tokenData.generated_id,
-				verified: verified
-			}, function(response){
-				res.json(response);
-			});
-		}else{
-			func.reponse(111,{ },function(response){
-				res.json(response);
-			});
-		}
+		});
 	});
 });
 router.post('/create', multipartMiddleware, function(req, res){
@@ -83,16 +90,19 @@ router.post('/get', multipartMiddleware, function(req, res){
 		if(status){
 			func.tokenToProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
 				if(status){
-					//res.send("True");
-					var data = {
-						user: userData,
-						profile: profileData,
-						profile_info: profileInfoData
-					};
+					func.experienceGet(profileData._id, function(statusExperience, experiencesData){
+						var data = {
+							user: userData,
+							profile: profileData,
+							profile_info: profileInfoData,
+							experiences: experiencesData
+						};
 
-					func.response(200, data, function(response){
-						res.json(response);
+						func.response(200, data, function(response){
+							res.json(response);
+						});
 					});
+					
 				}else{
 					func.response(113,{},function(response){
 						res.json(response);

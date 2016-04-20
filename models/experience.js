@@ -10,6 +10,7 @@ var experienceSchema = new Schema({
   	id: { type: Schema.Types.ObjectId, ref: 'Job' },
   	name: String
   },
+  type: Number,
   company: {
   	id: { type: Schema.Types.ObjectId, ref: 'Company' },
   	name: String
@@ -17,6 +18,10 @@ var experienceSchema = new Schema({
   speciality: {
   	id: { type: Schema.Types.ObjectId, ref: 'Speciality' },
   	name: String
+  },
+  sector: {
+    id: { type: Schema.Types.ObjectId, ref: 'Sector' },
+    name: String
   },
   profile_id: { type: Schema.Types.ObjectId, ref: 'Profile' },
 },{

@@ -8,10 +8,11 @@ var Company            = require('./models/company');
 var Speciality         = require('./models/speciality');
 var Profile            = require('./models/profile');
 var ProfileInfo        = require('./models/profile_info');
-//var CompanyProfile     = require('./models/company_profile');
+var Sector             = require('./models/sector');
 var Experience         = require('./models/experience');
 //var ExperienceCompany  = require('./models/experience_company');
 //var ExperienceJob      = require('./models/experience_job');
+//var CompanyProfile     = require('./models/company_profile');
 
 /*
 type:
@@ -69,6 +70,18 @@ exports.tokenToProfile = function(guid, callback){
 		}
 	});
 }
+exports.sectorExistsOrCreate = function(search, insert, callback){
+	Sector.findOne(search, function(err, sector){
+		if(!err && sector){
+			callback(true, sector);
+		}else{
+			var sector = new Sector(insert);
+			sector.save();
+
+			callback(false, sector);
+		}
+	});
+}
 exports.userProfileInsertIfDontExists = function(searchUser, userInsert, profileInsert, callback){
 	User.findOne(searchUser, function(errUser, user){
 		if(!errUser && user){
@@ -96,10 +109,10 @@ exports.userProfileLogin = function(email, password, callback){
 	User.findOne({ email: email, password: password }, function(errUser, user){
 		if(!errUser && user){
 			Token.findOne({ user_id: user._id}, function(errToken, token){
-				Profile.findOne({ user_id: user._id}, function(errProfile, profile){
-
+				Profile.findOne({ user_id: user._id }, function(errProfile, profile){
+					console.log(profile);
+					callback(true,token, user, profile);
 				});
-				callback(true,token, user);
 			});
 		}else{
 			callback(false);
@@ -130,13 +143,29 @@ exports.experienceExistsOrCreate = function(search, insert, callback){
 }
 exports.experienceGet = function(profile, callback){
 	Experience.find({ profile_id: profile}).exec( function(err, experiences){
-		callback(err, experiences);
+		console.log(err);
+		console.log(experiences.length);
+
+		if(!err && experiences.length > 0){
+
+			callback(true, experiences);
+		
+		}else{
+			callback(false, experiences);
+		}
+		
 	});
 }
 exports.experienceJobGet = function(name,callback) {
 
 	Job.find({ name: new RegExp(name, "i") }, function(errJob, job){
 		callback(errJob, job);
+	});
+}
+exports.sectorGet = function(name,callback) {
+
+	Sector.find({ name: new RegExp(name, "i") }, function(errJob, sector){
+		callback(errJob, sector);
 	});
 }
 exports.experienceSpecialityGet = function(name, callback){
