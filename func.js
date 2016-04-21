@@ -168,42 +168,25 @@ exports.sectorGet = function(name,callback) {
 		callback(errJob, sector);
 	});
 }
+exports.companyGet = function(name, callback){
+	Company.find({ name: new RegExp(name, "i") }, function(err, company){
+		callback(err, company);
+	});	
+}
 exports.experienceSpecialityGet = function(name, callback){
 	Speciality.find({ name: new RegExp(name, "i") }, function(errSpeciality, speciality){
 		callback(errSpeciality, speciality);
 	});
 }
-exports.experienceCompanyExistsOrCreate = function(search, insert, callback){
-	ExperienceCompany.findOne(search, function(err, experiencecompany){
-		if(!err && experiencecompany){
-			callback(true,experiencecompany);
+exports.companyExistsOrCreate = function(search, insert, callback){
+	Company.findOne(search, function(err, company){
+		if(!err && company){
+			callback(true,company);
 		}else{
-			var experiencecompany = new ExperienceCompany(insert);
-			experiencecompany.save();
-			callback(false, experiencecompany);
-		}
-	});
-}
-exports.experienceJobExistsOrCreate = function(search, insert, callback){
-	ExperienceJob.findOne(search, function(err, experiencejob){
-		if(!err && experiencejob){
-			callback(err,experiencejob);
-		}else{
-			var experiencejob = new ExperienceJob(insert);
-			experiencejob.save();
-			callback(null, experiencejob);
-		}
-	});
-}
-exports.companyProfileExistsOrCreate = function(company, job, callback){
-	CompanyProfile.findOne(search, function(err, companyprofile){
-		if(!err && companyprofile){
-			callback(companyprofile);
-		}else{
-			var companyprofile = new Job(insert);
-			companyprofile.save();
+			var company = new Company(insert);
+			company.save();
 
-			callback(null, companyprofile);
+			callback(false, company);
 		}
 	});
 }

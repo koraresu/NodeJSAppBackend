@@ -3,6 +3,8 @@ var router = express.Router();
 var func = require('../func'); 
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
+var path = require('path');
+var fs = require('fs');
 
 var mongoose    = require('mongoose');
 /*
@@ -143,6 +145,36 @@ router.post('/verify', multipartMiddleware, function(req, res){
 			func.response(101, {}, function(response){
 				res.json(response);
 			});
+		}
+	});
+});
+router.post('/setprofilepic', multipartMiddleware, function(req, res){
+	var guid      = req.body.guid;
+	var profile_pic = req.files.profilepic;
+	var tmp_path = profile_pic.path;
+
+	func.tokenExist(guid, function(status, tokenData){
+		if(status){
+			func.tokenToProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
+				var extension = path.extname(tmp_path);
+
+				var new_path   = path.dirname(path.dirname(process.mainModule.filename)) + '/public/profilepic/' + profileData._id + extension;
+				var path_image = req.get('host') + '/profilepic/' + profileData._id + extension;
+				console.log(tmp_path);
+				console.log(new_path);
+				fs.rename(tmp_path, new_path, function(err){
+					fs.unlink(tmp_path, function(err){
+						func.response(200, {
+							image: path_image
+						},function(response){
+							res.json(response);
+						});
+					})
+				});
+				
+			});
+		}else{
+
 		}
 	});
 });

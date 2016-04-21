@@ -20,7 +20,7 @@ router.post('/create', multipartMiddleware, function(req, res){
 	var job        = req.body.job;
 	var speciality = req.body.speciality;
 	var sector     = req.body.sector;
-
+	var ocupation  = req.body.ocupation;
 	func.tokenExist(guid, function(errToken, token){
 		if(errToken){
 			func.tokenToProfile(token.generated_id, function(status, userData, profileData, profileInfoData){
@@ -65,50 +65,65 @@ router.post('/create', multipartMiddleware, function(req, res){
 						name: company
 					},function(status, companyData){
 						func.jobExistsOrCreate({
-							name: job,
+							name: ocupation
 						},{
-							name: job,
-						},function(status, jobData){
-							console.log(jobData);
-							func.specialityExistsOrCreate({
-								name: speciality
+							name: ocupation
+						}, function(status, ocupationData){
+							func.jobExistsOrCreate({
+								name: job,
 							},{
-								name: speciality
-							}, function(status, specialityData){
-
-								func.sectorExistsOrCreate({
-									name: sector
+								name: job,
+							},function(status, jobData){
+								console.log(jobData);
+								func.specialityExistsOrCreate({
+									name: speciality
 								},{
-									name: sector
-								}, function(status, sectorData){
-									var data = {
-										profile_id: profileData._id,
-										type: type,
-										job: {
-											id: jobData._id,
-											name: jobData.name
-										},
-										company: {
-											id: companyData._id,
-											name: companyData.name
-										},
-										sector: {
-											id: sectorData._id,
-											name: sectorData.name
-										}
-									};
+									name: speciality
+								}, function(status, specialityData){
+
+									func.sectorExistsOrCreate({
+										name: sector
+									},{
+										name: sector
+									}, function(status, sectorData){
+										var data = {
+											profile_id: profileData._id,
+											type: type,
+											ocupation: {
+												id: jobData._id,
+												name: jobData.name
+											},
+											job: {
+												id: jobData._id,
+												name: jobData.name
+											},
+											speciality: {
+												id: specialityData._id,
+												name: specialityData.name
+											},
+											company: {
+												id: companyData._id,
+												name: companyData.name
+											},
+											sector: {
+												id: sectorData._id,
+												name: sectorData.name
+											}
+										};
 
 
 
-									func.experienceExistsOrCreate(data,data, function(statusExperience, experienceData){
-										func.response(200,experienceData,function(response){
-											res.json(response);
+										func.experienceExistsOrCreate(data,data, function(statusExperience, experienceData){
+											func.response(200,experienceData,function(response){
+												res.json(response);
+											});
 										});
 									});
 								});
 							});
-							
 						});
+
+						
 					});
 				}
 			});
@@ -266,4 +281,43 @@ router.post('/sector/get', multipartMiddleware, function(req, res){
 	});
 });
 
+router.post('/company/create', multipartMiddleware, function(req, res){
+		var guid      = req.body.guid;
+	var name      = req.body.name;
+	func.tokenExist(guid, function(status, token){
+		if(status){
+			func.companyExistsOrCreate({
+				name: name
+			},{
+				name: name
+			}, function(status, companyData){
+				func.response(200, companyData, function(response){
+					res.json(response);
+				})
+			});
+		}else{
+			func.response(101, {}, function(response){
+				res.json(response);
+			});
+		}
+	});
+});
+router.post('/company/get', multipartMiddleware, function(req, res){
+		var guid      = req.body.guid;
+	var name      = req.body.name;
+	func.tokenExist(guid, function(status, token){
+		if(status){
+			func.companyGet(name, function(err, companyData){
+				console.log(companyData);
+				func.response(200,companyData, function(response){
+					res.json(response);
+				})
+			});
+		}else{
+			func.response(101, {}, function(response){
+				res.json(response);
+			});
+		}
+	});
+});
 module.exports = router;
