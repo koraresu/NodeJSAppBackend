@@ -1,5 +1,7 @@
 
 var mongoose    = require('mongoose');
+var path = require('path');
+var fs = require('fs');
 
 var Token              = require('./models/token');
 var User               = require('./models/user');
@@ -43,6 +45,15 @@ exports.response = function(type,item, callback){
 			callback({ status: 'error', message: "Profile No Existe", data: item});
 		break;
 	}
+}
+exports.saveImage = function(file, new_path, callback){
+	var tmp_path         = file.path;
+	var extension = path.extname(tmp_path);
+	fs.rename(tmp_path, new_path, function(err){
+		fs.unlink(tmp_path, function(err){
+			callback();
+		});
+	});
 }
 exports.tokenToProfile = function(guid, callback){
 	Token.findOne({ generated_id: guid}, function(errToken, token){

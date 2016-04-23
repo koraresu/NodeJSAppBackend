@@ -90,8 +90,8 @@ router.post('/create', multipartMiddleware, function(req, res){
 											profile_id: profileData._id,
 											type: type,
 											ocupation: {
-												id: jobData._id,
-												name: jobData.name
+												id:   ocupationData._id,
+												name: ocupationData.name
 											},
 											job: {
 												id: jobData._id,
