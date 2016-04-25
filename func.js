@@ -44,6 +44,9 @@ exports.response = function(type,item, callback){
 		case 113:
 			callback({ status: 'error', message: "Profile No Existe", data: item});
 		break;
+		case 404:
+			callback({ status: 'error', message: "Not Found", data: item});
+		break;
 	}
 }
 exports.saveImage = function(file, new_path, callback){

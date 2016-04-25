@@ -26,7 +26,9 @@ router.get('/verification/:id',function(req, res){
 				res.send("Haz verificado tu cuenta.");
 			});
 		}else{
-			//res.send("Esta cuenta no existe.");
+			func.response(404, {}, function(response){
+				res.json(response);
+			})
 		}
 	})
 });
