@@ -18,7 +18,7 @@ var Token       = require('../models/token');
 var ProfileInfo = require('../models/profile_info');
 var Job         = require('../models/job');
 var Company     = require('../models/company');
-
+var Experience  = require('../models/experience');
 /*
 Nombre de Objectos de Documentos:
 	Todo dato recibido por FUNC, que sea un documento de mongo, se le colocara como nombre de varible el nombre del modelo,
@@ -187,6 +187,13 @@ router.post('/setprofilepic', multipartMiddleware, function(req, res){
 
 		}
 	});
+});
+router.post('/search', multipartMiddleware, function(req, res){
+	var text = req.body.search;
+	Experience.find({ $text: { $search: text }}, function(err, experiencesData){
+		res.send(err);
+		//res.json(experiencesData);
+	})
 });
 /*
 router.post('/update', multipartMiddleware, function(req, res){
