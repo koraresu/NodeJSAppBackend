@@ -12,6 +12,8 @@ var Profile            = require('./models/profile');
 var ProfileInfo        = require('./models/profile_info');
 var Sector             = require('./models/sector');
 var Experience         = require('./models/experience');
+var Skill              = require('./models/skills');
+var SkillProfile       = require('./models/skill_profile');
 //var ExperienceCompany  = require('./models/experience_company');
 //var ExperienceJob      = require('./models/experience_job');
 //var CompanyProfile     = require('./models/company_profile');
@@ -141,6 +143,28 @@ exports.specialityExistsOrCreate = function(search, insert, callback){
 			var speciality = new Speciality(insert);
 			speciality.save();
 			callback(false, speciality);
+		}
+	});
+}
+exports.skillExistsOrCreate = function(search, insert, callback){
+	Skill.findOne(search, function(err, skill){
+		if(!err && skill){
+			callback(true, skill);
+		}else{
+			var skill = new Skill(insert);
+			skill.save();
+			callback(false, skill);
+		}
+	});
+}
+exports.skillProfileExistsOrCreate = function(search, insert, callback){
+	SkillProfile.findOne(search, function(err, skillProfile){
+		if(!err && skillProfile){
+			callback(true, skillProfile);
+		}else{
+			var skillProfile = new SkillProfile(insert);
+			skillProfile.save();
+			callback(false, skillProfile);
 		}
 	});
 }

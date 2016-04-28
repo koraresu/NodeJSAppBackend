@@ -4,10 +4,16 @@ var mongoose   = require('mongoose'),
     db_lnk          = 'mongodb://localhost:27017/hive',
     db              = mongoose.createConnection(db_lnk);
 var skillProfileSchema = new Schema({
-  skill_id: { type: Schema.Types.ObjectId, ref: 'Skill' },
-  profile_id: { type: Schema.Types.ObjectId, ref: 'Profile' },
+  skill: {
+  	id: { type: Schema.Types.ObjectId, ref: 'Skill' },
+  	name: String
+  },
+  profile: {
+  	id: { type: Schema.Types.ObjectId, ref: 'Profile' },
+  	name: String
+  }
 },{
   timestamps: true
 });
 
-module.exports = db.model( 'SkillProfile' , skillsProfileSchema );
+module.exports = db.model( 'SkillProfile' , skillProfileSchema );
