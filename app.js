@@ -7,14 +7,13 @@ var bodyParser = require('body-parser');
 
 var db = require('monk')('localhost:27017/hive')
 
-//var users = require('./routes/users');
-//var token = require('./routes/token');
-//var job = require('./routes/job');
+
 var routes     = require('./routes/index');
 var profile    = require('./routes/profile');
 var company    = require('./routes/company');
 var skills     = require('./routes/skills');
 var experience = require('./routes/experience');
+var network    = require('./routes/network');
 
 //var admin = require('./routes/admin');
 
@@ -41,8 +40,7 @@ app.use(function(req,res,next){
     next();
 });
 app.use('/', routes);
-//app.use('/users', users);
-//app.use('/api/token', token);
+app.use('/api/network', network);
 app.use('/api/profile', profile);
 app.use('/api/skills', skills);
 

@@ -5,8 +5,14 @@ var mongoose   = require('mongoose'),
     db              = mongoose.createConnection(db_lnk);
 
 var NetworkSchema = new Schema({
-  profile_a_id: { type: Schema.Types.ObjectId, ref: 'Profile' },
-  profile_b_id: { type: Schema.Types.ObjectId, ref: 'Profile' },
+	profile_a:{
+		id: { type: Schema.Types.ObjectId, ref: 'Profile' },
+		accepted: { type: Boolean}
+	},
+	profile_b:{
+		id: { type: Schema.Types.ObjectId, ref: 'Profile' },
+		accepted: {type: Boolean}
+	}
 },{
   timestamps: true
 });

@@ -57,6 +57,12 @@ router.post('/login', multipartMiddleware, function(req, res){
 		});
 	});
 });
+router.post('/friend/get', multipartMiddleware, function(req, res){
+	var guid      = req.body.guid;
+	func.tokenExist(guid, function(errToken, token){
+		
+	});
+});
 router.post('/create', multipartMiddleware, function(req, res){
 	var nombre   = req.body.first_name;
 	var apellido = req.body.last_name;
