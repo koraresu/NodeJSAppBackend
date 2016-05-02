@@ -121,6 +121,11 @@ exports.userProfileInsertIfDontExists = function(searchUser, userInsert, profile
 		}
 	});
 }
+exports.ProfileId = function(profile_id, callback){
+	Profile.findOne({ _id: profile_id}, function(err, profile){
+		callback(err, profile);
+	})
+}
 exports.userProfileLogin = function(email, password, callback){
 	User.findOne({ email: email, password: password }, function(errUser, user){
 		if(!errUser && user){
