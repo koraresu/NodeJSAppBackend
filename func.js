@@ -122,9 +122,25 @@ exports.userProfileInsertIfDontExists = function(searchUser, userInsert, profile
 	});
 }
 exports.ProfileId = function(profile_id, callback){
-	Profile.findOne({ _id: profile_id}, function(err, profile){
-		callback(err, profile);
-	})
+	Profile.findOne({ _id: profile_id }, function(errProfile, profile){
+		if(!errProfile && profile){
+			ProfileInfo.find({ profile_id: profile._id }, function(errProfileInfo, profileinfo){
+				Experience.find({ profile_id: profile}).exec( function(err, experiences){
+					console.log(err);
+					console.log(experiences.length);
+
+					if(!err && experiences.length > 0){
+						callback(true, profile, profileinfo, experiences);
+					}else{
+						callback(false, profile, profileinfo, experiences);
+					}
+				});
+				
+			});
+		}else{
+			callback(101);
+		}
+	});
 }
 exports.userProfileLogin = function(email, password, callback){
 	User.findOne({ email: email, password: password }, function(errUser, user){

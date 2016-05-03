@@ -58,9 +58,16 @@ router.post('/login', multipartMiddleware, function(req, res){
 	});
 });
 router.post('/friend/get', multipartMiddleware, function(req, res){
-	var guid      = req.body.guid;
-	func.tokenExist(guid, function(errToken, token){
-		
+	var profile_id      = req.body.profile_id;
+	func.ProfileId(profile_id, function(err, profileData, profileInfoData, experiencesData){
+		var data = {
+			profile: profileData,
+			profile_info: profileInfoData,
+			experiences: experiencesData
+		};
+		func.response(200, data, function(response){
+			res.json(response);
+		});
 	});
 });
 router.post('/create', multipartMiddleware, function(req, res){
@@ -201,60 +208,4 @@ router.post('/search', multipartMiddleware, function(req, res){
 		//res.json(experiencesData);
 	})
 });
-/*
-router.post('/update', multipartMiddleware, function(req, res){
-	var guid  = req.body.guid;
-
-	Token.findOne({ generated_id: guid }, function(errToken, guid){
-		var token = guid;
-		if(!errToken && guid){
-			User.findOne({ _id: guid.user_id}, function(errUser, user){
-				var account = user;
-				if(!errUser && user){
-					Profile.findOne({ user_id: account._id}, function(errProfile, perfil){
-						var profile = perfil;
-						if(!errProfile && perfil){
-							var data = {
-									name: {
-										first: perfil.name.first, 
-										last: perfil.name.last
-									},
-									email: account.email,
-									token: token.generated_id,
-									extra: {}
-							};
-
-							ProfileData.find({ user_id: account._id }, function(errProfileData, perfildata){
-								if(!errProfileData && perfildata){
-									data.extra = new Array();
-									perfildata.forEach(function(pdata){
-										data.extra.push({
-											type: pdata.tipo,
-											value: pdata.data
-										});
-										res.json(data);
-									});
-								}else{
-									res.json({status: {code: 2 , message: "Perfil no existe"} });
-								}
-								
-
-								
-							});
-						}else{
-							res.json({status: {code: 3 , message: "Perfil no existe"} });
-						}
-						
-					});
-				}else{
-					res.json({status: {code: 4 , message: "Usuario no existe."} });
-				}
-			});
-		}else{
-			res.json({status: {code: 5 , message: "Este token no existe"} });
-		}
-	});
-});
-
-*/
 module.exports = router;
