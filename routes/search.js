@@ -20,8 +20,17 @@ router.post('/general', multipartMiddleware, function(req, res){
 	var text = req.body.search;
 	var reg  = new RegExp(text, "i");
 	var data = {};
-	Profile.find({ $or: [{first_name: reg}, {last_name: reg }] }, function(err, ProfileData){
-		res.json(ProfileData);
+	func.searchProfile(reg, function(status, profileData){
+		if(status){
+			func.response(200, profileData, function(response){
+				res.json(response);
+			});
+		}else{
+			func.response(404, {}, function(response){
+				res.json(response);
+			});
+		}
+		
 	});
 });
 module.exports = router;

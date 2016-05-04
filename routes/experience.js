@@ -74,7 +74,6 @@ router.post('/create', multipartMiddleware, function(req, res){
 							},{
 								name: job,
 							},function(status, jobData){
-								console.log(jobData);
 								func.specialityExistsOrCreate({
 									name: speciality
 								},{

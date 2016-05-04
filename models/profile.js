@@ -2,7 +2,11 @@ var mongoose   = require('mongoose'),
     Schema     = mongoose.Schema,
     //db_lnk          = 'mongodb://admin:123@localhost:27017/hive',
     db_lnk          = 'mongodb://localhost:27017/hive',
-    db              = mongoose.createConnection(db_lnk);
+    db              = mongoose.createConnection(db_lnk),
+    Experience      = require('./experience'),
+    Skill           = require('./skills'),
+    User            = require('./user'),
+    Review          = require('./review');
 
 var profileSchema = new Schema({
   first_name: String,
@@ -10,8 +14,18 @@ var profileSchema = new Schema({
   profile_pic: String,
   profile_hive: String,
   qrcode: { type: String },
-  user_id: { type: Schema.Types.ObjectId, ref: 'User' },
-  lang: String
+  user_id: { type: Schema.Types.ObjectId, ref: 'users' },
+  lang: String,
+  experiences: [{
+    tipo: Number,
+    job_name: String,
+    ocupation_name: String,
+    company_name: String,
+    speciality_name: String,
+    sector_name: String
+  }],
+  skills: [{ name: String }],
+  info: [{ type: Schema.Types.Mixed }]
 },{
   timestamps: true
 });

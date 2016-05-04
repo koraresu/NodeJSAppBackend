@@ -32,35 +32,14 @@ router.post('/add', multipartMiddleware, function(req, res){
 	func.tokenToProfile(guid, function(status, userData, profileData, profileInfoData){
 		switch(status){
 			case 200:
-				func.skillExistsOrCreate({
-					name: name
-				}, {
-					name: name
-				}, function(statusSkill, skillData){
-					func.skillProfileExistsOrCreate({
-						skill: {
-							id: skillData._id
-						}
-					},{
-						skill: {
-							id: skillData._id,
-							name: skillData.name
-						},
-						profile: {
-							id: profileData._id
-						}
-					}, function(statusSkillProfile, skillProfileData){
-						var data = {
-							skill_profile: skillProfileData, 
-							skill: skillData
-						};
-						res.json(data);
+				func.skillAddProfile(name, profileData._id, function(status, skillData, profileData){
+					func.response(200, { skill: skillData, profile: profileData }, function(response){
+						res.json(response);
 					});
-					
 				});
 			break;
 			default:
-				func.response(type, {},function(response){
+				func.response(113, {},function(response){
 					res.json(response);
 				});
 			break;

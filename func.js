@@ -13,7 +13,6 @@ var ProfileInfo        = require('./models/profile_info');
 var Sector             = require('./models/sector');
 var Experience         = require('./models/experience');
 var Skill              = require('./models/skills');
-var SkillProfile       = require('./models/skill_profile');
 //var ExperienceCompany  = require('./models/experience_company');
 //var ExperienceJob      = require('./models/experience_job');
 //var CompanyProfile     = require('./models/company_profile');
@@ -61,13 +60,13 @@ exports.saveImage = function(file, new_path, callback){
 	});
 }
 exports.tokenToProfile = function(guid, callback){
-	Token.findOne({ generated_id: guid}, function(errToken, token){
+	Token.findOne({ generated_id: guid}).exec(function(errToken, token){
 		if(!errToken && token){
 			User.findOne({ _id: token.user_id }, function(errUser, user){
 				if(!errUser && user){
 					user['password'] = null;
 					delete user['password'];
-					Profile.findOne({ user_id: user._id }, function(errProfile, profile){
+					Profile.findOne({ user_id: user._id }).populate('experiences','skills').exec(function(errProfile, profile){
 						if(!errProfile && profile){
 							ProfileInfo.find({ profile_id: profile._id }, function(errProfileInfo, profileinfo){
 								callback(200,user, profile, profileinfo);
@@ -83,6 +82,19 @@ exports.tokenToProfile = function(guid, callback){
 			});
 		}else{
 			callback(101, null, null, null);
+		}
+	});
+}
+exports.searchProfile = function(text, callback){
+	Profile.find({
+		skills:{
+			name: "PHP"
+		}
+	}).exec(function(err, ProfileData){
+		if(!err && ProfileData){
+			callback(true, ProfileData);
+		}else{
+			callback(false, ProfileData);
 		}
 	});
 }
@@ -126,8 +138,6 @@ exports.ProfileId = function(profile_id, callback){
 		if(!errProfile && profile){
 			ProfileInfo.find({ profile_id: profile._id }, function(errProfileInfo, profileinfo){
 				Experience.find({ profile_id: profile}).exec( function(err, experiences){
-					console.log(err);
-					console.log(experiences.length);
 
 					if(!err && experiences.length > 0){
 						callback(true, profile, profileinfo, experiences);
@@ -147,7 +157,6 @@ exports.userProfileLogin = function(email, password, callback){
 		if(!errUser && user){
 			Token.findOne({ user_id: user._id}, function(errToken, token){
 				Profile.findOne({ user_id: user._id }, function(errProfile, profile){
-					console.log(profile);
 					callback(true,token, user, profile);
 				});
 			});
@@ -164,6 +173,42 @@ exports.specialityExistsOrCreate = function(search, insert, callback){
 			var speciality = new Speciality(insert);
 			speciality.save();
 			callback(false, speciality);
+		}
+	});
+}
+exports.skillAddProfile = function(name, profile_id, callback){
+	Skill.findOne({ name: name}, function(err, skill){
+		if(!err && skill){
+			Profile.findOne({ _id: profile_id}, function(err, profile){
+				Profile.findOne({
+					skills: {
+						_id: skill._id
+					}
+				}, function(errSkillExist, skillExistData){
+					if(!errSkillExist && skillExistData){
+						callback(true, skill, profile);		
+					}else{
+						profile.skills.push(skill);
+						profile.save(function(err, profile){
+							callback(false, skill, profile);
+						});
+					}
+				});
+				
+			});
+			
+		}else{
+			var skill = new Skill({
+				name: name
+			});
+			skill.save(function(err, skill){
+				Profile.findOne({ _id: profile_id }, function(errProfile, profileData){
+					profileData.skills.push({name: skill.name });
+					profileData.save(function(err, profile){
+						callback(false, skill, profile);
+					});
+				});
+			});
 		}
 	});
 }
@@ -195,15 +240,26 @@ exports.experienceExistsOrCreate = function(search, insert, callback){
 			callback(true,experience);
 		}else{
 			var experience = new Experience(insert);
-			experience.save();
-			callback(false, experience);
+			experience.save(function(err, experience){
+				Profile.findOne({ _id: experience.profile_id}, function(errProfile, profileData){
+					profileData.experiences.push({
+						job_name: experience.job.name,
+						ocupation_name: experience.ocupation.name,
+						company_name: experience.company.name,
+						speciality_name: experience.speciality.name,
+						sector_name: experience.sector.name,
+						tipo: experience.type
+					});
+					profileData.save(function(err, prop){
+						callback(false, experience);
+					});
+				});
+			});
 		}
 	});
 }
 exports.experienceGet = function(profile, callback){
 	Experience.find({ profile_id: profile}).exec( function(err, experiences){
-		console.log(err);
-		console.log(experiences.length);
 
 		if(!err && experiences.length > 0){
 
@@ -284,68 +340,14 @@ exports.tokenExist = function(guid, callback){
 	});
 }
 
-/*
-exports.getProfile = function(guid, callback){
-	Token.findOne({ generated_id: guid}, function(errToken, guid){
-		User.findOne({ _id: guid.user_id},'_id email', function(errUser, user){
-			Profile.findOne({ user_id: guid.user_id},'_id user_id name', function(errProfile, profile){
-				ProfileHive.findOne({ profile_id: profile._id}, function(errProfileHive, profilehive){
-					var err = {
-						token: errToken, 
-						user: errUser, 
-						profile: errProfile,
-						hive: errProfileHive
-					};
-					var data = {
-						hive: profilehive,
-						profile: profile, 
-						user: user,
-						token: guid,
-						email: user.email, 
-						first_name: profile.name.first,
-						last_name: profile.name.last,
-					}
-					callback(err, data);
-				});
-			});
-		});
+function profile_serch(profile){
+	Experience.findOne({ profile_id: profile.id}, function(err, experience){
+		var data = {
+			id: profile._id,
+			first_name: profile.first_name,
+  			last_name: profile.last_name,
+  			job: experience.job.name
+		};
+		return data;
 	});
 }
-exports.getProfileHive = function(id, callback){
-	ProfileHive.findOne({ _id: id }, function(errProfileHive, profileHive){
-		Company.findOne({ _id: profileHive.company_id }, function(errCompany, company){
-			Job.findOne({ _id: company.job_id }, function(errJob, job){
-				var err  = {};
-				var data = {
-					hive: profileHive._id,
-					company: {
-						_id: company._id,
-						name: company.name
-						
-					},
-					job: {
-						_id: job._id,
-						name: job.name
-
-					}
-				};
-				callback( err, data );
-			});
-		});	
-	})	
-}
-exports.getUserLogin = function(email, password, callback){
-	User.findOne({ email: email, password: password }, function(errUser, user){
-		Token.findOne({ user_id: user._id}, function(errToken, guid){
-			Profile.findOne({ user_id: user._id}, function(errProfile, profile){
-				callback(user, guid,  profile);
-			});
-		});
-	});
-}
-exports.createProfile = function(email, password,nombre, apellido,callback){
-	var account;
-	var token;
-	var profile;
-}
-*/
