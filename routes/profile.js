@@ -165,6 +165,10 @@ router.post('/setprofilepic', multipartMiddleware, function(req, res){
 	var guid             = req.body.guid;
 	var profile_pic      = req.files.profilepic;
 	var profile_pic_hive = req.files.profilepic_hive;
+
+	console.log(profile_pic);
+	console.log(profile_pic);
+
 	var tmp_path         = profile_pic.path;
 	var tmp_hive_path    = profile_pic_hive.path;
 
@@ -197,7 +201,9 @@ router.post('/setprofilepic', multipartMiddleware, function(req, res){
 				});
 			});
 		}else{
-
+			func.response(101,{},function(response){
+				res.json(response);
+			});
 		}
 	});
 });
