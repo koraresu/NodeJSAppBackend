@@ -14,8 +14,8 @@ var company    = require('./routes/company');
 var skills     = require('./routes/skills');
 var experience = require('./routes/experience');
 var network    = require('./routes/network');
+var search     = require('./routes/search');
 
-//var admin = require('./routes/admin');
 
 var app = express();
 
@@ -46,6 +46,7 @@ app.use('/api/skills', skills);
 
 app.use('/api/company', company);
 app.use('/api/experience', experience);
+app.use('/api/search', search);
 //app.use('/admin', admin);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
