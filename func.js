@@ -87,9 +87,10 @@ exports.tokenToProfile = function(guid, callback){
 }
 exports.searchProfile = function(text, callback){
 	Profile.find({
-		skills:{
-			name: "PHP"
-		}
+		"$or":[
+			{ first_name: text },
+			{ last_name: text }
+		]
 	}).exec(function(err, ProfileData){
 		if(!err && ProfileData){
 			callback(true, ProfileData);
@@ -338,6 +339,9 @@ exports.tokenExist = function(guid, callback){
 		}
 		
 	});
+}
+exports.isFriend = function(guid, profile, callback){
+	
 }
 
 function profile_serch(profile){

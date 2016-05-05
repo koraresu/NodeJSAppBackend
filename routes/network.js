@@ -16,40 +16,45 @@ var Network         = require('../models/network');
 router.post('/connect', multipartMiddleware, function(req, res){
 	var guid       = req.body.guid;
 	var profile_id = req.body.profile_id;
+
 	func.tokenExist(guid, function(errToken, token){
 		if(errToken){
 			func.tokenToProfile(token.generated_id, function(status, userData, profileData, profileInfoData){
 				func.ProfileId(profile_id, function(errProfileAnotherData,profileAnotherData){
 					var find = {
-						$or: [
-							{
-								"profile_a":{
-									id:[
-										profileData._id,
-										profileAnotherData._id
-									]
-								}
-							},
-							{
-								"profile_b":{
-									id:[
-										profileData._id,
-										profileAnotherData._id
-									]
-								}
-							},
-						]
+						"profiles": {
+							"$all": [profileData._id,profileAnotherData._id],
+						}
 					};
-					Network.find(find, function(errNetwork, networkData){
-						res.json(find);
+					console.log(find);
+					Network.findOne(find, function(errNetwork, networkData){
+						if(!errNetwork && networkData){
+							func.response(200, networkData, function(response){
+								res.json(response);
+							});
+						}else{
+							var network = new Network({
+								accepted: false,
+								profiles: [
+									profileData._id,
+									profileAnotherData._id
+								]
+							});
+							network.save(function(err, networkData){
+								func.response(200, networkData, function(response){
+									res.json(response);
+								});
+							});
+						}
 					});
-					
 				});
 			});
+		}else{
+
 		}
 	});
 });
-router.post('/send', multipartMiddleware, function(req, res){
+router.post('/accept', multipartMiddleware, function(req, res){
 	var guid       = req.body.guid;
 	var profile_id = req.body.profile_id;
 
@@ -58,140 +63,92 @@ router.post('/send', multipartMiddleware, function(req, res){
 			func.tokenToProfile(token.generated_id, function(status, userData, profileData, profileInfoData){
 				func.ProfileId(profile_id, function(errProfileAnotherData,profileAnotherData){
 
-					var friend = Network({
-						accepted: false,
-						profile_a:{
-							id: profileData._id,
-							profile: profileData
-						},
-						profile_b:{
-							id: profileAnotherData._id,
-							profile: profileAnotherData
+
+					var find = {
+						"profiles": {
+							"$all": [profileData._id,profileAnotherData._id],
+						}
+					};
+					Network.findOne(find, function(errNetwork, networkData){
+						if(!errNetwork && networkData){
+							networkData.accepted = true;
+							networkData.save(function(err, network){
+								func.response(200, network, function(response){
+									res.json(response);
+								});
+							});
+						}else{
+							func.response(101, {}, function(response){
+								res.json(response);
+							});
 						}
 					});
-					friend.save();
-					res.json(friend);
 				});
 			});
+		}else{
+
 		}
 	});
 });
 router.post('/search', multipartMiddleware, function(req, res){
 	var search = req.body.search;
-	var profile1 = {
-			"_id": "572a3f480f407f8610493f6f",
-			"updatedAt": "2016-04-23T07:12:48.715Z",
-			"createdAt": "2016-04-14T21:57:33.129Z",
-			"first_name": "Rael",
-			"last_name": "Corrales",
-			"user_id": "5710124d2a2823ce06270ace",
-			"__v": 0,
-			"profile_pic": "5710124d2a2823ce06270ad1.jpg",
-			"profile_hive": "5710124d2a2823ce06270ad1_hive.png"
-		};
-	var profile2 = {
-	    "_id" : "571dc1712fed47f924de5010",
-	    "updatedAt" : "2016-04-25T07:06:03.165Z",
-	    "createdAt" : "2016-04-25T07:04:17.385Z",
-	    "first_name" : "Yarull",
-	    "last_name" : "Álvarez",
-	    "user_id" : "571dc1712fed47f924de500d",
-	    "__v" : 0,
-	    "profile_hive" : "571dc1712fed47f924de5010_hive.png",
-	    "profile_pic" : "571dc1712fed47f924de5010.jpg"
-	};
-	var profile3 = {
-	    "_id" : "5727966450e9446d0e8871b8",
-	    "updatedAt" : "2016-05-02T18:03:16.789Z",
-	    "createdAt" : "2016-05-02T18:03:16.789Z",
-	    "first_name" : "guillermo",
-	    "last_name" : "palafox",
-	    "user_id" : "5727966450e9446d0e8871b5",
-	    "__v" : 0
-	};
-	var experience = {
-			"_id": "571e52a82915bc1e05d40571",
-			"updatedAt": "2016-04-25T17:23:52.285Z",
-			"createdAt": "2016-04-25T17:23:52.285Z",
-			"profile_id": "5710124d2a2823ce06270ad1",
-			"type": 1,
-			"sector": {
-				"id": "571e52a82915bc1e05d40570",
-				"name": "Marketing"
-			},
-			"speciality": {
-				"id": "571e52a82915bc1e05d4056f",
-				"name": "FullStack Developer"
-			},
-			"company": {
-				"id": "571e52a82915bc1e05d4056c",
-				"name": "Axovia"
-			},
-			"ocupation": {
-				"id": "571e52a82915bc1e05d4056d",
-				"name": "Web Developer"
-			},
-			"job": {
-				"id": "571e52a82915bc1e05d4056e",
-				"name": "Developer"
-			},
-			"__v": 0
-		};
-	var skills = [{
-			"_id": "5722763de433776d1040497b",
-			"updatedAt": "2016-04-28T20:44:45.236Z",
-			"createdAt": "2016-04-28T20:44:45.236Z",
-			"profile": {
-				"id": "5710124d2a2823ce06270ad1"
-			},
-			"skill": {
-				"id": "572253cba8add8ed0e7327d5",
-				"name": "PHP"
-			},
-			"__v": 0
-		}];
+	var reg  = new RegExp(search, "i");
+	var data = [];
+	func.searchProfile(reg, function(status, profileData){
+		profileData.forEach(function(item, index, array, done) {
+			data.push(item);
 
-	var mi = [
-		{
-			profile: profile1,
-			experience: experience,
-			skills: skills
-		},
-		{
-			profile: profile1,
-			experience: experience,
-			skills: skills
-		}
-	];
-	var vecinas = [
-		{
-			profile: profile2,
-			experience: experience,
-			skills: skills
-		},
-		{
-			profile: profile2,
-			experience: experience,
-			skills: skills
-		}
-	];
-	var otros = [
-		{
-			profile: profile3,
-			experience: experience,
-			skills: skills
-		},
-		{
-			profile: profile3,
-			experience: experience,
-			skills: skills
-		}
-	];
-
-	var data = {mi: mi, vecinas: vecinas, otros: otros};
-
-	func.response(200, data, function(response){
-		res.json(response);
+			if(index == (profileData.length-1)){
+				func.response(200, data, function(response){
+					res.json(response);
+				})
+			}
+		});
 	});
 });
+router.post('/searchinfriends', multipartMiddleware, function(req, res){
+	var guid       = req.body.guid;
+	var search     = req.body.search;
+	var order      = req.body.order;
+
+
+	var friends = [];
+	func.tokenExist(guid, function(errToken, token){
+		if(errToken){
+			func.tokenToProfile(token.generated_id, function(status, userData, profileData, profileInfoData){
+				Network.find({
+					"profiles": {
+						"$in": [profileData._id]
+					}
+				}, function(errNetwork, networkData){
+					if(!errNetwork && networkData){
+
+						networkData.forEach(function(friendData, index){
+							var profile_id;
+							if(friendData.profiles[0] == profileData._id){
+								friends.push( friendData.profiles[1] );
+							}else{
+								friends.push( friendData.profiles[0] );
+							}
+
+							if(index == (networkData.length-1)){
+								friends.forEach(function(friend,indexFriend){
+
+								});
+								res.json(friends);
+
+							}
+						});
+						
+					}else{
+						res.send("No existe");
+					}
+				});
+			});
+		}else{
+
+		}
+	});
+});
+
 module.exports = router;

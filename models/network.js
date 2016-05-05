@@ -6,14 +6,7 @@ var mongoose   = require('mongoose'),
 
 var NetworkSchema = new Schema({
 	accepted: Boolean,
-	profile_a:{
-		id: { type: Schema.Types.ObjectId, ref: 'Profile' },
-		profile: { type: Schema.Types.Mixed }
-	},
-	profile_b:{
-		id: { type: Schema.Types.ObjectId, ref: 'Profile' },
-		profile: { type: Schema.Types.Mixed }
-	}
+	profiles: [{ type: Schema.Types.ObjectId, ref: 'Profile' }]
 },{
   timestamps: true
 });
