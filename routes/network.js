@@ -133,7 +133,7 @@ router.post('/searchinfriends', multipartMiddleware, function(req, res){
 
 							if(index == (networkData.length-1)){
 								friends.forEach(function(friend,indexFriend){
-
+									
 								});
 								res.json(friends);
 
