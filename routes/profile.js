@@ -84,6 +84,7 @@ router.post('/create', multipartMiddleware, function(req, res){
 	},{
 		first_name: nombre,
 		last_name: apellido,
+		nacimiento: null
 	}, function(exist, tokenData){
 		if(exist){
 			func.response(112,{}, function(response){
@@ -132,10 +133,38 @@ router.post('/get', multipartMiddleware, function(req, res){
 router.post('/update', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 
-	var nombre    = req.body.nombre;
-	var apellido  = req.body.apellido;
-	var phone     = req.body.phone;
+	var nombre    = req.body.first_name;
+	var apellido  = req.body.last_name;
 
+	var company    = req.body.company;
+	var job        = req.body.job;
+	var speciality = req.body.speciality;
+	var sector     = req.body.sector;
+	var ocupation  = req.body.ocupation;
+
+	var birthday   = req.body.birthday;
+
+	console.log(nombre)
+	console.log(apellido)
+	console.log(company)
+	console.log(job)
+	console.log(speciality)
+	console.log(sector)
+	console.log(ocupation)
+	console.log(birthday)
+	func.tokenExist(guid, function(status, tokenData){
+		if(status){
+			func.tokenToProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
+				Experience.findOne({ profile_id: tokenData._id }, function(err, experienceData){
+					ex
+				});
+			});
+		}else{
+			func.response(101, {}, function(response){
+				res.json(response);
+			})
+		}
+	});
 	res.send("Update");
 });
 router.post('/verify', multipartMiddleware, function(req, res){

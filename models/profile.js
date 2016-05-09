@@ -16,6 +16,7 @@ var profileSchema = new Schema({
   qrcode: { type: String },
   status: { type: Number},
   user_id: { type: Schema.Types.ObjectId, ref: 'users' },
+  nacimeinto: { type: Date },
   lang: String,
   experiences: [{
     tipo: Number,
