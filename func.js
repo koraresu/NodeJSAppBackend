@@ -50,6 +50,9 @@ exports.response = function(type,item, callback){
 		break;
 	}
 }
+exports.searchFriends = function(profile_id, text, callback){
+	
+}
 exports.saveImage = function(file, new_path, callback){
 	var tmp_path         = file.path;
 	var extension = path.extname(tmp_path);

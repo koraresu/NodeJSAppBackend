@@ -12,6 +12,11 @@ var mongoose    = require('mongoose');
 		Toda las variables de modelo se nombrara, con el nombre del archivo, eliminando _ 
 		y cambiando la siguiente letras al _ por mayuscula. Iniciando la primera letra en mayuscula.
 */
+
+var Profilefunc = require('../functions/profilefunc');
+var Experiencefunc = require('../functions/experiencefunc');
+
+
 var Profile     = require('../models/profile');
 var User        = require('../models/user');
 var Token       = require('../models/token');
@@ -136,6 +141,7 @@ router.post('/update', multipartMiddleware, function(req, res){
 	var nombre    = req.body.first_name;
 	var apellido  = req.body.last_name;
 
+	var type       = req.body.type;
 	var company    = req.body.company;
 	var job        = req.body.job;
 	var speciality = req.body.speciality;
@@ -144,20 +150,25 @@ router.post('/update', multipartMiddleware, function(req, res){
 
 	var birthday   = req.body.birthday;
 
-	console.log(nombre)
-	console.log(apellido)
-	console.log(company)
-	console.log(job)
-	console.log(speciality)
-	console.log(sector)
-	console.log(ocupation)
-	console.log(birthday)
+	var profile_pic_hive = req.files.profilepic_hive;
+
+
 	func.tokenExist(guid, function(status, tokenData){
 		if(status){
-			func.tokenToProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
-				Experience.findOne({ profile_id: tokenData._id }, function(err, experienceData){
-					ex
-				});
+			Profilefunc.tokenToProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
+				console.log(status);
+				console.log(profileData);
+				Profilefunc.update(profileData._id, nombre, apellido, birthday, function(statusProfile, profileData){
+					Experiencefunc.update(profileData._id, type,  company, job, speciality, sector, ocupation, function(statusExperience, experienceData){
+							console.log(profileData.experinces[0]);
+							profileData.experinces[0].push(experienceData);
+							profileData.save(function(err, profileData){
+								res.json(profileData);	
+							});
+					});
+
+					
+				});	
 			});
 		}else{
 			func.response(101, {}, function(response){
@@ -165,7 +176,7 @@ router.post('/update', multipartMiddleware, function(req, res){
 			})
 		}
 	});
-	res.send("Update");
+	//res.send("Update");
 });
 router.post('/verify', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
