@@ -28,7 +28,12 @@ exports.insert           = function(){
 exports.update           = function(profile_id, first_name, last_name, birthday, callback){
 	Profile.findOne({ _id: profile_id}, function(err, profileData){
 		var split = birthday.split("/");
-		var datebirth = Date(split[2],split[1],split[0],0,0,0,0);
+		var day = split[0];
+		var month = split[1];
+		//month = month-1;
+		var year = split[2];
+
+		var datebirth = new Date(year,month,day);
 
 		profileData.first_name = first_name;
 		profileData.last_name  = last_name;
@@ -49,7 +54,7 @@ exports.updateProfilePic = function(profile_id, file, callback){
 
 	Generalfunc.saveImage(file, new_path, function(){
 		Profile.findOne({ _id: profile_id}, function(err, profileData){
-			
+
 			profileData.profile_pic  = file_pic;
 			profileData.save(function(err, profileData){
 				callback(err,profileData);
