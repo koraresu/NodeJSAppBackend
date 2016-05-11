@@ -41,3 +41,13 @@ exports.tokenToProfile = function(guid, callback){
 		}
 	});
 }
+exports.exist = function(guid, callback){
+	Token.findOne({ generated_id: guid}, function(errToken, token){
+		if(!errToken && token){
+			callback(true, token);
+		}else{
+			callback(false, null);
+		}
+		
+	});
+}

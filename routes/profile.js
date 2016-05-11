@@ -15,6 +15,8 @@ var mongoose    = require('mongoose');
 
 var Profilefunc = require('../functions/profilefunc');
 var Experiencefunc = require('../functions/experiencefunc');
+var Tokenfunc = require('../functions/tokenfunc');
+var Skillfunc = require('../functions/skillfunc');
 
 
 var Profile     = require('../models/profile');
@@ -40,7 +42,6 @@ router.post('/login', multipartMiddleware, function(req, res){
 		console.log(profileData);
 		func.experienceGet(profileData._id, function(statusExperience, experiences){
 			var exp = statusExperience;
-
 			if(status){
 				var verified = false;
 
@@ -107,7 +108,7 @@ router.post('/create', multipartMiddleware, function(req, res){
 });
 router.post('/get', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
-	func.tokenExist(guid, function(status, tokenData){
+	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
 			func.tokenToProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
 				if(status){
@@ -153,7 +154,7 @@ router.post('/update', multipartMiddleware, function(req, res){
 	var profile_pic_hive = req.files.profilepic_hive;
 
 
-	func.tokenExist(guid, function(status, tokenData){
+	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
 			Profilefunc.tokenToProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
 				Profilefunc.update(profileData._id, nombre, apellido, birthday, function(statusProfile, profileData){
@@ -192,9 +193,47 @@ router.post('/update', multipartMiddleware, function(req, res){
 		}
 	});
 });
+router.post('/deleteskill', multipartMiddleware, function(req, res){
+	var guid             = req.body.guid;
+	var name             = req.body.name;
+
+	Tokenfunc.exist(guid, function(status, tokenData){
+		if(status){
+			Profilefunc.tokenToProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
+				Skillfunc.delete(profileData._id, name, function(err, profileData){
+					res.json(profileData);
+				});
+			});
+		}else{
+			func.response(101, {}, function(response){
+				res.json(response);
+			})
+		}
+		
+	});	
+});
+router.post('/addskill', multipartMiddleware, function(req, res){
+	var guid             = req.body.guid;
+	var name             = req.body.name;
+
+	Tokenfunc.exist(guid, function(status, tokenData){
+		if(status){
+			Profilefunc.tokenToProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
+				Skillfunc.add(profileData, name, function(status, skillData, profileData){
+					res.json(profileData);
+				});
+			});
+		}else{
+			func.response(101, {}, function(response){
+				res.json(response);
+			})
+		}
+		
+	});
+});
 router.post('/verify', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
-	func.tokenExist(guid, function(status, tokenData){
+	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
 			func.tokenToProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
 				var verified = false;
@@ -226,7 +265,7 @@ router.post('/setprofilepic', multipartMiddleware, function(req, res){
 	var tmp_path         = profile_pic.path;
 	var tmp_hive_path    = profile_pic_hive.path;
 
-	func.tokenExist(guid, function(status, tokenData){
+	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
 			func.tokenToProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
 				var extension       = path.extname(tmp_path);
