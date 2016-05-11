@@ -156,18 +156,33 @@ router.post('/update', multipartMiddleware, function(req, res){
 	func.tokenExist(guid, function(status, tokenData){
 		if(status){
 			Profilefunc.tokenToProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
-				console.log(status);
-				console.log(profileData);
 				Profilefunc.update(profileData._id, nombre, apellido, birthday, function(statusProfile, profileData){
 					Experiencefunc.update(profileData._id, type,  company, job, speciality, sector, ocupation, function(statusExperience, experienceData){
-							console.log(profileData.experinces[0]);
-							profileData.experinces[0].push(experienceData);
+							
+							if(typeof profileData.experiences[0] == "undefined"){
+								profileData.experiences = [{}];
+
+								profileData.experiences[0].job_name        = experienceData.job.name;
+								profileData.experiences[0].ocupation_name  = experienceData.ocupation.name;
+								profileData.experiences[0].company_name    = experienceData.company.name;
+								profileData.experiences[0].speciality_name = experienceData.speciality.name;
+								profileData.experiences[0].sector_name     = experienceData.sector.name;
+								profileData.experiences[0].tipo            = experienceData.type;
+							}else{
+								if(profileData.experiences[0] == null){
+									profileData.experiences[0] = {};
+								}
+								profileData.experiences[0].job_name        = experienceData.job.name;
+								profileData.experiences[0].ocupation_name  = experienceData.ocupation.name;
+								profileData.experiences[0].company_name    = experienceData.company.name;
+								profileData.experiences[0].speciality_name = experienceData.speciality.name;
+								profileData.experiences[0].sector_name     = experienceData.sector.name;
+								profileData.experiences[0].tipo            = experienceData.type;
+							}
 							profileData.save(function(err, profileData){
 								res.json(profileData);	
 							});
 					});
-
-					
 				});	
 			});
 		}else{
@@ -176,7 +191,6 @@ router.post('/update', multipartMiddleware, function(req, res){
 			})
 		}
 	});
-	//res.send("Update");
 });
 router.post('/verify', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
