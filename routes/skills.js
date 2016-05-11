@@ -29,7 +29,7 @@ router.post('/add', multipartMiddleware, function(req, res){
 	var guid             = req.body.guid;
 	var name             = req.body.name;
 
-	func.tokenToProfile(guid, function(status, userData, profileData, profileInfoData){
+	Tokenfunc.toProfile(guid, function(status, userData, profileData, profileInfoData){
 		switch(status){
 			case 200:
 				func.skillAddProfile(name, profileData._id, function(status, skillData, profileData){

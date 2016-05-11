@@ -110,7 +110,7 @@ router.post('/get', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
-			func.tokenToProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
+			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
 				if(status){
 					func.experienceGet(profileData._id, function(statusExperience, experiencesData){
 						var data = {
@@ -156,7 +156,7 @@ router.post('/update', multipartMiddleware, function(req, res){
 
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
-			Profilefunc.tokenToProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
+			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
 				Profilefunc.update(profileData._id, nombre, apellido, birthday, function(statusProfile, profileData){
 					Experiencefunc.update(profileData._id, type,  company, job, speciality, sector, ocupation, function(statusExperience, experienceData){
 							
@@ -199,9 +199,11 @@ router.post('/deleteskill', multipartMiddleware, function(req, res){
 
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
-			Profilefunc.tokenToProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
+			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
 				Skillfunc.delete(profileData._id, name, function(err, profileData){
-					res.json(profileData);
+					func.response(200, profileData, function(response){
+						res.json(response);
+					});
 				});
 			});
 		}else{
@@ -218,9 +220,11 @@ router.post('/addskill', multipartMiddleware, function(req, res){
 
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
-			Profilefunc.tokenToProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
+			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
 				Skillfunc.add(profileData, name, function(status, skillData, profileData){
-					res.json(profileData);
+					func.response(200, profileData, function(response){
+						res.json(response);	
+					});
 				});
 			});
 		}else{
@@ -235,7 +239,7 @@ router.post('/verify', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
-			func.tokenToProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
+			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
 				var verified = false;
 
 				if(userData.verified){
@@ -256,41 +260,15 @@ router.post('/verify', multipartMiddleware, function(req, res){
 });
 router.post('/setprofilepic', multipartMiddleware, function(req, res){
 	var guid             = req.body.guid;
-	var profile_pic      = req.files.profilepic;
-	var profile_pic_hive = req.files.profilepic_hive;
-
-	console.log(profile_pic);
-	console.log(profile_pic);
-
-	var tmp_path         = profile_pic.path;
-	var tmp_hive_path    = profile_pic_hive.path;
+	var profilepic      = req.files.profilepic;
+	var tmp_path         = profilepic.path;
 
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
-			func.tokenToProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
-				var extension       = path.extname(tmp_path);
-				var extension_hive  = path.extname(tmp_hive_path);
-				var file_pic        = profileData._id + extension;
-				var file_hivepic    = profileData._id + "_hive" + extension_hive;
-				var new_path        = path.dirname(path.dirname(process.mainModule.filename)) + '/public/profilepic/' + file_pic;
-				var new_hive_path   = path.dirname(path.dirname(process.mainModule.filename)) + '/public/profilepic/' + file_hivepic;
+			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
 
-				var path_image      = req.get('host') + '/profilepic/' + file_pic;
-				var path_image_hive = req.get('host') + '/profilepic/' + file_hivepic;
-
-				func.saveImage(profile_pic, new_path, function(){
-					func.saveImage(profile_pic_hive, new_hive_path, function(){
-
-						profileData.profile_pic  = file_pic;
-						profileData.profile_hive = file_hivepic;
-						profileData.save();
-						func.response(200, {
-							profilepic: path_image,
-							profilepic_hive: path_image_hive
-						},function(response){
-							res.json(response);
-						});
-					});
+				Profilefunc.updateProfilePic(profileData._id, profilepic, function(err, profileData){
+					res.json(profileData);
 				});
 			});
 		}else{

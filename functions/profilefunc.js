@@ -3,6 +3,8 @@ var mongoose    = require('mongoose');
 var path = require('path');
 var fs = require('fs');
 
+var Generalfunc = require('./generalfunc');
+
 var Token              = require('../models/token');
 var User               = require('../models/user');
 var Job                = require('../models/job');
@@ -41,7 +43,20 @@ exports.update           = function(profile_id, first_name, last_name, birthday,
 	});
 }
 exports.updateProfilePic = function(profile_id, file, callback){
+	var extension       = path.extname(file.path);
+	var file_pic        = profile_id + extension;
+	var new_path   = path.dirname(path.dirname(process.mainModule.filename)) + '/public/profilepic/' + file_pic;
 
+	Generalfunc.saveImage(file, new_path, function(){
+		Profile.findOne({ _id: profile_id}, function(err, profileData){
+			
+			profileData.profile_pic  = file_pic;
+			profileData.save(function(err, profileData){
+				callback(err,profileData);
+			});
+		});
+	});
+	
 }
 exports.updateSkills     = function(profile_id, callback){
 

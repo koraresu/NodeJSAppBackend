@@ -17,9 +17,9 @@ router.post('/connect', multipartMiddleware, function(req, res){
 	var guid       = req.body.guid;
 	var profile_id = req.body.profile_id;
 
-	func.tokenExist(guid, function(errToken, token){
+	Tokenfunc.exist(guid, function(errToken, token){
 		if(errToken){
-			func.tokenToProfile(token.generated_id, function(status, userData, profileData, profileInfoData){
+			Tokenfunc.toProfile(token.generated_id, function(status, userData, profileData, profileInfoData){
 				func.ProfileId(profile_id, function(errProfileAnotherData,profileAnotherData){
 					var find = {
 						"profiles": {
@@ -58,9 +58,9 @@ router.post('/accept', multipartMiddleware, function(req, res){
 	var guid       = req.body.guid;
 	var profile_id = req.body.profile_id;
 
-	func.tokenExist(guid, function(errToken, token){
+	Tokenfunc.exist(guid, function(errToken, token){
 		if(errToken){
-			func.tokenToProfile(token.generated_id, function(status, userData, profileData, profileInfoData){
+			Tokenfunc.toProfile(token.generated_id, function(status, userData, profileData, profileInfoData){
 				func.ProfileId(profile_id, function(errProfileAnotherData,profileAnotherData){
 
 
@@ -113,9 +113,9 @@ router.post('/searchinfriends', multipartMiddleware, function(req, res){
 
 
 	var friends = [];
-	func.tokenExist(guid, function(errToken, token){
+	Tokenfunc.exist(guid, function(errToken, token){
 		if(errToken){
-			func.tokenToProfile(token.generated_id, function(status, userData, profileData, profileInfoData){
+			Tokenfunc.toProfile(token.generated_id, function(status, userData, profileData, profileInfoData){
 				Network.find({
 					"profiles": {
 						"$in": [profileData._id]

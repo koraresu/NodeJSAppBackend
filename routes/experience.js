@@ -21,13 +21,13 @@ router.post('/create', multipartMiddleware, function(req, res){
 	var speciality = req.body.speciality;
 	var sector     = req.body.sector;
 	var ocupation  = req.body.ocupation;
-	func.tokenExist(guid, function(errToken, token){
+	Tokenfunc.exist(guid, function(errToken, token){
 		if(errToken){
-			func.tokenToProfile(token.generated_id, function(status, userData, profileData, profileInfoData){
+			Tokenfunc.toProfile(token.generated_id, function(status, userData, profileData, profileInfoData){
 				if(type == 0){
 					
 
-					func.tokenToProfile(token.generated_id, function(status, userData, profileData, profileInfoData){
+					//Tokenfunc.toProfile(token.generated_id, function(status, userData, profileData, profileInfoData){//Revisar
 						func.jobExistsOrCreate({
 							name: job,
 						},{
@@ -57,7 +57,7 @@ router.post('/create', multipartMiddleware, function(req, res){
 								});
 							});
 						});
-					});
+					//});
 				}else{
 					func.companyExistsOrCreate({
 						name: company
@@ -135,9 +135,9 @@ router.post('/create', multipartMiddleware, function(req, res){
 });
 router.post('/get', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
-	func.tokenExist(guid, function(status, token){
+	Tokenfunc.exist(guid, function(status, token){
 		if(status){
-			func.tokenToProfile(guid, function(status, userData, profileData, profileInfoData){
+			Tokenfunc.toProfile(guid, function(status, userData, profileData, profileInfoData){
 				if(status == 200){
 					func.experienceGet(profileData._id, function(err, experiences){
 						console.log(experiences);
@@ -163,7 +163,7 @@ router.post('/job/create', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 	var name      = req.body.name;
 
-	func.tokenExist(guid, function(status, token){
+	Tokenfunc.exist(guid, function(status, token){
 		if(status){	
 			func.jobExistsOrCreate ({
 				name: name,
@@ -185,7 +185,7 @@ router.post('/speciality/create', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 	var name      = req.body.name;
 
-	func.tokenExist(guid, function(status, token){
+	Tokenfunc.exist(guid, function(status, token){
 		if(status){	
 			func.specialityExistsOrCreate ({
 				name: name,
@@ -206,7 +206,7 @@ router.post('/speciality/create', multipartMiddleware, function(req, res){
 router.post('/job/get', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 	var name      = req.body.name;
-	func.tokenExist(guid, function(status, token){
+	Tokenfunc.exist(guid, function(status, token){
 		if(status){
 			func.experienceJobGet(name, function(err, jobData){
 				console.log(jobData);
@@ -224,7 +224,7 @@ router.post('/job/get', multipartMiddleware, function(req, res){
 router.post('/speciality/get', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 	var name      = req.body.name;
-	func.tokenExist(guid, function(status, token){
+	Tokenfunc.exist(guid, function(status, token){
 		if(status){
 			func.experienceSpecialityGet(name, function(err, specialityData){
 				console.log(specialityData);
@@ -243,7 +243,7 @@ router.post('/sector/create', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 	var name      = req.body.name;
 
-	func.tokenExist(guid, function(status, token){
+	Tokenfunc.exist(guid, function(status, token){
 		if(status){	
 			func.sectorExistsOrCreate ({
 				name: name,
@@ -264,7 +264,7 @@ router.post('/sector/create', multipartMiddleware, function(req, res){
 router.post('/sector/get', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 	var name      = req.body.name;
-	func.tokenExist(guid, function(status, token){
+	Tokenfunc.exist(guid, function(status, token){
 		if(status){
 			func.sectorGet(name, function(err, jobData){
 				console.log(jobData);
@@ -283,7 +283,7 @@ router.post('/sector/get', multipartMiddleware, function(req, res){
 router.post('/company/create', multipartMiddleware, function(req, res){
 		var guid      = req.body.guid;
 	var name      = req.body.name;
-	func.tokenExist(guid, function(status, token){
+	Tokenfunc.exist(guid, function(status, token){
 		if(status){
 			func.companyExistsOrCreate({
 				name: name
@@ -304,7 +304,7 @@ router.post('/company/create', multipartMiddleware, function(req, res){
 router.post('/company/get', multipartMiddleware, function(req, res){
 		var guid      = req.body.guid;
 	var name      = req.body.name;
-	func.tokenExist(guid, function(status, token){
+	Tokenfunc.exist(guid, function(status, token){
 		if(status){
 			func.companyGet(name, function(err, companyData){
 				console.log(companyData);

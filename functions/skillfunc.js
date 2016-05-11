@@ -18,21 +18,25 @@ var add = function(profile_id, name, callback){
 	Skill.findOne({ name: name}, function(err, skillData){
 		if(!err && skillData){
 			Profile.findOne({ _id: profile_id }, function(errProfile, profileData){
-					
+				var data = {
+					name: skillData.name,
+					id: skillData._id
+				};
+				var insertar = true;
+				profileData.skills.forEach(function(item, index){
 
-				Profile.findOne({ _id: profile_id }, function(errProfile, profileData){
-					var data = {
-						name: skillData.name,
-						id: skillData._id
-					};
-					console.log(data);
-					profileData.skills.push(data);
-					
-					profileData.save(function(err, profileData){
-						callback(true, skill, profileData);
-					});
+					if(item.name == name){
+						insertar = false;
+					}
+					if(index == (profileData.skills.length-1)){
+						if(insertar){
+							profileData.skills.push(data);
+						}
+						profileData.save(function(err, profileData){
+							callback(true, skill, profileData);
+						});
+					}
 				});
-
 			});
 		}else{
 			var skill = new Skill({
@@ -44,11 +48,20 @@ var add = function(profile_id, name, callback){
 						name: skillData.name,
 						id: skillData._id
 					};
-					console.log(data);
-					profileData.skills.push(data);
-					
-					profileData.save(function(err, profileData){
-						callback(false, skill, profileData);
+					var insertar = true;
+					profileData.skills.forEach(function(item, index){
+
+						if(item.name == name){
+							insertar = false;
+						}
+						if(index == (profileData.skills.length-1)){
+							if(insertar){
+								profileData.skills.push(data);
+							}
+							profileData.save(function(err, profileData){
+								callback(true, skill, profileData);
+							});
+						}
 					});
 				});
 			});

@@ -15,7 +15,7 @@ var Experience         = require('../models/experience');
 var Skill              = require('../models/skills');
 
 
-exports.tokenToProfile = function(guid, callback){
+exports.toProfile = function(guid, callback){
 	Token.findOne({ generated_id: guid}).exec(function(errToken, token){
 		if(!errToken && token){
 			User.findOne({ _id: token.user_id }, function(errUser, user){
