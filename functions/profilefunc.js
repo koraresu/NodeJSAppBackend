@@ -27,11 +27,15 @@ exports.insert           = function(){
 }
 exports.update           = function(profile_id, first_name, last_name, birthday, callback){
 	Profile.findOne({ _id: profile_id}, function(err, profileData){
-		var split = birthday.split("/");
-		var day = split[0];
+		var split = birthday.split("-");
+		var day = split[2];
 		var month = split[1];
-		//month = month-1;
-		var year = split[2];
+		month = month-1;
+		var year = split[0];
+
+		console.log(day)
+		console.log(month)
+		console.log(year)
 
 		var datebirth = new Date(year,month,day);
 

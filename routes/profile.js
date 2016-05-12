@@ -151,8 +151,6 @@ router.post('/update', multipartMiddleware, function(req, res){
 
 	var birthday   = req.body.birthday;
 
-	var profile_pic_hive = req.files.profilepic_hive;
-
 
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){

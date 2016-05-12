@@ -61,7 +61,7 @@ var update =  function(profile_id, type, company, job, speciality, sector, ocupa
 						}, function(status, sectorData){
 							var data = {
 								profile_id: experienceData.profile_id,
-								type: type,
+								type: experienceData.type,
 								ocupation: {
 									id:   ocupationData._id,
 									name: ocupationData.name
@@ -79,8 +79,8 @@ var update =  function(profile_id, type, company, job, speciality, sector, ocupa
 									name: companyData.name
 								},
 								sector: {
-									id: sectorData._id,
-									name: sectorData.name
+									id: experienceData._id,
+									name: experienceData.name
 								}
 							};
 
