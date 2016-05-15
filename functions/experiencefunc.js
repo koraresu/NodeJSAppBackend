@@ -107,21 +107,10 @@ var update =  function(profile_id, type, company, job, speciality, sector, ocupa
 	});
 }
 exports.update           = update
-var jobExistsOrCreate = function(search, insert, callback){
-	jobExistsOrCreate(search, insert, callback);
-}
+
 exports.jobExistsOrCreate = jobExistsOrCreate
-var companyExistsOrCreate = function(search, insert, callback){
-	companyExistsOrCreate(search, insert, callback);
-}
 exports.companyExistsOrCreate = companyExistsOrCreate
-var sectorExistsOrCreate = function(search, insert, callback){
-	sectorExistsOrCreate(search, insert, callback);
-}
 exports.sectorExistsOrCreate = sectorExistsOrCreate;
-var specialityExistsOrCreate = function(search, insert, callback){
-	specialityExistsOrCreate(search, insert, callback);
-}
 exports.specialityExistsOrCreate = specialityExistsOrCreate;
 
 function companyExistsOrCreate(search, insert, callback){
