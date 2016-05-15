@@ -107,12 +107,6 @@ var update =  function(profile_id, type, company, job, speciality, sector, ocupa
 	});
 }
 exports.update           = update
-
-exports.jobExistsOrCreate = jobExistsOrCreate
-exports.companyExistsOrCreate = companyExistsOrCreate
-exports.sectorExistsOrCreate = sectorExistsOrCreate;
-exports.specialityExistsOrCreate = specialityExistsOrCreate;
-
 function companyExistsOrCreate(search, insert, callback){
 	Company.findOne(search, function(err, company){
 		if(!err && company){
@@ -180,3 +174,8 @@ function experienceExists(search, callback){
 		}
 	});
 }
+
+exports.jobExistsOrCreate = jobExistsOrCreate
+exports.companyExistsOrCreate = companyExistsOrCreate
+exports.sectorExistsOrCreate = sectorExistsOrCreate;
+exports.specialityExistsOrCreate = specialityExistsOrCreate;
