@@ -72,18 +72,18 @@ router.post('/create', multipartMiddleware, function(req, res){
 						},{
 							name: ocupation
 						}, function(status, ocupationData){
-							jobExistsOrCreate({
+							Experiencefunc.jobExistsOrCreate({
 								name: job,
 							},{
 								name: job,
 							},function(status, jobData){
-								specialityExistsOrCreate({
+								Experiencefunc.specialityExistsOrCreate({
 									name: speciality
 								},{
 									name: speciality
 								}, function(status, specialityData){
 
-									sectorExistsOrCreate({
+									Experiencefunc.sectorExistsOrCreate({
 										name: sector
 									},{
 										name: sector
