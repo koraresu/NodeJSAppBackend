@@ -25,7 +25,7 @@ exports.get              = function(){
 exports.insert           = function(){
 
 }
-exports.update           = function(profile_id, first_name, last_name, birthday, callback){
+exports.update           = function(profile_id, first_name, last_name, birthday, status, callback){
 	Profile.findOne({ _id: profile_id}, function(err, profileData){
 		var split = birthday.split("-");
 		var day = split[2];
@@ -42,6 +42,7 @@ exports.update           = function(profile_id, first_name, last_name, birthday,
 		profileData.first_name = first_name;
 		profileData.last_name  = last_name;
 		profileData.birthday   = datebirth;
+		profileData.status     = status;
 		profileData.save(function(err, profileData){
 			if(!err && profileData){
 				callback(true, profileData);	

@@ -86,7 +86,8 @@ router.post('/create', multipartMiddleware, function(req, res){
 	},{
 		email: email,
 		password: password,
-		verified: false
+		verified: false,
+		status: 1
 	},{
 		first_name: nombre,
 		last_name: apellido,
@@ -141,6 +142,7 @@ router.post('/update', multipartMiddleware, function(req, res){
 
 	var nombre    = req.body.first_name;
 	var apellido  = req.body.last_name;
+	var statusReq = req.body.status;
 
 	var type       = req.body.type;
 	var company    = req.body.company;
@@ -152,10 +154,11 @@ router.post('/update', multipartMiddleware, function(req, res){
 	var birthday   = req.body.birthday;
 
 
+	console.log(statusReq);
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
 			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
-				Profilefunc.update(profileData._id, nombre, apellido, birthday, function(statusProfile, profileData){
+				Profilefunc.update(profileData._id, nombre, apellido, birthday, statusReq, function(statusProfile, profileData){
 					Experiencefunc.update(profileData._id, type,  company, job, speciality, sector, ocupation, function(statusExperience, experienceData){
 							
 							if(typeof profileData.experiences[0] == "undefined"){
