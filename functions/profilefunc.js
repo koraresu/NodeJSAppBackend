@@ -11,7 +11,6 @@ var Job                = require('../models/job');
 var Company            = require('../models/company');
 var Speciality         = require('../models/speciality');
 var Profile            = require('../models/profile');
-var ProfileInfo        = require('../models/profile_info');
 var Sector             = require('../models/sector');
 var Experience         = require('../models/experience');
 var Skill              = require('../models/skills');
@@ -52,6 +51,21 @@ exports.update           = function(profile_id, first_name, last_name, birthday,
 		});
 	});
 }
+exports.addinfo          = function(profile_id, data, callback){
+	Profile.findOne({ _id: profile_id }, function(err, profileData){
+		profileData.info = [];
+		data.forEach(function(item, index){
+			
+			profileData.info.push(item);
+
+			if(index == (data.length-1)){
+				profileData.save(function(err, profileData){
+					callback(profileData);
+				});		
+			}
+		});
+	});
+}
 exports.updateProfilePic = function(profile_id, file, callback){
 	var extension       = path.extname(file.path);
 	var file_pic        = profile_id + extension;
@@ -84,13 +98,9 @@ function tokenToProfile(guid, callback){
 				if(!errUser && user){
 					user['password'] = null;
 					delete user['password'];
-					console.log(user);
 					Profile.findOne({ user_id: user._id }).exec(function(errProfile, profile){
-						console.log()
 						if(!errProfile && profile){
-							ProfileInfo.find({ profile_id: profile._id }, function(errProfileInfo, profileinfo){
-								callback(200,user, profile, profileinfo);
-							});
+							callback(200,user, profile);
 						}else{
 							callback(101);
 						}

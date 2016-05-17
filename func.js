@@ -9,7 +9,6 @@ var Job                = require('./models/job');
 var Company            = require('./models/company');
 var Speciality         = require('./models/speciality');
 var Profile            = require('./models/profile');
-var ProfileInfo        = require('./models/profile_info');
 var Sector             = require('./models/sector');
 var Experience         = require('./models/experience');
 var Skill              = require('./models/skills');

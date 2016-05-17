@@ -10,7 +10,6 @@ var mongoose    = require('mongoose');
 var Profile     = require('../models/profile');
 var User        = require('../models/user');
 var Token       = require('../models/token');
-var ProfileInfo = require('../models/profile_info');
 var Job         = require('../models/job');
 var Company     = require('../models/company');
 var Experience  = require('../models/experience');

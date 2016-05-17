@@ -22,7 +22,6 @@ var Skillfunc = require('../functions/skillfunc');
 var Profile     = require('../models/profile');
 var User        = require('../models/user');
 var Token       = require('../models/token');
-var ProfileInfo = require('../models/profile_info');
 var Job         = require('../models/job');
 var Company     = require('../models/company');
 var Experience  = require('../models/experience');
@@ -104,6 +103,50 @@ router.post('/create', multipartMiddleware, function(req, res){
 			},function(response){
 				res.json( response );
 			} );
+		}
+	});
+});
+router.post('/facebook', multipartMiddleware, function(req, res){
+	var guid = req.body.guid;
+
+	var first_name = req.body.first_name;
+	var last_name  = req.body.last_name;
+	var name       = req.body.name;
+	var picture    = req.body.picture;
+	var email      = req.body.email;
+	Tokenfunc.exist(guid, function(status, tokenData){
+		if(status){
+			console.log("Token");
+			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
+				Profilefunc.addinfo(profileData._id, [
+					{
+						"name": "first_name",
+						"value": first_name
+					},
+					{
+						"name": "last_name",
+						"value": last_name
+					},
+					{
+						"name": "name",
+						"value":name
+					},
+					{
+						"name": "picture",
+						"value": picture
+					},
+					{
+						"name": "email",
+						"value": email
+					}
+				], function(profileInfoData){
+					res.json(profileInfoData);
+				});
+			});
+		}else{
+			func.response(113,{},function(response){
+				res.json(response);
+			});
 		}
 	});
 });
