@@ -9,8 +9,8 @@ var reviewSchema = new Schema({
 	title:      String,
 	content:    String,
 	rate:       Number, 
-	de_id:      { type: Schema.Types.ObjectId, ref: 'profiles' },
-	profile_id: { type: Schema.Types.ObjectId, ref: 'profiles' },
+	profiles: [{ type: Schema.Types.ObjectId, ref: 'Profile' }]
+	profile_id: { type: Schema.Types.ObjectId, ref: 'Profile' },
 },{
   timestamps: true
 });

@@ -150,5 +150,7 @@ router.post('/searchinfriends', multipartMiddleware, function(req, res){
 		}
 	});
 });
-
+router.post('/review', multipartMiddleware, function(req, res){
+	
+})
 module.exports = router;

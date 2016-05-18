@@ -18,6 +18,13 @@ var Token       = require('../models/token');
 var Job         = require('../models/job');
 var Company     = require('../models/company');
 var Experience  = require('../models/experience');
+
+
+
+var Profilefunc = require('../functions/profilefunc');
+var Experiencefunc = require('../functions/experiencefunc');
+var Tokenfunc = require('../functions/tokenfunc');
+var Skillfunc = require('../functions/skillfunc');
 /*
 Nombre de Objectos de Documentos:
 	Todo dato recibido por FUNC, que sea un documento de mongo, se le colocara como nombre de varible el nombre del modelo,
@@ -31,8 +38,8 @@ router.post('/add', multipartMiddleware, function(req, res){
 	Tokenfunc.toProfile(guid, function(status, userData, profileData, profileInfoData){
 		switch(status){
 			case 200:
-				func.skillAddProfile(name, profileData._id, function(status, skillData, profileData){
-					func.response(200, { skill: skillData, profile: profileData }, function(response){
+				Skillfunc.add(profileData._id,name, function(status, skillData, profileData){
+					func.response(200, profileData , function(response){
 						res.json(response);
 					});
 				});
@@ -48,5 +55,37 @@ router.post('/add', multipartMiddleware, function(req, res){
 	
 	
 });
+router.post('/adds', multipartMiddleware, function(req, res){
+	var guid             = req.body.guid;
+	var skills           = req.body.name;
+
+	var x = skills.split(",");
+	console.log(x);
+
+	Tokenfunc.toProfile(guid, function(status, userData, profileData, profileInfoData){
+		switch(status){
+			case 200:
+
+				x.forEach(function(item, index){
+					console.log(index+"|"+(x.length-1)+"|"+item)
+					Skillfunc.add(profileData._id,item, function(status, skillData, profileData){
+
+						if((x.length-1) == index){
+
+							func.response(200, profileData, function(response){
+								res.json(response);
+							});
+						}
+					});
+				})
+			break;
+			default:
+				func.response(113, {},function(response){
+					res.json(response);
+				});
+			break;
+		}
+	});
+})
 
 module.exports = router;

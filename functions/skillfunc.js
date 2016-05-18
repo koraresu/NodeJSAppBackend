@@ -14,28 +14,34 @@ var Experience         = require('../models/experience');
 var Skill              = require('../models/skills');
 
 var add = function(profile_id, name, callback){
+	console.log(profile_id);
 	Skill.findOne({ name: name}, function(err, skillData){
 		if(!err && skillData){
 			Profile.findOne({ _id: profile_id }, function(errProfile, profileData){
-				var data = {
-					name: skillData.name,
-					id: skillData._id
-				};
-				var insertar = true;
-				profileData.skills.forEach(function(item, index){
+				if(!errProfile && profileData){
+					var data = {
+						name: skillData.name,
+						id: skillData._id
+					};
+					var insertar = true;
+					console.log(profileData);
+					profileData.skills.forEach(function(item, index){
 
-					if(item.name == name){
-						insertar = false;
-					}
-					if(index == (profileData.skills.length-1)){
-						if(insertar){
-							profileData.skills.push(data);
+						if(item.name == name){
+							insertar = false;
 						}
-						profileData.save(function(err, profileData){
-							callback(true, skill, profileData);
-						});
-					}
-				});
+						if(index == (profileData.skills.length-1)){
+							if(insertar){
+								profileData.skills.push(data);
+							}
+							profileData.save(function(err, profileData){
+								callback(true, skill, profileData);
+							});
+						}
+					});
+				}else{
+					console.log("no Profile");
+				}
 			});
 		}else{
 			var skill = new Skill({
@@ -48,6 +54,7 @@ var add = function(profile_id, name, callback){
 						id: skillData._id
 					};
 					var insertar = true;
+					console.log(profileData.skills);
 					profileData.skills.forEach(function(item, index){
 
 						if(item.name == name){

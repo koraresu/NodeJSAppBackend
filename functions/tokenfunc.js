@@ -23,9 +23,9 @@ exports.toProfile = function(guid, callback){
 					delete user['password'];
 					Profile.findOne({ user_id: user._id }).populate('experiences','skills').exec(function(errProfile, profile){
 						if(!errProfile && profile){
-							ProfileInfo.find({ profile_id: profile._id }, function(errProfileInfo, profileinfo){
-								callback(200,user, profile, profileinfo);
-							});
+							//ProfileInfo.find({ profile_id: profile._id }, function(errProfileInfo, profileinfo){
+								callback(200,user, profile);
+							//});
 						}else{
 							callback(101);
 						}
