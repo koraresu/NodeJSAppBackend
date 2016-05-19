@@ -9,7 +9,7 @@ var reviewSchema = new Schema({
 	title:      String,
 	content:    String,
 	rate:       Number, 
-	profiles: [{ type: Schema.Types.ObjectId, ref: 'Profile' }]
+	profiles: [{ type: Schema.Types.ObjectId, ref: 'Profile' }],
 	profile_id: { type: Schema.Types.ObjectId, ref: 'Profile' },
 },{
   timestamps: true

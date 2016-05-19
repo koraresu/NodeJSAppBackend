@@ -90,6 +90,7 @@ router.post('/accept', multipartMiddleware, function(req, res){
 		}
 	});
 });
+/*
 router.post('/search', multipartMiddleware, function(req, res){
 	var search = req.body.search;
 	var reg  = new RegExp(search, "i");
@@ -97,13 +98,93 @@ router.post('/search', multipartMiddleware, function(req, res){
 	func.searchProfile(reg, function(status, profileData){
 		profileData.forEach(function(item, index, array, done) {
 			data.push(item);
-
 			if(index == (profileData.length-1)){
-				func.response(200, data, function(response){
+				func.response(200, {"mi": data}, function(response){
 					res.json(response);
 				})
 			}
 		});
+	});
+});
+*/
+router.post('/search', multipartMiddleware, function(req, res){
+	var mi = {
+                "_id": "573230e4b0a0a7421af5ef9f",
+                "updatedAt": "2016-05-18T18:06:51.124Z",
+                "createdAt": "2016-05-10T19:05:08.448Z",
+                "first_name": "Juan Rael",
+                "last_name": "Corrales Arellano",
+                "user_id": "573230e4b0a0a7421af5ef9c",
+                "__v": 40,
+                "birthday": "1980-06-12T06:00:00.000Z",
+                "profile_pic": "573230e4b0a0a7421af5ef9f.png",
+                "status": 1,
+                "info": [
+                    {
+                        "value": "Juan",
+                        "name": "first_name"
+                    },
+                    {
+                        "value": "Corrales",
+                        "name": "last_name"
+                    },
+                    {
+                        "value": "Juan Rael Corrales",
+                        "name": "name"
+                    },
+                    {
+                        "value": "https://scontent.xx.fbcdn.net/v/t1.0-1/p200x200/11813405_10207478275257749_1388270640230694431_n.jpg?oh=7ea3d9f41a819e731b74c78af7c0715d&oe=579F0ED7",
+                        "name": "picture"
+                    },
+                    {
+                        "value": "rkenshin21@gmail.com",
+                        "name": "email"
+                    }
+                ],
+                "skills": [
+                    {
+                        "name": "PHP",
+                        "_id": "57335dc763ae5d8505edd408"
+                    },
+                    {
+                        "name": "php",
+                        "_id": "573caea729becfd519602a76"
+                    },
+                    {
+                        "name": " javascript",
+                        "_id": "573caea729becfd519602a77"
+                    },
+                    {
+                        "name": " it",
+                        "_id": "573caea729becfd519602a78"
+                    }
+                ],
+                "experiences": [
+                    {
+                        "speciality_name": "Fullstack Developer",
+                        "company_name": "Axovia",
+                        "ocupation_name": "Diseño Web",
+                        "job_name": "Developer",
+                        "_id": "57335485a5cbe5540481f2d2"
+                    }
+                ]
+            };
+    var mi_g = [];
+    var vecinas_g = [];
+    var otros_g = [];
+
+    mi_g.push(mi);
+    vecinas_g.push(mi);
+    otros_g.push(mi);
+
+	var data = {};
+	data.mi = mi_g;
+	data.vecinas = vecinas_g;
+	data.otros = otros_g;
+
+	
+	func.response(200, data, function(response){
+		res.json(response)
 	});
 });
 router.post('/searchinfriends', multipartMiddleware, function(req, res){
