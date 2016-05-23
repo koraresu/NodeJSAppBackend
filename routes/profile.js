@@ -90,7 +90,11 @@ router.post('/create', multipartMiddleware, function(req, res){
 	},{
 		first_name: nombre,
 		last_name: apellido,
-		nacimiento: null
+		nacimiento: null,
+		ocupation: {},
+		speciality: {},
+		public_id: mongoose.Types.ObjectId(),
+		experiences: []
 	}, function(exist, tokenData){
 		if(exist){
 			func.response(112,{}, function(response){
@@ -134,7 +138,6 @@ router.post('/facebook', multipartMiddleware, function(req, res){
 	var email      = req.body.email;
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
-			console.log("Token");
 			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
 				Profilefunc.addinfo(profileData._id, [
 					{
@@ -215,36 +218,30 @@ router.post('/update', multipartMiddleware, function(req, res){
 	var birthday   = req.body.birthday;
 
 
-	console.log(statusReq);
+	console.log(ocupation);
+	console.log(sector);
+	console.log(company);
+
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
 			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
 				Profilefunc.update(profileData._id, nombre, apellido, birthday, statusReq, function(statusProfile, profileData){
-					Experiencefunc.update(profileData._id, type,  company, job, speciality, sector, ocupation, function(statusExperience, experienceData){
-							
-							if(typeof profileData.experiences[0] == "undefined"){
-								profileData.experiences = [{}];
+					var data = [];
+					for(var x = 0; x<company.length;x++){
+						data.push({
+							ocupation: ocupation[x],
+							company: company[x],
+							sector: sector[x]
+						});
 
-								profileData.experiences[0].job_name        = experienceData.job.name;
-								profileData.experiences[0].ocupation_name  = experienceData.ocupation.name;
-								profileData.experiences[0].company_name    = experienceData.company.name;
-								profileData.experiences[0].speciality_name = experienceData.speciality.name;
-								profileData.experiences[0].sector_name     = experienceData.sector.name;
-								profileData.experiences[0].tipo            = experienceData.type;
-							}else{
-								if(profileData.experiences[0] == null){
-									profileData.experiences[0] = {};
-								}
-								profileData.experiences[0].job_name        = experienceData.job.name;
-								profileData.experiences[0].ocupation_name  = experienceData.ocupation.name;
-								profileData.experiences[0].company_name    = experienceData.company.name;
-								profileData.experiences[0].speciality_name = experienceData.speciality.name;
-								profileData.experiences[0].sector_name     = experienceData.sector.name;
-								profileData.experiences[0].tipo            = experienceData.type;
-							}
-							profileData.save(function(err, profileData){
-								res.json(profileData);	
+					}
+					
+					Experiencefunc.updates(data, function(statusExperience, experienceData){
+						Profilefunc.findOne({ _id: profileData }, function(errProfile, profileData){
+							func.response(200, { profile: profileData, experience: experienceData }, function(response){
+								res.json(response);
 							});
+						});
 					});
 				});	
 			});

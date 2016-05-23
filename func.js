@@ -104,9 +104,10 @@ exports.userProfileInsertIfDontExists = function(searchUser, userInsert, profile
 			delete user['password'];
 			profileInsert['user_id'] = user._id;
 			var profile = new Profile( profileInsert );
-			profile.save();
-
-			callback( false, token );
+			profile.save(function(err, profileData){
+				Profilefunc.generate_qrcode(profileData);
+				callback( false, token );	
+			});
 		}
 	});
 }
