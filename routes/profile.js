@@ -106,6 +106,24 @@ router.post('/create', multipartMiddleware, function(req, res){
 		}
 	});
 });
+router.post('/qrcode', multipartMiddleware, function(req, res){
+	var guid = req.body.guid;
+
+	Tokenfunc.exist(guid, function(status, tokenData){
+		if(status){
+			console.log("Token");
+			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
+				Profilefunc.generate_qrcode(profileData);
+				res.json({
+					file: '/qrcode/'+profileData._id+'.png',
+					public_id: profileData.public_id
+				});
+			});
+		}else{
+
+		}
+	});
+});
 router.post('/facebook', multipartMiddleware, function(req, res){
 	var guid = req.body.guid;
 

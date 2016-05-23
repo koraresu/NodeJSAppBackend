@@ -5,10 +5,7 @@ var mongoose   = require('mongoose'),
     db              = mongoose.createConnection(db_lnk);
 
 var experienceSchema = new Schema({
-  job: {
-  	id: { type: Schema.Types.ObjectId, ref: 'jobs' },
-  	name: String
-  },
+  
   ocupation: {
     id: { type: Schema.Types.ObjectId, ref: 'jobs' },
     name: String
@@ -18,10 +15,7 @@ var experienceSchema = new Schema({
   	id: { type: Schema.Types.ObjectId, ref: 'companies' },
   	name: String
   },
-  speciality: {
-  	id: { type: Schema.Types.ObjectId, ref: 'specialities' },
-  	name: String
-  },
+  
   sector: {
     id: { type: Schema.Types.ObjectId, ref: 'sectors' },
     name: String

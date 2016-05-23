@@ -3,6 +3,8 @@ var mongoose    = require('mongoose');
 var path = require('path');
 var fs = require('fs');
 
+var qr = require('qr-image');
+
 var Generalfunc = require('./generalfunc');
 
 var Token              = require('../models/token');
@@ -24,6 +26,12 @@ exports.get              = function(){
 exports.insert           = function(){
 
 }
+exports.generate_qrcode  = function(profileData, callback){
+	var qr_svg = qr.image('the-hive:query?'+profileData.public_id, { type: 'png', margin: 0 });
+	qr_svg.pipe(require('fs').createWriteStream('./public/qrcode/'+profileData._id+'.png'));
+
+	var svg_string = qr.imageSync('the-hive:query?'+profileData.public_id, { type: 'png' });
+} 
 exports.update           = function(profile_id, first_name, last_name, birthday, status, callback){
 	Profile.findOne({ _id: profile_id}, function(err, profileData){
 		var split = birthday.split("-");

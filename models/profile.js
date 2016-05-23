@@ -27,7 +27,16 @@ var profileSchema = new Schema({
     sector_name: String
   }],
   skills: [{ name: String }],
-  info: [{ type: Schema.Types.Mixed }]
+  info: [{ type: Schema.Types.Mixed }],
+  public_id: { type: Schema.Types.Mixed },
+  speciality: {
+    id: { type: Schema.Types.ObjectId, ref: 'specialities' },
+    name: String
+  },
+  job: {
+    id: { type: Schema.Types.ObjectId, ref: 'jobs' },
+    name: String
+  }
 },{
   timestamps: true
 });
