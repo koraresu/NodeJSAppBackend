@@ -218,10 +218,6 @@ router.post('/update', multipartMiddleware, function(req, res){
 	var birthday   = req.body.birthday;
 
 
-	console.log(ocupation);
-	console.log(sector);
-	console.log(company);
-
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
 			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
@@ -236,7 +232,7 @@ router.post('/update', multipartMiddleware, function(req, res){
 
 					}
 					
-					Experiencefunc.updates(data, function(statusExperience, experienceData){
+					Experiencefunc.updates(profileData,data, function(statusExperience, experienceData){
 						Profilefunc.findOne({ _id: profileData }, function(errProfile, profileData){
 							func.response(200, { profile: profileData, experience: experienceData }, function(response){
 								res.json(response);
@@ -244,6 +240,69 @@ router.post('/update', multipartMiddleware, function(req, res){
 						});
 					});
 				});	
+			});
+		}else{
+			func.response(101, {}, function(response){
+				res.json(response);
+			})
+		}
+	});
+});
+router.post('/update-experience', multipartMiddleware, function(req, res){
+	var guid      = req.body.guid;
+
+	var nombre    = req.body.first_name;
+	var apellido  = req.body.last_name;
+	var statusReq = req.body.status;
+
+	var type       = req.body.type;
+	var company    = req.body.company;
+	var job        = req.body.job;
+	var speciality = req.body.speciality;
+	var sector     = req.body.sector;
+	var ocupation  = req.body.ocupation;
+
+	var birthday   = req.body.birthday;
+
+	Tokenfunc.exist(guid, function(status, tokenData){
+		if(status){
+			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
+				Profilefunc.update(profileData._id, nombre, apellido, birthday, statusReq, function(statusProfile, profileData){
+					var data = [];
+
+					for(var x = 0; x<company.length;x++){
+						data.push({
+							ocupation: ocupation[x],
+							company: company[x],
+							sector: sector[x]
+						});
+					}
+
+					Experiencefunc.updates(profileData, data, function(statusExperience, experienceData){
+						Profile.findOne({ _id: profileData._id}, function(errProfile, profileData){
+							Experience.find({ profile_id: profileData._id}, function(errExperience, experienceData){
+								var d = [];
+								experienceData.forEach(function(item, index){
+									d.push({
+										ocupation_name: item.ocupation.name,
+										company_name:   item.company.name,
+										sector_name:    item.sector.name
+									});
+								});
+								profileData.experiences = [];
+								profileData.experiences = d;
+
+								profileData.save(function(errProfile, profileData){
+									func.response(200, profileData, function(response){
+										res.json(response);
+									});
+								});
+							});
+						});
+					});
+
+					
+				});
 			});
 		}else{
 			func.response(101, {}, function(response){

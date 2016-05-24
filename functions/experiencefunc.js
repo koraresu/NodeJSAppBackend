@@ -25,7 +25,8 @@ var insert = function(){
 
 }
 exports.insert           = insert
-var updates = function(data, callback){
+var updates = function(profileData,data, callback){
+	var d = [];
 	data.forEach(function(item, index){
 		
 
@@ -39,30 +40,32 @@ var updates = function(data, callback){
 			},{
 				name: item.ocupation
 			}, function(statusOcupation, ocupationData){
-				console.log(companyData);
-				console.log(ocupationData);
+
 				sectorExistsOrCreate({
 					name: item.sector
 				},{
 					name: item.sector
 				}, function(statusSector, sectorData){
-
-					experienceExistsOrCreate({
+					var search = {
 						sector:{
 							name: sectorData.name,
+							id: sectorData._id
 						},
 						company: {
 							name: companyData.name,
+							id: companyData._id
 						},
-						job: {
-							name: ocupationData.name
+						ocupation: {
+							name: ocupationData.name,
+							id: ocupationData._id
+						},
+						profile_id: profileData._id
+					};
+					console.log(search);
+					experienceExistsOrCreate(search,search, function(errExperience, experienceData){
+						if(index == (data.length-1)){
+							callback(true, experienceData);
 						}
-					},{
-						sector: sectorData,
-						company: companyData,
-						job: ocupationData
-					}, function(statusExperience, experienceData){
-						callback(statusExperience, experienceData);
 					});
 				});
 				
@@ -163,11 +166,8 @@ function experienceExistsOrCreate(search, insert, callback){
 					
 					var data = [];
 					Experience.find({ profile_id: profileData._id }, function(errExperience, experienceData){
-						if(typeof profileData.experiences == "undefined"){
+						profileData.experiences = [];
 
-						}else{
-							
-						}
 						experienceData.forEach(function(item, index){
 							data.push({
 								ocupation_name: experience.ocupation.name,
@@ -178,7 +178,7 @@ function experienceExistsOrCreate(search, insert, callback){
 							if(index == (experienceData.length-1)){
 								profileData.experiences = data;
 								profileData.save(function(err, profileData){
-									callback(err,profileData);
+									callback(err,experienceData);
 								});
 							}
 						});

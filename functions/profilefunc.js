@@ -39,11 +39,7 @@ exports.update           = function(profile_id, first_name, last_name, birthday,
 		var month = split[1];
 		month = month-1;
 		var year = split[0];
-
-		console.log(day)
-		console.log(month)
-		console.log(year)
-
+		
 		var datebirth = new Date(year,month,day);
 
 		profileData.first_name = first_name;

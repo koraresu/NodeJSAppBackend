@@ -15,7 +15,6 @@ var experienceSchema = new Schema({
   	id: { type: Schema.Types.ObjectId, ref: 'companies' },
   	name: String
   },
-  
   sector: {
     id: { type: Schema.Types.ObjectId, ref: 'sectors' },
     name: String
