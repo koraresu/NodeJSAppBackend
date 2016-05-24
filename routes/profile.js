@@ -264,6 +264,29 @@ router.post('/update-experience', multipartMiddleware, function(req, res){
 
 	var birthday   = req.body.birthday;
 
+	if(typeof company == "undefined"){
+		company = [];
+	}
+
+	if(typeof req.body.company_uno != "undefined"){
+		company[0] = req.body.company_uno;
+	}
+	if(typeof req.body.company_dos != "undefined"){
+		company[1] = req.body.company_dos;
+	}
+
+	if(typeof req.body.ocupation_uno != "undefined"){
+		ocupation[0] = req.body.ocupation_uno;
+	}
+	if(typeof req.body.ocupation_dos != "undefined"){
+		ocupation[1] = req.body.ocupation_dos;
+	}
+
+
+	console.log(company);
+	console.log(ocupation);
+
+
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
 			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
