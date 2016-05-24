@@ -3,6 +3,7 @@
 
 ###### Editando Perfil 
 > Al entrar a la seccion more, existe una seccion para modificar y agregar un segundo puesto/empresa
+> [Update-Experience](http://localhost:3000/api/profile/update-experience)
 ```
 	guid = 574389ae2346af0a1fb6061e
 	first_name
