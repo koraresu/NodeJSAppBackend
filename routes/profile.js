@@ -267,6 +267,12 @@ router.post('/update-experience', multipartMiddleware, function(req, res){
 	if(typeof company == "undefined"){
 		company = [];
 	}
+	if(typeof ocupation == "undefined"){
+		ocupation = [];
+	}
+	if(typeof sector == "undefined"){
+		sector = [];
+	}
 
 	if(typeof req.body.company_uno != "undefined"){
 		company[0] = req.body.company_uno;
@@ -281,7 +287,12 @@ router.post('/update-experience', multipartMiddleware, function(req, res){
 	if(typeof req.body.ocupation_dos != "undefined"){
 		ocupation[1] = req.body.ocupation_dos;
 	}
-
+	if(typeof req.body.sector_uno != "undefined"){
+		sector[0] = req.body.sector_uno;
+	}
+	if(typeof req.body.sector_dos != "undefined"){
+		sector[1] = req.body.sector_dos;
+	}
 
 	console.log(company);
 	console.log(ocupation);
