@@ -6,6 +6,7 @@ var fs = require('fs');
 var qr = require('qr-image');
 
 var Generalfunc = require('./generalfunc');
+var Experiencefunc = require('./experiencefunc');
 
 var Token              = require('../models/token');
 var User               = require('../models/user');
@@ -32,7 +33,7 @@ exports.generate_qrcode  = function(profileData, callback){
 
 	var svg_string = qr.imageSync('the-hive:query?'+profileData.public_id, { type: 'png' });
 } 
-exports.update           = function(profile_id, first_name, last_name, birthday, status, callback){
+exports.update           = function(profile_id, first_name, last_name, birthday, status,speciality, job, callback){
 	Profile.findOne({ _id: profile_id}, function(err, profileData){
 		var split = birthday.split("-");
 		var day = split[2];
@@ -46,13 +47,39 @@ exports.update           = function(profile_id, first_name, last_name, birthday,
 		profileData.last_name  = last_name;
 		profileData.birthday   = datebirth;
 		profileData.status     = status;
-		profileData.save(function(err, profileData){
-			if(!err && profileData){
-				callback(true, profileData);	
-			}else{
-				callback(false, profileData);
-			}
+
+		Experiencefunc.specialityExistsOrCreate({
+			name: speciality
+		},{
+			name: speciality
+		}, function(status, specialityData){
+			Experiencefunc.jobExistsOrCreate({
+				name: job,
+			},{
+				name: job,
+			},function(status, jobData){
+				console.log("JOBDATA");
+				console.log(jobData);
+				profileData.job = {
+					name: jobData.name,
+					id: jobData._id
+				};
+				profileData.speciality = {
+					name: specialityData.name,
+					id: specialityData._id
+				};
+
+				profileData.save(function(err, profileData){
+					if(!err && profileData){
+						callback(true, profileData);	
+					}else{
+						callback(false, profileData);
+					}
+				});
+			});
 		});
+
+		
 	});
 }
 exports.addinfo          = function(profile_id, data, callback){

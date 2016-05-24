@@ -267,7 +267,7 @@ router.post('/update-experience', multipartMiddleware, function(req, res){
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
 			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
-				Profilefunc.update(profileData._id, nombre, apellido, birthday, statusReq, function(statusProfile, profileData){
+				Profilefunc.update(profileData._id, nombre, apellido, birthday, statusReq, speciality, job,  function(statusProfile, profileData){
 					var data = [];
 
 					for(var x = 0; x<company.length;x++){
