@@ -7,8 +7,8 @@ var mongoose   = require('mongoose'),
 var HistorySchema = new Schema({
   profile_id: { type: Schema.Types.ObjectId, ref: 'Profile' },
   de_id: { type: Schema.Types.ObjectId, ref: 'Profile' },
-  action: String,
-  action_id: { type: Schema.Types.ObjectId }
+  action: String,// 1 = News || 
+  data: { type: Schema.Types.Mixed }
 },{
   timestamps: true
 });
