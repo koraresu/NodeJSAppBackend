@@ -1,6 +1,8 @@
 var express = require('express');
 var func = require('../func');
 
+var mongoose    = require('mongoose');
+
 var router = express.Router();
 
 
@@ -13,8 +15,8 @@ router.get('/', function(req, res, next) {
 });
 router.get('/verification/:id',function(req, res){
 	var id = req.params.id;
-
-	Profile.findOne({ _id: id }, function(errProfile, profile){
+	id = mongoose.Types.ObjectId(id);
+	Profile.findOne({ public_id: id }, function(errProfile, profile){
 		console.log(profile);
 		if(!errProfile && profile){
 			User.findOne( { _id: profile.user_id }, function(err, user){

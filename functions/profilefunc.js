@@ -48,11 +48,24 @@ exports.update           = function(profile_id, first_name, last_name, birthday,
 			var datebirth = new Date(year,month,day);
 		}
 		
+		console.log(first_name);
+		console.log(last_name);
+		console.log(datebirth);
+		console.log(status);
 
-		profileData.first_name = first_name;
-		profileData.last_name  = last_name;
-		profileData.birthday   = datebirth;
-		profileData.status     = status;
+		if(first_name != ""){
+			profileData.first_name = first_name;	
+		}
+		if(last_name != ""){
+			profileData.last_name  = last_name;	
+		}
+		if(datebirth != ""){
+			profileData.birthday   = datebirth;	
+		}
+		if(status != ""){
+			profileData.status     = status;	
+		}
+		
 
 		Experiencefunc.specialityExistsOrCreate({
 			name: speciality
