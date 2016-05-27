@@ -25,22 +25,33 @@ var add = function(profile_id, name, callback){
 					};
 					var insertar = true;
 					console.log(profileData);
-					profileData.skills.forEach(function(item, index){
+					if(profileData.skills.length == 0){
+						if(insertar){
+							profileData.skills.push(data);
+						}
+						profileData.save(function(err, profileData){
+							callback(true, skill, profileData);
+						});
+					}else{
+						profileData.skills.forEach(function(item, index){
 
-						if(item.name == name){
-							insertar = false;
-						}
-						if(index == (profileData.skills.length-1)){
-							if(insertar){
-								profileData.skills.push(data);
+							if(item.name == name){
+								insertar = false;
 							}
-							profileData.save(function(err, profileData){
-								callback(true, skill, profileData);
-							});
-						}
-					});
+							if(index == (profileData.skills.length-1)){
+								if(insertar){
+									profileData.skills.push(data);
+								}
+								profileData.save(function(err, profileData){
+									callback(true, skill, profileData);
+								});
+							}
+						});	
+					}
+					
 				}else{
 					console.log("no Profile");
+					callback(false);
 				}
 			});
 		}else{

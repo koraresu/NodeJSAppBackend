@@ -36,30 +36,34 @@ router.post('/login', multipartMiddleware, function(req, res){
 	var password = req.body.password;
 
 	func.userProfileLogin(email, password, function(status, tokenData, userData, profileData){
-		console.log(tokenData);
-		console.log(userData);
-		console.log(profileData);
-		func.experienceGet(profileData._id, function(statusExperience, experiences){
-			var exp = statusExperience;
-			if(status){
-				var verified = false;
+		console.log(status)
+		if(status){
+			func.experienceGet(profileData._id, function(statusExperience, experiences){
+				var exp = statusExperience;
+				if(status){
+					var verified = false;
 
-				if(userData.verified){
-					verified = true;
+					if(userData.verified){
+						verified = true;
+					}
+					func.response(201,{
+						token: tokenData.generated_id,
+						verified: verified,
+						experiences: exp,
+					}, function(response){
+						res.json(response);
+					});
+				}else{
+					func.reponse(111,{ },function(response){
+						res.json(response);
+					});
 				}
-				func.response(201,{
-					token: tokenData.generated_id,
-					verified: verified,
-					experiences: exp,
-				}, function(response){
-					res.json(response);
-				});
-			}else{
-				func.reponse(111,{ },function(response){
-					res.json(response);
-				});
-			}
-		});
+			});
+		}else{
+			func.response(111, {}, function(response){
+				res.json(response);
+			})
+		}
 	});
 });
 router.post('/friend/get', multipartMiddleware, function(req, res){
@@ -373,10 +377,20 @@ router.post('/addskill', multipartMiddleware, function(req, res){
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
 			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
+				console.log("TokenToProfile");
 				Skillfunc.add(profileData, name, function(status, skillData, profileData){
-					func.response(200, profileData, function(response){
-						res.json(response);	
-					});
+					if(status){
+						console.log("SkillAdd");
+						func.response(200, profileData, function(response){
+							console.log("OK");
+							res.json(response);	
+						});	
+					}else{
+						func.response(404, {}, function(response){
+							res.json(response);
+						});
+					}
+					
 				});
 			});
 		}else{
