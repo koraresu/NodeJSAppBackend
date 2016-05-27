@@ -12,9 +12,12 @@ var Profile            = require('./models/profile');
 var Sector             = require('./models/sector');
 var Experience         = require('./models/experience');
 var Skill              = require('./models/skills');
-//var ExperienceCompany  = require('./models/experience_company');
-//var ExperienceJob      = require('./models/experience_job');
-//var CompanyProfile     = require('./models/company_profile');
+
+
+var Profilefunc = require('./functions/profilefunc');
+var Experiencefunc = require('./functions/experiencefunc');
+var Tokenfunc = require('./functions/tokenfunc');
+var Skillfunc = require('./functions/skillfunc');
 
 /*
 type:

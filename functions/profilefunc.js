@@ -34,14 +34,20 @@ exports.generate_qrcode  = function(profileData, callback){
 	var svg_string = qr.imageSync('the-hive:query?'+profileData.public_id, { type: 'png' });
 } 
 exports.update           = function(profile_id, first_name, last_name, birthday, status,speciality, job, callback){
+	console.log(birthday);
 	Profile.findOne({ _id: profile_id}, function(err, profileData){
-		var split = birthday.split("-");
-		var day = split[2];
-		var month = split[1];
-		month = month-1;
-		var year = split[0];
+		if(typeof birthday == "undefined"){
+			var datebirth = ""
+		}else{
+			var split = birthday.split("-");
+			var day = split[2];
+			var month = split[1];
+			month = month-1;
+			var year = split[0];
+			
+			var datebirth = new Date(year,month,day);
+		}
 		
-		var datebirth = new Date(year,month,day);
 
 		profileData.first_name = first_name;
 		profileData.last_name  = last_name;
