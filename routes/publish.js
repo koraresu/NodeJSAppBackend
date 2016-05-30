@@ -27,6 +27,12 @@ var History     = require('../models/history');
 
 var CompanyModel    = require('../models/company');
 
+/*
+router.post('/', multipartMiddleware, function(req, res){
+	var guid      = req.body.guid;
+
+});
+*/
 router.post('/news', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 	var titulo    = req.body.title;

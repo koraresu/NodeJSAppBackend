@@ -47,6 +47,17 @@ var updates = function(profileData,data, callback){
 					name: item.sector
 				}, function(statusSector, sectorData){
 					var search = {
+						company: {
+							name: companyData.name,
+							id: companyData._id
+						},
+						ocupation: {
+							name: ocupationData.name,
+							id: ocupationData._id
+						},
+						profile_id: profileData._id
+					};
+					var create = {
 						sector:{
 							name: sectorData.name,
 							id: sectorData._id
@@ -62,7 +73,7 @@ var updates = function(profileData,data, callback){
 						profile_id: profileData._id
 					};
 					console.log(search);
-					experienceExistsOrCreate(search,search, function(errExperience, experienceData){
+					experienceExistsOrCreate(search, create, function(errExperience, experienceData){
 						if(index == (data.length-1)){
 							callback(true, experienceData);
 						}
@@ -156,7 +167,11 @@ var update =  function(profile_id, type, company, sector, ocupation, callback){
 }
 exports.update           = update
 function experienceExistsOrCreate(search, insert, callback){
-	Experience.findOne(search, function(err, experience){
+	console.log("SEARCH");
+	console.log(search);
+	console.log("++++++++++++++++");
+	Experience.findOne( search , function(err, experience){
+		
 		if(!err && experience){
 			callback(true,experience);
 		}else{
@@ -185,21 +200,6 @@ function experienceExistsOrCreate(search, insert, callback){
 						
 					});
 				});
-				/*
-				Profile.findOne({ _id: experience.profile_id}, function(errProfile, profileData){
-					profileData.experiences.push({
-						job_name: experience.job.name,
-						ocupation_name: experience.ocupation.name,
-						company_name: experience.company.name,
-						speciality_name: experience.speciality.name,
-						sector_name: experience.sector.name,
-						tipo: experience.type
-					});
-					profileData.save(function(err, profileData){
-						callback(false, profileData);
-					});
-				});
-				*/
 			});
 		}
 	});

@@ -66,6 +66,17 @@ router.post('/login', multipartMiddleware, function(req, res){
 		}
 	});
 });
+router.post('/token/exists', multipartMiddleware, function(req, res){
+	var guid = req.body.guid;
+
+	Tokenfunc.exist(guid, function(status, tokenData){
+		if(status){
+
+		}else{
+
+		}
+	});
+});
 router.post('/friend/get', multipartMiddleware, function(req, res){
 	var profile_id      = req.body.profile_id;
 	func.ProfileId(profile_id, function(err, profileData, profileInfoData, experiencesData){
@@ -253,6 +264,8 @@ router.post('/update', multipartMiddleware, function(req, res){
 	});
 });
 router.post('/update-experience', multipartMiddleware, function(req, res){
+
+	console.log(req.body);
 	var guid      = req.body.guid;
 
 	var nombre    = req.body.first_name;
@@ -267,6 +280,7 @@ router.post('/update-experience', multipartMiddleware, function(req, res){
 	var ocupation  = req.body.ocupation;
 
 	var birthday   = req.body.birthday;
+
 
 	if(typeof company == "undefined"){
 		company = [];
@@ -405,17 +419,24 @@ router.post('/verify', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
-			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
-				var verified = false;
+			Tokenfunc.toProfile(tokenData.generated_id, function(statusProfile, userData, profileData, profileInfoData){
+				if(statusProfile){
+					var verified = false;
 
-				if(userData.verified){
-					verified = true;
+					if(userData.verified){
+						verified = true;
+					}
+					func.response(200,{	
+						verified: verified
+					}, function(response){
+						res.json(response);
+					});
+				}else{
+					func.response(404,{}, function(response){
+						res.json(response);
+					});
 				}
-				func.response(200,{	
-					verified: verified
-				}, function(response){
-					res.json(response);
-				});
+				
 			});
 		}else{
 			func.response(101, {}, function(response){

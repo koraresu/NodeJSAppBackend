@@ -53,17 +53,23 @@ exports.update           = function(profile_id, first_name, last_name, birthday,
 		console.log(datebirth);
 		console.log(status);
 
-		if(first_name != ""){
-			profileData.first_name = first_name;	
+		if(typeof first_name != "undefined"){
+			if(first_name != ""){
+				profileData.first_name = first_name;	
+			}
 		}
-		if(last_name != ""){
-			profileData.last_name  = last_name;	
+		if(typeof last_name != "undefined"){
+			if(last_name != ""){
+				profileData.last_name  = last_name;	
+			}
 		}
 		if(datebirth != ""){
 			profileData.birthday   = datebirth;	
 		}
-		if(status != ""){
-			profileData.status     = status;	
+		if(typeof status != "undefined"){
+			if(status != ""){
+				profileData.status     = status;	
+			}
 		}
 		
 
