@@ -47,37 +47,39 @@ var updates = function(profileData,data, callback){
 					name: item.sector
 				}, function(statusSector, sectorData){
 					var search = {
-						company: {
-							name: companyData.name,
-							id: companyData._id
+						"company": {
+							"name" : companyData.name,
+							"id" : companyData._id
 						},
-						ocupation: {
-							name: ocupationData.name,
-							id: ocupationData._id
+						"ocupation" : {
+							"name" : ocupationData.name,
+							"id" : ocupationData._id
 						},
-						profile_id: profileData._id
+						"profile_id": profileData._id
 					};
 					var create = {
-						sector:{
-							name: sectorData.name,
-							id: sectorData._id
+						"sector":{
+							"name": sectorData.name,
+							"id": sectorData._id
 						},
-						company: {
-							name: companyData.name,
-							id: companyData._id
+						"company": {
+							"name": companyData.name,
+							"id": companyData._id
 						},
-						ocupation: {
-							name: ocupationData.name,
-							id: ocupationData._id
+						"ocupation": {
+							"name": ocupationData.name,
+							"id": ocupationData._id
 						},
-						profile_id: profileData._id
+						"profile_id": profileData._id
 					};
+					console.log("Search");
 					console.log(search);
 					experienceExistsOrCreate(search, create, function(errExperience, experienceData){
 						if(index == (data.length-1)){
 							callback(true, experienceData);
 						}
 					});
+					
 				});
 				
 			});
