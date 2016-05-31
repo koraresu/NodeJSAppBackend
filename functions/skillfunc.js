@@ -13,6 +13,15 @@ var Sector             = require('../models/sector');
 var Experience         = require('../models/experience');
 var Skill              = require('../models/skills');
 
+var get = function(profile_id, callback){
+	Profile.findOne({ _id: profile_id }, function(errProfile, profileData){
+		if(!errProfile && profileData){
+			callback(true, profileData.skills);
+		}else{
+			callback(false);
+		}
+	});
+}
 var add = function(profile_id, name, callback){
 	console.log(profile_id);
 	Skill.findOne({ name: name}, function(err, skillData){
@@ -107,3 +116,4 @@ var remove = function(profile_id, name, callback){
 }
 exports.add = add
 exports.delete = remove
+exports.get = get

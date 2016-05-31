@@ -31,6 +31,25 @@ Nombre de Objectos de Documentos:
 	seguido de la palabra "Data"*Respetando Mayusculas*, se cambio el modelo ProfileData a ProfileInfo para no tener problemas.
 
 */
+router.post('/get', multipartMiddleware, function(req, res){
+	var guid             = req.body.guid;
+	Tokenfunc.toProfile(guid, function(status, userData, profileData, profileInfoData){
+		switch(status){
+			case 200:
+				Skillfunc.get(profileData._id, function(status, skills){
+					func.response(200, skills, function(response){
+						res.json(response);
+					});
+				});
+			break;
+			default:
+				func.response(113, {},function(response){
+					res.json(response);
+				});
+			break;
+		}
+	});
+});
 router.post('/add', multipartMiddleware, function(req, res){
 	var guid             = req.body.guid;
 	var name             = req.body.name;
