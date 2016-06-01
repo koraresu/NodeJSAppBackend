@@ -36,8 +36,7 @@ var profileSchema = new Schema({
   job: {
     id: { type: Schema.Types.ObjectId, ref: 'jobs' },
     name: String
-  },
-  phone: String
+  }
 },{
   timestamps: true
 });

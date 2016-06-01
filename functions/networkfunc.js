@@ -15,7 +15,8 @@ var Sector             = require('../models/sector');
 var Experience         = require('../models/experience');
 var Skill              = require('../models/skills');
 
+function addReview(profile_id_a, public_id, callback){}
+function addNetwork(profile_id_a, public_id, callback){}
 
-exports.addReview           = function(profile_id_a, profile_id_b, ){
-
-}
+exports.addReview           = addReview
+exports.addNetwork          = addNetwork
