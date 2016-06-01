@@ -28,10 +28,20 @@ exports.insert           = function(){
 
 }
 exports.generate_qrcode  = function(profileData, callback){
-	var qr_svg = qr.image('the-hive:query?'+profileData.public_id, { type: 'png', margin: 0 });
-	qr_svg.pipe(require('fs').createWriteStream('./public/qrcode/'+profileData._id+'.png'));
+	if(typeof profileData.public_id == "undefined"){
+		profileData.public_id = mongoose.Types.ObjectId();
+		profileData.save(function(err, profileData){
+			var qr_svg = qr.image('the-hive:query?'+profileData.public_id, { type: 'png', margin: 0 });
+			qr_svg.pipe(require('fs').createWriteStream('./public/qrcode/'+profileData._id+'.png'));
 
-	var svg_string = qr.imageSync('the-hive:query?'+profileData.public_id, { type: 'png' });
+			var svg_string = qr.imageSync('the-hive:query?'+profileData.public_id, { type: 'png' });
+		});
+	}else{
+		var qr_svg = qr.image('the-hive:query?'+profileData.public_id, { type: 'png', margin: 0 });
+		qr_svg.pipe(require('fs').createWriteStream('./public/qrcode/'+profileData._id+'.png'));
+
+		var svg_string = qr.imageSync('the-hive:query?'+profileData.public_id, { type: 'png' });
+	}
 } 
 exports.update           = function(profile_id, first_name, last_name, birthday, status,speciality, job, callback){
 	console.log(birthday);
