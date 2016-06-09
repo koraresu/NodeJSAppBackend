@@ -181,4 +181,14 @@ function tokenToProfile(guid, callback){
 		}
 	});
 }
+function PublicId(public_id, callback){
+	Profile.findOne({ public_id: mongoose.Types.ObjectId(public_id) }).exec(function(errPublicId, profileData){
+		if(!errPublicId && profileData){
+			callback(true, profileData);
+		}else{
+			callback(false, profileData);
+		}
+	});
+}
+exports.publicId = PublicId
 exports.tokenToProfile = tokenToProfile

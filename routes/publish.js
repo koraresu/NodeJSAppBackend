@@ -16,6 +16,7 @@ var Skillfunc = require('../functions/skillfunc');
 var Experiencefunc = require('../functions/experiencefunc');
 
 var Token       = require('../models/token');
+var Review      = require('../models/review');
 var User        = require('../models/user');
 var Job         = require('../models/job');
 var Company     = require('../models/company');
@@ -77,6 +78,77 @@ router.post('/news', multipartMiddleware, function(req, res){
 
 			}
 		});
+	});
+});
+router.post('/get/review', multipartMiddleware, function(req, res){
+	var guid      = req.body.guid;
+	var max    = req.body.max;
+	var page      = req.body.page;
+
+	Tokenfunc.exist(guid, function(status, tokenData){
+		if(status){
+			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
+				var r = Review.find({ profile_id: profileData._id });
+
+				if(typeof max != "undefined"){
+					max = max*1;
+					r = r.limit(max);
+				}
+				r.exec(function(errReview, reviewData){
+					console.log(errReview);
+					func.response(200, reviewData, function(response){
+						res.json(response);
+					});
+				});
+			});
+		}else{
+			func.response(101, {},function(response){
+				res.json(response);
+			})
+		}
+	});
+});
+router.post('/review', multipartMiddleware, function(req, res){
+	var guid      = req.body.guid;
+	var public_id = req.body.public_id;
+
+	var title = req.body.title;
+	var content = req.body.content;
+	var score   = req.body.score;
+
+	Tokenfunc.exist(guid, function(status, tokenData){
+		if(status){
+			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
+				Profilefunc.publicId(public_id, function(statusPublic, publicProfileData){
+					if(statusPublic){
+
+						var review = new Review({
+							title: title,
+							content: content,
+							rate: score,
+							profiles: [profileData._id,publicProfileData._id],
+							profile_id: profileData._id
+						});
+						review.save(function(errReview, reviewData){
+							func.response(200, reviewData, function(response){
+								res.json(response);
+							});
+						});
+
+						
+					}else{
+						func.response(101, {"message": "publicNotFound"}, function(response){
+							res.json(response);
+						});
+					}
+					
+				})
+			});
+		}else{
+			func.response(101, {}, function(response){
+				res.json(response);
+			});
+		}
 	});
 });
 module.exports = router;
