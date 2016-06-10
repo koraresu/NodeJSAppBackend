@@ -48,7 +48,7 @@ router.post('/news', multipartMiddleware, function(req, res){
 		var file_pic    = objectId + extension;
 
 		var new_path   = path.dirname(path.dirname(process.mainModule.filename)) + '/public/gallery/' + file_pic;
-		var p = '/public/gallery/' + file_pic;
+		var p = '/gallery/' + file_pic;
 		var d = {url:p, path: new_path};
 		data.push(d);
 
