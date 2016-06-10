@@ -71,9 +71,18 @@ router.post('/token/exists', multipartMiddleware, function(req, res){
 
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
-			func.response(200, {}, function(response){
-				res.json(response);
-			});
+				Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
+					if(status){
+						func.response(200, profileData, function(response){
+							res.json(response);
+						});
+					}else{
+						func.response(101, {}, function(response){
+							res.json(response);
+						});
+					}
+					
+				});
 		}else{
 			func.response(101, {}, function(response){
 				res.json(response);
