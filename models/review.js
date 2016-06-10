@@ -15,4 +15,15 @@ var reviewSchema = new Schema({
   timestamps: true
 });
 
+
+reviewSchema.methods.getProfileId = function(cb){
+    Profile.find({ _id: this.profile_id }).exec(function(errProfile,profileData){
+        if(!errProfile && profileData){
+            return profileData;
+        }else{
+            return {};
+        }
+    });
+}
+
 module.exports = db.model( 'Review' , reviewSchema );

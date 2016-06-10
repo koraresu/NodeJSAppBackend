@@ -41,6 +41,7 @@ router.post('/news', multipartMiddleware, function(req, res){
 	var gallery   = req.files.gallery;
 
 	var data = [];
+
 	gallery.forEach(function(item, index){
 		var objectId    = new ObjectID();
 		var extension   = path.extname(item.path);
@@ -95,7 +96,10 @@ router.post('/get/review', multipartMiddleware, function(req, res){
 					r = r.limit(max);
 				}
 				r.exec(function(errReview, reviewData){
-					console.log(errReview);
+
+					reviewData.forEach(function(rItem, rIndex){
+
+					});
 					func.response(200, reviewData, function(response){
 						res.json(response);
 					});
