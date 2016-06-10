@@ -127,7 +127,7 @@ router.post('/review', multipartMiddleware, function(req, res){
 							content: content,
 							rate: score,
 							profiles: [profileData._id,publicProfileData._id],
-							profile_id: profileData._id
+							profile_id: publicProfileData._id
 						});
 						review.save(function(errReview, reviewData){
 							func.response(200, reviewData, function(response){
