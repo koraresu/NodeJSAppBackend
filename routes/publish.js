@@ -41,22 +41,11 @@ router.post('/news', multipartMiddleware, function(req, res){
 	var gallery   = req.files.gallery;
 
 	var data = [];
-
-	gallery.forEach(function(item, index){
-		var objectId    = new ObjectID();
-		var extension   = path.extname(item.path);
-		var file_pic    = objectId + extension;
-
-		var new_path   = path.dirname(path.dirname(process.mainModule.filename)) + '/public/gallery/' + file_pic;
-		var p = '/gallery/' + file_pic;
-		var d = {url:p, path: new_path};
-		data.push(d);
-
+	if(typeof gallery == "undefined"){
 		Tokenfunc.exist(guid, function(status, tokenData){
 			if(status){
 				Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
-					Generalfunc.saveImage(item, new_path, function(){
-						if( (gallery.length-1) == index){
+						
 
 							var h = {};
 							h.title = titulo;
@@ -72,14 +61,56 @@ router.post('/news', multipartMiddleware, function(req, res){
 							history.save(function(err, historyData){
 								res.json(historyData);
 							});
-						}
-					});
+						
+					
 				});
 			}else{
-
+				func.response(101, {}, function(response){
+					res.json(response);
+				});
 			}
 		});
-	});
+	}else{
+		gallery.forEach(function(item, index){
+			var objectId    = new ObjectID();
+			var extension   = path.extname(item.path);
+			var file_pic    = objectId + extension;
+
+			var new_path   = path.dirname(path.dirname(process.mainModule.filename)) + '/public/gallery/' + file_pic;
+			var p = '/gallery/' + file_pic;
+			var d = {url:p, path: new_path};
+			data.push(d);
+
+			Tokenfunc.exist(guid, function(status, tokenData){
+				if(status){
+					Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
+						Generalfunc.saveImage(item, new_path, function(){
+							if( (gallery.length-1) == index){
+
+								var h = {};
+								h.title = titulo;
+								h.content =contenido;
+								h.gallery = data;
+								
+								var history = new History({
+									profile_id: profileData._id,
+				  					de_id: profileData._id,
+				  					action: 1,
+				  					data: h
+								});
+								history.save(function(err, historyData){
+									res.json(historyData);
+								});
+							}
+						});
+					});
+				}else{
+
+				}
+			});
+		});	
+	}
+	
 });
 router.post('/get/review', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
