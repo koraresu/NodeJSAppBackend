@@ -120,21 +120,21 @@ router.post('/get/review', multipartMiddleware, function(req, res){
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
 			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
-				console.log(status);
-				console.log(userData);
-				console.log(profileData._id);
-				var r = Review.find({ profile_id: profileData._id });
+
+				var r = Review.find();
 
 				if(typeof max != "undefined"){
 					max = max*1;
 					r = r.limit(max);
 				}
 				r.exec(function(errReview, reviewData){
-					console.log(errReview);
-					console.log(reviewData);
+
+					
+
 					func.response(200, reviewData, function(response){
 						res.json(response);
 					});
+
 				});
 			});
 		}else{
