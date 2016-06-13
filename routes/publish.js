@@ -120,7 +120,7 @@ router.post('/get/review', multipartMiddleware, function(req, res){
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
 			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
-
+				console.log(profileData._id);
 				var r = Review.find();
 
 				if(typeof max != "undefined"){
@@ -129,7 +129,7 @@ router.post('/get/review', multipartMiddleware, function(req, res){
 				}
 				r.exec(function(errReview, reviewData){
 
-					
+
 
 					func.response(200, reviewData, function(response){
 						res.json(response);
