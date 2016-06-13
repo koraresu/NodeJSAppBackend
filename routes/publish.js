@@ -34,6 +34,32 @@ router.post('/', multipartMiddleware, function(req, res){
 
 });
 */
+router.post('/comentario', multipartMiddleware, function(req, res){
+	var guid      = req.body.guid;
+	var titulo    = req.body.title;
+	var contenido = req.body.content;
+	Tokenfunc.exist(guid, function(status, tokenData){
+		if(status){
+			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
+				var h = {};
+				h.title = titulo;
+				h.content =contenido;
+							
+				var history = new History({
+					profile_id: profileData._id,
+					de_id: profileData._id,
+					action: 2,
+					data: h
+				});
+				history.save(function(err, historyData){
+					res.json(historyData);
+				});
+			});
+		}else{
+		}
+	});
+
+});
 router.post('/news', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 	var titulo    = req.body.title;
@@ -121,6 +147,7 @@ router.post('/get/review', multipartMiddleware, function(req, res){
 		if(status){
 			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
 				console.log(profileData._id);
+				
 				var r = Review.find({profile_id: profileData._id});
 
 				if(typeof max != "undefined"){
