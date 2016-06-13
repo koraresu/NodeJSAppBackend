@@ -114,7 +114,7 @@ router.post('/news', multipartMiddleware, function(req, res){
 });
 router.post('/get/review', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
-	var max    = req.body.max;
+	var max       = req.body.max;
 	var page      = req.body.page;
 
 	Tokenfunc.exist(guid, function(status, tokenData){
@@ -131,7 +131,7 @@ router.post('/get/review', multipartMiddleware, function(req, res){
 					reviewData.forEach(function(rItem, rIndex){
 
 					});
-					func.response(200, reviewData, function(response){
+					func.response(200, {profile: profileData, review: reviewData }, function(response){
 						res.json(response);
 					});
 				});
