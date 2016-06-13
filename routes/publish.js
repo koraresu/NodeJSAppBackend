@@ -121,7 +121,7 @@ router.post('/get/review', multipartMiddleware, function(req, res){
 		if(status){
 			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
 				console.log(profileData._id);
-				var r = Review.find();
+				var r = Review.find({profile_id: profileData._id});
 
 				if(typeof max != "undefined"){
 					max = max*1;
