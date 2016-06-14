@@ -16,6 +16,7 @@ var Skillfunc = require('../functions/skillfunc');
 var Experiencefunc = require('../functions/experiencefunc');
 
 var Token       = require('../models/token');
+var Profile     = require('../models/profile');
 var Review      = require('../models/review');
 var User        = require('../models/user');
 var Job         = require('../models/job');
@@ -150,13 +151,25 @@ router.post('/get/news', multipartMiddleware, function(req, res){
 				
 				var r = History.find({profile_id: profileData._id, action: 1});
 				r.exec(function(errHistory, historyData){
+					var data = []
+					historyData.forEach(function(hItem, hIndex){
+						Profile.findOne({_id: hItem.profile_id}, function(errProfile, profileData){
+							var d = {
+								profile: profileData,
+								history: historyData
+							};
+
+							data.push(d);
+
+							if(hIndex == (historyData.length-1)){
+								func.response(200, data, function(response){
+									res.json(response);
+								});
+							}
+						});
 
 
-
-					func.response(200, historyData, function(response){
-						res.json(response);
 					});
-
 				});
 			});
 		}else{
