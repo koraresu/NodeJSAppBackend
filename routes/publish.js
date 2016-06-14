@@ -148,7 +148,7 @@ router.post('/get/news', multipartMiddleware, function(req, res){
 			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
 				console.log(profileData._id);
 				
-				var r = History.find({profile_id: profileData._id});
+				var r = History.find({profile_id: profileData._id, action: 1});
 				r.exec(function(errHistory, historyData){
 
 
