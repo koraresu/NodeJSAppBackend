@@ -156,7 +156,7 @@ router.post('/get/news', multipartMiddleware, function(req, res){
 						Profile.findOne({_id: hItem.profile_id}, function(errProfile, profileData){
 							var d = {
 								profile: profileData,
-								history: historyData
+								history: hItem
 							};
 
 							data.push(d);
