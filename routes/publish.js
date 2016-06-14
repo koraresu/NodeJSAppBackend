@@ -138,6 +138,34 @@ router.post('/news', multipartMiddleware, function(req, res){
 	}
 	
 });
+router.post('/get/news', multipartMiddleware, function(req, res){
+	var guid      = req.body.guid;
+	var max       = req.body.max;
+	var page      = req.body.page;
+
+	Tokenfunc.exist(guid, function(status, tokenData){
+		if(status){
+			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
+				console.log(profileData._id);
+				
+				var r = History.find({profile_id: profileData._id});
+				r.exec(function(errHistory, historyData){
+
+
+
+					func.response(200, historyData, function(response){
+						res.json(response);
+					});
+
+				});
+			});
+		}else{
+			func.response(101, {},function(response){
+				res.json(response);
+			})
+		}
+	});
+});
 router.post('/get/review', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 	var max       = req.body.max;
