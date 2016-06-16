@@ -90,6 +90,39 @@ router.post('/accept', multipartMiddleware, function(req, res){
 		}
 	});
 });
+router.post('/emailtofriend', multipartMiddleware, function(req, res){
+	var guid       = req.body.guid;
+	var emails     = req.body.emails;
+
+
+	var split = emails.split(',');
+	
+	User.find({
+			"email": { $in: split }
+		}, function(userErr, userData){
+			console.log(userData);
+
+			var data = [];
+			if(userData.length > 0){
+				userData.forEach(function(userItem, userIndex){
+					Profile.findOne({ user_id: userItem._id}, function(profileErr, profileData){
+						data.push(profileData);
+
+						if((userData.length-1) == userIndex){
+							func.response(200, data, function(response){
+								res.json(response);
+							});
+							
+						}
+					});
+				});
+			}else{
+				func.response(200, {}, function(response){
+					res.json(response);
+				});
+			}
+		});
+});
 /*
 router.post('/search', multipartMiddleware, function(req, res){
 	var search = req.body.search;

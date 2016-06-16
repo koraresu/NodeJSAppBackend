@@ -156,6 +156,9 @@ router.post('/qrcode', multipartMiddleware, function(req, res){
 		}
 	});
 });
+router.post('/facebook/token', multipartMiddleware, function(req,res){
+	
+});
 router.post('/facebook', multipartMiddleware, function(req, res){
 	var guid = req.body.guid;
 
