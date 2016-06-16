@@ -164,6 +164,10 @@ router.post('/facebook', multipartMiddleware, function(req, res){
 	var name       = req.body.name;
 	var picture    = req.body.picture;
 	var email      = req.body.email;
+	var token      = req.body.token;
+	var gender     = req.body.gender;
+	var id         = req.body.id;
+	
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
 			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
@@ -187,6 +191,18 @@ router.post('/facebook', multipartMiddleware, function(req, res){
 					{
 						"name": "email",
 						"value": email
+					},
+					{
+						"name": "access-token",
+						"value": token
+					},
+					{
+						"name": "gender",
+						"value": gender
+					},
+					{
+						"name": "id",
+						"value": id
 					}
 				], function(profileInfoData){
 					res.json(profileInfoData);
