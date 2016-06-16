@@ -18,7 +18,9 @@ var Experience  = require('../models/experience');
 router.post('/general', multipartMiddleware, function(req, res){
 	var text = req.body.search;
 	var reg  = new RegExp(text, "i");
+
 	var data = [];
+	var ids = [];
 	Profile.find({},function(errProfile, profileData){
 		profileData.forEach(function(profileItem, profileIndex){
 			var array = new Array();
@@ -41,10 +43,23 @@ router.post('/general', multipartMiddleware, function(req, res){
 							array.push(profileItem.speciality.name);			
 						}
 					}
-
+					console.log(array)
 					array.filter(function(word,index){
-						if(word.match(reg)){
-							data.push(profileData);
+						var match = word.match(reg);
+
+						console.log(match);
+						if( match !== null){
+							
+							console.log("Entrando");
+
+							var search = ids.indexOf(profileItem._id);
+							if(search == -1){
+								data.push(profileItem);
+								ids.push(profileItem._id);	
+								console.log(profileItem);
+								console.log("+++++++++");
+							}
+							
 							return true;
 						}else{
 							return false;
