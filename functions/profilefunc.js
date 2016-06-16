@@ -27,6 +27,15 @@ exports.get              = function(){
 exports.insert           = function(){
 
 }
+exports.PublicId = function(profile_id, callback){
+	Profile.findOne({ public_id: profile_id }, function(errProfile, profile){
+		if(!errProfile && profile){
+			callback(true, profile);
+		}else{
+			callback(false, profile);
+		}
+	});
+}
 exports.generate_qrcode  = function(profileData, callback){
 	if(typeof profileData.public_id == "undefined"){
 		profileData.public_id = mongoose.Types.ObjectId();

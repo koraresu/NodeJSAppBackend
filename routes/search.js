@@ -5,6 +5,7 @@ var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
 var path = require('path');
 var fs = require('fs');
+var async = require("async");
 
 var mongoose    = require('mongoose');
 var Profile     = require('../models/profile');
@@ -24,6 +25,8 @@ router.post('/general', multipartMiddleware, function(req, res){
 	Profile.find({},function(errProfile, profileData){
 		profileData.forEach(function(profileItem, profileIndex){
 			var array = new Array();
+
+
 			profileItem.experiences.forEach(function(expeItem, expIndex){
 				array.push(expeItem.ocupation_name);
 				array.push(expeItem.company_name);
@@ -44,29 +47,35 @@ router.post('/general', multipartMiddleware, function(req, res){
 						}
 					}
 					console.log(array)
-					array.filter(function(word,index){
-						var match = word.match(reg);
-
-						console.log(match);
-						if( match !== null){
-							
-							console.log("Entrando");
-
-							var search = ids.indexOf(profileItem._id);
-							if(search == -1){
-								data.push(profileItem);
-								ids.push(profileItem._id);	
-								console.log(profileItem);
-								console.log("+++++++++");
-							}
-							
-							return true;
-						}else{
-							return false;
-						}
-					});
 				}
 			});
+			
+			profileItem.skills.forEach(function(skillItem, skillIndex){
+				array.push(skillItem.name);
+			});
+
+			array.filter(function(word,index){
+				var match = word.match(reg);
+
+				console.log(match);
+				if( match !== null){
+
+					console.log("Entrando");
+
+					var search = ids.indexOf(profileItem._id);
+					if(search == -1){
+						data.push(profileItem);
+						ids.push(profileItem._id);	
+						console.log(profileItem);
+						console.log("+++++++++");
+					}
+
+					return true;
+				}else{
+					return false;
+				}
+			});
+
 			if((profileData.length-1) == profileIndex){
 				func.response(200, data, function(response){
 					res.json(response);
@@ -76,3 +85,7 @@ router.post('/general', multipartMiddleware, function(req, res){
 	});
 });
 module.exports = router;
+
+function checkWords(array){
+	
+}

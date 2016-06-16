@@ -91,8 +91,8 @@ router.post('/token/exists', multipartMiddleware, function(req, res){
 	});
 });
 router.post('/friend/get', multipartMiddleware, function(req, res){
-	var profile_id      = req.body.profile_id;
-	func.ProfileId(profile_id, function(err, profileData, profileInfoData, experiencesData){
+	var profile_id      = mongoose.Types.ObjectId(req.body.profile_id);
+	Profilefunc.PublicId(profile_id, function(err, profileData, profileInfoData, experiencesData){
 		var data = {
 			profile: profileData,
 			profile_info: profileInfoData,
