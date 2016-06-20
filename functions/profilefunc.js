@@ -69,7 +69,6 @@ exports.update           = function(profile_id, first_name, last_name, birthday,
 		
 		console.log(first_name);
 		console.log(last_name);
-		console.log(datebirth);
 		console.log(status);
 
 		if(typeof first_name != "undefined"){

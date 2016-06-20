@@ -73,9 +73,29 @@ router.post('/token/exists', multipartMiddleware, function(req, res){
 		if(status){
 				Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
 					if(status){
-						func.response(200, profileData, function(response){
-							res.json(response);
+						var verified = false;
+						if(userData.verified){
+							verified = true;
+						}
+
+						func.experienceGet(profileData._id, function(statusExperience, experiences){
+							var exp = false;
+							console.log(experiences);
+							if(experiences.length > 0){
+								exp = true;
+							}
+
+							func.response(200, {
+								user: userData,
+								profile:profileData,
+								experiences: exp,
+								verified: verified
+							}, function(response){
+								res.json(response);
+							});
 						});
+
+						
 					}else{
 						func.response(101, {}, function(response){
 							res.json(response);
