@@ -11,7 +11,11 @@ var Profile            = require('../models/profile');
 var User            = require('../models/user');
 var Network         = require('../models/network');
 
-
+var Profilefunc = require('../functions/profilefunc');
+var Experiencefunc = require('../functions/experiencefunc');
+var Tokenfunc = require('../functions/tokenfunc');
+var Skillfunc = require('../functions/skillfunc');
+var Networkfunc = require('../functions/networkfunc');
 /* GET home page. */
 router.post('/connect', multipartMiddleware, function(req, res){
 	var guid       = req.body.guid;
@@ -122,6 +126,24 @@ router.post('/emailtofriend', multipartMiddleware, function(req, res){
 				});
 			}
 		});
+});
+router.post('/message', multipartMiddleware, function(req, res){
+	var text = req.body.text;
+	var profile_a = req.body.a_profile;
+	var profile_a = req.body.b_profile;
+});
+router.post('/check/conversation', multipartMiddleware, function(req, res){
+	var text = req.body.text;
+	var profile_a = req.body.a_profile;
+	var profile_b = req.body.b_profile;
+
+
+	Networkfunc.checkconversation(profile_a,profile_b, function(status, conversationData){
+
+		func.response(200, conversationData, function(response){
+			res.json(response);
+		})
+	});
 });
 /*
 router.post('/search', multipartMiddleware, function(req, res){
