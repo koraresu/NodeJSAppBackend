@@ -84,6 +84,10 @@ router.post('/general', multipartMiddleware, function(req, res){
 		});
 	});
 });
+router.post('/last-serch', multipartMiddleware, function(req, res){
+
+});
+
 module.exports = router;
 
 function checkWords(array){
