@@ -4,6 +4,8 @@ var func = require('../func');
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
 
+var _ = require('underscore');
+
 var router = express.Router();
 
 
@@ -57,6 +59,58 @@ router.post('/connect', multipartMiddleware, function(req, res){
 
 		}
 	});
+});
+
+router.post('/friends', multipartMiddleware, function(req, res){
+	var guid = req.body.guid;
+
+	Tokenfunc.exist(guid, function(errToken, token){
+		if(errToken){
+			Tokenfunc.toProfile(token.generated_id, function(status, userData, profileData, profileInfoData){
+				if(status){
+					var data = [];
+					var profile_id = profileData._id
+					Network.find({
+						"profiles": {
+							"$in": [profile_id]
+						}
+					}).exec(function(errNetwork, networkData){
+						networkData.forEach(function(item, index){
+							var a = ""
+
+							console.log(item.profiles);
+							if(item.profiles[0] == profile_id){
+								a = item.profiles[0];
+							}else{
+								a = item.profiles[1];
+							}
+							console.log(a);
+							Profile.findOne({ _id: a }).exec(function(errProfile, profileDataAnother){
+								var d = [];
+								d = _.extend(item, { profile: profileDataAnother });
+								data.push(d);
+
+								if(index == (networkData.length-1)){
+									func.response(200, data, function(response){
+										res.json(response);
+									});
+								}
+							});
+
+
+						});
+					});
+				}else{
+					res.send("No Token")
+				}
+				
+			});
+		}else{
+			console.log("No Token");
+		}
+	});
+
+	
 });
 router.post('/accept', multipartMiddleware, function(req, res){
 	var guid       = req.body.guid;
@@ -164,72 +218,24 @@ router.post('/search', multipartMiddleware, function(req, res){
 */
 router.post('/search', multipartMiddleware, function(req, res){
 	var mi = {
-                "_id": "573230e4b0a0a7421af5ef9f",
-                "updatedAt": "2016-05-18T18:06:51.124Z",
-                "createdAt": "2016-05-10T19:05:08.448Z",
+                
                 "first_name": "Juan Rael",
                 "last_name": "Corrales Arellano",
-                "user_id": "573230e4b0a0a7421af5ef9c",
-                "__v": 40,
-                "birthday": "1980-06-12T06:00:00.000Z",
-                "profile_pic": "573230e4b0a0a7421af5ef9f.png",
-                "status": 1,
-                "info": [
-                    {
-                        "value": "Juan",
-                        "name": "first_name"
-                    },
-                    {
-                        "value": "Corrales",
-                        "name": "last_name"
-                    },
-                    {
-                        "value": "Juan Rael Corrales",
-                        "name": "name"
-                    },
-                    {
-                        "value": "https://scontent.xx.fbcdn.net/v/t1.0-1/p200x200/11813405_10207478275257749_1388270640230694431_n.jpg?oh=7ea3d9f41a819e731b74c78af7c0715d&oe=579F0ED7",
-                        "name": "picture"
-                    },
-                    {
-                        "value": "rkenshin21@gmail.com",
-                        "name": "email"
-                    }
-                ],
-                "skills": [
-                    {
-                        "name": "PHP",
-                        "_id": "57335dc763ae5d8505edd408"
-                    },
-                    {
-                        "name": "php",
-                        "_id": "573caea729becfd519602a76"
-                    },
-                    {
-                        "name": " javascript",
-                        "_id": "573caea729becfd519602a77"
-                    },
-                    {
-                        "name": " it",
-                        "_id": "573caea729becfd519602a78"
-                    }
-                ],
                 "experiences": [
                     {
-                        "speciality_name": "Fullstack Developer",
-                        "company_name": "Axovia",
-                        "ocupation_name": "Diseño Web",
                         "job_name": "Developer",
-                        "_id": "57335485a5cbe5540481f2d2"
                     }
                 ]
             };
+
     var mi_g = [];
     var vecinas_g = [];
     var otros_g = [];
 
     mi_g.push(mi);
+    mi_g.push(mi);
     vecinas_g.push(mi);
+    otros_g.push(mi);
     otros_g.push(mi);
 
 	var data = {};

@@ -11,4 +11,7 @@ var NetworkSchema = new Schema({
   timestamps: true
 });
 
+NetworkSchema.methods.getFriend = function(profiles, profile, cb){
+}
+
 module.exports = db.model( 'Network' , NetworkSchema );

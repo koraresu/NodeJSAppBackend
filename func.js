@@ -93,7 +93,7 @@ exports.sectorExistsOrCreate = function(search, insert, callback){
 exports.userProfileInsertIfDontExists = function(searchUser, userInsert, profileInsert, callback){
 	User.findOne(searchUser, function(errUser, user){
 		if(!errUser && user){
-			callback(true,null);
+			callback(true,null,null);
 		}else{
 			var user = new User(userInsert);
 			user.save();
@@ -109,7 +109,7 @@ exports.userProfileInsertIfDontExists = function(searchUser, userInsert, profile
 			var profile = new Profile( profileInsert );
 			profile.save(function(err, profileData){
 				Profilefunc.generate_qrcode(profileData);
-				callback( false, token );	
+				callback( false, token, profileData );	
 			});
 		}
 	});

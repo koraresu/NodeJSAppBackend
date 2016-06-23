@@ -282,9 +282,8 @@ router.post('/sector/get', multipartMiddleware, function(req, res){
 		}
 	});
 });
-
 router.post('/company/create', multipartMiddleware, function(req, res){
-		var guid      = req.body.guid;
+	var guid      = req.body.guid;
 	var name      = req.body.name;
 	Tokenfunc.exist(guid, function(status, token){
 		if(status){

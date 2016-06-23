@@ -6,6 +6,8 @@ var multipartMiddleware = multipart();
 var path = require('path');
 var fs = require('fs');
 
+var faker = require('faker');
+faker.locale = "es_MX";
 var mongoose    = require('mongoose');
 /*
 	Nombre de Modelos:
@@ -25,12 +27,74 @@ var Token       = require('../models/token');
 var Job         = require('../models/job');
 var Company     = require('../models/company');
 var Experience  = require('../models/experience');
+var Network     = require('../models/network');
 /*
 Nombre de Objectos de Documentos:
 	Todo dato recibido por FUNC, que sea un documento de mongo, se le colocara como nombre de varible el nombre del modelo,
 	seguido de la palabra "Data"*Respetando Mayusculas*, se cambio el modelo ProfileData a ProfileInfo para no tener problemas.
 
 */
+router.post('/generate', multipartMiddleware, function(req,res){
+	for(var i = 0;i<=50;i++){
+		var nombre   = faker.name.firstName();
+		var apellido = faker.name.lastName();
+		var email    = faker.internet.email();
+		var password = faker.internet.password();
+
+		func.userProfileInsertIfDontExists({
+			email: email
+			//email: "programacion2@axovia.mx"
+		},{
+			email: email,
+			password: password,
+			verified: true,
+			status: Math.floor(Math.random() * (2 - 0 + 1)) + 0
+		},{
+			first_name: nombre,
+			last_name: apellido,
+			nacimiento: null,
+			ocupation: {},
+			speciality: {},
+			public_id: mongoose.Types.ObjectId(),
+			experiences: []
+		}, function(exist, tokenData,profileData){
+
+			var max = 10;
+			var min = 1;
+			var rand = Math.floor(Math.random() * (max - min + 1)) + min;
+			console.log(nombre+" "+apellido);
+			for(var x = 0;x<=rand;x++){
+				console.log(x);
+
+				Profile.findOne().skip(x).exec(function(statusRandF, profileRandF){
+					if(!statusRandF && profileRandF){
+						var accepted = false;
+						if(Math.random()%2){
+							accepted = true;
+						}
+						var network = new Network({
+							accepted: accepted,
+							profiles: [
+								profileData._id,
+								profileRandF._id
+							]
+						});
+						console.log(network);
+
+						network.save(function(err, networkData){
+														
+						});
+					}
+					
+				});
+			}
+
+			if(i == 50){
+				res.send("Creado");
+			}
+		});
+	}
+});
 router.post('/login', multipartMiddleware, function(req, res){
 	var email    = req.body.email;
 	var password = req.body.password;
@@ -175,9 +239,6 @@ router.post('/qrcode', multipartMiddleware, function(req, res){
 
 		}
 	});
-});
-router.post('/facebook/token', multipartMiddleware, function(req,res){
-	
 });
 router.post('/facebook', multipartMiddleware, function(req, res){
 	var guid = req.body.guid;
