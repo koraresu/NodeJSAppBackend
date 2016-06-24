@@ -21,13 +21,37 @@ var Experience         = require('../models/experience');
 var Skill              = require('../models/skills');
 
 function formatoProfile(profile_id,cb){
+	console.log(profile_id);
 	if(typeof profile_id != "object"){
 		profile_id = mongoose.Types.ObjectId(profile_id);
 	}
+
 	Profile.findOne({ _id: profile_id}, function(errProfile, profileData){
 		User.findOne({ _id: profileData.user_id }, function(errUser, userData){
-			Experience.find({ profile_id: profile._id}, function(errExperience, experienceData){
-				cb(profileData, userData, experienceData);
+			Experience.find({ profile_id: profileData._id}, function(errExperience, experienceData){
+
+				console.log("ProfilePic: "+profileData.profile_pic);
+
+				var data = {
+					profile: {
+						"first_name": profileData.first_name,
+						"last_name": profileData.last_name,
+						"public_id": profileData.public_id,
+						"email": userData.email,
+						"verified": userData.verified,
+						"info": profileData.info,
+						"skills": profileData.skills,
+						"experiences": profileData.experiences,
+						"birthday": profileData.birthday,
+						"job": profileData.job,
+						"speciality": profileData.speciality,
+						"profile_pic": profileData.profile_pic,
+						"status": profileData.status
+					},
+					experiences: experienceData
+				};
+
+				cb(data);
 			});
 		});
 		

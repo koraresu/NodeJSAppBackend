@@ -30,6 +30,23 @@ function message(conversation_id, text, callback){
 	});
 	*/
 }
+function otherProfile(profiles, profile_id,cb){
+	var a = "";
+	console.log(profile_id);
+	profiles.forEach(function(item, index){
+		var i = trimUnderscores(item.toString());
+		var p = trimUnderscores(profile_id.toString());
+		console.log(i);
+		if(i != p){
+			console.log(item+"|"+profile_id);
+			a = i;
+		}
+		if(index == (profiles.length-1)){
+			cb(a);
+		}
+	})
+}
+exports.otherProfile = otherProfile
 function checkconversation(profile_a, profile_b, callback){
 
 	var generated_id_a = mongoose.Types.ObjectId( profile_a );
@@ -65,3 +82,6 @@ exports.checkconversation   = checkconversation
 exports.message             = message
 exports.addReview           = addReview
 exports.addNetwork          = addNetwork
+function trimUnderscores(string) {
+    return string.split(' ').join('');
+}

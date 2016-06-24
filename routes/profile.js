@@ -15,7 +15,7 @@ var mongoose    = require('mongoose');
 		Toda las variables de modelo se nombrara, con el nombre del archivo, eliminando _ 
 		y cambiando la siguiente letras al _ por mayuscula. Iniciando la primera letra en mayuscula.
 */
-
+var Generalfunc = require('../functions/generalfunc');
 var Profilefunc = require('../functions/profilefunc');
 var Experiencefunc = require('../functions/experiencefunc');
 var Tokenfunc = require('../functions/tokenfunc');
@@ -38,6 +38,14 @@ Nombre de Objectos de Documentos:
 
 
 
+// LOGIN
+// Parameter
+// 		email     = Email
+// 		password  = Contraseña
+// Return (Formato 1)
+// 		Generated Token
+// 		Verified Status
+// 		Experiences Status
 
 router.post('/login', multipartMiddleware, function(req, res){
 	var email    = req.body.email;
@@ -148,12 +156,12 @@ router.post('/get', multipartMiddleware, function(req, res){
 					});
 					*/
 
-					Profilefunc.formatoProfile(profileData._id,function(err, profile){
-						var data = [];
-						data = _.extend(data,profile);
+					Profilefunc.formatoProfile(profileData._id,function( profile ){
 
-	 					
-						res.json(data);
+	 					Generalfunc.response(200, profile, function(response){
+	 						res.json(response);
+	 					});
+						
 					});
 					
 					

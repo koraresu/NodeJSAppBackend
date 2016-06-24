@@ -138,36 +138,44 @@ router.post('/get', multipartMiddleware, function(req, res){
 
 	Tokenfunc.exist(guid, function(errToken, token){
 		if(errToken){
-			Tokenfunc.toProfile(token.generated_id, function(status, userData, profileData, profileInfoData){
+			Tokenfunc.toProfile(token.generated_id, function(status, userData, profileData){
 				if(status){
 					var data = [];
-					var profile_id = profileData._id
+					var profile_id = profileData._id;
+					console.log(profileData);
+
+					console.log("ProfileId:"+profile_id);
 					Network.find({
 						"profiles": {
 							"$in": [profile_id]
 						}
 					}).exec(function(errNetwork, networkData){
+
 						networkData.forEach(function(item, index){
 							var a = ""
 
-							console.log(item.profiles);
-							if(item.profiles[0] == profile_id){
-								a = item.profiles[0];
-							}else{
-								a = item.profiles[1];
-							}
-							console.log(a);
-							Profile.findOne({ _id: a }).exec(function(errProfile, profileDataAnother){
-								var d = [];
-								d = _.extend(item, { profile: profileDataAnother });
-								data.push(d);
+							Networkfunc.otherProfile(item.profiles, profile_id, function(a){
+							 	console.log("A:"+a);
+							 	var d = [];
 
-								if(index == (networkData.length-1)){
-									func.response(200, data, function(response){
-										res.json(response);
-									});
-								}
+							 	Profile.findOne({ _id: a }).exec(function(errProfile, profileDataAnother){
+
+									d = item;
+									d.profiles = [profileData, profileDataAnother];
+									data.push(d);
+
+									if(index == (networkData.length-1)){
+										func.response(200, data, function(response){
+											res.json(response);
+										});
+									}
+								});
+
 							});
+
+							
+
+							
 
 
 						});
