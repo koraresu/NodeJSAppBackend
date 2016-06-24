@@ -3,16 +3,27 @@ var router = express.Router();
 var func = require('../func'); 
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
-
+var mongoose    = require('mongoose');
 var _ = require('underscore');
 
 var router = express.Router();
 
 
-var Profile            = require('../models/profile');
-var User            = require('../models/user');
-var Network         = require('../models/network');
 
+var Token              = require('../models/token');
+var User               = require('../models/user');
+var Job                = require('../models/job');
+var Company            = require('../models/company');
+var Speciality         = require('../models/speciality');
+var Profile            = require('../models/profile');
+var Sector             = require('../models/sector');
+var Experience         = require('../models/experience');
+var Network            = require('../models/network');
+var Review             = require('../models/review');
+var Skill              = require('../models/skills');
+
+
+var Generalfunc = require('../functions/generalfunc');
 var Profilefunc = require('../functions/profilefunc');
 var Experiencefunc = require('../functions/experiencefunc');
 var Tokenfunc = require('../functions/tokenfunc');
@@ -307,7 +318,75 @@ router.post('/search/friends', multipartMiddleware, function(req, res){
 	});
 });
 // REVIEW
+// Parameter:
+//  	Token
+// 		Titulo
+// 		Contenido
+// 		Calificación
+//
+// Return (Formato 20)
+//		
+//
 router.post('/review', multipartMiddleware, function(req, res){
-	
-})
+	var guid       = req.body.guid;
+	var title   = req.body.title;
+	var content = req.body.content;
+	var rate    = req.body.rate;
+
+	Tokenfunc.exist(guid, function(errToken, token){
+		if(errToken){
+			Tokenfunc.toProfile(token.generated_id, function(status, userData, profileData, profileInfoData){
+				var profiles = [];
+				profiles.push(profileData._id);
+				profiles.push( mongoose.Types.ObjectId("57626c974dc05ed852276ed3") );
+
+
+				var review = new Review({
+					title:      title,
+					content:    content,
+					rate:       rate,	
+					profiles: profiles,
+					profile_id: profileData._id
+				});
+				review.save(function(errReview, reviewData){
+					Generalfunc.response(200, reviewData, function(response){
+						res.json(response);
+					});
+				})
+			});
+		}else{
+
+		}
+	});
+});
+// GET REVIEW
+// Parameter:
+//  	Token
+//
+// Return (Formato 20)
+//		
+//
+router.post('/review/get', multipartMiddleware, function(req, res){
+	var guid       = req.body.guid;
+	var max        = req.body.max;
+
+	Tokenfunc.exist(guid, function(errToken, token){
+		if(errToken){
+			Tokenfunc.toProfile(token.generated_id, function(status, userData, profileData, profileInfoData){
+					if(typeof max != "undefined"){
+						max = max*1;
+						var r = Review.find({ profile_id: profileData._id});
+						r = r.limit(max);
+					}
+					r.exec(function(errReview, reviewData){
+						Generalfunc.response(200, reviewData, function(response){
+							res.json(response);
+						});
+					});
+			});
+		}else{
+
+		}
+	});
+});
 module.exports = router;

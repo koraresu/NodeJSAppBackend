@@ -148,7 +148,7 @@ router.post('/get', multipartMiddleware, function(req, res){
 					});
 					*/
 
-					var data = Profilefunc.formatoProfile(profileData._id).exec(function(err, profile){
+					Profilefunc.formatoProfile(profileData._id,function(err, profile){
 						var data = [];
 						data = _.extend(data,profile);
 
@@ -218,7 +218,7 @@ router.post('/update', multipartMiddleware, function(req, res){
 					}
 					
 					Experiencefunc.updates(profileData,data, function(statusExperience, experienceData){
-						Profilefunc.formatoProfile(profileData._id).exec(function(err, profile){
+						Profilefunc.formatoProfile(profileData._id,function(err, profile){
 							var data = [];
 							data = _.extend(data,profile);
 	 					
@@ -335,7 +335,7 @@ router.post('/update-experience', multipartMiddleware, function(req, res){
 								profileData.experiences = d;
 
 								profileData.save(function(errProfile, profileData){
-									Profilefunc.formatoProfile(profileData._id).exec(function(err, profile){
+									Profilefunc.formatoProfile(profileData._id,function(err, profile){
 										var data = [];
 										data = _.extend(data,profile);
 				 					
@@ -376,7 +376,7 @@ router.post('/addskill', multipartMiddleware, function(req, res){
 				Skillfunc.add(profileData, name, function(status, skillData, profileData){
 					if(status){
 						console.log("SkillAdd");
-						Profilefunc.formatoProfile(profileData._id).exec(function(err, profile){
+						Profilefunc.formatoProfile(profileData._id,function(err, profile){
 							var data = [];
 							data = _.extend(data,profile);
 	 					
@@ -415,7 +415,7 @@ router.post('/deleteskill', multipartMiddleware, function(req, res){
 		if(status){
 			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
 				Skillfunc.delete(profileData._id, name, function(err, profileData){
-					Profilefunc.formatoProfile(profileData._id).exec(function(err, profile){
+					Profilefunc.formatoProfile(profileData._id,function(err, profile){
 							var data = [];
 							data = _.extend(data,profile);
 	 					
@@ -486,7 +486,7 @@ router.post('/setprofilepic', multipartMiddleware, function(req, res){
 			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
 
 				Profilefunc.updateProfilePic(profileData._id, profilepic, function(err, profileData){
-					Profilefunc.formatoProfile(profileData._id).exec(function(err, profile){
+					Profilefunc.formatoProfile(profileData._id,function(err, profile){
 							var data = [];
 							data = _.extend(data,profile);
 	 					
@@ -575,7 +575,7 @@ router.post('/facebook', multipartMiddleware, function(req, res){
 						"value": id
 					}
 				], function(profileInfoData){
-					Profilefunc.formatoProfile(profileData._id).exec(function(err, profile){
+					Profilefunc.formatoProfile(profileData._id,function(err, profile){
 							var data = [];
 							data = _.extend(data,profile);
 	 					

@@ -24,7 +24,15 @@ function formatoProfile(profile_id,cb){
 	if(typeof profile_id != "object"){
 		profile_id = mongoose.Types.ObjectId(profile_id);
 	}
-	return Profile.findOne({ _id: profile_id});
+	Profile.findOne({ _id: profile_id}, function(errProfile, profileData){
+		User.findOne({ _id: profileData.user_id }, function(errUser, userData){
+			Experience.find({ profile_id: profile._id}, function(errExperience, experienceData){
+				cb(profileData, userData, experienceData);
+			});
+		});
+		
+		
+	});
 }
 
 exports.formatoProfile   = formatoProfile
