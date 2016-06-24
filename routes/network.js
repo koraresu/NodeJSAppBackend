@@ -19,6 +19,17 @@ var Tokenfunc = require('../functions/tokenfunc');
 var Skillfunc = require('../functions/skillfunc');
 var Networkfunc = require('../functions/networkfunc');
 /* GET home page. */
+
+
+
+
+// CONNECT
+// Parameter:
+//  	Token
+//
+// Return (Formato 14)
+//		Network
+// 		Profile
 router.post('/connect', multipartMiddleware, function(req, res){
 	var guid       = req.body.guid;
 	var profile_id = req.body.profile_id;
@@ -60,8 +71,58 @@ router.post('/connect', multipartMiddleware, function(req, res){
 		}
 	});
 });
+// ACCEPT
+// Parameter:
+//  	Token
+// 		Profile Id
+//
+// Return (Formato 15)
+//		Network
+// 		Profile
+router.post('/accept', multipartMiddleware, function(req, res){
+	var guid       = req.body.guid;
+	var profile_id = req.body.profile_id;
 
-router.post('/friends', multipartMiddleware, function(req, res){
+	Tokenfunc.exist(guid, function(errToken, token){
+		if(errToken){
+			Tokenfunc.toProfile(token.generated_id, function(status, userData, profileData, profileInfoData){
+				func.ProfileId(profile_id, function(errProfileAnotherData,profileAnotherData){
+
+
+					var find = {
+						"profiles": {
+							"$all": [profileData._id,profileAnotherData._id],
+						}
+					};
+					Network.findOne(find, function(errNetwork, networkData){
+						if(!errNetwork && networkData){
+							networkData.accepted = true;
+							networkData.save(function(err, network){
+								func.response(200, network, function(response){
+									res.json(response);
+								});
+							});
+						}else{
+							func.response(101, {}, function(response){
+								res.json(response);
+							});
+						}
+					});
+				});
+			});
+		}else{
+
+		}
+	});
+});
+// GET
+// Parameter:
+//  	Token
+//
+// Return (Formato 16)
+//		Network
+// 		Profile
+router.post('/get', multipartMiddleware, function(req, res){
 	var guid = req.body.guid;
 
 	Tokenfunc.exist(guid, function(errToken, token){
@@ -112,42 +173,14 @@ router.post('/friends', multipartMiddleware, function(req, res){
 
 	
 });
-router.post('/accept', multipartMiddleware, function(req, res){
-	var guid       = req.body.guid;
-	var profile_id = req.body.profile_id;
-
-	Tokenfunc.exist(guid, function(errToken, token){
-		if(errToken){
-			Tokenfunc.toProfile(token.generated_id, function(status, userData, profileData, profileInfoData){
-				func.ProfileId(profile_id, function(errProfileAnotherData,profileAnotherData){
-
-
-					var find = {
-						"profiles": {
-							"$all": [profileData._id,profileAnotherData._id],
-						}
-					};
-					Network.findOne(find, function(errNetwork, networkData){
-						if(!errNetwork && networkData){
-							networkData.accepted = true;
-							networkData.save(function(err, network){
-								func.response(200, network, function(response){
-									res.json(response);
-								});
-							});
-						}else{
-							func.response(101, {}, function(response){
-								res.json(response);
-							});
-						}
-					});
-				});
-			});
-		}else{
-
-		}
-	});
-});
+// EMAIL TO FRIEND
+// Parameter:
+//  	Token
+// 		EMAIL (lista dividida con , )
+//
+// Return (Formato 17)
+//		Profile
+//
 router.post('/emailtofriend', multipartMiddleware, function(req, res){
 	var guid       = req.body.guid;
 	var emails     = req.body.emails;
@@ -181,41 +214,13 @@ router.post('/emailtofriend', multipartMiddleware, function(req, res){
 			}
 		});
 });
-router.post('/message', multipartMiddleware, function(req, res){
-	var text = req.body.text;
-	var profile_a = req.body.a_profile;
-	var profile_a = req.body.b_profile;
-});
-router.post('/check/conversation', multipartMiddleware, function(req, res){
-	var text = req.body.text;
-	var profile_a = req.body.a_profile;
-	var profile_b = req.body.b_profile;
-
-
-	Networkfunc.checkconversation(profile_a,profile_b, function(status, conversationData){
-
-		func.response(200, conversationData, function(response){
-			res.json(response);
-		})
-	});
-});
-/*
-router.post('/search', multipartMiddleware, function(req, res){
-	var search = req.body.search;
-	var reg  = new RegExp(search, "i");
-	var data = [];
-	func.searchProfile(reg, function(status, profileData){
-		profileData.forEach(function(item, index, array, done) {
-			data.push(item);
-			if(index == (profileData.length-1)){
-				func.response(200, {"mi": data}, function(response){
-					res.json(response);
-				})
-			}
-		});
-	});
-});
-*/
+// SEARCH NETWORK [Test Seccion Buscador con Secciones(Colmena, Vecina y Otros)]
+// Parameter:
+//  	Token
+//
+// Return (Formato 18)
+//		
+//
 router.post('/search', multipartMiddleware, function(req, res){
 	var mi = {
                 
@@ -248,7 +253,16 @@ router.post('/search', multipartMiddleware, function(req, res){
 		res.json(response)
 	});
 });
-router.post('/searchinfriends', multipartMiddleware, function(req, res){
+// SEARCH NETWORK
+// Parameter:
+//  	Token
+// 		Text
+// 		ORDER (No Usado)
+//
+// Return (Formato 19)
+//		
+//
+router.post('/search/friends', multipartMiddleware, function(req, res){
 	var guid       = req.body.guid;
 	var search     = req.body.search;
 	var order      = req.body.order;
@@ -292,6 +306,7 @@ router.post('/searchinfriends', multipartMiddleware, function(req, res){
 		}
 	});
 });
+// REVIEW
 router.post('/review', multipartMiddleware, function(req, res){
 	
 })

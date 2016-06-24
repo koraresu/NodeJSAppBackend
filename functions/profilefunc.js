@@ -2,8 +2,10 @@
 var mongoose    = require('mongoose');
 var path = require('path');
 var fs = require('fs');
-
 var qr = require('qr-image');
+var _ = require('underscore');
+
+
 
 var Generalfunc = require('./generalfunc');
 var Experiencefunc = require('./experiencefunc');
@@ -18,15 +20,25 @@ var Sector             = require('../models/sector');
 var Experience         = require('../models/experience');
 var Skill              = require('../models/skills');
 
+function formatoProfile(profile_id,cb){
+	if(typeof profile_id != "object"){
+		profile_id = mongoose.Types.ObjectId(profile_id);
+	}
+	return Profile.findOne({ _id: profile_id});
+}
+
+exports.formatoProfile   = formatoProfile
+
 exports.getAll           = function(){
 
 }
-exports.get              = function(){
+exports.get              = function(profile_id,callback){
 
 }
 exports.insert           = function(){
 
 }
+
 exports.PublicId = function(profile_id, callback){
 	Profile.findOne({ public_id: profile_id }, function(errProfile, profile){
 		if(!errProfile && profile){
