@@ -23,19 +23,15 @@ var Job         = require('../models/job');
 var Company     = require('../models/company');
 var Experience  = require('../models/experience');
 var History     = require('../models/history');
-//var ExperienceCompany = require('../models/experience_company');
-//var ExperienceJob     = require('../models/experience_job');
-//var CompanyProfile = require('../models/company_profile');
 
-var CompanyModel    = require('../models/company');
-
-/*
-router.post('/', multipartMiddleware, function(req, res){
-	var guid      = req.body.guid;
-
-});
-*/
-router.post('/comentario', multipartMiddleware, function(req, res){
+// Write Comentario
+// Parameter
+//  	Token
+// 		Titulo
+// 		Contenido
+// Return (Formato 1)
+// 		Comentario
+router.post('/write/comentario', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 	var titulo    = req.body.title;
 	var contenido = req.body.content;
@@ -45,7 +41,7 @@ router.post('/comentario', multipartMiddleware, function(req, res){
 				var h = {};
 				h.title = titulo;
 				h.content =contenido;
-							
+
 				var history = new History({
 					profile_id: profileData._id,
 					de_id: profileData._id,
@@ -53,15 +49,24 @@ router.post('/comentario', multipartMiddleware, function(req, res){
 					data: h
 				});
 				history.save(function(err, historyData){
-					res.json(historyData);
+					Generalfunc.response(200, reviewData, function(response){
+						res.json(response);
+					});
 				});
 			});
 		}else{
 		}
 	});
-
 });
-router.post('/news', multipartMiddleware, function(req, res){
+// Write NEWS
+// Parameter
+//  	Token
+// 		Titulo
+// 		Contenido
+// 		Gallery (Debe ser Arreglo)
+// Return (Formato 1)
+// 		News
+router.post('/write/news', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 	var titulo    = req.body.title;
 	var contenido = req.body.content;
@@ -72,23 +77,23 @@ router.post('/news', multipartMiddleware, function(req, res){
 		Tokenfunc.exist(guid, function(status, tokenData){
 			if(status){
 				Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
-						
 
-							var h = {};
-							h.title = titulo;
-							h.content =contenido;
-							h.gallery = data;
-							
-							var history = new History({
-								profile_id: profileData._id,
-			  					de_id: profileData._id,
-			  					action: 1,
-			  					data: h
-							});
-							history.save(function(err, historyData){
-								res.json(historyData);
-							});
-						
+
+					var h = {};
+					h.title = titulo;
+					h.content =contenido;
+					h.gallery = data;
+
+					var history = new History({
+						profile_id: profileData._id,
+						de_id: profileData._id,
+						action: 1,
+						data: h
+					});
+					history.save(function(err, historyData){
+						res.json(historyData);
+					});
+
 					
 				});
 			}else{
@@ -98,47 +103,87 @@ router.post('/news', multipartMiddleware, function(req, res){
 			}
 		});
 	}else{
+		console.log(gallery)
 		gallery.forEach(function(item, index){
-			var objectId    = new ObjectID();
-			var extension   = path.extname(item.path);
-			var file_pic    = objectId + extension;
+			
 
-			var new_path   = path.dirname(path.dirname(process.mainModule.filename)) + '/public/gallery/' + file_pic;
-			var p = '/gallery/' + file_pic;
-			var d = {url:p, path: new_path};
-			data.push(d);
+			if(item.path.constructor != Array){
+				console.log("No Array");
+				var objectId    = new ObjectID();
+				var extension   = path.extname(item.path);
+				var file_pic    = objectId + extension;
 
-			Tokenfunc.exist(guid, function(status, tokenData){
-				if(status){
-					Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
-						Generalfunc.saveImage(item, new_path, function(){
-							if( (gallery.length-1) == index){
+				var new_path   = path.dirname(path.dirname(process.mainModule.filename)) + '/public/gallery/' + file_pic;
+				var p = '/gallery/' + file_pic;
+				var d = {url:p, path: new_path};
+				data.push(d);
+				Generalfunc.saveImage(item, new_path, function(){
+					if((gallery.length-1) == index){
+						Tokenfunc.exist(guid, function(status, tokenData){
+							if(status){
+								Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
+									var h = {};
+									h.title = titulo;
+									h.content =contenido;
+									h.gallery = data;
 
+									var history = new History({
+										profile_id: profileData._id,
+										de_id: profileData._id,
+										action: 1,
+										data: h
+									});
+									history.save(function(err, historyData){
+										Generalfunc.response(200, historyData, function(response){
+											res.json(historyData);	
+										});
+									});
+								});
+							}else{
+								res.send("Hola");
+							}
+						});
+					}	
+				});
+			}else{
+				console.log("Array");
+				if((gallery.length-1) == index){
+					Tokenfunc.exist(guid, function(status, tokenData){
+						if(status){
+							Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
 								var h = {};
 								h.title = titulo;
 								h.content =contenido;
 								h.gallery = data;
-								
+
 								var history = new History({
 									profile_id: profileData._id,
-				  					de_id: profileData._id,
-				  					action: 1,
-				  					data: h
+									de_id: profileData._id,
+									action: 1,
+									data: h
 								});
 								history.save(function(err, historyData){
-									res.json(historyData);
+									Generalfunc.response(200, historyData, function(response){
+										res.json(historyData);	
+									});
 								});
-							}
-						});
+							});
+						}else{
+							res.send("Hola");
+						}
 					});
-				}else{
-
-				}
-			});
+				}	
+			}
 		});	
 	}
-	
 });
+// GET NEWS
+// Parameter
+//  	Token
+// 		Max (Opcional) Maximo 40
+// 		Page(Opcional)
+// Return (Formato 1)
+// 		News
 router.post('/get/news', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 	var max       = req.body.max;
@@ -150,14 +195,31 @@ router.post('/get/news', multipartMiddleware, function(req, res){
 				console.log(profileData._id);
 				
 				var r = History.find({profile_id: profileData._id, action: 1});
-				r.exec(function(errHistory, historyData){
+
+				if(typeof max != "undefined"){
+					max = max*1;
+					r = r.limit(max);
+				}
+				if(typeof page != "undefined"){
+					page = page*1;
+					page = page-1;
+					var pages = page*max;
+					r = r.skip(pages);
+				}
+				r.sort( [ ['createdAt', 'descending'] ] ).exec(function(errHistory, historyData){
 					var data = []
+					console.log(historyData);
 					historyData.forEach(function(hItem, hIndex){
 						Profile.findOne({_id: hItem.profile_id}, function(errProfile, profileData){
 							var d = {
-								profile: profileData,
-								history: hItem
+								"type": hItem.action,
+								"title": hItem.data.title,
+								"content": hItem.data.content,
+								"gallery": hItem.data.gallery,
+								"profile": profileData,
+								"date": hItem.createdAt
 							};
+							
 
 							data.push(d);
 
@@ -179,11 +241,18 @@ router.post('/get/news', multipartMiddleware, function(req, res){
 		}
 	});
 });
+// GET NEWS
+// Parameter
+//  	Token
+// 		Max (Opcional) Maximo 40
+// 		Page(Opcional)
+// Return (Formato 1)
+// 		News
 router.post('/get/review', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 	var max       = req.body.max;
 	var page      = req.body.page;
-
+	var pages     = max*page;
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
 			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
@@ -195,10 +264,10 @@ router.post('/get/review', multipartMiddleware, function(req, res){
 					max = max*1;
 					r = r.limit(max);
 				}
+				if(typeof page != "undefined"){
+					r = r.skip();
+				}
 				r.exec(function(errReview, reviewData){
-
-
-
 					func.response(200, reviewData, function(response){
 						res.json(response);
 					});
@@ -212,7 +281,7 @@ router.post('/get/review', multipartMiddleware, function(req, res){
 		}
 	});
 });
-router.post('/review', multipartMiddleware, function(req, res){
+router.post('/write/review', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 	var public_id = req.body.public_id;
 
