@@ -140,13 +140,14 @@ router.post('/write/news', multipartMiddleware, function(req, res){
 									});
 								});
 							}else{
-								res.send("Hola");
+								Generalfunc.response(101, {}, function(response){
+									res.json(response);
+								})
 							}
 						});
 					}	
 				});
 			}else{
-				console.log("Array");
 				if((gallery.length-1) == index){
 					Tokenfunc.exist(guid, function(status, tokenData){
 						if(status){

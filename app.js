@@ -16,7 +16,7 @@ var experience = require('./routes/experience');
 var network    = require('./routes/network');
 var search     = require('./routes/search');
 var publish    = require('./routes/publish');
-
+var extra      = require('/.routes/extra');
 
 var app = express();
 
@@ -44,6 +44,7 @@ app.use('/', routes);
 app.use('/api/network', network);
 app.use('/api/profile', profile);
 app.use('/api/skills', skills);
+app.user('/api/extra', extra);
 
 app.use('/api/company', company);
 app.use('/api/experience', experience);
