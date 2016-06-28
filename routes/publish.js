@@ -16,7 +16,6 @@ var Tokenfunc      = require('../functions/tokenfunc');
 var Skillfunc      = require('../functions/skillfunc');
 var Experiencefunc = require('../functions/experiencefunc');
 var Networkfunc    = require('../functions/networkfunc');
-
 var format         = require('../functions/format.js');
 
 var Token       = require('../models/token');
@@ -27,7 +26,8 @@ var Job         = require('../models/job');
 var Company     = require('../models/company');
 var Experience  = require('../models/experience');
 var History     = require('../models/history');
-var Network            = require('../models/network');
+var Network     = require('../models/network');
+var Feedback    = require('../models/feedback');
 
 // Write Comentario
 // Parameter
@@ -43,21 +43,18 @@ router.post('/write/comentario', multipartMiddleware, function(req, res){
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
 			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
-				var h = {};
-				h.title = titulo;
-				h.content =contenido;
 
-				var history = new History({
+				var feedback = new Feedback({
 					profile_id: profileData._id,
-					de_id: profileData._id,
-					action: 2,
-					data: h
+					title: titulo,
+  					content: contenido
 				});
-				history.save(function(err, historyData){
-					Generalfunc.response(200, reviewData, function(response){
+				feedback.save(function(errFeedback, feedbackData){
+					Generalfunc.response(200, format.feedback(feedbackData), function(response){
 						res.json(response);
 					});
 				});
+
 			});
 		}else{
 		}

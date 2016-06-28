@@ -86,8 +86,14 @@ exports.news = function(news, profile){
 				"date": news.createdAt
 			};
 		break;
-	}
-	
+	}	
+}
+exports.feedback = function(feedback){
+	return {
+		"title": feedback.title,
+		"content": feedback.content,
+		"date": feedback.createdAt
+	};
 }
 exports.littleProfile = function(profile){
 	console.log(profile);

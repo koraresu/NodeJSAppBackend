@@ -5,11 +5,11 @@ var mongoose   = require('mongoose'),
     db              = mongoose.createConnection(db_lnk);
 
 var FeedbackSchema = new Schema({
-  profile_id: { type: Schema.Types.ObjectId, ref: 'Profile' },
-  title: String, 
-  content: String
+	profile_id: { type: Schema.Types.ObjectId, ref: 'Profile' },
+	title: { type: String },
+	content: { type: String }
 },{
   timestamps: true
 });
 
-module.exports = db.model( 'History' , FeedbackSchema );
+module.exports = db.model( 'Feedback' , FeedbackSchema );
