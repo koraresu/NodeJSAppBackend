@@ -14,7 +14,7 @@ exports.news = function(news, profile){
 	console.log(news);
 	console.log("/NEWS");
 	switch(news.action){
-		case 1:
+		case "1":
 			return {
 				"id": news._id,
 				"type": news.action,
@@ -25,37 +25,65 @@ exports.news = function(news, profile){
 				"date": news.createdAt
 			};
 		break;
-		case 2:
+		case "2":
 			return {
 				"type": "2",       // Action 
-				"puesto": "Gerente de piso",
+				"puesto": news.data.puesto,
 				"profile": profile,
-				"date": "2016-06-26T22:42:10.115Z"
+				"date": news.createdAt
 			};
 		break;
-		case 3:
+		case "3":
 			return {
-
+				"type": "3",       // Action 
+				"titulo": "Jennifer Pérez y Juan López",
+				"profile": profile,
+				"date": news.createdAt
 			};
 		break;
-		case 4:
+		case "4":
 			return {
-
+				"type": "4",       // Action 
+				"busqueda": news.data.busqueda,
+				"profile_friend": "57486bbe1a47529b08fda177",
+				"profile": profile,
+				"date": news.createdAt
 			};
 		break;
-		case 5:
+		case "5":
 			return {
-
+				"id": news._id,
+				"type": news.action,
+				"title": news.data.title,
+				"content": news.data.content,
+				"gallery": news.data.gallery,
+				"profile": profile,
+				"date": news.createdAt
 			};
 		break;
-		case 6:
+		case "6":
 			return {
-
+				"id": news._id,
+				"type": "6",
+				"skill": news.data.busqueda,
+				"profile": profile,
+				"date": news.createdAt
 			};
 		break;
-		case 7:
+		case "7":
 			return {
-
+				"type": "7",       // Action 
+				"title": "Titulo",
+				"content": "Probando",
+				"rate": "5",
+				"profile": profile,
+				"date": news.createdAt
+			};
+		break;
+		default:
+			return {
+				"profile": profile,
+				"date": news.createdAt
 			};
 		break;
 	}

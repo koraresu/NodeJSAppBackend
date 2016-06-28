@@ -107,6 +107,65 @@ router.post('/qrcode', multipartMiddleware, function(req, res){
 		}
 	});
 });
+router.post('/generate/history',multipartMiddleware, function(req, res){
+	var type = req.body.type;
+
+	var date = new Date();
+	// 57486bbe1a47529b08fda17b
+	switch(type){
+		case "1":
+			new History({
+				"type": "1",       // Action 
+				"title": faker.Lorem.words(),
+				"content": faker.Lorem.words(),
+				"gallery": [
+					{
+						"path": "/root/the-hive-server/public/gallery/57705a42d4ff75607874f4e2.png",
+						"url": "/gallery/57705a42d4ff75607874f4e2.png"
+					},
+					{
+						"path": "/root/the-hive-server/public/gallery/57705a42d4ff75607874f4e3.png",
+						"url": "/gallery/57705a42d4ff75607874f4e3.png"
+					},
+					{
+						"path": "/root/the-hive-server/public/gallery/57705a42d4ff75607874f4e4.png",
+						"url": "/gallery/57705a42d4ff75607874f4e4.png"
+					},
+					{
+						"path": "/root/the-hive-server/public/gallery/57705a42d4ff75607874f4e5.png",
+						"url": "/gallery/57705a42d4ff75607874f4e5.png"
+					}
+				],
+				"profile": {
+					"_id": "5738e9ef817c37df1ca03725",
+					"first_name": "Juan",
+					"last_name": "Corrales",
+					"profile_pic": "5738e9ef817c37df1ca03725.png",
+					"public_id": "574f58a61ab6bbed7cd340e7",
+					"speciality": {
+						"name": "Comercio Internacional",
+						"id": "574c68aed6fcbf6f0690bb52"
+					}
+				},
+				"date": "2016-06-26T22:42:10.115Z"
+			});
+		break;
+		case "2":
+		break;
+		case "3":
+		break;
+		case "4":
+		break;
+		case "5":
+		break;
+		case "6":
+		break;
+		case "6":
+		break;
+		default:
+		break;
+	}
+});
 router.post('/generate', multipartMiddleware, function(req,res){
 	for(var i = 0;i<=50;i++){
 		var nombre   = faker.name.firstName();
