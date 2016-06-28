@@ -34,6 +34,7 @@ function formatoProfile(profile_id,cb){
 				
 				var data = {
 					profile: {
+						"_id": profileData._id,
 						"first_name": profileData.first_name,
 						"last_name": profileData.last_name,
 						"public_id": profileData.public_id,
