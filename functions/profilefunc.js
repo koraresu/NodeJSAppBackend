@@ -30,7 +30,7 @@ function formatoProfile(profile_id,cb){
 		User.findOne({ _id: profileData.user_id }, function(errUser, userData){
 			Experience.find({ profile_id: profileData._id}, function(errExperience, experienceData){
 
-				console.log("ProfilePic: "+profileData.profile_pic);
+				console.log(profileData);
 				
 				var data = {
 					profile: {
