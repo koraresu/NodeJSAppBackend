@@ -29,6 +29,7 @@ var Job         = require('../models/job');
 var Company     = require('../models/company');
 var Experience  = require('../models/experience');
 var Network     = require('../models/network');
+var History     = require('../models/history');
 
 router.post('/friend/get', multipartMiddleware, function(req, res){
 	var profile_id      = mongoose.Types.ObjectId(req.body.profile_id);
@@ -109,62 +110,117 @@ router.post('/qrcode', multipartMiddleware, function(req, res){
 });
 router.post('/generate/history',multipartMiddleware, function(req, res){
 	var type = req.body.type;
+	var guid = req.body.guid;
+	var profile_id = req.body.profile_id;
 
-	var date = new Date();
-	// 57486bbe1a47529b08fda17b
-	switch(type){
-		case "1":
-			new History({
-				"type": "1",       // Action 
-				"title": faker.Lorem.words(),
-				"content": faker.Lorem.words(),
-				"gallery": [
-					{
-						"path": "/root/the-hive-server/public/gallery/57705a42d4ff75607874f4e2.png",
-						"url": "/gallery/57705a42d4ff75607874f4e2.png"
-					},
-					{
-						"path": "/root/the-hive-server/public/gallery/57705a42d4ff75607874f4e3.png",
-						"url": "/gallery/57705a42d4ff75607874f4e3.png"
-					},
-					{
-						"path": "/root/the-hive-server/public/gallery/57705a42d4ff75607874f4e4.png",
-						"url": "/gallery/57705a42d4ff75607874f4e4.png"
-					},
-					{
-						"path": "/root/the-hive-server/public/gallery/57705a42d4ff75607874f4e5.png",
-						"url": "/gallery/57705a42d4ff75607874f4e5.png"
+	profile_id = mongoose.Types.ObjectId( profile_id );
+
+	Tokenfunc.exist(guid, function(status, tokenData){
+		if(status){
+			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
+				if(status){
+					switch(type){
+						case "1":
+							new_history = new History({
+								"profile_id": profileData._id,
+								"de_id": profileData._id,
+								"action": type,
+								"data": {
+									"gallery": [],
+									"content": faker.lorem.words(10),
+									"title": faker.Lorem.words(5)
+								}
+							});
+
+						break;
+						case "2":
+							new_history = new History({
+
+								"action": type,
+								"profile_id": profileData._id,
+								"de_id": profileData._id,
+								
+								"data" : {
+				        			"puesto" : faker.lorem.words(2),
+				        			"puesto_id" : mongoose.Types.ObjectId(faker.random.number())
+				    			}
+							});
+						break;
+						case "3":
+							new_history = new History({
+								"profile_id": profileData._id,
+								"de_id": profile_id,
+								"action": type,
+								"data": {}
+							});
+						break;
+						case "4":
+							new_history = new History({
+								"profile_id": profileData._id,
+								"de_id": profileData._id,
+								"action": type,
+								"data": {
+									"busqueda": faker.lorem.words(2)
+								}
+							});
+						break;
+						case "5":
+							new_history = new History({
+								"profile_id": profileData._id,
+								"de_id": profile_id,
+								"action": type,
+								"data": {
+									"gallery": [],
+									"content": faker.lorem.words(10),
+									"title": faker.lorem.words(5)
+								}
+							});
+						break;
+						case "6":
+							new_history = new History({
+								"profile_id": profileData._id,
+								"de_id": profileData._id,
+								"action": type,
+								"data": { 
+									"name": faker.lorem.words(2),
+									"skill_id" : mongoose.Types.ObjectId(faker.random.number())
+								}
+							});
+						break;
+						case "7":
+							new_history = new History({
+								"profile_id": profileData._id,
+								"de_id": profile_id,
+								"action": type,
+								"data": { 
+									"content": faker.lorem.words(10),
+									"title": faker.lorem.words(5),
+									"rate": faker.random.number( 5 )
+								}
+							});
+						break;
+						default:
+							new_history = new History({
+								"profile_id": profileData._id,
+								"de_id": profile_id,
+							});
+						break;
 					}
-				],
-				"profile": {
-					"_id": "5738e9ef817c37df1ca03725",
-					"first_name": "Juan",
-					"last_name": "Corrales",
-					"profile_pic": "5738e9ef817c37df1ca03725.png",
-					"public_id": "574f58a61ab6bbed7cd340e7",
-					"speciality": {
-						"name": "Comercio Internacional",
-						"id": "574c68aed6fcbf6f0690bb52"
-					}
-				},
-				"date": "2016-06-26T22:42:10.115Z"
+
+					new_history.save(function(errHistory, historyData){
+						console.log(errHistory);
+
+						res.json(historyData);
+					});
+				}else{
+
+				}
 			});
-		break;
-		case "2":
-		break;
-		case "3":
-		break;
-		case "4":
-		break;
-		case "5":
-		break;
-		case "6":
-		break;
-		case "6":
-		break;
-		default:
-		break;
-	}
+		}else{
+
+		}
+	});
+	// 57486bbe1a47529b08fda17b
 });
 router.post('/generate', multipartMiddleware, function(req,res){
 	for(var i = 0;i<=50;i++){
