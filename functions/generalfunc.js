@@ -24,14 +24,14 @@ exports.saveImage = function(file, new_path, callback){
 }
 exports.response = function(type,item, callback){
 	switch(type){
-		case 101:
-			callback({ status: 'error', message: "No Permitido", data: item});
-		break;
 		case 200:
 			callback({ status: 'success', message: "Success", data: item});
 		break;
 		case 201:
 			callback({ status: 'logged', message: "Welcome", data: item });
+		break;
+		case 101:
+			callback({ status: 'error', message: "No Permitido", data: item});
 		break;
 		case 111:
 			callback({ status: 'error', message: "User Or Password Does't Exists.", data: item});
@@ -42,8 +42,10 @@ exports.response = function(type,item, callback){
 		case 113:
 			callback({ status: 'error', message: "Profile No Existe", data: item});
 		break;
+
 		case 404:
 			callback({ status: 'error', message: "Not Found", data: item});
 		break;
+
 	}
 }

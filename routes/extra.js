@@ -168,3 +168,4 @@ router.post('/generate', multipartMiddleware, function(req,res){
 		});
 	}
 });
+module.exports = router;

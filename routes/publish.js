@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var path = require('path');
 var fs = require('fs');
+var mongoose   = require('mongoose');
 
 var func = require('../func'); 
 var multipart = require('connect-multiparty');
@@ -9,11 +10,14 @@ var multipartMiddleware = multipart();
 
 var ObjectID = require('mongodb').ObjectID;
 
-var Generalfunc = require('../functions/generalfunc');
-var Profilefunc = require('../functions/profilefunc');
-var Tokenfunc = require('../functions/tokenfunc');
-var Skillfunc = require('../functions/skillfunc');
+var Generalfunc    = require('../functions/generalfunc');
+var Profilefunc    = require('../functions/profilefunc');
+var Tokenfunc      = require('../functions/tokenfunc');
+var Skillfunc      = require('../functions/skillfunc');
 var Experiencefunc = require('../functions/experiencefunc');
+var Networkfunc    = require('../functions/networkfunc');
+
+var format         = require('../functions/format.js');
 
 var Token       = require('../models/token');
 var Profile     = require('../models/profile');
@@ -23,6 +27,7 @@ var Job         = require('../models/job');
 var Company     = require('../models/company');
 var Experience  = require('../models/experience');
 var History     = require('../models/history');
+var Network            = require('../models/network');
 
 // Write Comentario
 // Parameter
@@ -189,13 +194,87 @@ router.post('/get/news', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 	var max       = req.body.max;
 	var page      = req.body.page;
+	var action    = req.body.action;
 
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
 			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
+
+				Networkfunc.getfriends(profileData._id, function(friends){
+					friends.push(profileData._id);
+					console.log(friends);
+
+					var search = new Object();
+					search.profile_id = { "$in": friends }
+
+					if(typeof action != "undefined"){
+						action = action*1;
+						search.action  = action;
+					}
+					
+	   				var jsonString= JSON.stringify(search);
+
+					var r = History.find(jsonString);
+					if(typeof max != "undefined"){
+						max = max*1;
+						r = r.limit(max);
+					}
+					if(typeof page != "undefined"){
+						page = page*1;
+						page = page-1;
+						var pages = page*max;
+						r = r.skip(pages);
+					}
+					r.sort( [ ['createdAt', 'descending'] ] ).exec(function(errHistory,historyData){
+						var data = []
+						console.log(historyData);
+						historyData.forEach(function(hItem, hIndex){
+							Profile.findOne({
+								_id: hItem.profile_id
+							}, function(errProfile, profileData){
+								var profile = format.littleProfile(profileData);
+								var d = format.news(hItem, profile);
+								
+
+								data.push(d);
+
+								if(hIndex == (historyData.length-1)){
+									func.response(200, data, function(response){
+										res.json(response);
+									});
+								}
+							});
+
+
+						});
+					});
+					
+					/*
+					History.find({
+						profile_id: {
+							"$in": friends
+						}
+					}).exec(function(errHistory, historyData){
+						res.json(historyData);
+					});
+					*/
+				});
+				//////
+
+				/*
 				console.log(profileData._id);
 				
-				var r = History.find({profile_id: profileData._id, action: 1});
+				var search = new Object();
+				search.profile_id = profileData._id;
+
+				if(typeof action != "undefined"){
+					action = action*1;
+					search.action  = action;
+				}
+				
+   				var jsonString= JSON.stringify(search);
+
+				var r = History.find(jsonString);
 
 				if(typeof max != "undefined"){
 					max = max*1;
@@ -230,10 +309,9 @@ router.post('/get/news', multipartMiddleware, function(req, res){
 								});
 							}
 						});
-
-
 					});
 				});
+				*/
 			});
 		}else{
 			func.response(101, {},function(response){

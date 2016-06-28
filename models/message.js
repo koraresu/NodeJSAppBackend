@@ -4,12 +4,13 @@ var mongoose   = require('mongoose'),
     db_lnk          = 'mongodb://localhost:27017/hive',
     db              = mongoose.createConnection(db_lnk);
 
-var FeedbackSchema = new Schema({
+var MessageSchema = new Schema({
+  conversation: { type: Schema.Types.ObjectId, ref: 'Conversation' },
   profile_id: { type: Schema.Types.ObjectId, ref: 'Profile' },
-  title: String, 
-  content: String
+  message: { type: String }
 },{
   timestamps: true
 });
 
-module.exports = db.model( 'History' , FeedbackSchema );
+module.exports = db.model( 'Message' , MessageSchema );
+

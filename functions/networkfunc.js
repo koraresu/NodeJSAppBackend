@@ -5,40 +5,46 @@ var fs = require('fs');
 
 var Generalfunc = require('./generalfunc');
 
-var Token              = require('../models/token');
-var User               = require('../models/user');
-var Job                = require('../models/job');
-var Company            = require('../models/company');
-var Speciality         = require('../models/speciality');
-var Profile            = require('../models/profile');
-var Sector             = require('../models/sector');
-var Experience         = require('../models/experience');
-var Skill              = require('../models/skills');
-var Conversation    = require('../models/conversation');
+var Profile        = require('../models/profile');
+var User           = require('../models/user');
+var Token          = require('../models/token');
+var Job            = require('../models/job');
+var Company        = require('../models/company');
+var Experience     = require('../models/experience');
+var Network        = require('../models/network');
+var Message        = require('../models/message');
+var Conversation   = require('../models/conversation');
 
 function addReview(profile_id_a, public_id, callback){}
 function addNetwork(profile_id_a, public_id, callback){}
 
-function message(conversation_id, text, callback){
-	/*
-	Conversation.find({_id: conversation_id, function(err, conversationData){
-		if(!err && conversationData){
-			callback(true, conversationData);
+function message(profileData, conv, text, callback){
+	Conversation.findOne({ _id: conv }).exec(function(errConversation, conversationData){
+		if(!errConversation && conversationData){
+			var message = new Message({
+				profile_id: profileData._id,
+				conversation: conversationData._id,
+				message: text
+			});
+
+			message.save(function(errMessage, messageData){
+				if(!errMessage && messageData){
+					callback(true, messageData);
+				}else{
+					callback(false);
+				}
+			});
 		}else{
-			callback(false, conversationData);
+			callback(false);
 		}
 	});
-	*/
 }
 function otherProfile(profiles, profile_id,cb){
 	var a = "";
-	console.log(profile_id);
 	profiles.forEach(function(item, index){
 		var i = trimUnderscores(item.toString());
 		var p = trimUnderscores(profile_id.toString());
-		console.log(i);
 		if(i != p){
-			console.log(item+"|"+profile_id);
 			a = i;
 		}
 		if(index == (profiles.length-1)){
@@ -52,32 +58,52 @@ function checkconversation(profile_a, profile_b, callback){
 	var generated_id_a = mongoose.Types.ObjectId( profile_a );
 	var generated_id_b = mongoose.Types.ObjectId( profile_b );
 
-	var profile = [];
-	profile.push( generated_id_a );
-	profile.push( generated_id_b );
+	var profile = [generated_id_a, generated_id_b];
 
-	console.log(profile);
-
-	Conversation.find({ profile: { "$in" : profile } }, function(err, conversationData){
+	Conversation.find({
+		profiles: {
+			"$in" : profile
+		}
+	}, function(err, conversationData){
+		
 		if(!err && conversationData){
-			callback(true, conversationData);
-		}else{
 
-			
-
-			console.log(profile);
-
-			var conversation = new Conversation({
-				profile: profile,
-				status: "active",
-				message: []
-			});
-			conversation.save(function(err, conversationData){
-				callback(false, conversationData);
-			});
+			if(conversationData.length > 0){
+				callback(true, conversationData);
+			}else{
+				var conversation = new Conversation({
+					profiles: profile,
+					status: "active",
+					message: []
+				});
+				conversation.save(function(err, conversationData){
+					callback(false, conversationData);
+				});
+			}
 		}
 	});
 }
+function getFriends(profile_id,callback){
+	var data = [];
+	Network.find({
+		profiles: {
+			"$in": [ mongoose.Types.ObjectId(profile_id) ]
+		}
+	}).exec(function(errNetwork, networkData){
+		if(networkData.length > 0){
+			networkData.forEach(function(item, index){
+				data.push( mongoose.Types.ObjectId(item._id) );
+
+				if((networkData.length-1) == index){
+					callback(data);
+				}
+			});
+		}else{
+			callback(data);
+		}
+	});
+}
+exports.getfriends = getFriends
 exports.checkconversation   = checkconversation
 exports.message             = message
 exports.addReview           = addReview
