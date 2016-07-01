@@ -9,7 +9,7 @@ exports.chat_message = function(message){
 		"message": message.message
 	};
 }
-exports.news = function(news, profile){
+exports.news = function(news, profile, profile_de){
 	console.log("NEWS");
 	console.log(news);
 	console.log("/NEWS");
@@ -45,7 +45,7 @@ exports.news = function(news, profile){
 			return {
 				"type": "4",       // Action 
 				"busqueda": news.data.busqueda,
-				"profile_friend": "57486bbe1a47529b08fda177",
+				"profile_friend": profile_de,
 				"profile": profile,
 				"date": news.createdAt
 			};

@@ -16,11 +16,11 @@ var mongoose    = require('mongoose');
 		y cambiando la siguiente letras al _ por mayuscula. Iniciando la primera letra en mayuscula.
 */
 
-var Profilefunc = require('../functions/profilefunc');
+var Profilefunc    = require('../functions/profilefunc');
 var Experiencefunc = require('../functions/experiencefunc');
-var Tokenfunc = require('../functions/tokenfunc');
-var Skillfunc = require('../functions/skillfunc');
-
+var Tokenfunc      = require('../functions/tokenfunc');
+var Skillfunc      = require('../functions/skillfunc');
+var Historyfunc    = require('../functions/historyfunc');
 
 var Profile     = require('../models/profile');
 var User        = require('../models/user');
@@ -131,7 +131,15 @@ router.post('/generate/history',multipartMiddleware, function(req, res){
 									"title": faker.Lorem.words(5)
 								}
 							});
+							/*
+							Historyfunc.generate_history(1, profileData, {
+								"gallery": [],
+								"content": faker.lorem.words(10),
+								"title": faker.Lorem.words(5)
+							}, function(){
 
+							});
+							*/
 						break;
 						case "2":
 							new_history = new History({
@@ -145,6 +153,15 @@ router.post('/generate/history',multipartMiddleware, function(req, res){
 				        			"puesto_id" : mongoose.Types.ObjectId(faker.random.number())
 				    			}
 							});
+
+							/*
+							Historyfunc.generate_history(2, profileData, {
+								"puesto" : faker.lorem.words(2),
+				        		"puesto_id" : mongoose.Types.ObjectId(faker.random.number())
+							}, function(){
+
+							});
+							*/
 						break;
 						case "3":
 							new_history = new History({
@@ -153,8 +170,15 @@ router.post('/generate/history',multipartMiddleware, function(req, res){
 								"action": type,
 								"data": {}
 							});
+							/*
+							Historyfunc.generate_history(3, profileData, {
+							}, function(){
+
+							});
+							*/
 						break;
 						case "4":
+
 							new_history = new History({
 								"profile_id": profileData._id,
 								"de_id": profileData._id,
@@ -163,6 +187,13 @@ router.post('/generate/history',multipartMiddleware, function(req, res){
 									"busqueda": faker.lorem.words(2)
 								}
 							});
+							/*
+							Historyfunc.generate_history(4, profileData, {
+
+							}, function(){
+
+							});
+							*/
 						break;
 						case "5":
 							new_history = new History({

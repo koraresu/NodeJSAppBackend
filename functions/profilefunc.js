@@ -243,5 +243,8 @@ function PublicId(public_id, callback){
 		}
 	});
 }
+function createHistory(){
+	
+}
 exports.publicId = PublicId
 exports.tokenToProfile = tokenToProfile
