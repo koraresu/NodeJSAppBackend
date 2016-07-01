@@ -7,6 +7,8 @@ var path = require('path');
 var fs = require('fs');
 var _ = require('underscore');
 
+
+
 var faker = require('faker');
 faker.locale = "es_MX";
 var mongoose    = require('mongoose');
@@ -50,6 +52,7 @@ Nombre de Objectos de Documentos:
 router.post('/login', multipartMiddleware, function(req, res){
 	var email    = req.body.email;
 	var password = req.body.password;
+
 
 	func.userProfileLogin(email, password, function(status, tokenData, userData, profileData){
 		console.log(status)
@@ -97,11 +100,13 @@ router.post('/create', multipartMiddleware, function(req, res){
 	var email    = req.body.email;
 	var password = req.body.password;
 
+	var pass = Profilefunc.generate_password(password);
+
 	func.userProfileInsertIfDontExists({
 		email: email
 	},{
 		email: email,
-		password: password,
+		password: pass,
 		verified: false,
 		status: 1
 	},{
@@ -173,6 +178,55 @@ router.post('/get', multipartMiddleware, function(req, res){
 			});
 		}else{
 			res.send("No Token");
+		}
+	});
+});
+router.post('/changepassword', multipartMiddleware, function(req, res){
+	var guid      = req.body.guid;
+	var password  = req.body.password;
+	Tokenfunc.exist(guid, function(status, tokenData){
+		if(status){
+			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
+				if(status){
+					User.findOne({ _id: profileData.user_id }, function(errUser, userData){
+						userData.password = Profilefunc.generate_password(password);
+						userData.save(function(errUser, userData){
+							res.json(userData);
+						});
+					});
+					
+				}else{
+					res.json("H");
+				}
+			});
+		}else{
+			res.json("T");
+		}
+	});
+});
+router.post('/checkpassword', multipartMiddleware, function(req, res){
+	var guid      = req.body.guid;
+	var password  = req.body.password;
+	Tokenfunc.exist(guid, function(status, tokenData){
+		if(status){
+			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
+				if(status){
+					User.findOne({ _id: profileData.user_id }, function(errUser, userData){
+						
+						if(Profilefunc.compare_password(userData.password, password)){
+							res.send("True");
+						}else{
+							res.send("False");
+						}
+
+					});
+					
+				}else{
+					res.json("H");
+				}
+			});
+		}else{
+			res.json("T");
 		}
 	});
 });

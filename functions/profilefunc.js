@@ -5,7 +5,7 @@ var fs = require('fs');
 var qr = require('qr-image');
 var _ = require('underscore');
 
-
+var bcrypt = require('bcrypt-nodejs');
 
 var Generalfunc = require('./generalfunc');
 var Experiencefunc = require('./experiencefunc');
@@ -243,8 +243,15 @@ function PublicId(public_id, callback){
 		}
 	});
 }
-function createHistory(){
-	
+function generate_Password(password){
+	var hash = bcrypt.hashSync(password);
+	return hash;
 }
+function compare_Password(in_db, password){
+	return bcrypt.compareSync(password, in_db);
+}
+exports.generate_password = generate_Password
+exports.compare_password  = compare_Password
+
 exports.publicId = PublicId
 exports.tokenToProfile = tokenToProfile

@@ -134,13 +134,20 @@ exports.ProfileId = function(profile_id, callback){
 	});
 }
 exports.userProfileLogin = function(email, password, callback){
-	User.findOne({ email: email, password: password }, function(errUser, user){
+	User.findOne({ email: email}, function(errUser, user){
 		if(!errUser && user){
-			Token.findOne({ user_id: user._id}, function(errToken, token){
-				Profile.findOne({ user_id: user._id }, function(errProfile, profile){
-					callback(true,token, user, profile);
+			var pass = Profilefunc.compare_password(user.password, password);
+
+			if(pass){
+				Token.findOne({ user_id: user._id}, function(errToken, token){
+					Profile.findOne({ user_id: user._id }, function(errProfile, profile){
+						callback(true,token, user, profile);
+					});
 				});
-			});
+			}else{
+				callback(false);
+			}
+			
 		}else{
 			callback(false);
 		}
