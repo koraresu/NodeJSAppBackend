@@ -128,7 +128,7 @@ router.post('/generate/history',multipartMiddleware, function(req, res){
 								"data": {
 									"gallery": [],
 									"content": faker.lorem.words(10),
-									"title": faker.Lorem.words(5)
+									"title": faker.lorem.words(5)
 								}
 							});
 							/*
