@@ -229,17 +229,19 @@ router.post('/get/news', multipartMiddleware, function(req, res){
 							Profile.findOne({
 								_id: hItem.profile_id
 							}, function(errProfile, profileData){
-								var profile = format.littleProfile(profileData);
-								var d = format.news(hItem, profile);
-								
+								Profile.findOne({
+									_id: hItem.de_id
+								}, function(errProfileDe, profileDeData){
+									var profile = format.littleProfile(profileData);
+									var d = format.news(hItem, profile, profileDeData);
+									data.push(d);
 
-								data.push(d);
-
-								if(hIndex == (historyData.length-1)){
-									func.response(200, data, function(response){
-										res.json(response);
-									});
-								}
+									if(hIndex == (historyData.length-1)){
+										func.response(200, data, function(response){
+											res.json(response);
+										});
+									}
+								});
 							});
 
 
