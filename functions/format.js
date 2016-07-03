@@ -73,10 +73,11 @@ exports.news = function(news, profile, profile_de){
 		case "7":
 			return {
 				"type": "7",       // Action 
-				"title": "Titulo",
-				"content": "Probando",
-				"rate": "5",
+				"title": news.data.title,
+				"content": news.data.content,
+				"rate": news.data.rate,
 				"profile": profile,
+				"profile_friend": profile_de,
 				"date": news.createdAt
 			};
 		break;
