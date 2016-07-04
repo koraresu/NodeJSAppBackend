@@ -34,7 +34,7 @@ exports.response = function(type,item, callback){
 			callback({ status: 'error', message: "No Permitido", data: item});
 		break;
 		case 111:
-			callback({ status: 'error', message: "Email y/o Contraseña inválido", data: item});
+			callback({ status: 'error', message: "Email y/o contraseña es incorrecto", data: item});
 		break;
 		case 112:
 			callback({ status: 'error', message: "User Exists", data: item});
