@@ -16,27 +16,27 @@ var mongoose    = require('mongoose');
 	Nombre de Modelos:
 		Toda las variables de modelo se nombrara, con el nombre del archivo, eliminando _ 
 		y cambiando la siguiente letras al _ por mayuscula. Iniciando la primera letra en mayuscula.
-*/
-var Generalfunc = require('../functions/generalfunc');
-var Profilefunc = require('../functions/profilefunc');
-var Experiencefunc = require('../functions/experiencefunc');
-var Tokenfunc = require('../functions/tokenfunc');
-var Skillfunc = require('../functions/skillfunc');
-var format = require('../functions/format');
+		*/
+		var Generalfunc = require('../functions/generalfunc');
+		var Profilefunc = require('../functions/profilefunc');
+		var Experiencefunc = require('../functions/experiencefunc');
+		var Tokenfunc = require('../functions/tokenfunc');
+		var Skillfunc = require('../functions/skillfunc');
+		var format = require('../functions/format');
 
-var Profile     = require('../models/profile');
-var User        = require('../models/user');
-var Token       = require('../models/token');
-var Job         = require('../models/job');
-var Company     = require('../models/company');
-var Experience  = require('../models/experience');
-var Network     = require('../models/network');
+		var Profile     = require('../models/profile');
+		var User        = require('../models/user');
+		var Token       = require('../models/token');
+		var Job         = require('../models/job');
+		var Company     = require('../models/company');
+		var Experience  = require('../models/experience');
+		var Network     = require('../models/network');
 /*
 Nombre de Objectos de Documentos:
 	Todo dato recibido por FUNC, que sea un documento de mongo, se le colocara como nombre de varible el nombre del modelo,
 	seguido de la palabra "Data"*Respetando Mayusculas*, se cambio el modelo ProfileData a ProfileInfo para no tener problemas.
 
-*/
+	*/
 
 
 
@@ -52,34 +52,44 @@ Nombre de Objectos de Documentos:
 router.post('/login', multipartMiddleware, function(req, res){
 	var email    = req.body.email;
 	var password = req.body.password;
+	User.findOne({email: email, type: 0 }, function(errUser, userData){
+		if(!errUser && userData){
+			if(typeof userData != "undefined"){
+				Profilefunc.compare_password(password, userData.password, function(status){
+					if(status){
+						Profilefunc.userProfile(userData, function(statProfile, tokenData, userData, profileData){
+							Experiencefunc.get(profileData._id, function(statusExperience, experiences){
+								var exp = statusExperience;	
+								var verified = false;
 
-	User.findOne({email: email}, function(errUser, userData){
-		Profilefunc.compare_password(password, userData.password, function(status){
-			if(status){
-
-				Profilefunc.userProfile(userData, function(statProfile, tokenData, userData, profileData){
-					Experiencefunc.get(profileData._id, function(statusExperience, experiences){
-						var exp = statusExperience;	
-						var verified = false;
-
-						if(userData.verified){
-							verified = true;
-						}
-						Generalfunc.response(201,{
-							token: tokenData.generated_id,
-							verified: verified,
-							experiences: exp,
-						}, function(response){
+								if(userData.verified){
+									verified = true;
+								}
+								Generalfunc.response(201,{
+									token: tokenData.generated_id,
+									verified: verified,
+									experiences: exp,
+								}, function(response){
+									res.json(response);
+								});
+							});
+						});
+					}else{
+						Generalfunc.response(111,{ },function(response){
 							res.json(response);
 						});
-					});
+					}
 				});
 			}else{
-				Generalfunc.response(111,{ },function(response){
+				Generalfunc.response(111, {}, function(response){
 					res.json(response);
 				});
 			}
-		});
+		}else{
+			Generalfunc.response(111, {}, function(response){
+				res.json(response);
+			});
+		}
 	});	
 });
 // CREATE
@@ -137,7 +147,7 @@ router.post('/create', multipartMiddleware, function(req, res){
 // Return (Formato 2)
 // 		Generated Token
 
-router.post('/create-facebook', multipartMiddleware, function(req, res){
+router.post('/login-facebook', multipartMiddleware, function(req, res){
 	var email      = req.body.email;
 	var first_name     = req.body.first_name;
 	var last_name   = req.body.last_name;
@@ -147,20 +157,70 @@ router.post('/create-facebook', multipartMiddleware, function(req, res){
 	var tokenFB    = req.body.token;
 	var name       = req.body.name;
 
-	User.find({ email: email}, function(errUser, userData){
+	User.findOne({ email: email}, function(errUser, userData){
 		if(!errUser && userData){
-			console.log("No ErrorUser & UserData");
-			console.log(userData);
 
-			if(userData.type == 1){
-				var data = format.login(tokenData, user, profile);
-				Generalfunc.response(201,data, function(response){
-					res.json(response);
-				});
+			var verified = false;
 
-			}else{
-				// Update Data on info.
+			if(userData.verified){
+				verified = true;
 			}
+
+			Token.findOne({ user_id: userData._id}, function(errToken, tokenData){
+				Profile.findOne({ user_id: userData._id}, function(errProfile, profileData){
+					var info = [
+					{
+						"name": "first_name",
+						"value": first_name
+					},
+					{
+						"name": "last_name",
+						"value": last_name
+					},
+					{
+						"name": "name",
+						"value":name
+					},
+					{
+						"name": "picture",
+						"value": profilepic
+					},
+					{
+						"name": "email",
+						"value": email
+					},
+					{
+						"name": "access-token",
+						"value": tokenFB
+					},
+					{
+						"name": "gender",
+						"value": gender
+					},
+					{
+						"name": "id",
+						"value": facebookID
+					}
+					];
+
+					profileData.info = [];
+					profileData.info = info;
+
+					Experiencefunc.get(profileData._id, function(statusExperience, experiences){
+						var exp = statusExperience;	
+						profileData.save(function(errProfile, profileData){
+							Generalfunc.response(201,{
+								token: tokenData.generated_id,
+								verified: verified,
+								experiences: exp,
+							}, function(response){
+								res.json(response);
+							});
+						});
+					});
+					
+				});
+			});
 		}else{
 			func.userProfileInsertIfDontExists({
 				email: email
@@ -177,53 +237,55 @@ router.post('/create-facebook', multipartMiddleware, function(req, res){
 				public_id: mongoose.Types.ObjectId(),
 				experiences: [],
 				info: [
-					{
-						"name": "first_name",
-						"value": first_name
-					},
-					{
-						"name": "last_name",
-								"value": last_name
-							},
-							{
-								"name": "name",
-								"value":name
-							},
-							{
-								"name": "picture",
-								"value": profilepic
-							},
-							{
-								"name": "email",
-								"value": email
-							},
-							{
-								"name": "access-token",
-								"value": tokenFB
-							},
-							{
-								"name": "gender",
-								"value": gender
-							},
-							{
-								"name": "id",
-								"value": facebookID
-							}
-						],
-			}, function(exist, tokenData){
-				if(exist){
-					func.response(112,{}, function(response){
-						res.json( response );
-					});
-				}else{
-					Generalfunc.response(201,{
-						token: tokenData.generated_id,
-						verified: verified,
-						experiences: exp,
-					}, function(response){
-						res.json(response);
-					});
+				{
+					"name": "first_name",
+					"value": first_name
+				},
+				{
+					"name": "last_name",
+					"value": last_name
+				},
+				{
+					"name": "name",
+					"value":name
+				},
+				{
+					"name": "picture",
+					"value": profilepic
+				},
+				{
+					"name": "email",
+					"value": email
+				},
+				{
+					"name": "access-token",
+					"value": tokenFB
+				},
+				{
+					"name": "gender",
+					"value": gender
+				},
+				{
+					"name": "id",
+					"value": facebookID
 				}
+				],
+			}, function(exist, tokenData, profileData){
+
+				verified = false;
+
+				Experiencefunc.get(profileData._id, function(statusExperience, experiences){
+					var exp = statusExperience;	
+					profileData.save(function(errProfile, profileData){
+						Generalfunc.response(201,{
+							token: tokenData.generated_id,
+							verified: verified,
+							experiences: exp,
+						}, function(response){
+							res.json(response);
+						});
+					});
+				});
 			});
 		}
 	});
@@ -265,9 +327,9 @@ router.post('/get', multipartMiddleware, function(req, res){
 
 					Profilefunc.formatoProfile(profileData._id,function( profile ){
 
-	 					Generalfunc.response(200, profile, function(response){
-	 						res.json(response);
-	 					});
+						Generalfunc.response(200, profile, function(response){
+							res.json(response);
+						});
 						
 					});
 					
@@ -385,7 +447,7 @@ router.post('/update', multipartMiddleware, function(req, res){
 						Profilefunc.formatoProfile(profileData._id,function(err, profile){
 							var data = [];
 							data = _.extend(data,profile);
-	 					
+
 							func.response(200,data, function(response){
 								res.json(response);
 							});
@@ -502,7 +564,7 @@ router.post('/update-experience', multipartMiddleware, function(req, res){
 									Profilefunc.formatoProfile(profileData._id,function(err, profile){
 										var data = [];
 										data = _.extend(data,profile);
-				 					
+
 										func.response(200,data, function(response){
 											res.json(response);
 										});
@@ -543,7 +605,7 @@ router.post('/addskill', multipartMiddleware, function(req, res){
 						Profilefunc.formatoProfile(profileData._id,function(err, profile){
 							var data = [];
 							data = _.extend(data,profile);
-	 					
+
 							func.response(200,data, function(response){
 								res.json(response);
 							});
@@ -580,13 +642,13 @@ router.post('/deleteskill', multipartMiddleware, function(req, res){
 			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
 				Skillfunc.delete(profileData._id, name, function(err, profileData){
 					Profilefunc.formatoProfile(profileData._id,function(err, profile){
-							var data = [];
-							data = _.extend(data,profile);
-	 					
-							func.response(200,data, function(response){
-								res.json(response);
-							});
+						var data = [];
+						data = _.extend(data,profile);
+
+						func.response(200,data, function(response){
+							res.json(response);
 						});
+					});
 				});
 			});
 		}else{
@@ -651,13 +713,13 @@ router.post('/setprofilepic', multipartMiddleware, function(req, res){
 
 				Profilefunc.updateProfilePic(profileData._id, profilepic, function(err, profileData){
 					Profilefunc.formatoProfile(profileData._id,function(err, profile){
-							var data = [];
-							data = _.extend(data,profile);
-	 					
-							func.response(200,data, function(response){
-								res.json(response);
-							});
+						var data = [];
+						data = _.extend(data,profile);
+
+						func.response(200,data, function(response){
+							res.json(response);
 						});
+					});
 				});
 			});
 		}else{
@@ -706,47 +768,47 @@ router.post('/facebook', multipartMiddleware, function(req, res){
 		if(status){
 			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
 				Profilefunc.addinfo(profileData._id, [
-					{
-						"name": "first_name",
-						"value": first_name
-					},
-					{
-						"name": "last_name",
-						"value": last_name
-					},
-					{
-						"name": "name",
-						"value":name
-					},
-					{
-						"name": "picture",
-						"value": picture
-					},
-					{
-						"name": "email",
-						"value": email
-					},
-					{
-						"name": "access-token",
-						"value": token
-					},
-					{
-						"name": "gender",
-						"value": gender
-					},
-					{
-						"name": "id",
-						"value": id
-					}
+				{
+					"name": "first_name",
+					"value": first_name
+				},
+				{
+					"name": "last_name",
+					"value": last_name
+				},
+				{
+					"name": "name",
+					"value":name
+				},
+				{
+					"name": "picture",
+					"value": picture
+				},
+				{
+					"name": "email",
+					"value": email
+				},
+				{
+					"name": "access-token",
+					"value": token
+				},
+				{
+					"name": "gender",
+					"value": gender
+				},
+				{
+					"name": "id",
+					"value": id
+				}
 				], function(profileInfoData){
 					Profilefunc.formatoProfile(profileData._id,function(err, profile){
-							var data = [];
-							data = _.extend(data,profile);
-	 					
-							func.response(200,data, function(response){
-								res.json(response);
-							});
+						var data = [];
+						data = _.extend(data,profile);
+
+						func.response(200,data, function(response){
+							res.json(response);
 						});
+					});
 				});
 			});
 		}else{
@@ -770,38 +832,38 @@ router.post('/token/exists', multipartMiddleware, function(req, res){
 
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
-				Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
-					if(status){
-						var verified = false;
-						if(userData.verified){
-							verified = true;
+			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
+				if(status){
+					var verified = false;
+					if(userData.verified){
+						verified = true;
+					}
+
+					func.experienceGet(profileData._id, function(statusExperience, experiences){
+						var exp = false;
+						console.log(experiences);
+						if(experiences.length > 0){
+							exp = true;
 						}
 
-						func.experienceGet(profileData._id, function(statusExperience, experiences){
-							var exp = false;
-							console.log(experiences);
-							if(experiences.length > 0){
-								exp = true;
-							}
-
-							func.response(200, {
-								user: userData,
-								profile:profileData,
-								experiences: exp,
-								verified: verified
-							}, function(response){
-								res.json(response);
-							});
-						});
-
-						
-					}else{
-						func.response(101, {}, function(response){
+						func.response(200, {
+							user: userData,
+							profile:profileData,
+							experiences: exp,
+							verified: verified
+						}, function(response){
 							res.json(response);
 						});
-					}
-					
-				});
+					});
+
+
+				}else{
+					func.response(101, {}, function(response){
+						res.json(response);
+					});
+				}
+
+			});
 		}else{
 			func.response(101, {}, function(response){
 				res.json(response);
