@@ -17,8 +17,18 @@ var getAll = function(){
 
 }
 exports.getAll           = getAll
-var get = function(){
+var get = function(profile, callback){
+	Experience.find({ profile_id: profile}).exec( function(err, experiences){
 
+		if(!err && experiences.length > 0){
+
+			callback(true, experiences);
+		
+		}else{
+			callback(false, experiences);
+		}
+		
+	});
 }
 exports.get              = get
 var insert = function(){

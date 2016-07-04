@@ -210,6 +210,13 @@ exports.updateInfo       = function(profile_id, callback){
 exports.updateExperience = function(profile_id, callback){
 
 }
+exports.userProfile = function(user, callback){
+	Token.findOne({ user_id: user._id}, function(errToken, token){
+		Profile.findOne({ user_id: user._id }, function(errProfile, profile){
+			callback(true,token, user, profile);
+		});
+	});				
+}
 function tokenToProfile(guid, callback){
 	Token.findOne({ generated_id: guid}).exec(function(errToken, token){
 		if(!errToken && token){
@@ -247,9 +254,43 @@ function generate_Password(password){
 	var hash = bcrypt.hashSync(password);
 	return hash;
 }
-function compare_Password(in_db, password){
-	return bcrypt.compareSync(password, in_db);
+function compare_Password(password,in_db, cb){
+	bcrypt.compare(password, in_db, function(err, res){
+		cb(res);
+	});
 }
+
+function userProfileInsertIfDontExists(searchUser, userInsert, profileInsert, callback){
+	User.findOne(searchUser, function(errUser, user){
+		if(!errUser && user){
+			callback(true,null,null);
+		}else{
+			var user = new User(userInsert);
+			user.save(function(errUser, userData){
+				var token = new Token({
+					generated_id: mongoose.Types.ObjectId(),
+					user_id: user
+				});
+				token.save(function(errToken, tokenData){
+					delete user['password'];
+					
+					user = format.user(user);
+					profileInsert['user_id'] = user._id;
+					var profile = new Profile( profileInsert );
+					profile.save(function(err, profileData){
+						Profilefunc.generate_qrcode(profileData);
+						callback( false, token, profileData );	
+					});		
+				});
+				
+			});
+
+
+			
+		}
+	});
+}
+exports.userProfileInsertIfDontExists = userProfileInsertIfDontExists
 exports.generate_password = generate_Password
 exports.compare_password  = compare_Password
 

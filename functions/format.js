@@ -96,6 +96,9 @@ exports.feedback = function(feedback){
 		"date": feedback.createdAt
 	};
 }
+exports.user = function(user){
+
+}
 exports.littleProfile = function(profile){
 	console.log(profile);
 	/*

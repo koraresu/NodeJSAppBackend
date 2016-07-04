@@ -136,18 +136,23 @@ exports.ProfileId = function(profile_id, callback){
 exports.userProfileLogin = function(email, password, callback){
 	User.findOne({ email: email}, function(errUser, user){
 		if(!errUser && user){
-			var pass = Profilefunc.compare_password(user.password, password);
+			console.log(user);
 
-			if(pass){
-				Token.findOne({ user_id: user._id}, function(errToken, token){
-					Profile.findOne({ user_id: user._id }, function(errProfile, profile){
-						callback(true,token, user, profile);
-					});
-				});
-			}else{
-				callback(false);
-			}
+			var pass = Profilefunc.generate_password(password);
 			
+			console.log(user.password);
+			Profilefunc.compare_password(password, user.password, function(err, res){
+				console.log(res);
+				if(res){
+					Token.findOne({ user_id: user._id}, function(errToken, token){
+						Profile.findOne({ user_id: user._id }, function(errProfile, profile){
+							callback(true,token, user, profile);
+						});
+					});	
+				}else{
+					callback(false);
+				}
+			});
 		}else{
 			callback(false);
 		}

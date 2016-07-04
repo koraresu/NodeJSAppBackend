@@ -53,37 +53,34 @@ router.post('/login', multipartMiddleware, function(req, res){
 	var email    = req.body.email;
 	var password = req.body.password;
 
+	User.findOne({email: email}, function(errUser, userData){
+		Profilefunc.compare_password(password, userData.password, function(status){
+			if(status){
 
-	func.userProfileLogin(email, password, function(status, tokenData, userData, profileData){
-		console.log(status)
-		if(status){
-			func.experienceGet(profileData._id, function(statusExperience, experiences){
-				var exp = statusExperience;
-				if(status){
-					var verified = false;
+				Profilefunc.userProfile(userData, function(statProfile, tokenData, userData, profileData){
+					Experiencefunc.get(profileData._id, function(statusExperience, experiences){
+						var exp = statusExperience;	
+						var verified = false;
 
-					if(userData.verified){
-						verified = true;
-					}
-					func.response(201,{
-						token: tokenData.generated_id,
-						verified: verified,
-						experiences: exp,
-					}, function(response){
-						res.json(response);
+						if(userData.verified){
+							verified = true;
+						}
+						Generalfunc.response(201,{
+							token: tokenData.generated_id,
+							verified: verified,
+							experiences: exp,
+						}, function(response){
+							res.json(response);
+						});
 					});
-				}else{
-					func.reponse(111,{ },function(response){
-						res.json(response);
-					});
-				}
-			});
-		}else{
-			func.response(111, {}, function(response){
-				res.json(response);
-			})
-		}
-	});
+				});
+			}else{
+				Generalfunc.response(111,{ },function(response){
+					res.json(response);
+				});
+			}
+		});
+	});	
 });
 // CREATE
 // Parameter:
@@ -707,4 +704,49 @@ router.post('/token/exists', multipartMiddleware, function(req, res){
 		}
 	});
 });
+
+// CREATE FACEBOOK
+// Parameter:
+// 		first_name     = Nombre
+// 		last_name      = Apellido
+//		email          = Email
+// Return (Formato 2)
+// 		Generated Token
+
+router.post('/create-facebook', multipartMiddleware, function(req, res){
+	var nombre   = req.body.first_name;
+	var apellido = req.body.last_name;
+	var email    = req.body.email;
+
+	Profilefunc.
+	func.userProfileInsertIfDontExists({
+		email: email
+	},{
+		email: email,
+		password: pass,
+		verified: false,
+		status: 1
+	},{
+		first_name: nombre,
+		last_name: apellido,
+		nacimiento: null,
+		ocupation: {},
+		speciality: {},
+		public_id: mongoose.Types.ObjectId(),
+		experiences: []
+	}, function(exist, tokenData){
+		if(exist){
+			func.response(112,{}, function(response){
+				res.json( response );
+			});
+		}else{
+			func.response(200,{
+				token: tokenData.generated_id
+			},function(response){
+				res.json( response );
+			} );
+		}
+	});
+});
+
 module.exports = router;
