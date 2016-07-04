@@ -65,7 +65,7 @@ exports.news = function(news, profile, profile_de){
 			return {
 				"id": news._id,
 				"type": "6",
-				"skill": news.data.busqueda,
+				"skill": news.data.name,
 				"profile": profile,
 				"date": news.createdAt
 			};
@@ -98,6 +98,13 @@ exports.feedback = function(feedback){
 }
 exports.user = function(user){
 
+}
+exports.login = function(tokenData, verified, exp){
+	return {
+		token: tokenData.generated_id,
+		verified: verified,
+		experiences: exp,
+	};
 }
 exports.littleProfile = function(profile){
 	console.log(profile);

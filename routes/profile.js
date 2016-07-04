@@ -22,7 +22,7 @@ var Profilefunc = require('../functions/profilefunc');
 var Experiencefunc = require('../functions/experiencefunc');
 var Tokenfunc = require('../functions/tokenfunc');
 var Skillfunc = require('../functions/skillfunc');
-
+var format = require('../functions/format');
 
 var Profile     = require('../models/profile');
 var User        = require('../models/user');
@@ -99,13 +99,14 @@ router.post('/create', multipartMiddleware, function(req, res){
 
 	var pass = Profilefunc.generate_password(password);
 
+
 	func.userProfileInsertIfDontExists({
 		email: email
 	},{
 		email: email,
 		password: pass,
 		verified: false,
-		status: 1
+		type: 0
 	},{
 		first_name: nombre,
 		last_name: apellido,
@@ -116,11 +117,11 @@ router.post('/create', multipartMiddleware, function(req, res){
 		experiences: []
 	}, function(exist, tokenData){
 		if(exist){
-			func.response(112,{}, function(response){
+			Generalfunc.response(112,{}, function(response){
 				res.json( response );
 			});
 		}else{
-			func.response(200,{
+			Generalfunc.response(200,{
 				token: tokenData.generated_id
 			},function(response){
 				res.json( response );
@@ -128,6 +129,110 @@ router.post('/create', multipartMiddleware, function(req, res){
 		}
 	});
 });
+// CREATE FACEBOOK
+// Parameter:
+// 		first_name     = Nombre
+// 		last_name      = Apellido
+//		email          = Email
+// Return (Formato 2)
+// 		Generated Token
+
+router.post('/create-facebook', multipartMiddleware, function(req, res){
+	var email      = req.body.email;
+	var first_name     = req.body.first_name;
+	var last_name   = req.body.last_name;
+	var gender     = req.body.gender;
+	var profilepic = req.body.profilepic;
+	var facebookID = req.body.facebook_id;
+	var tokenFB    = req.body.token;
+	var name       = req.body.name;
+
+	User.find({ email: email}, function(errUser, userData){
+		if(!errUser && userData){
+			console.log("No ErrorUser & UserData");
+			console.log(userData);
+
+			if(userData.type == 1){
+				var data = format.login(tokenData, user, profile);
+				Generalfunc.response(201,data, function(response){
+					res.json(response);
+				});
+
+			}else{
+				// Update Data on info.
+			}
+		}else{
+			func.userProfileInsertIfDontExists({
+				email: email
+			},{
+				email: email,
+				verified: false,
+				type: 1
+			},{
+				first_name: first_name,
+				last_name: last_name,
+				nacimiento: null,
+				ocupation: {},
+				speciality: {},
+				public_id: mongoose.Types.ObjectId(),
+				experiences: [],
+				info: [
+					{
+						"name": "first_name",
+						"value": first_name
+					},
+					{
+						"name": "last_name",
+								"value": last_name
+							},
+							{
+								"name": "name",
+								"value":name
+							},
+							{
+								"name": "picture",
+								"value": profilepic
+							},
+							{
+								"name": "email",
+								"value": email
+							},
+							{
+								"name": "access-token",
+								"value": tokenFB
+							},
+							{
+								"name": "gender",
+								"value": gender
+							},
+							{
+								"name": "id",
+								"value": facebookID
+							}
+						],
+			}, function(exist, tokenData){
+				if(exist){
+					func.response(112,{}, function(response){
+						res.json( response );
+					});
+				}else{
+					Generalfunc.response(201,{
+						token: tokenData.generated_id,
+						verified: verified,
+						experiences: exp,
+					}, function(response){
+						res.json(response);
+					});
+				}
+			});
+		}
+	});
+	/*
+	
+
+	*/
+});
+
 // GET
 // Parameter:
 //  	Token
@@ -701,50 +806,6 @@ router.post('/token/exists', multipartMiddleware, function(req, res){
 			func.response(101, {}, function(response){
 				res.json(response);
 			});
-		}
-	});
-});
-
-// CREATE FACEBOOK
-// Parameter:
-// 		first_name     = Nombre
-// 		last_name      = Apellido
-//		email          = Email
-// Return (Formato 2)
-// 		Generated Token
-
-router.post('/create-facebook', multipartMiddleware, function(req, res){
-	var nombre   = req.body.first_name;
-	var apellido = req.body.last_name;
-	var email    = req.body.email;
-
-	Profilefunc.
-	func.userProfileInsertIfDontExists({
-		email: email
-	},{
-		email: email,
-		password: pass,
-		verified: false,
-		status: 1
-	},{
-		first_name: nombre,
-		last_name: apellido,
-		nacimiento: null,
-		ocupation: {},
-		speciality: {},
-		public_id: mongoose.Types.ObjectId(),
-		experiences: []
-	}, function(exist, tokenData){
-		if(exist){
-			func.response(112,{}, function(response){
-				res.json( response );
-			});
-		}else{
-			func.response(200,{
-				token: tokenData.generated_id
-			},function(response){
-				res.json( response );
-			} );
 		}
 	});
 });

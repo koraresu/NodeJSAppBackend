@@ -7,6 +7,7 @@ var userSchema = new Schema({
   email: { type: String },
   password: { type: String },
   verified: { type: Boolean},
+  type: { type: Number }   // 0 = Normal User || 1 = Facebook User
 },{
   timestamps: true
 });
