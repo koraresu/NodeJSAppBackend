@@ -205,7 +205,7 @@ router.post('/get/news', multipartMiddleware, function(req, res){
 
 					search.action = { "$in": ["1","2","3","6","7"]}
 
-					console.log(typeof action);
+
 					if(typeof action == "string"){
 						var actTemp = action;
 						action = action.split(",")
@@ -243,6 +243,8 @@ router.post('/get/news', multipartMiddleware, function(req, res){
 									}, function(errProfileDe, profileDeData){
 										var profile = format.littleProfile(profileData);
 										var d = format.news(hItem, profile, format.littleProfile(profileDeData));
+										
+										data.push(d);
 
 										if(hIndex == (historyData.length-1)){
 											func.response(200, data, function(response){
