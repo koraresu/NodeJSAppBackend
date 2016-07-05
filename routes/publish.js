@@ -244,7 +244,8 @@ router.post('/get/news', multipartMiddleware, function(req, res){
 										var profile = format.littleProfile(profileData);
 										console.log("Action:"+hItem.action);
 										var d = format.news(hItem, profile, format.littleProfile(profileDeData));
-
+										console.log("D:");
+										console.log(d);
 										data.push(d);
 
 										if(hIndex == (historyData.length-1)){
