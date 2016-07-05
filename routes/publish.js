@@ -3,6 +3,7 @@ var router = express.Router();
 var path = require('path');
 var fs = require('fs');
 var mongoose   = require('mongoose');
+var _ = require('underscore');
 
 var func = require('../func'); 
 var multipart = require('connect-multiparty');
@@ -28,6 +29,8 @@ var Experience  = require('../models/experience');
 var History     = require('../models/history');
 var Network     = require('../models/network');
 var Feedback    = require('../models/feedback');
+
+var model = require('../model');
 
 // Write Comentario
 // Parameter
@@ -196,7 +199,6 @@ router.post('/get/news', multipartMiddleware, function(req, res){
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
 			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
-
 				Networkfunc.getfriends(profileData._id, function(friends){
 					friends.push(profileData._id);
 
@@ -215,8 +217,7 @@ router.post('/get/news', multipartMiddleware, function(req, res){
 						}
 						search.action = { "$in": action }
 					}
-					console.log( search );
-					var r = History.find( search );
+					var r = model.history.find( search );
 					
 					if(typeof max != "undefined"){
 						max = max*1;
@@ -230,41 +231,27 @@ router.post('/get/news', multipartMiddleware, function(req, res){
 						var pages = page*max;
 						r = r.skip(pages);
 					}
-					r.sort( [ ['createdAt', 'descending'] ] ).exec(function(errHistory,historyData){
-						res.json(historyData);
-					});
-					/*
-					r.sort( [ ['createdAt', 'descending'] ] ).exec(function(errHistory,historyData){
-						var data = []
+					var data = [];
+					r.sort( [ ['createdAt', 'descending'] ] ).populate('profile_id', '_id first_name last_name profile_pic public_id speciality').populate('de_id', '_id first_name last_name profile_pic public_id speciality').exec(function(errHistory,historyData){
 						if(historyData.length > 0){
-							historyData.forEach(function(hItem, hIndex){
-
-								Profile.findOne({
-									_id: hItem.profile_id
-								}, function(errProfile, profileData){
-									Profile.findOne({
-										_id: hItem.de_id
-									}, function(errProfileDe, profileDeData){
-										var profile = format.littleProfile(profileData);
-										var d = format.news(hItem, profile, format.littleProfile(profileDeData));
-										
-										data.push(d);
-
-										if(hIndex == (historyData.length-1)){
-											func.response(200, data, function(response){
-												res.json(response);
-											});
-										}
-									});
-								});
+							_.each(historyData, function(element, index, list) {
+								var de = format.littleProfile(element.de_id);
+								var profile = format.littleProfile(element.profile_id);
+								var d = format.news(element, profile, de);
+								data.push(d);
+	    						if(index+1 == historyData.length) {
+	    							Generalfunc.response(200, data, function(response){
+	    								res.json(response);
+	    							});
+	    						}
 							});
 						}else{
 							Generalfunc.response(200, {}, function(response){
 								res.json(response);
-							});
+							})
 						}
+						
 					});
-					*/
 				});
 				
 			});

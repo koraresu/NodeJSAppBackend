@@ -20,6 +20,7 @@
     "mongo-relation": "^0.5.4",
     "mongodb": "^2.0.55",
     "mongoose": "^4.4.6",
+    "mongoose-format": "^2.0.1",
     "morgan": "~1.6.1",
     "multer": "^1.1.0",
     "qr-image": "^3.1.0",
