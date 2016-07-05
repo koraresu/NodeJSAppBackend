@@ -199,22 +199,34 @@ router.post('/get/news', multipartMiddleware, function(req, res){
 
 				Networkfunc.getfriends(profileData._id, function(friends){
 					friends.push(profileData._id);
-					console.log(friends);
 
 					var search = new Object();
 					search.profile_id = { "$in": friends }
 
-					if(typeof action != "undefined"){
-						action = action*1;
-						search.action  = action;
-					}
-					
-	   				var jsonString= JSON.stringify(search);
+					search.action = { "$in": ["1","2","3","6","7"]}
 
-					var r = History.find(jsonString);
+					console.log(typeof action);
+					if(typeof action == "string"){
+						var actTemp = action;
+
+						console.log(action);
+
+						action = action.split(",")
+						console.log(action);
+						if(action.length == 1){
+							console.log(action);
+							action = actTemp;
+						}
+						search.action = { "$in": action }
+					}
+					console.log( search );
+					var r = History.find( search );
+					
 					if(typeof max != "undefined"){
 						max = max*1;
 						r = r.limit(max);
+					}else{
+						r = r.limit(40);
 					}
 					if(typeof page != "undefined"){
 						page = page*1;
@@ -224,93 +236,34 @@ router.post('/get/news', multipartMiddleware, function(req, res){
 					}
 					r.sort( [ ['createdAt', 'descending'] ] ).exec(function(errHistory,historyData){
 						var data = []
-						console.log(historyData);
-						historyData.forEach(function(hItem, hIndex){
-							Profile.findOne({
-								_id: hItem.profile_id
-							}, function(errProfile, profileData){
+						if(historyData.length > 0){
+							historyData.forEach(function(hItem, hIndex){
 								Profile.findOne({
-									_id: hItem.de_id
-								}, function(errProfileDe, profileDeData){
-									var profile = format.littleProfile(profileData);
-									var d = format.news(hItem, profile, format.littleProfile(profileDeData));
-									data.push(d);
+									_id: hItem.profile_id
+								}, function(errProfile, profileData){
+									Profile.findOne({
+										_id: hItem.de_id
+									}, function(errProfileDe, profileDeData){
+										var profile = format.littleProfile(profileData);
+										var d = format.news(hItem, profile, format.littleProfile(profileDeData));
+										data.push(d);
 
-									if(hIndex == (historyData.length-1)){
-										func.response(200, data, function(response){
-											res.json(response);
-										});
-									}
+										if(hIndex == (historyData.length-1)){
+											func.response(200, data, function(response){
+												res.json(response);
+											});
+										}
+									});
 								});
 							});
-
-
-						});
-					});
-					
-					/*
-					History.find({
-						profile_id: {
-							"$in": friends
+						}else{
+							Generalfunc.response(200, {}, function(response){
+								res.json(response);
+							});
 						}
-					}).exec(function(errHistory, historyData){
-						res.json(historyData);
-					});
-					*/
-				});
-				//////
-
-				/*
-				console.log(profileData._id);
-				
-				var search = new Object();
-				search.profile_id = profileData._id;
-
-				if(typeof action != "undefined"){
-					action = action*1;
-					search.action  = action;
-				}
-				
-   				var jsonString= JSON.stringify(search);
-
-				var r = History.find(jsonString);
-
-				if(typeof max != "undefined"){
-					max = max*1;
-					r = r.limit(max);
-				}
-				if(typeof page != "undefined"){
-					page = page*1;
-					page = page-1;
-					var pages = page*max;
-					r = r.skip(pages);
-				}
-				r.sort( [ ['createdAt', 'descending'] ] ).exec(function(errHistory, historyData){
-					var data = []
-					console.log(historyData);
-					historyData.forEach(function(hItem, hIndex){
-						Profile.findOne({_id: hItem.profile_id}, function(errProfile, profileData){
-							var d = {
-								"type": hItem.action,
-								"title": hItem.data.title,
-								"content": hItem.data.content,
-								"gallery": hItem.data.gallery,
-								"profile": profileData,
-								"date": hItem.createdAt
-							};
-							
-
-							data.push(d);
-
-							if(hIndex == (historyData.length-1)){
-								func.response(200, data, function(response){
-									res.json(response);
-								});
-							}
-						});
 					});
 				});
-				*/
+				
 			});
 		}else{
 			func.response(101, {},function(response){

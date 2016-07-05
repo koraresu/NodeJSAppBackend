@@ -10,9 +10,6 @@ exports.chat_message = function(message){
 	};
 }
 exports.news = function(news, profile, profile_de){
-	console.log("NEWS");
-	console.log(news);
-	console.log("/NEWS");
 	switch(news.action){
 		case "1":
 			return {
@@ -107,10 +104,6 @@ exports.login = function(tokenData, verified, exp){
 	};
 }
 exports.littleProfile = function(profile){
-	console.log(profile);
-	/*
-	
-	*/
 	if(typeof profile == "undefined" || profile == null){
 		return {};
 	}else{
