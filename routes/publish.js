@@ -205,6 +205,7 @@ router.post('/get/news', multipartMiddleware, function(req, res){
 
 					search.action = { "$in": ["1","2","3","6","7"]}
 
+					console.log(typeof action);
 					if(typeof action == "string"){
 						var actTemp = action;
 						action = action.split(",")
@@ -231,10 +232,9 @@ router.post('/get/news', multipartMiddleware, function(req, res){
 					}
 					r.sort( [ ['createdAt', 'descending'] ] ).exec(function(errHistory,historyData){
 						var data = []
-						console.log("Length:"+historyData.length);
 						if(historyData.length > 0){
 							historyData.forEach(function(hItem, hIndex){
-								
+
 								Profile.findOne({
 									_id: hItem.profile_id
 								}, function(errProfile, profileData){
@@ -245,7 +245,6 @@ router.post('/get/news', multipartMiddleware, function(req, res){
 										var d = format.news(hItem, profile, format.littleProfile(profileDeData));
 
 										if(hIndex == (historyData.length-1)){
-											console.log(data);
 											func.response(200, data, function(response){
 												res.json(response);
 											});
