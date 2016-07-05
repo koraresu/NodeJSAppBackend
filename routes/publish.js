@@ -231,6 +231,10 @@ router.post('/get/news', multipartMiddleware, function(req, res){
 						r = r.skip(pages);
 					}
 					r.sort( [ ['createdAt', 'descending'] ] ).exec(function(errHistory,historyData){
+						res.json(historyData);
+					});
+					/*
+					r.sort( [ ['createdAt', 'descending'] ] ).exec(function(errHistory,historyData){
 						var data = []
 						if(historyData.length > 0){
 							historyData.forEach(function(hItem, hIndex){
@@ -260,6 +264,7 @@ router.post('/get/news', multipartMiddleware, function(req, res){
 							});
 						}
 					});
+					*/
 				});
 				
 			});
