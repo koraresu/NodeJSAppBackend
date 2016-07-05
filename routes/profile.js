@@ -22,6 +22,7 @@ var mongoose    = require('mongoose');
 		var Experiencefunc = require('../functions/experiencefunc');
 		var Tokenfunc = require('../functions/tokenfunc');
 		var Skillfunc = require('../functions/skillfunc');
+		var Historyfunc = require('../functions/historyfunc');
 		var format = require('../functions/format');
 
 		var Profile     = require('../models/profile');
@@ -598,24 +599,48 @@ router.post('/addskill', multipartMiddleware, function(req, res){
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
 			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
-				console.log("TokenToProfile");
-				Skillfunc.add(profileData, name, function(status, skillData, profileData){
-					if(status){
-						console.log("SkillAdd");
-						Profilefunc.formatoProfile(profileData._id,function(err, profile){
-							var data = [];
-							data = _.extend(data,profile);
 
-							func.response(200,data, function(response){
+				Skillfunc.ExistsOrCreate({
+					name: name
+				}, {
+					name: name
+				}, function(status, skillData){
+					
+					Profilefunc.findSkill(profileData._id,name,function(status, skill){
+						data = {};
+						if(status){
+							console.log("Dont Created");
+							var data = {
+								status: "dont-created",
+								skill: skill
+							};
+							console.log(data);
+							Generalfunc.response(200, data, function(response){
 								res.json(response);
 							});
-						});
-					}else{
-						func.response(404, {}, function(response){
-							res.json(response);
-						});
-					}
+						}else{
+							console.log("Created");
+
+							profileData.skills.push({
+								_id: skillData._id,
+								name: skillData.name
+							});
+							profileData.save(function(errProfile, profileData){
+								var data = {
+									status: "created",
+									skill: skillData
+								};
+								console.log(data);
+								Generalfunc.response(200, data, function(response){
+									Historyfunc.generate_history("6", profileData, skillData, function(){
+										res.json(response);	
+									});
+								});
+							});
+						}
+					});
 					
+
 				});
 			});
 		}else{

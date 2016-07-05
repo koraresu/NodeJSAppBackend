@@ -71,7 +71,27 @@ exports.get              = function(profile_id,callback){
 exports.insert           = function(){
 
 }
+exports.findSkill = function(profile_id, name, callback){
+	status = false;
+	Profile.findOne({ _id: profile_id }, function(errProfile, profileData){
+		if(profileData.skills.length > 0){
+			profileData.skills.forEach(function(item, index){
+				if(item.name == name){
+					status = true;
+					callback(status, item);
+					return false;
+				}
 
+				if((profileData.skills.length-1) == index){
+					console.log(status)
+					callback(status);
+				}
+			});	
+		}else{
+			callback(status);
+		}
+	});
+}
 exports.PublicId = function(profile_id, callback){
 	Profile.findOne({ public_id: profile_id }, function(errProfile, profile){
 		if(!errProfile && profile){

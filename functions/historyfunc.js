@@ -12,7 +12,7 @@ var Profile            = require('../models/profile');
 var Sector             = require('../models/sector');
 var Experience         = require('../models/experience');
 var Skill              = require('../models/skills');
-
+var History            = require('../models/history');
 
 exports.generate_history = function(type, profileData, data, cb){
 
@@ -105,8 +105,8 @@ exports.generate_history = function(type, profileData, data, cb){
 				"de_id": profileData._id,
 				"action": type,
 				"data": { 
-					"name": data.skill_name,
-					"skill_id" : data.skill_id
+					"name": data.name,
+					"id" : data._id
 				}
 			});
 		break;

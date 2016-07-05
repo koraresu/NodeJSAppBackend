@@ -24,6 +24,9 @@ var get = function(profile_id, callback){
 }
 var add = function(profile_id, name, callback){
 	console.log(profile_id);
+
+	
+	/*
 	Skill.findOne({ name: name}, function(err, skillData){
 		if(!err && skillData){
 			Profile.findOne({ _id: profile_id }, function(errProfile, profileData){
@@ -49,6 +52,7 @@ var add = function(profile_id, name, callback){
 							}
 							if(index == (profileData.skills.length-1)){
 								if(insertar){
+									console.log(profileData);
 									profileData.skills.push(data);
 								}
 								profileData.save(function(err, profileData){
@@ -93,6 +97,19 @@ var add = function(profile_id, name, callback){
 			});
 		}
 	});
+	*/
+}
+var ExistsOrCreate = function(search, insert, callback){
+	Skill.findOne(search, function(err, skillData){
+		if(!err && skillData){
+			callback(true, skillData);
+		}else{
+			var skill = new Skill(insert);
+			skill.save(function(errSkill, skillData){
+				callback(false, skillData);
+			});
+		}
+	});
 }
 var remove = function(profile_id, name, callback){
 	Profile.findOne({ _id: profile_id }, function(errProfile, profileData){
@@ -114,6 +131,7 @@ var remove = function(profile_id, name, callback){
 
 	});
 }
+exports.ExistsOrCreate = ExistsOrCreate
 exports.add = add
 exports.delete = remove
 exports.get = get
