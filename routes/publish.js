@@ -242,7 +242,7 @@ router.post('/get/news', multipartMiddleware, function(req, res){
 										_id: hItem.de_id
 									}, function(errProfileDe, profileDeData){
 										var profile = format.littleProfile(profileData);
-										console.log(hItem.action);
+										console.log("Action:"+hItem.action);
 										var d = format.news(hItem, profile, format.littleProfile(profileDeData));
 
 										data.push(d);
