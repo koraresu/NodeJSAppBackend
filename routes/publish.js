@@ -234,6 +234,7 @@ router.post('/get/news', multipartMiddleware, function(req, res){
 						console.log("Length:"+historyData.length);
 						if(historyData.length > 0){
 							historyData.forEach(function(hItem, hIndex){
+								console.log(hIndex);
 								Profile.findOne({
 									_id: hItem.profile_id
 								}, function(errProfile, profileData){
