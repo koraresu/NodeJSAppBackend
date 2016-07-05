@@ -234,7 +234,7 @@ router.post('/get/news', multipartMiddleware, function(req, res){
 						console.log("Length:"+historyData.length);
 						if(historyData.length > 0){
 							historyData.forEach(function(hItem, hIndex){
-								console.log(hIndex);
+								
 								Profile.findOne({
 									_id: hItem.profile_id
 								}, function(errProfile, profileData){
@@ -242,13 +242,10 @@ router.post('/get/news', multipartMiddleware, function(req, res){
 										_id: hItem.de_id
 									}, function(errProfileDe, profileDeData){
 										var profile = format.littleProfile(profileData);
-										console.log("Action:"+hItem.action);
 										var d = format.news(hItem, profile, format.littleProfile(profileDeData));
-										console.log("D:");
-										console.log(d);
-										data.push(d);
 
 										if(hIndex == (historyData.length-1)){
+											console.log(data);
 											func.response(200, data, function(response){
 												res.json(response);
 											});
