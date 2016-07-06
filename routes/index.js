@@ -5,7 +5,9 @@ var router = express.Router();
 var _jade = require('jade');
 var fs = require('fs');
 
-var Profile     = require('../models/profile');
+var model = require('../model');
+var Profile     = model.profile;
+
 var Profilefunc = require('../functions/profilefunc');
 
 var User           = require('../models/user');
@@ -40,10 +42,11 @@ router.get('/verification/:id',function(req, res){
 });
 router.get('/email/:id', function(req, res){
   var id = req.params.id;
-  Profile.findOne({ _id: mongoose.Types.ObjectId(id) }, function(errProfile, profileData){
-    Profilefunc.generate_email_verification(profileData.public_id , profileData.first_name,"rkenshin21@gmail.com", "test", function(status, html){
+
+  Profile.findOne({ public_id: mongoose.Types.ObjectId( id ) }).populate("user_id").exec(function(errProfile, profileData){
+    Profilefunc.generate_email_verification(profileData.public_id , profileData.first_name,profileData.user_id.email, "test", function(status, html){
       if(status){
-        res.send(html);  
+        res.send(html);
       }else{
         res.send("Error");
       }

@@ -21,7 +21,7 @@ var profileSchema = new Schema({
   profile_hive: String,
   qrcode: { type: String },
   status: { type: Number},
-  user_id: { type: Schema.Types.ObjectId, ref: 'users' },
+  user_id: { type: Schema.Types.ObjectId, ref: 'User' },
   birthday: { type: Date },
   lang: String,
   experiences: [{
