@@ -38,9 +38,10 @@ router.get('/verification/:id',function(req, res){
 		}
 	})
 });
-router.get('/email', function(req, res){
-  Profile.findOne({ _id: mongoose.Types.ObjectId("577ae1951a03379a3d80197d") }, function(errProfile, profileData){
-    Profilefunc.generate_email_verification(profileData.public_id, profileData.first_name,"rkenshin21@gmail.com", "test", function(status, html){
+router.get('/email/:id', function(req, res){
+  var id = req.params.id;
+  Profile.findOne({ _id: mongoose.Types.ObjectId(id) }, function(errProfile, profileData){
+    Profilefunc.generate_email_verification(profileData.public_id , profileData.first_name,"rkenshin21@gmail.com", "test", function(status, html){
       if(status){
         res.send(html);  
       }else{
