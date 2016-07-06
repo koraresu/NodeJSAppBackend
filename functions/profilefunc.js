@@ -4,6 +4,8 @@ var path = require('path');
 var fs = require('fs');
 var qr = require('qr-image');
 var _ = require('underscore');
+var _jade = require('jade');
+var fs = require('fs');
 
 var bcrypt = require('bcrypt-nodejs');
 
@@ -19,6 +21,28 @@ var Profile            = require('../models/profile');
 var Sector             = require('../models/sector');
 var Experience         = require('../models/experience');
 var Skill              = require('../models/skills');
+
+var nodemailer = require('nodemailer');
+
+var smtpConfig = {
+    host: 'mailtrap.io',
+    port: 2525,
+    secure: false, // use SSL
+    auth: {
+        user: '6eee0d2498d528',
+        pass: '247ca080dcf3c8'
+    }
+};
+var transporter    = nodemailer.createTransport(smtpConfig);
+var sendMail = function(toAddress, subject, content, next){
+  var mailOptions = {
+    to: toAddress,
+    subject: subject,
+    html: content
+  };
+
+  transporter.sendMail(mailOptions, next);
+}; 
 
 function formatoProfile(profile_id,cb){
 	console.log(profile_id);
@@ -310,9 +334,28 @@ function userProfileInsertIfDontExists(searchUser, userInsert, profileInsert, ca
 		}
 	});
 }
+function generate_email_verification(public_id,nombre, email, asunto, cb){
+	var template = process.cwd() + '/views/email.jade';
+	fs.readFile(template, 'utf8', function(err, file){
+		if(err){
+			cb(false);
+		}else {
+			var compiledTmpl = _jade.compile(file, {filename: template});
+			var context = { public_id: public_id, nombre:nombre };
+			var html = compiledTmpl(context);
+			sendMail(email, asunto, html, function(err, response){
+				if(err){
+					cb(false);
+				}else{
+					cb(true, html);
+				}
+			});
+    	}
+  	});
+}
+exports.generate_email_verification   = generate_email_verification
 exports.userProfileInsertIfDontExists = userProfileInsertIfDontExists
-exports.generate_password = generate_Password
-exports.compare_password  = compare_Password
-
-exports.publicId = PublicId
-exports.tokenToProfile = tokenToProfile
+exports.generate_password             = generate_Password
+exports.compare_password              = compare_Password
+exports.publicId                      = PublicId
+exports.tokenToProfile                = tokenToProfile

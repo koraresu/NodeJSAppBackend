@@ -1,5 +1,6 @@
 var express = require('express');
 var path = require('path');
+var stylus = require('stylus');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
@@ -52,6 +53,16 @@ app.use('/api/company', company);
 app.use('/api/experience', experience);
 app.use('/api/search', search);
 app.use('/api/publish', publish);
+
+
+app.use(stylus.middleware({
+  src: __dirname + '/public',
+  dest: __dirname + '/public/stylesheets',
+  compile: function compile(str, path){
+     return stylus(str).set('filename', path).set('compress', true);
+  }
+}));
+
 //app.use('/admin', admin);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

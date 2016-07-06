@@ -1,8 +1,92 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  font-family: 'Roboto', sans-serif;
+  background: #363636 url("../images/bg.png") repeat;
 }
-
-a {
-  color: #00B7FF;
+body table.body-wrap {
+  margin: 0 auto;
+}
+body table.body-wrap td.container {
+  background-color: #fff;
+  padding: 20px 52px;
+}
+body table .header {
+  border: 0;
+  text-align: center;
+}
+body table .header a img {
+  width: 274px;
+}
+body table .main {
+  margin-top: 30px;
+}
+body table .main tr td .titulo,
+body table .main tr td .subtitulo {
+  font-weight: 300;
+}
+body table .main tr td .titulo {
+  border: 0;
+  font-size: 24px;
+}
+body table .main tr td .subtitulo {
+  border: 0;
+  color: #f9be00;
+  font-size: 40px;
+  width: 50%;
+  display: block;
+  margin-bottom: 20px;
+}
+body table .main tr td .boton {
+  text-align: center;
+}
+body table .main tr td .boton span {
+  font-weight: 300;
+  font-size: 16px;
+}
+body table .main tr td .boton a.verify {
+  display: block;
+  width: 178px;
+  margin: 0 auto;
+  margin-top: 20px;
+  border: 0;
+  background-color: #f6be00;
+  color: #fff;
+  font-weight: 500;
+  font-size: 18px;
+  padding: 12px 15px;
+  border-radius: 4px;
+  text-decoration: none;
+  border: 1px solid #f7a700;
+}
+body table .footer {
+  border: 0;
+  color: #808080;
+  font-weight: 300;
+  font-size: 14px;
+  margin-top: 30px;
+}
+body table .footer table tr td {
+  padding: 11px 0;
+  text-align: center;
+  color: #808080;
+}
+body table .footer table tr td a {
+  text-decoration: none;
+  display: block;
+  color: #808080;
+}
+body table .footer table tr td a.email {
+  display: inline-block;
+  color: #f7a700;
+}
+body table .footer table tr td span.divider,
+body table .footer table tr td span a {
+  border: 0;
+}
+body table .footer table tr td.last span.divider {
+  padding: 0 10px;
+}
+body table .footer table tr td.last a {
+  display: inline-block;
+  color: #f7a700;
 }
