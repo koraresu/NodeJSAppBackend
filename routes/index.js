@@ -44,15 +44,17 @@ router.get('/email/:id', function(req, res){
   var id = req.params.id;
 
   Profile.findOne({ public_id: mongoose.Types.ObjectId( id ) }).populate("user_id").exec(function(errProfile, profileData){
-    Profilefunc.generate_email_verification(profileData.public_id , profileData.first_name,profileData.user_id.email, "test", function(status, html){
-      if(status){
-        res.send(html);
-      }else{
-        res.send("Error");
-      }
-      
-    });
-    
+    if(!errProfile && profileData){
+      Profilefunc.generate_email_verification(profileData.public_id , profileData.first_name,profileData.user_id.email, "test", function(status, html){
+        if(status){
+          res.send(html);
+        }else{
+          res.send("Error");
+        }
+      });  
+    }else{
+      res.send("Error");
+    }
   });
 
 
