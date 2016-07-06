@@ -49,11 +49,11 @@ router.get('/email/:id', function(req, res){
         if(status){
           res.send(html);
         }else{
-          res.send("Error");
+          res.send("File Error");
         }
       });  
     }else{
-      res.send("Error");
+      res.send("No Profile");
     }
   });
 
