@@ -50,8 +50,8 @@ function formatoProfile(profile_id,cb){
 		profile_id = mongoose.Types.ObjectId(profile_id);
 	}
 
-	Profile.findOne({ _id: profile_id}, function(errProfile, profileData){
-		User.findOne({ _id: profileData.user_id }, function(errUser, userData){
+	Profile.findOne({ _id: profile_id}).populate('user_id').exec(function(errProfile, profileData){
+		var userData = profileData.user_id;
 			Experience.find({ profile_id: profileData._id}, function(errExperience, experienceData){
 
 				console.log(profileData);
@@ -78,7 +78,7 @@ function formatoProfile(profile_id,cb){
 
 				cb(data);
 			});
-		});
+		
 		
 		
 	});
