@@ -22,17 +22,14 @@ router.get('/', function(req, res, next) {
 router.get('/verification/:id',function(req, res){
 	var id = req.params.id;
 	id = mongoose.Types.ObjectId(id);
-	Profile.findOne({ public_id: id }, function(errProfile, profile){
-		console.log(profile);
-		if(!errProfile && profile){
-			User.findOne( { _id: profile.user_id }, function(err, user){
-				
-				user.verified = true;
-				user.save();
-				
-				console.log(user);
-				res.send("Haz verificado tu cuenta.");	
-			});
+	Profile.findOne({ public_id: id }).populate('user_id').exec( function(errProfile, profileData){
+		if(!errProfile && profileData){
+        
+        
+				profileData.user_id.verified = true;
+				profileData.user_id.save(function(errUser, userData){
+          res.render("verified",{ email: userData.email});
+        });
 		}else{
 			func.response(404, {}, function(response){
 				res.json(response);
