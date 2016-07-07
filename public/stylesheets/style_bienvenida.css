@@ -29,11 +29,8 @@ body .cont .content .header a img {
 body .cont .content .main table {
   margin-top: 20px;
 }
-body .cont .content .main table tr td.iphone,
-body .cont .content .main table tr td.list {
-  vertical-align: top;
-}
 body .cont .content .main table tr td.iphone {
+  text-align: center;
   display: inline;
   width: 50%;
   max-width: 300px;
@@ -46,6 +43,7 @@ body .cont .content .main table tr td.iphone img {
   max-width: 100%;
 }
 body .cont .content .main table tr td.list {
+  vertical-align: top;
   width: 50%;
   max-width: 50%;
   box-sizing: border-box;
