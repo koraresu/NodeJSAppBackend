@@ -353,6 +353,26 @@ function generate_email_verification(public_id,nombre, email, asunto, cb){
     	}
   	});
 }
+function generate_email_bienvenida(public_id,nombre, email, asunto, cb){
+	var template = process.cwd() + '/views/email_bienvenida.jade';
+	fs.readFile(template, 'utf8', function(err, file){
+		if(err){
+			cb(false);
+		}else {
+			var compiledTmpl = _jade.compile(file, {filename: template});
+			var context = { public_id: public_id, nombre:nombre };
+			var html = compiledTmpl(context);
+			sendMail(email, asunto, html, function(err, response){
+				if(err){
+					cb(false);
+				}else{
+					cb(true, html);
+				}
+			});
+    	}
+  	});
+}
+exports.generate_email_bienvenida   = generate_email_bienvenida
 exports.generate_email_verification   = generate_email_verification
 exports.userProfileInsertIfDontExists = userProfileInsertIfDontExists
 exports.generate_password             = generate_Password

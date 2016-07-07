@@ -40,12 +40,31 @@ router.get('/verification/:id',function(req, res){
 		}
 	})
 });
+router.get('/email/bienvenida/:id', function(req, res){
+  var id = req.params.id;
+
+  Profile.findOne({ public_id: mongoose.Types.ObjectId( id ) }).populate("user_id").exec(function(errProfile, profileData){
+    if(!errProfile && profileData){
+      Profilefunc.generate_email_bienvenida(profileData.public_id , profileData.first_name,profileData.user_id.email, "Verificación de Correo", function(status, html){
+        if(status){
+          res.send(html);
+        }else{
+          res.send("File Error");
+        }
+      });  
+    }else{
+      res.send("No Profile");
+    }
+  });
+
+
+});
 router.get('/email/:id', function(req, res){
   var id = req.params.id;
 
   Profile.findOne({ public_id: mongoose.Types.ObjectId( id ) }).populate("user_id").exec(function(errProfile, profileData){
     if(!errProfile && profileData){
-      Profilefunc.generate_email_verification(profileData.public_id , profileData.first_name,profileData.user_id.email, "test", function(status, html){
+      Profilefunc.generate_email_verification(profileData.public_id , profileData.first_name,profileData.user_id.email, "Verificación de Correo", function(status, html){
         if(status){
           res.send(html);
         }else{

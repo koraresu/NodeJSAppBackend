@@ -26,34 +26,62 @@ body .cont .content .header a img {
   width: 100%;
   max-width: 370px;
 }
-body .cont .content .main {
-  margin-top: 30px;
+body .cont .content .main table {
+  margin-top: 20px;
 }
-body .cont .content .main .list .element .titulo,
-body .cont .content .main .list .element .subtitulo {
+body .cont .content .main table tr td.iphone,
+body .cont .content .main table tr td.list {
+  vertical-align: top;
+}
+body .cont .content .main table tr td.iphone {
+  display: inline;
+  width: 50%;
+  max-width: 300px;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body .cont .content .main table tr td.iphone img {
+  width: 230px;
+  max-width: 100%;
+}
+body .cont .content .main table tr td.list {
+  width: 50%;
+  max-width: 50%;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  margin-left: auto;
+}
+body .cont .content .main table tr td.list .element {
+  margin-left: 30px;
+}
+body .cont .content .main table tr td.list .element.title {
+  margin-left: 0;
+}
+body .cont .content .main table tr td.list .element .titulo,
+body .cont .content .main table tr td.list .element .subtitulo {
   font-weight: 300;
 }
-body .cont .content .main .list .element .titulo {
+body .cont .content .main table tr td.list .element .titulo {
   border: 0;
   font-size: 24px;
 }
-body .cont .content .main .list .element .subtitulo {
+body .cont .content .main table tr td.list .element .subtitulo {
   border: 0;
   color: #f9be00;
   font-size: 40px;
-  width: 100%;
-  max-width: 300px;
   display: block;
   margin-bottom: 20px;
 }
-body .cont .content .main .list .element.boton {
+body .cont .content .main table tr td.list .element.boton {
   text-align: center;
 }
-body .cont .content .main .list .element.boton span {
+body .cont .content .main table tr td.list .element.boton span {
   font-weight: 300;
   font-size: 16px;
 }
-body .cont .content .main .list .element.boton a.verify {
+body .cont .content .main table tr td.list .element.boton a.verify {
   display: block;
   width: 178px;
   margin: 0 auto;
@@ -92,6 +120,9 @@ body .cont .content .footer .list .element a.email {
 body .cont .content .footer .list .element span.divider,
 body .cont .content .footer .list .element span a {
   border: 0;
+}
+body .cont .content .footer .list .element.last {
+  padding: 0;
 }
 body .cont .content .footer .list .element.last span.divider {
   padding: 0 10px;

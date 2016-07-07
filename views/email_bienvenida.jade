@@ -6,7 +6,7 @@ html(xmlns='http://www.w3.org/1999/xhtml')
     meta(name="viewport", content="width=device-width, initial-scale=1")
     meta(http-equiv="X-UA-Compatible",content="IE=edge")
     link(href='https://fonts.googleapis.com/css?family=Roboto:300,500', rel='stylesheet' type='text/css')
-    style(type="text/css"): include ../public/stylesheets/style.css
+    style(type="text/css"): include ../public/stylesheets/style_bienvenida.css
     link(rel="shortcut icon",href="http://192.241.245.98:3000/favicon.ico",type="image/x-icon")
     link(rel="icon",href="http://192.241.245.98:3000/favicon.ico",type="image/x-icon")
     title TheHive
@@ -17,27 +17,37 @@ html(xmlns='http://www.w3.org/1999/xhtml')
           a(href="#")
             img(src="http://192.241.245.98:3000/images/logo.png")
         div.main
-          .list
-            .element
-              span.titulo Hola #{nombre}
-              span.subtitulo Estás a un paso de formar parte de la Colmena
-            .element
-              span Haz click para verificar tu cuenta
-              a(href="http://192.241.245.98:3000/verification/"+public_id).verify Confirmar tu correo
+          table(cellspacing="0",cellpadding="0")
+            tr
+              td.iphone
+                img(src="http://localhost:3000/images/iphone.png")
+              td.list
+                .element.title
+                  span.titulo #{nombre},
+                  span.subtitulo ¡Bienvenido a la Colmena!
+                .element
+                  p Te ayudaremos a organizar y mejorar tus conexiones profesionales.
+                  p 
+                    span.yellow Busca Hivers cerca de ti
+                    span Haz networking en tu zona.
+
+                  p
+                    span.yellow Agrégalos a tu colmena
+                    span Todos los Hivers que colaboran contigo estarán en un mismo lugar.
+                  p
+                    span Valora sus resultados
+                    span Cuenta cómo te fue con tus colegas.
         div.footer
           .list
-            .element
-              span ¿El link no funciona? Pega esto en tu navegador:
-              a(href="#") http://192.241.245.98:3000/verification/#{public_id}
             .element
               span Este correo fue enviado de manera automática, no respondas.
               span Si necesitas ayuda, contáctanos: 
               a(href="#").email ayuda@theHIVE.com
-            .element
+            .element.last
               span ©2016 The Hive, S.A de C.V.
               span.divider |
               span Todos los derechos reservados
-            .element
+            .element.last
               a(href="#") Política de Privacidad
               span.divider |
               a(href="#") Términos y Condiciones
