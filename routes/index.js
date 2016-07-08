@@ -9,6 +9,8 @@ var model = require('../model');
 var Profile     = model.profile;
 
 var Profilefunc = require('../functions/profilefunc');
+var Generalfunc = require('../functions/generalfunc');
+
 
 var User           = require('../models/user');
 
