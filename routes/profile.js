@@ -130,7 +130,7 @@ router.post('/create', multipartMiddleware, function(req, res){
 				res.json( response );
 			});
 		}else{
-			Generalfunc.sendEmail("email_bienvenida.jade", {
+			Generalfunc.sendEmail("email.jade", {
 				public_id: profileData.public_id,
 				nombre: profileData.first_name,
 			}, userData.email, "¡Bienvenido a la Colmena!",function(status, html){

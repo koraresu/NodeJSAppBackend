@@ -28,7 +28,24 @@ router.get('/verification/:id',function(req, res){
         
 				profileData.user_id.verified = true;
 				profileData.user_id.save(function(errUser, userData){
-          res.render("verified",{ email: userData.email});
+
+
+          Generalfunc.sendEmail("email_bienvenida.jade", {
+            public_id: profileData.public_id,
+            nombre: profileData.first_name,
+          }, userData.email, "¡Bienvenido a la Colmena!",function(status, html){
+            if(status){
+              Generalfunc.response(200,{
+                email: userData.email
+              },function(response){
+                res.json( response );
+              });
+            }else{
+              Generalfunc.response(101,{},function(response){
+                res.json( response );
+              });
+            }     
+          });
         });
 		}else{
 			func.response(404, {}, function(response){
