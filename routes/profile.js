@@ -7,8 +7,6 @@ var path = require('path');
 var fs = require('fs');
 var _ = require('underscore');
 
-
-
 var faker = require('faker');
 faker.locale = "es_MX";
 var mongoose    = require('mongoose');
@@ -111,7 +109,7 @@ router.post('/create', multipartMiddleware, function(req, res){
 	var pass = Profilefunc.generate_password(password);
 
 
-	func.userProfileInsertIfDontExists({
+	Profilefunc.userProfileInsertIfDontExists({
 		email: email
 	},{
 		email: email,
@@ -126,17 +124,28 @@ router.post('/create', multipartMiddleware, function(req, res){
 		speciality: {},
 		public_id: mongoose.Types.ObjectId(),
 		experiences: []
-	}, function(exist, tokenData){
+	}, function(exist, tokenData, profileData, userData){
 		if(exist){
 			Generalfunc.response(112,{}, function(response){
 				res.json( response );
 			});
 		}else{
-			Generalfunc.response(200,{
-				token: tokenData.generated_id
-			},function(response){
-				res.json( response );
-			} );
+			Generalfunc.sendEmail("email_bienvenida.jade", {
+				public_id: profileData.public_id,
+				nombre: profileData.first_name,
+			}, userData.email, "¡Bienvenido a la Colmena!",function(status, html){
+				if(status){
+					Generalfunc.response(200,{
+						token: tokenData.generated_id
+					},function(response){
+						res.json( response );
+					});
+				}else{
+					Generalfunc.response(101,{},function(response){
+						res.json( response );
+					});
+				}			
+			});
 		}
 	});
 });
@@ -737,13 +746,15 @@ router.post('/setprofilepic', multipartMiddleware, function(req, res){
 			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
 
 				Profilefunc.updateProfilePic(profileData._id, profilepic, function(err, profileData){
-					Profilefunc.formatoProfile(profileData._id,function(err, profile){
-						var data = [];
-						data = _.extend(data,profile);
+					console.log(profileData);
+					var profile = format.littleProfile(profileData);
 
-						func.response(200,data, function(response){
-							res.json(response);
-						});
+					console.log(profile);
+					var data = {};
+					data = profile;
+					console.log(data);
+					func.response(200,data, function(response){
+						res.json(response);
 					});
 				});
 			});
@@ -893,6 +904,42 @@ router.post('/token/exists', multipartMiddleware, function(req, res){
 			func.response(101, {}, function(response){
 				res.json(response);
 			});
+		}
+	});
+});
+// RESEND EMAIL VERIFICATION
+// Parameter:
+//  	Token
+//
+// Return (Formato 13)
+router.post('/send/verification', multipartMiddleware, function(req, res){
+	var guid = req.body.guid;
+
+	Tokenfunc.exist(guid, function(status, tokenData){
+		if(status){
+			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
+				if(status){
+					Generalfunc.sendEmail("email.jade", {
+						public_id: profileData.public_id,
+						nombre: profileData.first_name,
+					}, userData.email, "Verificación de Correo",function(status, html){
+						if(status){
+							Generalfunc.response(200, { status: true }, function(response){
+								res.json(response);
+							});
+						}else{
+							Generalfunc.response(101, { status: false }, function(response){
+								res.json(response);
+							});
+						}
+						
+					});
+				}else{
+					res.send("No Profile");
+				}
+			});
+		}else{
+			res.send("No Token");
 		}
 	});
 });

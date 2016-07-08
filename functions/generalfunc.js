@@ -2,6 +2,7 @@
 var mongoose    = require('mongoose');
 var path = require('path');
 var fs = require('fs');
+var _jade = require('jade');
 
 var Token              = require('../models/token');
 var User               = require('../models/user');
@@ -12,6 +13,31 @@ var Profile            = require('../models/profile');
 var Sector             = require('../models/sector');
 var Experience         = require('../models/experience');
 var Skill              = require('../models/skills');
+
+
+
+var nodemailer = require('nodemailer');
+
+var smtpConfig = {
+    host: 'mailtrap.io',
+    port: 2525,
+    secure: false, // use SSL
+    auth: {
+        user: '6eee0d2498d528',
+        pass: '247ca080dcf3c8'
+    }
+};
+var transporter    = nodemailer.createTransport(smtpConfig);
+var sendMail = function(toAddress, subject, content, next){
+  var mailOptions = {
+    to: toAddress,
+    subject: subject,
+    html: content
+  };
+
+  transporter.sendMail(mailOptions, next);
+}; 
+
 
 exports.saveImage = function(file, new_path, callback){
 	var tmp_path         = file.path;
@@ -48,4 +74,24 @@ exports.response = function(type,item, callback){
 		break;
 
 	}
+}
+exports.sendEmail = function(file, data,email, asunto, callback){
+	var template = process.cwd() + '/views/';
+	template+= file;
+	fs.readFile(template, 'utf8', function(err, file){
+		if(err){
+			cb(false);
+		}else {
+			var compiledTmpl = _jade.compile(file, {filename: template});
+			var context = data;
+			var html = compiledTmpl(context);
+			sendMail(email, asunto, html, function(err, response){
+				if(err){
+					callback(false);
+				}else{
+					callback(true, html);
+				}
+			});
+    	}
+  	});
 }

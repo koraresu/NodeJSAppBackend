@@ -23,6 +23,8 @@ var Sector             = require('../models/sector');
 var Experience         = require('../models/experience');
 var Skill              = require('../models/skills');
 
+var format = require('./format');
+
 
 
 var nodemailer = require('nodemailer');
@@ -98,30 +100,6 @@ exports.get              = function(profile_id,callback){
 exports.insert           = function(){
 
 }
-exports.userProfileInsertIfDontExists = function(searchUser, userInsert, profileInsert, callback){
-	User.findOne(searchUser, function(errUser, user){
-		if(!errUser && user){
-			callback(true,null,null);
-		}else{
-			var user = new User(userInsert);
-			user.save();
-
-
-			var token = new Token({
-				generated_id: mongoose.Types.ObjectId(),
-				user_id: user
-			});
-			token.save();
-			delete user['password'];
-			profileInsert['user_id'] = user._id;
-			var profile = new Profile( profileInsert );
-			profile.save(function(err, profileData){
-				Profilefunc.generate_qrcode(profileData);
-				callback( false, token, profileData );	
-			});
-		}
-	});
-}
 exports.findSkill = function(profile_id, name, callback){
 	status = false;
 	Profile.findOne({ _id: profile_id }, function(errProfile, profileData){
@@ -152,7 +130,7 @@ exports.PublicId = function(profile_id, callback){
 		}
 	});
 }
-exports.generate_qrcode  = function(profileData, callback){
+function generate_qrcode(profileData, callback){
 	if(typeof profileData.public_id == "undefined"){
 		profileData.public_id = mongoose.Types.ObjectId();
 		profileData.save(function(err, profileData){
@@ -167,7 +145,8 @@ exports.generate_qrcode  = function(profileData, callback){
 
 		var svg_string = qr.imageSync('the-hive:query?'+profileData.public_id, { type: 'png' });
 	}
-} 
+}
+exports.generate_qrcode  = generate_qrcode
 exports.update           = function(profile_id, first_name, last_name, birthday, status,speciality, job, callback){
 	console.log(birthday);
 	Profile.findOne({ _id: profile_id}, function(err, profileData){
@@ -340,17 +319,17 @@ function userProfileInsertIfDontExists(searchUser, userInsert, profileInsert, ca
 			user.save(function(errUser, userData){
 				var token = new Token({
 					generated_id: mongoose.Types.ObjectId(),
-					user_id: user
+					user_id: userData._id
 				});
 				token.save(function(errToken, tokenData){
-					delete user['password'];
-					
-					user = format.user(user);
-					profileInsert['user_id'] = user._id;
+					delete userData['password'];
+
+					user = format.user(userData);
+					profileInsert['user_id'] = userData._id;
 					var profile = new Profile( profileInsert );
 					profile.save(function(err, profileData){
-						Profilefunc.generate_qrcode(profileData);
-						callback( false, token, profileData );	
+						generate_qrcode(profileData);
+						callback( false, token, profileData, userData );	
 					});		
 				});
 				
