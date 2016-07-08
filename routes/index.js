@@ -37,18 +37,14 @@ router.get('/verification/:id',function(req, res){
             nombre: profileData.first_name,
           }, userData.email, "¡Bienvenido a la Colmena!",function(status, html){
             if(status){
-              res.render('verified', { email: userData.email});
+              res.render('verified', { email: userData.email, status: 2 });
             }else{
-              Generalfunc.response(101,{},function(response){
-                res.json( response );
-              });
+              res.render('verified', { email: userData.email, status: 1 });
             }     
           });
         });
 		}else{
-			func.response(404, {}, function(response){
-				res.json(response);
-			})
+			res.render('verified', { email: userData.email, status: 0 });
 		}
 	})
 });

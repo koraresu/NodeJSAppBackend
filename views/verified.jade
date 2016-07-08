@@ -20,6 +20,9 @@ html(xmlns='http://www.w3.org/1999/xhtml')
             .icon
               img(src="http://192.241.245.98:3000/images/right.png")
             .message
-              ¡Gracias! Tu email 
-              i #{email}
-              ha sido verificado. Comienza a formar tus colmenas
+              if status == 2
+                ¡Gracias! Tu email 
+                i #{email}
+                ha sido verificado. Comienza a formar tus colmenas
+              else
+                El usuario que estas buscando no existe
