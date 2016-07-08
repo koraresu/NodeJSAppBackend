@@ -37,11 +37,7 @@ router.get('/verification/:id',function(req, res){
             nombre: profileData.first_name,
           }, userData.email, "¡Bienvenido a la Colmena!",function(status, html){
             if(status){
-              Generalfunc.response(200,{
-                email: userData.email
-              },function(response){
-                res.json( response );
-              });
+              res.render('verified', { email: userData.email});
             }else{
               Generalfunc.response(101,{},function(response){
                 res.json( response );
