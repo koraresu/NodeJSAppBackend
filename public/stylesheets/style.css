@@ -1,0 +1,67 @@
+html {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+}
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100%;
+  font-size: 16px;
+  font-family: 'Roboto', sans-serif;
+  background-color: #fff;
+}
+body .cont {
+  background-color: #fff;
+  max-width: 800px;
+  padding: 20px 54px;
+  margin: 0 auto;
+  min-width: 300px;
+}
+body .cont .content .header {
+  border: 0;
+  text-align: center;
+}
+body .cont .content .header a img {
+  width: 100%;
+  max-width: 270px;
+}
+body .cont .content .main {
+  margin-top: 78px;
+}
+body .cont .content .main .alert {
+  background-color: #f2f2f2;
+  border: 1px solid #e6e6e6;
+}
+body .cont .content .main .alert .icon {
+  display: inline-block;
+  vertical-align: top;
+}
+body .cont .content .main .alert .icon img {
+  height: 51px;
+}
+body .cont .content .main .alert .message {
+  display: inline-block;
+  vertical-align: top;
+  padding: 16px;
+  box-sizing: border-box;
+  font-weight: 300;
+  text-decoration: none;
+}
+body .cont .content .main .alert .message i {
+  font-style: normal;
+  color: #f7a800;
+  display: inline;
+  padding: 0 5px;
+}
+@media (max-width: 600px) {
+  body .cont {
+    padding: 20px 10px;
+  }
+}
+@media (max-width: 300px) {
+  body .cont {
+    padding: 20px 0;
+  }
+}
