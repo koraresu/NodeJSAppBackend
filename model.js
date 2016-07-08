@@ -168,25 +168,37 @@ var userSchema = new Schema({
   timestamps: true
 });
 
-// Company
+var NotificationSchema = new Schema({
+  tipo: Number, // 0 = se ha unido | 1 = recomendación | 2 = share contacto | 3 = Envio Solucitud | 4 = Respondio Solicitud
+  profile: { type: Schema.Types.ObjectId, ref: 'Profile' },
+  profile_emisor: { type: Schema.Types.ObjectId, ref: 'Profile' },
+  profile_mensaje: { type: Schema.Types.ObjectId, ref: 'Profile' },
+  busqueda: { type: Schema.Types.ObjectId, ref: 'History' }
+},{
+  timestamps: true
+});
 
-exports.company = db.model( 'Company' , companySchema );
-exports.experience = db.model( 'Experience' , experienceSchema );
-exports.job = db.model( 'Job' , jobSchema );
-exports.skill = db.model( 'Skill' , skillsSchema );
-exports.speciality = db.model( 'Speciality' , specialitySchema );
-exports.sector  = db.model( 'Sector' , sectorSchema );
+
+
+// Company
+exports.company      = db.model( 'Company' , companySchema );
+exports.experience   = db.model( 'Experience' , experienceSchema );
+exports.job          = db.model( 'Job' , jobSchema );
+exports.skill        = db.model( 'Skill' , skillsSchema );
+exports.speciality   = db.model( 'Speciality' , specialitySchema );
+exports.sector       = db.model( 'Sector' , sectorSchema );
 // Profile
-exports.profile = db.model( 'Profile' , profileSchema );
-exports.network = db.model( 'Network' , NetworkSchema );
-exports.review  = db.model( 'Review' , reviewSchema );
-exports.search  = db.model( 'Search' , SearchSchema );
-exports.token   = db.model('Token', tokenSchema);
-exports.user    = db.model( 'User' , userSchema );
+exports.profile      = db.model( 'Profile' , profileSchema );
+exports.network      = db.model( 'Network' , NetworkSchema );
+exports.review       = db.model( 'Review' , reviewSchema );
+exports.search       = db.model( 'Search' , SearchSchema );
+exports.token        = db.model( 'Token', tokenSchema );
+exports.user         = db.model( 'User' , userSchema );
+exports.notification = db.model( 'Notification', NotificationSchema );
 // History
-var history = db.model( 'History' , HistorySchema );
-exports.history = history;
-exports.feedback = db.model( 'Feedback' , FeedbackSchema );
+var history          = db.model( 'History' , HistorySchema );
+exports.history      = history;
+exports.feedback     = db.model( 'Feedback' , FeedbackSchema );
 // Chat
 exports.conversation = db.model( 'Conversation' , ConversationSchema );
-exports.message = db.model( 'Message' , MessageSchema );
+exports.message      = db.model( 'Message' , MessageSchema );

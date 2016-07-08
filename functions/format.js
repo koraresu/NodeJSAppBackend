@@ -86,6 +86,16 @@ exports.news = function(news, profile, profile_de){
 		break;
 	}	
 }
+exports.notification = function(notification){
+	var data = {
+		tipo: notification.tipo,
+		date: notification.createdAt
+	};
+	if(typeof notification.busqueda != "undefined"){
+		data.busqueda = notification.busqueda;	
+	}
+	return data;
+}
 exports.feedback = function(feedback){
 	return {
 		"title": feedback.title,

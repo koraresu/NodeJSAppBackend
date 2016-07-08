@@ -11,33 +11,34 @@ html(xmlns='http://www.w3.org/1999/xhtml')
     link(rel="icon",href="http://192.241.245.98:3000/favicon.ico",type="image/x-icon")
     title TheHive
   body
-    div.cont
-      div.content
-        div.header
-          a(href="#")
-            img(src="http://192.241.245.98:3000/images/logo.png")
-        div.main
-          .list
-            .element
-              span.titulo Hola #{nombre}
-              span.subtitulo Estás a un paso de formar parte de la Colmena
-            .element.boton
-              span Haz click para verificar tu cuenta
-              a(href="http://192.241.245.98:3000/verification/"+public_id).verify Confirmar tu correo
-        div.footer
-          .list
-            .element
-              span ¿El link no funciona? Pega esto en tu navegador:
-              a(href="#") http://192.241.245.98:3000/verification/#{public_id}
-            .element
-              span Este correo fue enviado de manera automática, no respondas.
-              span Si necesitas ayuda, contáctanos: 
-              a(href="#").email ayuda@theHIVE.com
-            .element
-              span ©2016 The Hive, S.A de C.V.
-              span.divider |
-              span Todos los derechos reservados
-            .element
-              a(href="#") Política de Privacidad
-              span.divider |
-              a(href="#") Términos y Condiciones
+    div.block
+      div.cont
+        div.content
+          div.header
+            a(href="#")
+              img(src="http://192.241.245.98:3000/images/logo.png")
+          div.main
+            .list
+              .element
+                span.titulo Hola #{nombre}
+                span.subtitulo Estás a un paso de formar parte de la Colmena
+              .element.boton
+                span Haz click para verificar tu cuenta
+                a(href="http://192.241.245.98:3000/verification/"+public_id).verify Confirmar tu correo
+          div.footer
+            .list
+              .element
+                span ¿El link no funciona? Pega esto en tu navegador:
+                a(href="#") http://192.241.245.98:3000/verification/#{public_id}
+              .element
+                span Este correo fue enviado de manera automática, no respondas.
+                span Si necesitas ayuda, contáctanos: 
+                a(href="#").email ayuda@theHIVE.com
+              .element
+                span ©2016 The Hive, S.A de C.V.
+                span.divider |
+                span Todos los derechos reservados
+              .element.last
+                a(href="#") Política de Privacidad
+                span.divider |
+                a(href="#") Términos y Condiciones

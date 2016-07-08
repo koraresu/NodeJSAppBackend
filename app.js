@@ -9,16 +9,17 @@ var bodyParser = require('body-parser');
 var db = require('monk')('localhost:27017/hive')
 
 
-var routes     = require('./routes/index');
-var profile    = require('./routes/profile');
-var company    = require('./routes/company');
-var skills     = require('./routes/skills');
-var experience = require('./routes/experience');
-var network    = require('./routes/network');
-var search     = require('./routes/search');
-var publish    = require('./routes/publish');
-var extra      = require('./routes/extra');
-var chat       = require('./routes/chat');
+var routes       = require('./routes/index');
+var profile      = require('./routes/profile');
+var company      = require('./routes/company');
+var skills       = require('./routes/skills');
+var experience   = require('./routes/experience');
+var network      = require('./routes/network');
+var search       = require('./routes/search');
+var publish      = require('./routes/publish');
+var extra        = require('./routes/extra');
+var chat         = require('./routes/chat');
+var notification = require('./routes/notifications');
 
 var app = express();
 
@@ -53,6 +54,7 @@ app.use('/api/company', company);
 app.use('/api/experience', experience);
 app.use('/api/search', search);
 app.use('/api/publish', publish);
+app.use('/api/notification', notification);
 
 
 app.use(stylus.middleware({

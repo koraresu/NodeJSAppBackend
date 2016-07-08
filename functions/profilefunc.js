@@ -12,15 +12,18 @@ var bcrypt = require('bcrypt-nodejs');
 var Generalfunc = require('./generalfunc');
 var Experiencefunc = require('./experiencefunc');
 
+var model = require('../model');
 var Token              = require('../models/token');
-var User               = require('../models/user');
+var User               = model.user;
 var Job                = require('../models/job');
 var Company            = require('../models/company');
 var Speciality         = require('../models/speciality');
-var Profile            = require('../models/profile');
+var Profile            = model.profile;
 var Sector             = require('../models/sector');
 var Experience         = require('../models/experience');
 var Skill              = require('../models/skills');
+
+
 
 var nodemailer = require('nodemailer');
 
@@ -94,6 +97,30 @@ exports.get              = function(profile_id,callback){
 }
 exports.insert           = function(){
 
+}
+exports.userProfileInsertIfDontExists = function(searchUser, userInsert, profileInsert, callback){
+	User.findOne(searchUser, function(errUser, user){
+		if(!errUser && user){
+			callback(true,null,null);
+		}else{
+			var user = new User(userInsert);
+			user.save();
+
+
+			var token = new Token({
+				generated_id: mongoose.Types.ObjectId(),
+				user_id: user
+			});
+			token.save();
+			delete user['password'];
+			profileInsert['user_id'] = user._id;
+			var profile = new Profile( profileInsert );
+			profile.save(function(err, profileData){
+				Profilefunc.generate_qrcode(profileData);
+				callback( false, token, profileData );	
+			});
+		}
+	});
 }
 exports.findSkill = function(profile_id, name, callback){
 	status = false;
