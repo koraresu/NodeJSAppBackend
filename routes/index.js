@@ -23,30 +23,38 @@ router.get('/', function(req, res, next) {
 
 router.get('/verification/:id',function(req, res){
 	var id = req.params.id;
-	id = mongoose.Types.ObjectId(id);
-	Profile.findOne({ public_id: id }).populate('user_id').exec( function(errProfile, profileData){
-		if(!errProfile && profileData){
-        
-        
-				profileData.user_id.verified = true;
-				profileData.user_id.save(function(errUser, userData){
+
+  if(mongoose.Types.ObjectId.isValid(id)){
+    id = mongoose.Types.ObjectId(id);
 
 
-          Generalfunc.sendEmail("email_bienvenida.jade", {
-            public_id: profileData.public_id,
-            nombre: profileData.first_name,
-          }, userData.email, "¡Bienvenido a la Colmena!",function(status, html){
-            if(status){
-              res.render('verified', { email: userData.email, status: 2 });
-            }else{
-              res.render('verified', { email: userData.email, status: 1 });
-            }     
+    Profile.findOne({ public_id: id }).populate('user_id').exec( function(errProfile, profileData){
+      if(!errProfile && profileData){
+          
+          
+          profileData.user_id.verified = true;
+          profileData.user_id.save(function(errUser, userData){
+
+
+            Generalfunc.sendEmail("email_bienvenida.jade", {
+              public_id: profileData.public_id,
+              nombre: profileData.first_name,
+            }, userData.email, "¡Bienvenido a la Colmena!",function(status, html){
+              if(status){
+                res.render('verified', { email: userData.email, status: true });
+              }else{
+                res.render('verified', { email: userData.email, status: false, message: "Error al enviar el correo de bienvenida" });
+              }     
+            });
           });
-        });
-		}else{
-			res.render('verified', { email: userData.email, status: 0 });
-		}
-	})
+      }else{
+        res.render('verified', { email: userData.email, status: false, message: "El usuario que estas buscando no existe"});
+      }
+    });
+  }else{
+    res.render('verified', { email: userData.email, status: false, message: "El usuario que estas buscando no existe"});
+  }
+  	
 });
 
 module.exports = router;
