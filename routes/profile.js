@@ -133,7 +133,7 @@ router.post('/create', multipartMiddleware, function(req, res){
 			Generalfunc.sendEmail("email.jade", {
 				public_id: profileData.public_id,
 				nombre: profileData.first_name,
-			}, userData.email, "¡Bienvenido a la Colmena!",function(status, html){
+			}, userData.email, "Verificación de Correo",function(status, html){
 				if(status){
 					Generalfunc.response(200,{
 						token: tokenData.generated_id
