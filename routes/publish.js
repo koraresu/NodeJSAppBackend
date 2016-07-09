@@ -157,10 +157,16 @@ router.post('/write/news', multipartMiddleware, function(req, res){
 						
 					}else{
 						res.send("No Profile");
+
+						Generalfunc.response(113, {}, function(response){
+							res.json(response);
+						});
 					}
 				});
 			}else{
-				res.send("No Token");
+				Generalfunc.response(101, {}, function(response){
+					res.json(response);
+				});
 			}
 	});
 	
