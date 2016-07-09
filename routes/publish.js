@@ -131,7 +131,7 @@ router.post('/write/news', multipartMiddleware, function(req, res){
 										if (err){
 											throw err;
 										}else{
-											var p = '/gallery/' + file_pic;
+											var p = file_pic;
 											var d = {url:p, path: new_path};
 											data.push(d);
 
