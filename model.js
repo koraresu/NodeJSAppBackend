@@ -3,7 +3,6 @@ var mongoose   = require('mongoose'),
     //db_lnk          = 'mongodb://admin:123@localhost:27017/hive',
     db_lnk          = 'mongodb://localhost:27017/hive',
     db              = mongoose.createConnection(db_lnk);
-var formatPlugin = require('mongoose-format');
 
 var HistorySchema = new Schema({
   profile_id: { type: Schema.Types.ObjectId, ref: 'Profile' },

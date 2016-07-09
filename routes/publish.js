@@ -1,4 +1,4 @@
-var express = require('express');
+	var express = require('express');
 var router = express.Router();
 var path = require('path');
 var fs = require('fs');
@@ -71,117 +71,81 @@ router.post('/write/comentario', multipartMiddleware, function(req, res){
 // 		Gallery (Debe ser Arreglo)
 // Return (Formato 1)
 // 		News
+
+function save_news(profileData, title, content, gallery,callback){
+	var h = {
+		title: title,
+		content: content,
+		gallery: gallery
+	};
+	var history = new History({
+		profile_id: profileData._id,
+		de_id: profileData._id,
+		action: 1,
+		data: h
+	});
+	history.save(function(err, historyData){
+		callback(historyData);
+	});
+}
 router.post('/write/news', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 	var titulo    = req.body.title;
 	var contenido = req.body.content;
 	var gallery   = req.files.gallery;
-
 	var data = [];
-	if(typeof gallery == "undefined"){
-		Tokenfunc.exist(guid, function(status, tokenData){
+
+	Tokenfunc.exist(guid, function(status, tokenData){
 			if(status){
 				Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
-
-
-					var h = {};
-					h.title = titulo;
-					h.content =contenido;
-					h.gallery = data;
-
-					var history = new History({
-						profile_id: profileData._id,
-						de_id: profileData._id,
-						action: 1,
-						data: h
-					});
-					history.save(function(err, historyData){
-						res.json(historyData);
-					});
-
-					
-				});
-			}else{
-				func.response(101, {}, function(response){
-					res.json(response);
-				});
-			}
-		});
-	}else{
-		console.log(gallery)
-		gallery.forEach(function(item, index){
-			
-
-			if(item.path.constructor != Array){
-				console.log("No Array");
-				var objectId    = new ObjectID();
-				var extension   = path.extname(item.path);
-				var file_pic    = objectId + extension;
-
-				var new_path   = path.dirname(path.dirname(process.mainModule.filename)) + '/public/gallery/' + file_pic;
-				var p = '/gallery/' + file_pic;
-				var d = {url:p, path: new_path};
-				data.push(d);
-				Generalfunc.saveImage(item, new_path, function(){
-					if((gallery.length-1) == index){
-						Tokenfunc.exist(guid, function(status, tokenData){
-							if(status){
-								Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
-									var h = {};
-									h.title = titulo;
-									h.content =contenido;
-									h.gallery = data;
-
-									var history = new History({
-										profile_id: profileData._id,
-										de_id: profileData._id,
-										action: 1,
-										data: h
-									});
-									history.save(function(err, historyData){
-										Generalfunc.response(200, historyData, function(response){
-											res.json(historyData);	
-										});
-									});
-								});
-							}else{
-								Generalfunc.response(101, {}, function(response){
-									res.json(response);
-								})
-							}
-						});
-					}	
-				});
-			}else{
-				if((gallery.length-1) == index){
-					Tokenfunc.exist(guid, function(status, tokenData){
-						if(status){
-							Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
-								var h = {};
-								h.title = titulo;
-								h.content =contenido;
-								h.gallery = data;
-
-								var history = new History({
-									profile_id: profileData._id,
-									de_id: profileData._id,
-									action: 1,
-									data: h
-								});
-								history.save(function(err, historyData){
-									Generalfunc.response(200, historyData, function(response){
-										res.json(historyData);	
-									});
-								});
+					if(status){
+						if(typeof gallery == "undefined"){
+							save_news(profileData, titulo, contenido, [], function(historyData){
+								res.json(historyData);
 							});
 						}else{
-							res.send("Hola");
+							if(gallery.length > 0){
+								gallery.forEach(function(item, index){
+									var file = item;
+									var objectId    = new ObjectID();
+									var fileName  = file.fieldName;
+									var pathfile  = file.path;
+									var extension = path.extname(pathfile);
+									var file_pic    = objectId + extension;
+
+									var new_path = path.dirname(path.dirname(process.mainModule.filename)) + '/public/gallery/' + file_pic;
+									fs.rename(pathfile, new_path, function(err){
+										if (err){
+											throw err;
+										}else{
+											var p = '/gallery/' + file_pic;
+											var d = {url:p, path: new_path};
+											data.push(d);
+
+											if(index == (gallery.length-1)){
+												save_news(profileData, titulo, contenido, data, function(historyData){
+													res.json(historyData);
+												});
+											}
+										}
+									});
+								});	
+							}else{
+								save_news(profileData, titulo, contenido, [], function(historyData){
+									res.json(historyData);
+								});
+							}	
 						}
-					});
-				}	
+						
+					}else{
+						res.send("No Profile");
+					}
+				});
+			}else{
+				res.send("No Token");
 			}
-		});	
-	}
+	});
+	
 });
 // GET NEWS
 // Parameter
