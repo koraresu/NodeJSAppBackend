@@ -99,6 +99,7 @@ router.post('/write/news', multipartMiddleware, function(req, res){
 		console.log("TOken Status:");
 		console.log(status);
 			if(status){
+				console.log(tokenData);
 				Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
 					console.log("Profile Status:");
 					console.log(status);
@@ -106,7 +107,14 @@ router.post('/write/news', multipartMiddleware, function(req, res){
 					if(status){
 						if(typeof gallery == "undefined"){
 							save_news(profileData, titulo, contenido, [], function(historyData){
-								res.json(historyData);
+								
+								var profile = format.littleProfile(profileData);
+								var de = format.littleProfile(profileData);
+								var d = format.news(historyData, profile, de);
+								Generalfunc.response(200,d, function(response){
+									res.json(response);
+								});
+
 							});
 						}else{
 							if(gallery.length > 0){
@@ -129,7 +137,12 @@ router.post('/write/news', multipartMiddleware, function(req, res){
 
 											if(index == (gallery.length-1)){
 												save_news(profileData, titulo, contenido, data, function(historyData){
-													res.json(historyData);
+													var profile = format.littleProfile(profileData);
+													var de = format.littleProfile(profileData);
+													var d = format.news(historyData, profile, de);
+													Generalfunc.response(200,d, function(response){
+														res.json(response);
+													});
 												});
 											}
 										}
