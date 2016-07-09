@@ -98,6 +98,8 @@ router.post('/write/news', multipartMiddleware, function(req, res){
 	Tokenfunc.exist(guid, function(status, tokenData){
 			if(status){
 				Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
+
+					console.log(profileData);
 					if(status){
 						if(typeof gallery == "undefined"){
 							save_news(profileData, titulo, contenido, [], function(historyData){
