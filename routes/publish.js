@@ -96,9 +96,12 @@ router.post('/write/news', multipartMiddleware, function(req, res){
 	var data = [];
 
 	Tokenfunc.exist(guid, function(status, tokenData){
+		console.log("TOken Status:");
+		console.log(status);
 			if(status){
 				Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
-
+					console.log("Profile Status:");
+					console.log(status);
 					console.log(profileData);
 					if(status){
 						if(typeof gallery == "undefined"){
