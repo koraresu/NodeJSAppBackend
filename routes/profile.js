@@ -68,6 +68,7 @@ router.post('/login', multipartMiddleware, function(req, res){
 									token: tokenData.generated_id,
 									verified: verified,
 									experiences: exp,
+									profile: profileData
 								}, function(response){
 									res.json(response);
 								});
@@ -136,7 +137,8 @@ router.post('/create', multipartMiddleware, function(req, res){
 			}, userData.email, "Verificación de Correo",function(status, html){
 				if(status){
 					Generalfunc.response(200,{
-						token: tokenData.generated_id
+						token: tokenData.generated_id,
+						profile: profileData
 					},function(response){
 						res.json( response );
 					});
