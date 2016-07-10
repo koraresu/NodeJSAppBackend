@@ -47,7 +47,31 @@ Nombre de Objectos de Documentos:
 // 		Generated Token
 // 		Verified Status
 // 		Experiences Status
+router.post('/login', multipartMiddleware, function(req, res){
+	var email    = req.body.email;
+	var password = req.body.password;
 
+	User.findOne({ email: email, type: 0}, function(errUser, userData){
+		if(!errUser && userData){
+			Profilefunc.compare_password(password, userData.password, function(statusPassword){
+				if(statusPassword){
+					Profile.findOne({ user_id: userData._id }).exec(function(errProfile, profileData){
+						if(!errProfile && profileData){
+							console.log("Profile Exists");
+						}else{
+							console.log("Profile Fails");
+						}
+					});
+				}else{
+
+				}
+			});
+		}else{
+
+		}
+	});
+});
+/*
 router.post('/login', multipartMiddleware, function(req, res){
 	var email    = req.body.email;
 	var password = req.body.password;
@@ -92,6 +116,7 @@ router.post('/login', multipartMiddleware, function(req, res){
 		}
 	});	
 });
+*/
 // CREATE
 // Parameter:
 // 		first_name     = Nombre
