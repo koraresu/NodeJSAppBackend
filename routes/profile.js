@@ -55,21 +55,34 @@ router.post('/login', multipartMiddleware, function(req, res){
 		if(!errUser && userData){
 			Profilefunc.compare_password(password, userData.password, function(statusPassword){
 				if(statusPassword){
-					console.log(statusPassword);
-					console.log(userData);
-					Profile.findOne({ user_id: userData._id }).exec(function(errProfile, profileData){
-						if(!errProfile && profileData){
-							console.log("Profile Exists");
-						}else{
-							console.log("Profile Fails");
-						}
+					Profilefunc.userProfile(userData, function(statProfile, tokenData, userData, profileData){
+						Experiencefunc.get(profileData._id, function(statusExperience, experiences){
+							var exp = statusExperience;	
+							var verified = false;
+
+							if(userData.verified){
+								verified = true;
+							}
+							Generalfunc.response(201,{
+								token: tokenData.generated_id,
+								verified: verified,
+								experiences: exp,
+								profile: profileData
+							}, function(response){
+								res.json(response);
+							});
+						});
 					});
 				}else{
-
+					Generalfunc.response(111,{ },function(response){
+						res.json(response);
+					});
 				}
 			});
 		}else{
-
+			Generalfunc.response(111, {}, function(response){
+				res.json(response);
+			});
 		}
 	});
 });
@@ -133,6 +146,7 @@ router.post('/create', multipartMiddleware, function(req, res){
 	var apellido = req.body.last_name;
 	var email    = req.body.email;
 	var password = req.body.password;
+	var phone    = req.body.phone;
 
 	var pass = Profilefunc.generate_password(password);
 
@@ -148,6 +162,7 @@ router.post('/create', multipartMiddleware, function(req, res){
 		first_name: nombre,
 		last_name: apellido,
 		nacimiento: null,
+		phone: phone,
 		ocupation: {},
 		speciality: {},
 		public_id: mongoose.Types.ObjectId(),
