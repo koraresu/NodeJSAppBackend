@@ -55,6 +55,8 @@ router.post('/login', multipartMiddleware, function(req, res){
 		if(!errUser && userData){
 			Profilefunc.compare_password(password, userData.password, function(statusPassword){
 				if(statusPassword){
+					console.log(statusPassword);
+					console.log(userData);
 					Profile.findOne({ user_id: userData._id }).exec(function(errProfile, profileData){
 						if(!errProfile && profileData){
 							console.log("Profile Exists");
