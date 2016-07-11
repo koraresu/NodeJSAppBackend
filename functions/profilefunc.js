@@ -131,20 +131,18 @@ exports.PublicId = function(profile_id, callback){
 	});
 }
 function generate_qrcode(profileData, callback){
+
 	if(typeof profileData.public_id == "undefined"){
 		profileData.public_id = mongoose.Types.ObjectId();
-		profileData.save(function(err, profileData){
-			var qr_svg = qr.image('the-hive:query?'+profileData.public_id, { type: 'png', margin: 0 });
-			qr_svg.pipe(require('fs').createWriteStream('./public/qrcode/'+profileData._id+'.png'));
+	}
 
-			var svg_string = qr.imageSync('the-hive:query?'+profileData.public_id, { type: 'png' });
-		});
-	}else{
+	profileData.save(function(err, profileData){
 		var qr_svg = qr.image('the-hive:query?'+profileData.public_id, { type: 'png', margin: 0 });
 		qr_svg.pipe(require('fs').createWriteStream('./public/qrcode/'+profileData._id+'.png'));
 
 		var svg_string = qr.imageSync('the-hive:query?'+profileData.public_id, { type: 'png' });
-	}
+		callback(profileData);
+	});
 }
 exports.generate_qrcode  = generate_qrcode
 exports.update           = function(profile_id, first_name, last_name, birthday, status,speciality, job, callback){
@@ -328,8 +326,10 @@ function userProfileInsertIfDontExists(searchUser, userInsert, profileInsert, ca
 					profileInsert['user_id'] = userData._id;
 					var profile = new Profile( profileInsert );
 					profile.save(function(err, profileData){
-						generate_qrcode(profileData);
-						callback( false, token, profileData, userData );	
+						generate_qrcode(profileData, function(){
+							callback( false, token, profileData, userData );		
+						});
+						
 					});		
 				});
 				
