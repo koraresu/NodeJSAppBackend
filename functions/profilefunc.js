@@ -138,7 +138,7 @@ function generate_qrcode(profileData, callback){
 	var qrcode = profileData.public_id;
 	profileData.qrcode = qrcode;
 
-	print(profileData._id)
+	console.log(profileData._id)
 	profileData.save(function(err, profileData){
 		var qr_svg = qr.image('the-hive:query?'+qrcode, { type: 'png', margin: 0 });
 		qr_svg.pipe(require('fs').createWriteStream('./public/qrcode/'+qrcode+'.png'));
