@@ -135,12 +135,15 @@ function generate_qrcode(profileData, callback){
 	if(typeof profileData.public_id == "undefined"){
 		profileData.public_id = mongoose.Types.ObjectId();
 	}
+	var qrcode = profileData.public_id;
+	profileData.qrcode = qrcode;
 
+	print(profileData._id)
 	profileData.save(function(err, profileData){
-		var qr_svg = qr.image('the-hive:query?'+profileData.public_id, { type: 'png', margin: 0 });
-		qr_svg.pipe(require('fs').createWriteStream('./public/qrcode/'+profileData._id+'.png'));
+		var qr_svg = qr.image('the-hive:query?'+qrcode, { type: 'png', margin: 0 });
+		qr_svg.pipe(require('fs').createWriteStream('./public/qrcode/'+qrcode+'.png'));
 
-		var svg_string = qr.imageSync('the-hive:query?'+profileData.public_id, { type: 'png' });
+		var svg_string = qr.imageSync('the-hive:query?'+qrcode, { type: 'png' });
 		callback(profileData);
 	});
 }
