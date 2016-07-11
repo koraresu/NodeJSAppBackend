@@ -14,6 +14,7 @@ exports.news = function(news, profile, profile_de){
 	switch(news.action){
 		case "1":
 			return {
+				"id_n": news.id_numerico,
 				"id": news._id,
 				"type": news.action,
 				"title": news.data.title,
@@ -25,6 +26,8 @@ exports.news = function(news, profile, profile_de){
 		break;
 		case "2":
 			return {
+				"id_n": news.id_numerico,
+				"id": news._id,
 				"type": "2",       // Action 
 				"puesto": news.data.puesto,
 				"profile": profile,
@@ -33,6 +36,8 @@ exports.news = function(news, profile, profile_de){
 		break;
 		case "3":
 			return {
+				"id_n": news.id_numerico,
+				"id": news._id,
 				"type": "3",       // Action 
 				"titulo": "Jennifer Pérez y Juan López",
 				"profile": profile,
@@ -41,6 +46,8 @@ exports.news = function(news, profile, profile_de){
 		break;
 		case "4":
 			return {
+				"id_n": news.id_numerico,
+				"id": news._id,
 				"type": "4",       // Action 
 				"busqueda": news.data.busqueda,
 				"profile_friend": profile_de,
@@ -50,6 +57,7 @@ exports.news = function(news, profile, profile_de){
 		break;
 		case "5":
 			return {
+				"id_n": news.id_numerico,
 				"id": news._id,
 				"type": news.action,
 				"title": news.data.title,
@@ -61,6 +69,7 @@ exports.news = function(news, profile, profile_de){
 		break;
 		case "6":
 			return {
+				"id_n": news.id_numerico,
 				"id": news._id,
 				"type": "6",
 				"skill": news.data.name,
@@ -70,6 +79,8 @@ exports.news = function(news, profile, profile_de){
 		break;
 		case "7":
 			return {
+				"id_n": news.id_numerico,
+				"id": news._id,
 				"type": "7",       // Action 
 				"title": news.data.title,
 				"content": news.data.content,
@@ -81,6 +92,7 @@ exports.news = function(news, profile, profile_de){
 		break;
 		default:
 			return {
+				"id_n": news.id_numerico,
 				"profile": profile,
 				"date": news.createdAt
 			};
