@@ -226,8 +226,8 @@ router.post('/get/news', multipartMiddleware, function(req, res){
 					r.sort( [ ['createdAt', 'descending'] ] ).populate('profile_id', '_id first_name last_name profile_pic public_id speciality').populate('de_id', '_id first_name last_name profile_pic public_id speciality').exec(function(errHistory,historyData){
 						if(historyData.length > 0){
 							_.each(historyData, function(element, index, list) {
-								var de = format.littleProfile(element.de_id);
-								var profile = format.littleProfile(element.profile_id);
+								var de = format.littleProfile( element.de_id );
+								var profile = format.littleProfile( element.profile_id );
 								var d = format.news(element, profile, de);
 								data.push(d);
 	    						if(index+1 == historyData.length) {
