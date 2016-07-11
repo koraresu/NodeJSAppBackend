@@ -136,7 +136,7 @@ function generate_qrcode(profileData, callback){
 		profileData.public_id = mongoose.Types.ObjectId();
 	}
 	var qrcode = profileData.public_id;
-	profileData.qrcode = qrcode;
+	profileData.qrcode = qrcode+'.png';
 
 	console.log(profileData._id)
 	profileData.save(function(err, profileData){
