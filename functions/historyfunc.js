@@ -141,3 +141,14 @@ exports.generate_history = function(type, profileData, data, cb){
 	});
 
 }
+
+exports.insert = function(data, callback){
+	History.count({}, function(err, c){
+		data.id_numerico = c;
+		var new_history = new History(data);
+		new_history.save(function(errHistory, historyData){
+			callback(errHistory, historyData);
+		});
+	})
+	
+}

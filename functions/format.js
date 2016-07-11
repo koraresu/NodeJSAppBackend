@@ -10,6 +10,7 @@ exports.chat_message = function(message){
 	};
 }
 exports.news = function(news, profile, profile_de){
+	console.log(news);
 	switch(news.action){
 		case "1":
 			return {

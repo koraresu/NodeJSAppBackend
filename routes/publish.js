@@ -15,6 +15,7 @@ var Generalfunc    = require('../functions/generalfunc');
 var Profilefunc    = require('../functions/profilefunc');
 var Tokenfunc      = require('../functions/tokenfunc');
 var Skillfunc      = require('../functions/skillfunc');
+var Historyfunc    = require('../functions/Historyfunc');
 var Experiencefunc = require('../functions/experiencefunc');
 var Networkfunc    = require('../functions/networkfunc');
 var format         = require('../functions/format.js');
@@ -78,14 +79,15 @@ function save_news(profileData, title, content, gallery,callback){
 		content: content,
 		gallery: gallery
 	};
-	var history = new History({
+	Historyfunc.insert({
 		profile_id: profileData._id,
 		de_id: profileData._id,
 		action: 1,
 		data: h
-	});
-	history.save(function(err, historyData){
-		callback(historyData);
+	}, function(err, historyData){
+		console.log(err);
+			console.log(historyData);
+			callback(historyData);
 	});
 }
 router.post('/write/news', multipartMiddleware, function(req, res){
@@ -132,8 +134,9 @@ router.post('/write/news', multipartMiddleware, function(req, res){
 											throw err;
 										}else{
 											var p = file_pic;
-											var d = {url:p, path: new_path};
-											data.push(d);
+											//var d = {url:p, path: new_path};
+
+											data.push(p);
 
 											if(index == (gallery.length-1)){
 												save_news(profileData, titulo, contenido, data, function(historyData){
