@@ -23,6 +23,7 @@ var profileSchema = new Schema({
   user_id: { type: Schema.Types.ObjectId, ref: 'User' },
   birthday: { type: Date },
   lang: String,
+  phone: String,
   experiences: [{
     tipo: Number,
     job_name: String,
