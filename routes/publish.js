@@ -85,9 +85,7 @@ function save_news(profileData, title, content, gallery,callback){
 		action: 1,
 		data: h
 	}, function(err, historyData){
-		console.log(err);
-			console.log(historyData);
-			callback(historyData);
+		callback(historyData);
 	});
 }
 router.post('/write/news', multipartMiddleware, function(req, res){
@@ -98,14 +96,9 @@ router.post('/write/news', multipartMiddleware, function(req, res){
 	var data = [];
 
 	Tokenfunc.exist(guid, function(status, tokenData){
-		console.log("TOken Status:");
-		console.log(status);
+	
 			if(status){
-				console.log(tokenData);
 				Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
-					console.log("Profile Status:");
-					console.log(status);
-					console.log(profileData);
 					if(status){
 						if(typeof gallery == "undefined"){
 							save_news(profileData, titulo, contenido, [], function(historyData){

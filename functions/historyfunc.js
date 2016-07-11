@@ -143,12 +143,19 @@ exports.generate_history = function(type, profileData, data, cb){
 }
 
 exports.insert = function(data, callback){
-	History.count({}, function(err, c){
-		data.id_numerico = c;
+	History.findOne({}).sort('-id_numerico').exec(function(err, c){
+		console.log(err);
+		console.log(c);
+		if( c == null){
+			data.id_numerico = 0;	
+		}else{
+			data.id_numerico = c.id_numerico+1;
+		}
+		
 		var new_history = new History(data);
 		new_history.save(function(errHistory, historyData){
-			callback(errHistory, historyData);
+				callback(errHistory, historyData);
 		});
-	})
+	});
 	
 }
