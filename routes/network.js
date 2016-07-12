@@ -251,16 +251,33 @@ router.post('/search', multipartMiddleware, function(req, res){
                     }
                 ]
             };
-
+    var vecina = {
+                
+                "first_name": "Yarull",
+                "last_name": "Alvarez",
+                "experiences": [
+                    {
+                        "job_name": "Scrum Master",
+                    }
+                ]
+            };
+    var otro = {
+                
+                "first_name": "Memo",
+                "last_name": "Palafox",
+                "experiences": [
+                    {
+                        "job_name": "Dev",
+                    }
+                ]
+            };
     var mi_g = [];
     var vecinas_g = [];
     var otros_g = [];
 
     mi_g.push(mi);
-    mi_g.push(mi);
-    vecinas_g.push(mi);
-    otros_g.push(mi);
-    otros_g.push(mi);
+    vecinas_g.push(vecina);
+    otros_g.push(otro);
 
 	var data = {};
 	data.mi = mi_g;
