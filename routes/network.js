@@ -245,6 +245,7 @@ router.post('/search', multipartMiddleware, function(req, res){
                 
                 "first_name": "Juan Rael",
                 "last_name": "Corrales Arellano",
+                "rate": 4.0,
                 "experiences": [
                     {
                         "job_name": "Developer",
@@ -255,6 +256,7 @@ router.post('/search', multipartMiddleware, function(req, res){
                 
                 "first_name": "Yarull",
                 "last_name": "Alvarez",
+                "rate": 4.8,
                 "experiences": [
                     {
                         "job_name": "Scrum Master",
@@ -265,6 +267,7 @@ router.post('/search', multipartMiddleware, function(req, res){
                 
                 "first_name": "Memo",
                 "last_name": "Palafox",
+                "rate": 3.0,
                 "experiences": [
                     {
                         "job_name": "Dev",
