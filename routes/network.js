@@ -8,7 +8,7 @@ var _ = require('underscore');
 
 var router = express.Router();
 
-
+var model              = require('../model');
 
 var Token              = require('../models/token');
 var User               = require('../models/user');
@@ -18,7 +18,7 @@ var Speciality         = require('../models/speciality');
 var Profile            = require('../models/profile');
 var Sector             = require('../models/sector');
 var Experience         = require('../models/experience');
-var Network            = require('../models/network');
+var Network            = model.network;
 var Review             = require('../models/review');
 var Skill              = require('../models/skills');
 
@@ -142,51 +142,29 @@ router.post('/get', multipartMiddleware, function(req, res){
 				if(status){
 					var data = [];
 					var profile_id = profileData._id;
-					console.log(profileData);
 
-					console.log("ProfileId:"+profile_id);
-					Network.find({
-						"profiles": {
-							"$in": [profile_id]
-						}
-					}).exec(function(errNetwork, networkData){
-
-						networkData.forEach(function(item, index){
-							var a = ""
-
-							Networkfunc.otherProfile(item.profiles, profile_id, function(a){
-							 	console.log("A:"+a);
-							 	var d = [];
-
-							 	Profile.findOne({ _id: a }).exec(function(errProfile, profileDataAnother){
-
-									d = item;
-									d.profiles = [profileData, profileDataAnother];
-									data.push(d);
-
-									if(index == (networkData.length-1)){
-										func.response(200, data, function(response){
-											res.json(response);
-										});
-									}
-								});
-
+					Networkfunc.getFriends(profile_id, function(err, networkData){
+						if(!err && networkData){
+							Generalfunc.response(200, networkData, function(response){
+								res.json(response);
 							});
-
-							
-
-							
-
-
-						});
+						}else{
+							Generalfunc.response(404, {}, function(response){
+								res.json(response);
+							});
+						}
 					});
 				}else{
-					res.send("No Token")
+					Generalfunc.response(113, {}, function(response){
+						res.json(response);
+					});
 				}
 				
 			});
 		}else{
-			console.log("No Token");
+			Generalfunc.response(101, {}, function(response){
+				res.json(response);
+			});
 		}
 	});
 
@@ -241,6 +219,11 @@ router.post('/emailtofriend', multipartMiddleware, function(req, res){
 //		
 //
 router.post('/search', multipartMiddleware, function(req, res){
+	var guid       = req.body.guid;
+	var text       = req.body.text;
+});
+/*
+router.post('/search', multipartMiddleware, function(req, res){
 	var mi = {
                 
                 "first_name": "Juan Rael",
@@ -292,6 +275,7 @@ router.post('/search', multipartMiddleware, function(req, res){
 		res.json(response)
 	});
 });
+*/
 // SEARCH NETWORK
 // Parameter:
 //  	Token

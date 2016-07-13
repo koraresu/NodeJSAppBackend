@@ -5,13 +5,15 @@ var fs = require('fs');
 
 var Generalfunc = require('./generalfunc');
 
+var model          = require('../model');
+
 var Profile        = require('../models/profile');
 var User           = require('../models/user');
 var Token          = require('../models/token');
 var Job            = require('../models/job');
 var Company        = require('../models/company');
 var Experience     = require('../models/experience');
-var Network        = require('../models/network');
+var Network        = model.network;
 var Message        = require('../models/message');
 var Conversation   = require('../models/conversation');
 
@@ -84,26 +86,20 @@ function checkconversation(profile_a, profile_b, callback){
 	});
 }
 function getFriends(profile_id,callback){
-	var data = [];
-	Network.find({
-		profiles: {
-			"$in": [ mongoose.Types.ObjectId(profile_id) ]
-		}
-	}).exec(function(errNetwork, networkData){
-		if(networkData.length > 0){
-			networkData.forEach(function(item, index){
-				data.push( mongoose.Types.ObjectId(item._id) );
+	if(typeof profile_id == "object"){
+		var profile_id = mongoose.Types.ObjectId(profile_id);	
+	}
 
-				if((networkData.length-1) == index){
-					callback(data);
-				}
-			});
-		}else{
-			callback(data);
+	Network.find({
+		"profiles": {
+			"$in": [profile_id]
 		}
+	}).populate("profiles", "_id first_name last_name public_id qrcode profilepic").exec(function(errNetwork, networkData){
+		callback(errNetwork, networkData);
 	});
+
 }
-exports.getfriends = getFriends
+exports.getFriends = getFriends
 exports.checkconversation   = checkconversation
 exports.message             = message
 exports.addReview           = addReview

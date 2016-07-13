@@ -329,7 +329,7 @@ function userProfileInsertIfDontExists(searchUser, userInsert, profileInsert, ca
 					profileInsert['user_id'] = userData._id;
 					var profile = new Profile( profileInsert );
 					profile.save(function(err, profileData){
-						generate_qrcode(profileData, function(){
+						generate_qrcode(profileData, function(profileData){
 							callback( false, token, profileData, userData );		
 						});
 						

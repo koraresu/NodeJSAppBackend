@@ -97,11 +97,13 @@ router.post('/qrcode', multipartMiddleware, function(req, res){
 		if(status){
 			console.log("Token");
 			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
-				Profilefunc.generate_qrcode(profileData);
-				res.json({
-					file: '/qrcode/'+profileData._id+'.png',
-					public_id: profileData.public_id
+				Profilefunc.generate_qrcode(profileData, function(profileData){
+					res.json({
+						file: '/qrcode/'+profileData._id+'.png',
+						public_id: profileData.public_id
+					});
 				});
+				
 			});
 		}else{
 

@@ -108,8 +108,10 @@ exports.userProfileInsertIfDontExists = function(searchUser, userInsert, profile
 			profileInsert['user_id'] = user._id;
 			var profile = new Profile( profileInsert );
 			profile.save(function(err, profileData){
-				Profilefunc.generate_qrcode(profileData);
-				callback( false, token, profileData );	
+				Profilefunc.generate_qrcode(profileData, function(profileData){
+					callback( false, token, profileData );	
+				});
+				
 			});
 		}
 	});
