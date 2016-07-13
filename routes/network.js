@@ -221,6 +221,8 @@ router.post('/emailtofriend', multipartMiddleware, function(req, res){
 router.post('/search', multipartMiddleware, function(req, res){
 	var guid       = req.body.guid;
 	var text       = req.body.text;
+
+	
 });
 /*
 router.post('/search', multipartMiddleware, function(req, res){
