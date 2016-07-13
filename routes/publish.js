@@ -185,7 +185,7 @@ router.post('/get/news', multipartMiddleware, function(req, res){
 			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
 				Networkfunc.getFriends(profileData._id, function(errFriends, friendsData){
 					var friends = friendsData;
-
+					console.log("Friends");
 					console.log(friends);
 					friends.push(profileData._id);
 
@@ -224,6 +224,7 @@ router.post('/get/news', multipartMiddleware, function(req, res){
 							_.each(historyData, function(element, index, list) {
 								var de = format.littleProfile( element.de_id );
 								var profile = format.littleProfile( element.profile_id );
+								console.log("Format News");
 								var d = format.news(element, profile, de);
 								data.push(d);
 	    						if(index+1 == historyData.length) {
