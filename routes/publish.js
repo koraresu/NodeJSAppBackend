@@ -174,6 +174,11 @@ router.post('/write/news', multipartMiddleware, function(req, res){
 // 		Page(Opcional)
 // Return (Formato 1)
 // 		News
+router.post('/get/news/a', multipartMiddleware, function(req, res){
+	
+	Networkfunc.getFriends(profileData._id, function(errFriends, friendsData){
+	});
+});
 router.post('/get/news', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 	var max       = req.body.max;
@@ -185,15 +190,10 @@ router.post('/get/news', multipartMiddleware, function(req, res){
 			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
 				Networkfunc.getFriends(profileData._id, function(errFriends, friendsData){
 					var friends = friendsData;
-					console.log("Friends");
-					console.log(friends);
 					friends.push(profileData._id);
-
 					var search = new Object();
 					search.profile_id = { "$in": friends }
-
 					search.action = { "$in": ["1","2","3","6","7"]}
-
 
 					if(typeof action == "string"){
 						var actTemp = action;
@@ -205,13 +205,14 @@ router.post('/get/news', multipartMiddleware, function(req, res){
 						search.action = { "$in": action }
 					}
 					var r = model.history.find( search );
-					
+					/*
 					if(typeof max != "undefined"){
 						max = max*1;
 						r = r.limit(max);
 					}else{
 						r = r.limit(40);
 					}
+					*/
 					if(typeof page != "undefined"){
 						page = page*1;
 						page = page-1;
@@ -219,13 +220,10 @@ router.post('/get/news', multipartMiddleware, function(req, res){
 						r = r.skip(pages);
 					}
 					var data = [];
-					r.sort( [ ['createdAt', 'descending'] ] ).populate('profile_id', '_id first_name last_name profile_pic public_id speciality').populate('de_id', '_id first_name last_name profile_pic public_id speciality').exec(function(errHistory,historyData){
+					r.sort( [ ['createdAt', 'descending'] ] ).populate('profile_id').populate('de_id').exec(function(errHistory,historyData){
 						if(historyData.length > 0){
 							_.each(historyData, function(element, index, list) {
-								var de = format.littleProfile( element.de_id );
-								var profile = format.littleProfile( element.profile_id );
-								console.log("Format News");
-								var d = format.news(element, profile, de);
+								var d = format.news(element, element.profile_id, element.de_id);
 								data.push(d);
 	    						if(index+1 == historyData.length) {
 	    							Generalfunc.response(200, data, function(response){

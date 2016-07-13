@@ -10,13 +10,11 @@ exports.chat_message = function(message){
 	};
 }
 exports.news = function(news, profile, profile_de){
-	console.log(news);
+	profile_de = news.de_id;
 	switch(news.action){
 		case "1":
-
-
 			console.log(news.id_numerico);
-			
+
 			return {
 				"id_n": news.id_numerico,
 				"id": news._id,
@@ -24,7 +22,7 @@ exports.news = function(news, profile, profile_de){
 				"title": news.data.title,
 				"content": news.data.content,
 				"gallery": news.data.gallery,
-				"profile": profile,
+				"profile": profileformat(profile),
 				"date": news.createdAt
 			};
 		break;
@@ -34,7 +32,7 @@ exports.news = function(news, profile, profile_de){
 				"id": news._id,
 				"type": "2",       // Action 
 				"puesto": news.data.puesto,
-				"profile": profile,
+				"profile": profileformat(profile),
 				"date": news.createdAt
 			};
 		break;
@@ -43,8 +41,7 @@ exports.news = function(news, profile, profile_de){
 				"id_n": news.id_numerico,
 				"id": news._id,
 				"type": "3",       // Action 
-				"titulo": "Jennifer Pérez y Juan López",
-				"profile": profile,
+				"profile": profileformat(profile),
 				"date": news.createdAt
 			};
 		break;
@@ -54,8 +51,8 @@ exports.news = function(news, profile, profile_de){
 				"id": news._id,
 				"type": "4",       // Action 
 				"busqueda": news.data.busqueda,
-				"profile_friend": profile_de,
-				"profile": profile,
+				"profile": profileformat(profile),
+				"profile_friend": profileformat(profile_de),
 				"date": news.createdAt
 			};
 		break;
@@ -67,7 +64,7 @@ exports.news = function(news, profile, profile_de){
 				"title": news.data.title,
 				"content": news.data.content,
 				"gallery": news.data.gallery,
-				"profile": profile,
+				"profile": profileformat(profile),
 				"date": news.createdAt
 			};
 		break;
@@ -77,11 +74,12 @@ exports.news = function(news, profile, profile_de){
 				"id": news._id,
 				"type": "6",
 				"skill": news.data.name,
-				"profile": profile,
+				"profile": profileformat(profile),
 				"date": news.createdAt
 			};
 		break;
 		case "7":
+		
 			return {
 				"id_n": news.id_numerico,
 				"id": news._id,
@@ -89,19 +87,20 @@ exports.news = function(news, profile, profile_de){
 				"title": news.data.title,
 				"content": news.data.content,
 				"rate": news.data.rate,
-				"profile": profile,
-				"profile_friend": profile_de,
+				"profile": profileformat(profile),
+				"profile_friend": profileformat(profile_de),
 				"date": news.createdAt
 			};
 		break;
 		default:
 			return {
 				"id_n": news.id_numerico,
-				"profile": profile,
+				"profile": profileformat(profile),
 				"date": news.createdAt
 			};
 		break;
-	}	
+	}
+	
 }
 exports.notification = function(notification){
 	var data = {
@@ -130,10 +129,11 @@ exports.login = function(tokenData, verified, exp){
 		experiences: exp,
 	};
 }
-exports.littleProfile = function(profile){
+function profileformat(profile){
 	if(typeof profile == "undefined" || profile == null){
 		return {};
 	}else{
+		/*
 		var retorno = {
 		"_id": profile._id,
 		"first_name": profile.first_name,
@@ -148,6 +148,17 @@ exports.littleProfile = function(profile){
 			};
 		}
 		return retorno;
+		*/
+		return {
+			"id": profile._id,
+			"first_name": profile.first_name,
+			"last_name": profile.last_name,
+			"public_id": profile.public_id,
+			"skills": profile.skills,
+			"experiences": profile.experiences,
+			"speciality": profile.speciality
+		};
 	}
 	
 }
+exports.littleProfile = profileformat

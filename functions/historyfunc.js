@@ -15,8 +15,8 @@ var Skill              = require('../models/skills');
 var History            = require('../models/history');
 
 exports.generate_history = function(type, profileData, data, cb){
-
-
+	console.log(data);
+	profile_id = data.profile;
 
 	switch(type){
 		case "1":
@@ -27,7 +27,6 @@ exports.generate_history = function(type, profileData, data, cb){
 			// }
 			new_history = new History({
 				"profile_id": profileData._id,
-				"de_id": profileData._id,
 				"action": type,
 				"data": {
 					"gallery": data.gallery,
@@ -46,7 +45,6 @@ exports.generate_history = function(type, profileData, data, cb){
 
 			"action": type,
 			"profile_id": profileData._id,
-			"de_id": profileData._id,
 
 			"data" : {
 				"puesto" : data.puesto,
@@ -71,10 +69,9 @@ exports.generate_history = function(type, profileData, data, cb){
 			// }
 			new_history = new History({
 				"profile_id": profileData._id,
-				"de_id": profileData._id,
 				"action": type,
 				"data": {
-					"busqueda": faker.lorem.words(2)
+					"busqueda": data.busqueda
 				}
 			});
 		break;
@@ -86,12 +83,12 @@ exports.generate_history = function(type, profileData, data, cb){
 			// }
 			new_history = new History({
 				"profile_id": profileData._id,
-				"de_id": profile_id,
+				"de_id": data.profile._id,
 				"action": type,
 				"data": {
-					"gallery": gallery,
-					"content": content,
-					"title": title
+					"gallery": data.gallery,
+					"content": data.gallery,
+					"title": data.gallery,
 				}
 			});
 		break;
@@ -102,7 +99,6 @@ exports.generate_history = function(type, profileData, data, cb){
 			// }
 			new_history = new History({
 				"profile_id": profileData._id,
-				"de_id": profileData._id,
 				"action": type,
 				"data": { 
 					"name": data.name,
@@ -122,24 +118,23 @@ exports.generate_history = function(type, profileData, data, cb){
 				"de_id": profile_id,
 				"action": type,
 				"data": { 
-					"content": faker.lorem.words(10),
-					"title": faker.lorem.words(5),
-					"rate": faker.random.number( 5 )
+					"content": data.content,
+					"title": data.title,
+					"rate": data.rate
 				}
 			});
 		break;
 		default:
 			new_history = new History({
+				"acion": type,
 				"profile_id": profileData._id,
-				"de_id": profile_id,
+				"de_id": data.profile._id,
 			});
 		break;
 	}
-
 	new_history.save(function(errHistory, historyData){
 		cb(historyData);
 	});
-
 }
 
 exports.insert = function(data, callback){

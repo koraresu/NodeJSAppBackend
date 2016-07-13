@@ -143,7 +143,7 @@ router.post('/get', multipartMiddleware, function(req, res){
 					var data = [];
 					var profile_id = profileData._id;
 
-					Networkfunc.getFriends(profile_id, function(err, networkData){
+					Networkfunc.getFriends(profile_id, function(err, networkData, friendsId){
 						if(!err && networkData){
 							Generalfunc.response(200, networkData, function(response){
 								res.json(response);
@@ -222,7 +222,30 @@ router.post('/search', multipartMiddleware, function(req, res){
 	var guid       = req.body.guid;
 	var text       = req.body.text;
 
-	
+
+	Tokenfunc.exist(guid, function(errToken, token){
+		if(errToken){
+			Tokenfunc.toProfile(token.generated_id, function(status, userData, profileData){
+				if(status){
+					var data = [];
+					var profile_id = profileData._id;
+
+					Networkfunc.getFriends(profile_id, function(err, networkData, friendsId){
+						console.log(friendsId);
+						if(!err && networkData){
+							console.log(networkData);
+						}else{
+
+						}
+					});
+				}else{
+
+				}
+			});
+		}else{
+
+		}
+	});
 });
 /*
 router.post('/search', multipartMiddleware, function(req, res){

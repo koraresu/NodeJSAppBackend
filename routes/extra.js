@@ -112,148 +112,75 @@ router.post('/qrcode', multipartMiddleware, function(req, res){
 });
 router.post('/generate/history',multipartMiddleware, function(req, res){
 	var type = req.body.type;
-	var guid = req.body.guid;
-	var profile_id = req.body.profile_id;
 
-	profile_id = mongoose.Types.ObjectId( profile_id );
+	Profile.find().exec(function(err, profileData){
+		profileData.forEach(function(profileData, index){
+			Network.find({
+				profiles: {
+					"$in": [profileData._id]
+				}
+			}).count().exec(function(err, count){
+				
+				var random = Math.floor(Math.random() * count);
 
-	Tokenfunc.exist(guid, function(status, tokenData){
-		if(status){
-			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
-				if(status){
-					switch(type){
-						case "1":
-							new_history = new History({
-								"profile_id": profileData._id,
-								"de_id": profileData._id,
-								"action": type,
-								"data": {
-									"gallery": [],
-									"content": faker.lorem.words(10),
-									"title": faker.lorem.words(5)
-								}
-							});
-							/*
-							Historyfunc.generate_history(1, profileData, {
-								"gallery": [],
-								"content": faker.lorem.words(10),
-								"title": faker.Lorem.words(5)
-							}, function(){
+				Network.findOne().skip(random).exec(function(err, friend){
+					var uno = friend.profiles[0]._id;
+					var dos = friend.profiles[1]._id;
 
-							});
-							*/
-						break;
-						case "2":
-							new_history = new History({
-
-								"action": type,
-								"profile_id": profileData._id,
-								"de_id": profileData._id,
-								
-								"data" : {
-				        			"puesto" : faker.lorem.words(2),
-				        			"puesto_id" : mongoose.Types.ObjectId(faker.random.number())
-				    			}
-							});
-
-							/*
-							Historyfunc.generate_history(2, profileData, {
-								"puesto" : faker.lorem.words(2),
-				        		"puesto_id" : mongoose.Types.ObjectId(faker.random.number())
-							}, function(){
-
-							});
-							*/
-						break;
-						case "3":
-							new_history = new History({
-								"profile_id": profileData._id,
-								"de_id": profile_id,
-								"action": type,
-								"data": {}
-							});
-							/*
-							Historyfunc.generate_history(3, profileData, {
-							}, function(){
-
-							});
-							*/
-						break;
-						case "4":
-
-							new_history = new History({
-								"profile_id": profileData._id,
-								"de_id": profileData._id,
-								"action": type,
-								"data": {
-									"busqueda": faker.lorem.words(2)
-								}
-							});
-							/*
-							Historyfunc.generate_history(4, profileData, {
-
-							}, function(){
-
-							});
-							*/
-						break;
-						case "5":
-							new_history = new History({
-								"profile_id": profileData._id,
-								"de_id": profile_id,
-								"action": type,
-								"data": {
-									"gallery": [],
-									"content": faker.lorem.words(10),
-									"title": faker.lorem.words(5)
-								}
-							});
-						break;
-						case "6":
-							new_history = new History({
-								"profile_id": profileData._id,
-								"de_id": profileData._id,
-								"action": type,
-								"data": { 
-									"name": faker.lorem.words(2),
-									"skill_id" : mongoose.Types.ObjectId(faker.random.number())
-								}
-							});
-						break;
-						case "7":
-							new_history = new History({
-								"profile_id": profileData._id,
-								"de_id": profile_id,
-								"action": type,
-								"data": { 
-									"content": faker.lorem.words(10),
-									"title": faker.lorem.words(5),
-									"rate": faker.random.number( 5 )
-								}
-							});
-						break;
-						default:
-							new_history = new History({
-								"profile_id": profileData._id,
-								"de_id": profile_id,
-							});
-						break;
+					var profile_id;
+					if(uno == profileData._id){
+						profile_id = friend.profiles[1];
+					}else{
+						profile_id = friend.profiles[0];
 					}
 
-					new_history.save(function(errHistory, historyData){
-						console.log(errHistory);
-
-						res.json(historyData);
+					Historyfunc.generate_history("7", profileData, {
+						"gallery": [],
+						"content": faker.lorem.words(10),
+						"title": faker.lorem.words(5),
+						"profile": profile_id
+					}, function(err, history){
+						console.log(history);
+						
+						Historyfunc.generate_history("2", profileData, {
+							"puesto" : faker.lorem.words( 2 ),
+							"profile": profile_id
+						}, function(err, history){
+							Historyfunc.generate_history("3", profileData, {
+								"profile": profile_id
+							}, function(err, history){
+								
+								Historyfunc.generate_history("4", profileData, {
+									"busqueda": faker.lorem.words( 2 ),
+									"profile": profile_id
+								}, function(err, history){
+									
+							
+										
+										Historyfunc.generate_history("6", profileData, {
+											"name": faker.lorem.words(2),
+											"profile": profile_id
+										}, function(err, history){
+											
+											Historyfunc.generate_history("7", profileData, {
+												"content": faker.lorem.words( 10 ),
+												"title": faker.lorem.words(5),
+												"rate": faker.random.number( 5 ),
+												"profile": profile_id
+											}, function(err, history){
+												
+											});
+										});
+								
+								});
+							});
+						});
+						
 					});
-				}else{
-
-				}
+				});
 			});
-		}else{
-
-		}
+		});
 	});
-	// 57486bbe1a47529b08fda17b
 });
 router.post('/generate', multipartMiddleware, function(req,res){
 	for(var i = 0;i<=50;i++){
@@ -287,24 +214,27 @@ router.post('/generate', multipartMiddleware, function(req,res){
 			for(var x = 0;x<=rand;x++){
 				console.log(x);
 
-				Profile.findOne().skip(x).exec(function(statusRandF, profileRandF){
+				Profile.findOne({ _id: {"$ne": profileData._id } }).skip(x).exec(function(statusRandF, profileRandF){
 					if(!statusRandF && profileRandF){
 						var accepted = false;
 						if(Math.random()%2){
 							accepted = true;
 						}
-						var network = new Network({
-							accepted: accepted,
-							profiles: [
-								profileData._id,
-								profileRandF._id
-							]
-						});
-						console.log(network);
 
-						network.save(function(err, networkData){
-														
-						});
+						if(profileData._id != profileRandF._id){
+							var network = new Network({
+								accepted: accepted,
+								profiles: [
+									profileData._id,
+									profileRandF._id
+								]
+							});
+							console.log(network);
+
+							network.save(function(err, networkData){
+															
+							});
+						}
 					}
 					
 				});

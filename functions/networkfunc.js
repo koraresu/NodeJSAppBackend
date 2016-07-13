@@ -89,13 +89,34 @@ function getFriends(profile_id,callback){
 	if(typeof profile_id == "object"){
 		var profile_id = mongoose.Types.ObjectId(profile_id);	
 	}
-
+	var data = [];
 	Network.find({
 		"profiles": {
 			"$in": [profile_id]
 		}
 	}).populate("profiles", "_id first_name last_name public_id qrcode profilepic").exec(function(errNetwork, networkData){
-		callback(errNetwork, networkData);
+		networkData.forEach(function(friend, index, friends){
+
+			
+			primer  = friend.profiles[0]._id;
+			segundo = friend.profiles[1]._id;
+
+			
+			
+			var a;
+			if(primer == profile_id){
+				a = segundo;
+			}else{
+				a = primer;
+			}
+			
+			data.push(a);
+
+			if((networkData.length-1) == index){
+				callback(errNetwork, friends, data);	
+			}
+		});
+		
 	});
 
 }
