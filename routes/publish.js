@@ -183,7 +183,7 @@ router.post('/get/news', multipartMiddleware, function(req, res){
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
 			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
-				Networkfunc.getfriends(profileData._id, function(friends){
+				Networkfunc.getFriends(profileData._id, function(friends){
 					friends.push(profileData._id);
 
 					var search = new Object();
