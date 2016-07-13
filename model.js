@@ -5,6 +5,7 @@ var mongoose   = require('mongoose'),
     db              = mongoose.createConnection(db_lnk);
 
 var HistorySchema = new Schema({
+  id_numerico: { type: Number },
   profile_id: { type: Schema.Types.ObjectId, ref: 'Profile' },
   de_id: { type: Schema.Types.ObjectId, ref: 'Profile' },
   action: String,// 1 = News || 3 = Cambio de Puesto || 4 = Trabajaron juntos || 5 = Busca Recomendación
