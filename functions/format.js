@@ -156,6 +156,7 @@ function profileformat(profile){
 			"public_id": profile.public_id,
 			"skills": profile.skills,
 			"experiences": profile.experiences,
+			"profilie_pic": profile.profile_pic,
 			"speciality": profile.speciality
 		};
 	}
