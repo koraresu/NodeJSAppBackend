@@ -95,27 +95,26 @@ function getFriends(profile_id,callback){
 			"$in": [profile_id]
 		}
 	}).populate("profiles", "_id first_name last_name public_id qrcode profilepic").exec(function(errNetwork, networkData){
-		networkData.forEach(function(friend, index, friends){
+		if(networkData.length > 0){
+			networkData.forEach(function(friend, index, friends){
+				primer  = friend.profiles[0]._id;
+				segundo = friend.profiles[1]._id;
+				var a = new Object();
+				if(primer.str == profile_id.str){
+					a = segundo;
+				}else{
+					a = primer;
+				}
+				data.push(a);
 
-			
-			primer  = friend.profiles[0]._id;
-			segundo = friend.profiles[1]._id;
-
-			
-			
-			var a;
-			if(primer == profile_id){
-				a = segundo;
-			}else{
-				a = primer;
-			}
-			
-			data.push(a);
-
-			if((networkData.length-1) == index){
-				callback(errNetwork, friends, data);	
-			}
-		});
+				if((networkData.length-1) == index){
+					callback(errNetwork, friends, data);	
+				}
+			});
+		}else{
+			callback(errNetwork, {}, []);
+		}
+		
 		
 	});
 

@@ -173,8 +173,49 @@ router.post('/write/news', multipartMiddleware, function(req, res){
 // Return (Formato 1)
 // 		News
 router.post('/get/news/a', multipartMiddleware, function(req, res){
-	
-	Networkfunc.getFriends(profileData._id, function(errFriends, friendsData){
+	var guid      = req.body.guid;
+	Tokenfunc.exist(guid, function(status, tokenData){
+		if(status){
+			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
+				Networkfunc.getFriends(profileData._id, function(errFriends, friendsData, friendsId){
+					console.log(friendsId);
+					var friends = friendsId;
+					friends.push(profileData._id);
+
+					var search = new Object();
+					search.profile_id = { "$in": friends }
+					search.action = { "$in": ["1","2","3","6","7"]}
+
+
+					var r = model.history.find( search );
+					var data = [];
+
+					console.log(search);
+					
+					r.sort( [ ['createdAt', 'descending'] ] ).populate('profile_id').populate('de_id').exec(function(errHistory,historyData){
+						if(historyData.length > 0){
+							_.each(historyData, function(element, index, list) {
+								var d = format.news(element, element.profile_id, element.de_id);
+								data.push(d);
+	    						if(index+1 == historyData.length) {
+	    							Generalfunc.response(200, data, function(response){
+	    								res.json(response);
+	    							});
+	    						}
+							});
+						}else{
+							Generalfunc.response(200, {}, function(response){
+								res.json(response);
+							})
+						}
+					});
+					
+					
+				});
+			});
+		}else{
+
+		}
 	});
 });
 router.post('/get/news', multipartMiddleware, function(req, res){
@@ -186,12 +227,16 @@ router.post('/get/news', multipartMiddleware, function(req, res){
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
 			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
-				Networkfunc.getFriends(profileData._id, function(errFriends, friendsData){
-					var friends = friendsData;
+				Networkfunc.getFriends(profileData._id, function(errFriends, friendsData, friendsId){
+					var friends = friendsId;
 					friends.push(profileData._id);
+
 					var search = new Object();
 					search.profile_id = { "$in": friends }
 					search.action = { "$in": ["1","2","3","6","7"]}
+
+
+					
 
 					if(typeof action == "string"){
 						var actTemp = action;
@@ -203,6 +248,7 @@ router.post('/get/news', multipartMiddleware, function(req, res){
 						search.action = { "$in": action }
 					}
 					var r = model.history.find( search );
+					var data = [];
 					/*
 					if(typeof max != "undefined"){
 						max = max*1;
@@ -234,7 +280,6 @@ router.post('/get/news', multipartMiddleware, function(req, res){
 								res.json(response);
 							})
 						}
-						
 					});
 				});
 				
