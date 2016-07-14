@@ -119,7 +119,7 @@ router.post('/write/news', multipartMiddleware, function(req, res){
 									var fileName  = file.fieldName;
 									var pathfile  = file.path;
 									var extension = path.extname(pathfile);
-									var file_pic    = objectId + extension;
+									var file_pic    = shortid.generate() + extension;
 
 									var new_path = path.dirname(path.dirname(process.mainModule.filename)) + '/public/gallery/' + file_pic;
 									fs.rename(pathfile, new_path, function(err){
@@ -127,8 +127,6 @@ router.post('/write/news', multipartMiddleware, function(req, res){
 											throw err;
 										}else{
 											var p = file_pic;
-											//var d = {url:p, path: new_path};
-
 											data.push(p);
 
 											if(index == (gallery.length-1)){
