@@ -235,7 +235,6 @@ router.post('/get/news', multipartMiddleware, function(req, res){
 					search.profile_id = { "$in": friends }
 					search.action = { "$in": ["1","2","3","6","7"]}
 
-
 					
 
 					if(typeof action == "string"){
