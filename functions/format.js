@@ -15,6 +15,7 @@ exports.news = function(news, profile, profile_de){
 		case "1":
 			console.log(news.id_numerico);
 
+
 			return {
 				"id_n": news.id_numerico,
 				"id": news._id,

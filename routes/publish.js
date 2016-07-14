@@ -127,7 +127,7 @@ router.post('/write/news', multipartMiddleware, function(req, res){
 											throw err;
 										}else{
 											var p = file_pic;
-											data.push(p);
+											data.push({url: p});
 
 											if(index == (gallery.length-1)){
 												save_news(profileData, titulo, contenido, data, function(historyData){
