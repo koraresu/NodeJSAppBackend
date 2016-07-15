@@ -20,6 +20,7 @@
 	company[1]
 	sector[1]
 ```
+
 ## Network
 ### Mandando Solicitud
 > Enviar solicitud de Conexion, 
@@ -39,6 +40,7 @@ public_id
     }
 }
 ```
+
 ### Aceptando Solicitud
 > Aceptando una solicitud enviada.
 > (http://localhost:3000/api/network/accept)
@@ -116,6 +118,7 @@ gallery <- Array, Ejemplo: gallery[0], gallery[1]
     }
 }
 ```
+
 ### Escribir Comentario (FeedBack)
 > Descripcion
 > (http://localhost:3000/api/publish/write/comentario)
@@ -136,6 +139,7 @@ content
     }
 }
 ```
+
 ### Obtener Noticias
 > Descripcion
 > (http://localhost:3000/api/publish/get/news)
@@ -193,6 +197,7 @@ guid
     ]
 }
 ```
+
 ### Obtener Recomendaciones
 > Descripcion
 > (http://localhost:3000/api/publish/get/news)
@@ -237,6 +242,7 @@ action <- Filtro (Numero de tipo de Noticia, Ejemplo: "1", "1,2,3", En el caso d
     ]
 }
 ```
+
 ### Peticion de Recomendación
 > Descripcion
 > (http://localhost:3000/api/publish/write/recomendar)
@@ -278,6 +284,7 @@ busqueda
     }
 }
 ```
+
 ### Recomendación
 > Descripcion
 > (http://localhost:3000/api/network/recomendar)
