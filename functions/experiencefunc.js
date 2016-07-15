@@ -31,16 +31,10 @@ var get = function(profile, callback){
 	});
 }
 exports.get              = get
-var insert = function(){
 
-}
-exports.insert           = insert
-var updates = function(profileData,data, callback){
-	var d = [];
-	data.forEach(function(item, index){
-		
 
-		companyExistsOrCreate({
+function exeperienceCreate(profileData,item, callback){
+	companyExistsOrCreate({
 			name: item.company
 		},{
 			name: item.company
@@ -82,21 +76,23 @@ var updates = function(profileData,data, callback){
 						},
 						"profile_id": profileData._id
 					};
-					console.log("Search");
-					console.log(search);
-					experienceExistsOrCreate(search, create, function(errExperience, experienceData){
-						if(index == (data.length-1)){
-							callback(true, experienceData);
-						}
-					});
+					
+					callback(search, create);
 					
 				});
 				
 			});
 		});
+}
+var insert = function(profileData,data, callback){
+	exeperienceCreate(profileData,data, function(search,create){
+		experienceExistsOrCreate(search, create, function(errExperience, experienceData){
+			callback(true, experienceData);
+		});
 	});
 }
-exports.updates          = updates
+exports.insert           = insert
+
 var update =  function(profile_id, type, company, sector, ocupation, callback){
 	Experience.findOne({ profile_id: profile_id}, function(err, experienceData){
 			
@@ -178,10 +174,8 @@ var update =  function(profile_id, type, company, sector, ocupation, callback){
 	});
 }
 exports.update           = update
+
 function experienceExistsOrCreate(search, insert, callback){
-	console.log("SEARCH");
-	console.log(search);
-	console.log("++++++++++++++++");
 	Experience.findOne( search , function(err, experience){
 		
 		if(!err && experience){

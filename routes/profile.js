@@ -516,6 +516,55 @@ router.post('/update', multipartMiddleware, function(req, res){
 		}
 	});
 });
+// INSERT EXPERIENCE
+// Parameter:
+//  	Token
+//  	Type
+//  	Company
+//  	Job
+//  	Speciality
+//  	Sector
+//  	Ocupation
+//
+// Return (Formato 5)
+//		Profile
+//		Experiences
+router.post('/experience', multipartMiddleware, function(req, res){
+	var guid      = req.body.guid;
+
+	var type       = req.body.type;
+	var company    = req.body.company;
+	var job        = req.body.job;
+	var speciality = req.body.speciality;
+	var sector     = req.body.sector;
+	var ocupation  = req.body.ocupation;
+
+
+		Tokenfunc.exist(guid, function(status, tokenData){
+			if(status){
+				Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
+					var data = {
+						ocupation: ocupation,
+						company: company,
+						sector: sector
+					};
+
+					Experiencefunc.insert(profileData, data, function(statusExperience, experienceData){
+						console.log(experienceData);
+						Profile.findOne({ _id: profileData._id}, function(errProfile, profileData){
+							Experience.find({ profile_id: profileData._id}, function(errExperience, experienceData){
+								Generalfunc.response(200, { profile: format.littleProfile(profileData), experiences: experienceData}, function(response){
+									res.json(response);
+								});
+							});
+						});
+					});
+				});
+			}else{
+
+			}
+		});
+});
 // UPDATE EXPERIENCE
 // Parameter:
 //  	Token

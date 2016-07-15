@@ -1,33 +1,15 @@
 # The Hive Server
 ## Profile
 
-### Editando Perfil 
-Al entrar a la seccion more, existe una seccion para modificar y agregar un segundo puesto/empresa
-[Update-Experience](http://localhost:3000/api/profile/update-experience)
+### Creando Perfil
+Descripcion
+(http://localhost:3000/api/profile/create)
 ```
-	guid = 574389ae2346af0a1fb6061e
-	first_name
-	last_name
-	job
-	speciality
-	birthday
-	type[0]
-	ocupation[0]
-	company[0]
-	sector[0]
-	type[1]
-	ocupation[1]
-	company[1]
-	sector[1]
-```
-
-## Network
-### Mandando Solicitud
-Enviar solicitud de Conexion, 
-(http://localhost:3000/api/network/connect)
-```
-guid 
-public_id
+first_name
+last_name
+email
+password
+phone
 ```
 #### Retorno
 ```
@@ -35,11 +17,125 @@ public_id
     "status": "success",
     "message": "Success",
     "data": {
-        "accepted": false,
-        "public_id": "57833a32bb45107f65f48c7a"
+        "token": "57890cb9f9d2dd290401dd18",
+        "profile": {
+            "qrcode": "57890cb9f9d2dd290401dd16.png",
+            "__v": 0,
+            "updatedAt": "2016-07-15T16:18:01.605Z",
+            "createdAt": "2016-07-15T16:18:01.600Z",
+            "first_name": "Yarull",
+            "last_name": "Alvarez",
+            "phone": "3221232233",
+            "public_id": "57890cb9f9d2dd290401dd16",
+            "user_id": "57890cb9f9d2dd290401dd17",
+            "_id": "57890cb9f9d2dd290401dd1a",
+            "info": [],
+            "skills": [],
+            "experiences": []
+        }
     }
 }
 ```
+
+### Insertando Experience
+Descripcion
+(http://localhost:3000/api/profile/experience)
+```
+guid
+type
+company
+job
+speciality
+sector
+ocupation
+```
+#### Retorno
+```
+{
+    "status": "success",
+    "message": "Success",
+    "data": {
+        "profile": {
+            "id": "57890cb9f9d2dd290401dd1a",
+            "first_name": "Yarull",
+            "last_name": "Alvarez",
+            "public_id": "57890cb9f9d2dd290401dd16",
+            "skills": [],
+            "experiences": [
+                {
+                    "ocupation_name": "Developer",
+                    "company_name": "Axovia",
+                    "sector_name": "Marketing",
+                    "_id": "57891497f5ca4c5c053bd729"
+                }
+            ],
+            "speciality": {
+                "id": "57890e02f9d2dd290401dd20",
+                "name": "ScrumMaster"
+            }
+        },
+        "experiences": [
+            {
+                "_id": "57891497f5ca4c5c053bd728",
+                "updatedAt": "2016-07-15T16:51:35.108Z",
+                "createdAt": "2016-07-15T16:51:35.108Z",
+                "profile_id": "57890cb9f9d2dd290401dd1a",
+                "__v": 0,
+                "sector": {
+                    "name": "Marketing",
+                    "id": "57891388b105112e05bbd5ba"
+                },
+                "company": {
+                    "name": "Axovia",
+                    "id": "578912327db486f5044a6d57"
+                },
+                "ocupation": {
+                    "name": "Developer",
+                    "id": "578912327db486f5044a6d58"
+                }
+            }
+        ]
+    }
+}
+```
+### Cambiando Profilepic
+Descripcion
+(http://localhost:3000/api/profile/setprofilepic)
+```
+guid
+profilepic
+```
+#### Retorno
+```
+{
+    "status": "success",
+    "message": "Success",
+    "data": {
+        "id": "57890cb9f9d2dd290401dd1a",
+        "first_name": "Yarull",
+        "last_name": "Alvarez",
+        "public_id": "57890cb9f9d2dd290401dd16",
+        "skills": [],
+        "experiences": [
+            {
+                "ocupation_name": "Developer",
+                "company_name": "Axovia",
+                "sector_name": "Marketing",
+                "_id": "57891497f5ca4c5c053bd729"
+            }
+        ],
+        "profile_pic": "57890cb9f9d2dd290401dd1a.png",
+        "speciality": {
+            "id": "57890e02f9d2dd290401dd20",
+            "name": "ScrumMaster"
+        }
+    }
+}
+```
+
+
+
+## Network
 
 ### Aceptando Solicitud
 Aceptando una solicitud enviada.
