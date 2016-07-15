@@ -150,7 +150,7 @@ router.post('/write/news', multipartMiddleware, function(req, res){
 						}
 						
 					}else{
-						res.send("No Profile");
+						//res.send("No Profile");
 
 						Generalfunc.response(113, {}, function(response){
 							res.json(response);
@@ -172,52 +172,6 @@ router.post('/write/news', multipartMiddleware, function(req, res){
 // 		Page(Opcional)
 // Return (Formato 1)
 // 		News
-router.post('/get/news/a', multipartMiddleware, function(req, res){
-	var guid      = req.body.guid;
-	Tokenfunc.exist(guid, function(status, tokenData){
-		if(status){
-			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
-				Networkfunc.getFriends(profileData._id, function(errFriends, friendsData, friendsId){
-					console.log(friendsId);
-					var friends = friendsId;
-					friends.push(profileData._id);
-
-					var search = new Object();
-					search.profile_id = { "$in": friends }
-					search.action = { "$in": ["1","2","3","6","7"]}
-
-
-					var r = model.history.find( search );
-					var data = [];
-
-					console.log(search);
-					
-					r.sort( [ ['createdAt', 'descending'] ] ).populate('profile_id').populate('de_id').exec(function(errHistory,historyData){
-						if(historyData.length > 0){
-							_.each(historyData, function(element, index, list) {
-								var d = format.news(element, element.profile_id, element.de_id);
-								data.push(d);
-	    						if(index+1 == historyData.length) {
-	    							Generalfunc.response(200, data, function(response){
-	    								res.json(response);
-	    							});
-	    						}
-							});
-						}else{
-							Generalfunc.response(200, {}, function(response){
-								res.json(response);
-							})
-						}
-					});
-					
-					
-				});
-			});
-		}else{
-
-		}
-	});
-});
 router.post('/get/news', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 	var max       = req.body.max;
@@ -290,7 +244,7 @@ router.post('/get/news', multipartMiddleware, function(req, res){
 		}
 	});
 });
-// GET NEWS
+// GET REVIEW
 // Parameter
 //  	Token
 // 		Max (Opcional) Maximo 40
@@ -368,6 +322,41 @@ router.post('/write/review', multipartMiddleware, function(req, res){
 			});
 		}else{
 			func.response(101, {}, function(response){
+				res.json(response);
+			});
+		}
+	});
+});
+router.post('/write/recomendar', multipartMiddleware, function(req, res){
+	var guid      = req.body.guid;
+	var busqueda  = req.body.busqueda;
+	var data = [];
+
+	Tokenfunc.exist(guid, function(status, tokenData){
+		if(status){
+			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
+				if(status){
+					Historyfunc.insert({
+						profile_id: profileData._id,
+						action: 4,
+						data: {
+							busqueda: busqueda
+						}
+					}, function(err, historyData){
+						var profile = format.littleProfile(profileData);
+						var d = format.news(historyData, profile, {});
+						Generalfunc.response(200,d, function(response){
+							res.json(response);
+						});
+					});
+				}else{
+					Generalfunc.response(113, {}, function(response){
+						res.json(response);
+					});
+				}
+			});
+		}else{
+			Generalfunc.response(101, {}, function(response){
 				res.json(response);
 			});
 		}

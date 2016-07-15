@@ -21,7 +21,7 @@ var Experience         = require('../models/experience');
 var Network            = model.network;
 var Review             = require('../models/review');
 var Skill              = require('../models/skills');
-
+var Notification       = model.notification;
 
 var Generalfunc = require('../functions/generalfunc');
 var Profilefunc = require('../functions/profilefunc');
@@ -43,42 +43,62 @@ var Networkfunc = require('../functions/networkfunc');
 // 		Profile
 router.post('/connect', multipartMiddleware, function(req, res){
 	var guid       = req.body.guid;
-	var profile_id = req.body.profile_id;
+	var public_id = req.body.public_id;
 
+	public_id = mongoose.Types.ObjectId(public_id);
 	Tokenfunc.exist(guid, function(errToken, token){
 		if(errToken){
 			Tokenfunc.toProfile(token.generated_id, function(status, userData, profileData, profileInfoData){
-				func.ProfileId(profile_id, function(errProfileAnotherData,profileAnotherData){
-					var find = {
-						"profiles": {
-							"$all": [profileData._id,profileAnotherData._id],
-						}
-					};
-					console.log(find);
-					Network.findOne(find, function(errNetwork, networkData){
-						if(!errNetwork && networkData){
-							func.response(200, networkData, function(response){
-								res.json(response);
-							});
-						}else{
-							var network = new Network({
-								accepted: false,
-								profiles: [
-									profileData._id,
-									profileAnotherData._id
-								]
-							});
-							network.save(function(err, networkData){
+				console.log("Token");
+				Networkfunc.PublicId(public_id, function(statusPublic, profileAnotherData){
+					if(statusPublic){
+						console.log(profileAnotherData);
+						var find = {
+							"profiles": {
+								"$all": [profileData._id,profileAnotherData._id],
+							}
+						};
+						console.log(find);
+						Network.findOne(find, function(errNetwork, networkData){
+							if(!errNetwork && networkData){
 								func.response(200, networkData, function(response){
 									res.json(response);
 								});
-							});
-						}
-					});
+							}else{
+								var network = new Network({
+									accepted: false,
+									profiles: [
+										profileData._id,
+										profileAnotherData._id
+									]
+								});
+								network.save(function(err, networkData){
+									var notification = new Notification({
+										tipo: 3,
+	  									profile: profileAnotherData._id,
+	  									profile_emisor: profileData._id,
+									});
+									notification.save(function(errNotification, notificationData){
+										var data = {
+											"accepted": networkData.accepted,
+											"public_id": profileAnotherData.public_id
+										};
+										func.response(200, data,  function(response){
+											res.json(response);
+										});	
+									})
+									
+								});
+							}
+						});
+					}else{
+						res.send("No ProfileAnother");
+					}
+					
 				});
 			});
 		}else{
-
+			res.send("No Token");
 		}
 	});
 });
@@ -92,33 +112,52 @@ router.post('/connect', multipartMiddleware, function(req, res){
 // 		Profile
 router.post('/accept', multipartMiddleware, function(req, res){
 	var guid       = req.body.guid;
-	var profile_id = req.body.profile_id;
+	var public_id = req.body.public_id;
+
+	public_id = mongoose.Types.ObjectId(public_id);
 
 	Tokenfunc.exist(guid, function(errToken, token){
 		if(errToken){
 			Tokenfunc.toProfile(token.generated_id, function(status, userData, profileData, profileInfoData){
-				func.ProfileId(profile_id, function(errProfileAnotherData,profileAnotherData){
+				
+				Networkfunc.PublicId(public_id, function(statusPublic, profileAnotherData){
+					if(statusPublic){
 
 
-					var find = {
-						"profiles": {
-							"$all": [profileData._id,profileAnotherData._id],
-						}
-					};
-					Network.findOne(find, function(errNetwork, networkData){
-						if(!errNetwork && networkData){
-							networkData.accepted = true;
-							networkData.save(function(err, network){
-								func.response(200, network, function(response){
+						var find = {
+							"profiles": {
+								"$all": [profileData._id,profileAnotherData._id],
+							}
+						};
+						Network.findOne(find, function(errNetwork, networkData){
+							if(!errNetwork && networkData){
+								networkData.accepted = true;
+								networkData.save(function(err, network){
+									var notification = new Notification({
+										tipo: 4,
+	  									profile: profileData._id,
+	  									profile_emisor: profileAnotherData._id,
+									});
+									notification.save(function(errNotification, notificationData){
+										var data = {
+											"accepted": network.accepted,
+											"public_id": profileAnotherData.public_id
+										};
+										func.response(200, data, function(response){
+											res.json(response);
+										});
+									});
+								});
+							}else{
+								func.response(101, {}, function(response){
 									res.json(response);
 								});
-							});
-						}else{
-							func.response(101, {}, function(response){
-								res.json(response);
-							});
-						}
-					});
+							}
+						});
+
+					}else{
+
+					}
 				});
 			});
 		}else{
@@ -426,4 +465,63 @@ router.post('/review/get', multipartMiddleware, function(req, res){
 		}
 	});
 });
+// SEND RECOMENDACIÓN
+// Parameter:
+//		Token
+//		Busqueda
+//
+// Return (Formato 21)
+//
+//
+router.post('/recomendar', multipartMiddleware, function(req, res){
+	var guid          = req.body.guid;
+	var public_id     = req.body.public_id;
+	var p_recomend_id = req.body.recomendar_id;
+	var history_id    = req.body.history_id;
+
+	history_id        = mongoose.Types.ObjectId(history_id);
+	public_id = mongoose.Types.ObjectId(public_id);
+
+	Tokenfunc.exist(guid, function(errToken, token){
+		if(errToken){
+			Tokenfunc.toProfile(token.generated_id, function(status, userData, profileData, profileInfoData){
+				
+				Networkfunc.PublicId(public_id, function(statusPublic, profileAnotherData){
+					if(statusPublic){
+						Networkfunc.PublicId(public_id, function(statusRecomend, profileRecomendData){
+							if(statusRecomend){
+								var notification = new Notification({
+									tipo: 1, // 0 = se ha unido | 1 = recomendación | 2 = share contacto | 3 = Envio Solucitud | 4 = Respondio Solicitud
+									profile: profileAnotherData._id,
+									profile_emisor: profileData._id,
+									profile_mensaje: profileRecomendData._id,
+									busqueda: history_id
+								});
+								notification.save(function(errNotification, notificationData){
+									var data = {
+										profile_emisor: profileData.public_id,
+										profile_mensaje: profileRecomendData.public_id,
+										busqueda: history_id
+									};
+									Generalfunc.response(200, data, function(response){
+										res.json(response);
+									});
+								});
+							}else{
+
+							}
+						});
+
+						
+					}else{
+
+					}
+				});
+			});
+		}else{
+
+		}
+	});
+});
+
 module.exports = router;

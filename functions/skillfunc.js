@@ -25,8 +25,20 @@ var get = function(profile_id, callback){
 var add = function(profile_id, name, callback){
 	console.log(profile_id);
 
+	Skill.findOne({ name: name}, function(err, skillData){
+		if(!err && skillData){
+			Profile.findOne({ _id: profile_id}).exec(function(errProfile, profileData){
+				if(!errProfile && profileData){
+					
+				}else{
+
+				}
+			});
+		}else{
+			
+		}
+	});
 	
-	/*
 	Skill.findOne({ name: name}, function(err, skillData){
 		if(!err && skillData){
 			Profile.findOne({ _id: profile_id }, function(errProfile, profileData){
@@ -97,7 +109,7 @@ var add = function(profile_id, name, callback){
 			});
 		}
 	});
-	*/
+	
 }
 var ExistsOrCreate = function(search, insert, callback){
 	Skill.findOne(search, function(err, skillData){

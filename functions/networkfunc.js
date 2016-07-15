@@ -85,6 +85,18 @@ function checkconversation(profile_a, profile_b, callback){
 		}
 	});
 }
+function PublicId(public_id, callback){
+	console.log("PublicId:");
+	console.log(public_id);
+	Profile.findOne({ public_id: public_id}).exec(function(errProfile, profileData){
+		console.log(errProfile);
+		if(!errProfile && profileData){
+			callback(true, profileData);
+		}else{
+			callback(false,{});
+		}
+	});
+}
 function getFriends(profile_id,callback){
 	if(typeof profile_id == "object"){
 		var profile_id = mongoose.Types.ObjectId(profile_id);	
@@ -119,7 +131,8 @@ function getFriends(profile_id,callback){
 	});
 
 }
-exports.getFriends = getFriends
+exports.PublicId            = PublicId
+exports.getFriends          = getFriends
 exports.checkconversation   = checkconversation
 exports.message             = message
 exports.addReview           = addReview

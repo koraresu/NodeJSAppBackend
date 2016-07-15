@@ -21,10 +21,14 @@ var Experience  = require('../models/experience');
 
 
 
-var Profilefunc = require('../functions/profilefunc');
+var Generalfunc    = require('../functions/generalfunc');
+var Profilefunc    = require('../functions/profilefunc');
+var Tokenfunc      = require('../functions/tokenfunc');
+var Skillfunc      = require('../functions/skillfunc');
+var Historyfunc    = require('../functions/historyfunc');
 var Experiencefunc = require('../functions/experiencefunc');
-var Tokenfunc = require('../functions/tokenfunc');
-var Skillfunc = require('../functions/skillfunc');
+var Networkfunc    = require('../functions/networkfunc');
+var format         = require('../functions/format.js');
 /*
 Nombre de Objectos de Documentos:
 	Todo dato recibido por FUNC, que sea un documento de mongo, se le colocara como nombre de varible el nombre del modelo,
@@ -54,21 +58,35 @@ router.post('/add', multipartMiddleware, function(req, res){
 	var guid             = req.body.guid;
 	var name             = req.body.name;
 
-	Tokenfunc.toProfile(guid, function(status, userData, profileData, profileInfoData){
-		switch(status){
-			case 200:
-				Skillfunc.add(profileData._id,name, function(status, skillData, profileData){
-					func.response(200, profileData , function(response){
-						res.json(response);
-					});
+	Tokenfunc.exist(guid, function(status, tokenData){
+	
+			if(status){
+				Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
+					if(status){
+						Skillfunc.add(profileData._id,name, function(status, skillData, profileData){
+							console.log("Skill Function");
+							console.log(status);
+
+							Historyfunc.insert({
+								profile_id: profileData._id,
+								action: 6,
+								data: {
+									name: skillData.name,
+									id: skillData._id
+								}
+							}, function(err, historyData){
+								func.response(200, historyData , function(response){
+									res.json(response);
+								});
+							});
+						});
+					}else{
+
+					}
 				});
-			break;
-			default:
-				func.response(113, {},function(response){
-					res.json(response);
-				});
-			break;
-		}
+			}else{
+
+			}
 	});
 
 	
