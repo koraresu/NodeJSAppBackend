@@ -2,8 +2,8 @@
 ## Profile
 
 ### Editando Perfil 
-> Al entrar a la seccion more, existe una seccion para modificar y agregar un segundo puesto/empresa
-> [Update-Experience](http://localhost:3000/api/profile/update-experience)
+Al entrar a la seccion more, existe una seccion para modificar y agregar un segundo puesto/empresa
+[Update-Experience](http://localhost:3000/api/profile/update-experience)
 ```
 	guid = 574389ae2346af0a1fb6061e
 	first_name
@@ -23,8 +23,8 @@
 
 ## Network
 ### Mandando Solicitud
-> Enviar solicitud de Conexion, 
-> (http://localhost:3000/api/network/connect)
+Enviar solicitud de Conexion, 
+(http://localhost:3000/api/network/connect)
 ```
 guid 
 public_id
@@ -42,8 +42,8 @@ public_id
 ```
 
 ### Aceptando Solicitud
-> Aceptando una solicitud enviada.
-> (http://localhost:3000/api/network/accept)
+Aceptando una solicitud enviada.
+(http://localhost:3000/api/network/accept)
 ```
 guid 
 public_id
@@ -62,8 +62,8 @@ public_id
 
 ## Publish
 ### Escribir una Noticia
-> Descripcion
-> (http://localhost:3000/api/publish/write/news)
+Descripcion
+(http://localhost:3000/api/publish/write/news)
 ```
 guid
 title
@@ -120,8 +120,8 @@ gallery <- Array, Ejemplo: gallery[0], gallery[1]
 ```
 
 ### Escribir Comentario (FeedBack)
-> Descripcion
-> (http://localhost:3000/api/publish/write/comentario)
+Descripcion
+(http://localhost:3000/api/publish/write/comentario)
 ```
 guid
 title
@@ -141,8 +141,8 @@ content
 ```
 
 ### Obtener Noticias
-> Descripcion
-> (http://localhost:3000/api/publish/get/news)
+Descripcion
+(http://localhost:3000/api/publish/get/news)
 ```
 guid
 ```
@@ -199,8 +199,8 @@ guid
 ```
 
 ### Obtener Recomendaciones
-> Descripcion
-> (http://localhost:3000/api/publish/get/news)
+Descripcion
+(http://localhost:3000/api/publish/get/news)
 ```
 guid
 action <- Filtro (Numero de tipo de Noticia, Ejemplo: "1", "1,2,3", En el caso de las Recomendación usas "4")
@@ -244,8 +244,8 @@ action <- Filtro (Numero de tipo de Noticia, Ejemplo: "1", "1,2,3", En el caso d
 ```
 
 ### Peticion de Recomendación
-> Descripcion
-> (http://localhost:3000/api/publish/write/recomendar)
+Descripcion
+(http://localhost:3000/api/publish/write/recomendar)
 ```
 guid
 busqueda
@@ -286,8 +286,8 @@ busqueda
 ```
 
 ### Recomendación
-> Descripcion
-> (http://localhost:3000/api/network/recomendar)
+Descripcion
+(http://localhost:3000/api/network/recomendar)
 ```
 guid
 public_id
@@ -312,8 +312,8 @@ history_id
 
 
 ### Titulo
-> Descripcion
-> (Direccion)
+Descripcion
+(Direccion)
 ```
 Parametros
 ```
