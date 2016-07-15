@@ -25,23 +25,16 @@ var profileSchema = new Schema({
   birthday: { type: Date },
   lang: String,
   phone: String,
-  experiences: [{
-    tipo: Number,
-    job_name: String,
-    ocupation_name: String,
-    company_name: String,
-    speciality_name: String,
-    sector_name: String
-  }],
+  experiences: [{ type: Schema.Types.ObjectId, ref: 'Experience' }],
   skills: [{ name: String }],
   info: [{ type: Schema.Types.Mixed }],
   public_id: { type: Schema.Types.Mixed },
   speciality: {
-    id: { type: Schema.Types.ObjectId, ref: 'specialities' },
+    id: { type: Schema.Types.ObjectId, ref: 'Speciality' },
     name: String
   },
   job: {
-    id: { type: Schema.Types.ObjectId, ref: 'jobs' },
+    id: { type: Schema.Types.ObjectId, ref: 'Job' },
     name: String
   }
 },{

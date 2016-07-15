@@ -148,17 +148,36 @@ function generate_qrcode(profileData, callback){
 	});
 }
 exports.generate_qrcode  = generate_qrcode
-exports.update           = function(profile_id, first_name, last_name, birthday, status,speciality, job, callback){
+function checkDate(date){
+	if ( Object.prototype.toString.call(date) === "[object Date]" ) {
+		if ( isNaN( date.getTime() ) ) {
+			return false;
+		}else{
+			return true;
+		}
+	}else{
+		return false;
+	}
+}
+exports.update           = function(profile_id, data, callback){
+	first_name = data.first_name;
+	last_name  = data.last_name;
+	birthday   = data.birthday;
+	status     = data.status;
+	speciality = data.speciality;
+	job        = data.job;
+	phone      = data.phone;
+
 	console.log(birthday);
 	Profile.findOne({ _id: profile_id}, function(err, profileData){
 		if(typeof birthday == "undefined"){
 			var datebirth = ""
 		}else{
 			var split = birthday.split("-");
-			var day = split[2];
+			var day   = split[2];
 			var month = split[1];
-			month = month-1;
-			var year = split[0];
+			month     = month-1;
+			var year  = split[0];
 			
 			var datebirth = new Date(year,month,day);
 		}
@@ -178,11 +197,18 @@ exports.update           = function(profile_id, first_name, last_name, birthday,
 			}
 		}
 		if(datebirth != ""){
-			profileData.birthday   = datebirth;	
+			if(checkDate(datebirth)){
+				profileData.birthday   = datebirth;		
+			}
 		}
 		if(typeof status != "undefined"){
 			if(status != ""){
 				profileData.status     = status;	
+			}
+		}
+		if(typeof phone != "undefined" ){
+			if(phone != ""){
+				profileData.phone   = phone;
 			}
 		}
 		
@@ -197,8 +223,6 @@ exports.update           = function(profile_id, first_name, last_name, birthday,
 			},{
 				name: job,
 			},function(status, jobData){
-				console.log("JOBDATA");
-				console.log(jobData);
 				profileData.job = {
 					name: jobData.name,
 					id: jobData._id
@@ -251,15 +275,6 @@ exports.updateProfilePic = function(profile_id, file, callback){
 		});
 	});
 	
-}
-exports.updateSkills     = function(profile_id, callback){
-
-}
-exports.updateInfo       = function(profile_id, callback){
-
-}
-exports.updateExperience = function(profile_id, callback){
-
 }
 exports.userProfile = function(user, callback){
 	Token.findOne({ user_id: user._id}, function(errToken, token){

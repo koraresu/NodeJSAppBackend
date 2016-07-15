@@ -561,7 +561,9 @@ router.post('/experience', multipartMiddleware, function(req, res){
 					});
 				});
 			}else{
-
+				Generalfunc.response(101, {}, function(response){
+					res.json(response);
+				});
 			}
 		});
 });
@@ -585,11 +587,12 @@ router.post('/experience', multipartMiddleware, function(req, res){
 router.post('/update-experience', multipartMiddleware, function(req, res){
 
 	console.log(req.body);
-	var guid      = req.body.guid;
+	var guid       = req.body.guid;
 
-	var nombre    = req.body.first_name;
-	var apellido  = req.body.last_name;
-	var statusReq = req.body.status;
+	var nombre     = req.body.first_name;
+	var apellido   = req.body.last_name;
+	var statusReq  = req.body.status;
+	var phone      = req.body.phone;
 
 	var type       = req.body.type;
 	var company    = req.body.company;
@@ -631,10 +634,37 @@ router.post('/update-experience', multipartMiddleware, function(req, res){
 		sector[1] = req.body.sector_dos;
 	}
 
-	console.log(company);
-	console.log(ocupation);
+	Tokenfunc.exist(guid, function(status, tokenData){
+		if(status){
+			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
+				console.log(profileData);
+				Profilefunc.update(profileData._id, {
+					first_name: nombre, 
+					last_name: apellido,
+					birthday: birthday,
+					status: statusReq,
+					speciality: speciality,
+					job: job,
+					phone: phone
+				}, function(statusProfile, profileData){
+					console.log(profileData);
+					res.json(profileData);
+					/*
+					console.log(profileData);
+					Experiencefunc.insertOrExists(profileData,ocupation, company, sector, function(statusExperience, experienceData){
+						console.log(experienceData);
+					});
+					*/
+
+				});
+			});
+		}else{
+
+		}
+	});
 
 
+	/*
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
 			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
@@ -686,6 +716,7 @@ router.post('/update-experience', multipartMiddleware, function(req, res){
 			})
 		}
 	});
+	*/
 });
 // ADD SKILL
 // Parameter:

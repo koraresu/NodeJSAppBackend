@@ -13,6 +13,108 @@ var Sector             = require('../models/sector');
 var Experience         = require('../models/experience');
 var Skill              = require('../models/skills');
 
+function checkExperience(profileData,ocupation, company, sector, callback){
+	console.log("ProfileData:");
+	console.log(profileData);
+
+	companyExistsOrCreate({ name: company}, { name: company}, function(statusCompany, companyData){
+		sectorExistsOrCreate({ name: sector }, { name: sector }, function(statusSector, sectorData){
+			jobExistsOrCreate({ name: ocupation}, { name: ocupation}, function(statusJob, jobData){
+				var search = {
+					company:{
+						id: companyData._id,
+						name: companyData.name
+					},
+					sector: {
+						id: sectorData._id,
+						name: sectorData.name
+					},
+					ocupation: {
+						id: jobData._id,
+						name: jobData.name
+					},
+					profile_id: profileData._id
+				};
+				Experience.findOne(search).exec(function(errExperience, experienceData){
+					if(!errExperience && experienceData){
+						if(experienceData.length > 0){
+							callback(true,experienceData,search);
+						}else{
+							callback(false,experienceData,search);
+						}
+					}else{
+						callback(false,experienceData,search);
+					}
+				});
+			});
+		});
+	})
+}
+exports.insertOrExists = function(profileData,ocupation, company, sector, callback){
+	checkExperience(profileData,ocupation, company, sector, function(statusExperience,search,experienceData){
+		if(statusExperience){
+			var experience = new Experience(search);
+			experience.save(function(errExperience, experienceData){
+				callback(true,experienceData);
+			});
+		}else{
+			callback(false,experienceData);
+		}
+	});
+}
+
+function jobExistsOrCreate(search, insert, callback){
+	Job.findOne(search, function(err, job){
+		if(!err && job){
+			callback(true,job);
+		}else{
+			var job = new Job(insert);
+			job.save();
+
+			callback(false, job);
+		}
+	});
+}
+function sectorExistsOrCreate(search, insert, callback){
+	Sector.findOne(search, function(err, sector){
+		if(!err && sector){
+			callback(true, sector);
+		}else{
+			var sector = new Sector(insert);
+			sector.save();
+
+			callback(false, sector);
+		}
+	});
+}
+function specialityExistsOrCreate(search, insert, callback){
+	Speciality.findOne(search, function(err, speciality){
+		if(!err && speciality){
+			callback(true,speciality);
+		}else{
+			var speciality = new Speciality(insert);
+			speciality.save();
+			callback(false, speciality);
+		}
+	});
+}
+function companyExistsOrCreate(search, insert, callback){
+	Company.findOne(search, function(err, company){
+		if(!err && company){
+			callback(true,company);
+		}else{
+			var company = new Company(insert);
+			company.save();
+
+			callback(false, company);
+		}
+	});
+}
+exports.companyExistsOrCreate    = companyExistsOrCreate
+exports.jobExistsOrCreate        = jobExistsOrCreate
+exports.sectorExistsOrCreate     = sectorExistsOrCreate
+exports.specialityExistsOrCreate = specialityExistsOrCreate
+/*
 var getAll = function(){
 
 }
@@ -283,3 +385,4 @@ exports.jobExistsOrCreate = jobExistsOrCreate
 exports.companyExistsOrCreate = companyExistsOrCreate
 exports.sectorExistsOrCreate = sectorExistsOrCreate;
 exports.specialityExistsOrCreate = specialityExistsOrCreate;
+*/
