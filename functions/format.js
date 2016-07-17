@@ -1,5 +1,6 @@
 var express = require('express');
-
+var model = require('../model');
+var Profile = model.profile;
 exports.chat_message = function(message){
 	return {
 		"_id": message._id,
@@ -130,26 +131,10 @@ exports.login = function(tokenData, verified, exp){
 		experiences: exp,
 	};
 }
-function profileformat(profile){
+function friendProfileFormat(profile){
 	if(typeof profile == "undefined" || profile == null){
 		return {};
 	}else{
-		/*
-		var retorno = {
-		"_id": profile._id,
-		"first_name": profile.first_name,
-		"last_name": profile.last_name,
-		"profile_pic": profile.profile_pic,
-		"public_id": profile.public_id,
-		};
-		if(typeof profile.speciality != "undefined"){
-			retorno.speciality = {
-				"name": profile.speciality.name,
-				"id": profile.speciality.id
-			};
-		}
-		return retorno;
-		*/
 		return {
 			"id": profile._id,
 			"first_name": profile.first_name,
@@ -161,6 +146,51 @@ function profileformat(profile){
 			"speciality": profile.speciality
 		};
 	}
+}
+function MyProfileFormat(profile, callback){
+	if(typeof profile == "undefined" || profile == null){
+		var data = {};
+		callback(data);
+	}else{
+		Profile.findOne({ _id: profile._id }).populate('experiences').populate('skills').populate('user_id').exec(function(errProfile, profile){
+			var data = {
+				"id": profile._id,
+				"first_name": profile.first_name,
+				"last_name": profile.last_name,
+				"public_id": profile.public_id,
+				"skills": profile.skills,
+				"experiences": profile.experiences,
+				"profile_pic": profile.profile_pic,
+				"speciality": profile.speciality
+			};
+			callback(data);
+		});
+	}
 	
 }
+function profileformat(profile){
+	if(typeof profile == "undefined" || profile == null){
+		return {};
+	}else{
+		Profile.findOne({ _id: profile._id})
+		.populate('user_id')
+		.populate('experiences')
+		.populate('skills')
+		.exec(function(err, profile){
+			return {
+				"id": profile._id,
+				"first_name": profile.first_name,
+				"last_name": profile.last_name,
+				"public_id": profile.public_id,
+				"skills": profile.skills,
+				"experiences": profile.experiences,
+				"profile_pic": profile.profile_pic,
+				"speciality": profile.speciality
+			};
+		});
+	}
+	
+}
+exports.profileformat = MyProfileFormat
+exports.friendProfile = friendProfileFormat
 exports.littleProfile = profileformat

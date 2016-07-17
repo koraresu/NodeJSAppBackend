@@ -3,20 +3,18 @@ var mongoose    = require('mongoose');
 var path = require('path');
 var fs = require('fs');
 
+var model              = require('../model');
 var Token              = require('../models/token');
 var User               = require('../models/user');
 var Job                = require('../models/job');
 var Company            = require('../models/company');
 var Speciality         = require('../models/speciality');
-var Profile            = require('../models/profile');
+var Profile            = model.profile;
 var Sector             = require('../models/sector');
-var Experience         = require('../models/experience');
+var Experience         = model.experience;
 var Skill              = require('../models/skills');
 
 function checkExperience(profileData,ocupation, company, sector, callback){
-	console.log("ProfileData:");
-	console.log(profileData);
-
 	companyExistsOrCreate({ name: company}, { name: company}, function(statusCompany, companyData){
 		sectorExistsOrCreate({ name: sector }, { name: sector }, function(statusSector, sectorData){
 			jobExistsOrCreate({ name: ocupation}, { name: ocupation}, function(statusJob, jobData){
@@ -37,7 +35,8 @@ function checkExperience(profileData,ocupation, company, sector, callback){
 				};
 				Experience.findOne(search).exec(function(errExperience, experienceData){
 					if(!errExperience && experienceData){
-						if(experienceData.length > 0){
+
+						if(experienceData != null){
 							callback(true,experienceData,search);
 						}else{
 							callback(false,experienceData,search);
@@ -51,13 +50,14 @@ function checkExperience(profileData,ocupation, company, sector, callback){
 	})
 }
 exports.insertOrExists = function(profileData,ocupation, company, sector, callback){
-	checkExperience(profileData,ocupation, company, sector, function(statusExperience,search,experienceData){
+	checkExperience(profileData,ocupation, company, sector, function(statusExperience,experienceData,search){
 		if(statusExperience){
+			callback(true,experienceData);
+		}else{
 			var experience = new Experience(search);
 			experience.save(function(errExperience, experienceData){
 				callback(true,experienceData);
 			});
-		}else{
 			callback(false,experienceData);
 		}
 	});

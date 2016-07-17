@@ -100,7 +100,30 @@ exports.get              = function(profile_id,callback){
 exports.insert           = function(){
 
 }
-exports.findSkill = function(profile_id, name, callback){
+exports.findSkill = function(profile_id, skill, callback){
+	Profile.findOne({ _id: profile_id }, function(errProfile, profileData){
+		var skills = profileData.skills;
+		console.log(skills);
+		if(skills.length > 0){
+			console.log("SKILL:");
+			console.log(skill);
+
+			var element = skills.filter(function(value){
+				return value.toString() === skill._id.toString()
+			});
+			if(element.length > 0){
+				callback(true);
+			}else{
+				callback(false);
+			}
+		}else{
+			callback(false);
+		}
+		
+
+		
+	});
+	/*
 	status = false;
 	Profile.findOne({ _id: profile_id }, function(errProfile, profileData){
 		if(profileData.skills.length > 0){
@@ -120,6 +143,7 @@ exports.findSkill = function(profile_id, name, callback){
 			callback(status);
 		}
 	});
+	*/
 }
 exports.PublicId = function(profile_id, callback){
 	Profile.findOne({ public_id: profile_id }, function(errProfile, profile){
@@ -168,7 +192,6 @@ exports.update           = function(profile_id, data, callback){
 	job        = data.job;
 	phone      = data.phone;
 
-	console.log(birthday);
 	Profile.findOne({ _id: profile_id}, function(err, profileData){
 		if(typeof birthday == "undefined"){
 			var datebirth = ""
@@ -181,10 +204,6 @@ exports.update           = function(profile_id, data, callback){
 			
 			var datebirth = new Date(year,month,day);
 		}
-		
-		console.log(first_name);
-		console.log(last_name);
-		console.log(status);
 
 		if(typeof first_name != "undefined"){
 			if(first_name != ""){

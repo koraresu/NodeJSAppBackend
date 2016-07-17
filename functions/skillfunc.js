@@ -3,12 +3,13 @@ var mongoose    = require('mongoose');
 var path = require('path');
 var fs = require('fs');
 
+var model              = require('../model');
 var Token              = require('../models/token');
 var User               = require('../models/user');
 var Job                = require('../models/job');
 var Company            = require('../models/company');
 var Speciality         = require('../models/speciality');
-var Profile            = require('../models/profile');
+var Profile            = model.profile;
 var Sector             = require('../models/sector');
 var Experience         = require('../models/experience');
 var Skill              = require('../models/skills');
@@ -111,7 +112,7 @@ var add = function(profile_id, name, callback){
 	});
 	
 }
-var ExistsOrCreate = function(search, insert, callback){
+function ExistsOrCreate(search, insert, callback){
 	Skill.findOne(search, function(err, skillData){
 		if(!err && skillData){
 			callback(true, skillData);
@@ -122,28 +123,53 @@ var ExistsOrCreate = function(search, insert, callback){
 			});
 		}
 	});
-}
-var remove = function(profile_id, name, callback){
+} 
+var ExistsOrCreate = ExistsOrCreate
+var edit = function(profile_id, from, to, callback){
 	Profile.findOne({ _id: profile_id }, function(errProfile, profileData){
-		var skills = [];
-		profileData.skills.forEach(function(item, index){
-			if(item.name != name){
-				skills.push(item);
-			}
+		ExistsOrCreate({name: from},{ name: from },function(errFromSkill, skillFromData){
+			ExistsOrCreate({ name: to},{ name: to},function(errSkillTo, skillToData){
+				var skills = profileData.skills;
 
-			if(index == (profileData.skills.length-1)){
-				console.log(skills);
+				var skills = profileData.skills;
+				var skillsD = skills.map(function(o){
+					if(o.toString() == skillFromData._id.toString()){
+						return skillToData._id;
+					}else{
+						return o;	
+					}
+				});
 
-				profileData.skills = skills;
+				profileData.skills = skillsD;
 				profileData.save(function(err, profileData){
 					callback(err, profileData);
 				});
-			}
+				
+			});
 		});
+	});
+}
+var remove = function(profile_id, name, callback){
+	Profile.findOne({ _id: profile_id }, function(errProfile, profileData){
+		Skill.findOne({name: name}).exec(function(errSkill, skillData){
+			var skills = profileData.skills;
+			console.log(skills);
+			console.log(skillData);
 
+			var skillsD = skills.filter(function(o){
+				return o.toString() != skillData._id.toString()
+			});
+			console.log(skillsD);
+			profileData.skills = skillsD;
+			profileData.save(function(err, profileData){
+				callback(err, profileData);
+			});
+		});
+		
 	});
 }
 exports.ExistsOrCreate = ExistsOrCreate
 exports.add = add
+exports.edit = edit
 exports.delete = remove
 exports.get = get

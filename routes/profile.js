@@ -23,12 +23,13 @@ var mongoose    = require('mongoose');
 		var Historyfunc = require('../functions/historyfunc');
 		var format = require('../functions/format');
 
-		var Profile     = require('../models/profile');
+		var model       = require('../model');
+		var Profile     = model.profile;
 		var User        = require('../models/user');
 		var Token       = require('../models/token');
 		var Job         = require('../models/job');
 		var Company     = require('../models/company');
-		var Experience  = require('../models/experience');
+		var Experience  = model.experience;
 		var Network     = require('../models/network');
 /*
 Nombre de Objectos de Documentos:
@@ -585,8 +586,6 @@ router.post('/experience', multipartMiddleware, function(req, res){
 //		Profile
 //		Experiences
 router.post('/update-experience', multipartMiddleware, function(req, res){
-
-	console.log(req.body);
 	var guid       = req.body.guid;
 
 	var nombre     = req.body.first_name;
@@ -637,7 +636,6 @@ router.post('/update-experience', multipartMiddleware, function(req, res){
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
 			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
-				console.log(profileData);
 				Profilefunc.update(profileData._id, {
 					first_name: nombre, 
 					last_name: apellido,
@@ -647,76 +645,34 @@ router.post('/update-experience', multipartMiddleware, function(req, res){
 					job: job,
 					phone: phone
 				}, function(statusProfile, profileData){
-					console.log(profileData);
-					res.json(profileData);
-					/*
-					console.log(profileData);
+					console.log(statusProfile);
+					
 					Experiencefunc.insertOrExists(profileData,ocupation, company, sector, function(statusExperience, experienceData){
-						console.log(experienceData);
-					});
-					*/
+						profileData.experiences = [];
+						Experience.find({ profile_id: profileData._id}).exec(function(errExperience, experiencesData){
+							profileData.experiences = experiencesData.map(function(o){
+								console.log(o);
+								return o._id;
+							});
+							profileData.save(function(errProfile, profileData){
 
-				});
-			});
-		}else{
-
-		}
-	});
-
-
-	/*
-	Tokenfunc.exist(guid, function(status, tokenData){
-		if(status){
-			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
-				Profilefunc.update(profileData._id, nombre, apellido, birthday, statusReq, speciality, job,  function(statusProfile, profileData){
-					var data = [];
-
-					for(var x = 0; x<company.length;x++){
-						data.push({
-							ocupation: ocupation[x],
-							company: company[x],
-							sector: sector[x]
-						});
-					}
-
-					Experiencefunc.updates(profileData, data, function(statusExperience, experienceData){
-						Profile.findOne({ _id: profileData._id}, function(errProfile, profileData){
-							Experience.find({ profile_id: profileData._id}, function(errExperience, experienceData){
-								var d = [];
-								experienceData.forEach(function(item, index){
-									d.push({
-										ocupation_name: item.ocupation.name,
-										company_name:   item.company.name,
-										sector_name:    item.sector.name
-									});
-								});
-								profileData.experiences = [];
-								profileData.experiences = d;
-
-								profileData.save(function(errProfile, profileData){
-									Profilefunc.formatoProfile(profileData._id,function(err, profile){
-										var data = [];
-										data = _.extend(data,profile);
-
-										func.response(200,data, function(response){
-											res.json(response);
-										});
+								Profile.findOne({ _id: profileData._id }).populate('experiences').populate('skills').populate('user_id').exec(function(errProfile, profileData){
+									Generalfunc.response(200, format.littleProfile(profileData), function(response){
+										res.json(response);
 									});
 								});
 							});
 						});
+						
 					});
-
 					
+
 				});
 			});
 		}else{
-			func.response(101, {}, function(response){
-				res.json(response);
-			})
+
 		}
 	});
-	*/
 });
 // ADD SKILL
 // Parameter:
@@ -739,37 +695,39 @@ router.post('/addskill', multipartMiddleware, function(req, res){
 					name: name
 				}, function(status, skillData){
 					
-					Profilefunc.findSkill(profileData._id,name,function(status, skill){
-						data = {};
+					Profilefunc.findSkill(profileData._id,skillData,function(status, skill){
+						console.log(status);
 						if(status){
-							console.log("Dont Created");
-							var data = {
-								status: "dont-created",
-								skill: skill
-							};
-							console.log(data);
-							Generalfunc.response(200, data, function(response){
-								res.json(response);
-							});
-						}else{
-							console.log("Created");
-
-							profileData.skills.push({
-								_id: skillData._id,
-								name: skillData.name
-							});
-							profileData.save(function(errProfile, profileData){
-								var data = {
-									status: "created",
-									skill: skillData
-								};
-								console.log(data);
-								Generalfunc.response(200, data, function(response){
-									Historyfunc.generate_history("6", profileData, skillData, function(){
-										res.json(response);	
-									});
+							format.profileformat(profileData, function(profileData){
+								Generalfunc.response(200, profileData, function(response){
+									res.json(response);
 								});
 							});
+							
+						}else{
+							var filter = profileData.skills.filter(function(o){
+								return o == skillData._id
+							});
+
+							console.log(filter.length);
+
+							if(filter.length > 0){
+								format.profileformat(profileData, function(profileData){
+									Generalfunc.response(200, profileData, function(response){
+										res.json(response);
+									});
+								});
+							}else{
+								console.log(skillData);
+								profileData.skills.push(skillData._id);
+								profileData.save(function(errProfile, profileData){
+									format.profileformat(profileData, function(profileData){
+										Generalfunc.response(200, profileData, function(response){
+											res.json(response);
+										});
+									});
+								});
+							}
 						}
 					});
 					
@@ -782,6 +740,27 @@ router.post('/addskill', multipartMiddleware, function(req, res){
 			})
 		}
 		
+	});
+});
+router.post('/editskill', multipartMiddleware, function(req, res){
+	var guid             = req.body.guid;
+	var from             = req.body.from;
+	var to               = req.body.to;
+
+	Tokenfunc.exist(guid, function(status, tokenData){
+		if(status){
+			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
+				Skillfunc.edit(profileData._id, from, to, function(err, profileData){
+					format.profileformat(profileData, function(profileData){
+						Generalfunc.response(200, profileData, function(response){
+							res.json(response);
+						});
+					});
+				});
+			});
+		}else{
+
+		}
 	});
 });
 // DELETE SKILL
@@ -799,11 +778,8 @@ router.post('/deleteskill', multipartMiddleware, function(req, res){
 		if(status){
 			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
 				Skillfunc.delete(profileData._id, name, function(err, profileData){
-					Profilefunc.formatoProfile(profileData._id,function(err, profile){
-						var data = [];
-						data = _.extend(data,profile);
-
-						func.response(200,data, function(response){
+					format.profileformat(profileData, function(profileData){
+						Generalfunc.response(200, profileData, function(response){
 							res.json(response);
 						});
 					});

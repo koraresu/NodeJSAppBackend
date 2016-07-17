@@ -27,7 +27,7 @@ var profileSchema = new Schema({
     speciality_name: String,
     sector_name: String
   }],
-  skills: [{ name: String }],
+  skills: [{ type: Schema.Types.ObjectId, ref: 'Skill' }],
   info: [{ type: Schema.Types.Mixed }],
   public_id: { type: Schema.Types.Mixed },
   speciality: {
