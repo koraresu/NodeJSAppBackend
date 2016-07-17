@@ -133,7 +133,162 @@ profilepic
 }
 ```
 
+## Skills
 
+### Agregar una Habilidad
+Descripcion
+(http://localhost:3000/api/profile/addskill)
+```
+guid
+name
+```
+#### Retorno
+```
+{
+    "status": "success",
+    "message": "Success",
+    "data": {
+        "id": "5782efffdd160bdc46a28b66",
+        "first_name": "Rael",
+        "last_name": "Corrales",
+        "public_id": "5782efffdd160bdc46a28b62",
+        "skills": [
+            {
+                "_id": "578bc47104d9151709ce36ea",
+                "name": "CSS",
+            }
+        ],
+        "experiences": [
+            {
+                "_id": "578bb946901175690790664b",
+                "updatedAt": "2016-07-17T16:58:46.034Z",
+                "createdAt": "2016-07-17T16:58:46.034Z",
+                "profile_id": "5782efffdd160bdc46a28b66",
+                "__v": 0,
+                "sector": {
+                    "id": "5783142dd9257ca356a357d0",
+                    "name": "Marketing"
+                },
+                "company": {
+                    "id": "5783142dd9257ca356a357ce",
+                    "name": "Axovia"
+                },
+                "ocupation": {
+                    "id": "5783142dd9257ca356a357cd",
+                    "name": "Web Developer"
+                }
+            }
+        ],
+        "profile_pic": "5782efffdd160bdc46a28b66.png",
+        "speciality": {
+            "id": "5783142dd9257ca356a357cc",
+            "name": "Fullstack Developer"
+        }
+    }
+}
+```
+
+### Editar Habilidad
+Descripcion
+(http://localhost:3000/api/profile/editskill)
+```
+guid
+from
+to
+```
+#### Retorno
+```
+{
+    "status": "success",
+    "message": "Success",
+    "data": {
+        "id": "5782efffdd160bdc46a28b66",
+        "first_name": "Rael",
+        "last_name": "Corrales",
+        "public_id": "5782efffdd160bdc46a28b62",
+        "skills": [
+            {
+                "_id": "578c0619283434d50e1f1922",
+                "name": "CSS3"
+            }
+        ],
+        "experiences": [
+            {
+                "_id": "578bb946901175690790664b",
+                "updatedAt": "2016-07-17T16:58:46.034Z",
+                "createdAt": "2016-07-17T16:58:46.034Z",
+                "profile_id": "5782efffdd160bdc46a28b66",
+                "__v": 0,
+                "sector": {
+                    "id": "5783142dd9257ca356a357d0",
+                    "name": "Marketing"
+                },
+                "company": {
+                    "id": "5783142dd9257ca356a357ce",
+                    "name": "Axovia"
+                },
+                "ocupation": {
+                    "id": "5783142dd9257ca356a357cd",
+                    "name": "Web Developer"
+                }
+            }
+        ],
+        "profile_pic": "5782efffdd160bdc46a28b66.png",
+        "speciality": {
+            "id": "5783142dd9257ca356a357cc",
+            "name": "Fullstack Developer"
+        }
+    }
+}
+```
+
+### Eliminar Habilidad
+Descripcion
+(Direccion)
+```
+guid
+name
+```
+#### Retorno
+```
+{
+    "status": "success",
+    "message": "Success",
+    "data": {
+        "id": "5782efffdd160bdc46a28b66",
+        "first_name": "Rael",
+        "last_name": "Corrales",
+        "public_id": "5782efffdd160bdc46a28b62",
+        "skills": [],
+        "experiences": [
+            {
+                "_id": "578bb946901175690790664b",
+                "updatedAt": "2016-07-17T16:58:46.034Z",
+                "createdAt": "2016-07-17T16:58:46.034Z",
+                "profile_id": "5782efffdd160bdc46a28b66",
+                "__v": 0,
+                "sector": {
+                    "id": "5783142dd9257ca356a357d0",
+                    "name": "Marketing"
+                },
+                "company": {
+                    "id": "5783142dd9257ca356a357ce",
+                    "name": "Axovia"
+                },
+                "ocupation": {
+                    "id": "5783142dd9257ca356a357cd",
+                    "name": "Web Developer"
+                }
+            }
+        ],
+        "profile_pic": "5782efffdd160bdc46a28b66.png",
+        "speciality": {
+            "id": "5783142dd9257ca356a357cc",
+            "name": "Fullstack Developer"
+        }
+    }
+}
+```
 
 ## Network
 
