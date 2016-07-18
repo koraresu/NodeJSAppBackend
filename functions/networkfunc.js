@@ -149,6 +149,38 @@ function getFriends(profile_id,callback){
 		
 	});
 }
+function getNoMyID(profilesId, profile_id){
+	var a = profilesId.filter(function(o){
+		return o.toString() != profile_id.toString()
+	});
+	return a;
+}
+function getVecinas(friendsId,profile_id,  callback){
+	console.log("ProfileID: "+profile_id.toString());
+	Network.find({
+		profiles: {
+			"$in": friendsId
+		}
+	}).exec(function(errNeighbors, neighborData){
+		var data = []
+		//neighborData.forEach(function(neighbor, index){
+		var new_data = neighborData.filter(function(neighbor){
+			var notid = getNoMyID(neighbor.profiles, profile_id);
+			return notid.length > 1
+		});
+
+		new_data.forEach(function(n, index){
+			var a = n.profiles.filter(function(o){
+				return o.toString() != profile_id.toString() 
+			});
+			a = a[0];
+			data.push(a);
+			if(new_data.length == index+1){
+				callback(new_data, data);
+			}
+		});
+	});
+}
 function isFriend(profile_id, another_id, callback){
 	getFriends(profile_id, function(errNetwork, friendsData, friendsId){
 
@@ -170,6 +202,7 @@ function isFriend(profile_id, another_id, callback){
 		});	
 	});
 }
+exports.getVecinas          = getVecinas
 exports.isFriend            = isFriend
 exports.PublicId            = PublicId
 exports.getFriends          = getFriends

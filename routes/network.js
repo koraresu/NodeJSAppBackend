@@ -286,21 +286,42 @@ router.post('/search', multipartMiddleware, function(req, res){
 	var guid       = req.body.guid;
 	var text       = req.body.text;
 
+	var reg  = new RegExp(text, "i");
+
+	var mi_g = [];
+    var vecinas_g = [];
+    var otros_g = [];
 
 	Tokenfunc.exist(guid, function(errToken, token){
 		if(errToken){
 			Tokenfunc.toProfile(token.generated_id, function(status, userData, profileData){
 				if(status){
 					var data = [];
-					var profile_id = profileData._id;
-
-					Networkfunc.getFriends(profile_id, function(err, networkData, friendsId){
-						console.log(friendsId);
-						if(!err && networkData){
-							console.log(networkData);
-						}else{
-
-						}
+					Networkfunc.getFriends(profileData._id, function(err, networkData, friendsId){
+						mi_g = friendsId;
+						Profile.find({
+							_id: {
+								"$in": mi_g
+							},
+							first_name: reg,
+							last_name: reg,
+						}).populate('experiences').exec(function(errProfileColmena, profileColmenaData){º
+							Networkfunc.getVecinas(friendsId,profileData._id, function(networkVecinasData, data){
+								console.log(data);		
+								Profile.find({
+									_id: {
+										"$in": data
+									}
+								}).exec(function(errProfileVecinas, profileVecinasData){
+									res.json({
+										mi: profileColmenaData,
+										vecinas: profileVecinasData
+									})
+								});
+							});
+						});
+						
+						
 					});
 				}else{
 

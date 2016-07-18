@@ -18,6 +18,7 @@ var mongoose    = require('mongoose');
 		var Generalfunc = require('../functions/generalfunc');
 		var Profilefunc = require('../functions/profilefunc');
 		var Experiencefunc = require('../functions/experiencefunc');
+		var Networkfunc    = require('../functions/networkfunc');
 		var Tokenfunc = require('../functions/tokenfunc');
 		var Skillfunc = require('../functions/skillfunc');
 		var Historyfunc = require('../functions/historyfunc');
@@ -385,6 +386,41 @@ router.post('/get', multipartMiddleware, function(req, res){
 					});
 					
 					
+				}else{
+					func.response(113,{},function(response){
+						res.json(response);
+					});
+				}
+			});
+		}else{
+			res.send("No Token");
+		}
+	});
+});
+router.post('/get/friend', multipartMiddleware, function(req, res){
+	var guid      = req.body.guid;
+	var public_id = req.body.public_id;
+	Tokenfunc.exist(guid, function(status, tokenData){
+		if(status){
+			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
+				if(status){
+					Profilefunc.publicId(public_id, function(anotherStatus, profileAnotherData){
+						Networkfunc.isFriend(profileData._id, profileAnotherData._id, function(statusFriend){
+							if(statusFriend){
+								Profilefunc.formatoProfile(profileAnotherData._id,function( profile ){
+									Generalfunc.response(200, profile, function(response){
+										res.json(response);
+									});
+								});
+							}else{
+								Generalfunc.response(101, {}, function(response){
+									res.json(response);
+								});
+							}
+						});
+
+						
+					});
 				}else{
 					func.response(113,{},function(response){
 						res.json(response);

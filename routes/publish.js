@@ -20,9 +20,10 @@ var Experiencefunc = require('../functions/experiencefunc');
 var Networkfunc    = require('../functions/networkfunc');
 var format         = require('../functions/format.js');
 
+var model       = require('../model');
 var Token       = require('../models/token');
-var Profile     = require('../models/profile');
-var Review      = require('../models/review');
+var Profile     = model.profile;
+var Review      = model.review;
 var User        = require('../models/user');
 var Job         = require('../models/job');
 var Company     = require('../models/company');
@@ -281,6 +282,7 @@ router.post('/get/review', multipartMiddleware, function(req, res){
 				}
 				console.log("Pages:"+pages);
 				r = r.skip(pages);
+				r = r.populate('profile_id');
 				r.exec(function(errReview, reviewData){
 					func.response(200, reviewData, function(response){
 						res.json(response);
