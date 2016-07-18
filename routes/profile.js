@@ -649,6 +649,7 @@ router.post('/update-experience', multipartMiddleware, function(req, res){
 							});
 							profileData.save(function(errProfile, profileData){
 								Profile.findOne({ _id: profileData._id }).populate('experiences').populate('skills').populate('user_id').exec(function(errProfile, profileData){
+									
 									format.profileformat(profileData, function(profileData){
 										Generalfunc.response( 200, profileData, function(response){
 											res.json(response);

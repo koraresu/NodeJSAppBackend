@@ -152,7 +152,7 @@ function MyProfileFormat(profile, callback){
 		var data = {};
 		callback(data);
 	}else{
-		Profile.findOne({ _id: profile._id }).populate('experiences').populate('skills').populate('user_id').exec(function(errProfile, profile){
+		Profile.findOne({ _id: profile._id }).populate('experiences').populate('skills').populate('user_id','-password').exec(function(errProfile, profile){
 			var data = {
 				"id": profile._id,
 				"first_name": profile.first_name,
