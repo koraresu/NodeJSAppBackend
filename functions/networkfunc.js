@@ -106,11 +106,29 @@ function getFriends(profile_id,callback){
 		"profiles": {
 			"$in": [profile_id]
 		}
-	}).populate("profiles", "_id first_name last_name public_id qrcode profilepic").exec(function(errNetwork, networkData){
+	//}).populate("profiles", "_id first_name last_name public_id qrcode profilepic").exec(function(errNetwork, networkData){
+	}).exec(function(errNetwork, networkData){		
 		if(networkData.length > 0){
+			networkData.forEach(function(friend, index, friends){
+
+				var a = friend.profiles.filter(function(o){
+					return o.toString() != profile_id.toString() 
+				});
+				a = a[0];
+				
+				data.push(a);
+
+				if((networkData.length-1) == index){
+					callback(errNetwork, friends, data);
+				}
+				
+			});
+
+			/*
 			networkData.forEach(function(friend, index, friends){
 				primer  = friend.profiles[0]._id;
 				segundo = friend.profiles[1]._id;
+
 				var a = new Object();
 				if(primer.str == profile_id.str){
 					a = segundo;
@@ -123,14 +141,36 @@ function getFriends(profile_id,callback){
 					callback(errNetwork, friends, data);	
 				}
 			});
+			*/
 		}else{
 			callback(errNetwork, {}, []);
 		}
 		
 		
 	});
-
 }
+function isFriend(profile_id, another_id, callback){
+	getFriends(profile_id, function(errNetwork, friendsData, friendsId){
+
+
+		Network.findOne({
+			"profiles": {
+				"$all": [profile_id, another_id]
+			}
+		}).exec(function(errNetwork, networkData){
+			if(!errNetwork && networkData){
+				if(networkData != null){
+					callback(true);
+				}else{
+					callback(false);
+				}
+			}else{
+				callback(false);
+			}
+		});	
+	});
+}
+exports.isFriend            = isFriend
 exports.PublicId            = PublicId
 exports.getFriends          = getFriends
 exports.checkconversation   = checkconversation

@@ -255,26 +255,36 @@ router.post('/get/review', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 	var max       = req.body.max;
 	var page      = req.body.page;
-	var pages     = max*page;
+	var pages     = 1;
+	if(page == "1"){
+		pages = 0;
+	}else{
+		pages = page*1;
+		pages = (pages*max)-1;
+	}
+	
+	
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
 			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
 				console.log(profileData._id);
 				
-				var r = Review.find({profile_id: profileData._id});
-
+				var r = Review.find({
+					profiles: {
+						"$in": [profileData._id]
+					}
+				});
+				r = r.sort( [ ['createdAt', 'descending'] ] );
 				if(typeof max != "undefined"){
 					max = max*1;
 					r = r.limit(max);
 				}
-				if(typeof page != "undefined"){
-					r = r.skip();
-				}
+				console.log("Pages:"+pages);
+				r = r.skip(pages);
 				r.exec(function(errReview, reviewData){
 					func.response(200, reviewData, function(response){
 						res.json(response);
 					});
-
 				});
 			});
 		}else{
@@ -297,7 +307,6 @@ router.post('/write/review', multipartMiddleware, function(req, res){
 			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
 				Profilefunc.publicId(public_id, function(statusPublic, publicProfileData){
 					if(statusPublic){
-
 						var review = new Review({
 							title: title,
 							content: content,

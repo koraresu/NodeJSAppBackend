@@ -165,6 +165,31 @@ router.post('/accept', multipartMiddleware, function(req, res){
 		}
 	});
 });
+router.post('/isfriend', multipartMiddleware, function(req, res){
+	var guid       = req.body.guid;
+	var public_id = req.body.public_id;
+
+	public_id = mongoose.Types.ObjectId(public_id);
+
+	Tokenfunc.exist(guid, function(errToken, token){
+		if(errToken){
+			Tokenfunc.toProfile(token.generated_id, function(status, userData, profileData, profileInfoData){
+				
+				Networkfunc.PublicId(public_id, function(statusPublic, profileAnotherData){
+					if(statusPublic){
+						Networkfunc.isFriend(profileData._id, profileAnotherData._id, function(status){
+							res.send(status);
+						});
+					}else{
+
+					}
+				});
+			});
+		}else{
+
+		}
+	});
+});
 // GET
 // Parameter:
 //  	Token
