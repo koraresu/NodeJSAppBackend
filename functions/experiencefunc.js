@@ -110,15 +110,6 @@ function companyExistsOrCreate(search, insert, callback){
 		}
 	});
 }
-exports.companyExistsOrCreate    = companyExistsOrCreate
-exports.jobExistsOrCreate        = jobExistsOrCreate
-exports.sectorExistsOrCreate     = sectorExistsOrCreate
-exports.specialityExistsOrCreate = specialityExistsOrCreate
-/*
-var getAll = function(){
-
-}
-exports.getAll           = getAll
 var get = function(profile, callback){
 	Experience.find({ profile_id: profile}).exec( function(err, experiences){
 
@@ -133,6 +124,15 @@ var get = function(profile, callback){
 	});
 }
 exports.get              = get
+exports.companyExistsOrCreate    = companyExistsOrCreate
+exports.jobExistsOrCreate        = jobExistsOrCreate
+exports.sectorExistsOrCreate     = sectorExistsOrCreate
+exports.specialityExistsOrCreate = specialityExistsOrCreate
+/*
+var getAll = function(){
+
+}
+exports.getAll           = getAll
 
 
 function exeperienceCreate(profileData,item, callback){

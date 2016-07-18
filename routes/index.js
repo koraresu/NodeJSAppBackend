@@ -10,7 +10,7 @@ var Profile     = model.profile;
 
 var Profilefunc = require('../functions/profilefunc');
 var Generalfunc = require('../functions/generalfunc');
-
+var Notificationfunc = require('../functions/notificationfunc');
 
 var User           = require('../models/user');
 
@@ -41,7 +41,9 @@ router.get('/verification/:id',function(req, res){
               nombre: profileData.first_name,
             }, userData.email, "¡Bienvenido a la Colmena!",function(status, html){
               if(status){
-                res.render('verified', { email: userData.email, status: true });
+                Notificationfunc.add(0, profileData._id, {}, function(){
+                  res.render('verified', { email: userData.email, status: true });  
+                });
               }else{
                 res.render('verified', { email: userData.email, status: false, message: "Error al enviar el correo de bienvenida" });
               }     

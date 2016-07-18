@@ -57,6 +57,7 @@ router.post('/login', multipartMiddleware, function(req, res){
 			Profilefunc.compare_password(password, userData.password, function(statusPassword){
 				if(statusPassword){
 					Profilefunc.userProfile(userData, function(statProfile, tokenData, userData, profileData){
+
 						Experiencefunc.get(profileData._id, function(statusExperience, experiences){
 							var exp = statusExperience;	
 							var verified = false;
@@ -223,43 +224,38 @@ router.post('/login-facebook', multipartMiddleware, function(req, res){
 
 			Token.findOne({ user_id: userData._id}, function(errToken, tokenData){
 				Profile.findOne({ user_id: userData._id}, function(errProfile, profileData){
-					var info = [
-					{
-						"name": "first_name",
-						"value": first_name
-					},
-					{
-						"name": "last_name",
-						"value": last_name
-					},
-					{
-						"name": "name",
-						"value":name
-					},
-					{
-						"name": "picture",
-						"value": profilepic
-					},
-					{
-						"name": "email",
-						"value": email
-					},
-					{
-						"name": "access-token",
-						"value": tokenFB
-					},
-					{
-						"name": "gender",
-						"value": gender
-					},
-					{
-						"name": "id",
-						"value": facebookID
-					}
+					profileData.facebookId = facebookID;
+					profileData.facebookToken = tokenFB;
+
+					var facebookData = [
+						{
+							"name": "first_name",
+							"value": first_name
+						},
+						{
+							"name": "last_name",
+							"value": last_name
+						},
+						{
+							"name": "name",
+							"value":name
+						},
+						{
+							"name": "picture",
+							"value": profilepic
+						},
+						{
+							"name": "email",
+							"value": email
+						},
+						{
+							"name": "gender",
+							"value": gender
+						}
 					];
 
-					profileData.info = [];
-					profileData.info = info;
+					profileData.facebookData = [];
+					profileData.facebookData = facebookData;
 
 					Experiencefunc.get(profileData._id, function(statusExperience, experiences){
 						var exp = statusExperience;	
@@ -645,32 +641,29 @@ router.post('/update-experience', multipartMiddleware, function(req, res){
 					job: job,
 					phone: phone
 				}, function(statusProfile, profileData){
-					console.log(statusProfile);
-					
 					Experiencefunc.insertOrExists(profileData,ocupation, company, sector, function(statusExperience, experienceData){
 						profileData.experiences = [];
 						Experience.find({ profile_id: profileData._id}).exec(function(errExperience, experiencesData){
 							profileData.experiences = experiencesData.map(function(o){
-								console.log(o);
 								return o._id;
 							});
 							profileData.save(function(errProfile, profileData){
-
 								Profile.findOne({ _id: profileData._id }).populate('experiences').populate('skills').populate('user_id').exec(function(errProfile, profileData){
-									Generalfunc.response(200, format.littleProfile(profileData), function(response){
-										res.json(response);
+									format.profileformat(profileData, function(profileData){
+										Generalfunc.response( 200, profileData, function(response){
+											res.json(response);
+										});
 									});
 								});
 							});
 						});
-						
 					});
-					
-
 				});
 			});
 		}else{
-
+			Generalfunc.response(101, {}, function(response){
+				res.json(response);
+			})
 		}
 	});
 });
