@@ -23,6 +23,8 @@ var Review             = require('../models/review');
 var Skill              = require('../models/skills');
 var Notification       = model.notification;
 
+var format             = require('../functions/format');
+
 var Generalfunc = require('../functions/generalfunc');
 var Profilefunc = require('../functions/profilefunc');
 var Experiencefunc = require('../functions/experiencefunc');
@@ -209,8 +211,15 @@ router.post('/get', multipartMiddleware, function(req, res){
 
 					Networkfunc.getFriends(profile_id, function(err, networkData, friendsId){
 						if(!err && networkData){
-							Generalfunc.response(200, networkData, function(response){
-								res.json(response);
+							var query = Profile.find({
+								_id:{
+									"$in": friendsId
+								}
+							});
+							format.profilequeryformat(query,function(errProfile, profileData){
+								Generalfunc.response(200, profileData, function(response){
+									res.json(response);
+								});
 							});
 						}else{
 							Generalfunc.response(404, {}, function(response){
@@ -303,16 +312,22 @@ router.post('/search', multipartMiddleware, function(req, res){
 							_id: {
 								"$in": mi_g
 							},
-							first_name: reg,
-							last_name: reg,
-						}).populate('experiences').exec(function(errProfileColmena, profileColmenaData){º
+						}).populate('experiences').exec(function(errProfileColmena, profileColmenaData){
+
+							Profilefunc.search(profileColmenaData._id, text, function(){
+
+							});
+
+
 							Networkfunc.getVecinas(friendsId,profileData._id, function(networkVecinasData, data){
 								console.log(data);		
 								Profile.find({
 									_id: {
 										"$in": data
 									}
-								}).exec(function(errProfileVecinas, profileVecinasData){
+								}).populate('experiences').exec(function(errProfileVecinas, profileVecinasData){
+
+
 									res.json({
 										mi: profileColmenaData,
 										vecinas: profileVecinasData

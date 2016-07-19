@@ -413,7 +413,7 @@ router.post('/get/friend', multipartMiddleware, function(req, res){
 									});
 								});
 							}else{
-								Generalfunc.response(101, {}, function(response){
+								Generalfunc.response(114, {}, function(response){
 									res.json(response);
 								});
 							}

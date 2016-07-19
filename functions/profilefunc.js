@@ -428,7 +428,7 @@ function search(profile_id, text_search, callback){
 			booleano = true;
 		}
 		if(!booleano){
-			var skills = profileData.skills.(function(o){
+			var skills = profileData.skills.filter(function(o){
 				return o.name == text_search
 			});	
 			if(skills.length > 0){

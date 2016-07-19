@@ -15,7 +15,7 @@ var Experience         = require('../models/experience');
 var Skill              = require('../models/skills');
 
 var get = function(profile_id, callback){
-	Profile.findOne({ _id: profile_id }, function(errProfile, profileData){
+	Profile.findOne({ _id: profile_id }).populate('skills','name _id').exec(function(errProfile, profileData){
 		if(!errProfile && profileData){
 			callback(true, profileData.skills);
 		}else{

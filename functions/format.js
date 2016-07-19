@@ -147,6 +147,36 @@ function friendProfileFormat(profile){
 		};
 	}
 }
+function MyProfileQueryFormat(query, callback){
+	if(typeof profile == "undefined" || profile == null){
+		var data = {};
+		callback(data);
+	}else{
+		query.populate('experiences').populate('skills').populate('user_id','-password').exec(function(errProfile, perfil){
+			var data = [];
+			perfil.forEach(function(profile, index){
+				var d = {
+					"id": profile._id,
+					"first_name": profile.first_name,
+					"last_name": profile.last_name,
+					"public_id": profile.public_id,
+					"skills": profile.skills,
+					"experiences": profile.experiences,
+					"profile_pic": profile.profile_pic,
+					"speciality": profile.speciality
+				};
+				data.push(d);
+
+				if(perfil.length == index+1){
+					console.log(data);
+					callback(data);
+				}
+			});
+				 
+		});
+	}
+	
+}
 function MyProfileFormat(profile, callback){
 	if(typeof profile == "undefined" || profile == null){
 		var data = {};
@@ -163,7 +193,7 @@ function MyProfileFormat(profile, callback){
 				"profile_pic": profile.profile_pic,
 				"speciality": profile.speciality
 			};
-			callback(data);
+			callback(errProfile, data);
 		});
 	}
 	
@@ -191,6 +221,7 @@ function profileformat(profile){
 	}
 	
 }
+exports.profilequeryformat = MyProfileQueryFormat
 exports.profileformat = MyProfileFormat
 exports.friendProfile = friendProfileFormat
 exports.littleProfile = profileformat
