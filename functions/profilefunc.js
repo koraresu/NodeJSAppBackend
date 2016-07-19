@@ -19,6 +19,7 @@ var Job                = require('../models/job');
 var Company            = require('../models/company');
 var Speciality         = require('../models/speciality');
 var Profile            = model.profile;
+var Review             = model.review;
 var Sector             = require('../models/sector');
 var Experience         = require('../models/experience');
 var Skill              = require('../models/skills');
@@ -58,30 +59,32 @@ function formatoProfile(profile_id,cb){
 	Profile.findOne({ _id: profile_id}).populate('user_id').exec(function(errProfile, profileData){
 		var userData = profileData.user_id;
 			Experience.find({ profile_id: profileData._id}, function(errExperience, experienceData){
+				Review.find({ profile_id: profileData._id }).sort( [ ['createdAt', 'descending'] ] ).limit(2).exec(function(errReview, reviewData){
+					console.log(profileData);
+					
+					var data = {
+						profile: {
+							"_id": profileData._id,
+							"first_name": profileData.first_name,
+							"last_name": profileData.last_name,
+							"public_id": profileData.public_id,
+							"email": userData.email,
+							"verified": userData.verified,
+							"info": profileData.info,
+							"skills": profileData.skills,
+							"experiences": profileData.experiences,
+							"birthday": profileData.birthday,
+							"job": profileData.job,
+							"speciality": profileData.speciality,
+							"profile_pic": profileData.profile_pic,
+							"status": profileData.status
+						},
+						experiences: experienceData,
+						review: reviewData
+					};
 
-				console.log(profileData);
-				
-				var data = {
-					profile: {
-						"_id": profileData._id,
-						"first_name": profileData.first_name,
-						"last_name": profileData.last_name,
-						"public_id": profileData.public_id,
-						"email": userData.email,
-						"verified": userData.verified,
-						"info": profileData.info,
-						"skills": profileData.skills,
-						"experiences": profileData.experiences,
-						"birthday": profileData.birthday,
-						"job": profileData.job,
-						"speciality": profileData.speciality,
-						"profile_pic": profileData.profile_pic,
-						"status": profileData.status
-					},
-					experiences: experienceData
-				};
-
-				cb(data);
+					cb(data);
+				});
 			});
 		
 		
@@ -420,11 +423,14 @@ function search(profile_id, text_search, callback){
 	Profile.findOne({
 		_id: profile_id,
 	}).populate('experiences').populate('skills').populate('user_id','-password').exec(function(errProfile, profile){
-		if(first_name == text_search){
+		console.log(profile_id);
+		console.log(profile);
+		/*
+		if(profile.first_name == text_search){
 			booleano = true;
 		}
 		
-		if(last_name == text_search){
+		if(profile.last_name == text_search){
 			booleano = true;
 		}
 		if(!booleano){
@@ -444,6 +450,7 @@ function search(profile_id, text_search, callback){
 			}
 		}
 		callback(booleano);
+		*/
 	});
 }
 exports.search = search

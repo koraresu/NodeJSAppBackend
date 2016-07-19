@@ -254,6 +254,7 @@ router.post('/get/news', multipartMiddleware, function(req, res){
 // 		News
 router.post('/get/review', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
+	var public_id = req.body.public_id;
 	var max       = req.body.max;
 	var page      = req.body.page;
 	var pages     = 1;
@@ -270,9 +271,11 @@ router.post('/get/review', multipartMiddleware, function(req, res){
 			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
 				console.log(profileData._id);
 				
+				var data = profileData._id;
+
 				var r = Review.find({
 					profiles: {
-						"$in": [profileData._id]
+						"$in": [data]
 					}
 				});
 				r = r.sort( [ ['createdAt', 'descending'] ] );
