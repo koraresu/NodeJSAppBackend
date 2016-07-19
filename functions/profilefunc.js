@@ -8,6 +8,7 @@ var _jade = require('jade');
 var fs = require('fs');
 
 var bcrypt = require('bcrypt-nodejs');
+var async = require("async");
 
 var Generalfunc = require('./generalfunc');
 var Experiencefunc = require('./experiencefunc');
@@ -418,42 +419,10 @@ function generate_email_bienvenida(public_id,nombre, email, asunto, cb){
     	}
   	});
 }
-function search(profile_id, text_search, callback){
-	var booleano = false;
-	Profile.findOne({
-		_id: profile_id,
-	}).populate('experiences').populate('skills').populate('user_id','-password').exec(function(errProfile, profile){
-		console.log(profile_id);
-		console.log(profile);
-		/*
-		if(profile.first_name == text_search){
-			booleano = true;
-		}
-		
-		if(profile.last_name == text_search){
-			booleano = true;
-		}
-		if(!booleano){
-			var skills = profileData.skills.filter(function(o){
-				return o.name == text_search
-			});	
-			if(skills.length > 0){
-				booleano = true;
-			}
-		}
-		if(!booleano){
-			var experiences = profileData.experiences.filter(function(o){
-				return (o.company.name == text_search || o.sector.name == text_search || o.ocupation.name == text_search)
-			});
-			if(experiences.length > 0){
-				booleano = true;
-			}
-		}
-		callback(booleano);
-		*/
-	});
+function permitedData(getter, info_profile, callback){
+	callback(true);
 }
-exports.search = search
+exports.permitedData = permitedData
 exports.generate_email_bienvenida   = generate_email_bienvenida
 exports.generate_email_verification   = generate_email_verification
 exports.userProfileInsertIfDontExists = userProfileInsertIfDontExists

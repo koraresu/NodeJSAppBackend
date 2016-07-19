@@ -182,8 +182,7 @@ function getVecinas(friendsId,profile_id,  callback){
 	});
 }
 function isFriend(profile_id, another_id, callback){
-	getFriends(profile_id, function(errNetwork, friendsData, friendsId){
-
+	//getFriends(profile_id, function(errNetwork, friendsData, friendsId){
 
 		Network.findOne({
 			"profiles": {
@@ -200,8 +199,31 @@ function isFriend(profile_id, another_id, callback){
 				callback(false);
 			}
 		});	
+	//});
+}
+function type(profileID, anotherID, callback){
+	
+
+	Network.findOne({
+		profiles: {
+			"$in": [anotherID._id]
+		}
+	}).exec(function(errNetworkVecinas, networkVecinasData){
+		var profiles = networkVecinasData.profiles;
+
+		var its = profiles.filter(function(o){
+			return o.toString() != profileID._id.toString()
+		});
+		console.log(its);
+
+		if(its.length > 1){
+			callback(1);
+		}else{
+			callback(0);
+		}
 	});
 }
+exports.type = type
 exports.getVecinas          = getVecinas
 exports.isFriend            = isFriend
 exports.PublicId            = PublicId

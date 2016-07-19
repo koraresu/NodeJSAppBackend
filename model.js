@@ -174,7 +174,11 @@ var NotificationSchema = new Schema({
 },{
   timestamps: true
 });
-
+var LogSchema = new Schema({
+  message: { type: String },
+},{
+  timestamps: true
+});
 
 
 // Company
@@ -199,3 +203,4 @@ exports.feedback     = db.model( 'Feedback' , FeedbackSchema );
 // Chat
 exports.conversation = db.model( 'Conversation' , ConversationSchema );
 exports.message      = db.model( 'Message' , MessageSchema );
+exports.log          = db.model( 'Log' , LogSchema );
