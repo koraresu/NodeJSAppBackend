@@ -116,7 +116,6 @@ router.post('/general/network', multipartMiddleware, function(req, res){
 					Profile.find({ _id: { "$ne": actualData._id }}).populate('experiences').populate('skills').populate('user_id','-password').exec(function(errProfile, profileData){
 						profileData.forEach(function(profileItem, profileIndex){
 							var array = new Array();
-							Networkfunc.type(actualData, profileItem, function(typo){
 
 
 								array.push(profileItem.first_name);
@@ -148,19 +147,19 @@ router.post('/general/network', multipartMiddleware, function(req, res){
 
 									if(n_array.length > 0){
 										var isDisponible = ids.indexOf(profileItem._id);
+
 										if(isDisponible == -1){
-											switch(typo){
-												case 0:
-													mi.push(profileItem);
-												break;
-												case 1:
-													vecinas.push(profileItem);
-												break;
-												case 2:
-													otros.push(profileItem);
-												break;
-											}
-											ids.push(profileItem._id);	
+											Networkfunc.type(actualData, profileItem, function(typo){
+												switch(typo){
+													case 0:
+														mi.push(profileItem);
+													break;
+													case 1:
+														vecinas.push(profileItem);
+													break;
+												}
+												ids.push(profileItem._id);
+											});
 										}
 									}
 								
@@ -174,7 +173,7 @@ router.post('/general/network', multipartMiddleware, function(req, res){
 										res.json(response);
 									});
 								}
-							});
+							
 
 							
 						});
@@ -191,6 +190,15 @@ router.post('/general/network', multipartMiddleware, function(req, res){
 			});
 		}
 	});
+});
+router.post('/general/network/friends', multipartMiddleware, function(req, res){
+	var rael   = mongoose.Types.ObjectId("578c3985021e94d11de142cf");
+	var memo   = mongoose.Types.ObjectId("578c84e48bae9a04b27fb4e8");
+	var carlos = mongoose.Types.ObjectId("578c9001efe81531b41bc53f");
+
+	Networkfunc.isNeightbor(rael, carlos, function(status){
+		res.send(status);
+	})
 });
 
 module.exports = router;

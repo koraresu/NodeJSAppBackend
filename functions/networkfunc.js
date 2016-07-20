@@ -123,25 +123,6 @@ function getFriends(profile_id,callback){
 				}
 				
 			});
-
-			/*
-			networkData.forEach(function(friend, index, friends){
-				primer  = friend.profiles[0]._id;
-				segundo = friend.profiles[1]._id;
-
-				var a = new Object();
-				if(primer.str == profile_id.str){
-					a = segundo;
-				}else{
-					a = primer;
-				}
-				data.push(a);
-
-				if((networkData.length-1) == index){
-					callback(errNetwork, friends, data);	
-				}
-			});
-			*/
 		}else{
 			callback(errNetwork, {}, []);
 		}
@@ -155,76 +136,75 @@ function getNoMyID(profilesId, profile_id){
 	});
 	return a;
 }
-function getVecinas(friendsId,profile_id,  callback){
-	console.log("ProfileID: "+profile_id.toString());
-	Network.find({
-		profiles: {
-			"$in": friendsId
+function isNeightbor(profile_id, another_id, callback){
+	var lvl = 0;
+	getFriends(profile_id._id, function(errFirst, firstData, firstIds){
+		if(firstIds.length>0){
+			firstIds.forEach(function(firstItem, firstIndex){
+				getFriends(firstItem, function(errSecond, secondData, secondIds){
+					var x = secondIds.filter(function(y){
+						return y.toString() == another_id.toString()
+					});
+					if(x.length > 0){
+						callback(2);
+					}else{
+						if(firstIds.length == (firstIndex+1)){
+							callback(1);
+						}
+					}
+				});
+			});	
+		}else{
+			callback(0);
 		}
-	}).exec(function(errNeighbors, neighborData){
-		var data = []
-		//neighborData.forEach(function(neighbor, index){
-		var new_data = neighborData.filter(function(neighbor){
-			var notid = getNoMyID(neighbor.profiles, profile_id);
-			return notid.length > 1
-		});
-
-		new_data.forEach(function(n, index){
-			var a = n.profiles.filter(function(o){
-				return o.toString() != profile_id.toString() 
+	});
+	/*
+	getFriends(profile_id, function(errFirst, firstData, firstIds){
+		getFriends(firstIds, function(errSecond, secondData, secondIds){
+			var x = secondIds.filter(function(y){
+				return y.toString() == another_id._id.toString()
 			});
-			a = a[0];
-			data.push(a);
-			if(new_data.length == index+1){
-				callback(new_data, data);
-			}
+			console.log(x);
 		});
 	});
+
+	//callback(true);
+	*/
 }
 function isFriend(profile_id, another_id, callback){
-	//getFriends(profile_id, function(errNetwork, friendsData, friendsId){
-
-		Network.findOne({
-			"profiles": {
-				"$all": [profile_id, another_id]
-			}
-		}).exec(function(errNetwork, networkData){
-			if(!errNetwork && networkData){
-				if(networkData != null){
-					callback(true);
-				}else{
-					callback(false);
-				}
+	Network.findOne({
+		"profiles": {
+			"$all": [profile_id, another_id]
+		}
+	}).exec(function(errNetwork, networkData){
+		if(!errNetwork && networkData){
+			if(networkData != null){
+				callback(true);
 			}else{
 				callback(false);
 			}
-		});	
-	//});
+		}else{
+			callback(false);
+		}
+	});	
 }
 function type(profileID, anotherID, callback){
-	
 
-	Network.findOne({
-		profiles: {
-			"$in": [anotherID._id]
-		}
-	}).exec(function(errNetworkVecinas, networkVecinasData){
-		var profiles = networkVecinasData.profiles;
-
-		var its = profiles.filter(function(o){
+	getFriends(anotherID._id, function(errNetwork, friends, friendsId){
+		console.log(friendsId);
+		var its = friendsId.filter(function(o){
 			return o.toString() != profileID._id.toString()
 		});
-		console.log(its);
-
-		if(its.length > 1){
+		console.log(friendsId);
+		if(friendsId.length == its.length){
 			callback(1);
 		}else{
 			callback(0);
 		}
 	});
 }
-exports.type = type
-exports.getVecinas          = getVecinas
+exports.type                = type
+exports.isNeightbor         = isNeightbor
 exports.isFriend            = isFriend
 exports.PublicId            = PublicId
 exports.getFriends          = getFriends

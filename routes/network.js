@@ -292,60 +292,6 @@ router.post('/emailtofriend', multipartMiddleware, function(req, res){
 //		
 //
 router.post('/search', multipartMiddleware, function(req, res){
-	var guid       = req.body.guid;
-	var text       = req.body.text;
-
-	var reg  = new RegExp(text, "i");
-
-	var mi_g = [];
-    var vecinas_g = [];
-    var otros_g = [];
-
-	Tokenfunc.exist(guid, function(errToken, token){
-		if(errToken){
-			Tokenfunc.toProfile(token.generated_id, function(status, userData, profileData){
-				if(status){
-					var data = [];
-					Networkfunc.getFriends(profileData._id, function(err, networkData, friendsId){
-						mi_g = friendsId;
-						Profile.find({
-							_id: {
-								"$in": mi_g
-							},
-						}).populate('experiences').exec(function(errProfileColmena, profileColmenaData){
-
-							Profilefunc.search(profileColmenaData._id, text, function(){
-
-							});
-
-
-							Networkfunc.getVecinas(friendsId,profileData._id, function(networkVecinasData, data){
-								console.log(data);		
-								Profile.find({
-									_id: {
-										"$in": data
-									}
-								}).populate('experiences').exec(function(errProfileVecinas, profileVecinasData){
-
-
-									res.json({
-										mi: profileColmenaData,
-										vecinas: profileVecinasData
-									})
-								});
-							});
-						});
-						
-						
-					});
-				}else{
-
-				}
-			});
-		}else{
-
-		}
-	});
 });
 /*
 router.post('/search', multipartMiddleware, function(req, res){
