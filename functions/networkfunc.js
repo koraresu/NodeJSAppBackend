@@ -191,13 +191,19 @@ function isFriend(profile_id, another_id, callback){
 function type(profileID, anotherID, callback){
 
 	getFriends(anotherID._id, function(errNetwork, friends, friendsId){
-		console.log(friendsId);
 		var its = friendsId.filter(function(o){
 			return o.toString() != profileID._id.toString()
 		});
 		console.log(friendsId);
 		if(friendsId.length == its.length){
-			callback(1);
+			isNeightbor(profileID, anotherID, function(status){
+				if(status){
+					console.log("Es Vecino");
+				}else{
+					console.log("No es Vecino");
+				}
+				callback(1);
+			});
 		}else{
 			callback(0);
 		}

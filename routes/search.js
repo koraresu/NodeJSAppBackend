@@ -6,6 +6,8 @@ var multipartMiddleware = multipart();
 var path = require('path');
 var fs = require('fs');
 
+var async = require('async');
+
 var mongoose    = require('mongoose');
 var model       = require('../model');
 
@@ -114,91 +116,95 @@ router.post('/general/network', multipartMiddleware, function(req, res){
 				var actualData = profileData;
 				if(status){
 					Profile.find({ _id: { "$ne": actualData._id }}).populate('experiences').populate('skills').populate('user_id','-password').exec(function(errProfile, profileData){
-						profileData.forEach(function(profileItem, profileIndex){
+						async.forEach(profileData, function(profileItem, callback){
 							var array = new Array();
 
+							array.push(profileItem.first_name);
+							array.push(profileItem.last_name);
+							array.push(profileItem.speciality.name);
+							array.push(profileItem.job.name);
 
-								array.push(profileItem.first_name);
-								array.push(profileItem.last_name);
-								array.push(profileItem.speciality.name);
-								array.push(profileItem.job.name);
+							profileItem.experiences.forEach(function(experienceItem, experienceIndex){
+								var company   = experienceItem.company.name;
+								var sector    = experienceItem.sector.name;
+								var ocupation = experienceItem.ocupation.name;
 
-								profileItem.experiences.forEach(function(experienceItem, experienceIndex){
-									var company   = experienceItem.company.name;
-									var sector    = experienceItem.sector.name;
-									var ocupation = experienceItem.ocupation.name;
-
-									array.push(experienceItem.company.name);
-									array.push(experienceItem.sector.name);
-									array.push(experienceItem.ocupation.name);
-								});
-								profileItem.skills.forEach(function(skillItem, skillIndex){
-									array.push(skillItem.name);
-								});
-
-								var n_array = array.filter(function(i){
-									var match = i.match(reg);
-									if( match !== null){
-										return true;
-									}else{
-										return false;
-									}
-								});
-
-									if(n_array.length > 0){
-										var isDisponible = ids.indexOf(profileItem._id);
-
-										if(isDisponible == -1){
-											Networkfunc.type(actualData, profileItem, function(typo){
-												switch(typo){
-													case 0:
-														mi.push(profileItem);
-													break;
-													case 1:
-														vecinas.push(profileItem);
-													break;
-												}
-												ids.push(profileItem._id);
-											});
-										}
-									}
-								
-								if(profileData.length == profileIndex+1){
-									data = {
-										mi: mi,
-										vecinas: vecinas,
-										otros: otros
-									}
-									Generalfunc.response(200, data, function(response){
-										res.json(response);
-									});
+								array.push(experienceItem.company.name);
+								array.push(experienceItem.sector.name);
+								array.push(experienceItem.ocupation.name);
+							});
+							profileItem.skills.forEach(function(skillItem, skillIndex){
+								array.push(skillItem.name);
+							});
+							
+							var n_array = array.filter(function(i){
+								var match = i.match(reg);
+								if( match !== null){
+									return true;
+								}else{
+									return false;
 								}
+							});
 							
+							if(n_array.length > 0){
+								var isDisponible = ids.indexOf(profileItem._id);
+								if(isDisponible == -1){
+									Networkfunc.type(actualData, profileItem, function(t){
+										switch(t){
+											case 0:
+												mi.push(profileItem);
+											break;
+											case 1:
+												vecinas.push(profileItem);
+											break;
+											case 2:
+												console.log("Otros");
+											break;
+										}
+										callback();
+									});
+									ids.push(profileItem._id);
+									
+								}
+							}
+							
+						}, function(results){
+							data = {
+								mi: mi,
+								vecinas: vecinas,
+								otros: otros
+							}
+							Generalfunc.response(200, data, function(response){
+								res.json(response);
+							});
 
-							
 						});
-					});
-				}else{
-					Generalfunc.response(113,{}, function(response){
-						res.json(response);
-					});
-				}
-			});
+				});
 		}else{
-			Generalfunc.response(101,{}, function(response){
+			Generalfunc.response(113,{}, function(response){
 				res.json(response);
 			});
 		}
 	});
+}else{
+	Generalfunc.response(101,{}, function(response){
+		res.json(response);
+	});
+}
+});
 });
 router.post('/general/network/friends', multipartMiddleware, function(req, res){
 	var rael   = mongoose.Types.ObjectId("578c3985021e94d11de142cf");
 	var memo   = mongoose.Types.ObjectId("578c84e48bae9a04b27fb4e8");
 	var carlos = mongoose.Types.ObjectId("578c9001efe81531b41bc53f");
 
-	Networkfunc.isNeightbor(rael, carlos, function(status){
-		res.send(status);
-	})
+	Profile.findOne({_id: rael}).exec(function(err, rael){
+		Profile.findOne({_id: carlos }).exec(function(err, carlos){
+			Networkfunc.isNeightbor(rael, carlos, function(status){
+				res.send(""+status);
+			});
+		});
+	});
 });
 
 module.exports = router;
