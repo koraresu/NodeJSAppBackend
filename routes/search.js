@@ -153,18 +153,20 @@ router.post('/general/network', multipartMiddleware, function(req, res){
 										switch(t){
 											case 0:
 												mi.push(profileItem);
+												//mi.push(profileItem.first_name);
 											break;
 											case 1:
 												vecinas.push(profileItem);
+												//vecinas.push(profileItem.first_name);
 											break;
 											case 2:
-												console.log("Otros");
+												otros.push(profileItem);
+												//otros.push(profileItem.first_name);
 											break;
 										}
 										callback();
+										ids.push(profileItem._id);
 									});
-									ids.push(profileItem._id);
-									
 								}
 							}
 							

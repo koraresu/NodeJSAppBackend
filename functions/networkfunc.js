@@ -138,38 +138,33 @@ function getNoMyID(profilesId, profile_id){
 }
 function isNeightbor(profile_id, another_id, callback){
 	var lvl = 0;
+
 	getFriends(profile_id._id, function(errFirst, firstData, firstIds){
 		if(firstIds.length>0){
+			console.log("|-"+profile_id.first_name);
 			firstIds.forEach(function(firstItem, firstIndex){
+				console.log("|--"+firstItem);
 				getFriends(firstItem, function(errSecond, secondData, secondIds){
+					console.log("|---"+secondIds);
+
 					var x = secondIds.filter(function(y){
-						return y.toString() == another_id.toString()
+						return y.toString() == another_id._id.toString()
 					});
+					
 					if(x.length > 0){
-						callback(2);
+						console.log("|----"+1);
+						callback(1);
 					}else{
-						if(firstIds.length == (firstIndex+1)){
-							callback(1);
-						}
+						console.log("|----"+2);
+						callback(2);
 					}
 				});
-			});	
+			});
+			
 		}else{
 			callback(0);
 		}
 	});
-	/*
-	getFriends(profile_id, function(errFirst, firstData, firstIds){
-		getFriends(firstIds, function(errSecond, secondData, secondIds){
-			var x = secondIds.filter(function(y){
-				return y.toString() == another_id._id.toString()
-			});
-			console.log(x);
-		});
-	});
-
-	//callback(true);
-	*/
 }
 function isFriend(profile_id, another_id, callback){
 	Network.findOne({
@@ -197,12 +192,11 @@ function type(profileID, anotherID, callback){
 		console.log(friendsId);
 		if(friendsId.length == its.length){
 			isNeightbor(profileID, anotherID, function(status){
-				if(status){
-					console.log("Es Vecino");
+				if(status == 1){
+					callback(1);
 				}else{
-					console.log("No es Vecino");
+					callback(2);
 				}
-				callback(1);
 			});
 		}else{
 			callback(0);
