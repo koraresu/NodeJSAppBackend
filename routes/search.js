@@ -120,8 +120,13 @@ router.post('/general/network', multipartMiddleware, function(req, res){
 							var array = new Array();
 							array.push(profileItem.first_name);
 							array.push(profileItem.last_name);
-							array.push(profileItem.speciality.name);
-							array.push(profileItem.job.name);
+
+							if(typeof profileItem.speciality.name != "undefined"){
+								array.push(profileItem.speciality.name);	
+							}
+							if(typeof profileItem.job.name != "undefined"){
+								array.push(profileItem.job.name);
+							}
 
 							profileItem.experiences.forEach(function(experienceItem, experienceIndex){
 								var company   = experienceItem.company.name;
@@ -166,7 +171,11 @@ router.post('/general/network', multipartMiddleware, function(req, res){
 										callback();
 										
 									});
+								}else{
+									callback();
 								}
+							}else{
+								callback();
 							}
 							
 						}, function(results){
