@@ -27,6 +27,7 @@
     "qr-image": "^3.1.0",
     "serve-favicon": "~2.3.0",
     "shortid": "^2.2.6",
+    "smtp-connection": "^2.10.0",
     "underscore": "^1.8.3"
   }
 }

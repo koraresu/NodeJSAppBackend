@@ -197,6 +197,23 @@ router.post('/create', multipartMiddleware, function(req, res){
 		}
 	});
 });
+router.post('/sendemail', multipartMiddleware, function(req, res){
+	Profile.findOne({
+		_id: mongoose.Types.ObjectId("578c4e292c5f4fd7322caebd")
+	}).exec(function(err, profileData){
+		Generalfunc.sendEmail("email.jade", {
+			public_id: profileData.public_id,
+			nombre: profileData.first_name,
+		}, "rkenshin21@gmail.com", "Test envio de correos",function(status, html){
+			if(status){
+				res.send("Enviado");
+			}else{
+				res.send("No Enviado");
+			}			
+		});
+	});
+	
+});
 // CREATE FACEBOOK
 // Parameter:
 // 		first_name     = Nombre

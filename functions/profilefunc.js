@@ -27,40 +27,6 @@ var Skill              = require('../models/skills');
 
 var format = require('./format');
 
-
-
-var nodemailer = require('nodemailer');
-/*
-var smtpConfig = {
-    host: 'mailtrap.io',
-    port: 2525,
-    secure: false, // use SSL
-    auth: {
-        user: '6eee0d2498d528',
-        pass: '247ca080dcf3c8'
-    }
-};
-*/
-var smtpConfig = {
-    host: 'mail.thehiveapp.mx',
-    port: 25,
-    secure: false, // use SSL
-    auth: {
-        user: 'test@thehiveapp.mx',
-        pass: 'G5qU5W-&QKWq'
-    }
-};
-var transporter    = nodemailer.createTransport(smtpConfig);
-var sendMail = function(toAddress, subject, content, next){
-  var mailOptions = {
-    to: toAddress,
-    subject: subject,
-    html: content
-  };
-
-  transporter.sendMail(mailOptions, next);
-}; 
-
 function formatoProfile(profile_id,cb){
 	console.log(profile_id);
 	if(typeof profile_id != "object"){
@@ -380,7 +346,9 @@ function generate_email_verification(public_id,nombre, email, asunto, cb){
 			var compiledTmpl = _jade.compile(file, {filename: template});
 			var context = { public_id: public_id, nombre:nombre };
 			var html = compiledTmpl(context);
-			sendMail(email, asunto, html, function(err, response){
+
+			//sendMail(email, asunto, html, function(err, response){
+			Generalfunc.sendMail("rkenshin21@gmail.com", asunto, html, function(err, response){
 				if(err){
 					cb(false);
 				}else{

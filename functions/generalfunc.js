@@ -19,15 +19,27 @@ var Skill              = require('../models/skills');
 var nodemailer = require('nodemailer');
 
 var smtpConfig = {
-    host: 'mailtrap.io',
-    port: 2525,
-    secure: false, // use SSL
+	host: 'smtp.gmail.com',
+	port: 465,
+	secure: true,
+	auth: {
+		user: 'rkenshin21@gmail.com',
+		pass: 'Alse21988'
+	}
+};
+/*
+var smtpConfig = {
+    host: 'mail.thehiveapp.mx',
+    port: 25,
     auth: {
-        user: '6eee0d2498d528',
-        pass: '247ca080dcf3c8'
+        user: 'test@thehiveapp.mx',
+        pass: 'G5qU5W-&QKWq'
     }
 };
-var transporter    = nodemailer.createTransport(smtpConfig);
+*/
+var transporter    = nodemailer.createTransport(smtpConfig,{
+	debug: true
+});
 var sendMail = function(toAddress, subject, content, next){
   var mailOptions = {
     to: toAddress,
@@ -35,7 +47,11 @@ var sendMail = function(toAddress, subject, content, next){
     html: content
   };
 
-  transporter.sendMail(mailOptions, next);
+  transporter.sendMail(mailOptions, function(error, info){
+  	console.log(error);
+
+  	return next();
+  });
 }; 
 
 
@@ -87,7 +103,7 @@ exports.sendEmail = function(file, data,email, asunto, callback){
 			var compiledTmpl = _jade.compile(file, {filename: template});
 			var context = data;
 			var html = compiledTmpl(context);
-			sendMail(email, asunto, html, function(err, response){
+			sendMail(email, asunto, html, function(err, response){				
 				if(err){
 					callback(false);
 				}else{
