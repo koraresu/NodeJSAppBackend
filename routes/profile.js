@@ -169,7 +169,8 @@ router.post('/create', multipartMiddleware, function(req, res){
 		ocupation: {},
 		speciality: {},
 		public_id: mongoose.Types.ObjectId(),
-		experiences: []
+		experiences: [],
+		status: 0
 	}, function(exist, tokenData, profileData, userData){
 		if(exist){
 			Generalfunc.response(112,{}, function(response){
@@ -362,20 +363,6 @@ router.post('/get', multipartMiddleware, function(req, res){
 		if(status){
 			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
 				if(status){
-					/*
-					func.experienceGet(profileData._id, function(statusExperience, experiencesData){
-						var data = {
-							user: userData,
-							profile: profileData,
-							profile_info: profileInfoData,
-							experiences: experiencesData
-						};
-
-						func.response(200, data, function(response){
-							res.json(response);
-						});
-					});
-					*/
 
 					Profilefunc.formatoProfile(profileData._id,function( profile ){
 

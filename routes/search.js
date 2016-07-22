@@ -118,7 +118,6 @@ router.post('/general/network', multipartMiddleware, function(req, res){
 					Profile.find({ _id: { "$ne": actualData._id }}).populate('experiences').populate('skills').populate('user_id','-password').exec(function(errProfile, profileData){
 						async.forEach(profileData, function(profileItem, callback){
 							var array = new Array();
-
 							array.push(profileItem.first_name);
 							array.push(profileItem.last_name);
 							array.push(profileItem.speciality.name);
@@ -153,19 +152,19 @@ router.post('/general/network', multipartMiddleware, function(req, res){
 										switch(t){
 											case 0:
 												mi.push(profileItem);
-												//mi.push(profileItem.first_name);
+												ids.push(profileItem._id);
 											break;
 											case 1:
 												vecinas.push(profileItem);
-												//vecinas.push(profileItem.first_name);
+												ids.push(profileItem._id);
 											break;
 											case 2:
 												otros.push(profileItem);
-												//otros.push(profileItem.first_name);
+												ids.push(profileItem._id);
 											break;
 										}
 										callback();
-										ids.push(profileItem._id);
+										
 									});
 								}
 							}

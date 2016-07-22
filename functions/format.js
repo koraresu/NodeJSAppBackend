@@ -143,7 +143,8 @@ function friendProfileFormat(profile){
 			"skills": profile.skills,
 			"experiences": profile.experiences,
 			"profile_pic": profile.profile_pic,
-			"speciality": profile.speciality
+			"speciality": profile.speciality,
+			"status": profile.status
 		};
 	}
 }
@@ -163,7 +164,8 @@ function MyProfileQueryFormat(query, callback){
 					"skills": profile.skills,
 					"experiences": profile.experiences,
 					"profile_pic": profile.profile_pic,
-					"speciality": profile.speciality
+					"speciality": profile.speciality,
+					"status": profile.status
 				};
 				data.push(d);
 
@@ -191,7 +193,8 @@ function MyProfileFormat(profile, callback){
 				"skills": profile.skills,
 				"experiences": profile.experiences,
 				"profile_pic": profile.profile_pic,
-				"speciality": profile.speciality
+				"speciality": profile.speciality,
+				"status": profile.status
 			};
 			callback(errProfile, data);
 		});
@@ -215,7 +218,8 @@ function profileformat(profile){
 				"skills": profile.skills,
 				"experiences": profile.experiences,
 				"profile_pic": profile.profile_pic,
-				"speciality": profile.speciality
+				"speciality": profile.speciality,
+				"status": profile.status
 			};
 		});
 	}

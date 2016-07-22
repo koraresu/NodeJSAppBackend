@@ -30,7 +30,7 @@ var format = require('./format');
 
 
 var nodemailer = require('nodemailer');
-
+/*
 var smtpConfig = {
     host: 'mailtrap.io',
     port: 2525,
@@ -38,6 +38,16 @@ var smtpConfig = {
     auth: {
         user: '6eee0d2498d528',
         pass: '247ca080dcf3c8'
+    }
+};
+*/
+var smtpConfig = {
+    host: 'mail.thehiveapp.mx',
+    port: 25,
+    secure: false, // use SSL
+    auth: {
+        user: 'test@thehiveapp.mx',
+        pass: 'G5qU5W-&QKWq'
     }
 };
 var transporter    = nodemailer.createTransport(smtpConfig);
@@ -82,6 +92,7 @@ function formatoProfile(profile_id,cb){
 						},
 						experiences: experienceData,
 						review: reviewData
+						//trabajo: getTrabajo(profileData)
 					};
 
 					cb(data);
@@ -127,27 +138,6 @@ exports.findSkill = function(profile_id, skill, callback){
 
 		
 	});
-	/*
-	status = false;
-	Profile.findOne({ _id: profile_id }, function(errProfile, profileData){
-		if(profileData.skills.length > 0){
-			profileData.skills.forEach(function(item, index){
-				if(item.name == name){
-					status = true;
-					callback(status, item);
-					return false;
-				}
-
-				if((profileData.skills.length-1) == index){
-					console.log(status)
-					callback(status);
-				}
-			});	
-		}else{
-			callback(status);
-		}
-	});
-	*/
 }
 exports.PublicId = function(public_id, callback){
 	Profile.findOne({ public_id: public_id }, function(errProfile, profile){
