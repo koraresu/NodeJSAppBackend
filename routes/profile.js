@@ -162,15 +162,20 @@ router.post('/create', multipartMiddleware, function(req, res){
 		verified: false,
 		type: 0
 	},{
-		first_name: nombre,
-		last_name: apellido,
-		nacimiento: null,
-		phone: phone,
-		ocupation: {},
-		speciality: {},
-		public_id: mongoose.Types.ObjectId(),
-		experiences: [],
-		status: 0
+	    first_name: nombre,
+	    last_name: apellido,
+	    phone: phone,
+	    nacimiento: null,
+	    public_id: mongoose.Types.ObjectId(),
+	    info: [],
+	    skills: [],
+	    experiences: [],
+	    facebookData: [],
+	    job: {},
+	    speciality: {},
+	    profile_pic : "",
+	    status: 0,
+	    review_score: 0
 	}, function(exist, tokenData, profileData, userData){
 		if(exist){
 			Generalfunc.response(112,{}, function(response){

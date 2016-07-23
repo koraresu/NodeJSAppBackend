@@ -27,16 +27,7 @@ var smtpConfig = {
 		pass: 'Alse21988'
 	}
 };
-/*
-var smtpConfig = {
-    host: 'mail.thehiveapp.mx',
-    port: 25,
-    auth: {
-        user: 'test@thehiveapp.mx',
-        pass: 'G5qU5W-&QKWq'
-    }
-};
-*/
+
 var transporter    = nodemailer.createTransport(smtpConfig,{
 	debug: true
 });

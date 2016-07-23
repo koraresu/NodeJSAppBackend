@@ -39,7 +39,8 @@ var profileSchema = new Schema({
   job: {
     id: { type: Schema.Types.ObjectId, ref: 'Job' },
     name: String
-  }
+  },
+  review_score: 0
 },{
   timestamps: true
 });
