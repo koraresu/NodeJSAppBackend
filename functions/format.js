@@ -12,10 +12,10 @@ exports.chat_message = function(message){
 }
 exports.news = function(news, profile, profile_de){
 	profile_de = news.de_id;
+
 	switch(news.action){
 		case "1":
 			console.log(news.id_numerico);
-
 
 			return {
 				"id_n": news.id_numerico,
@@ -24,7 +24,7 @@ exports.news = function(news, profile, profile_de){
 				"title": news.data.title,
 				"content": news.data.content,
 				"gallery": news.data.gallery,
-				"profile": profileformat(profile),
+				"profile": profileNewsFormat(profile),
 				"date": news.createdAt
 			};
 		break;
@@ -34,7 +34,7 @@ exports.news = function(news, profile, profile_de){
 				"id": news._id,
 				"type": "2",       // Action 
 				"puesto": news.data.puesto,
-				"profile": profileformat(profile),
+				"profile": profileNewsFormat(profile),
 				"date": news.createdAt
 			};
 		break;
@@ -43,7 +43,7 @@ exports.news = function(news, profile, profile_de){
 				"id_n": news.id_numerico,
 				"id": news._id,
 				"type": "3",       // Action 
-				"profile": profileformat(profile),
+				"profile": profileNewsFormat(profile),
 				"date": news.createdAt
 			};
 		break;
@@ -53,8 +53,8 @@ exports.news = function(news, profile, profile_de){
 				"id": news._id,
 				"type": "4",       // Action 
 				"busqueda": news.data.busqueda,
-				"profile": profileformat(profile),
-				"profile_friend": profileformat(profile_de),
+				"profile": profileNewsFormat(profile),
+				"profile_friend": profileNewsFormat(profile_de),
 				"date": news.createdAt
 			};
 		break;
@@ -66,7 +66,7 @@ exports.news = function(news, profile, profile_de){
 				"title": news.data.title,
 				"content": news.data.content,
 				"gallery": news.data.gallery,
-				"profile": profileformat(profile),
+				"profile": profileNewsFormat(profile),
 				"date": news.createdAt
 			};
 		break;
@@ -76,7 +76,7 @@ exports.news = function(news, profile, profile_de){
 				"id": news._id,
 				"type": "6",
 				"skill": news.data.name,
-				"profile": profileformat(profile),
+				"profile": profileNewsFormat(profile),
 				"date": news.createdAt
 			};
 		break;
@@ -89,15 +89,15 @@ exports.news = function(news, profile, profile_de){
 				"title": news.data.title,
 				"content": news.data.content,
 				"rate": news.data.rate,
-				"profile": profileformat(profile),
-				"profile_friend": profileformat(profile_de),
+				"profile": profileNewsFormat(profile),
+				"profile_friend": profileNewsFormat(profile_de),
 				"date": news.createdAt
 			};
 		break;
 		default:
 			return {
 				"id_n": news.id_numerico,
-				"profile": profileformat(profile),
+				"profile": profileNewsFormat(profile),
 				"date": news.createdAt
 			};
 		break;
@@ -201,10 +201,31 @@ function MyProfileFormat(profile, callback){
 	}
 	
 }
+function profileNewsFormat(profile){
+	if(typeof profile == "undefined" || profile == null){
+		return {};
+	}else{
+			return {
+				"id": profile._id,
+				"first_name": profile.first_name,
+				"last_name": profile.last_name,
+				"public_id": profile.public_id,
+				"skills": profile.skills,
+				"experiences": profile.experiences,
+				"profile_pic": profile.profile_pic,
+				"speciality": profile.speciality,
+				"status": profile.status
+			};
+	}
+	
+}
 function profileformat(profile){
 	if(typeof profile == "undefined" || profile == null){
 		return {};
 	}else{
+
+
+
 		Profile.findOne({ _id: profile._id})
 		.populate('user_id')
 		.populate('experiences')
