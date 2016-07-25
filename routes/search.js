@@ -116,6 +116,7 @@ router.post('/general/network', multipartMiddleware, function(req, res){
 				var actualData = profileData;
 				if(status){
 					Profile.find({ _id: { "$ne": actualData._id }}).populate('experiences').populate('skills').populate('user_id','-password').exec(function(errProfile, profileData){
+
 						async.forEach(profileData, function(profileItem, callback){
 							var array = new Array();
 							array.push(profileItem.first_name);
@@ -157,14 +158,18 @@ router.post('/general/network', multipartMiddleware, function(req, res){
 										Profilefunc.formatoProfile(profileItem._id,function( profile ){
 											switch(t){
 												case 0:
+													profile.friend = t
 													mi.push(profile);
+
 													ids.push(profileItem._id);
 												break;
 												case 1:
+													profile.friend = t
 													vecinas.push(profile);
 													ids.push(profileItem._id);
 												break;
 												case 2:
+													profile.friend = t
 													otros.push(profile);
 													ids.push(profileItem._id);
 												break;
