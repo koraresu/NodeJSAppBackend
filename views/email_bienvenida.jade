@@ -6,48 +6,47 @@ html(xmlns='http://www.w3.org/1999/xhtml')
     meta(name="viewport", content="width=device-width, initial-scale=1")
     meta(http-equiv="X-UA-Compatible",content="IE=edge")
     link(href='https://fonts.googleapis.com/css?family=Roboto:300,500', rel='stylesheet' type='text/css')
-    style(type="text/css"): include ../public/stylesheets/style_bienvenida.css
     link(rel="shortcut icon",href="http://192.241.245.98:3000/favicon.ico",type="image/x-icon")
     link(rel="icon",href="http://192.241.245.98:3000/favicon.ico",type="image/x-icon")
     title TheHive
-  body
-    div.cont
-      div.content
-        div.header
-          a(href="#")
-            img(src="http://192.241.245.98:3000/images/logo.png")
-        div.main
-          table(cellspacing="0",cellpadding="0")
+  body(style="font-family: 'Roboto', sans-serif;font-weight:100;background: #363636 url('../images/bg.png') repeat;")
+    div(style="background-color: #fff;max-width: 600px;padding: 20px 54px; margin: 0 auto;")
+      div(style="display:block;")
+        div(style="border:0;text-align:center;")
+          a(href="#", style="text-decoration: none;")
+            img(src="../images/logo.png", style="width:100%;max-width:370px")
+        div(style="display:block;")
+          table(cellspacing="0",cellpadding="0", style="margin-top:20px;")
             tr
-              td.iphone
-                img(src="http://192.241.245.98:3000/images/iphone.png")
-              td.list
-                .element.title
-                  span.titulo #{nombre},
-                  span.subtitulo ¡Bienvenido a la Colmena!
-                .element
+              td(style="text-align: center;display: inline;width: 50%;max-width: 300px;margin: 0;padding: 0;box-sizing: border-box;")
+                img(src="../images/iphone.png",style="width: 230px;max-width: 100%;")
+              td(style="vertical-align: top;width: 50%;max-width: 50%;box-sizing: border-box;padding: 0;margin: 0;margin-left: auto;")
+                div(style="margin-left:0;")
+                  span(style="border:0;font-size:24px;") #{nombre},
+                  span(style="border: 0;color: #f9be00;font-size: 40px;display: block;margin-bottom: 20px;") ¡Bienvenido a la Colmena!
+                div(style="margin-left:30px")
                   p Te ayudaremos a organizar y mejorar tus conexiones profesionales.
                   p 
-                    span.yellow Busca Hivers cerca de ti
+                    span(style="color:#F1A800;display:block;") Busca Hivers cerca de ti.
                     span Haz networking en tu zona.
 
                   p
-                    span.yellow Agrégalos a tu colmena
+                    span(style="color:#F1A800;display:block;") Agrégalos a tu colmena
                     span Todos los Hivers que colaboran contigo estarán en un mismo lugar.
                   p
-                    span Valora sus resultados
+                    span(style="color:#F1A800;display:block;") Valora sus resultados
                     span Cuenta cómo te fue con tus colegas.
-        div.footer
-          .list
-            .element
+        div(style="border: 0;color: #808080;font-weight: 300;font-size: 16px;margin-top: 30px;")
+          div(style="display:block;")
+            div(style="padding:0;text-align:center;")
               span Este correo fue enviado de manera automática, no respondas.
               span Si necesitas ayuda, contáctanos: 
-              a(href="#").email ayuda@theHIVE.com
-            .element.last
+              a(href="#",style="display: inline-block;color: #f7a700;font-family:Roboto;") ayuda@theHIVE.com
+            div(style="text-align:center;")
               span ©2016 The Hive, S.A de C.V.
-              span.divider |
+              span |
               span Todos los derechos reservados
-            .element.last
-              a(href="#") Política de Privacidad
-              span.divider |
-              a(href="#") Términos y Condiciones
+            div(style="text-align:center;")
+              a(href="#",style="display: inline-block;color: #f7a700;margin-right:10px;") Política de Privacidad
+              span |
+              a(href="#",style="display: inline-block;color: #f7a700;margin-left:10px;") Términos y Condiciones

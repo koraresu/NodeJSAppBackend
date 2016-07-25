@@ -14,17 +14,16 @@ html(xmlns='http://www.w3.org/1999/xhtml')
       div.content
         div.header
           a(href="#")
-            img(src="http://192.241.245.98:3000/images/logo.png")
+            img(src="../images/logo.png")
         div.main
           .alert
             .icon
-              img(src="http://192.241.245.98:3000/images/right.png")
-            .message
+              img(src="../images/right.png")
+            
               if status
-                ¡Gracias! Tu email 
-                i #{email}
-                ha sido verificado. Comienza a formar tus colmenas
-              
-              
+                .message
+                  b ¡Gracias! Tu email 
+                  i #{email}
+                  b ha sido verificado. Comienza a formar tus colmenas
               else 
-                #{message}
+                .message #{message}

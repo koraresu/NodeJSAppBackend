@@ -20,7 +20,20 @@ var User           = require('../models/user');
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
+router.get('/bienvenida/:id', function(req, res){
+  var id = req.params.id;
 
+  if(mongoose.Types.ObjectId.isValid(id)){
+    id = mongoose.Types.ObjectId(id);
+
+
+    Profile.findOne({ public_id: id }).populate('user_id').exec( function(errProfile, profileData){
+      if(!errProfile && profileData){
+        res.render('email_bienvenida', { nombre: profileData.first_name, public_id: profileData.public_id });
+      }
+    });
+  }
+})
 router.get('/verification/:id',function(req, res){
 	var id = req.params.id;
 

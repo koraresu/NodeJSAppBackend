@@ -49,6 +49,9 @@ body .cont .content .main .alert .message {
   font-weight: 300;
   text-decoration: none;
 }
+body .cont .content .main .alert .message b {
+  font-weight: 100;
+}
 body .cont .content .main .alert .message i {
   font-style: normal;
   color: #f7a800;

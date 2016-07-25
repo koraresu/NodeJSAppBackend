@@ -27,8 +27,18 @@ var smtpConfig = {
 		pass: 'Alse21988'
 	}
 };
+var smtpConfigtrap = {
+	host: 'mailtrap.io',
+	port: 25,
+	secure: false,
+	auth: {
+		user: 'fea6a54f8a714a',
+		pass: 'e977cec06a0b1d'
+	}
+};
 
 var transporter    = nodemailer.createTransport(smtpConfig,{
+//var transporter    = nodemailer.createTransport(smtpConfigtrap,{
 	debug: true
 });
 var sendMail = function(toAddress, subject, content, next){
@@ -37,10 +47,8 @@ var sendMail = function(toAddress, subject, content, next){
     subject: subject,
     html: content
   };
-
   transporter.sendMail(mailOptions, function(error, info){
   	console.log(error);
-
   	return next();
   });
 }; 
