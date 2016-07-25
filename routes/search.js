@@ -154,21 +154,24 @@ router.post('/general/network', multipartMiddleware, function(req, res){
 								var isDisponible = ids.indexOf(profileItem._id);
 								if(isDisponible == -1){
 									Networkfunc.type(actualData, profileItem, function(t){
-										switch(t){
-											case 0:
-												mi.push(profileItem);
-												ids.push(profileItem._id);
-											break;
-											case 1:
-												vecinas.push(profileItem);
-												ids.push(profileItem._id);
-											break;
-											case 2:
-												otros.push(profileItem);
-												ids.push(profileItem._id);
-											break;
-										}
-										callback();
+										Profilefunc.formatoProfile(profileItem._id,function( profile ){
+											switch(t){
+												case 0:
+													mi.push(profile);
+													ids.push(profileItem._id);
+												break;
+												case 1:
+													vecinas.push(profile);
+													ids.push(profileItem._id);
+												break;
+												case 2:
+													otros.push(profile);
+													ids.push(profileItem._id);
+												break;
+											}
+											callback();
+										});
+
 										
 									});
 								}else{

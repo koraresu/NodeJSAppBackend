@@ -409,26 +409,31 @@ router.post('/get', multipartMiddleware, function(req, res){
 router.post('/get/friend', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 	var public_id = req.body.public_id;
-	Tokenfunc.exist(guid, function(status, tokenData){
+	if(typeof public_id == "undefined"){
+
+	}else{
+		Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
 			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
 				if(status){
 					Profilefunc.publicId(public_id, function(anotherStatus, profileAnotherData){
-						Networkfunc.isFriend(profileData._id, profileAnotherData._id, function(statusFriend){
-							if(statusFriend){
-								Profilefunc.formatoProfile(profileAnotherData._id,function( profile ){
-									Generalfunc.response(200, profile, function(response){
+						if(anotherStatus){
+							Networkfunc.isFriend(profileData._id, profileAnotherData._id, function(statusFriend){
+								if(statusFriend){
+									Profilefunc.formatoProfile(profileAnotherData._id,function( profile ){
+										Generalfunc.response(200, profile, function(response){
+											res.json(response);
+										});
+									});
+								}else{
+									Generalfunc.response(114, {}, function(response){
 										res.json(response);
 									});
-								});
-							}else{
-								Generalfunc.response(114, {}, function(response){
-									res.json(response);
-								});
-							}
-						});
+								}
+							});	
+						}else{
 
-						
+						}
 					});
 				}else{
 					func.response(113,{},function(response){
@@ -440,6 +445,8 @@ router.post('/get/friend', multipartMiddleware, function(req, res){
 			res.send("No Token");
 		}
 	});
+	}
+	
 });
 router.post('/changepassword', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;

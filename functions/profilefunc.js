@@ -27,6 +27,11 @@ var Skill              = require('../models/skills');
 
 var format = require('./format');
 
+function getTrabajo(profile_id, callback){
+	var data = [];
+	callback(null, data);
+}
+
 function formatoProfile(profile_id,cb){
 	console.log(profile_id);
 	if(typeof profile_id != "object"){
@@ -38,30 +43,31 @@ function formatoProfile(profile_id,cb){
 			Experience.find({ profile_id: profileData._id}, function(errExperience, experienceData){
 				Review.find({ profile_id: profileData._id }).sort( [ ['createdAt', 'descending'] ] ).limit(2).exec(function(errReview, reviewData){
 					console.log(profileData);
+					getTrabajo(profileData, function(errTrabajo, trabajoData){
+						var data = {
+							profile: {
+								"_id": profileData._id,
+								"first_name": profileData.first_name,
+								"last_name": profileData.last_name,
+								"public_id": profileData.public_id,
+								"email": userData.email,
+								"verified": userData.verified,
+								"info": profileData.info,
+								"skills": profileData.skills,
+								"experiences": profileData.experiences,
+								"birthday": profileData.birthday,
+								"job": profileData.job,
+								"speciality": profileData.speciality,
+								"profile_pic": profileData.profile_pic,
+								"status": profileData.status,
+							},
+							experiences: experienceData,
+							review: reviewData,
+							trabajo: trabajoData
+						};
+						cb(data);
+					})
 					
-					var data = {
-						profile: {
-							"_id": profileData._id,
-							"first_name": profileData.first_name,
-							"last_name": profileData.last_name,
-							"public_id": profileData.public_id,
-							"email": userData.email,
-							"verified": userData.verified,
-							"info": profileData.info,
-							"skills": profileData.skills,
-							"experiences": profileData.experiences,
-							"birthday": profileData.birthday,
-							"job": profileData.job,
-							"speciality": profileData.speciality,
-							"profile_pic": profileData.profile_pic,
-							"status": profileData.status
-						},
-						experiences: experienceData,
-						review: reviewData
-						//trabajo: getTrabajo(profileData)
-					};
-
-					cb(data);
 				});
 			});
 		
