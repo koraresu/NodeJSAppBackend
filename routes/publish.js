@@ -319,11 +319,24 @@ router.post('/write/review', multipartMiddleware, function(req, res){
 							profiles: [profileData._id,publicProfileData._id],
 							profile_id: publicProfileData._id
 						});
-						review.save(function(errReview, reviewData){
-							func.response(200, reviewData, function(response){
-								res.json(response);
+
+						Historyfunc.insert({
+  							profile_id: publicProfileData._id,
+  							de_id: profileData._id,
+  							action: "7",
+  							data: {
+  								content: content,
+								title: title,
+								rate:  score
+  							}
+						}, function(errHistory, historyData){
+							review.save(function(errReview, reviewData){
+								func.response(200, reviewData, function(response){
+									res.json(response);
+								});
 							});
 						});
+						
 
 						
 					}else{

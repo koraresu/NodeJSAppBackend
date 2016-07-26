@@ -145,6 +145,7 @@ router.post('/accept', multipartMiddleware, function(req, res){
 											"accepted": network.accepted,
 											"public_id": profileAnotherData.public_id
 										};
+										
 										func.response(200, data, function(response){
 											res.json(response);
 										});
