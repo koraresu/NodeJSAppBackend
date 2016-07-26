@@ -331,9 +331,30 @@ router.post('/write/review', multipartMiddleware, function(req, res){
   							}
 						}, function(errHistory, historyData){
 							review.save(function(errReview, reviewData){
-								func.response(200, reviewData, function(response){
-									res.json(response);
+								Review.count({
+									profiles:{
+										"$all":[publicProfileData._id,profileData._id]
+									}
+								},function(errReview, reviewCheck){
+									console.log("Review Count:"+reviewCheck);
+									if(reviewCheck == 1){
+										Historyfunc.insert({
+				  							profile_id: publicProfileData._id,
+				  							de_id: profileData._id,
+				  							action: "3",
+				  							data: {}
+										}, function(errHistory, historyData){
+											func.response(200, reviewData, function(response){
+												res.json(response);
+											});
+										});
+									}else{
+										func.response(200, reviewData, function(response){
+											res.json(response);
+										});
+									}
 								});
+								
 							});
 						});
 						

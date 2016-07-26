@@ -154,30 +154,29 @@ router.post('/general/network', multipartMiddleware, function(req, res){
 							if(n_array.length > 0){
 								var isDisponible = ids.indexOf(profileItem._id);
 								if(isDisponible == -1){
+
 									Networkfunc.type(actualData, profileItem, function(t){
 										Profilefunc.formatoProfile(profileItem._id,function( profile ){
 											switch(t){
 												case 0:
-													profile.friend = t
-													mi.push(profile);
+												profile.friend = t
+												mi.push(profile);
 
-													ids.push(profileItem._id);
+												ids.push(profileItem._id);
 												break;
 												case 1:
-													profile.friend = t
-													vecinas.push(profile);
-													ids.push(profileItem._id);
+												profile.friend = t
+												vecinas.push(profile);
+												ids.push(profileItem._id);
 												break;
 												case 2:
-													profile.friend = t
-													otros.push(profile);
-													ids.push(profileItem._id);
+												profile.friend = t
+												otros.push(profile);
+												ids.push(profileItem._id);
 												break;
 											}
 											callback();
 										});
-
-										
 									});
 								}else{
 									callback();
@@ -192,24 +191,25 @@ router.post('/general/network', multipartMiddleware, function(req, res){
 								vecinas: vecinas,
 								otros: otros
 							}
+
 							Generalfunc.response(200, data, function(response){
 								res.json(response);
 							});
 
 						});
-				});
+					});
+				}else{
+					Generalfunc.response(113,{}, function(response){
+						res.json(response);
+					});
+				}
+			});
 		}else{
-			Generalfunc.response(113,{}, function(response){
+			Generalfunc.response(101,{}, function(response){
 				res.json(response);
 			});
 		}
 	});
-}else{
-	Generalfunc.response(101,{}, function(response){
-		res.json(response);
-	});
-}
-});
 });
 router.post('/general/network/friends', multipartMiddleware, function(req, res){
 	var rael   = mongoose.Types.ObjectId("578c3985021e94d11de142cf");

@@ -139,8 +139,6 @@ exports.generate_history = function(type, profileData, data, cb){
 
 exports.insert = function(data, callback){
 	History.findOne({}).sort('-id_numerico').exec(function(err, c){
-		console.log(err);
-		console.log(c);
 		if( c == null){
 			data.id_numerico = 0;	
 		}else{

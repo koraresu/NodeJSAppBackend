@@ -21,6 +21,7 @@ var Company            = require('../models/company');
 var Speciality         = require('../models/speciality');
 var Profile            = model.profile;
 var Review             = model.review;
+var History            = model.history;
 var Sector             = require('../models/sector');
 var Experience         = require('../models/experience');
 var Skill              = require('../models/skills');
@@ -29,11 +30,32 @@ var format = require('./format');
 
 function getTrabajo(profile_id, callback){
 	var data = [];
-	callback(null, data);
+
+	History.find({
+		profile_id: profile_id,
+		action: "3"
+	}).populate('de_id').select('de_id -_id').exec(function(errHistory, historyData){
+		if(historyData.length>0){
+			historyData.forEach(function(historyItem, historyIndex){
+				Profile.findOne({ _id: historyItem.de_id}).exec(function(errProfile, profileData){
+					data.push(profileData);
+					console.log(historyIndex);
+					if(historyIndex+1 == historyData.length){
+						callback(errProfile, data);
+					}
+				});
+			});
+		}else{
+			callback(null, data);
+		}
+		
+		
+		
+	});
+	
 }
 
 function formatoProfile(profile_id,cb){
-	console.log(profile_id);
 	if(typeof profile_id != "object"){
 		profile_id = mongoose.Types.ObjectId(profile_id);
 	}
@@ -42,7 +64,7 @@ function formatoProfile(profile_id,cb){
 		var userData = profileData.user_id;
 			Experience.find({ profile_id: profileData._id}, function(errExperience, experienceData){
 				Review.find({ profile_id: profileData._id }).sort( [ ['createdAt', 'descending'] ] ).limit(2).exec(function(errReview, reviewData){
-					console.log(profileData);
+
 					getTrabajo(profileData, function(errTrabajo, trabajoData){
 						var data = {
 							profile: {
@@ -90,11 +112,8 @@ exports.insert           = function(){
 exports.findSkill = function(profile_id, skill, callback){
 	Profile.findOne({ _id: profile_id }, function(errProfile, profileData){
 		var skills = profileData.skills;
-		console.log(skills);
-		if(skills.length > 0){
-			console.log("SKILL:");
-			console.log(skill);
 
+		if(skills.length > 0){
 			var element = skills.filter(function(value){
 				return value.toString() === skill._id.toString()
 			});
@@ -128,7 +147,6 @@ function generate_qrcode(profileData, callback){
 	var qrcode = profileData.public_id;
 	profileData.qrcode = qrcode+'.png';
 
-	console.log(profileData._id)
 	profileData.save(function(err, profileData){
 		var qr_svg = qr.image('the-hive:query?'+qrcode, { type: 'png', margin: 0 });
 		qr_svg.pipe(require('fs').createWriteStream('./public/qrcode/'+qrcode+'.png'));

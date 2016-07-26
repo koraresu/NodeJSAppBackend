@@ -141,21 +141,16 @@ function isNeightbor(profile_id, another_id, callback){
 
 	getFriends(profile_id._id, function(errFirst, firstData, firstIds){
 		if(firstIds.length>0){
-			console.log("|-"+profile_id.first_name);
 			firstIds.forEach(function(firstItem, firstIndex){
-				console.log("|--"+firstItem);
+				console.log("FirstIds");
 				getFriends(firstItem, function(errSecond, secondData, secondIds){
-					console.log("|---"+secondIds);
 
 					var x = secondIds.filter(function(y){
 						return y.toString() == another_id._id.toString()
 					});
-					
 					if(x.length > 0){
-						console.log("|----"+1);
 						callback(1);
 					}else{
-						console.log("|----"+2);
 						callback(2);
 					}
 				});
@@ -184,12 +179,10 @@ function isFriend(profile_id, another_id, callback){
 	});	
 }
 function type(profileID, anotherID, callback){
-
 	getFriends(anotherID._id, function(errNetwork, friends, friendsId){
 		var its = friendsId.filter(function(o){
 			return o.toString() != profileID._id.toString()
 		});
-		console.log(friendsId);
 		if(friendsId.length == its.length){
 			isNeightbor(profileID, anotherID, function(status){
 				if(status == 1){
