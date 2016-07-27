@@ -142,16 +142,20 @@ function isNeightbor(profile_id, another_id, callback){
 	getFriends(profile_id._id, function(errFirst, firstData, firstIds){
 		if(firstIds.length>0){
 			firstIds.forEach(function(firstItem, firstIndex){
-				console.log("FirstIds");
 				getFriends(firstItem, function(errSecond, secondData, secondIds){
 
 					var x = secondIds.filter(function(y){
 						return y.toString() == another_id._id.toString()
 					});
 					if(x.length > 0){
-						callback(1);
-					}else{
-						callback(2);
+						lvl = 1;
+					}
+					if(firstIndex+1 == firstIds.length){
+						if(lvl == 1){
+							callback(1);
+						}else{
+							callback(2);
+						}
 					}
 				});
 			});
