@@ -22,6 +22,7 @@ var Network            = model.network;
 var Review             = require('../models/review');
 var Skill              = require('../models/skills');
 var Notification       = model.notification;
+var LogSchema          = model.log;
 
 var format             = require('../functions/format');
 
@@ -192,6 +193,71 @@ router.post('/isfriend', multipartMiddleware, function(req, res){
 
 		}
 	});
+});
+// UNFRIEND
+// Parameter:
+//  	Token
+//
+// Return (Formato 16)
+//		Network
+// 		Profile
+router.post('/unfriend', multipartMiddleware, function(req, res){
+	var guid       = req.body.guid;
+	var public_id = req.body.public_id;
+
+	public_id = mongoose.Types.ObjectId(public_id);
+	Tokenfunc.exist(guid, function(errToken, token){
+		if(errToken){
+			Tokenfunc.toProfile(token.generated_id, function(status, userData, profileData, profileInfoData){
+				console.log("Token");
+				Networkfunc.PublicId(public_id, function(statusPublic, profileAnotherData){
+					if(statusPublic){
+						var find = {
+							"profiles": {
+								"$all": [profileData._id,profileAnotherData._id],
+							}
+						};
+						Network.findOne(find).exec(function(errNetwork, networkData){
+							if(!errNetwork && networkData){
+								if(networkData != null){
+
+									var log = new LogSchema({
+										message: "unfriend",
+										data: networkData
+									});
+									log.save(function(){
+										networkData.remove(function(err, data){
+											Generalfunc.response(200, networkData, function(response){
+												res.json(response);
+											});
+										});;
+									});
+
+								}else{
+									Generalfunc.response(404, {}, function(response){
+										res.json(response);
+									});
+								}
+							}else{
+								Generalfunc.response(404, {}, function(response){
+										res.json(response);
+									});
+							}
+						});
+					}else{
+						Generalfunc.response(113, {}, function(response){
+							res.json(response);
+						});
+					}
+				});
+			});
+		}else{
+			Generalfunc.response(101, {}, function(response){
+				res.json(response);
+			});
+		}
+	});
+
 });
 // GET
 // Parameter:

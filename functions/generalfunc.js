@@ -66,30 +66,32 @@ exports.saveImage = function(file, new_path, callback){
 exports.response = function(type,item, callback){
 	switch(type){
 		case 200:
-			callback({ status: 'success', message: "Success", data: item});
+			callback({ status: 'success', code: type, message: "Success", data: item});
 		break;
 		case 201:
-			callback({ status: 'logged', message: "Welcome", data: item });
+			callback({ status: 'logged', code: type, message: "Welcome", data: item });
 		break;
 		case 101:
-			callback({ status: 'error', message: "No Permitido", data: item});
+			callback({ status: 'error', code: type, message: "No Permitido", data: item});
 		break;
 		case 111:
-			callback({ status: 'error', message: "Email y/o contraseña es incorrecto", data: item});
+			callback({ status: 'error', code: type, message: "Email y/o contraseña es incorrecto", data: item});
 		break;
 		case 112:
-			callback({ status: 'error', message: "User Exists", data: item});
+			callback({ status: 'error', code: type, message: "User Exists", data: item});
 		break;
 		case 113:
-			callback({ status: 'error', message: "Profile No Existe", data: item});
+			callback({ status: 'error', code: type, message: "Profile No Existe", data: item});
 		break;
 		case 114:
-			callback({ status: 'error', message: "No Son Amigos", data: item});
+			callback({ status: 'error', code: type, message: "No Son Amigos", data: item});
 		break;
 		case 404:
-			callback({ status: 'error', message: "Not Found", data: item});
+			callback({ status: 'error', code: type, message: "Not Found", data: item});
 		break;
-
+		default:
+			callback({ status: 'unknown', code: type, message: "Not Found", data: item});
+		break;
 	}
 }
 exports.sendEmail = function(file, data,email, asunto, callback){

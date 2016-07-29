@@ -177,6 +177,7 @@ var NotificationSchema = new Schema({
 });
 var LogSchema = new Schema({
   message: { type: String },
+  data: { type: Schema.Types.Mixed }
 },{
   timestamps: true
 });
