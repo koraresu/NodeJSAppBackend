@@ -6,7 +6,7 @@ var fs = require('fs');
 var model              = require('../model');
 var Token              = require('../models/token');
 var User               = require('../models/user');
-var Job                = require('../models/job');
+var Job                = model.job;
 var Company            = require('../models/company');
 var Speciality         = require('../models/speciality');
 var Profile            = model.profile;
@@ -17,7 +17,7 @@ var Skill              = require('../models/skills');
 function checkExperience(profileData,ocupation, company, sector, callback){
 	companyExistsOrCreate({ name: company}, { name: company}, function(statusCompany, companyData){
 		sectorExistsOrCreate({ name: sector }, { name: sector }, function(statusSector, sectorData){
-			jobExistsOrCreate({ name: ocupation}, { name: ocupation}, function(statusJob, jobData){
+			jobExistsOrCreate({ name: ocupation, type: 0}, { name: ocupation, type: 0}, function(statusJob, jobData){
 				var search = {
 					company:{
 						id: companyData._id,

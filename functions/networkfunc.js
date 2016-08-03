@@ -105,8 +105,8 @@ function getFriends(profile_id,callback){
 	Network.find({
 		"profiles": {
 			"$in": [profile_id]
-		}
-	//}).populate("profiles", "_id first_name last_name public_id qrcode profilepic").exec(function(errNetwork, networkData){
+		},
+		"accepted": true
 	}).exec(function(errNetwork, networkData){		
 		if(networkData.length > 0){
 			networkData.forEach(function(friend, index, friends){
@@ -152,7 +152,7 @@ function isNeightbor(profile_id, another_id, callback){
 					}
 					if(firstIndex+1 == firstIds.length){
 						if(lvl == 1){
-							callback(1);
+							callback(1, firstItem);
 						}else{
 							callback(2);
 						}
@@ -169,7 +169,8 @@ function isFriend(profile_id, another_id, callback){
 	Network.findOne({
 		"profiles": {
 			"$all": [profile_id, another_id]
-		}
+		},
+		"accepted": true
 	}).exec(function(errNetwork, networkData){
 		if(!errNetwork && networkData){
 			if(networkData != null){
@@ -188,15 +189,18 @@ function type(profileID, anotherID, callback){
 			return o.toString() != profileID._id.toString()
 		});
 		if(friendsId.length == its.length){
-			isNeightbor(profileID, anotherID, function(status){
+			isNeightbor(profileID, anotherID, function(status, friendId){
 				if(status == 1){
-					callback(1);
+					Profile.findOne({ _id: friendId }).exec(function(errP, pData){
+						callback(1, pData);
+					});
+					
 				}else{
 					callback(2);
 				}
 			});
 		}else{
-			callback(0);
+			callback(0,anotherID);
 		}
 	});
 }

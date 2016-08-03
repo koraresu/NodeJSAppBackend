@@ -154,25 +154,28 @@ router.post('/general/network', multipartMiddleware, function(req, res){
 							if(n_array.length > 0){
 								var isDisponible = ids.indexOf(profileItem._id);
 								if(isDisponible == -1){
-
-									Networkfunc.type(actualData, profileItem, function(t){
+									Networkfunc.type(actualData, profileItem, function(t, contacto){
 										Profilefunc.formatoProfile(profileItem._id,function( profile ){
 											switch(t){
 												case 0:
 												profile.friend = t
 												mi.push(profile);
-
 												ids.push(profileItem._id);
 												break;
 												case 1:
-												profile.friend = t
-												vecinas.push(profile);
-												ids.push(profileItem._id);
+													if(profile.profile.status == 0 || profile.profile.status == 1){
+														profile.friend_data = contacto.first_name+" "+contacto.last_name;
+														profile.friend = t
+														vecinas.push(profile);
+														ids.push(profileItem._id);	
+													}
 												break;
 												case 2:
-												profile.friend = t
-												otros.push(profile);
-												ids.push(profileItem._id);
+												if(profile.profile.status == 0){
+													profile.friend = t
+													otros.push(profile);
+													ids.push(profileItem._id);	
+												}
 												break;
 											}
 											callback();

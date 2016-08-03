@@ -16,7 +16,7 @@ var Experiencefunc = require('./experiencefunc');
 var model = require('../model');
 var Token              = require('../models/token');
 var User               = model.user;
-var Job                = require('../models/job');
+var Job                = model.job;
 var Company            = require('../models/company');
 var Speciality         = require('../models/speciality');
 var Profile            = model.profile;
@@ -223,8 +223,10 @@ exports.update           = function(profile_id, data, callback){
 		}, function(status, specialityData){
 			Experiencefunc.jobExistsOrCreate({
 				name: job,
+				type: 1
 			},{
 				name: job,
+				type: 1
 			},function(status, jobData){
 				profileData.job = {
 					name: jobData.name,

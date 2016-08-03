@@ -102,6 +102,7 @@ var MessageSchema = new Schema({
 
 var jobSchema = new Schema({
   name: String,
+  type: Number
 },{
   timestamps: true
 });
