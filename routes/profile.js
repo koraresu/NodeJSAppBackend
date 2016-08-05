@@ -297,7 +297,7 @@ router.post('/login-facebook', multipartMiddleware, function(req, res){
 				});
 			});
 		}else{
-			func.userProfileInsertIfDontExists({
+			Profilefunc.userProfileInsertIfDontExists({
 				email: email
 			},{
 				email: email,
@@ -311,7 +311,9 @@ router.post('/login-facebook', multipartMiddleware, function(req, res){
 				speciality: {},
 				public_id: mongoose.Types.ObjectId(),
 				experiences: [],
-				info: [
+				facebookId: facebookID,
+				facebookToken: tokenFB,
+				facebookData: [
 				{
 					"name": "first_name",
 					"value": first_name
@@ -333,16 +335,8 @@ router.post('/login-facebook', multipartMiddleware, function(req, res){
 					"value": email
 				},
 				{
-					"name": "access-token",
-					"value": tokenFB
-				},
-				{
 					"name": "gender",
 					"value": gender
-				},
-				{
-					"name": "id",
-					"value": facebookID
 				}
 				],
 			}, function(exist, tokenData, profileData){
@@ -635,11 +629,6 @@ router.post('/experience', multipartMiddleware, function(req, res){
 //		Experiences
 router.post('/update-experience', multipartMiddleware, function(req, res){
 	var guid       = req.body.guid;
-
-	var nombre     = req.body.first_name;
-	var apellido   = req.body.last_name;
-	var statusReq  = req.body.status;
-	var phone      = req.body.phone;
 
 	var type       = req.body.type;
 	var company    = req.body.company;
@@ -949,7 +938,7 @@ router.post('/facebook', multipartMiddleware, function(req, res){
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
 			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
-				Profilefunc.addinfo(profileData._id, [
+				Profilefunc.facebookinfo(profileData._id, [
 				{
 					"name": "first_name",
 					"value": first_name
@@ -971,10 +960,6 @@ router.post('/facebook', multipartMiddleware, function(req, res){
 					"value": email
 				},
 				{
-					"name": "access-token",
-					"value": token
-				},
-				{
 					"name": "gender",
 					"value": gender
 				},
@@ -982,7 +967,7 @@ router.post('/facebook', multipartMiddleware, function(req, res){
 					"name": "id",
 					"value": id
 				}
-				], function(profileInfoData){
+				], token, function(profileInfoData){
 					Profilefunc.formatoProfile(profileData._id,function(err, profile){
 						var data = [];
 						data = _.extend(data,profile);

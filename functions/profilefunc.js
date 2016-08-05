@@ -265,6 +265,20 @@ exports.addinfo          = function(profile_id, data, callback){
 		});
 	});
 }
+exports.facebookinfo          = function(profile_id, data, token, callback){
+	Profile.findOne({ _id: profile_id }, function(err, profileData){
+		profileData.facebookData = [];
+		profileData.facebookToken = token;
+		data.forEach(function(item, index){
+			profileData.facebookData.push(item);
+			if(index == (data.length-1)){
+				profileData.save(function(err, profileData){
+					callback(profileData);
+				});		
+			}
+		});
+	});
+}
 exports.updateProfilePic = function(profile_id, file, callback){
 	var extension       = path.extname(file.path);
 	var file_pic        = profile_id + extension;

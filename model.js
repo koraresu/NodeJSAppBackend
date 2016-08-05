@@ -40,7 +40,8 @@ var profileSchema = new Schema({
     id: { type: Schema.Types.ObjectId, ref: 'Job' },
     name: String
   },
-  review_score: 0
+  review_score: 0,
+  block: { type: Boolean }
 },{
   timestamps: true
 });
@@ -183,6 +184,18 @@ var LogSchema = new Schema({
   timestamps: true
 });
 
+var PaisSchema = new Schema({
+  name: { type: String }
+});
+var EstadoSchema = new Schema({
+  name: { type: String },
+  pais: { type: Schema.Types.ObjectId, ref: 'Pais'}
+});
+var CiudadSchema = new Schema({
+  name: { type: String },
+  estado: { type: Schema.Types.ObjectId, ref: 'Estado'}
+});
+
 
 // Company
 exports.company      = db.model( 'Company' , companySchema );
@@ -207,3 +220,7 @@ exports.feedback     = db.model( 'Feedback' , FeedbackSchema );
 exports.conversation = db.model( 'Conversation' , ConversationSchema );
 exports.message      = db.model( 'Message' , MessageSchema );
 exports.log          = db.model( 'Log' , LogSchema );
+// Localization
+exports.ciudad       = db.model('Ciudad', CiudadSchema);
+exports.estado       = db.model('Estado', EstadoSchema);
+exports.pais         = db.model('Pais', PaisSchema);
