@@ -5,7 +5,7 @@ var fs = require('fs');
 var mongoose   = require('mongoose');
 var _ = require('underscore');
 
-var func = require('../func'); 
+
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
 
@@ -20,18 +20,35 @@ var Networkfunc    = require('../functions/networkfunc');
 var Notificationfunc = require('../functions/notificationfunc');
 var format         = require('../functions/format.js');
 
-var Token       = require('../models/token');
-var Profile     = require('../models/profile');
-var Review      = require('../models/review');
-var User        = require('../models/user');
-var Job         = require('../models/job');
-var Company     = require('../models/company');
-var Experience  = require('../models/experience');
-var History     = require('../models/history');
-var Network     = require('../models/network');
-var Feedback    = require('../models/feedback');
-
 var model = require('../model');
+var Profile     = model.profile;
+var User        = model.user;
+var Token       = model.token;
+var Job         = model.job;
+var Company     = model.company;
+var Experience  = model.experience;
+var Network     = model.network;
+var History     = model.history;
+var Feedback    = model.feedback;
+var Review      = model.review;
+var Log         = model.log;
+var Skill       = model.skill;
+var Speciality  = model.speciality;
+var Sector      = model.sector;
+var Notification = model.notification;
+var Feedback     = model.feedback;
+var Conversation = model.conversation;
+var Message      = model.message;
+var City         = model.city;
+var State        = model.state;
+var Country      = model.country;
+
+
+
+
+
+
+
 
 
 router.post('/get', multipartMiddleware, function(req, res){

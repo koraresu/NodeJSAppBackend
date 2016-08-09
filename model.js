@@ -220,6 +220,6 @@ exports.conversation = db.model( 'Conversation' , ConversationSchema );
 exports.message      = db.model( 'Message' , MessageSchema );
 exports.log          = db.model( 'Log' , LogSchema );
 // Localization
-exports.ciudad       = db.model('Ciudad', CiudadSchema);
-exports.estado       = db.model('Estado', EstadoSchema);
-exports.pais         = db.model('Pais', PaisSchema);
+exports.city       = db.model('City', CiudadSchema);
+exports.state       = db.model('State', EstadoSchema);
+exports.country        = db.model('Country', PaisSchema);

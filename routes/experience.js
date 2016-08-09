@@ -1,15 +1,31 @@
 var express = require('express');
 var router = express.Router();
-var func = require('../func'); 
+
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
 
-var Token       = require('../models/token');
-var User        = require('../models/user');
-var Job         = require('../models/job');
-var Company     = require('../models/company');
-var Experience  = require('../models/experience');
-var CompanyModel    = require('../models/company');
+var model = require('../model');
+var Profile     = model.profile;
+var User        = model.user;
+var Token       = model.token;
+var Job         = model.job;
+var Company     = model.company;
+var Experience  = model.experience;
+var Network     = model.network;
+var History     = model.history;
+var Feedback    = model.feedback;
+var Review      = model.review;
+var Log         = model.log;
+var Skill       = model.skill;
+var Speciality  = model.speciality;
+var Sector      = model.sector;
+var Notification = model.notification;
+var Feedback     = model.feedback;
+var Conversation = model.conversation;
+var Message      = model.message;
+var City         = model.city;
+var State        = model.state;
+var Country      = model.country;
 
 var Profilefunc = require('../functions/profilefunc');
 var Experiencefunc = require('../functions/experiencefunc');
@@ -54,7 +70,7 @@ router.post('/create', multipartMiddleware, function(req, res){
 									}
 								};
 								func.experienceExistsOrCreate(data,data, function(statusExperience, experienceData){
-									func.response(200,experienceData,function(response){
+									Generalfunc.response(200,experienceData,function(response){
 										res.json(response);
 									});
 								});

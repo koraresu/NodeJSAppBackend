@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var func = require('../func'); 
+
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
 var path = require('path');
@@ -24,14 +24,28 @@ var mongoose    = require('mongoose');
 		var Historyfunc = require('../functions/historyfunc');
 		var format = require('../functions/format');
 
-		var model       = require('../model');
-		var Profile     = model.profile;
-		var User        = require('../models/user');
-		var Token       = require('../models/token');
-		var Job         = require('../models/job');
-		var Company     = require('../models/company');
-		var Experience  = model.experience;
-		var Network     = require('../models/network');
+var model = require('../model');
+var Profile     = model.profile;
+var User        = model.user;
+var Token       = model.token;
+var Job         = model.job;
+var Company     = model.company;
+var Experience  = model.experience;
+var Network     = model.network;
+var History     = model.history;
+var Feedback    = model.feedback;
+var Review      = model.review;
+var Log         = model.log;
+var Skill       = model.skill;
+var Speciality  = model.speciality;
+var Sector      = model.sector;
+var Notification = model.notification;
+var Feedback     = model.feedback;
+var Conversation = model.conversation;
+var Message      = model.message;
+var City         = model.city;
+var State        = model.state;
+var Country      = model.country;
 /*
 Nombre de Objectos de Documentos:
 	Todo dato recibido por FUNC, que sea un documento de mongo, se le colocara como nombre de varible el nombre del modelo,
@@ -969,13 +983,13 @@ router.post('/setprofilepic', multipartMiddleware, function(req, res){
 					var data = {};
 					data = profile;
 					console.log(data);
-					func.response(200,data, function(response){
+					Generalfunc.response(200,data, function(response){
 						res.json(response);
 					});
 				});
 			});
 		}else{
-			func.response(101,{},function(response){
+			Generalfunc.response(101,{},function(response){
 				res.json(response);
 			});
 		}
@@ -1053,14 +1067,14 @@ router.post('/facebook', multipartMiddleware, function(req, res){
 						var data = [];
 						data = _.extend(data,profile);
 
-						func.response(200,data, function(response){
+						Generalfunc.response(200,data, function(response){
 							res.json(response);
 						});
 					});
 				});
 			});
 		}else{
-			func.response(113,{},function(response){
+			Generalfunc.response(113,{},function(response){
 				res.json(response);
 			});
 		}
@@ -1082,38 +1096,37 @@ router.post('/token/exists', multipartMiddleware, function(req, res){
 		if(status){
 			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
 				if(status){
-					var verified = false;
-					if(userData.verified){
-						verified = true;
-					}
 
-					func.experienceGet(profileData._id, function(statusExperience, experiences){
-						var exp = false;
-						console.log(experiences);
-						if(experiences.length > 0){
-							exp = true;
-						}
+					Profile.findOne({ _id: profileData._id}).populate('experiences').populate('skills').populate('user_id','-password').exec(function(errProfile, profileData){
 
-						func.response(200, {
-							user: userData,
-							profile:profileData,
-							experiences: exp,
-							verified: verified
-						}, function(response){
-							res.json(response);
+						Experiencefunc.get(profileData._id, function(statusExperience, experiences){
+							var exp = statusExperience;	
+							var verified = false;
+
+							if(userData.verified){
+								verified = true;
+							}
+							Generalfunc.response(201,{
+								token: tokenData.generated_id,
+								verified: verified,
+								experiences: exp,
+								profile: profileData
+							}, function(response){
+								res.json(response);
+							});
 						});
+
 					});
 
-
 				}else{
-					func.response(101, {}, function(response){
+					Generalfunc.response(101, {}, function(response){
 						res.json(response);
 					});
 				}
 
 			});
 		}else{
-			func.response(101, {}, function(response){
+			Generalfunc.response(101, {}, function(response){
 				res.json(response);
 			});
 		}

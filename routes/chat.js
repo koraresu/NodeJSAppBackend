@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var func = require('../func'); 
+
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
 var path = require('path');
@@ -24,15 +24,28 @@ var Networkfunc    = require('../functions/networkfunc');
 
 var format         = require('../functions/format');
 
-var Profile        = require('../models/profile');
-var User           = require('../models/user');
-var Token          = require('../models/token');
-var Job            = require('../models/job');
-var Company        = require('../models/company');
-var Experience     = require('../models/experience');
-var Network        = require('../models/network');
-var Message        = require('../models/message');
-var Conversation   = require('../models/conversation');
+var model = require('../model');
+var Profile     = model.profile;
+var User        = model.user;
+var Token       = model.token;
+var Job         = model.job;
+var Company     = model.company;
+var Experience  = model.experience;
+var Network     = model.network;
+var History     = model.history;
+var Feedback    = model.feedback;
+var Review      = model.review;
+var Log         = model.log;
+var Skill       = model.skill;
+var Speciality  = model.speciality;
+var Sector      = model.sector;
+var Notification = model.notification;
+var Feedback     = model.feedback;
+var Conversation = model.conversation;
+var Message      = model.message;
+var City         = model.city;
+var State        = model.state;
+var Country      = model.country;
 
 
 router.post('/conversation', multipartMiddleware, function(req, res){
@@ -77,7 +90,7 @@ router.post('/check/conversation', multipartMiddleware, function(req, res){
 
 	Networkfunc.checkconversation(profile_a,profile_b, function(status, conversationData){
 
-		func.response(200, conversationData, function(response){
+		Generalfunc.response(200, conversationData, function(response){
 			res.json(response);
 		})
 	});

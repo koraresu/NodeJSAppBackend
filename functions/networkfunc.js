@@ -5,17 +5,28 @@ var fs = require('fs');
 
 var Generalfunc = require('./generalfunc');
 
-var model          = require('../model');
-
-var Profile        = require('../models/profile');
-var User           = require('../models/user');
-var Token          = require('../models/token');
-var Job            = require('../models/job');
-var Company        = require('../models/company');
-var Experience     = require('../models/experience');
-var Network        = model.network;
-var Message        = require('../models/message');
-var Conversation   = require('../models/conversation');
+var model = require('../model');
+var Profile     = model.profile;
+var User        = model.user;
+var Token       = model.token;
+var Job         = model.job;
+var Company     = model.company;
+var Experience  = model.experience;
+var Network     = model.network;
+var History     = model.history;
+var Feedback    = model.feedback;
+var Review      = model.review;
+var Log         = model.log;
+var Skill       = model.skill;
+var Speciality  = model.speciality;
+var Sector      = model.sector;
+var Notification = model.notification;
+var Feedback     = model.feedback;
+var Conversation = model.conversation;
+var Message      = model.message;
+var City         = model.city;
+var State        = model.state;
+var Country      = model.country;
 
 function addReview(profile_id_a, public_id, callback){}
 function addNetwork(profile_id_a, public_id, callback){}

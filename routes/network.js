@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var func = require('../func'); 
+
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
 var mongoose    = require('mongoose');
@@ -10,19 +10,28 @@ var router = express.Router();
 
 var model              = require('../model');
 
-var Token              = require('../models/token');
-var User               = require('../models/user');
-var Job                = require('../models/job');
-var Company            = require('../models/company');
-var Speciality         = require('../models/speciality');
-var Profile            = require('../models/profile');
-var Sector             = require('../models/sector');
-var Experience         = require('../models/experience');
-var Network            = model.network;
-var Review             = require('../models/review');
-var Skill              = require('../models/skills');
-var Notification       = model.notification;
-var LogSchema          = model.log;
+var model = require('../model');
+var Profile     = model.profile;
+var User        = model.user;
+var Token       = model.token;
+var Job         = model.job;
+var Company     = model.company;
+var Experience  = model.experience;
+var Network     = model.network;
+var History     = model.history;
+var Feedback    = model.feedback;
+var Review      = model.review;
+var Log         = model.log;
+var Skill       = model.skill;
+var Speciality  = model.speciality;
+var Sector      = model.sector;
+var Notification = model.notification;
+var Feedback     = model.feedback;
+var Conversation = model.conversation;
+var Message      = model.message;
+var City         = model.city;
+var State        = model.state;
+var Country      = model.country;
 
 var format             = require('../functions/format');
 
@@ -64,7 +73,7 @@ router.post('/connect', multipartMiddleware, function(req, res){
 						console.log(find);
 						Network.findOne(find, function(errNetwork, networkData){
 							if(!errNetwork && networkData){
-								func.response(200, networkData, function(response){
+								Generalfunc.response(200, networkData, function(response){
 									res.json(response);
 								});
 							}else{
@@ -86,7 +95,7 @@ router.post('/connect', multipartMiddleware, function(req, res){
 											"accepted": networkData.accepted,
 											"public_id": profileAnotherData.public_id
 										};
-										func.response(200, data,  function(response){
+										Generalfunc.response(200, data,  function(response){
 											res.json(response);
 										});	
 									})
@@ -147,13 +156,13 @@ router.post('/accept', multipartMiddleware, function(req, res){
 											"public_id": profileAnotherData.public_id
 										};
 										
-										func.response(200, data, function(response){
+										Generalfunc.response(200, data, function(response){
 											res.json(response);
 										});
 									});
 								});
 							}else{
-								func.response(101, {}, function(response){
+								Generalfunc.response(101, {}, function(response){
 									res.json(response);
 								});
 							}
@@ -337,7 +346,7 @@ router.post('/emailtofriend', multipartMiddleware, function(req, res){
 						data.push(profileData);
 
 						if((userData.length-1) == userIndex){
-							func.response(200, data, function(response){
+							Generalfunc.response(200, data, function(response){
 								res.json(response);
 							});
 							
@@ -345,7 +354,7 @@ router.post('/emailtofriend', multipartMiddleware, function(req, res){
 					});
 				});
 			}else{
-				func.response(200, {}, function(response){
+				Generalfunc.response(200, {}, function(response){
 					res.json(response);
 				});
 			}
