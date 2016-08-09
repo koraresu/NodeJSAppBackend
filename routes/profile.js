@@ -69,7 +69,7 @@ router.post('/login', multipartMiddleware, function(req, res){
 
 	User.findOne({ email: email, type: 0}, function(errUser, userData){
 		if(!errUser && userData){
-			Profilefunc.compare_password(password, userData.password, function(statusPassword){
+			Profilefunc.compare_password(password, userData.password, function(err, statusPassword){
 				console.log(statusPassword);
 				if(statusPassword){
 					Profilefunc.userProfile(userData, function(statProfile, tokenData, userData, profileData){
