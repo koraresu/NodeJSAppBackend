@@ -68,12 +68,11 @@ var companySchema = new Schema({
 
 
 var experienceSchema = new Schema({
-  
+  type: Number,  // 0 = Independiente | 1 = Empresa
   ocupation: {
     id: { type: Schema.Types.ObjectId, ref: 'jobs' },
     name: String
   },
-  type: Number,
   company: {
   	id: { type: Schema.Types.ObjectId, ref: 'companies' },
   	name: String

@@ -14,55 +14,97 @@ var Sector             = require('../models/sector');
 var Experience         = model.experience;
 var Skill              = require('../models/skills');
 
-function checkExperience(profileData,ocupation, company, sector, callback){
-	companyExistsOrCreate({ name: company}, { name: company}, function(statusCompany, companyData){
-		sectorExistsOrCreate({ name: sector }, { name: sector }, function(statusSector, sectorData){
-			jobExistsOrCreate({ name: ocupation, type: 0}, { name: ocupation, type: 0}, function(statusJob, jobData){
-				var search = {
-					company:{
-						id: companyData._id,
-						name: companyData.name
-					},
-					sector: {
-						id: sectorData._id,
-						name: sectorData.name
-					},
-					ocupation: {
-						id: jobData._id,
-						name: jobData.name
-					},
-					profile_id: profileData._id
-				};
-				Experience.findOne(search).exec(function(errExperience, experienceData){
-					if(!errExperience && experienceData){
+function checkExperience(profileData, type, data, callback){
+	if(type == 0){
+		console.log(data);
 
-						if(experienceData != null){
-							callback(true,experienceData,search);
-						}else{
-							callback(false,experienceData,search);
-						}
+		jobExistsOrCreate({ name: data.ocupation, type: 0}, { name: data.ocupation, type: 0}, function(statusJob, jobData){
+			var search = {
+						type: type,
+						ocupation: {
+							id: jobData._id,
+							name: jobData.name
+						},
+						profile_id: profileData._id
+					};
+			console.log(search);
+			Experience.findOne(search).exec(function(errExperience, experienceData){
+				if(!errExperience && experienceData){
+
+					if(experienceData != null){
+						callback(true,experienceData,search);
 					}else{
 						callback(false,experienceData,search);
 					}
-				});
+				}else{
+					callback(false,experienceData,search);
+				}
 			});
 		});
-	})
+	}else{
+		console.log(data);
+
+		companyExistsOrCreate({ name: data.company}, { name: data.company}, function(statusCompany, companyData){
+			sectorExistsOrCreate({ name: data.sector }, { name: data.sector }, function(statusSector, sectorData){
+				jobExistsOrCreate({ name: data.ocupation, type: 0}, { name: data.ocupation, type: 0}, function(statusJob, jobData){
+					var search = {
+						type: type,
+						company:{
+							id: companyData._id,
+							name: companyData.name
+						},
+						sector: {
+							id: sectorData._id,
+							name: sectorData.name
+						},
+						ocupation: {
+							id: jobData._id,
+							name: jobData.name
+						},
+						profile_id: profileData._id
+					};
+					Experience.findOne(search).exec(function(errExperience, experienceData){
+						if(!errExperience && experienceData){
+
+							if(experienceData != null){
+								callback(true,experienceData,search);
+							}else{
+								callback(false,experienceData,search);
+							}
+						}else{
+							callback(false,experienceData,search);
+						}
+					});
+				});
+			});
+		})
+	}
 }
-exports.insertOrExists = function(profileData,ocupation, company, sector, callback){
-	checkExperience(profileData,ocupation, company, sector, function(statusExperience,experienceData,search){
+exports.insertOrExists = function(profileData, type, data, callback){
+	checkExperience(profileData,type,data, function(statusExperience,experienceData,search){
 		if(statusExperience){
-			callback(true,experienceData);
+			callback(false,experienceData);
 		}else{
 			var experience = new Experience(search);
 			experience.save(function(errExperience, experienceData){
 				callback(true,experienceData);
 			});
-			callback(false,experienceData);
+			
 		}
 	});
 }
+exports.profileGenerate = function(profileData, callback){
+	profileData.experiences = [];
+	Experience.find({ profile_id: profileData._id}).exec(function(errExperience, experiencesData){
+		profileData.experiences = experiencesData.map(function(o){
+			return o._id;
+		});
+		profileData.save(function(errProfile, profileData){
+			callback(profileData);
+		});
+	});
 
+}
 function jobExistsOrCreate(search, insert, callback){
 	Job.findOne(search, function(err, job){
 		if(!err && job){
@@ -116,7 +158,7 @@ var get = function(profile, callback){
 		if(!err && experiences.length > 0){
 
 			callback(true, experiences);
-		
+
 		}else{
 			callback(false, experiences);
 		}

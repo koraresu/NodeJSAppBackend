@@ -632,6 +632,86 @@ router.post('/update-experience', multipartMiddleware, function(req, res){
 
 	var type       = req.body.type;
 	var company    = req.body.company;
+	
+	var job        = req.body.job;
+	var speciality = req.body.speciality;
+
+	var sector     = req.body.sector;
+	var ocupation  = req.body.ocupation;
+
+	Tokenfunc.exist(guid, function(status, tokenData){
+		if(status){
+			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
+				var data = [];
+				if(type == 1){
+					data = {
+						ocupation: ocupation,
+						company: company,
+						sector: sector
+					};
+				}else{
+					data = {
+						ocupation: job,
+					};
+				}
+				
+				Experiencefunc.insertOrExists(profileData,type, data, function(statusExperience, experienceData){
+					Experiencefunc.specialityExistsOrCreate({
+						name: speciality
+					},{
+						name: speciality
+					}, function(status, specialityData){
+
+						Experiencefunc.jobExistsOrCreate({
+							name: job
+						}, {
+							name: job
+						}, function(status, jobData){
+							console.log("JobExsits");
+							Profile.findOne({ _id: profileData._id }).exec(function(errProfile, profileData){
+								profileData.job = {
+									id: jobData._id,
+									name: jobData.name
+								};
+								profileData.speciality = {
+									id: specialityData._id,
+									name: specialityData.name
+								};
+								profileData.save(function(errProfile, profileData){
+									console.log(errProfile);
+									console.log("Save Profile");
+									console.log(profileData);
+									
+									Experiencefunc.profileGenerate(profileData, function(profileData){
+
+										Generalfunc.response(200, profileData, function(response){
+											res.json(response);
+										});	
+									});
+								});
+							});
+						});
+					});
+					/*
+					
+					*/
+				});
+				
+			});
+		}else{
+			Generalfunc.response(101, {}, function(response){
+				console.log("No Profile");
+				res.json(response);
+			})
+		}
+	});
+});
+/*
+router.post('/update-experience', multipartMiddleware, function(req, res){
+	var guid       = req.body.guid;
+
+	var type       = req.body.type;
+	var company    = req.body.company;
 	var job        = req.body.job;
 	var speciality = req.body.speciality;
 	var sector     = req.body.sector;
@@ -709,6 +789,7 @@ router.post('/update-experience', multipartMiddleware, function(req, res){
 		}
 	});
 });
+*/
 // ADD SKILL
 // Parameter:
 //  	Token
