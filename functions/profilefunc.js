@@ -350,8 +350,10 @@ function generate_Password(password){
 	return hash;
 }
 function compare_Password(password,in_db, cb){
+	console.log(password);
+
 	bcrypt.compare(password, in_db, function(err, res){
-		cb(res);
+		cb(err, res);
 	});
 }
 

@@ -103,52 +103,6 @@ router.post('/login', multipartMiddleware, function(req, res){
 		}
 	});
 });
-/*
-router.post('/login', multipartMiddleware, function(req, res){
-	var email    = req.body.email;
-	var password = req.body.password;
-	User.findOne({email: email, type: 0 }, function(errUser, userData){
-		if(!errUser && userData){
-			if(typeof userData != "undefined"){
-				Profilefunc.compare_password(password, userData.password, function(status){
-					if(status){
-						Profilefunc.userProfile(userData, function(statProfile, tokenData, userData, profileData){
-							Experiencefunc.get(profileData._id, function(statusExperience, experiences){
-								var exp = statusExperience;	
-								var verified = false;
-
-								if(userData.verified){
-									verified = true;
-								}
-								Generalfunc.response(201,{
-									token: tokenData.generated_id,
-									verified: verified,
-									experiences: exp,
-									profile: profileData
-								}, function(response){
-									res.json(response);
-								});
-							});
-						});
-					}else{
-						Generalfunc.response(111,{ },function(response){
-							res.json(response);
-						});
-					}
-				});
-			}else{
-				Generalfunc.response(111, {}, function(response){
-					res.json(response);
-				});
-			}
-		}else{
-			Generalfunc.response(111, {}, function(response){
-				res.json(response);
-			});
-		}
-	});	
-});
-*/
 // CREATE
 // Parameter:
 // 		first_name     = Nombre
@@ -157,7 +111,6 @@ router.post('/login', multipartMiddleware, function(req, res){
 // 		password       = Contraseña
 // Return (Formato 2)
 // 		Generated Token
-
 router.post('/create', multipartMiddleware, function(req, res){
 	var nombre   = req.body.first_name;
 	var apellido = req.body.last_name;
@@ -372,10 +325,6 @@ router.post('/login-facebook', multipartMiddleware, function(req, res){
 			});
 		}
 	});
-	/*
-	
-
-	*/
 });
 
 // GET
@@ -404,13 +353,16 @@ router.post('/get', multipartMiddleware, function(req, res){
 					
 					
 				}else{
-					func.response(113,{},function(response){
+					Generalfunc.response(113,{},function(response){
 						res.json(response);
 					});
 				}
 			});
 		}else{
-			res.send("No Token");
+			Generalfunc.response(101, {}, function(response){
+				res.json(response);
+			});
+
 		}
 	});
 });
@@ -450,7 +402,9 @@ router.post('/get/friend', multipartMiddleware, function(req, res){
 				}
 			});
 		}else{
-			res.send("No Token");
+			Generalfunc.response(101, {}, function(response){
+				res.json(response);
+			});
 		}
 	});
 	}
@@ -471,37 +425,55 @@ router.post('/changepassword', multipartMiddleware, function(req, res){
 					});
 					
 				}else{
-					res.json("H");
+					Generalfunc.response(111,{ },function(response){
+						res.json(response);
+					});
 				}
 			});
 		}else{
-			res.json("T");
+			Generalfunc.response(111,{ },function(response){
+				res.json(response);
+			});
 		}
 	});
 });
 router.post('/checkpassword', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 	var password  = req.body.password;
+
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
 			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
 				if(status){
 					User.findOne({ _id: profileData.user_id }, function(errUser, userData){
-						
-						if(Profilefunc.compare_password(userData.password, password)){
-							res.send("True");
+						if(userData.type == 1){
+							Generalfunc.response(200, {
+								message: "Es un perfil de Facebook."
+							}, function(response){
+								res.json(response);
+							});
 						}else{
-							res.send("False");
+							Profilefunc.compare_password(password, userData.password, function(err, data){
+									Generalfunc.response(200, {
+										response: data
+									}, function(response){
+										res.json(response);
+									});
+							});
 						}
-
+						
 					});
 					
 				}else{
-					res.json("H");
+					Generalfunc.response(111,{ },function(response){
+						res.json(response);
+					});
 				}
 			});
 		}else{
-			res.json("T");
+			Generalfunc.response(111,{ },function(response){
+				res.json(response);
+			});
 		}
 	});
 });
@@ -706,15 +678,11 @@ router.post('/update-experience', multipartMiddleware, function(req, res){
 							});
 						});
 					});
-					/*
-					
-					*/
 				});
 				
 			});
 		}else{
 			Generalfunc.response(101, {}, function(response){
-				console.log("No Profile");
 				res.json(response);
 			})
 		}
@@ -990,91 +958,6 @@ router.post('/setprofilepic', multipartMiddleware, function(req, res){
 			});
 		}else{
 			Generalfunc.response(101,{},function(response){
-				res.json(response);
-			});
-		}
-	});
-});
-// FACEBOOK LOGIN
-// Parameter:
-//  	Token
-// 		File - Profilepic
-//
-// Return (Formato 10)
-//		P
-
-// FACEBOOK CREATE
-// Parameter:
-//  	Token
-// 		File - Profilepic
-//
-// Return (Formato 11)
-//		P
-
-// FACEBOOK EXISTS
-// Parameter:
-//  	Token
-// 		File - Profilepic
-//
-// Return (Formato 12)
-//		P
-router.post('/facebook', multipartMiddleware, function(req, res){
-	var guid = req.body.guid;
-
-	var first_name = req.body.first_name;
-	var last_name  = req.body.last_name;
-	var name       = req.body.name;
-	var picture    = req.body.picture;
-	var email      = req.body.email;
-	var token      = req.body.token;
-	var gender     = req.body.gender;
-	var id         = req.body.id;
-	
-	Tokenfunc.exist(guid, function(status, tokenData){
-		if(status){
-			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
-				Profilefunc.facebookinfo(profileData._id, [
-				{
-					"name": "first_name",
-					"value": first_name
-				},
-				{
-					"name": "last_name",
-					"value": last_name
-				},
-				{
-					"name": "name",
-					"value":name
-				},
-				{
-					"name": "picture",
-					"value": picture
-				},
-				{
-					"name": "email",
-					"value": email
-				},
-				{
-					"name": "gender",
-					"value": gender
-				},
-				{
-					"name": "id",
-					"value": id
-				}
-				], token, function(profileInfoData){
-					Profilefunc.formatoProfile(profileData._id,function(err, profile){
-						var data = [];
-						data = _.extend(data,profile);
-
-						Generalfunc.response(200,data, function(response){
-							res.json(response);
-						});
-					});
-				});
-			});
-		}else{
-			Generalfunc.response(113,{},function(response){
 				res.json(response);
 			});
 		}
