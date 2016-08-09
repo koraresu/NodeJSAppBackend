@@ -4,7 +4,7 @@ var path = require('path');
 var fs = require('fs');
 var mongoose   = require('mongoose');
 var _ = require('underscore');
-
+var async = require('async');
 
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
@@ -110,13 +110,56 @@ router.post('/write/news', multipartMiddleware, function(req, res){
 			if(status){
 				Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
 					if(status){
+
+						async.series([
+							function(callback){
+								if(typeof gallery != "undefined"){
+									gallery.forEach(function(item, index){
+										var file = item;
+										var objectId    = new ObjectID();
+										var fileName  = file.fieldName;
+										var pathfile  = file.path;
+										var extension = path.extname(pathfile);
+										var file_pic    = shortid.generate() + extension;
+
+										var new_path = path.dirname(path.dirname(process.mainModule.filename)) + '/public/gallery/' + file_pic;
+										fs.rename(pathfile, new_path, function(err){
+											if (err){
+												throw err;
+											}else{
+												var p = file_pic;
+												data.push({url: p});
+
+												if(index == (gallery.length-1)){
+													callback(null, data);
+												}
+											}
+										});
+									});
+								}else{
+									callback(null, {});
+								}
+							}
+						], function(err, results){
+							console.log(results);
+							var data = {};
+							if(typeof results[0] != "undefined"){
+								data = results[0];
+							}
+							save_news(profileData, titulo, contenido, data, function(historyData){
+								res.json(historyData);
+							});
+
+						});
+						
+						/*
 						if(typeof gallery == "undefined"){
 							save_news(profileData, titulo, contenido, [], function(historyData){
 								
 								var profile = format.littleProfile(profileData);
 								var de = format.littleProfile(profileData);
 								var d = format.news(historyData, profile, de);
-								Generalfunc.response(200,d, function(response){
+								Generalfunc.response(200,historyData, function(response){
 									res.json(response);
 								});
 
@@ -141,10 +184,11 @@ router.post('/write/news', multipartMiddleware, function(req, res){
 
 											if(index == (gallery.length-1)){
 												save_news(profileData, titulo, contenido, data, function(historyData){
-													var profile = format.littleProfile(profileData);
-													var de = format.littleProfile(profileData);
-													var d = format.news(historyData, profile, de);
-													Generalfunc.response(200,d, function(response){
+													console.log(profileData);
+
+													var d = format.news(historyData, profileData, profileData);
+
+													Generalfunc.response(200,historyData, function(response){
 														res.json(response);
 													});
 												});
@@ -158,6 +202,7 @@ router.post('/write/news', multipartMiddleware, function(req, res){
 								});
 							}	
 						}
+						*/
 						
 					}else{
 						//res.send("No Profile");
