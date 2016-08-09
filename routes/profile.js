@@ -70,6 +70,7 @@ router.post('/login', multipartMiddleware, function(req, res){
 	User.findOne({ email: email, type: 0}, function(errUser, userData){
 		if(!errUser && userData){
 			Profilefunc.compare_password(password, userData.password, function(statusPassword){
+				console.log(statusPassword);
 				if(statusPassword){
 					Profilefunc.userProfile(userData, function(statProfile, tokenData, userData, profileData){
 
@@ -396,7 +397,7 @@ router.post('/get/friend', multipartMiddleware, function(req, res){
 						}
 					});
 				}else{
-					func.response(113,{},function(response){
+					Generalfunc.response(113,{},function(response){
 						res.json(response);
 					});
 				}
@@ -531,7 +532,7 @@ router.post('/update', multipartMiddleware, function(req, res){
 							var data = [];
 							data = _.extend(data,profile);
 
-							func.response(200,data, function(response){
+							Generalfunc.response(200,data, function(response){
 								res.json(response);
 							});
 						});
@@ -539,7 +540,7 @@ router.post('/update', multipartMiddleware, function(req, res){
 				});	
 			});
 		}else{
-			func.response(101, {}, function(response){
+			Generalfunc.response(101, {}, function(response){
 				res.json(response);
 			})
 		}
@@ -833,7 +834,7 @@ router.post('/addskill', multipartMiddleware, function(req, res){
 				});
 			});
 		}else{
-			func.response(101, {}, function(response){
+			Generalfunc.response(101, {}, function(response){
 				res.json(response);
 			})
 		}
@@ -884,7 +885,7 @@ router.post('/deleteskill', multipartMiddleware, function(req, res){
 				});
 			});
 		}else{
-			func.response(101, {}, function(response){
+			Generalfunc.response(101, {}, function(response){
 				res.json(response);
 			})
 		}
@@ -908,20 +909,20 @@ router.post('/verify', multipartMiddleware, function(req, res){
 					if(userData.verified){
 						verified = true;
 					}
-					func.response(200,{	
+					Generalfunc.response(200,{	
 						verified: verified
 					}, function(response){
 						res.json(response);
 					});
 				}else{
-					func.response(404,{}, function(response){
+					Generalfunc.response(404,{}, function(response){
 						res.json(response);
 					});
 				}
 				
 			});
 		}else{
-			func.response(101, {}, function(response){
+			Generalfunc.response(101, {}, function(response){
 				res.json(response);
 			});
 		}

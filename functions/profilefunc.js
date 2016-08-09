@@ -351,7 +351,7 @@ function generate_Password(password){
 }
 function compare_Password(password,in_db, cb){
 	console.log(password);
-
+	console.log(in_db);
 	bcrypt.compare(password, in_db, function(err, res){
 		cb(err, res);
 	});

@@ -57,13 +57,13 @@ router.post('/get', multipartMiddleware, function(req, res){
 		switch(status){
 			case 200:
 				Skillfunc.get(profileData._id, function(status, skills){
-					func.response(200, skills, function(response){
+					Generalfunc.response(200, skills, function(response){
 						res.json(response);
 					});
 				});
 			break;
 			default:
-				func.response(113, {},function(response){
+				Generalfunc.response(113, {},function(response){
 					res.json(response);
 				});
 			break;
@@ -91,7 +91,7 @@ router.post('/add', multipartMiddleware, function(req, res){
 									id: skillData._id
 								}
 							}, function(err, historyData){
-								func.response(200, historyData , function(response){
+								Generalfunc.response(200, historyData , function(response){
 									res.json(response);
 								});
 							});
@@ -125,7 +125,7 @@ router.post('/adds', multipartMiddleware, function(req, res){
 
 						if((x.length-1) == index){
 
-							func.response(200, profileData, function(response){
+							Generalfunc.response(200, profileData, function(response){
 								res.json(response);
 							});
 						}
@@ -133,7 +133,7 @@ router.post('/adds', multipartMiddleware, function(req, res){
 				})
 			break;
 			default:
-				func.response(113, {},function(response){
+				Generalfunc.response(113, {},function(response){
 					res.json(response);
 				});
 			break;
