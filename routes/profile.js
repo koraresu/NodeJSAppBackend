@@ -70,32 +70,37 @@ router.post('/login', multipartMiddleware, function(req, res){
 	User.findOne({ email: email, type: 0}, function(errUser, userData){
 		if(!errUser && userData){
 			Profilefunc.compare_password(password, userData.password, function(err, statusPassword){
-				console.log(statusPassword);
+				res.json(userData);
+				/*
 				if(statusPassword){
+				
 					Profilefunc.userProfile(userData, function(statProfile, tokenData, userData, profileData){
+						Profilefunc.logs(profileData, 24, profileData, function(){
+							Experiencefunc.get(profileData._id, function(statusExperience, experiences){
+								var exp = statusExperience;	
+								var verified = false;
 
-						Experiencefunc.get(profileData._id, function(statusExperience, experiences){
-							var exp = statusExperience;	
-							var verified = false;
-
-							if(userData.verified){
-								verified = true;
-							}
-							Generalfunc.response(201,{
-								token: tokenData.generated_id,
-								verified: verified,
-								experiences: exp,
-								profile: profileData
-							}, function(response){
-								res.json(response);
+								if(userData.verified){
+									verified = true;
+								}
+								Generalfunc.response(201,{
+									token: tokenData.generated_id,
+									verified: verified,
+									experiences: exp,
+									profile: profileData
+								}, function(response){
+									res.json(response);
+								});
 							});
 						});
+						
 					});
 				}else{
 					Generalfunc.response(111,{ },function(response){
 						res.json(response);
 					});
 				}
+				*/
 			});
 		}else{
 			Generalfunc.response(111, {}, function(response){
@@ -150,23 +155,26 @@ router.post('/create', multipartMiddleware, function(req, res){
 				res.json( response );
 			});
 		}else{
-			Generalfunc.sendEmail("email.jade", {
-				public_id: profileData.public_id,
-				nombre: profileData.first_name,
-			}, userData.email, "Verificación de Correo",function(status, html){
-				if(status){
-					Generalfunc.response(200,{
-						token: tokenData.generated_id,
-						profile: profileData
-					},function(response){
-						res.json( response );
-					});
-				}else{
-					Generalfunc.response(101,{},function(response){
-						res.json( response );
-					});
-				}			
+			Profilefunc.logs(profileData, 2, {profile:profileData, token: tokenData, user: userData }, function(){
+				Generalfunc.sendEmail("email.jade", {
+					public_id: profileData.public_id,
+					nombre: profileData.first_name,
+				}, userData.email, "Verificación de Correo",function(status, html){
+					if(status){
+						Generalfunc.response(200,{
+							token: tokenData.generated_id,
+							profile: profileData
+						},function(response){
+							res.json( response );
+						});
+					}else{
+						Generalfunc.response(101,{},function(response){
+							res.json( response );
+						});
+					}			
+				});
 			});
+			
 		}
 	});
 });
@@ -252,12 +260,14 @@ router.post('/login-facebook', multipartMiddleware, function(req, res){
 					Experiencefunc.get(profileData._id, function(statusExperience, experiences){
 						var exp = statusExperience;	
 						profileData.save(function(errProfile, profileData){
-							Generalfunc.response(201,{
-								token: tokenData.generated_id,
-								verified: verified,
-								experiences: exp,
-							}, function(response){
-								res.json(response);
+							Profilefunc.logs(profileData, 19, profileData, function(){
+								Generalfunc.response(201,{
+									token: tokenData.generated_id,
+									verified: verified,
+									experiences: exp,
+								}, function(response){
+									res.json(response);
+								});
 							});
 						});
 					});
@@ -314,12 +324,14 @@ router.post('/login-facebook', multipartMiddleware, function(req, res){
 				Experiencefunc.get(profileData._id, function(statusExperience, experiences){
 					var exp = statusExperience;	
 					profileData.save(function(errProfile, profileData){
-						Generalfunc.response(201,{
-							token: tokenData.generated_id,
-							verified: verified,
-							experiences: exp,
-						}, function(response){
-							res.json(response);
+						Profilefunc.logs(profileData, 19, profileData, function(){
+							Generalfunc.response(201,{
+								token: tokenData.generated_id,
+								verified: verified,
+								experiences: exp,
+							}, function(response){
+								res.json(response);
+							});
 						});
 					});
 				});
@@ -345,11 +357,11 @@ router.post('/get', multipartMiddleware, function(req, res){
 				if(status){
 
 					Profilefunc.formatoProfile(profileData._id,function( profile ){
-
-						Generalfunc.response(200, profile, function(response){
-							res.json(response);
+						Profilefunc.logs(profileData, 25, profileData, function(){
+							Generalfunc.response(200, profile, function(response){
+								res.json(response);
+							});
 						});
-						
 					});
 					
 					
@@ -421,7 +433,9 @@ router.post('/changepassword', multipartMiddleware, function(req, res){
 					User.findOne({ _id: profileData.user_id }, function(errUser, userData){
 						userData.password = Profilefunc.generate_password(password);
 						userData.save(function(errUser, userData){
-							res.json(userData);
+							Profilefunc.logs(profileData, 27, userData, function(){
+								res.json(userData);
+							});
 						});
 					});
 					
@@ -528,12 +542,14 @@ router.post('/update', multipartMiddleware, function(req, res){
 					}
 					
 					Experiencefunc.updates(profileData,data, function(statusExperience, experienceData){
-						Profilefunc.formatoProfile(profileData._id,function(err, profile){
-							var data = [];
-							data = _.extend(data,profile);
+						Profilefunc.logs(profileData, 28, profileData, function(){
+							Profilefunc.formatoProfile(profileData._id,function(err, profile){
+								var data = [];
+								data = _.extend(data,profile);
 
-							Generalfunc.response(200,data, function(response){
-								res.json(response);
+								Generalfunc.response(200,data, function(response){
+									res.json(response);
+								});
 							});
 						});
 					});
@@ -668,12 +684,13 @@ router.post('/update-experience', multipartMiddleware, function(req, res){
 									console.log(errProfile);
 									console.log("Save Profile");
 									console.log(profileData);
-									
-									Experiencefunc.profileGenerate(profileData, function(profileData){
+									Profilefunc.logs(profileData, 3, experienceData, function(){
+										Experiencefunc.profileGenerate(profileData, function(profileData){
 
-										Generalfunc.response(200, profileData, function(response){
-											res.json(response);
-										});	
+											Generalfunc.response(200, profileData, function(response){
+												res.json(response);
+											});	
+										});
 									});
 								});
 							});
@@ -820,9 +837,11 @@ router.post('/addskill', multipartMiddleware, function(req, res){
 								console.log(skillData);
 								profileData.skills.push(skillData._id);
 								profileData.save(function(errProfile, profileData){
-									format.profileformat(profileData, function(profileData){
-										Generalfunc.response(200, profileData, function(response){
-											res.json(response);
+									Profilefunc.logs(profileData, 15, skill, function(){
+										format.profileformat(profileData, function(profileData){
+											Generalfunc.response(200, profileData, function(response){
+												res.json(response);
+											});
 										});
 									});
 								});
@@ -841,25 +860,13 @@ router.post('/addskill', multipartMiddleware, function(req, res){
 		
 	});
 });
-router.post('/editskill', multipartMiddleware, function(req, res){
+router.post('/editskill', multipartMiddleware, function(req, res){ // Eliminar skill en el perfil y crear uno nuevo.
 	var guid             = req.body.guid;
 	var from             = req.body.from;
 	var to               = req.body.to;
 
 	Tokenfunc.exist(guid, function(status, tokenData){
-		if(status){
-			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
-				Skillfunc.edit(profileData._id, from, to, function(err, profileData){
-					format.profileformat(profileData, function(profileData){
-						Generalfunc.response(200, profileData, function(response){
-							res.json(response);
-						});
-					});
-				});
-			});
-		}else{
 
-		}
 	});
 });
 // DELETE SKILL
@@ -909,10 +916,13 @@ router.post('/verify', multipartMiddleware, function(req, res){
 					if(userData.verified){
 						verified = true;
 					}
-					Generalfunc.response(200,{	
-						verified: verified
-					}, function(response){
-						res.json(response);
+
+					Profilefunc.logs(profileData, 13, profileData, function(){
+						Generalfunc.response(200,{	
+							verified: verified
+						}, function(response){
+							res.json(response);
+						});
 					});
 				}else{
 					Generalfunc.response(404,{}, function(response){
@@ -945,15 +955,17 @@ router.post('/setprofilepic', multipartMiddleware, function(req, res){
 			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
 
 				Profilefunc.updateProfilePic(profileData._id, profilepic, function(err, profileData){
-					console.log(profileData);
-					var profile = format.littleProfile(profileData);
+					Profilefunc.logs(profileData, 4, profileData, function(){
+						console.log(profileData);
+						var profile = format.littleProfile(profileData);
 
-					console.log(profile);
-					var data = {};
-					data = profile;
-					console.log(data);
-					Generalfunc.response(200,data, function(response){
-						res.json(response);
+						console.log(profile);
+						var data = {};
+						data = profile;
+						console.log(data);
+						Generalfunc.response(200,data, function(response){
+							res.json(response);
+						});
 					});
 				});
 			});
@@ -990,13 +1002,15 @@ router.post('/token/exists', multipartMiddleware, function(req, res){
 							if(userData.verified){
 								verified = true;
 							}
-							Generalfunc.response(201,{
-								token: tokenData.generated_id,
-								verified: verified,
-								experiences: exp,
-								profile: profileData
-							}, function(response){
-								res.json(response);
+							Profilefunc.logs(profileData, 14, profileData, function(){
+								Generalfunc.response(201,{
+									token: tokenData.generated_id,
+									verified: verified,
+									experiences: exp,
+									profile: profileData
+								}, function(response){
+									res.json(response);
+								});
 							});
 						});
 
@@ -1052,5 +1066,29 @@ router.post('/send/verification', multipartMiddleware, function(req, res){
 		}
 	});
 });
+// PETICION EMPRESA
+// Parameter:
+//  	Token
+//
+// Return (Formato 14)
+router.post('/company/petition', multipartMiddleware, function(req, res){
+	var guid = req.body.guid;
+	Tokenfunc.exist(guid, function(status, tokenData){
+		if(status){
+			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
+				if(status){
+					Profilefunc.logs(profileData, 20, profileData, function(){
+
+					});
+				}else{
+
+				}
+			});
+		}else{
+
+		}
+	});
+});
+
 
 module.exports = router;

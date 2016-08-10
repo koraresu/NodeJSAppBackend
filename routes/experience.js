@@ -27,10 +27,14 @@ var City         = model.city;
 var State        = model.state;
 var Country      = model.country;
 
+var Generalfunc = require('../functions/generalfunc');
 var Profilefunc = require('../functions/profilefunc');
 var Experiencefunc = require('../functions/experiencefunc');
+var Networkfunc    = require('../functions/networkfunc');
 var Tokenfunc = require('../functions/tokenfunc');
 var Skillfunc = require('../functions/skillfunc');
+var Historyfunc = require('../functions/historyfunc');
+var format = require('../functions/format');
 
 router.post('/create', multipartMiddleware, function(req, res){
 	var guid       = req.body.guid;
@@ -185,20 +189,24 @@ router.post('/get', multipartMiddleware, function(req, res){
 router.post('/job/create', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 	var name      = req.body.name;
+	var type      = req.body.type;
 
 	Tokenfunc.exist(guid, function(status, token){
 		if(status){	
-			func.jobExistsOrCreate ({
+			Experiencefunc.jobExistsOrCreate ({
 				name: name,
+				type: type
 			},{
 				name: name,
+				type: type
 			}, function(status, jobData){
-				func.response(200, jobData, function(response){
+
+				Generalfunc.response(200, jobData, function(response){
 					res.json(response);
 				});
 			});
 		}else{
-			func.response(101, {}, function(response){
+			Generalfunc.response(101, {}, function(response){
 				res.json(response);
 			});
 		}

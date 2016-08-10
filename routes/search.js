@@ -129,117 +129,106 @@ router.post('/general/network', multipartMiddleware, function(req, res){
 		if(status){
 			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
 				var actualData = profileData;
-				if(status){
-					Profile.find({ _id: { "$ne": actualData._id }}).populate('experiences').populate('skills').populate('user_id','-password').exec(function(errProfile, profileData){
+				Profilefunc.logs(profileData, 8, {profile: profileData, search: text }, function(){
+					if(status){
+						Profile.find({ _id: { "$ne": actualData._id }}).populate('experiences').populate('skills').populate('user_id','-password').exec(function(errProfile, profileData){
 
-						async.forEach(profileData, function(profileItem, callback){
-							var array = new Array();
-							array.push(profileItem.first_name);
-							array.push(profileItem.last_name);
+							async.forEach(profileData, function(profileItem, callback){
+								var array = new Array();
+								array.push(profileItem.first_name);
+								array.push(profileItem.last_name);
 
-							if(typeof profileItem.speciality.name != "undefined"){
-								array.push(profileItem.speciality.name);	
-							}
-							if(typeof profileItem.job.name != "undefined"){
-								array.push(profileItem.job.name);
-							}
-
-							profileItem.experiences.forEach(function(experienceItem, experienceIndex){
-								var company   = experienceItem.company.name;
-								var sector    = experienceItem.sector.name;
-								var ocupation = experienceItem.ocupation.name;
-
-								array.push(experienceItem.company.name);
-								array.push(experienceItem.sector.name);
-								array.push(experienceItem.ocupation.name);
-							});
-							profileItem.skills.forEach(function(skillItem, skillIndex){
-								array.push(skillItem.name);
-							});
-							
-							var n_array = array.filter(function(i){
-								var match = i.match(reg);
-								if( match !== null){
-									return true;
-								}else{
-									return false;
+								if(typeof profileItem.speciality.name != "undefined"){
+									array.push(profileItem.speciality.name);	
 								}
-							});
-							
-							if(n_array.length > 0){
-								var isDisponible = ids.indexOf(profileItem._id);
-								if(isDisponible == -1){
-									Networkfunc.type(actualData, profileItem, function(t, contacto){
-										Profilefunc.formatoProfile(profileItem._id,function( profile ){
-											switch(t){
-												case 0:
-												profile.friend = t
-												mi.push(profile);
-												ids.push(profileItem._id);
-												break;
-												case 1:
-													if(profile.profile.status == 0 || profile.profile.status == 1){
-														profile.friend_data = contacto.first_name+" "+contacto.last_name;
+								if(typeof profileItem.job.name != "undefined"){
+									array.push(profileItem.job.name);
+								}
+
+								profileItem.experiences.forEach(function(experienceItem, experienceIndex){
+									var company   = experienceItem.company.name;
+									var sector    = experienceItem.sector.name;
+									var ocupation = experienceItem.ocupation.name;
+
+									array.push(experienceItem.company.name);
+									array.push(experienceItem.sector.name);
+									array.push(experienceItem.ocupation.name);
+								});
+								profileItem.skills.forEach(function(skillItem, skillIndex){
+									array.push(skillItem.name);
+								});
+								
+								var n_array = array.filter(function(i){
+									var match = i.match(reg);
+									if( match !== null){
+										return true;
+									}else{
+										return false;
+									}
+								});
+								
+								if(n_array.length > 0){
+									var isDisponible = ids.indexOf(profileItem._id);
+									if(isDisponible == -1){
+										Networkfunc.type(actualData, profileItem, function(t, contacto){
+											Profilefunc.formatoProfile(profileItem._id,function( profile ){
+												switch(t){
+													case 0:
+													profile.friend = t
+													mi.push(profile);
+													ids.push(profileItem._id);
+													break;
+													case 1:
+														if(profile.profile.status == 0 || profile.profile.status == 1){
+															profile.friend_data = contacto.first_name+" "+contacto.last_name;
+															profile.friend = t
+															vecinas.push(profile);
+															ids.push(profileItem._id);	
+														}
+													break;
+													case 2:
+													if(profile.profile.status == 0){
 														profile.friend = t
-														vecinas.push(profile);
+														otros.push(profile);
 														ids.push(profileItem._id);	
 													}
-												break;
-												case 2:
-												if(profile.profile.status == 0){
-													profile.friend = t
-													otros.push(profile);
-													ids.push(profileItem._id);	
+													break;
 												}
-												break;
-											}
-											callback();
+												callback();
+											});
 										});
-									});
+									}else{
+										callback();
+									}
 								}else{
 									callback();
 								}
-							}else{
-								callback();
-							}
-							
-						}, function(results){
-							data = {
-								mi: mi,
-								vecinas: vecinas,
-								otros: otros
-							}
+								
+							}, function(results){
+								data = {
+									mi: mi,
+									vecinas: vecinas,
+									otros: otros
+								}
 
-							Generalfunc.response(200, data, function(response){
-								res.json(response);
+								Generalfunc.response(200, data, function(response){
+									res.json(response);
+								});
+
 							});
-
 						});
-					});
-				}else{
-					Generalfunc.response(113,{}, function(response){
-						res.json(response);
-					});
-				}
+					}else{
+						Generalfunc.response(113,{}, function(response){
+							res.json(response);
+						});
+					}
+				});
 			});
 		}else{
 			Generalfunc.response(101,{}, function(response){
 				res.json(response);
 			});
 		}
-	});
-});
-router.post('/general/network/friends', multipartMiddleware, function(req, res){
-	var rael   = mongoose.Types.ObjectId("578c3985021e94d11de142cf");
-	var memo   = mongoose.Types.ObjectId("578c84e48bae9a04b27fb4e8");
-	var carlos = mongoose.Types.ObjectId("578c9001efe81531b41bc53f");
-
-	Profile.findOne({_id: rael}).exec(function(err, rael){
-		Profile.findOne({_id: carlos }).exec(function(err, carlos){
-			Networkfunc.isNeightbor(rael, carlos, function(status){
-				res.send(""+status);
-			});
-		});
 	});
 });
 

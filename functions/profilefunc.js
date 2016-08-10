@@ -7,7 +7,12 @@ var _ = require('underscore');
 var _jade = require('jade');
 var fs = require('fs');
 
-var bcrypt = require('bcrypt-nodejs');
+var bcrypt = require('bcrypt');
+
+const saltRounds = 10;
+const myPlaintextPassword = 's0/\/\P4$$w0rD';
+const someOtherPlaintextPassword = 'not_bacon';
+
 var async = require("async");
 
 var Generalfunc = require('./generalfunc');
@@ -350,16 +355,14 @@ function generate_Password(password){
 	return hash;
 }
 function compare_Password(password,in_db, cb){
-	console.log(password);
-	console.log(in_db);
+	var start = new Date().getTime();
+	console.log(start);
+	var v = bcrypt.compareSync(password, in_db);
+	var end = (new Date().getTime());
+	var time = end - start;
+	console.log(time);
 
-	bcrypt.compare(password, in_db, function(err, res){
-
-		console.log(err);
-		console.log(res);
-		
-		cb(err, res);
-	});
+	cb(null, v);
 }
 
 function userProfileInsertIfDontExists(searchUser, userInsert, profileInsert, callback){
@@ -437,6 +440,23 @@ function generate_email_bienvenida(public_id,nombre, email, asunto, cb){
 function permitedData(getter, info_profile, callback){
 	callback(true);
 }
+function logs(profile, code, data, callback){
+	console.log("LOG: "+typeof data);
+	data = JSON.stringify(data);
+	data = JSON.parse(data);
+	console.log("LOGN:"+typeof data);
+	var d = {
+		code: code,
+		profile: profile,
+		data: data
+	};
+
+	var log = new Log(d);
+	log.save(function(err, logData){
+		callback(err, logData);
+	});
+}
+exports.logs = logs
 exports.permitedData = permitedData
 exports.generate_email_bienvenida   = generate_email_bienvenida
 exports.generate_email_verification   = generate_email_verification

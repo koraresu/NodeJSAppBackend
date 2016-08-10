@@ -30,7 +30,13 @@ function checkExperience(profileData, type, data, callback){
 	if(type == 0){
 		console.log(data);
 
-		jobExistsOrCreate({ name: data.ocupation, type: 0}, { name: data.ocupation, type: 0}, function(statusJob, jobData){
+		jobExistsOrCreate({
+			name: data.ocupation,
+			type: 0
+		}, {
+			name: data.ocupation,
+			type: 0
+		}, function(statusJob, jobData){
 			var search = {
 						type: type,
 						ocupation: {
@@ -56,9 +62,13 @@ function checkExperience(profileData, type, data, callback){
 	}else{
 		console.log(data);
 
-		companyExistsOrCreate({ name: data.company}, { name: data.company}, function(statusCompany, companyData){
+		companyExistsOrCreate({
+			name: data.company
+		}, {
+			name: data.company
+		}, function(statusCompany, companyData){
 			sectorExistsOrCreate({ name: data.sector }, { name: data.sector }, function(statusSector, sectorData){
-				jobExistsOrCreate({ name: data.ocupation, type: 0}, { name: data.ocupation, type: 0}, function(statusJob, jobData){
+				jobExistsOrCreate({ name: data.ocupation, type: 1}, { name: data.ocupation, type: 1}, function(statusJob, jobData){
 					var search = {
 						type: type,
 						company:{
