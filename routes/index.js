@@ -89,5 +89,32 @@ router.get('/verification/:id',function(req, res){
   }
   	
 });
+router.get('/city/list', function(req, res){
+  City.find({}).populate('state_id', '_id name').exec(function(err, cityData){
+    res.json(cityData);
+  });
+});
+router.get('/city', function(req, res){
+  City.find({}).exec(function(err, cityData){
+    cityData.forEach(function(cityItem, cityIndex){
+      State.findOne({
+        _id: cityItem.state_id
+      }).exec(function(errState, stateData){
+        if(!errState && stateData){
+          cityItem.state_id = mongoose.Types.ObjectId(stateData._id);
+          cityItem.save(function(err, city){
+            console.log(cityIndex);
+            console.log(cityData.length);
+
+            if(cityIndex+1 == cityData.length){
+              res.send("Ya esta!!");
+            }
+          });
+        }
+      });
+    });
+  });
+
+});
 
 module.exports = router;

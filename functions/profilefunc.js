@@ -7,11 +7,7 @@ var _ = require('underscore');
 var _jade = require('jade');
 var fs = require('fs');
 
-var bcrypt = require('bcrypt');
-
-const saltRounds = 10;
-const myPlaintextPassword = 's0/\/\P4$$w0rD';
-const someOtherPlaintextPassword = 'not_bacon';
+var bcrypt = require('bcrypt-nodejs');
 
 var async = require("async");
 

@@ -516,44 +516,58 @@ router.post('/update', multipartMiddleware, function(req, res){
 	var nombre    = req.body.first_name;
 	var apellido  = req.body.last_name;
 	var statusReq = req.body.status;
+	var job        = req.body.job;
+	var speciality = req.body.speciality;	
+	var birthday   = req.body.birthday;
 
 	var type       = req.body.type;
 	var company    = req.body.company;
-	var job        = req.body.job;
-	var speciality = req.body.speciality;
 	var sector     = req.body.sector;
 	var ocupation  = req.body.ocupation;
-
-	var birthday   = req.body.birthday;
-
 
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
 			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
-				Profilefunc.update(profileData._id, nombre, apellido, birthday, statusReq, function(statusProfile, profileData){
-					var data = [];
-					for(var x = 0; x<company.length;x++){
-						data.push({
-							ocupation: ocupation[x],
-							company: company[x],
-							sector: sector[x]
-						});
-
+				profileData.first_name = nombre;
+				profileData.last_name  = apellido;
+				Experiencefunc.jobExistsOrCreate({ name: job, type: 1}, { name: job, type: 1}, function(statusJob, jobData){
+					if(type == 1){
+						data = {
+							ocupation: ocupation,
+							company: company,
+							sector: sector
+						};
+					}else{
+						data = {
+							ocupation: job,
+						};
 					}
 					
-					Experiencefunc.updates(profileData,data, function(statusExperience, experienceData){
-						Profilefunc.logs(profileData, 28, profileData, function(){
-							Profilefunc.formatoProfile(profileData._id,function(err, profile){
-								var data = [];
-								data = _.extend(data,profile);
+					Experiencefunc.insertOrExists(profileData,type, data, function(statusExperience, experienceData){
+						Experiencefunc.profileGenerate(profileData, function(profileData){
+							var job = {
+								id: jobData._id,
+								name: jobData.name
+							};
+							profileData.job = job;
+							profileData.status = statusReq;
 
-								Generalfunc.response(200,data, function(response){
-									res.json(response);
-								});
+						
+
+
+					
+
+					
+
+
+
+
+							profileData.save(function(err, profileData){
+								res.json(profileData);
 							});
 						});
 					});
-				});	
+				});
 			});
 		}else{
 			Generalfunc.response(101, {}, function(response){
@@ -1089,6 +1103,36 @@ router.post('/company/petition', multipartMiddleware, function(req, res){
 		}
 	});
 });
+router.post('/location', multipartMiddleware, function(req, res){
+	var guid = req.body.guid;
+	var search = req.body.search;
+	var reg  = new RegExp(search, "i");
+	
+	Tokenfunc.exist(guid, function(status, tokenData){
+		if(status){
+			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
+				if(status){
+					City.find().populate('state_id').find({
+							name: reg
+					}).exec(function(err, cityData){
+						var data = [];
+						cityData.forEach(function(item, index){
+							var d = {
+								_id: item._id,
+								name: item.name+", "+item.state_id.name
+							};
+							data.push(d);
+							if(index+1 == cityData.length){
+								res.json(data);
+							}
+						});
+					})
+				}
+			});
+		}
+	});
 
+
+});
 
 module.exports = router;

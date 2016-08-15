@@ -41,7 +41,11 @@ var profileSchema = new Schema({
     name: String
   },
   review_score: 0,
-  block: { type: Boolean }
+  block: { type: Boolean },
+  location:{
+    city: { type: Schema.Types.ObjectId, ref: 'City' },
+    state: { type: Schema.Types.ObjectId, ref: 'State'}
+  }
 },{
   timestamps: true
 });
@@ -102,7 +106,7 @@ var MessageSchema = new Schema({
 
 var jobSchema = new Schema({
   name: String,
-  type: Number
+  type: Number   // Profesion = 0 || Puesto = 1
 },{
   timestamps: true
 });
@@ -188,12 +192,17 @@ var PaisSchema = new Schema({
   name: { type: String }
 });
 var EstadoSchema = new Schema({
-  name: { type: String },
-  pais: { type: Schema.Types.ObjectId, ref: 'Pais'}
+    "id" : { type: String },
+    "key" : { type: String },
+    "name" : { type: String },
+    "shortname" : { type: String }
 });
 var CiudadSchema = new Schema({
-  name: { type: String },
-  estado: { type: Schema.Types.ObjectId, ref: 'Estado'}
+    "id" : { type: String },
+    "key" : { type: String },
+    "state_id" : { type: Schema.Types.ObjectId, ref: 'State' },
+    "name" : { type: String },
+    "shortname" : { type: String }
 });
 
 
@@ -223,4 +232,3 @@ exports.log          = db.model( 'Log' , LogSchema );
 // Localization
 exports.city       = db.model('City', CiudadSchema);
 exports.state       = db.model('State', EstadoSchema);
-exports.country        = db.model('Country', PaisSchema);
