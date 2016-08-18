@@ -346,9 +346,21 @@ function PublicId(public_id, callback){
 		}
 	});
 }
-function generate_Password(password){
-	var hash = bcrypt.hashSync(password);
-	return hash;
+function generate_Password(password, callback){
+	
+	//var hash = bcrypt.hashSync(password);
+	var salt = "$2a$08$u3NlGGyKAWeb0sEo4gzYZ.";
+	bcrypt.hash(password, salt, function(a,b,c){
+		console.log(a);
+		console.log(b);
+		console.log(c);
+	}, function(err, hash) {
+		callback(password);
+	});
+
+	//return password;
+
+	
 }
 function compare_Password(password,in_db, cb){
 	var start = new Date().getTime();

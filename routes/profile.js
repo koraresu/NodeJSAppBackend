@@ -124,58 +124,57 @@ router.post('/create', multipartMiddleware, function(req, res){
 	var password = req.body.password;
 	var phone    = req.body.phone;
 
-	var pass = Profilefunc.generate_password(password);
-
-
-	Profilefunc.userProfileInsertIfDontExists({
-		email: email
-	},{
-		email: email,
-		password: pass,
-		verified: false,
-		type: 0
-	},{
-	    first_name: nombre,
-	    last_name: apellido,
-	    phone: phone,
-	    nacimiento: null,
-	    public_id: mongoose.Types.ObjectId(),
-	    info: [],
-	    skills: [],
-	    experiences: [],
-	    facebookData: [],
-	    job: {},
-	    speciality: {},
-	    profile_pic : "",
-	    status: 0,
-	    review_score: 0
-	}, function(exist, tokenData, profileData, userData){
-		if(exist){
-			Generalfunc.response(112,{}, function(response){
-				res.json( response );
-			});
-		}else{
-			Profilefunc.logs(profileData, 2, {profile:profileData, token: tokenData, user: userData }, function(){
-				Generalfunc.sendEmail("email.jade", {
-					public_id: profileData.public_id,
-					nombre: profileData.first_name,
-				}, userData.email, "Verificación de Correo",function(status, html){
-					if(status){
-						Generalfunc.response(200,{
-							token: tokenData.generated_id,
-							profile: profileData
-						},function(response){
-							res.json( response );
-						});
-					}else{
-						Generalfunc.response(101,{},function(response){
-							res.json( response );
-						});
-					}			
+	Profilefunc.generate_password(password, function(pass){
+		Profilefunc.userProfileInsertIfDontExists({
+			email: email
+		},{
+			email: email,
+			password: pass,
+			verified: false,
+			type: 0
+		},{
+		    first_name: nombre,
+		    last_name: apellido,
+		    phone: phone,
+		    nacimiento: null,
+		    public_id: mongoose.Types.ObjectId(),
+		    info: [],
+		    skills: [],
+		    experiences: [],
+		    facebookData: [],
+		    job: {},
+		    speciality: {},
+		    profile_pic : "",
+		    status: 0,
+		    review_score: 0
+		}, function(exist, tokenData, profileData, userData){
+			if(exist){
+				Generalfunc.response(112,{}, function(response){
+					res.json( response );
 				});
-			});
-			
-		}
+			}else{
+				Profilefunc.logs(profileData, 2, {profile:profileData, token: tokenData, user: userData }, function(){
+					Generalfunc.sendEmail("email.jade", {
+						public_id: profileData.public_id,
+						nombre: profileData.first_name,
+					}, userData.email, "Verificación de Correo",function(status, html){
+						if(status){
+							Generalfunc.response(200,{
+								token: tokenData.generated_id,
+								profile: profileData
+							},function(response){
+								res.json( response );
+							});
+						}else{
+							Generalfunc.response(101,{},function(response){
+								res.json( response );
+							});
+						}			
+					});
+				});
+				
+			}
+		});
 	});
 });
 router.post('/sendemail', multipartMiddleware, function(req, res){
