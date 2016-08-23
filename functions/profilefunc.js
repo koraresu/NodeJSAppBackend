@@ -7,7 +7,8 @@ var _ = require('underscore');
 var _jade = require('jade');
 var fs = require('fs');
 
-var bcrypt = require('bcrypt-nodejs');
+var passwordHash = require('password-hash');
+var bcrypt = require('bcryptjs');
 
 var async = require("async");
 
@@ -347,30 +348,12 @@ function PublicId(public_id, callback){
 	});
 }
 function generate_Password(password, callback){
-	
-	//var hash = bcrypt.hashSync(password);
-	var salt = "$2a$08$u3NlGGyKAWeb0sEo4gzYZ.";
-	bcrypt.hash(password, salt, function(a,b,c){
-		console.log(a);
-		console.log(b);
-		console.log(c);
-	}, function(err, hash) {
-		callback(password);
-	});
-
-	//return password;
-
-	
+	var hashedPassword = passwordHash.generate(password);
+	return hashedPassword;
 }
 function compare_Password(password,in_db, cb){
-	var start = new Date().getTime();
-	console.log(start);
-	var v = bcrypt.compareSync(password, in_db);
-	var end = (new Date().getTime());
-	var time = end - start;
-	console.log(time);
-
-	cb(null, v);
+	var verify = passwordHash.verify(password, in_db);
+	cb(null, verify);
 }
 
 function userProfileInsertIfDontExists(searchUser, userInsert, profileInsert, callback){
@@ -449,10 +432,8 @@ function permitedData(getter, info_profile, callback){
 	callback(true);
 }
 function logs(profile, code, data, callback){
-	console.log("LOG: "+typeof data);
 	data = JSON.stringify(data);
 	data = JSON.parse(data);
-	console.log("LOGN:"+typeof data);
 	var d = {
 		code: code,
 		profile: profile,

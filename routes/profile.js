@@ -67,11 +67,15 @@ router.post('/login', multipartMiddleware, function(req, res){
 	var email    = req.body.email;
 	var password = req.body.password;
 
+
+
+	
 	User.findOne({ email: email, type: 0}, function(errUser, userData){
+		
 		if(!errUser && userData){
 			Profilefunc.compare_password(password, userData.password, function(err, statusPassword){
-				res.json(userData);
-				/*
+				console.log("Password:");
+				console.log(statusPassword);
 				if(statusPassword){
 				
 					Profilefunc.userProfile(userData, function(statProfile, tokenData, userData, profileData){
@@ -93,14 +97,13 @@ router.post('/login', multipartMiddleware, function(req, res){
 								});
 							});
 						});
-						
 					});
 				}else{
 					Generalfunc.response(111,{ },function(response){
 						res.json(response);
 					});
 				}
-				*/
+				
 			});
 		}else{
 			Generalfunc.response(111, {}, function(response){
@@ -108,6 +111,7 @@ router.post('/login', multipartMiddleware, function(req, res){
 			});
 		}
 	});
+	
 });
 // CREATE
 // Parameter:
