@@ -1163,11 +1163,11 @@ router.get('/qrcode/:id', function(req, res){
 		if(status){
 			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
 				if(status){
-					console.log(profileData);
+					
+					console.log(profileData.public_id);
+
 					Profilefunc.generate_qrcode(profileData, function(profileData){
-
-						
-
+						console.log(profileData.public_id);
 						res.json(profileData);
 					});
 				}else{
