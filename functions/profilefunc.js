@@ -152,6 +152,8 @@ exports.PublicId = function(public_id, callback){
 	});
 }
 function generate_qrcode(profileData, callback){
+	console.log("Dentro de Generate QrCode");
+
 	console.log(profileData);
 	profileData.qrcode = "";
 
@@ -162,11 +164,16 @@ function generate_qrcode(profileData, callback){
 	var qrcode = profileData.public_id;
 	profileData.qrcode = qrcode+'.png';
 	
+	console.log("Antes de Save");
+	
 	console.log(profileData);
 	
 	profileData.save(function(err, profileData){
+	
+		console.log("Despues de Save");
+	
 		console.log(profileData);
-		
+
 		var qr_svg = qr.image('the-hive:query?'+qrcode, { type: 'png', margin: 0 });
 		qr_svg.pipe(require('fs').createWriteStream('./public/qrcode/'+qrcode+'.png'));
 
