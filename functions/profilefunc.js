@@ -152,7 +152,7 @@ exports.PublicId = function(public_id, callback){
 	});
 }
 function generate_qrcode(profileData, callback){
-	console.log(profileData.public_id);
+	console.log(profileData);
 	
 	if(typeof profileData.public_id == "undefined"){
 		profileData.public_id = mongoose.Types.ObjectId();
@@ -161,7 +161,7 @@ function generate_qrcode(profileData, callback){
 	var qrcode = profileData.public_id;
 	profileData.qrcode = qrcode+'.png';
 	
-	console.log(profileData.public_id);
+	console.log(profileData);
 	
 	profileData.save(function(err, profileData){
 		var qr_svg = qr.image('the-hive:query?'+qrcode, { type: 'png', margin: 0 });
