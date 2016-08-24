@@ -169,6 +169,7 @@ function generate_qrcode(profileData, callback){
 	console.log(profileData);
 	
 	profileData.save(function(err, profile){
+		console.log(err);
 		Profile.findOne({ _id: profileData._id}).exec(function(){
 			console.log("Despues de Save");
 		

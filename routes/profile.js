@@ -1160,7 +1160,7 @@ router.post('/qrcode',multipartMiddleware, function(req, res){
 
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
-			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
+			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData){
 				if(status){
 					console.log("Status OK");
 					console.log(profileData);
