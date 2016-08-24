@@ -1160,6 +1160,7 @@ router.post('/qrcode', function(req, res){
 	var guid = req.body.guid;
 
 	Tokenfunc.exist(guid, function(status, tokenData){
+		console.log(token);
 		if(status){
 			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
 				if(status){
@@ -1168,7 +1169,7 @@ router.post('/qrcode', function(req, res){
 
 					Profilefunc.generate_qrcode(profileData, function(profileData){
 						console.log(profileData);
-						
+
 						Generalfunc.response(200, profileData, function(response){
 							res.json(response);
 						});
