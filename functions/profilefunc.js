@@ -8,7 +8,6 @@ var _jade = require('jade');
 var fs = require('fs');
 
 var passwordHash = require('password-hash');
-var bcrypt = require('bcryptjs');
 
 var async = require("async");
 
