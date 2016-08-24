@@ -238,6 +238,7 @@ function profileNewsFormat(profile){
 				"skills": profile.skills,
 				"experiences": profile.experiences,
 				"profile_pic": profile.profile_pic,
+				"qrcode": profile.qrcode,
 				"speciality": profile.speciality,
 				"status": profile.status
 			};

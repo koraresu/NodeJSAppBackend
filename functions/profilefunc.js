@@ -94,6 +94,7 @@ function formatoProfile(profile_id,cb){
 								"speciality": profileData.speciality,
 								"profile_pic": profileData.profile_pic,
 								"status": profileData.status,
+								"qrcode": profileData.qrcode
 							},
 							experiences: experienceData,
 							review: reviewData,
@@ -357,10 +358,13 @@ function compare_Password(password,in_db, cb){
 }
 
 function userProfileInsertIfDontExists(searchUser, userInsert, profileInsert, callback){
+
 	User.findOne(searchUser, function(errUser, user){
 		if(!errUser && user){
+			console.log("Existe el usuario");
 			callback(true,null,null);
 		}else{
+			console.log("Creando Usuario");
 			var user = new User(userInsert);
 			user.save(function(errUser, userData){
 				var token = new Token({

@@ -150,21 +150,37 @@ router.post('/general/network', multipartMiddleware, function(req, res){
 									var sector    = experienceItem.sector.name;
 									var ocupation = experienceItem.ocupation.name;
 
-									array.push(experienceItem.company.name);
-									array.push(experienceItem.sector.name);
-									array.push(experienceItem.ocupation.name);
+									if(typeof company != "undefined")
+									{
+										array.push("ExpC:"+company);
+									}
+									if(typeof sector != "undefined")
+									{
+										array.push("ExpS:"+sector);
+									}
+									if(typeof ocupation != "undefined")
+									{
+										array.push("ExpC:"+ocupation);
+									}
 								});
 								profileItem.skills.forEach(function(skillItem, skillIndex){
 									array.push(skillItem.name);
 								});
 								
+								console.log(array);
+
 								var n_array = array.filter(function(i){
-									var match = i.match(reg);
-									if( match !== null){
-										return true;
-									}else{
+									if(i == null){
 										return false;
+									}else{
+										var match = i.match(reg);
+										if( match !== null){
+											return true;
+										}else{
+											return false;
+										}
 									}
+									
 								});
 								
 								if(n_array.length > 0){

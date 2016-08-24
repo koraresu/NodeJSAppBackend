@@ -56,7 +56,7 @@ router.post('/create', multipartMiddleware, function(req, res){
 						},{
 							name: job,
 						},function(status, jobData){
-							func.specialityExistsOrCreate({
+							Experiencefunc.specialityExistsOrCreate({
 								name: speciality
 							},{
 								name: speciality
@@ -73,7 +73,7 @@ router.post('/create', multipartMiddleware, function(req, res){
 										name: specialityData.name
 									}
 								};
-								func.experienceExistsOrCreate(data,data, function(statusExperience, experienceData){
+								Experiencefunc.insertOrExists(profileData,type, data, function(statusExperience, experienceData){
 									Generalfunc.response(200,experienceData,function(response){
 										res.json(response);
 									});
@@ -239,14 +239,14 @@ router.post('/job/get', multipartMiddleware, function(req, res){
 	var name      = req.body.name;
 	Tokenfunc.exist(guid, function(status, token){
 		if(status){
-			func.experienceJobGet(name, function(err, jobData){
-				console.log(jobData);
-				func.response(200,jobData, function(response){
+			Experiencefunc.experienceJobGet(name, function(err, jobData){
+
+				Generalfunc.response(200,jobData, function(response){
 					res.json(response);
 				})
 			});
 		}else{
-			func.response(101, {}, function(response){
+			Generalfunc.response(101, {}, function(response){
 				res.json(response);
 			});
 		}
@@ -257,14 +257,14 @@ router.post('/speciality/get', multipartMiddleware, function(req, res){
 	var name      = req.body.name;
 	Tokenfunc.exist(guid, function(status, token){
 		if(status){
-			func.experienceSpecialityGet(name, function(err, specialityData){
+			Experiencefunc.experienceSpecialityGet(name, function(err, specialityData){
 				console.log(specialityData);
-				func.response(200,specialityData, function(response){
+				Generalfunc.response(200,specialityData, function(response){
 					res.json(response);
 				})
 			});
 		}else{
-			func.response(101, {}, function(response){
+			Generalfunc.response(101, {}, function(response){
 				res.json(response);
 			});
 		}
@@ -276,17 +276,17 @@ router.post('/sector/create', multipartMiddleware, function(req, res){
 
 	Tokenfunc.exist(guid, function(status, token){
 		if(status){	
-			func.sectorExistsOrCreate ({
+			Experiencefunc.sectorExistsOrCreate ({
 				name: name,
 			},{
 				name: name,
 			}, function(status, sectorData){
-				func.response(200, sectorData, function(response){
+				Generalfunc.response(200, sectorData, function(response){
 					res.json(response);
 				});
 			});
 		}else{
-			func.response(101, {}, function(response){
+			Generalfunc.response(101, {}, function(response){
 				res.json(response);
 			});
 		}
@@ -297,14 +297,14 @@ router.post('/sector/get', multipartMiddleware, function(req, res){
 	var name      = req.body.name;
 	Tokenfunc.exist(guid, function(status, token){
 		if(status){
-			func.sectorGet(name, function(err, jobData){
+			Experiencefunc.sectorGet(name, function(err, jobData){
 				console.log(jobData);
-				func.response(200,jobData, function(response){
+				Generalfunc.response(200,jobData, function(response){
 					res.json(response);
 				})
 			});
 		}else{
-			func.response(101, {}, function(response){
+			Generalfunc.response(101, {}, function(response){
 				res.json(response);
 			});
 		}
@@ -315,17 +315,17 @@ router.post('/company/create', multipartMiddleware, function(req, res){
 	var name      = req.body.name;
 	Tokenfunc.exist(guid, function(status, token){
 		if(status){
-			func.companyExistsOrCreate({
+			Experiencefunc.companyExistsOrCreate({
 				name: name
 			},{
 				name: name
 			}, function(status, companyData){
-				func.response(200, companyData, function(response){
+				Generalfunc.response(200, companyData, function(response){
 					res.json(response);
 				})
 			});
 		}else{
-			func.response(101, {}, function(response){
+			Generalfunc.response(101, {}, function(response){
 				res.json(response);
 			});
 		}
@@ -336,14 +336,14 @@ router.post('/company/get', multipartMiddleware, function(req, res){
 	var name      = req.body.name;
 	Tokenfunc.exist(guid, function(status, token){
 		if(status){
-			func.companyGet(name, function(err, companyData){
+			Experiencefunc.companyGet(name, function(err, companyData){
 				console.log(companyData);
-				func.response(200,companyData, function(response){
+				Generalfunc.response(200,companyData, function(response){
 					res.json(response);
 				})
 			});
 		}else{
-			func.response(101, {}, function(response){
+			Generalfunc.response(101, {}, function(response){
 				res.json(response);
 			});
 		}

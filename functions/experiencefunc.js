@@ -174,6 +174,7 @@ function companyExistsOrCreate(search, insert, callback){
 		}
 	});
 }
+
 var get = function(profile, callback){
 	Experience.find({ profile_id: profile}).exec( function(err, experiences){
 
@@ -187,6 +188,39 @@ var get = function(profile, callback){
 		
 	});
 }
+exports.experienceJobGet = function(name, callback){
+	var text = name;
+	var reg  = new RegExp(text, "i");
+
+	Job.find({ name: reg }).exec(function(err, jobData){
+		callback(err, jobData);
+	});
+}
+exports.experienceSpecialityGet = function(name, callback){
+	var text = name;
+	var reg  = new RegExp(text, "i");
+
+	Speciality.find({ name: reg }).exec(function(err, jobData){
+		callback(err, jobData);
+	});	
+}
+exports.companyGet = function(name, callback){
+	var text = name;
+	var reg  = new RegExp(text, "i");
+
+	Company.find({ name: reg }).exec(function(err, jobData){
+		callback(err, jobData);
+	});
+}
+exports.sectorGet = function(name, callback){
+	var text = name;
+	var reg  = new RegExp(text, "i");
+
+	Sector.find({ name: reg }).exec(function(err, jobData){
+		callback(err, jobData);
+	});
+}
+
 exports.get              = get
 exports.companyExistsOrCreate    = companyExistsOrCreate
 exports.jobExistsOrCreate        = jobExistsOrCreate

@@ -7,6 +7,8 @@ var logger       = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser   = require('body-parser');
 
+const pathDir = __dirname;
+
 
 var routes       = require('./routes/index');
 var profile      = require('./routes/profile');

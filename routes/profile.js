@@ -1,11 +1,15 @@
 var express = require('express');
 var router = express.Router();
 
+
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
 var path = require('path');
 var fs = require('fs');
 var _ = require('underscore');
+var mime = require('mime');
+
+var appDir = path.dirname(path.dirname(require.main.filename));
 
 var faker = require('faker');
 faker.locale = "es_MX";
@@ -128,7 +132,11 @@ router.post('/create', multipartMiddleware, function(req, res){
 	var password = req.body.password;
 	var phone    = req.body.phone;
 
-	Profilefunc.generate_password(password, function(pass){
+	console.log(email);
+
+	var pass = Profilefunc.generate_password(password);
+	
+		console.log(pass)
 		Profilefunc.userProfileInsertIfDontExists({
 			email: email
 		},{
@@ -137,20 +145,30 @@ router.post('/create', multipartMiddleware, function(req, res){
 			verified: false,
 			type: 0
 		},{
-		    first_name: nombre,
-		    last_name: apellido,
-		    phone: phone,
-		    nacimiento: null,
-		    public_id: mongoose.Types.ObjectId(),
-		    info: [],
-		    skills: [],
-		    experiences: [],
-		    facebookData: [],
-		    job: {},
-		    speciality: {},
-		    profile_pic : "",
-		    status: 0,
-		    review_score: 0
+			first_name: nombre,
+			last_name: apellido,
+			profile_pic: null,
+			profile_hive: null,
+			qrcode: null,
+			status: 0,
+			birthday: null, 
+			facebookId: "",
+			facebookToken: "",
+			facebookData: [],
+			lang: "es",
+			phone: phone,
+			experiences: [],
+			skills: [],
+			info: [],
+			public_id: mongoose.Types.ObjectId(),
+			speciality: {},
+			job: {},
+			review_score: 0,
+			block: false,
+			location:{
+				city: null,
+				state: null
+			}
 		}, function(exist, tokenData, profileData, userData){
 			if(exist){
 				Generalfunc.response(112,{}, function(response){
@@ -179,7 +197,7 @@ router.post('/create', multipartMiddleware, function(req, res){
 				
 			}
 		});
-	});
+
 });
 router.post('/sendemail', multipartMiddleware, function(req, res){
 	Profile.findOne({
@@ -980,7 +998,7 @@ router.post('/setprofilepic', multipartMiddleware, function(req, res){
 						var data = {};
 						data = profile;
 						console.log(data);
-						Generalfunc.response(200,data, function(response){
+						Generalfunc.response(200, data, function(response){
 							res.json(response);
 						});
 					});
@@ -1020,7 +1038,7 @@ router.post('/token/exists', multipartMiddleware, function(req, res){
 								verified = true;
 							}
 							Profilefunc.logs(profileData, 14, profileData, function(){
-								Generalfunc.response(201,{
+								Generalfunc.response(200,{
 									token: tokenData.generated_id,
 									verified: verified,
 									experiences: exp,
@@ -1136,6 +1154,42 @@ router.post('/location', multipartMiddleware, function(req, res){
 	});
 
 
+});
+router.get('/qrcode/:id', multipartMiddleware, function(req, res){
+	var guid = req.params.id;
+	Tokenfunc.exist(guid, function(status, tokenData){
+		if(status){
+			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
+				if(status){
+					Profilefunc.generate_qrcode(profileData, function(){
+						var file = '/public/qrcode/'+profileData.public_id+'.png';
+
+						var file = path.join(appDir+file);
+
+						console.log(file);
+						
+						var filename = path.basename(file);
+
+						var mimetype = mime.lookup(file);
+
+						res.setHeader('Content-type', mimetype);
+
+						var filestream = fs.createReadStream(file);	
+						filestream.pipe(res);
+					});
+				}else{
+
+				}
+			});
+		}else{
+
+		}
+	});
+
+
+
+
+	
 });
 
 module.exports = router;

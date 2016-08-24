@@ -152,61 +152,9 @@ router.post('/write/news', multipartMiddleware, function(req, res){
 
 						});
 						
-						/*
-						if(typeof gallery == "undefined"){
-							save_news(profileData, titulo, contenido, [], function(historyData){
-								
-								var profile = format.littleProfile(profileData);
-								var de = format.littleProfile(profileData);
-								var d = format.news(historyData, profile, de);
-								Generalfunc.response(200,historyData, function(response){
-									res.json(response);
-								});
-
-							});
-						}else{
-							if(gallery.length > 0){
-								gallery.forEach(function(item, index){
-									var file = item;
-									var objectId    = new ObjectID();
-									var fileName  = file.fieldName;
-									var pathfile  = file.path;
-									var extension = path.extname(pathfile);
-									var file_pic    = shortid.generate() + extension;
-
-									var new_path = path.dirname(path.dirname(process.mainModule.filename)) + '/public/gallery/' + file_pic;
-									fs.rename(pathfile, new_path, function(err){
-										if (err){
-											throw err;
-										}else{
-											var p = file_pic;
-											data.push({url: p});
-
-											if(index == (gallery.length-1)){
-												save_news(profileData, titulo, contenido, data, function(historyData){
-													console.log(profileData);
-
-													var d = format.news(historyData, profileData, profileData);
-
-													Generalfunc.response(200,historyData, function(response){
-														res.json(response);
-													});
-												});
-											}
-										}
-									});
-								});	
-							}else{
-								save_news(profileData, titulo, contenido, [], function(historyData){
-									res.json(historyData);
-								});
-							}	
-						}
-						*/
+						
 						
 					}else{
-						//res.send("No Profile");
-
 						Generalfunc.response(113, {}, function(response){
 							res.json(response);
 						});
@@ -233,6 +181,7 @@ router.post('/get/news', multipartMiddleware, function(req, res){
 	var page      = req.body.page;
 	var action    = req.body.action;
 
+	console.log("GUID:"+guid);
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
 			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
