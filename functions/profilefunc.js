@@ -168,20 +168,21 @@ function generate_qrcode(profileData, callback){
 	
 	console.log(profileData);
 	
-	profileData.save(function(err, profileData){
-	
-		console.log("Despues de Save");
-	
-		console.log(profileData);
-
-		var qr_svg = qr.image('the-hive:query?'+qrcode, { type: 'png', margin: 0 });
-		qr_svg.pipe(require('fs').createWriteStream('./public/qrcode/'+qrcode+'.png'));
-
-		var svg_string = qr.imageSync('the-hive:query?'+qrcode, { type: 'png' });
+	profileData.save(function(err, profile){
+		Profile.findOne({ _id: profileData._id}).exec(function(){
+			console.log("Despues de Save");
 		
-		console.log(profileData);
+			console.log(profileData);
 
-		callback(profileData);
+			var qr_svg = qr.image('the-hive:query?'+qrcode, { type: 'png', margin: 0 });
+			qr_svg.pipe(require('fs').createWriteStream('./public/qrcode/'+qrcode+'.png'));
+
+			var svg_string = qr.imageSync('the-hive:query?'+qrcode, { type: 'png' });
+			
+			console.log(profileData);
+
+			callback(profileData);
+		});
 	});
 }
 exports.generate_qrcode  = generate_qrcode
