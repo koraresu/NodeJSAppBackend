@@ -1168,14 +1168,21 @@ router.post('/qrcode', function(req, res){
 
 					Profilefunc.generate_qrcode(profileData, function(profileData){
 						console.log(profileData);
-						res.json(profileData);
+						
+						Generalfunc.response(200, profileData, function(response){
+							res.json(response);
+						});
 					});
 				}else{
-
+					Generalfunc.response(101, {}, function(response){
+						res.json(response);
+					});
 				}
 			});
 		}else{
-
+			Generalfunc.response(101, {}, function(response){
+				res.json(response);
+			});
 		}
 	});
 
