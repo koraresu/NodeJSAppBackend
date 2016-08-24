@@ -165,11 +165,15 @@ function generate_qrcode(profileData, callback){
 	console.log(profileData);
 	
 	profileData.save(function(err, profileData){
+		console.log(profileData);
+		
 		var qr_svg = qr.image('the-hive:query?'+qrcode, { type: 'png', margin: 0 });
 		qr_svg.pipe(require('fs').createWriteStream('./public/qrcode/'+qrcode+'.png'));
 
 		var svg_string = qr.imageSync('the-hive:query?'+qrcode, { type: 'png' });
+		
 		console.log(profileData);
+
 		callback(profileData);
 	});
 }

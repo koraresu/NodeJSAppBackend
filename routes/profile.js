@@ -1157,17 +1157,13 @@ router.post('/location', multipartMiddleware, function(req, res){
 });
 router.post('/qrcode',multipartMiddleware, function(req, res){
 	var guid = req.body.guid;
-	
-	console.log(guid);
 
 	Tokenfunc.exist(guid, function(status, tokenData){
-		console.log(status);
 		if(status){
 			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
 				if(status){
-					
+					console.log("Status OK");
 					console.log(profileData);
-
 					Profilefunc.generate_qrcode(profileData, function(profileData){
 						console.log("ProfileData Callback");
 						console.log(profileData);
