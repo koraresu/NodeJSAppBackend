@@ -1155,10 +1155,11 @@ router.post('/location', multipartMiddleware, function(req, res){
 
 
 });
-router.post('/qrcode', function(req, res){
-	
+router.post('/qrcode',multipartMiddleware, function(req, res){
 	var guid = req.body.guid;
+	
 	console.log(guid);
+
 	Tokenfunc.exist(guid, function(status, tokenData){
 		console.log(status);
 		if(status){
