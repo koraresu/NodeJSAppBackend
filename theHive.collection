@@ -1,0 +1,19 @@
+{
+    "_id" : ObjectId("57b237e57a28f01f332e3447"),
+    "updatedAt" : ISODate("2016-08-15T21:45:09.971Z"),
+    "createdAt" : ISODate("2016-08-15T21:45:09.867Z"),
+    "first_name" : "Administración",
+    "last_name" : "The Hive",
+    "phone" : "",
+    "public_id" : ObjectId("57b237e57a28f01f332e3443"),
+    "profile_pic" : "",
+    "status" : 0,
+    "review_score" : 0,
+    "user_id" : ObjectId("57b237e57a28f01f332e3444"),
+    "info" : [],
+    "skills" : [],
+    "experiences" : [],
+    "facebookData" : [],
+    "__v" : 0,
+    "qrcode" : "57b237e57a28f01f332e3443.png"
+}

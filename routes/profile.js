@@ -1155,27 +1155,18 @@ router.post('/location', multipartMiddleware, function(req, res){
 
 
 });
-router.get('/qrcode/:id', multipartMiddleware, function(req, res){
+router.get('/qrcode/:id', function(req, res){
+	
 	var guid = req.params.id;
+
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
 			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
 				if(status){
 					Profilefunc.generate_qrcode(profileData, function(){
-						var file = '/public/qrcode/'+profileData.public_id+'.png';
+						var file = '/qrcode/'+profileData.public_id+'.png';
 
-						var file = path.join(appDir+file);
-
-						console.log(file);
-						
-						var filename = path.basename(file);
-
-						var mimetype = mime.lookup(file);
-
-						res.setHeader('Content-type', mimetype);
-
-						var filestream = fs.createReadStream(file);	
-						filestream.pipe(res);
+						res.send(file);
 					});
 				}else{
 
