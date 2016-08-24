@@ -1158,9 +1158,9 @@ router.post('/location', multipartMiddleware, function(req, res){
 router.post('/qrcode', function(req, res){
 	
 	var guid = req.body.guid;
-
+	console.log(guid);
 	Tokenfunc.exist(guid, function(status, tokenData){
-		console.log(token);
+		console.log(status);
 		if(status){
 			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
 				if(status){
