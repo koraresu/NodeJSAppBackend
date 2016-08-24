@@ -153,7 +153,8 @@ exports.PublicId = function(public_id, callback){
 }
 function generate_qrcode(profileData, callback){
 	console.log(profileData);
-	
+	profileData.qrcode = "";
+
 	if(typeof profileData.public_id == "undefined"){
 		profileData.public_id = mongoose.Types.ObjectId();
 	}

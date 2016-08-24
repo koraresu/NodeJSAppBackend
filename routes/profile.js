@@ -1169,6 +1169,7 @@ router.post('/qrcode',multipartMiddleware, function(req, res){
 					console.log(profileData);
 
 					Profilefunc.generate_qrcode(profileData, function(profileData){
+						console.log("ProfileData Callback");
 						console.log(profileData);
 
 						Generalfunc.response(200, profileData, function(response){
