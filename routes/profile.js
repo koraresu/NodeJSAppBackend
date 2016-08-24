@@ -1157,16 +1157,11 @@ router.post('/location', multipartMiddleware, function(req, res){
 });
 router.post('/qrcode',multipartMiddleware, function(req, res){
 	var guid = req.body.guid;
-
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
 			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData){
 				if(status){
-					console.log("Status OK");
-					console.log(profileData);
 					Profilefunc.generate_qrcode(profileData, function(profileData){
-						console.log("ProfileData Callback");
-						console.log(profileData);
 
 						Generalfunc.response(200, profileData, function(response){
 							res.json(response);
@@ -1183,12 +1178,7 @@ router.post('/qrcode',multipartMiddleware, function(req, res){
 				res.json(response);
 			});
 		}
-	});
-
-
-
-
-	
+	});	
 });
 
 module.exports = router;

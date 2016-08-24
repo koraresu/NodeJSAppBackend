@@ -15,6 +15,7 @@ var Generalfunc = require('./generalfunc');
 var Experiencefunc = require('./experiencefunc');
 
 var model = require('../model');
+
 var Profile     = model.profile;
 var User        = model.user;
 var Token       = model.token;
