@@ -169,6 +169,7 @@ function generate_qrcode(profileData, callback){
 		qr_svg.pipe(require('fs').createWriteStream('./public/qrcode/'+qrcode+'.png'));
 
 		var svg_string = qr.imageSync('the-hive:query?'+qrcode, { type: 'png' });
+		console.log(profileData);
 		callback(profileData);
 	});
 }
