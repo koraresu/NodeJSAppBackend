@@ -35,6 +35,9 @@ var smtpConfig = {
 	host: 'mail.thehiveapp.mx',
 	port: 26,
 	secure: false,
+	tls:  {
+		rejectUnauthorized: false
+	},
 	auth: {
 		user: 'hola@thehiveapp.mx',
 		pass: 'axovia es lo mejor'
