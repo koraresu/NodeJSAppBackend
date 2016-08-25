@@ -32,26 +32,16 @@ var Country      = model.country;
 var nodemailer = require('nodemailer');
 
 var smtpConfig = {
-	host: 'smtp.gmail.com',
-	port: 465,
-	secure: true,
-	auth: {
-		user: 'rkenshin21@gmail.com',
-		pass: 'Alse21988'
-	}
-};
-var smtpConfigtrap = {
-	host: 'mailtrap.io',
-	port: 25,
+	host: 'mail.thehiveapp.mx',
+	port: 26,
 	secure: false,
 	auth: {
-		user: 'fea6a54f8a714a',
-		pass: 'e977cec06a0b1d'
+		user: 'hola@thehiveapp.mx',
+		pass: 'axovia es lo mejor'
 	}
 };
 
 var transporter    = nodemailer.createTransport(smtpConfig,{
-//var transporter    = nodemailer.createTransport(smtpConfigtrap,{
 	debug: true
 });
 var sendMail = function(toAddress, subject, content, next){
