@@ -54,8 +54,12 @@ var sendMail = function(toAddress, subject, content, next){
     html: content
   };
   transporter.sendMail(mailOptions, function(error, info){
-  	console.log("Error: [Email]");
+  	console.log("Email: [Error]");
   	console.log(error);
+  	
+  	console.log("Email: [Info]");
+  	console.log(info);
+
   	return next();
   });
 }; 
