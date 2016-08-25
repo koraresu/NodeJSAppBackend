@@ -43,6 +43,7 @@ var smtpConfig = {
 		pass: 'axovia es lo mejor'
 	}
 };
+
 */
 var smtpConfig = {
   host: "mailtrap.io",
@@ -57,20 +58,25 @@ var transporter    = nodemailer.createTransport(smtpConfig,{
 	debug: true
 });
 var sendMail = function(toAddress, subject, content, next){
-  var mailOptions = {
-    to: toAddress,
-    subject: subject,
-    html: content
-  };
-  transporter.sendMail(mailOptions, function(error, info){
-  	console.log("Email: [Error]");
-  	console.log(error);
+	console.log("SmtpConfig:")
+	console.log(smtpConfig);
+	var mailOptions = {
+		to: toAddress,
+		subject: subject,
+		html: content
+	};
+	console.log("Mail Options:");
+	console.log(mailOptions);
+	
+	transporter.sendMail(mailOptions, function(error, info){
+		console.log("Email: [Error]");
+		console.log(error);
   	
-  	console.log("Email: [Info]");
-  	console.log(info);
+		console.log("Email: [Info]");
+		console.log(info);
 
-  	return next();
-  });
+		return next();
+	});
 }; 
 
 
