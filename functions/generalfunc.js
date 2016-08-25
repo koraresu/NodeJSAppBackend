@@ -108,6 +108,8 @@ exports.response = function(type,item, callback){
 	}
 }
 exports.sendEmail = function(file, data,email, asunto, callback){
+	callback(true, "");
+	/*
 	var template = process.cwd() + '/views/';
 	template+= file;
 	fs.readFile(template, 'utf8', function(err, file){
@@ -126,4 +128,5 @@ exports.sendEmail = function(file, data,email, asunto, callback){
 			});
     	}
   	});
+  	*/
 }

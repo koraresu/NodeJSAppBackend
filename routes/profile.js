@@ -136,7 +136,7 @@ router.post('/create', multipartMiddleware, function(req, res){
 
 	var pass = Profilefunc.generate_password(password);
 	
-		console.log(pass)
+		console.log(pass);
 		Profilefunc.userProfileInsertIfDontExists({
 			email: email
 		},{
@@ -180,6 +180,7 @@ router.post('/create', multipartMiddleware, function(req, res){
 						public_id: profileData.public_id,
 						nombre: profileData.first_name,
 					}, userData.email, "Verificación de Correo",function(status, html){
+						console.log(status);
 						if(status){
 							Generalfunc.response(200,{
 								token: tokenData.generated_id,

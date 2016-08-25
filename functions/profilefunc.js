@@ -367,7 +367,7 @@ function PublicId(public_id, callback){
 		}
 	});
 }
-function generate_Password(password, callback){
+function generate_Password(password){
 	var hashedPassword = passwordHash.generate(password);
 	return hashedPassword;
 }
@@ -397,7 +397,8 @@ function userProfileInsertIfDontExists(searchUser, userInsert, profileInsert, ca
 					profileInsert['user_id'] = userData._id;
 					var profile = new Profile( profileInsert );
 					profile.save(function(err, profileData){
-						generate_qrcode(profileData, function(profileData){
+
+						generate_qrcode(profile, function(profileData){
 							callback( false, token, profileData, userData );		
 						});
 						
