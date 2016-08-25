@@ -32,9 +32,9 @@ var Country      = model.country;
 var nodemailer = require('nodemailer');
 
 var smtpConfig = {
-	host: 'host.thehiveapp.mx',
-	port: 465,
-	secure: true,
+	host: 'mail.thehiveapp.mx',
+	port: 26,
+	secure: false,
 	auth: {
 		user: 'hola@thehiveapp.mx',
 		pass: 'axovia es lo mejor'
