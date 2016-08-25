@@ -53,8 +53,9 @@ var smtpConfig = {
   }
 };
 
-var transporter    = nodemailer.createTransport("SMTP",smtpConfig);
-
+var transporter    = nodemailer.createTransport(smtpConfig,{
+	debug: true
+});
 var sendMail = function(toAddress, subject, content, next){
   var mailOptions = {
     to: toAddress,
