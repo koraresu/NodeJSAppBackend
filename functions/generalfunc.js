@@ -30,7 +30,6 @@ var Country      = model.country;
 
 
 var nodemailer = require('nodemailer');
-/*
 var smtpConfig = {
 	host: 'mail.thehiveapp.mx',
 	port: 26,
@@ -43,8 +42,7 @@ var smtpConfig = {
 		pass: 'axovia es lo mejor'
 	}
 };
-
-*/
+/*
 var smtpConfig = {
   host: "mailtrap.io",
   port: 2525,
@@ -53,7 +51,7 @@ var smtpConfig = {
     pass: "e977cec06a0b1d"
   }
 };
-
+*/
 var transporter    = nodemailer.createTransport(smtpConfig,{
 	debug: true
 });
@@ -61,13 +59,14 @@ var sendMail = function(toAddress, subject, content, next){
 	console.log("SmtpConfig:")
 	console.log(smtpConfig);
 	var mailOptions = {
+		from: "hola@thehiveapp.mx",
 		to: toAddress,
 		subject: subject,
 		html: content
 	};
 	console.log("Mail Options:");
 	console.log(mailOptions);
-	
+
 	transporter.sendMail(mailOptions, function(error, info){
 		console.log("Email: [Error]");
 		console.log(error);
