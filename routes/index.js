@@ -61,7 +61,7 @@ router.get('/verification/:id',function(req, res){
 
     Profile.findOne({ public_id: id }).populate('user_id').exec( function(errProfile, profileData){
       if(!errProfile && profileData){
-          console.log(profileData.length);
+          console.log(profileData);
           
           profileData.user_id.verified = true;
           profileData.user_id.save(function(errUser, userData){
