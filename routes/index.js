@@ -62,6 +62,9 @@ router.get('/verification/:id',function(req, res){
     Profile.findOne({ public_id: id }).populate('user_id').exec( function(errProfile, profileData){
       if(!errProfile && profileData){
           console.log(profileData);
+          if(typeof profileData == "undefined"){
+            res.render('verified', { email: userData.email, status: false, message: "El usuario que estas buscando no existe"});
+          }else{
           
           profileData.user_id.verified = true;
           profileData.user_id.save(function(errUser, userData){
@@ -80,6 +83,7 @@ router.get('/verification/:id',function(req, res){
               }     
             });
           });
+        }
       }else{
         res.render('verified', { email: userData.email, status: false, message: "El usuario que estas buscando no existe"});
       }
