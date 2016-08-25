@@ -61,7 +61,8 @@ router.get('/verification/:id',function(req, res){
 
     Profile.findOne({ public_id: id }).populate('user_id').exec( function(errProfile, profileData){
       if(!errProfile && profileData){
-          console.log(profileData);
+          console.log(profileData.user_id);
+
           if(typeof profileData.user_id == null){
             res.render('verified', { email: userData.email, status: false, message: "El usuario que estas buscando no existe"});
           }else{
