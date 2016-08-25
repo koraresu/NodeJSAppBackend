@@ -17,16 +17,16 @@ html(xmlns='http://www.w3.org/1999/xhtml', style='width: 100%; height: 100%; mar
         div(style='margin-top: 30px;')
           div
             div
-              span(style='font-weight: 300; font-size: 24px; border: 0;') Hola #{nombre}
+              span(style='font-weight: 300; color:#333333;font-size: 24px; border: 0;') Hola #{nombre}
               span(style='font-weight: 300; color: #f9be00; font-size: 40px; width: 100%; max-width: 300px; display: block; margin-bottom: 20px; border: 0;') Estás a un paso de formar parte de la Colmena
             div(style='text-align: center;', align='center')
-              span(style='font-weight: 300; font-size: 16px;') Haz click para verificar tu cuenta
+              span(style='font-weight: 300; font-size: 16px;color:#333333;') Haz click para verificar tu cuenta
               a(href="http://thehiveapp.mx:3000/verification/"+public_id, style='display: block; width: 178px; background-color: #f6be00; color: #fff; font-weight: 500; font-size: 18px; border-radius: 4px; text-decoration: none; margin: 20px auto 0; padding: 12px 15px; border: 1px solid #f7a700;') Confirmar tu correo
         div(style='color: #808080; font-weight: 300; font-size: 16px; margin-top: 30px; border: 0;')
           div
             div(style='text-align: center; color: #808080; padding: 11px 0;', align='center')
               span ¿El link no funciona? Pega esto en tu navegador:
-              a(href='#d41d8cd98f00b204e9800998ecf8427e', style='text-decoration: none; display: block; color: #808080;') http://thehiveapp.mx/verification/#{public_id}
+              a(href='#d41d8cd98f00b204e9800998ecf8427e', style='text-decoration: none; display: block; color: #808080;') http://thehiveapp.mx:3000/verification/#{public_id}
             div(style='text-align: center; color: #808080; padding: 11px 0;', align='center')
               span Este correo fue enviado de manera automática, no respondas.
               span Si necesitas ayuda, contáctanos: 
