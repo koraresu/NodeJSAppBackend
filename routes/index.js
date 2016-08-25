@@ -63,7 +63,7 @@ router.get('/verification/:id',function(req, res){
       if(!errProfile && profileData){
           console.log(profileData.user_id);
 
-          if(typeof profileData.user_id == null){
+          if(profileData.user_id == null){
             res.render('verified', { email: userData.email, status: false, message: "El usuario que estas buscando no existe"});
           }else{
           profileData.user_id.verified = true;
