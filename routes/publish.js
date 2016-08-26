@@ -347,7 +347,7 @@ router.post('/write/review', multipartMiddleware, function(req, res){
 				  							action: "3",
 				  							data: {}
 										}, function(errHistory, historyData){
-											Generalunc.response(200, reviewData, function(response){
+											Generalfunc.response(200, reviewData, function(response){
 												res.json(response);
 											});
 										});
