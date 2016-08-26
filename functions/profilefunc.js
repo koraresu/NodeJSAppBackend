@@ -47,6 +47,9 @@ function getTrabajo(profile_id, callback){
 		profile_id: profile_id,
 		action: "3"
 	}).populate('de_id').select('de_id -_id').exec(function(errHistory, historyData){
+		
+		console.log(historyData);
+
 		if(historyData.length>0){
 			historyData.forEach(function(historyItem, historyIndex){
 				Profile.findOne({ _id: historyItem.de_id}).exec(function(errProfile, profileData){
