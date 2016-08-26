@@ -78,7 +78,7 @@ router.post('/connect', multipartMiddleware, function(req, res){
 								});
 							}else{
 								var network = new Network({
-									accepted: false,
+									accepted: true,
 									profiles: [
 										profileData._id,
 										profileAnotherData._id
@@ -230,7 +230,7 @@ router.post('/unfriend', multipartMiddleware, function(req, res){
 							if(!errNetwork && networkData){
 								if(networkData != null){
 
-									var log = new LogSchema({
+									var log = new Log({
 										message: "unfriend",
 										data: networkData
 									});
