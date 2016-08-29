@@ -42,12 +42,12 @@ var format = require('./format');
 
 function getTrabajo(profile_id, callback){
 	var data = [];
-
+	console.log("Get Trabajo");
 	History.find({
 		profile_id: profile_id,
 		action: "3"
 	}).populate('de_id').select('de_id -_id').exec(function(errHistory, historyData){
-		
+	
 		console.log(historyData);
 
 		if(historyData.length>0){
