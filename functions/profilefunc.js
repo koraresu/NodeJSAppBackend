@@ -81,7 +81,7 @@ function formatoProfile(profile_id,cb){
 			Experience.find({ profile_id: profileData._id}, function(errExperience, experienceData){
 				Review.find({ profile_id: profileData._id }).sort( [ ['createdAt', 'descending'] ] ).limit(2).exec(function(errReview, reviewData){
 
-					getTrabajo(profileData, function(errTrabajo, trabajoData){
+					getTrabajo(profileData._id, function(errTrabajo, trabajoData){
 						var data = {
 							profile: {
 								"_id": profileData._id,
