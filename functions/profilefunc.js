@@ -43,6 +43,7 @@ var format = require('./format');
 function getTrabajo(profile_id, callback){
 	var data = [];
 	console.log("Get Trabajo");
+	console.log(profile_id);
 	History.find({
 		profile_id: profile_id,
 		action: "3"
