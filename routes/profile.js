@@ -902,7 +902,24 @@ router.post('/editskill', multipartMiddleware, function(req, res){ // Eliminar s
 	var to               = req.body.to;
 
 	Tokenfunc.exist(guid, function(status, tokenData){
-
+		Tokenfunc.exist(guid, function(status, tokenData){
+		if(status){
+			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
+				Skillfunc.edit(profileData._id, from, to, function(err, profileData){
+					format.profileformat(profileData, function(profileData){
+						Generalfunc.response(200, profileData, function(response){
+							res.json(response);
+						});
+					});
+				});
+			});
+		}else{
+			Generalfunc.response(101, {}, function(response){
+				res.json(response);
+			})
+		}
+		
+	});	
 	});
 });
 // DELETE SKILL
