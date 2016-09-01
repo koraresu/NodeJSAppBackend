@@ -460,6 +460,9 @@ function permitedData(getter, info_profile, callback){
 	callback(true);
 }
 function logs(profile, code, data, callback){
+	
+	console.log(data);
+
 	data = JSON.stringify(data);
 	data = JSON.parse(data);
 	var d = {
