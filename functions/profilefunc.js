@@ -478,7 +478,7 @@ function logs(profile, code, data, callback){
 		profile: profile,
 		data: data
 	};
-
+	console.log(d);
 	var log = new Log(d);
 	log.save(function(err, logData){
 		callback(err, logData);
