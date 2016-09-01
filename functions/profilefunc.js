@@ -463,16 +463,12 @@ function logs(profile, code, data, callback){
 	data = JSON.stringify(data);
 	data = JSON.parse(data);
 	
-	console.log(data);
-
 	var d = {
 		code: code,
 		profile: profile,
 		data: data
 	};
 
-	console.log(d);
-	
 	var log = new Log(d);
 	log.save(function(err, logData){
 		callback(err, logData);
