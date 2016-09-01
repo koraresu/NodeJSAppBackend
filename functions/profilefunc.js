@@ -460,12 +460,15 @@ function permitedData(getter, info_profile, callback){
 	callback(true);
 }
 function logs(profile, code, data, callback){
-	
-	console.log(data);
-	data = JSON.stringify(data);
-	console.log(data);
-	data = JSON.parse(data);
-	console.log(data);
+	if(IsJsonString(data)){
+		console.log(data);
+	}else{
+		console.log(data);
+		data = JSON.stringify(data);
+		console.log(data);
+		data = JSON.parse(data);
+		console.log(data);
+	}
 	var d = {
 		code: code,
 		profile: profile,
@@ -476,6 +479,14 @@ function logs(profile, code, data, callback){
 	log.save(function(err, logData){
 		callback(err, logData);
 	});
+}
+function IsJsonString(str) {
+    try {
+        JSON.parse(str);
+    } catch (e) {
+        return false;
+    }
+    return true;
 }
 exports.logs = logs
 exports.permitedData = permitedData
