@@ -472,6 +472,7 @@ function logs(profile, code, data, callback){
 		data = JSON.parse(data);
 		console.log(data);
 	}*/
+	console.log(data);
 	var d = {
 		code: code,
 		profile: profile,
