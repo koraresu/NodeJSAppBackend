@@ -872,8 +872,8 @@ router.post('/addskill', multipartMiddleware, function(req, res){
 							}else{
 								console.log(skillData);
 								profileData.skills.push(skillData._id);
-								profileData.save(function(errProfile, profileData){
-									Profilefunc.logs(profileData, 15, skill, function(){
+								profileData.save(function(errProfile, profile){
+									Profilefunc.logs(profileData, 15, skillData, function(){
 										format.profileformat(profileData, function(profileData){
 											Generalfunc.response(200, profileData, function(response){
 												res.json(response);
