@@ -460,22 +460,19 @@ function permitedData(getter, info_profile, callback){
 	callback(true);
 }
 function logs(profile, code, data, callback){
-	
-	
-		console.log("Invalid JSON");
-		console.log(data);
-		data = JSON.stringify(data);
-		console.log(data);
-		data = JSON.parse(data);
-		console.log(data);
+	data = JSON.stringify(data);
+	data = JSON.parse(data);
 	
 	console.log(data);
+
 	var d = {
 		code: code,
 		profile: profile,
 		data: data
 	};
+
 	console.log(d);
+	
 	var log = new Log(d);
 	log.save(function(err, logData){
 		callback(err, logData);
