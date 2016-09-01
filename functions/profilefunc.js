@@ -462,9 +462,10 @@ function permitedData(getter, info_profile, callback){
 function logs(profile, code, data, callback){
 	
 	console.log(data);
-
 	data = JSON.stringify(data);
+	console.log(data);
 	data = JSON.parse(data);
+	console.log(data);
 	var d = {
 		code: code,
 		profile: profile,
