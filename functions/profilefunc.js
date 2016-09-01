@@ -460,15 +460,18 @@ function permitedData(getter, info_profile, callback){
 	callback(true);
 }
 function logs(profile, code, data, callback){
+	/*
 	if(IsJsonString(data)){
+		console.log("Valid JSON");
 		console.log(data);
 	}else{
+		console.log("Invalid JSON");
 		console.log(data);
 		data = JSON.stringify(data);
 		console.log(data);
 		data = JSON.parse(data);
 		console.log(data);
-	}
+	}*/
 	var d = {
 		code: code,
 		profile: profile,
