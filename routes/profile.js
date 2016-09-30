@@ -135,6 +135,7 @@ router.post('/create', multipartMiddleware, function(req, res){
 	console.log(email);
 
 	var pass = Profilefunc.generate_password(password);
+	console.log(pass);
 	
 		console.log(pass);
 		Profilefunc.userProfileInsertIfDontExists({

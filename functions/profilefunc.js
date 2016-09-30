@@ -333,7 +333,7 @@ exports.updateProfilePic = function(profile_id, file, callback){
 }
 exports.userProfile = function(user, callback){
 	Token.findOne({ user_id: user._id}, function(errToken, token){
-		Profile.findOne({ user_id: user._id }, function(errProfile, profile){
+		Profile.findOne({ user_id: user._id }).populate('experiences').populate('skills').populate('user_id','-password').exec( function(errProfile, profile){
 			callback(true,token, user, profile);
 		});
 	});				
