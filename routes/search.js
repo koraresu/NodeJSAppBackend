@@ -55,7 +55,7 @@ router.post('/general', multipartMiddleware, function(req, res){
 		if(status){
 			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
 				if(status){
-					Profile.find({}).populate('experiences').populate('skills').populate('user_id','-password').exec(function(errProfile, profileData){
+					Profile.find({}).populate('experiences').populate('skills').populate('user_id','-password').populate('job').exec(function(errProfile, profileData){
 						profileData.forEach(function(profileItem, profileIndex){
 							var array = new Array();
 							
