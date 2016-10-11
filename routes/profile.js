@@ -424,9 +424,17 @@ router.post('/get/friend', multipartMiddleware, function(req, res){
 											});
 										});
 									}else{
-										Generalfunc.response(114, {}, function(response){
-											res.json(response);
-										});
+										if(profileAnotherData.status == 0){
+											Profilefunc.formatoProfile(profileAnotherData._id,function( profile ){
+												Generalfunc.response(200, profile, function(response){
+													res.json(response);
+												});
+											});	
+										}else{
+											Generalfunc.response(114, {}, function(response){
+												res.json(response);
+											});	
+										}
 									}
 								});	
 							}else{
