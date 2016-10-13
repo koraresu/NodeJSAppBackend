@@ -191,10 +191,16 @@ router.post('/isfriend', multipartMiddleware, function(req, res){
 				Networkfunc.PublicId(public_id, function(statusPublic, profileAnotherData){
 					if(statusPublic){
 						Networkfunc.isFriend(profileData._id, profileAnotherData._id, function(status){
-							res.send(status);
+							Generalfunc.response(200, {
+								status: status
+							}, function(response){
+								res.json(response);
+							});
 						});
 					}else{
-
+						Generalfunc.response(101, {}, function(response){
+							res.json(response);
+						});
 					}
 				});
 			});
