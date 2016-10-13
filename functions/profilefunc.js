@@ -79,7 +79,7 @@ function formatoProfile(profile_id,cb){
 	Profile.findOne({ _id: profile_id}).populate('experiences').populate('skills').populate('user_id','-password').exec(function(errProfile, profileData){
 		var userData = profileData.user_id;
 			Experience.find({ profile_id: profileData._id}, function(errExperience, experienceData){
-				Review.find({ profile_id: profileData._id }).sort( [ ['createdAt', 'descending'] ] ).limit(2).populate('profiles')exec(function(errReview, reviewData){
+				Review.find({ profile_id: profileData._id }).sort( [ ['createdAt', 'descending'] ] ).limit(2).populate('profiles').exec(function(errReview, reviewData){
 
 					getTrabajo(profileData._id, function(errTrabajo, trabajoData){
 						var data = {
