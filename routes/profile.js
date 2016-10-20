@@ -918,8 +918,8 @@ router.post('/editskill', multipartMiddleware, function(req, res){ // Eliminar s
 		if(status){
 			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
 				Skillfunc.edit(profileData._id, from, to, function(err, profileData){
-					format.profileformat(profileData, function(profileData){
-						Generalfunc.response(200, profileData, function(response){
+					Profilefunc.formatoProfile(profileData._id,function( profileData ){
+						Generalfunc.response(200, profileData , function(response){
 							res.json(response);
 						});
 					});
