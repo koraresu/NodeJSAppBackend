@@ -643,7 +643,7 @@ router.post('/experience', multipartMiddleware, function(req, res){
 						sector: sector
 					};
 
-					Experiencefunc.insert(profileData, data, function(statusExperience, experienceData){
+					Experiencefunc.insertOrExists(profileData, data, function(statusExperience, experienceData){
 						console.log(experienceData);
 						Profile.findOne({ _id: profileData._id}, function(errProfile, profileData){
 							Experience.find({ profile_id: profileData._id}, function(errExperience, experienceData){

@@ -3,6 +3,8 @@ var mongoose    = require('mongoose');
 var path = require('path');
 var fs = require('fs');
 
+var async = require('async');
+
 var model = require('../model');
 var Profile     = model.profile;
 var User        = model.user;
@@ -36,93 +38,59 @@ var get = function(profile_id, callback){
 	});
 }
 var add = function(profile_id, name, callback){
-	console.log(profile_id);
-
-	Skill.findOne({ name: name}, function(err, skillData){
-		if(!err && skillData){
-			Profile.findOne({ _id: profile_id}).exec(function(errProfile, profileData){
-				if(!errProfile && profileData){
-					
-				}else{
-
-				}
-			});
-		}else{
-			
-		}
-	});
 	
-	Skill.findOne({ name: name}, function(err, skillData){
-		if(!err && skillData){
-			Profile.findOne({ _id: profile_id }, function(errProfile, profileData){
-				if(!errProfile && profileData){
-					var data = {
-						name: skillData.name,
-						id: skillData._id
-					};
-					var insertar = true;
-					console.log(profileData);
-					if(profileData.skills.length == 0){
-						if(insertar){
-							profileData.skills.push(data);
-						}
-						profileData.save(function(err, profileData){
-							callback(true, skill, profileData);
-						});
-					}else{
-						profileData.skills.forEach(function(item, index){
+	var skills = name.split(',');
+	Profile.findOne({ _id: profile_id }, function(errProfile, profileData){
+		
+		console.log(skills.length);
 
-							if(item.name == name){
-								insertar = false;
-							}
-							if(index == (profileData.skills.length-1)){
-								if(insertar){
-									console.log(profileData);
-									profileData.skills.push(data);
-								}
-								profileData.save(function(err, profileData){
-									callback(true, skill, profileData);
-								});
-							}
-						});	
+		if(skills.length > 1){
+			console.log("Skills");
+			async.each(skills, function(skill, callback){
+				console.log(skill);
+				ExistsOrCreate({
+					name: skill
+				}, {
+					name: skill
+				}, function(status, skillData){
+					console.log(skillData);
+					console.log(skillData._id);
+					callback(skillData._id);
+				});
+			}, function(results){
+				console.log(results);
+				/*
+				profileData.skills.forEach(function(index, item){
+					profileData.skills.push(item);
+					if((profileData.skills.length-1) == index){
+						profileData.save(function(err, pd){
+							Profile.findOne({ _id: profileData._id }).exec(function(erroProfile, profileData){
+								callback(true, skillData, profileData);
+							});
+						});
 					}
-					
-				}else{
-					console.log("no Profile");
-					callback(false);
-				}
+				});
+				*/
 			});
 		}else{
-			var skill = new Skill({
+			ExistsOrCreate({
 				name: name
-			});
-			skill.save(function(err, skillData){
-				Profile.findOne({ _id: profile_id }, function(errProfile, profileData){
-					var data = {
-						name: skillData.name,
-						id: skillData._id
-					};
-					var insertar = true;
-					console.log(profileData.skills);
-					profileData.skills.forEach(function(item, index){
+			}, {
+				name: name
+			}, function(status, skillData){
+				profileData.skills.push(skillData._id);
 
-						if(item.name == name){
-							insertar = false;
-						}
-						if(index == (profileData.skills.length-1)){
-							if(insertar){
-								profileData.skills.push(data);
-							}
-							profileData.save(function(err, profileData){
-								callback(true, skill, profileData);
-							});
-						}
+				profileData.save(function(err, pd){
+
+					Profile.findOne({ _id: profileData._id }).exec(function(erroProfile, profileData){
+						callback(true, skillData, profileData);
 					});
 				});
 			});
 		}
+
+		
 	});
-	
 }
 function ExistsOrCreate(search, insert, callback){
 	Skill.findOne(search, function(err, skillData){

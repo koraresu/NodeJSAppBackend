@@ -40,8 +40,92 @@ router.post('/create', multipartMiddleware, function(req, res){
 	var guid       = req.body.guid;
 	var type       = req.body.type; // 0 = independiente | 1 = company
 	var company    = req.body.company;
-	var job        = req.body.job;
-	var speciality = req.body.speciality;
+	var sector     = req.body.sector;
+	var ocupation  = req.body.ocupation;
+	Tokenfunc.exist(guid, function(errToken, token){
+		if(errToken){
+			Tokenfunc.toProfile(token.generated_id, function(status, userData, profileData, profileInfoData){
+				if(type == 0){
+					Experiencefunc.jobExistsOrCreate({
+						name: job,
+					},{
+						name: job,
+					},function(status, jobData){
+
+						Experiencefunc.insertOrExists(profileData,type, data, function(statusExperience, experienceData){
+							Generalfunc.response(200,experienceData,function(response){
+								res.json(response);
+							});
+						});
+
+					});
+				}else{
+					func.companyExistsOrCreate({
+						name: company
+					},{
+						name: company
+					},function(status, companyData){
+						func.jobExistsOrCreate({
+							name: ocupation,
+							type: 0
+						},{
+							name: ocupation,
+							type: 0
+						}, function(status, ocupationData){
+							Experiencefunc.jobExistsOrCreate({
+								name: job,
+								type: 1
+							},{
+								name: job,
+								type: 1
+							},function(status, jobData){
+
+
+								Experiencefunc.sectorExistsOrCreate({
+									name: sector
+								},{
+									name: sector
+								}, function(status, sectorData){
+									var data = {
+										profile_id: profileData._id,
+										type: type,
+										ocupation: {
+											id:   ocupationData._id,
+											name: ocupationData.name
+										},
+										company: {
+											id: companyData._id,
+											name: companyData.name
+										},
+										sector: {
+											id: sectorData._id,
+											name: sectorData.name
+										}
+									};
+
+
+
+									func.insertOrExists(data,data, function(statusExperience, experienceData){
+										func.response(200,experienceData,function(response){
+											res.json(response);
+										});
+									});
+								});
+
+							});
+						});
+					});
+				}
+			});
+		}else{
+
+		}
+	});
+/*
+router.post('/create', multipartMiddleware, function(req, res){
+	var guid       = req.body.guid;
+	var type       = req.body.type; // 0 = independiente | 1 = company
+	var company    = req.body.company;
 	var sector     = req.body.sector;
 	var ocupation  = req.body.ocupation;
 	Tokenfunc.exist(guid, function(errToken, token){
@@ -51,7 +135,7 @@ router.post('/create', multipartMiddleware, function(req, res){
 					
 
 					//Tokenfunc.toProfile(token.generated_id, function(status, userData, profileData, profileInfoData){//Revisar
-						func.jobExistsOrCreate({
+						Experiencefunc.jobExistsOrCreate({
 							name: job,
 						},{
 							name: job,
@@ -166,7 +250,7 @@ router.post('/get', multipartMiddleware, function(req, res){
 		if(status){
 			Tokenfunc.toProfile(guid, function(status, userData, profileData, profileInfoData){
 				if(status == 200){
-					func.experienceGet(profileData._id, function(err, experiences){
+					Experiencefunc.get(profileData._id, function(err, experiences){
 						console.log(experiences);
 						func.response(status, experiences, function(response){
 							res.json( response );
@@ -349,4 +433,5 @@ router.post('/company/get', multipartMiddleware, function(req, res){
 		}
 	});
 });
+*/
 module.exports = router;

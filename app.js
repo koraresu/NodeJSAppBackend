@@ -7,8 +7,9 @@ var logger       = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser   = require('body-parser');
 var cors         = require('cors');
-const pathDir = __dirname;
+var socket_io    = require( "socket.io" );
 
+const pathDir = __dirname;
 
 var routes       = require('./routes/index');
 var profile      = require('./routes/profile');
@@ -22,7 +23,12 @@ var extra        = require('./routes/extra');
 var chat         = require('./routes/chat');
 var notification = require('./routes/notifications');
 
+
+
 var app = express();
+
+var io           = socket_io();
+app.io           = io;
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -82,6 +88,16 @@ app.use(function(err, req, res, next) {
   console.error(err);
   res.status(500).send('internal server error');
 })
+
+
+io.on( "connection", function( socket )
+{
+  socket.on('chat message', function(data){
+    console.log(data);
+  });
+});
+
+
 
 
 module.exports = app;
