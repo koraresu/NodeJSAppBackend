@@ -91,8 +91,10 @@ Nombre de Objectos de Documentos:
 									id: skillData._id
 								}
 							}, function(err, historyData){
-								Generalfunc.response(200, profileData , function(response){
-									res.json(response);
+								Profilefunc.formatoProfile(profileData._id,function( profileData ){
+									Generalfunc.response(200, profileData , function(response){
+										res.json(response);
+									});
 								});
 							});
 						});

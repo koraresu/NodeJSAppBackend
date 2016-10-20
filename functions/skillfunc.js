@@ -78,10 +78,7 @@ var add = function(profile_id, name, callback){
 
 						if((different.length-1) == index){
 							profileData.save(function(err, pd){
-
-								Profile.findOne({ _id: profileData._id }).exec(function(erroProfile, profileData){
-									callback(true, {}, profileData);
-								});
+								callback(true, {}, profileData);
 							});
 						}
 					});
@@ -98,10 +95,7 @@ var add = function(profile_id, name, callback){
 				profileData.skills.push(skillData._id);
 
 				profileData.save(function(err, pd){
-
-					Profile.findOne({ _id: profileData._id }).exec(function(erroProfile, profileData){
-						callback(true, skillData, profileData);
-					});
+					callback(true, skillData, profileData);
 				});
 			});
 		}
