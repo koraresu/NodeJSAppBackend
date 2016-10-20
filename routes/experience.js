@@ -36,8 +36,8 @@ var Skillfunc = require('../functions/skillfunc');
 var Historyfunc = require('../functions/historyfunc');
 var format = require('../functions/format');
 
-//
 
+/*
 router.post('/create', multipartMiddleware, function(req, res){
 	var guid       = req.body.guid;
 	var type       = req.body.type; // 0 = independiente | 1 = company
@@ -234,6 +234,50 @@ router.post('/speciality/create', multipartMiddleware, function(req, res){
 		}
 	});
 });
+router.post('/company/create', multipartMiddleware, function(req, res){
+	var guid      = req.body.guid;
+	var name      = req.body.name;
+	Tokenfunc.exist(guid, function(status, token){
+		if(status){
+			Experiencefunc.companyExistsOrCreate({
+				name: name
+			},{
+				name: name
+			}, function(status, companyData){
+				Generalfunc.response(200, companyData, function(response){
+					res.json(response);
+				})
+			});
+		}else{
+			Generalfunc.response(101, {}, function(response){
+				res.json(response);
+			});
+		}
+	});
+});
+router.post('/sector/create', multipartMiddleware, function(req, res){
+	var guid      = req.body.guid;
+	var name      = req.body.name;
+
+	Tokenfunc.exist(guid, function(status, token){
+		if(status){	
+			Experiencefunc.sectorExistsOrCreate ({
+				name: name,
+			},{
+				name: name,
+			}, function(status, sectorData){
+				Generalfunc.response(200, sectorData, function(response){
+					res.json(response);
+				});
+			});
+		}else{
+			Generalfunc.response(101, {}, function(response){
+				res.json(response);
+			});
+		}
+	});
+});
+*/
 router.post('/job/get', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 	var name      = req.body.name;
@@ -270,28 +314,7 @@ router.post('/speciality/get', multipartMiddleware, function(req, res){
 		}
 	});
 });
-router.post('/sector/create', multipartMiddleware, function(req, res){
-	var guid      = req.body.guid;
-	var name      = req.body.name;
 
-	Tokenfunc.exist(guid, function(status, token){
-		if(status){	
-			Experiencefunc.sectorExistsOrCreate ({
-				name: name,
-			},{
-				name: name,
-			}, function(status, sectorData){
-				Generalfunc.response(200, sectorData, function(response){
-					res.json(response);
-				});
-			});
-		}else{
-			Generalfunc.response(101, {}, function(response){
-				res.json(response);
-			});
-		}
-	});
-});
 router.post('/sector/get', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 	var name      = req.body.name;
@@ -310,29 +333,8 @@ router.post('/sector/get', multipartMiddleware, function(req, res){
 		}
 	});
 });
-router.post('/company/create', multipartMiddleware, function(req, res){
-	var guid      = req.body.guid;
-	var name      = req.body.name;
-	Tokenfunc.exist(guid, function(status, token){
-		if(status){
-			Experiencefunc.companyExistsOrCreate({
-				name: name
-			},{
-				name: name
-			}, function(status, companyData){
-				Generalfunc.response(200, companyData, function(response){
-					res.json(response);
-				})
-			});
-		}else{
-			Generalfunc.response(101, {}, function(response){
-				res.json(response);
-			});
-		}
-	});
-});
 router.post('/company/get', multipartMiddleware, function(req, res){
-		var guid      = req.body.guid;
+	var guid      = req.body.guid;
 	var name      = req.body.name;
 	Tokenfunc.exist(guid, function(status, token){
 		if(status){

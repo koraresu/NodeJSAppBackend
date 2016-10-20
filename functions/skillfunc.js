@@ -42,35 +42,51 @@ var add = function(profile_id, name, callback){
 	var skills = name.split(',');
 	Profile.findOne({ _id: profile_id }, function(errProfile, profileData){
 		
-		console.log(skills.length);
 
 		if(skills.length > 1){
-			console.log("Skills");
+			var skillsID = [];
 			async.each(skills, function(skill, callback){
-				console.log(skill);
 				ExistsOrCreate({
 					name: skill
 				}, {
 					name: skill
 				}, function(status, skillData){
 					console.log(skillData);
-					console.log(skillData._id);
-					callback(skillData._id);
-				});
-			}, function(results){
-				console.log(results);
-				/*
-				profileData.skills.forEach(function(index, item){
-					profileData.skills.push(item);
-					if((profileData.skills.length-1) == index){
-						profileData.save(function(err, pd){
-							Profile.findOne({ _id: profileData._id }).exec(function(erroProfile, profileData){
-								callback(true, skillData, profileData);
-							});
-						});
+					if(profileData.skills.length > 0){
+						var dont = true;
+						skillsID.push(skillData._id);
+						callback();
+					}else{
+						console.log("Profile Skills Vacio");
+						skillsID.push(skillData._id);
+						callback();
 					}
+					
+					console.log(profileData.skills.length);
 				});
-				*/
+			}, function(error,results){
+				console.log(skillsID);
+				console.log(profileData.skills);
+
+				var different = skillsID.filter(function(obj) { return profileData.skills.indexOf(obj) == -1; });
+				console.log("DIFFERENT:");
+				console.log(different);
+				if(different.length > 0){
+					different.forEach(function(item, index){
+						profileData.skills.push(item);
+
+						if((different.length-1) == index){
+							profileData.save(function(err, pd){
+
+								Profile.findOne({ _id: profileData._id }).exec(function(erroProfile, profileData){
+									callback(true, {}, profileData);
+								});
+							});
+						}
+					});
+				}else{
+					callback(true, {}, profileData);
+				}
 			});
 		}else{
 			ExistsOrCreate({
