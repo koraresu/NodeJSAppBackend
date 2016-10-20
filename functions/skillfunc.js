@@ -46,6 +46,7 @@ var add = function(profile_id, name, callback){
 		if(skills.length > 1){
 			var skillsID = [];
 			async.each(skills, function(skill, callback){
+				skill = skill.trim();
 				ExistsOrCreate({
 					name: skill
 				}, {
