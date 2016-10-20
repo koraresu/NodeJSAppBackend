@@ -36,7 +36,7 @@ var Skillfunc = require('../functions/skillfunc');
 var Historyfunc = require('../functions/historyfunc');
 var format = require('../functions/format');
 
-
+//
 
 router.post('/create', multipartMiddleware, function(req, res){
 	var guid       = req.body.guid;
