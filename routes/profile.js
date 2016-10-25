@@ -402,6 +402,73 @@ router.post('/get', multipartMiddleware, function(req, res){
 		}
 	});
 });
+router.post('/setfacebook',multipartMiddleware, function(req, res){
+	var guid      = req.body.guid;
+
+	var first_name     = req.body.first_name;
+	var last_name   = req.body.last_name;
+	var gender     = req.body.gender;
+	var profilepic = req.body.profilepic;
+	var facebookID = req.body.facebook_id;
+	var tokenFB    = req.body.token;
+	var name       = req.body.name;
+
+
+	Tokenfunc.exist(guid, function(status, tokenData){
+		if(status){
+			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
+				if(status){
+					profileData.facebookId = facebookID;
+					profileData.facebookToken = tokenFB;
+
+					var facebookData = [
+					{
+						"name": "first_name",
+						"value": first_name
+					},
+					{
+						"name": "last_name",
+						"value": last_name
+					},
+					{
+						"name": "name",
+						"value":name
+					},
+					{
+						"name": "picture",
+						"value": profilepic
+					},
+					{
+						"name": "email",
+						"value": email
+					},
+					{
+						"name": "gender",
+						"value": gender
+					}
+					];
+
+					profileData.facebookData = [];
+					profileData.facebookData = facebookData;
+
+					profileData.save(function(errProfile, profileData){
+						Generalfunc.response(200, profile, function(response){
+							res.json(response);
+						});
+					});
+				}else{
+					Generalfunc.response(101, {}, function(response){
+						res.json(response);
+					});
+				}
+			});
+		}else{
+			Generalfunc.response(101, {}, function(response){
+				res.json(response);
+			});
+		}
+	});
+});
 router.post('/get/friend', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 	var public_id = req.body.public_id;
