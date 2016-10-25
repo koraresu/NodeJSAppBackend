@@ -28,28 +28,28 @@ var mongoose    = require('mongoose');
 		var Historyfunc = require('../functions/historyfunc');
 		var format = require('../functions/format');
 
-var model = require('../model');
-var Profile     = model.profile;
-var User        = model.user;
-var Token       = model.token;
-var Job         = model.job;
-var Company     = model.company;
-var Experience  = model.experience;
-var Network     = model.network;
-var History     = model.history;
-var Feedback    = model.feedback;
-var Review      = model.review;
-var Log         = model.log;
-var Skill       = model.skill;
-var Speciality  = model.speciality;
-var Sector      = model.sector;
-var Notification = model.notification;
-var Feedback     = model.feedback;
-var Conversation = model.conversation;
-var Message      = model.message;
-var City         = model.city;
-var State        = model.state;
-var Country      = model.country;
+		var model = require('../model');
+		var Profile     = model.profile;
+		var User        = model.user;
+		var Token       = model.token;
+		var Job         = model.job;
+		var Company     = model.company;
+		var Experience  = model.experience;
+		var Network     = model.network;
+		var History     = model.history;
+		var Feedback    = model.feedback;
+		var Review      = model.review;
+		var Log         = model.log;
+		var Skill       = model.skill;
+		var Speciality  = model.speciality;
+		var Sector      = model.sector;
+		var Notification = model.notification;
+		var Feedback     = model.feedback;
+		var Conversation = model.conversation;
+		var Message      = model.message;
+		var City         = model.city;
+		var State        = model.state;
+		var Country      = model.country;
 /*
 Nombre de Objectos de Documentos:
 	Todo dato recibido por FUNC, que sea un documento de mongo, se le colocara como nombre de varible el nombre del modelo,
@@ -81,7 +81,7 @@ router.post('/login', multipartMiddleware, function(req, res){
 				console.log("Password:");
 				console.log(statusPassword);
 				if(statusPassword){
-				
+
 					Profilefunc.userProfile(userData, function(statProfile, tokenData, userData, profileData){
 						Profilefunc.logs(profileData, 24, profileData, function(){
 							Experiencefunc.get(profileData._id, function(statusExperience, experiences){
@@ -137,68 +137,68 @@ router.post('/create', multipartMiddleware, function(req, res){
 	var pass = Profilefunc.generate_password(password);
 	console.log(pass);
 	
-		console.log(pass);
-		Profilefunc.userProfileInsertIfDontExists({
-			email: email
-		},{
-			email: email,
-			password: pass,
-			verified: false,
-			type: 0
-		},{
-			first_name: nombre,
-			last_name: apellido,
-			profile_pic: null,
-			profile_hive: null,
-			qrcode: null,
-			status: 0,
-			birthday: null, 
-			facebookId: "",
-			facebookToken: "",
-			facebookData: [],
-			lang: "es",
-			phone: phone,
-			experiences: [],
-			skills: [],
-			info: [],
-			public_id: mongoose.Types.ObjectId(),
-			speciality: {},
-			job: {},
-			review_score: 0,
-			block: false,
-			location:{
-				city: null,
-				state: null
-			}
-		}, function(exist, tokenData, profileData, userData){
-			if(exist){
-				Generalfunc.response(112,{}, function(response){
-					res.json( response );
+	console.log(pass);
+	Profilefunc.userProfileInsertIfDontExists({
+		email: email
+	},{
+		email: email,
+		password: pass,
+		verified: false,
+		type: 0
+	},{
+		first_name: nombre,
+		last_name: apellido,
+		profile_pic: null,
+		profile_hive: null,
+		qrcode: null,
+		status: 0,
+		birthday: null, 
+		facebookId: "",
+		facebookToken: "",
+		facebookData: [],
+		lang: "es",
+		phone: phone,
+		experiences: [],
+		skills: [],
+		info: [],
+		public_id: mongoose.Types.ObjectId(),
+		speciality: {},
+		job: {},
+		review_score: 0,
+		block: false,
+		location:{
+			city: null,
+			state: null
+		}
+	}, function(exist, tokenData, profileData, userData){
+		if(exist){
+			Generalfunc.response(112,{}, function(response){
+				res.json( response );
+			});
+		}else{
+			Profilefunc.logs(profileData, 2, {profile:profileData, token: tokenData, user: userData }, function(){
+				Generalfunc.sendEmail("email.jade", {
+					public_id: profileData.public_id,
+					nombre: profileData.first_name,
+				}, userData.email, "Verificación de Correo",function(status, html){
+					console.log(status);
+					if(status){
+						Generalfunc.response(200,{
+							token: tokenData.generated_id,
+							profile: profileData
+						},function(response){
+							res.json( response );
+						});
+					}else{
+						Generalfunc.response(101,{},function(response){
+							res.json( response );
+						});
+					}			
 				});
-			}else{
-				Profilefunc.logs(profileData, 2, {profile:profileData, token: tokenData, user: userData }, function(){
-					Generalfunc.sendEmail("email.jade", {
-						public_id: profileData.public_id,
-						nombre: profileData.first_name,
-					}, userData.email, "Verificación de Correo",function(status, html){
-						console.log(status);
-						if(status){
-							Generalfunc.response(200,{
-								token: tokenData.generated_id,
-								profile: profileData
-							},function(response){
-								res.json( response );
-							});
-						}else{
-							Generalfunc.response(101,{},function(response){
-								res.json( response );
-							});
-						}			
-					});
-				});
-				
-			}
-		});
+			});
+
+		}
+	});
 
 });
 router.post('/sendemail', multipartMiddleware, function(req, res){
@@ -251,30 +251,30 @@ router.post('/login-facebook', multipartMiddleware, function(req, res){
 					profileData.facebookToken = tokenFB;
 
 					var facebookData = [
-						{
-							"name": "first_name",
-							"value": first_name
-						},
-						{
-							"name": "last_name",
-							"value": last_name
-						},
-						{
-							"name": "name",
-							"value":name
-						},
-						{
-							"name": "picture",
-							"value": profilepic
-						},
-						{
-							"name": "email",
-							"value": email
-						},
-						{
-							"name": "gender",
-							"value": gender
-						}
+					{
+						"name": "first_name",
+						"value": first_name
+					},
+					{
+						"name": "last_name",
+						"value": last_name
+					},
+					{
+						"name": "name",
+						"value":name
+					},
+					{
+						"name": "picture",
+						"value": profilepic
+					},
+					{
+						"name": "email",
+						"value": email
+					},
+					{
+						"name": "gender",
+						"value": gender
+					}
 					];
 
 					profileData.facebookData = [];
@@ -503,11 +503,11 @@ router.post('/checkpassword', multipartMiddleware, function(req, res){
 							});
 						}else{
 							Profilefunc.compare_password(password, userData.password, function(err, data){
-									Generalfunc.response(200, {
-										response: data
-									}, function(response){
-										res.json(response);
-									});
+								Generalfunc.response(200, {
+									response: data
+								}, function(response){
+									res.json(response);
+								});
 							});
 						}
 						
@@ -543,7 +543,19 @@ router.post('/checkpassword', multipartMiddleware, function(req, res){
 // Return (Formato 4)
 //		Profile
 //		Experiences
+/*
+router.post('/update', multipartMiddleware, function(req, res){
+	var guid      = req.body.guid;
 
+	var nombre    = req.body.first_name;
+	var apellido  = req.body.last_name;
+	var statusReq = req.body.status;
+	var job        = req.body.job;
+	var speciality = req.body.speciality;	
+	var birthday   = req.body.birthday;
+
+});
+*/
 router.post('/update', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 
@@ -556,6 +568,8 @@ router.post('/update', multipartMiddleware, function(req, res){
 
 	var type       = req.body.type;
 	var company    = req.body.company;
+	var job        = req.body.job;
+	var speciality = req.body.speciality;
 	var sector     = req.body.sector;
 	var ocupation  = req.body.ocupation;
 
@@ -576,8 +590,7 @@ router.post('/update', multipartMiddleware, function(req, res){
 							ocupation: job,
 						};
 					}
-					
-					Experiencefunc.insertOrExists(profileData,type, data, function(statusExperience, experienceData){
+					if(ocupation != undefined){
 						Experiencefunc.profileGenerate(profileData, function(profileData){
 							var job = {
 								id: jobData._id,
@@ -586,21 +599,45 @@ router.post('/update', multipartMiddleware, function(req, res){
 							profileData.job = job;
 							profileData.status = statusReq;
 
-						
-
-
-					
-
-					
-
-
-
+							if(birthday != undefined){
+								birthday = explDate(birthday);
+								birthday = new Date(birthday);
+								console.log(birthday);
+								if(validDate(birthday)){
+									profileData.birthday = birthday;
+								}
+							}
 
 							profileData.save(function(err, profileData){
 								res.json(profileData);
 							});
 						});
-					});
+					}else{
+						Experiencefunc.insertOrExists(profileData,type, data, function(statusExperience, experienceData){
+							Experiencefunc.profileGenerate(profileData, function(profileData){
+								var job = {
+									id: jobData._id,
+									name: jobData.name
+								};
+								profileData.job = job;
+								profileData.status = statusReq;
+
+								if(birthday != undefined){
+									birthday = explDate(birthday);
+									birthday = new Date(birthday);
+									console.log(birthday);
+									if(validDate(birthday)){
+										profileData.birthday = birthday;
+									}
+								}
+								
+								profileData.save(function(err, profileData){
+									res.json(profileData);
+								});
+							});
+						});	
+					}
+					
 				});
 			});
 		}else{
@@ -634,32 +671,32 @@ router.post('/experience', multipartMiddleware, function(req, res){
 	var ocupation  = req.body.ocupation;
 
 
-		Tokenfunc.exist(guid, function(status, tokenData){
-			if(status){
-				Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
-					var data = {
-						ocupation: ocupation,
-						company: company,
-						sector: sector
-					};
+	Tokenfunc.exist(guid, function(status, tokenData){
+		if(status){
+			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
+				var data = {
+					ocupation: ocupation,
+					company: company,
+					sector: sector
+				};
 
-					Experiencefunc.insertOrExists(profileData, data, function(statusExperience, experienceData){
-						console.log(experienceData);
-						Profile.findOne({ _id: profileData._id}, function(errProfile, profileData){
-							Experience.find({ profile_id: profileData._id}, function(errExperience, experienceData){
-								Generalfunc.response(200, { profile: format.littleProfile(profileData), experiences: experienceData}, function(response){
-									res.json(response);
-								});
+				Experiencefunc.insertOrExists(profileData, data, function(statusExperience, experienceData){
+					console.log(experienceData);
+					Profile.findOne({ _id: profileData._id}, function(errProfile, profileData){
+						Experience.find({ profile_id: profileData._id}, function(errExperience, experienceData){
+							Generalfunc.response(200, { profile: format.littleProfile(profileData), experiences: experienceData}, function(response){
+								res.json(response);
 							});
 						});
 					});
 				});
-			}else{
-				Generalfunc.response(101, {}, function(response){
-					res.json(response);
-				});
-			}
-		});
+			});
+		}else{
+			Generalfunc.response(101, {}, function(response){
+				res.json(response);
+			});
+		}
+	});
 });
 // UPDATE EXPERIENCE
 // Parameter:
@@ -915,23 +952,23 @@ router.post('/editskill', multipartMiddleware, function(req, res){ // Eliminar s
 
 	Tokenfunc.exist(guid, function(status, tokenData){
 		Tokenfunc.exist(guid, function(status, tokenData){
-		if(status){
-			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
-				Skillfunc.edit(profileData._id, from, to, function(err, profileData){
-					Profilefunc.formatoProfile(profileData._id,function( profileData ){
-						Generalfunc.response(200, profileData , function(response){
-							res.json(response);
+			if(status){
+				Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
+					Skillfunc.edit(profileData._id, from, to, function(err, profileData){
+						Profilefunc.formatoProfile(profileData._id,function( profileData ){
+							Generalfunc.response(200, profileData , function(response){
+								res.json(response);
+							});
 						});
 					});
 				});
-			});
-		}else{
-			Generalfunc.response(101, {}, function(response){
-				res.json(response);
-			})
-		}
-		
-	});	
+			}else{
+				Generalfunc.response(101, {}, function(response){
+					res.json(response);
+				})
+			}
+
+		});	
 	});
 });
 // DELETE SKILL
@@ -1164,7 +1201,7 @@ router.post('/location', multipartMiddleware, function(req, res){
 			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
 				if(status){
 					City.find().populate('state_id').find({
-							name: reg
+						name: reg
 					}).exec(function(err, cityData){
 						var data = [];
 						cityData.forEach(function(item, index){
@@ -1212,3 +1249,24 @@ router.post('/qrcode',multipartMiddleware, function(req, res){
 });
 
 module.exports = router;
+
+function validDate(d){
+	if ( Object.prototype.toString.call(d) === "[object Date]" ) {
+		if ( isNaN( d.getTime() ) ) {  // d.valueOf() could also work
+			return false;
+		}else {
+			return true;
+		}
+	}else {
+		return false;
+	}
+}
+function explDate(birthday){
+	var x = birthday.split('-');
+
+	var day    = x[0];
+	var month  = x[1];
+	var year   = x[2];
+
+	return year+"-"+month+"-"+day;
+}
