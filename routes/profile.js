@@ -794,7 +794,9 @@ router.post('/update-experience', multipartMiddleware, function(req, res){
 	var sector     = req.body.sector;
 	var ocupation  = req.body.ocupation;
 
-	id = mongoose.Types.ObjectId(id);
+	if(id != undefined){
+		id = mongoose.Types.ObjectId(id);	
+	}
 
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
