@@ -687,7 +687,9 @@ router.post('/update', multipartMiddleware, function(req, res){
 									name: jobData.name
 								};
 								profileData.job = job;
-								profileData.status = statusReq;
+								if(statusReq != undefined){
+									profileData.status = statusReq;	
+								}
 
 								if(birthday != undefined){
 									birthday = explDate(birthday);
@@ -785,71 +787,77 @@ router.post('/experience', multipartMiddleware, function(req, res){
 router.post('/update-experience', multipartMiddleware, function(req, res){
 	var guid       = req.body.guid;
 
+	var id         = req.body.id;
 	var type       = req.body.type;
 	var company    = req.body.company;
-	
-	var job        = req.body.job;
-	var speciality = req.body.speciality;
 
 	var sector     = req.body.sector;
 	var ocupation  = req.body.ocupation;
 
+	id = mongoose.Types.ObjectId(id);
+
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
 			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
-				var data = [];
-				if(type == 1){
-					data = {
-						ocupation: ocupation,
-						company: company,
-						sector: sector
-					};
-				}else{
-					data = {
-						ocupation: job,
-					};
-				}
-				
-				Experiencefunc.insertOrExists(profileData,type, data, function(statusExperience, experienceData){
-					Experiencefunc.specialityExistsOrCreate({
-						name: speciality
-					},{
-						name: speciality
-					}, function(status, specialityData){
-
+				console.log(profileData._id);
+				Experience.findOne({ profile_id: profileData._id, _id: id }, function(errorExp, experienceData){
+					Experiencefunc.companyExistsOrCreate({
+						name: company
+					}, {
+						name: company
+					}, function(statusCompany, companyData){
 						Experiencefunc.jobExistsOrCreate({
-							name: job
-						}, {
-							name: job
-						}, function(status, jobData){
-							console.log("JobExsits");
-							Profile.findOne({ _id: profileData._id }).exec(function(errProfile, profileData){
-								profileData.job = {
-									id: jobData._id,
-									name: jobData.name
-								};
-								profileData.speciality = {
-									id: specialityData._id,
-									name: specialityData.name
-								};
-								profileData.save(function(errProfile, profileData){
-									console.log(errProfile);
-									console.log("Save Profile");
-									console.log(profileData);
-									Profilefunc.logs(profileData, 3, experienceData, function(){
-										Experiencefunc.profileGenerate(profileData, function(profileData){
+							name: ocupation
+						},{
+							name: ocupation
+						},function(statusJob, ocupationData){
+							Experiencefunc.sectorExistsOrCreate({
+								name: sector
+							},{
+								name: sector
+							}, function(statusSector, sectorData){
+									
 
-											Generalfunc.response(200, profileData, function(response){
+
+
+								var data = {
+									profile_id: experienceData.profile_id,
+									type: experienceData.type,
+									ocupation: {
+										id:   ocupationData._id,
+										name: ocupationData.name
+									},
+									company: {
+										id: companyData._id,
+										name: companyData.name
+									},
+									sector: {
+										id: sectorData._id,
+										name: sectorData.name
+									}
+								};
+
+
+									experienceData.type = data.type;
+									experienceData.ocupation = data.ocupation;
+									experienceData.company = data.company;
+									experienceData.sector = data.sector;
+									experienceData.save(function(err, experienceData){
+										if(!err && experienceData){
+											Generalfunc.response(200, experienceData, function(response){
 												res.json(response);
-											});	
-										});
+											})
+										}else{
+											Generalfunc.response(101, experienceData, function(response){
+												res.json(response);
+											});
+										}
 									});
-								});
+
 							});
 						});
 					});
 				});
-				
 			});
 		}else{
 			Generalfunc.response(101, {}, function(response){
