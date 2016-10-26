@@ -48,9 +48,36 @@ var State        = model.state;
 var Country      = model.country;
 
 
-router.post('/conversation', multipartMiddleware, function(req, res){
+router.post('/conversations', multipartMiddleware, function(req, res){
+	var guid         = req.body.guid;
+	var conversation = req.body.conversation;
+	var text         = req.body.message;
 
+	Tokenfunc.exist(guid, function(status, tokenData){
+		console.log(status);
+		if(status){
+			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
+				if(status){
+
+					Conversation.find({
+						profiles: {
+							"$in" : [profileData._id]
+						}
+					}).exec(function(err, conversations){
+						console.log(conversations);
+					});
+				}else{
+
+				}
+			});
+		}else{
+
+		}
+	});				
+
+				
 });
+router
 router.post('/message', multipartMiddleware, function(req, res){
 	var guid         = req.body.guid;
 	var conversation = req.body.conversation;

@@ -90,11 +90,16 @@ app.use(function(err, req, res, next) {
 })
 
 
-io.on( "connection", function( socket )
-{
-  socket.on('chat message', function(data){
-    console.log(data);
-  });
+io.sockets.on('connection', function (socket) {
+    console.log('socket connected');
+
+    socket.on('disconnect', function () {
+        console.log('socket disconnected');
+    });
+    socket.on('message', function(h){
+      console.log(h);
+    });
+    socket.emit('text', 'wow. such event. very real time.');
 });
 
 
