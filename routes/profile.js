@@ -816,13 +816,22 @@ router.post('/update-experience', multipartMiddleware, function(req, res){
 							},{
 								name: sector
 							}, function(statusSector, sectorData){
+
+								var profile_id = "";
+								var type = "";
+								var exp = "";
+								if(experienceData == null){
+									profile_id = profileData._id;
+									type = 1;
+									exp = new Experience();
+								}else{
+									profile_id = experienceData.profile_id;
+									type = 1;
+								}
 									
-
-
-
 								var data = {
-									profile_id: experienceData.profile_id,
-									type: experienceData.type,
+									profile_id: profile_id,
+									type: type,
 									ocupation: {
 										id:   ocupationData._id,
 										name: ocupationData.name
@@ -837,11 +846,17 @@ router.post('/update-experience', multipartMiddleware, function(req, res){
 									}
 								};
 
-
+								if(experienceData == null){
+									experienceData = new Experience(data);
+								}else{
 									experienceData.type = data.type;
 									experienceData.ocupation = data.ocupation;
 									experienceData.company = data.company;
 									experienceData.sector = data.sector;
+								}
+									
+									
+									
 									experienceData.save(function(err, experienceData){
 										if(!err && experienceData){
 											Generalfunc.response(200, experienceData, function(response){
