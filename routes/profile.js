@@ -405,6 +405,7 @@ router.post('/get', multipartMiddleware, function(req, res){
 router.post('/setfacebook',multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 
+	var email      = req.body.email;
 	var first_name     = req.body.first_name;
 	var last_name   = req.body.last_name;
 	var gender     = req.body.gender;
