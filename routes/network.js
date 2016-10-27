@@ -377,7 +377,6 @@ router.post('/facebooktofriend', multipartMiddleware, function(req, res){
 		if(errToken){
 			Tokenfunc.toProfile(token.generated_id, function(status, userData, profileData){
 				if(status){
-
 					var facebook = [];
 					console.log(status);
 					Profile.find({
@@ -441,6 +440,7 @@ router.post('/phonetofriend', multipartMiddleware, function(req, res){
 							$in: split
 						}
 					}).exec(function(profileErr, facebookProfileData){
+						console.log(facebookProfileData);
 						facebookProfileData.forEach(function(item, index){
 							console.log(index);
 							Networkfunc.isFriend(profileData._id, facebookProfileData._id, function(d){
