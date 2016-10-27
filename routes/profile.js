@@ -453,7 +453,7 @@ router.post('/setfacebook',multipartMiddleware, function(req, res){
 					profileData.facebookData = facebookData;
 
 					profileData.save(function(errProfile, profileData){
-						Generalfunc.response(200, profile, function(response){
+						Generalfunc.response(200, profileData, function(response){
 							res.json(response);
 						});
 					});
