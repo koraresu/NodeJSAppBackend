@@ -351,5 +351,25 @@ router.post('/company/get', multipartMiddleware, function(req, res){
 		}
 	});
 });
+router.post('/company/getid', multipartMiddleware, function(req, res){
+	var guid      = req.body.guid;
+	var id        = req.body.id;
+	if(mongoose.Types.ObjectId.isValid(id)){
+		id = mongoose.Types.ObjectId(id);
+	}
+	Tokenfunc.exist(guid, function(status, token){
+		if(status){
+			Company.find({ _id: id }).exec(function(err, companyData){
+				Generalfunc.response(200,companyData, function(response){
+					res.json(response);
+				});
+			});
+		}else{
+			Generalfunc.response(101, {}, function(response){
+				res.json(response);
+			});
+		}
+	});
+});
 
 module.exports = router;
