@@ -366,6 +366,49 @@ router.post('/emailtofriend', multipartMiddleware, function(req, res){
 			}
 		});
 });
+router.post('/facebooktofriend', multipartMiddleware, function(req, res){
+	var guid       = req.body.guid;
+	var facebookids     = req.body.facebookid;
+
+
+	var split = facebookids.split(',');
+
+	console.log(split);
+
+
+	Profile.find({
+		"facebookId": {
+			$in: split
+		}
+	}).exec(function(profileErr, profileData){
+		Generalfunc.response(200, profileData, function(response){
+			res.json(response);
+		});
+	});
+
+});
+router.post('/phonetofriend', multipartMiddleware, function(req, res){
+	var guid       = req.body.guid;
+	var phones     = req.body.phones;
+
+
+	var split = phones.split(',');
+
+	console.log(split);
+
+
+	Profile.find({
+		"phone": {
+			$in: split
+		}
+	}).exec(function(profileErr, profileData){
+		Generalfunc.response(200, profileData, function(response){
+			res.json(response);
+		});
+	});
+
+});
+
 // SEARCH NETWORK [Test Seccion Buscador con Secciones(Colmena, Vecina y Otros)]
 // Parameter:
 //  	Token
