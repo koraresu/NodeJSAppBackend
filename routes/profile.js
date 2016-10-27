@@ -658,57 +658,28 @@ router.post('/update', multipartMiddleware, function(req, res){
 							ocupation: job,
 						};
 					}
-					//if(ocupation != undefined){
-						Experiencefunc.profileGenerate(profileData, function(profileData){
-							var job = {
-								id: jobData._id,
-								name: jobData.name
-							};
-							profileData.job = job;
-							profileData.status = statusReq;
+					
+					Experiencefunc.profileGenerate(profileData, function(profileData){
+						var job = {
+							id: jobData._id,
+							name: jobData.name
+						};
+						profileData.job = job;
+						profileData.status = statusReq;
 
-							if(birthday != undefined){
-								birthday = explDate(birthday);
-								birthday = new Date(birthday);
-								console.log(birthday);
-								if(validDate(birthday)){
-									profileData.birthday = birthday;
-								}
+						if(birthday != undefined){
+							birthday = explDate(birthday);
+							birthday = new Date(birthday);
+							console.log(birthday);
+							if(validDate(birthday)){
+								profileData.birthday = birthday;
 							}
+						}
 
-							profileData.save(function(err, profileData){
-								res.json(profileData);
-							});
+						profileData.save(function(err, profileData){
+							res.json(profileData);
 						});
-					/*
-					}else{
-						Experiencefunc.insertOrExists(profileData,type, data, function(statusExperience, experienceData){
-							Experiencefunc.profileGenerate(profileData, function(profileData){
-								var job = {
-									id: jobData._id,
-									name: jobData.name
-								};
-								profileData.job = job;
-								if(statusReq != undefined){
-									profileData.status = statusReq;	
-								}
-
-								if(birthday != undefined){
-									birthday = explDate(birthday);
-									birthday = new Date(birthday);
-									console.log(birthday);
-									if(validDate(birthday)){
-										profileData.birthday = birthday;
-									}
-								}
-								
-								profileData.save(function(err, profileData){
-									res.json(profileData);
-								});
-							});
-						});	
-					}
-					*/
+					});
 				});
 			});
 		}else{
@@ -858,9 +829,12 @@ router.post('/update-experience', multipartMiddleware, function(req, res){
 
 								experienceData.save(function(err, experienceData){
 									if(!err && experienceData){
-										Generalfunc.response(200, experienceData, function(response){
-											res.json(response);
-										})
+										Experiencefunc.profileGenerate(profileData, function(profileData){
+											Generalfunc.response(200, profileData, function(response){
+												res.json(response);
+											});
+										});
+										
 									}else{
 										Generalfunc.response(101, experienceData, function(response){
 											res.json(response);
@@ -948,12 +922,12 @@ router.post('/update-experience', multipartMiddleware, function(req, res){
 				}
 				
 			});
-}else{
-	Generalfunc.response(101, {}, function(response){
-		res.json(response);
-	})
-}
-});
+		}else{
+			Generalfunc.response(101, {}, function(response){
+				res.json(response);
+			})
+		}
+	});
 });
 /*
 router.post('/update-experience', multipartMiddleware, function(req, res){
