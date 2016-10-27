@@ -404,7 +404,7 @@ router.post('/facebooktofriend', multipartMiddleware, function(req, res){
 								
 							});
 						}else{
-							Generalfunc.response(101, {}, function(response){
+							Generalfunc.response(113, {}, function(response){
 											res.json(response);
 										});
 						}
