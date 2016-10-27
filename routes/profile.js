@@ -796,7 +796,9 @@ router.post('/update-experience', multipartMiddleware, function(req, res){
 	var sector     = req.body.sector;
 	var ocupation  = req.body.ocupation;
 
-	if(id != undefined){
+	console.log("ID: '"+id+"'");
+	id = id.trim();
+	if(mongoose.Types.ObjectId.isValid(id)){
 		id = mongoose.Types.ObjectId(id);	
 	}
 
