@@ -80,15 +80,15 @@ router.post('/connect', multipartMiddleware, function(req, res){
 								var network = new Network({
 									accepted: true,
 									profiles: [
-										profileData._id,
-										profileAnotherData._id
+									profileData._id,
+									profileAnotherData._id
 									]
 								});
 								network.save(function(err, networkData){
 									var notification = new Notification({
 										tipo: 3,
-	  									profile: profileAnotherData._id,
-	  									profile_emisor: profileData._id,
+										profile: profileAnotherData._id,
+										profile_emisor: profileData._id,
 									});
 									notification.save(function(errNotification, notificationData){
 										var data = {
@@ -147,8 +147,8 @@ router.post('/accept', multipartMiddleware, function(req, res){
 								networkData.save(function(err, network){
 									var notification = new Notification({
 										tipo: 4,
-	  									profile: profileData._id,
-	  									profile_emisor: profileAnotherData._id,
+										profile: profileData._id,
+										profile_emisor: profileAnotherData._id,
 									});
 									notification.save(function(errNotification, notificationData){
 										var data = {
@@ -255,8 +255,8 @@ router.post('/unfriend', multipartMiddleware, function(req, res){
 								}
 							}else{
 								Generalfunc.response(404, {}, function(response){
-										res.json(response);
-									});
+									res.json(response);
+								});
 							}
 						});
 					}else{
@@ -341,30 +341,30 @@ router.post('/emailtofriend', multipartMiddleware, function(req, res){
 	var split = emails.split(',');
 	
 	User.find({
-			"email": { $in: split }
-		}, function(userErr, userData){
-			console.log(userData);
+		"email": { $in: split }
+	}, function(userErr, userData){
+		console.log(userData);
 
-			var data = [];
-			if(userData.length > 0){
-				userData.forEach(function(userItem, userIndex){
-					Profile.findOne({ user_id: userItem._id}, function(profileErr, profileData){
-						data.push(profileData);
+		var data = [];
+		if(userData.length > 0){
+			userData.forEach(function(userItem, userIndex){
+				Profile.findOne({ user_id: userItem._id}, function(profileErr, profileData){
+					data.push(profileData);
 
-						if((userData.length-1) == userIndex){
-							Generalfunc.response(200, data, function(response){
-								res.json(response);
-							});
-							
-						}
-					});
+					if((userData.length-1) == userIndex){
+						Generalfunc.response(200, data, function(response){
+							res.json(response);
+						});
+						
+					}
 				});
-			}else{
-				Generalfunc.response(200, {}, function(response){
-					res.json(response);
-				});
-			}
-		});
+			});
+		}else{
+			Generalfunc.response(200, {}, function(response){
+				res.json(response);
+			});
+		}
+	});
 });
 router.post('/facebooktofriend', multipartMiddleware, function(req, res){
 	var guid       = req.body.guid;
@@ -407,14 +407,14 @@ router.post('/facebooktofriend', multipartMiddleware, function(req, res){
 					});
 				}else{
 					Generalfunc.response(101, {}, function(response){
-										res.json(response);
-									});
+						res.json(response);
+					});
 				}
 			});
 		}else{
 			Generalfunc.response(101, {}, function(response){
-										res.json(response);
-									});
+				res.json(response);
+			});
 		}
 	});
 
@@ -428,28 +428,48 @@ router.post('/phonetofriend', multipartMiddleware, function(req, res){
 
 	console.log(split);
 
+	Tokenfunc.exist(guid, function(errToken, token){
+		if(errToken){
+			Tokenfunc.toProfile(token.generated_id, function(status, userData, profileData){
+				if(status){
 
-	Profile.find({
-		"phone": {
-			$in: split
+					var facebook = [];
+					Profile.find({
+						"phone": {
+							$in: split
+						}
+					}).exec(function(profileErr, facebookProfileData){
+						facebookProfileData.forEach(function(item, index){
+							console.log(index);
+							Networkfunc.isFriend(profileData._id, facebookProfileData._id, function(d){
+								console.log(d);
+								var x = {};
+								x.profile = item;
+								x.isfriend = d;
+								facebook[facebook.length] = x;
+
+								if((facebookProfileData.length-1) == index){
+									Generalfunc.response(200, facebook, function(response){
+										res.json(response);
+									});
+								}	
+							})
+							
+						});
+					});
+				}else{
+					Generalfunc.response(101, {}, function(response){
+						res.json(response);
+					});
+				}
+			});
+		}else{
+			Generalfunc.response(101, {}, function(response){
+				res.json(response);
+			});
 		}
-	}).exec(function(profileErr, profileData){
-		profileData.forEach(function(item, index){
 
-			
-
-			if((profileData.length-1) == index){
-
-			}
-		});
-		/*
-		Generalfunc.response(200, profileData, function(response){
-			res.json(response);
-		});
-		*/
 	});
-
-});
 
 // SEARCH NETWORK [Test Seccion Buscador con Secciones(Colmena, Vecina y Otros)]
 // Parameter:
@@ -623,16 +643,16 @@ router.post('/review/get', multipartMiddleware, function(req, res){
 	Tokenfunc.exist(guid, function(errToken, token){
 		if(errToken){
 			Tokenfunc.toProfile(token.generated_id, function(status, userData, profileData, profileInfoData){
-					if(typeof max != "undefined"){
-						max = max*1;
-						var r = Review.find({ profile_id: profileData._id});
-						r = r.limit(max);
-					}
-					r.exec(function(errReview, reviewData){
-						Generalfunc.response(200, reviewData, function(response){
-							res.json(response);
-						});
+				if(typeof max != "undefined"){
+					max = max*1;
+					var r = Review.find({ profile_id: profileData._id});
+					r = r.limit(max);
+				}
+				r.exec(function(errReview, reviewData){
+					Generalfunc.response(200, reviewData, function(response){
+						res.json(response);
 					});
+				});
 			});
 		}else{
 
