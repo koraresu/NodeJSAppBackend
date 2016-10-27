@@ -797,11 +797,14 @@ router.post('/update-experience', multipartMiddleware, function(req, res){
 	var ocupation  = req.body.ocupation;
 
 	console.log("ID: '"+id+"'");
-	id = id.trim();
 	var d = {};
-	if(mongoose.Types.ObjectId.isValid(id)){
-		id = mongoose.Types.ObjectId(id);
-		d._id = id;
+	if(id != undefined){
+		id = id.trim();
+		
+		if(mongoose.Types.ObjectId.isValid(id)){
+			id = mongoose.Types.ObjectId(id);
+			d._id = id;
+		}
 	}
 
 	Tokenfunc.exist(guid, function(status, tokenData){
