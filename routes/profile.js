@@ -812,7 +812,7 @@ router.post('/update-experience', multipartMiddleware, function(req, res){
 			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
 				console.log(profileData._id);
 				d.profile_id = profileData._id;
-				Experience.findOne(d, function(errorExp, experienceData){
+				if(id == undefined){
 					Experiencefunc.companyExistsOrCreate({
 						name: company
 					}, {
@@ -828,19 +828,11 @@ router.post('/update-experience', multipartMiddleware, function(req, res){
 							},{
 								name: sector
 							}, function(statusSector, sectorData){
+								
+								var profile_id = profileData._id;
+								var type = 1;
+								var exp = new Experience();
 
-								var profile_id = "";
-								var type = "";
-								var exp = "";
-								if(experienceData == null){
-									profile_id = profileData._id;
-									type = 1;
-									exp = new Experience();
-								}else{
-									profile_id = experienceData.profile_id;
-									type = 1;
-								}
-									
 								var data = {
 									profile_id: profile_id,
 									type: type,
@@ -858,17 +850,85 @@ router.post('/update-experience', multipartMiddleware, function(req, res){
 									}
 								};
 
-								if(experienceData == null){
-									experienceData = new Experience(data);
-								}else{
-									experienceData.type = data.type;
-									experienceData.ocupation = data.ocupation;
-									experienceData.company = data.company;
-									experienceData.sector = data.sector;
-								}
-									
-									
-									
+								
+								var experienceData = new Experience(data);
+								
+
+
+
+								experienceData.save(function(err, experienceData){
+									if(!err && experienceData){
+										Generalfunc.response(200, experienceData, function(response){
+											res.json(response);
+										})
+									}else{
+										Generalfunc.response(101, experienceData, function(response){
+											res.json(response);
+										});
+									}
+								});
+
+							});
+						});
+					});
+				}else{
+					Experience.findOne(d, function(errorExp, experienceData){
+						Experiencefunc.companyExistsOrCreate({
+							name: company
+						}, {
+							name: company
+						}, function(statusCompany, companyData){
+							Experiencefunc.jobExistsOrCreate({
+								name: ocupation
+							},{
+								name: ocupation
+							},function(statusJob, ocupationData){
+								Experiencefunc.sectorExistsOrCreate({
+									name: sector
+								},{
+									name: sector
+								}, function(statusSector, sectorData){
+
+									var profile_id = "";
+									var type = "";
+									var exp = "";
+									if(experienceData == null){
+										profile_id = profileData._id;
+										type = 1;
+										exp = new Experience();
+									}else{
+										profile_id = experienceData.profile_id;
+										type = 1;
+									}
+
+									var data = {
+										profile_id: profile_id,
+										type: type,
+										ocupation: {
+											id:   ocupationData._id,
+											name: ocupationData.name
+										},
+										company: {
+											id: companyData._id,
+											name: companyData.name
+										},
+										sector: {
+											id: sectorData._id,
+											name: sectorData.name
+										}
+									};
+
+									if(experienceData == null){
+										experienceData = new Experience(data);
+									}else{
+										experienceData.type = data.type;
+										experienceData.ocupation = data.ocupation;
+										experienceData.company = data.company;
+										experienceData.sector = data.sector;
+									}
+
+
+
 									experienceData.save(function(err, experienceData){
 										if(!err && experienceData){
 											Generalfunc.response(200, experienceData, function(response){
@@ -881,17 +941,19 @@ router.post('/update-experience', multipartMiddleware, function(req, res){
 										}
 									});
 
+								});
 							});
 						});
 					});
-				});
+				}
+				
 			});
-		}else{
-			Generalfunc.response(101, {}, function(response){
-				res.json(response);
-			})
-		}
-	});
+}else{
+	Generalfunc.response(101, {}, function(response){
+		res.json(response);
+	})
+}
+});
 });
 /*
 router.post('/update-experience', multipartMiddleware, function(req, res){
