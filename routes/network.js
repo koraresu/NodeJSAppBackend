@@ -374,16 +374,48 @@ router.post('/facebooktofriend', multipartMiddleware, function(req, res){
 	var split = facebookids.split(',');
 
 	console.log(split);
+	Tokenfunc.exist(guid, function(errToken, token){
+		if(errToken){
+			Tokenfunc.toProfile(token.generated_id, function(status, userData, profileData){
+				if(status){
+
+					var facebook = [];
+					Profile.find({
+						"facebookId": {
+							$in: split
+						}
+					}).exec(function(profileErr, facebookProfileData){
+						facebookProfileData.forEach(function(item, index){
+
+							Networkfunc.isFriend(profileData._id, facebookProfileData._id, function(d){
+								console.log(d);
+								var x = item;
+
+								facebook[facebook.length] = x;
+
+								if((facebookProfileData.length-1) == index){
+									Generalfunc.response(200, facebook, function(response){
+										res.json(response);
+									});
+								}	
+							})
+							
+						});
 
 
-	Profile.find({
-		"facebookId": {
-			$in: split
+						
+					});
+				}else{
+					Generalfunc.response(101, {}, function(response){
+										res.json(response);
+									});
+				}
+			});
+		}else{
+			Generalfunc.response(101, {}, function(response){
+										res.json(response);
+									});
 		}
-	}).exec(function(profileErr, profileData){
-		Generalfunc.response(200, profileData, function(response){
-			res.json(response);
-		});
 	});
 
 });
@@ -402,9 +434,19 @@ router.post('/phonetofriend', multipartMiddleware, function(req, res){
 			$in: split
 		}
 	}).exec(function(profileErr, profileData){
+		profileData.forEach(function(item, index){
+
+			
+
+			if((profileData.length-1) == index){
+
+			}
+		});
+		/*
 		Generalfunc.response(200, profileData, function(response){
 			res.json(response);
 		});
+		*/
 	});
 
 });
