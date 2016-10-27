@@ -798,15 +798,18 @@ router.post('/update-experience', multipartMiddleware, function(req, res){
 
 	console.log("ID: '"+id+"'");
 	id = id.trim();
+	var d = {};
 	if(mongoose.Types.ObjectId.isValid(id)){
-		id = mongoose.Types.ObjectId(id);	
+		id = mongoose.Types.ObjectId(id);
+		d._id = id;
 	}
 
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
 			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
 				console.log(profileData._id);
-				Experience.findOne({ profile_id: profileData._id, _id: id }, function(errorExp, experienceData){
+				d.profile_id = profileData._id;
+				Experience.findOne(d, function(errorExp, experienceData){
 					Experiencefunc.companyExistsOrCreate({
 						name: company
 					}, {
