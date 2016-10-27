@@ -658,7 +658,7 @@ router.post('/update', multipartMiddleware, function(req, res){
 							ocupation: job,
 						};
 					}
-					if(ocupation != undefined){
+					//if(ocupation != undefined){
 						Experiencefunc.profileGenerate(profileData, function(profileData){
 							var job = {
 								id: jobData._id,
@@ -680,6 +680,7 @@ router.post('/update', multipartMiddleware, function(req, res){
 								res.json(profileData);
 							});
 						});
+					/*
 					}else{
 						Experiencefunc.insertOrExists(profileData,type, data, function(statusExperience, experienceData){
 							Experiencefunc.profileGenerate(profileData, function(profileData){
@@ -707,7 +708,7 @@ router.post('/update', multipartMiddleware, function(req, res){
 							});
 						});	
 					}
-					
+					*/
 				});
 			});
 		}else{
