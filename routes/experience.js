@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 
+var mongoose    = require('mongoose');
+
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
 
