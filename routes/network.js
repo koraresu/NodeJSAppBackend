@@ -373,7 +373,6 @@ router.post('/facebooktofriend', multipartMiddleware, function(req, res){
 
 	var split = facebookids.split(',');
 
-	console.log(split);
 	Tokenfunc.exist(guid, function(errToken, token){
 		if(errToken){
 			Tokenfunc.toProfile(token.generated_id, function(status, userData, profileData){
@@ -386,11 +385,12 @@ router.post('/facebooktofriend', multipartMiddleware, function(req, res){
 						}
 					}).exec(function(profileErr, facebookProfileData){
 						facebookProfileData.forEach(function(item, index){
-
+							console.log(index);
 							Networkfunc.isFriend(profileData._id, facebookProfileData._id, function(d){
 								console.log(d);
-								var x = item;
-
+								var x = {};
+								x.profile = item;
+								x.isfriend = d;
 								facebook[facebook.length] = x;
 
 								if((facebookProfileData.length-1) == index){
