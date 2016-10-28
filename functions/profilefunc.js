@@ -102,7 +102,6 @@ function formatoProfile(profile_id,cb){
 								"review_score": profileData.review_score,
 								"phone": profileData.phone 
 							},
-							experiences: experienceData,
 							review: reviewData,
 							trabajo: trabajoData
 						};
