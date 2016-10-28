@@ -358,7 +358,7 @@ router.post('/company/claim', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 	var id        = req.body.id;
 
-	if(mongoose.Types.ObjectId.valid(id)){
+	if(mongoose.Types.ObjectId.isValid(id)){
 		id = mongoose.Types.ObjectId(id);
 	}
 	Tokenfunc.exist(guid, function(status, tokenData){
