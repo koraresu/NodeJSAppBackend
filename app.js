@@ -23,6 +23,7 @@ var extra        = require('./routes/extra');
 var chat         = require('./routes/chat');
 var notification = require('./routes/notifications');
 
+var gps = require('./routes/gps');
 
 
 var app = express();
@@ -90,17 +91,9 @@ app.use(function(err, req, res, next) {
 })
 
 
-io.sockets.on('connection', function (socket) {
-    console.log('socket connected');
+gps(io);
+//var chat = require('chat')(io);
 
-    socket.on('disconnect', function () {
-        console.log('socket disconnected');
-    });
-    socket.on('message', function(h){
-      console.log(h);
-    });
-    socket.emit('text', 'wow. such event. very real time.');
-});
 
 
 

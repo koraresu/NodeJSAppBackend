@@ -353,6 +353,30 @@ router.post('/company/get', multipartMiddleware, function(req, res){
 		}
 	});
 });
+router.post('/company/claim', multipartMiddleware, function(req, res){
+	var guid      = req.body.guid;
+	Tokenfunc.exist(guid, function(status, tokenData){
+		if(status){
+			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
+				if(status){
+					Profilefunc.formatoProfile(profileData._id,function( profile ){
+						Generalfunc.response(200, profile, function(response){
+							res.json(response);
+						})
+					});
+				}else{
+					Generalfunc.response(101, {}, function(response){
+							res.json(response);
+						})
+				}
+			});
+		}else{
+			Generalfunc.response(101, {}, function(response){
+				res.json(response);
+			});
+		}
+	});
+});
 router.post('/company/getid', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 	var id        = req.body.id;

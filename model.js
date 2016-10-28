@@ -52,6 +52,13 @@ var profileSchema = new Schema({
 },{
   timestamps: true
 });
+var locationSchema = new Schema({
+  x: { type: String },
+  y: { type: String },
+  profiles: { type: Schema.Types.ObjectId, ref: 'Profile' }
+}, {
+  timestamps: true
+});
 
 var NetworkSchema = new Schema({
 	accepted: Boolean,
@@ -213,6 +220,7 @@ var CiudadSchema = new Schema({
 exports.company      = db.model( 'Company' , companySchema );
 exports.experience   = db.model( 'Experience' , experienceSchema );
 exports.job          = db.model( 'Job' , jobSchema );
+exports.location     = db.model( 'GPS', locationSchema);
 exports.skill        = db.model( 'Skill' , skillsSchema );
 exports.speciality   = db.model( 'Speciality' , specialitySchema );
 exports.sector       = db.model( 'Sector' , sectorSchema );
