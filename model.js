@@ -59,7 +59,11 @@ var locationSchema = new Schema({
 }, {
   timestamps: true
 });
+var CompanyClaimSchema = new Schema({
 
+}, {
+  timestamps: true
+});
 var NetworkSchema = new Schema({
 	accepted: Boolean,
 	profiles: [{ type: Schema.Types.ObjectId, ref: 'Profile' }]
@@ -221,6 +225,7 @@ exports.company      = db.model( 'Company' , companySchema );
 exports.experience   = db.model( 'Experience' , experienceSchema );
 exports.job          = db.model( 'Job' , jobSchema );
 exports.location     = db.model( 'GPS', locationSchema);
+exports.co_claim     = db.model( 'CompanyClaim', CompanyClaimSchema);
 exports.skill        = db.model( 'Skill' , skillsSchema );
 exports.speciality   = db.model( 'Speciality' , specialitySchema );
 exports.sector       = db.model( 'Sector' , sectorSchema );

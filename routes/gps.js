@@ -20,6 +20,7 @@ module.exports = function(io){
 									profile: profileData,
 									gps: data.gps
 								};
+								console.log(d);
 								socket.emit('getlocation', d);
 								socket.broadcast.emit('getlocation', d);
 							}
