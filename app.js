@@ -91,6 +91,11 @@ app.use(function(err, req, res, next) {
 })
 
 
+var sockets = io.connect('http://67.222.22.154:3000');
+sockets.on('connection', function(socket){
+
+});
+
 gps(io);
 //var chat = require('chat')(io);
 
