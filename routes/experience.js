@@ -6,21 +6,22 @@ var mongoose    = require('mongoose');
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
 
-var model = require('../model');
-var Profile     = model.profile;
-var User        = model.user;
-var Token       = model.token;
-var Job         = model.job;
-var Company     = model.company;
-var Experience  = model.experience;
-var Network     = model.network;
-var History     = model.history;
-var Feedback    = model.feedback;
-var Review      = model.review;
-var Log         = model.log;
-var Skill       = model.skill;
-var Speciality  = model.speciality;
-var Sector      = model.sector;
+var model        = require('../model');
+var Profile      = model.profile;
+var User         = model.user;
+var Token        = model.token;
+var Job          = model.job;
+var Company      = model.company;
+var CompanyClaim = model.company_claim;
+var Experience   = model.experience;
+var Network      = model.network;
+var History      = model.history;
+var Feedback     = model.feedback;
+var Review       = model.review;
+var Log          = model.log;
+var Skill        = model.skill;
+var Speciality   = model.speciality;
+var Sector       = model.sector;
 var Notification = model.notification;
 var Feedback     = model.feedback;
 var Conversation = model.conversation;
@@ -355,14 +356,29 @@ router.post('/company/get', multipartMiddleware, function(req, res){
 });
 router.post('/company/claim', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
+	var id        = req.body.id;
+
+	if(mongoose.Types.ObjectId.valid(id)){
+		id = mongoose.Types.ObjectId(id);
+	}
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
 			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
 				if(status){
 					Profilefunc.formatoProfile(profileData._id,function( profile ){
-						Generalfunc.response(200, profile, function(response){
-							res.json(response);
-						})
+						var claim = new CompanyClaim({
+							profile: profileData._id,
+							company: id
+						});
+						
+						claim.save(function(err, c_claim){
+							CompanyClaim.find({ _id: c_claim._id }).populate('profile').populate('company').exec(function(errComp, compData){
+								Generalfunc.response(200, compData, function(response){
+									res.json(response);
+								})
+							});
+							
+						});
 					});
 				}else{
 					Generalfunc.response(101, {}, function(response){
