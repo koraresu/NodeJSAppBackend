@@ -90,13 +90,21 @@ app.use(function(err, req, res, next) {
   res.status(500).send('internal server error');
 })
 
-
-var sockets = io.connect('http://67.222.22.154:3000');
-sockets.on('connection', function(socket){
-
+io.sockets.on('connection', function (socket) {
+ console.log('socket connected');
+ gps(io);
+ //var chat = require('chat')(io);
+ 
+ socket.on('disconnect', function () {
+   console.log('socket disconnected');
+ });
+ socket.on('message', function(h){
+   console.log(h);
+ });
+ socket.emit('text', 'wow. such event. very real time.');
 });
 
-gps(io);
+//gps(io);
 //var chat = require('chat')(io);
 
 
