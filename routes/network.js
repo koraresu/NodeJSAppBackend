@@ -358,6 +358,7 @@ router.post('/emailtofriend', multipartMiddleware, function(req, res){
 					data.push(profileData);
 
 					if((userData.length-1) == userIndex){
+						console.log(split);
 						Generalfunc.response(200, { profiles: data, uknown: split }, function(response){
 							res.json(response);
 						});
