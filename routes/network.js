@@ -453,10 +453,10 @@ router.post('/phonetofriend', multipartMiddleware, function(req, res){
 							
 							var x = split.indexOf(item.phone);
 							console.log("X:"+x);
-							split = split.slice(x, 1);
+							split = split.splice(x, 1);
 
 							console.log(split);
-							
+
 							Networkfunc.isFriend(profileData._id, facebookProfileData._id, function(d){
 								console.log(d);
 								var x = {};
