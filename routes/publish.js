@@ -84,6 +84,9 @@ router.post('/write/comentario', multipartMiddleware, function(req, res){
 // 		News
 
 function save_news(profileData, title, content, gallery,callback){
+	if(gallery == null){
+		gallery = [];
+	}
 	var h = {
 		title: title,
 		content: content,
@@ -206,70 +209,81 @@ router.post('/write/news/loi', multipartMiddleware, function(req, res){
 	});
 	
 });
-router.post('write/news/image', multipartMiddleware, function(req, res){
+router.post('/write/news/image', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 	var history   = req.body.id;
 	var images     = req.files;
-
-	console.log(req.body);
-	console.log(images);
-	console.log(history);
+	var data = [];
 
 	if(mongoose.Types.ObjectId.isValid(history)){
 		history = mongoose.Types.ObjectId(history);
 	}
-	Tokenfunc.exist(guid, function(status, tokenData){
+	
+	if(images.image != undefined){
+		var image = images.image;
+		Tokenfunc.exist(guid, function(status, tokenData){
 
-		if(status){
-			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
-				if(status){
-					if(images[0] != undefined){
-						var file = images[0];
-						var objectId    = new ObjectID();
-						var fileName  = file.fieldName;
-						var pathfile  = file.path;
-						var extension = path.extname(pathfile);
-						var file_pic    = shortid.generate() + extension;
+			if(status){
+				Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
+					if(status){
+						if(image != undefined){
+							var file = image;
+							var objectId    = new ObjectID();
+							var fileName  = file.fieldName;
+							var pathfile  = file.path;
+							var extension = path.extname(pathfile);
+							var file_pic    = shortid.generate() + extension;
 
-						var new_path = path.dirname(path.dirname(process.mainModule.filename)) + '/public/gallery/' + file_pic;
-						fs.rename(pathfile, new_path, function(err){
-							if (err){
-								throw err;
-							}else{
-								var p = file_pic;
-								
+							var new_path = path.dirname(path.dirname(process.mainModule.filename)) + '/public/gallery/' + file_pic;
+							fs.rename(pathfile, new_path, function(err){
+								if (err){
+									throw err;
+								}else{
+									var p = file_pic;
 
-								History.find({ _id: history }).exec(function(errHistory, historyData){
-									if( historyData.data.gallery == undefined){
-										historyData.data.gallery = [];
-									}
-									historyData.data.gallery[historyData.data.gallery.length] = { "url" : p };
 
-									historyData.save(function(err, history){
-										Generalfunc.response(200, history, function(response){
-											res.json(response);
+									History.findOne({ _id: history }).exec(function(errHistory, historyData){
+
+										data = data.concat(historyData.data.gallery);
+										data.push({ "url" : p });
+										historyData.data.gallery = data;
+
+										console.log(historyData);
+										
+										historyData.save(function(err, history){
+											History.findOne({ _id: history._id }).exec(function(errHistory, historyData){
+												Generalfunc.response(200, historyData, function(response){
+													res.json(response);
+												});
+											});
 										});
 									});
-								});
-							}
-						});
+								}
+							});
+						}else{
+							Generalfunc.response(101, {}, function(response){
+								res.json(response);
+							});
+						}
 					}else{
 						Generalfunc.response(101, {}, function(response){
 							res.json(response);
 						});
 					}
-				}else{
-					Generalfunc.response(101, {}, function(response){
-						res.json(response);
-					});
-				}
-			});
-		}else{
-			Generalfunc.response(101, {}, function(response){
-				res.json(response);
-			});
-		}
-	});
+				});
+			}else{
+				Generalfunc.response(101, {}, function(response){
+					res.json(response);
+				});
+			}
+		});
+	}else{
+		Generalfunc.response(101, { error: "No image" }, function(response){
+			res.json(response);
+		});
+	}
+
+	
 });
 // GET NEWS
 // Parameter
