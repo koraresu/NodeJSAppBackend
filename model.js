@@ -100,7 +100,7 @@ var experienceSchema = new Schema({
     id: { type: Schema.Types.ObjectId, ref: 'sectors' },
     name: String
   },
-  profile_id: { type: Schema.Types.ObjectId, ref: 'profiles' },
+  profile_id: { type: Schema.Types.ObjectId, ref: 'Profile' },
 },{
   timestamps: true
 });

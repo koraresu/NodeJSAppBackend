@@ -401,13 +401,16 @@ router.post('/company/getid', multipartMiddleware, function(req, res){
 		Tokenfunc.exist(guid, function(status, token){
 			if(status){
 				Company.findOne({ _id: id }).exec(function(err, companyData){
-					/*var data = {
-						company: companyData,
-					};
-					Generalfunc.response(200,companyData, function(response){
-						res.json(response);
+					Experience.find({ "company.id": id }).populate('profile_id').exec(function(err, experienceData){
+						var data = {
+							company: companyData,
+							trabajo: experienceData
+						};
+						Generalfunc.response(200,data, function(response){
+							res.json(response);
+						});
+						
 					});
-					*/
 				});
 			}else{
 				Generalfunc.response(101, {}, function(response){
