@@ -400,7 +400,10 @@ router.post('/company/getid', multipartMiddleware, function(req, res){
 		id = mongoose.Types.ObjectId(id);
 		Tokenfunc.exist(guid, function(status, token){
 			if(status){
-				Company.find({ _id: id }).exec(function(err, companyData){
+				Company.findOne({ _id: id }).exec(function(err, companyData){
+					var data = {
+						company: companyData,
+					};
 					Generalfunc.response(200,companyData, function(response){
 						res.json(response);
 					});

@@ -206,11 +206,18 @@ router.post('/write/news/loi', multipartMiddleware, function(req, res){
 	});
 	
 });
-router.post('write/news/images', multipartMiddleware, function(req, res){
+router.post('write/news/image', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 	var history   = req.body.id;
 	var images     = req.files;
 
+	console.log(req.body);
+	console.log(images);
+	console.log(history);
+
+	if(mongoose.Types.ObjectId.isValid(history)){
+		history = mongoose.Types.ObjectId(history);
+	}
 	Tokenfunc.exist(guid, function(status, tokenData){
 
 		if(status){

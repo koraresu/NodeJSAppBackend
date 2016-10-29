@@ -430,6 +430,7 @@ router.post('/phonetofriend', multipartMiddleware, function(req, res){
 	var guid       = req.body.guid;
 	var phones     = req.body.phones;
 
+	console.log(phones);
 
 	var split = phones.split(',');
 
