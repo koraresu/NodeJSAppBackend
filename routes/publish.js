@@ -5,7 +5,7 @@
 	var mongoose   = require('mongoose');
 	var _ = require('underscore');
 	var async = require('async');
-
+	var mime = require('mime-types');
 	var multipart = require('connect-multiparty');
 	var multipartMiddleware = multipart();
 	var shortid = require('shortid');
@@ -534,3 +534,7 @@ router.post('/write/recomendar', multipartMiddleware, function(req, res){
 	});
 });
 module.exports = router;
+
+function extension(mime){
+
+}
