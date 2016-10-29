@@ -674,13 +674,15 @@ router.post('/review/get', multipartMiddleware, function(req, res){
 	}
 	
 
+	console.log(pagination);
+
 	Tokenfunc.exist(guid, function(errToken, token){
 		if(errToken){
 			Tokenfunc.toProfile(token.generated_id, function(status, userData, profileData, profileInfoData){
 				var r = Review.find({ profile_id: profileData._id});
 				r = r.limit(perPage);
 				r = r.skip( pagination );
-				
+
 				console.log("perPage:"+perPage);
 				console.log("Page:"+perPage*page);
 				r.exec(function(errReview, reviewData){
