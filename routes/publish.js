@@ -105,6 +105,10 @@ router.post('/write/news', multipartMiddleware, function(req, res){
 	var gallery   = req.files.gallery;
 	var data = [];
 
+	console.log(req.body);
+	console.log(req.files);
+	
+
 	Tokenfunc.exist(guid, function(status, tokenData){
 	
 			if(status){
