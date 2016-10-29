@@ -663,7 +663,6 @@ router.post('/review/get', multipartMiddleware, function(req, res){
 	var perPage    = 20;
 
 	page = isNormalInteger(page);
-	page = Math.max(0, page);
 
 	Tokenfunc.exist(guid, function(errToken, token){
 		if(errToken){
