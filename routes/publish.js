@@ -1,47 +1,47 @@
 	var express = require('express');
-var router = express.Router();
-var path = require('path');
-var fs = require('fs');
-var mongoose   = require('mongoose');
-var _ = require('underscore');
-var async = require('async');
+	var router = express.Router();
+	var path = require('path');
+	var fs = require('fs');
+	var mongoose   = require('mongoose');
+	var _ = require('underscore');
+	var async = require('async');
 
-var multipart = require('connect-multiparty');
-var multipartMiddleware = multipart();
-var shortid = require('shortid');
-var ObjectID = require('mongodb').ObjectID;
+	var multipart = require('connect-multiparty');
+	var multipartMiddleware = multipart();
+	var shortid = require('shortid');
+	var ObjectID = require('mongodb').ObjectID;
 
-var Generalfunc    = require('../functions/generalfunc');
-var Profilefunc    = require('../functions/profilefunc');
-var Tokenfunc      = require('../functions/tokenfunc');
-var Skillfunc      = require('../functions/skillfunc');
-var Historyfunc    = require('../functions/historyfunc');
-var Experiencefunc = require('../functions/experiencefunc');
-var Networkfunc    = require('../functions/networkfunc');
-var format         = require('../functions/format.js');
+	var Generalfunc    = require('../functions/generalfunc');
+	var Profilefunc    = require('../functions/profilefunc');
+	var Tokenfunc      = require('../functions/tokenfunc');
+	var Skillfunc      = require('../functions/skillfunc');
+	var Historyfunc    = require('../functions/historyfunc');
+	var Experiencefunc = require('../functions/experiencefunc');
+	var Networkfunc    = require('../functions/networkfunc');
+	var format         = require('../functions/format.js');
 
-var model = require('../model');
-var Profile     = model.profile;
-var User        = model.user;
-var Token       = model.token;
-var Job         = model.job;
-var Company     = model.company;
-var Experience  = model.experience;
-var Network     = model.network;
-var History     = model.history;
-var Feedback    = model.feedback;
-var Review      = model.review;
-var Log         = model.log;
-var Skill       = model.skill;
-var Speciality  = model.speciality;
-var Sector      = model.sector;
-var Notification = model.notification;
-var Feedback     = model.feedback;
-var Conversation = model.conversation;
-var Message      = model.message;
-var City         = model.city;
-var State        = model.state;
-var Country      = model.country;
+	var model = require('../model');
+	var Profile     = model.profile;
+	var User        = model.user;
+	var Token       = model.token;
+	var Job         = model.job;
+	var Company     = model.company;
+	var Experience  = model.experience;
+	var Network     = model.network;
+	var History     = model.history;
+	var Feedback    = model.feedback;
+	var Review      = model.review;
+	var Log         = model.log;
+	var Skill       = model.skill;
+	var Speciality  = model.speciality;
+	var Sector      = model.sector;
+	var Notification = model.notification;
+	var Feedback     = model.feedback;
+	var Conversation = model.conversation;
+	var Message      = model.message;
+	var City         = model.city;
+	var State        = model.state;
+	var Country      = model.country;
 
 // Write Comentario
 // Parameter
@@ -61,7 +61,7 @@ router.post('/write/comentario', multipartMiddleware, function(req, res){
 				var feedback = new Feedback({
 					profile_id: profileData._id,
 					title: titulo,
-  					content: contenido
+					content: contenido
 				});
 				feedback.save(function(errFeedback, feedbackData){
 					Generalfunc.response(200, format.feedback(feedbackData), function(response){
@@ -110,40 +110,40 @@ router.post('/write/news', multipartMiddleware, function(req, res){
 
 
 	Tokenfunc.exist(guid, function(status, tokenData){
-	
-			if(status){
-				Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
-					if(status){
 
-						async.series([
-							function(callback){
-								if(typeof gallery != "undefined"){
-									gallery.forEach(function(item, index){
-										var file = item;
-										var objectId    = new ObjectID();
-										var fileName  = file.fieldName;
-										var pathfile  = file.path;
-										var extension = path.extname(pathfile);
-										var file_pic    = shortid.generate() + extension;
+		if(status){
+			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
+				if(status){
 
-										var new_path = path.dirname(path.dirname(process.mainModule.filename)) + '/public/gallery/' + file_pic;
-										fs.rename(pathfile, new_path, function(err){
-											if (err){
-												throw err;
-											}else{
-												var p = file_pic;
-												data.push({url: p});
+					async.series([
+						function(callback){
+							if(typeof gallery != "undefined"){
+								gallery.forEach(function(item, index){
+									var file = item;
+									var objectId    = new ObjectID();
+									var fileName  = file.fieldName;
+									var pathfile  = file.path;
+									var extension = path.extname(pathfile);
+									var file_pic    = shortid.generate() + extension;
 
-												if(index == (gallery.length-1)){
-													callback(null, data);
-												}
+									var new_path = path.dirname(path.dirname(process.mainModule.filename)) + '/public/gallery/' + file_pic;
+									fs.rename(pathfile, new_path, function(err){
+										if (err){
+											throw err;
+										}else{
+											var p = file_pic;
+											data.push({url: p});
+
+											if(index == (gallery.length-1)){
+												callback(null, data);
 											}
-										});
+										}
 									});
-								}else{
-									callback(null, {});
-								}
+								});
+							}else{
+								callback(null, {});
 							}
+						}
 						], function(err, results){
 							console.log(results);
 							var data = {};
@@ -155,20 +155,20 @@ router.post('/write/news', multipartMiddleware, function(req, res){
 							});
 
 						});
-						
-						
-						
-					}else{
-						Generalfunc.response(113, {}, function(response){
-							res.json(response);
-						});
-					}
-				});
-			}else{
-				Generalfunc.response(101, {}, function(response){
-					res.json(response);
-				});
-			}
+
+
+
+				}else{
+					Generalfunc.response(113, {}, function(response){
+						res.json(response);
+					});
+				}
+			});
+		}else{
+			Generalfunc.response(101, {}, function(response){
+				res.json(response);
+			});
+		}
 	});
 	
 });
@@ -183,28 +183,85 @@ router.post('/write/news/loi', multipartMiddleware, function(req, res){
 	
 
 	Tokenfunc.exist(guid, function(status, tokenData){
+
+		if(status){
+			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
+				if(status){
+
+					save_news(profileData, titulo, contenido, undefined, function(historyData){
+						res.json(historyData);
+					});
+
+				}else{
+					Generalfunc.response(113, {}, function(response){
+						res.json(response);
+					});
+				}
+			});
+		}else{
+			Generalfunc.response(101, {}, function(response){
+				res.json(response);
+			});
+		}
+	});
 	
-			if(status){
-				Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
-					if(status){
+});
+router.post('write/news/images', multipartMiddleware, function(req, res){
+	var guid      = req.body.guid;
+	var history   = req.body.id;
+	var images     = req.files;
 
-						save_news(profileData, titulo, contenido, undefined, function(historyData){
-							res.json(historyData);
+	Tokenfunc.exist(guid, function(status, tokenData){
+
+		if(status){
+			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
+				if(status){
+					if(images[0] != undefined){
+						var file = images[0];
+						var objectId    = new ObjectID();
+						var fileName  = file.fieldName;
+						var pathfile  = file.path;
+						var extension = path.extname(pathfile);
+						var file_pic    = shortid.generate() + extension;
+
+						var new_path = path.dirname(path.dirname(process.mainModule.filename)) + '/public/gallery/' + file_pic;
+						fs.rename(pathfile, new_path, function(err){
+							if (err){
+								throw err;
+							}else{
+								var p = file_pic;
+								
+
+								History.find({ _id: history }).exec(function(errHistory, historyData){
+									if( historyData.data.gallery == undefined){
+										historyData.data.gallery = [];
+									}
+									historyData.data.gallery[historyData.data.gallery.length] = { "url" : p };
+
+									historyData.save(function(err, history){
+										Generalfunc.response(200, history, function(response){
+											res.json(response);
+										});
+									});
+								});
+							}
 						});
-
 					}else{
-						Generalfunc.response(113, {}, function(response){
+						Generalfunc.response(101, {}, function(response){
 							res.json(response);
 						});
 					}
-				});
-			}else{
-				Generalfunc.response(101, {}, function(response){
-					res.json(response);
-				});
-			}
-	});
-	
+				}else{
+					Generalfunc.response(101, {}, function(response){
+							res.json(response);
+						});
+				}
+			});
+		}else{
+			Generalfunc.response(101, {}, function(response){
+							res.json(response);
+						});
+		}
 });
 // GET NEWS
 // Parameter
@@ -264,11 +321,11 @@ router.post('/get/news', multipartMiddleware, function(req, res){
 							_.each(historyData, function(element, index, list) {
 								var d = format.news(element, element.profile_id, element.de_id);
 								data.push(d);
-	    						if(index+1 == historyData.length) {
-	    							Generalfunc.response(200, data, function(response){
-	    								res.json(response);
-	    							});
-	    						}
+								if(index+1 == historyData.length) {
+									Generalfunc.response(200, data, function(response){
+										res.json(response);
+									});
+								}
 							});
 						}else{
 							Generalfunc.response(200, {}, function(response){
@@ -362,14 +419,14 @@ router.post('/write/review', multipartMiddleware, function(req, res){
 						});
 
 						Historyfunc.insert({
-  							profile_id: publicProfileData._id,
-  							de_id: profileData._id,
-  							action: "7",
-  							data: {
-  								content: content,
+							profile_id: publicProfileData._id,
+							de_id: profileData._id,
+							action: "7",
+							data: {
+								content: content,
 								title: title,
 								rate:  score
-  							}
+							}
 						}, function(errHistory, historyData){
 							review.save(function(errReview, reviewData){
 								Review.count({
@@ -380,10 +437,10 @@ router.post('/write/review', multipartMiddleware, function(req, res){
 									console.log("Review Count:"+reviewCheck);
 									if(reviewCheck == 1){
 										Historyfunc.insert({
-				  							profile_id: publicProfileData._id,
-				  							de_id: profileData._id,
-				  							action: "3",
-				  							data: {}
+											profile_id: publicProfileData._id,
+											de_id: profileData._id,
+											action: "3",
+											data: {}
 										}, function(errHistory, historyData){
 											Generalfunc.response(200, reviewData, function(response){
 												res.json(response);
