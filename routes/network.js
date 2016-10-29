@@ -671,6 +671,9 @@ router.post('/review/get', multipartMiddleware, function(req, res){
 				var r = Review.find({ profile_id: profileData._id});
 				r = r.limit(perPage);
 				r = r.skip( perPage*page );
+
+				console.log("perPage:"+perPage);
+				console.log("Page:"+perPage*page);
 				r.exec(function(errReview, reviewData){
 					Generalfunc.response(200, reviewData, function(response){
 						res.json(response);
