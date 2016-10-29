@@ -359,6 +359,7 @@ router.post('/emailtofriend', multipartMiddleware, function(req, res){
 
 					if((userData.length-1) == userIndex){
 						console.log(split);
+						split = cleanArray(split);
 						Generalfunc.response(200, { profiles: data, uknown: split }, function(response){
 							res.json(response);
 						});
@@ -467,6 +468,7 @@ router.post('/phonetofriend', multipartMiddleware, function(req, res){
 								facebook[facebook.length] = x;
 
 								if((facebookProfileData.length-1) == index){
+									split = cleanArray(split);
 									Generalfunc.response(200, {profiles: facebook, uknown: split}, function(response){
 										res.json(response);
 									});
@@ -738,3 +740,13 @@ router.post('/recomendar', multipartMiddleware, function(req, res){
 });
 
 module.exports = router;
+
+function cleanArray(actual) {
+  var newArray = new Array();
+  for (var i = 0; i < actual.length; i++) {
+    if (actual[i]) {
+      newArray.push(actual[i]);
+    }
+  }
+  return newArray;
+}
