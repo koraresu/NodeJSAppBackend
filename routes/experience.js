@@ -401,12 +401,13 @@ router.post('/company/getid', multipartMiddleware, function(req, res){
 		Tokenfunc.exist(guid, function(status, token){
 			if(status){
 				Company.findOne({ _id: id }).exec(function(err, companyData){
-					var data = {
+					/*var data = {
 						company: companyData,
 					};
 					Generalfunc.response(200,companyData, function(response){
 						res.json(response);
 					});
+					*/
 				});
 			}else{
 				Generalfunc.response(101, {}, function(response){
