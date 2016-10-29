@@ -121,28 +121,31 @@ router.post('/write/news', multipartMiddleware, function(req, res){
 					async.series([
 						function(callback){
 							if(typeof gallery != "undefined"){
-								gallery.forEach(function(item, index){
-									var file = item;
-									var objectId    = new ObjectID();
-									var fileName  = file.fieldName;
-									var pathfile  = file.path;
-									var extension = path.extname(pathfile);
-									var file_pic    = shortid.generate() + extension;
+								if(gallery.constructor === Array){
+									gallery.forEach(function(item, index){
+										var file = item;
+										var objectId    = new ObjectID();
+										var fileName  = file.fieldName;
+										var pathfile  = file.path;
+										var extension = path.extname(pathfile);
+										var file_pic    = shortid.generate() + extension;
 
-									var new_path = path.dirname(path.dirname(process.mainModule.filename)) + '/public/gallery/' + file_pic;
-									fs.rename(pathfile, new_path, function(err){
-										if (err){
-											throw err;
-										}else{
-											var p = file_pic;
-											data.push({url: p});
+										var new_path = path.dirname(path.dirname(process.mainModule.filename)) + '/public/gallery/' + file_pic;
+										fs.rename(pathfile, new_path, function(err){
+											if (err){
+												throw err;
+											}else{
+												var p = file_pic;
+												data.push({url: p});
 
-											if(index == (gallery.length-1)){
-												callback(null, data);
+												if(index == (gallery.length-1)){
+													callback(null, data);
+												}
 											}
-										}
-									});
-								});
+										});
+									});	
+								}
+								
 							}else{
 								callback(null, {});
 							}

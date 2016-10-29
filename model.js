@@ -53,8 +53,10 @@ var profileSchema = new Schema({
   timestamps: true
 });
 var locationSchema = new Schema({
-  x: { type: String },
-  y: { type: String },
+  coordinates: {
+    type: [Number],  // [<longitude>, <latitude>]
+    index: '2d'      // create the geospatial index
+  },
   profiles: { type: Schema.Types.ObjectId, ref: 'Profile' }
 }, {
   timestamps: true
