@@ -107,7 +107,7 @@ router.post('/write/news', multipartMiddleware, function(req, res){
 
 	console.log(req.body);
 	console.log(req.files);
-	
+
 
 	Tokenfunc.exist(guid, function(status, tokenData){
 	
@@ -158,6 +158,40 @@ router.post('/write/news', multipartMiddleware, function(req, res){
 						
 						
 						
+					}else{
+						Generalfunc.response(113, {}, function(response){
+							res.json(response);
+						});
+					}
+				});
+			}else{
+				Generalfunc.response(101, {}, function(response){
+					res.json(response);
+				});
+			}
+	});
+	
+});
+router.post('/write/news/loi', multipartMiddleware, function(req, res){
+	var guid      = req.body.guid;
+	var titulo    = req.body.title;
+	var contenido = req.body.content;
+	var data = [];
+
+	console.log(req.body);
+	console.log(req.files);
+	
+
+	Tokenfunc.exist(guid, function(status, tokenData){
+	
+			if(status){
+				Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
+					if(status){
+
+						save_news(profileData, titulo, contenido, undefined, function(historyData){
+							res.json(historyData);
+						});
+
 					}else{
 						Generalfunc.response(113, {}, function(response){
 							res.json(response);
