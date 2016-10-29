@@ -340,6 +340,8 @@ router.post('/emailtofriend', multipartMiddleware, function(req, res){
 
 	var split = emails.split(',');
 	
+	console.log(split);
+
 	User.find({
 		"email": { $in: split }
 	}, function(userErr, userData){
