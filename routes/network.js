@@ -448,8 +448,14 @@ router.post('/phonetofriend', multipartMiddleware, function(req, res){
 						}
 					}).exec(function(profileErr, facebookProfileData){
 						console.log(facebookProfileData);
+						if(!profileErr && facebookProfileData){
+							var x = split.indexOf(facebookProfileData.phone);
+							split = split.slice(x, 1);
+						}
+
 						facebookProfileData.forEach(function(item, index){
 							console.log(index);
+							
 							Networkfunc.isFriend(profileData._id, facebookProfileData._id, function(d){
 								console.log(d);
 								var x = {};
@@ -458,7 +464,7 @@ router.post('/phonetofriend', multipartMiddleware, function(req, res){
 								facebook[facebook.length] = x;
 
 								if((facebookProfileData.length-1) == index){
-									Generalfunc.response(200, facebook, function(response){
+									Generalfunc.response(200, {profiles: facebook, uknown: split}, function(response){
 										res.json(response);
 									});
 								}	
