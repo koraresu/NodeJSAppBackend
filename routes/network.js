@@ -662,15 +662,25 @@ router.post('/review/get', multipartMiddleware, function(req, res){
 	var page       = req.body.page;
 	var perPage    = 20;
 
+	if(page == undefined){
+		page = 0;
+	}
 	page = isNormalInteger(page);
+
+
+	var pagination = 0;
+	if(page != 0){
+		pagination = page*perPage;
+	}
+	
 
 	Tokenfunc.exist(guid, function(errToken, token){
 		if(errToken){
 			Tokenfunc.toProfile(token.generated_id, function(status, userData, profileData, profileInfoData){
 				var r = Review.find({ profile_id: profileData._id});
 				r = r.limit(perPage);
-				r = r.skip( perPage*page );
-
+				r = r.skip( pagination );
+				
 				console.log("perPage:"+perPage);
 				console.log("Page:"+perPage*page);
 				r.exec(function(errReview, reviewData){
