@@ -348,11 +348,15 @@ router.post('/emailtofriend', multipartMiddleware, function(req, res){
 		var data = [];
 		if(userData.length > 0){
 			userData.forEach(function(userItem, userIndex){
+
+				var x = split.indexOf(userItem.email);
+				delete split[x];
+
 				Profile.findOne({ user_id: userItem._id}, function(profileErr, profileData){
 					data.push(profileData);
 
 					if((userData.length-1) == userIndex){
-						Generalfunc.response(200, data, function(response){
+						Generalfunc.response(200, { profiles: data, uknown: split }, function(response){
 							res.json(response);
 						});
 
