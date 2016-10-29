@@ -659,16 +659,18 @@ router.post('/review', multipartMiddleware, function(req, res){
 //
 router.post('/review/get', multipartMiddleware, function(req, res){
 	var guid       = req.body.guid;
-	var max        = req.body.max;
+	var page       = req.body.page;
+	var perPage    = 20;
+
+	page = isNormalInteger(page);
+	page = Math.max(0, page);
 
 	Tokenfunc.exist(guid, function(errToken, token){
 		if(errToken){
 			Tokenfunc.toProfile(token.generated_id, function(status, userData, profileData, profileInfoData){
-				if(typeof max != "undefined"){
-					max = max*1;
-					var r = Review.find({ profile_id: profileData._id});
-					r = r.limit(max);
-				}
+				var r = Review.find({ profile_id: profileData._id});
+				r = r.limit(perPage);
+				r = r.skip( perPage*page );
 				r.exec(function(errReview, reviewData){
 					Generalfunc.response(200, reviewData, function(response){
 						res.json(response);
@@ -749,4 +751,8 @@ function cleanArray(actual) {
     }
   }
   return newArray;
+}
+function isNormalInteger(str) {
+    var n = ~~Number(str);
+    return String(n) === str && n >= 0;
 }

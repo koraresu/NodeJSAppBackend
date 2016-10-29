@@ -19,6 +19,7 @@
     "faker": "^3.1.0",
     "jade": "~1.11.0",
     "kerberos": "~0.0",
+    "mime-types": "^2.1.12",
     "mongo-relation": "^0.5.4",
     "mongodb": "^2.0.55",
     "mongoose": "^4.4.6",
