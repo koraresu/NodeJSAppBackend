@@ -447,15 +447,13 @@ router.post('/phonetofriend', multipartMiddleware, function(req, res){
 							$in: split
 						}
 					}).exec(function(profileErr, facebookProfileData){
-						console.log(facebookProfileData);
-						if(!profileErr && facebookProfileData){
-							var x = split.indexOf(facebookProfileData.phone);
-							split = split.slice(x, 1);
-						}
 
 						facebookProfileData.forEach(function(item, index){
 							console.log(index);
 							
+							var x = split.indexOf(item.phone);
+							split = split.slice(x, 1);
+
 							Networkfunc.isFriend(profileData._id, facebookProfileData._id, function(d){
 								console.log(d);
 								var x = {};
