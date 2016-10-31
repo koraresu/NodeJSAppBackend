@@ -646,41 +646,54 @@ router.post('/update', multipartMiddleware, function(req, res){
 			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
 				profileData.first_name = nombre;
 				profileData.last_name  = apellido;
-				Experiencefunc.jobExistsOrCreate({ name: job, type: 1}, { name: job, type: 1}, function(statusJob, jobData){
-					if(type == 1){
-						data = {
-							ocupation: ocupation,
-							company: company,
-							sector: sector
-						};
-					}else{
-						data = {
-							ocupation: job,
-						};
-					}
-					
-					Experiencefunc.profileGenerate(profileData, function(profileData){
-						var job = {
-							id: jobData._id,
-							name: jobData.name
-						};
-						profileData.job = job;
-						profileData.status = statusReq;
-
-						if(birthday != undefined){
-							birthday = explDate(birthday);
-							birthday = new Date(birthday);
-							console.log(birthday);
-							if(validDate(birthday)){
-								profileData.birthday = birthday;
-							}
+				Experiencefunc.specialityExistsOrCreate({
+					name: speciality
+				}, {
+					name: speciality
+				}, function(statusSpeciality, specialityData){
+					Experiencefunc.jobExistsOrCreate({ name: job, type: 1}, { name: job, type: 1}, function(statusJob, jobData){
+						if(type == 1){
+							data = {
+								ocupation: ocupation,
+								company: company,
+								sector: sector
+							};
+						}else{
+							data = {
+								ocupation: job,
+							};
 						}
+						
+						Experiencefunc.profileGenerate(profileData, function(profileData){
+							var job = {
+								id: jobData._id,
+								name: jobData.name
+							};
+							var speciality = {
+								id: specialityData._id,
+								name: specialityData.name
+							};
+							profileData.job = job;
+							profileData.speciality = speciality;
+							profileData.status = statusReq;
 
-						profileData.save(function(err, profileData){
-							res.json(profileData);
+							if(birthday != undefined){
+								birthday = explDate(birthday);
+								birthday = new Date(birthday);
+								console.log(birthday);
+								if(validDate(birthday)){
+									profileData.birthday = birthday;
+								}
+							}
+
+							profileData.save(function(err, profileData){
+								res.json(profileData);
+							});
 						});
 					});
 				});
+
+				
 			});
 		}else{
 			Generalfunc.response(101, {}, function(response){
