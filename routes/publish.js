@@ -520,6 +520,51 @@ router.post('/write/review', multipartMiddleware, function(req, res){
 		}
 	});
 });
+router.post('/count/review', multipartMiddleware, function(req, res){
+	var guid      = req.body.guid;
+	var public_id = req.body.public_id;
+
+	Tokenfunc.exist(guid, function(status, tokenData){
+		if(status){
+			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
+				Profilefunc.publicId(public_id, function(statusPublic, publicProfileData){
+					if(statusPublic){
+
+						Review.find({ profile_id: profileData._id }).exec(function(err, reviewData){
+							res.json(reviewData);
+						})
+					}else{
+						var suma  = 0;
+						var count = 0;
+						var find = Review.find({ profile_id: profileData._id });
+						var data = [];
+						find.exec(function(err, reviewData){
+							reviewData.forEach(function(item, index){
+								suma+= item.rate;
+								count++;
+								data[data.length] = item.rate;
+								if((reviewData.length-1) == index){	
+									var prom = suma/count;
+									res.json({
+										avg: prom,
+										sum: suma,
+										count: count,
+										data: data
+									});
+								}
+								
+							});
+						})
+					}
+				});
+			});
+		}else{
+			Generalfunc.response(101, { message: "No Token" }, function(response){
+							res.json(response);
+						});
+		}
+	});
+});
 router.post('/write/recomendar', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 	var busqueda  = req.body.busqueda;
