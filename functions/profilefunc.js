@@ -79,13 +79,15 @@ function formatoProfile(profile_id,cb){
 				
 				var email = "";
 				var verified = "";
-
-				if(userData.email != undefined){
-					email = userData.email;
+				if(userData != undefined || userData != null){
+					if(userData.email != undefined){
+						email = userData.email;
+					}
+					if(userData.verified != undefined){
+						verified = userData.verified;
+					}	
 				}
-				if(userData.verified != undefined){
-					verified = userData.verified;
-				}
+				
 
 				Experience.find({ profile_id: profileData._id}, function(errExperience, experienceData){
 					Review.find({ profile_id: profileData._id }).sort( [ ['createdAt', 'descending'] ] ).limit(2).populate('profiles').exec(function(errReview, reviewData){
