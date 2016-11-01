@@ -418,8 +418,8 @@ router.post('/get/review', multipartMiddleware, function(req, res){
 				r = r.limit(max);
 				console.log("Pages:"+pages);
 				r = r.skip(pages);
-				//r = r.populate('profile_id');
-				//r.populate('profiles').exec(function(errReview, reviewData){
+				r = r.populate('profile_id');
+				r.populate('profiles').exec(function(errReview, reviewData){
 				r.exec(function(errReview, reviewData){
 					Generalfunc.response(200, reviewData, function(response){
 						res.json(response);
