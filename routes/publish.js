@@ -300,8 +300,23 @@ router.post('/get/news', multipartMiddleware, function(req, res){
 	var max       = req.body.max;
 	var page      = req.body.page;
 	var action    = req.body.action;
+	var pages     = 0;
 
-	console.log("GUID:"+guid);
+	if(isNumber(max)){
+		console.log("Max is Number");
+		max = max*1;
+	}else{
+		max = 1;
+	}
+	if(isNumber(page)){
+		console.log("Page is Number");
+		pages = page*1;
+		pages = (pages*max);
+	}else{
+		pages = 0;
+	}
+
+
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
 			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
@@ -326,20 +341,10 @@ router.post('/get/news', multipartMiddleware, function(req, res){
 					}
 					var r = model.history.find( search );
 					var data = [];
-					/*
-					if(typeof max != "undefined"){
-						max = max*1;
-						r = r.limit(max);
-					}else{
-						r = r.limit(40);
-					}
-					*/
-					if(typeof page != "undefined"){
-						page = page*1;
-						page = page-1;
-						var pages = page*max;
-						r = r.skip(pages);
-					}
+					
+					r = r.limit(max);
+					r = r.skip(pages);
+					
 					var data = [];
 					r.sort( [ ['createdAt', 'descending'] ] ).populate('profile_id').populate('de_id').exec(function(errHistory,historyData){
 						if(historyData.length > 0){
