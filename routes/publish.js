@@ -560,3 +560,6 @@ module.exports = router;
 function extension(mime){
 
 }
+function isNumber(n) {
+  return !isNaN(parseFloat(n)) && isFinite(n);
+}
