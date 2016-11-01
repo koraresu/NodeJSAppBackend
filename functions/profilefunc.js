@@ -76,6 +76,17 @@ function formatoProfile(profile_id,cb){
 
 		Profile.findOne({ _id: profile_id }).populate('experiences').populate('skills').populate('user_id','-password').exec(function(errProfile, profileData){
 			var userData = profileData.user_id;
+				
+				var email = "";
+				var verified = "";
+
+				if(userData.email != undefined){
+					email = userData.email;
+				}
+				if(userData.verified != undefined){
+					verified = userData.verified;
+				}
+
 				Experience.find({ profile_id: profileData._id}, function(errExperience, experienceData){
 					Review.find({ profile_id: profileData._id }).sort( [ ['createdAt', 'descending'] ] ).limit(2).populate('profiles').exec(function(errReview, reviewData){
 
@@ -86,8 +97,8 @@ function formatoProfile(profile_id,cb){
 									"first_name": profileData.first_name,
 									"last_name": profileData.last_name,
 									"public_id": profileData.public_id,
-									"email": userData.email,
-									"verified": userData.verified,
+									"email": email,
+									"verified": verified,
 									"info": profileData.info,
 									"skills": profileData.skills,
 									"experiences": profileData.experiences,
