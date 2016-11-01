@@ -306,7 +306,7 @@ router.post('/get/news', multipartMiddleware, function(req, res){
 		console.log("Max is Number");
 		max = max*1;
 	}else{
-		max = 1;
+		max = 20;
 	}
 	if(isNumber(page)){
 		console.log("Page is Number");
@@ -394,7 +394,7 @@ router.post('/get/review', multipartMiddleware, function(req, res){
 		console.log("Max is Number");
 		max = max*1;
 	}else{
-		max = 1;
+		max = 20;
 	}
 	if(isNumber(page)){
 		console.log("Page is Number");
