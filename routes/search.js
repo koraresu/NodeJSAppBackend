@@ -57,6 +57,7 @@ router.post('/general', multipartMiddleware, function(req, res){
 				if(status){
 					Profile.find({}).populate('experiences').populate('skills').populate('user_id','-password').populate('job').exec(function(errProfile, profileData){
 						profileData.forEach(function(profileItem, profileIndex){
+							console.log(profileItem.user_id);
 							var array = new Array();
 							
 							array.push(profileItem.first_name);
@@ -131,9 +132,10 @@ router.post('/general/network', multipartMiddleware, function(req, res){
 				var actualData = profileData;
 				Profilefunc.logs(profileData, 8, {profile: profileData, search: text }, function(){
 					if(status){
-						Profile.find({ _id: { "$nin": [actualData._id,mongoose.Types.ObjectId('57b237e57a28f01f332e3447')] }}).populate('experiences').populate('skills').populate('user_id','-password').exec(function(errProfile, profileData){
-
+						Profile.find({ _id: { "$nin": [actualData._id,mongoose.Types.ObjectId("57b237e57a28f01f332e3447")] }}).populate('experiences').populate('skills').populate('user_id','-password').exec(function(errProfile, profileData){
 							async.forEach(profileData, function(profileItem, callback){
+
+								console.log(profileItem._id);
 								var array = new Array();
 								array.push(profileItem.first_name);
 								array.push(profileItem.last_name);
