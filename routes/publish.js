@@ -467,8 +467,11 @@ router.post('/write/review', multipartMiddleware, function(req, res){
 											action: "3",
 											data: {}
 										}, function(errHistory, historyData){
-											Generalfunc.response(200, reviewData, function(response){
-												res.json(response);
+
+											Review.find({ _id: reviewData._id }).populate('profiles').populate('profile_id').exec(function(errReview, reviewData){
+												Generalfunc.response(200, reviewData, function(response){
+													res.json(response);
+												});
 											});
 										});
 									}else{
