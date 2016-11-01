@@ -57,7 +57,7 @@ router.post('/general', multipartMiddleware, function(req, res){
 				if(status){
 					Profile.find({}).populate('experiences').populate('skills').populate('user_id','-password').populate('job').exec(function(errProfile, profileData){
 						profileData.forEach(function(profileItem, profileIndex){
-							console.log(profileItem.user_id);
+							
 							var array = new Array();
 							
 							array.push(profileItem.first_name);
@@ -169,7 +169,6 @@ router.post('/general/network', multipartMiddleware, function(req, res){
 									array.push(skillItem.name);
 								});
 								
-								console.log(array);
 
 								var n_array = array.filter(function(i){
 									if(i == null){
