@@ -72,7 +72,7 @@ function getTrabajo(profile_id, callback){
 }
 
 function formatoProfile(profile_id,cb){
-	if(profile_id != "57b237e57a28f01f332e3447"){
+	
 		if(typeof profile_id != "object"){
 			profile_id = mongoose.Types.ObjectId(profile_id);
 		}
@@ -114,7 +114,7 @@ function formatoProfile(profile_id,cb){
 					});
 				});
 		});
-	}
+	
 	
 }
 
