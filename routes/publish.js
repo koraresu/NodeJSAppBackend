@@ -381,18 +381,31 @@ router.post('/get/review', multipartMiddleware, function(req, res){
 	var max       = req.body.max;
 	var page      = req.body.page;
 	var pages     = 1;
-	if(page == "1"){
-		pages = 0;
+
+	console.log(page);
+	console.log(max);
+
+	if(isNumber(max)){
+		console.log("Max is Number");
+		max = max*1;
 	}else{
-		pages = page*1;
-		pages = (pages*max)-1;
+		max = 1;
 	}
+	if(isNumber(page)){
+		console.log("Page is Number");
+		pages = page*1;
+		pages = (pages*max);
+	}else{
+		pages = 0;
+	}
+
+	
 	
 	
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
 			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
-				console.log(profileData._id);
+
 				
 				var data = profileData._id;
 
@@ -402,14 +415,12 @@ router.post('/get/review', multipartMiddleware, function(req, res){
 					}
 				});
 				r = r.sort( [ ['createdAt', 'descending'] ] );
-				if(typeof max != "undefined"){
-					max = max*1;
-					r = r.limit(max);
-				}
+				r = r.limit(max);
 				console.log("Pages:"+pages);
 				r = r.skip(pages);
-				r = r.populate('profile_id');
-				r.populate('profiles').exec(function(errReview, reviewData){
+				//r = r.populate('profile_id');
+				//r.populate('profiles').exec(function(errReview, reviewData){
+				r.exec(function(errReview, reviewData){
 					Generalfunc.response(200, reviewData, function(response){
 						res.json(response);
 					});
