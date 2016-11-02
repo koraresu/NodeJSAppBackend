@@ -115,8 +115,93 @@ router.post('/connect', multipartMiddleware, function(req, res){
 	});
 });
 router.post('/connect/all', multipartMiddleware, function(req, res){
+	var guid       = req.body.guid;
+	var public_id = req.body.public_id;
+	
 
-})
+	var split = public_id.split(',');
+
+	Tokenfunc.exist(guid, function(errToken, token){
+		if(errToken){
+			Tokenfunc.toProfile(token.generated_id, function(status, userData, profileData, profileInfoData){
+
+				async.map(split, function(item, callback){
+					var element = item.trim();
+					if(mongoose.Types.ObjectId.isValid(element)){
+						public_id = mongoose.Types.ObjectId(element);
+						Networkfunc.PublicId(public_id, function(statusPublic, profileAnotherData){
+							if(statusPublic){
+								console.log(profileAnotherData);
+								var find = {
+									"profiles": {
+										"$all": [profileData._id,profileAnotherData._id],
+									}
+								};
+								
+								Network.findOne(find).populate('profiles').exec(function(errNetwork, networkData){
+									if(!errNetwork && networkData){
+										var data = {
+											"accepted": networkData.accepted,
+											"public_id": profileAnotherData.public_id,
+											"data": networkData
+										};
+										callback(null, data);
+									}else{
+										var network = new Network({
+											accepted: true,
+											profiles: [
+											profileData._id,
+											profileAnotherData._id
+											]
+										});
+										network.save(function(err, networkData){
+											var notification = new Notification({
+												tipo: 3,
+												profile: profileAnotherData._id,
+												profile_emisor: profileData._id,
+											});
+											notification.save(function(errNotification, notificationData){
+												Network.findOne({ _id: networkData._id }).populate('profiles').exec(function(err, networkData){
+													var data = {
+														"accepted": networkData.accepted,
+														"public_id": profileAnotherData.public_id,
+														"data": networkData
+													};
+													callback(null, data);
+												});
+												
+											});
+										});
+									}
+								});
+							}else{
+								callback(null, null);
+							}
+						});
+					}else{
+						callback(null, null);
+					}
+				}, function(err, results){
+					Generalfunc.response(200, results, function(response){
+						console.log("B");
+						res.json(response);
+					});
+				});
+			});
+		}else{
+			Generalfunc.response(101, {}, function(response){
+				console.log("C");
+				res.json(response);
+			});
+		}
+	});
+
+
+
+
+
+
+});
 // ACCEPT
 // Parameter:
 //  	Token
