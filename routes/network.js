@@ -380,13 +380,13 @@ router.post('/emailtofriend', multipartMiddleware, function(req, res){
 						}
 					});
 				}else{
-					Generalfunc.response(101, {}, function(response){
+					Generalfunc.response(101, { message: "No Profile"}, function(response){
 						res.json(response);
 					});
 				}
 			});
 		}else{
-			Generalfunc.response(101, {}, function(response){
+			Generalfunc.response(101, { message: "No Exists Token" }, function(response){
 						res.json(response);
 					});
 		}
