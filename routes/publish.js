@@ -373,6 +373,30 @@ router.post('/get/news', multipartMiddleware, function(req, res){
 		}
 	});
 });
+router.post('/get/news/show', multipartMiddleware, function(req, res){
+	var guid      = req.body.guid;
+	var news_id   = req.body.id;
+
+
+	Tokenfunc.exist(guid, function(status, tokenData){
+		if(status){
+			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
+
+				History.findOne({ _id: news_id }).populate('profile_id').populate('de_id').exec(function(errHistory,historyData){
+
+					var d = format.news(historyData, historyData.profile_id, historyData.de_id);
+					Generalfunc.response(200, data, function(response){
+						res.json(response);
+					});
+				});
+			});
+		}else{
+			Generalfunc.response(101, {},function(response){
+				res.json(response);
+			})
+		}
+	});
+});
 // GET REVIEW
 // Parameter
 //  	Token
