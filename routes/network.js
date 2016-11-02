@@ -502,11 +502,11 @@ router.post('/facebooktofriend', multipartMiddleware, function(req, res){
 					Profile.find(v).exec(function(profileErr, facebookProfileData){
 						if(facebookProfileData.length > 0){
 							async.map(facebookProfileData, function(item, callback){
-								Networkfunc.isFriend(profileData._id, facebookProfileData._id, function(d){
+								Networkfunc.isFriend(profileData._id, item._id, function(d){
 									console.log("ProfileData:");
 									console.log(profileData._id);
 									console.log("Facebook Profile Data");
-									console.log(facebookProfileData._id);
+									console.log(item._id);
 									console.log("Friend:");
 									console.log(d);
 									var x = {
