@@ -461,12 +461,15 @@ router.post('/phonetofriend', multipartMiddleware, function(req, res){
 							delete split[x];
 
 							console.log(item);
-							
+
 							Networkfunc.isFriend(profileData._id, facebookProfileData._id, function(d){
-								console.log(d);
-								var x = {};
-								x.profile = item;
-								x.isfriend = d;
+								var x = {
+									profile: item,
+									isFriend: d
+								};
+
+								console.log(x);
+								
 								callback(null, x);
 							});
 						}, function(err, results){
