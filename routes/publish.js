@@ -519,7 +519,7 @@ router.post('/write/review', multipartMiddleware, function(req, res){
 											var suma  = 0;
 											var count = 0;
 
-											Review.find({ profile_id: profileData._id }).exec(function(err, review){
+											Review.find({ profile_id: publicProfileData._id }).exec(function(err, review){
 												console.log(review);
 												review.forEach(function(item, index){
 													suma+= item.rate;
