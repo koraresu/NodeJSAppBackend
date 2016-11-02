@@ -114,6 +114,9 @@ router.post('/connect', multipartMiddleware, function(req, res){
 		}
 	});
 });
+router.post('/connect/all', multipartMiddleware, function(req, res){
+
+})
 // ACCEPT
 // Parameter:
 //  	Token

@@ -101,6 +101,25 @@ function save_news(profileData, title, content, gallery,callback){
 		callback(historyData);
 	});
 }
+function update_news(id, profileData, title, content, gallery,callback){
+	if(gallery == null){
+		gallery = [];
+	}
+	var h = {
+		title: title,
+		content: content,
+		gallery: gallery
+	};
+
+
+	History.findOne({ _id: id }).exec(function(err, history){
+		
+		history.data = h;
+		history.save(function(errHistory, historyData){
+			callback(errHistory, historyData);
+		});
+	});
+}
 router.post('/write/news', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 	var titulo    = req.body.title;
@@ -394,6 +413,87 @@ router.post('/get/news/show', multipartMiddleware, function(req, res){
 			Generalfunc.response(101, {},function(response){
 				res.json(response);
 			})
+		}
+	});
+});
+router.post('/update/news', multipartMiddleware, function(req, res){
+	var guid      = req.body.guid;
+	var id        = req.body.id;
+	var titulo    = req.body.title;
+	var contenido = req.body.content;
+	var gallery   = req.files.gallery;
+	var data = [];
+
+	
+	if(mongoose.Types.ObjectId.isValid(id)){
+		id = mongoose.Types.ObjectId(id);
+	}
+
+
+	Tokenfunc.exist(guid, function(status, tokenData){
+
+		if(status){
+			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
+				if(status){
+
+					async.series([
+						function(callback){
+							if(typeof gallery != "undefined"){
+								if(gallery.constructor === Array){
+									gallery.forEach(function(item, index){
+										var file = item;
+										var objectId    = new ObjectID();
+										var fileName  = file.fieldName;
+										var pathfile  = file.path;
+										var extension = path.extname(pathfile);
+										var file_pic    = shortid.generate() + extension;
+
+										var new_path = path.dirname(path.dirname(process.mainModule.filename)) + '/public/gallery/' + file_pic;
+										fs.rename(pathfile, new_path, function(err){
+											if (err){
+												throw err;
+											}else{
+												var p = file_pic;
+												data.push({url: p});
+
+												if(index == (gallery.length-1)){
+													callback(null, data);
+												}
+											}
+										});
+									});	
+								}
+								
+							}else{
+								callback(null, {});
+							}
+						}
+						], function(err, results){
+							console.log(results);
+							var data = {};
+							if(typeof results[0] != "undefined"){
+								data = results[0];
+							}
+
+
+							update_news(id, profileData, titulo, contenido, data, function(historyData){
+								res.json(historyData);
+							});
+
+						});
+
+
+
+				}else{
+					Generalfunc.response(113, {}, function(response){
+						res.json(response);
+					});
+				}
+			});
+		}else{
+			Generalfunc.response(101, {}, function(response){
+				res.json(response);
+			});
 		}
 	});
 });
