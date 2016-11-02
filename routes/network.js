@@ -394,21 +394,41 @@ router.post('/facebooktofriend', multipartMiddleware, function(req, res){
 					}).exec(function(profileErr, facebookProfileData){
 						console.log(facebookProfileData.length);
 						if(facebookProfileData.length > 0){
-							facebookProfileData.forEach(function(item, index){
-								console.log(index);
+							async.map(facebookProfileData, function(item, callback){
 								Networkfunc.isFriend(profileData._id, facebookProfileData._id, function(d){
 									console.log(d);
 									var x = {};
 									x.profile = item;
 									x.isfriend = d;
-									facebook[facebook.length] = x;
+									
+								});
+							}, function(err, results){
+								console.log(results);
+								split = cleanArray(split);
+								Generalfunc.response(200, {profiles: results, uknown: split}, function(response){
+									res.json(response);
+								});
+							});
+							facebookProfileData.forEach(function(item, index){
+								console.log(index);
+								async.map(facebookProfileData, function(item, callback){
 
-									if((facebookProfileData.length-1) == index){
-										Generalfunc.response(200, facebook, function(response){
-											res.json(response);
-										});
-									}	
-								})
+									Networkfunc.isFriend(profileData._id, item._id, function(d){
+										var x = {
+											profile: item,
+											isFriend: d
+										};
+
+
+										callback(null, x);
+									});
+								}, function(err, results){
+									console.log(results);
+									split = cleanArray(split);
+									Generalfunc.response(200, {profiles: results}, function(response){
+										res.json(response);
+									});
+								});
 								
 							});
 						}else{
