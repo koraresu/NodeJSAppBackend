@@ -421,6 +421,8 @@ router.post('/update/news', multipartMiddleware, function(req, res){
 	var gallery   = req.files.gallery;
 	var data = [];
 
+	console.log(req.body);
+	console.log(req.files);
 	
 	if(mongoose.Types.ObjectId.isValid(id)){
 		id = mongoose.Types.ObjectId(id);
