@@ -410,27 +410,54 @@ router.post('/get/review', multipartMiddleware, function(req, res){
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
 			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
+				if(public_id != undefined){
+					Profilefunc.publicId(public_id, function(statusPublic, publicProfileData){
+						if(statusPublic){
+							var data = publicProfileData._id;
 
-				
-				var data = profileData._id;
+							var r = Review.find({
+								profiles: {
+									"$in": [data]
+								}
+							});
+							r = r.sort( [ ['createdAt', 'descending'] ] );
+							r = r.limit(max);
+							console.log("Pages:"+pages);
+							r = r.skip(pages);
+							r = r.populate('profile_id');
+							r.populate('profiles').exec(function(errReview, reviewData){
+								r.exec(function(errReview, reviewData){
+									Generalfunc.response(200, reviewData, function(response){
+										res.json(response);
+									});
+								});
+							});	
+						}
+					});
+				}else{
+					var data = profileData._id;
 
-				var r = Review.find({
-					profiles: {
-						"$in": [data]
-					}
-				});
-				r = r.sort( [ ['createdAt', 'descending'] ] );
-				r = r.limit(max);
-				console.log("Pages:"+pages);
-				r = r.skip(pages);
-				r = r.populate('profile_id');
-				r.populate('profiles').exec(function(errReview, reviewData){
-					r.exec(function(errReview, reviewData){
-						Generalfunc.response(200, reviewData, function(response){
-							res.json(response);
+					var r = Review.find({
+						profiles: {
+							"$in": [data]
+						}
+					});
+					r = r.sort( [ ['createdAt', 'descending'] ] );
+					r = r.limit(max);
+					console.log("Pages:"+pages);
+					r = r.skip(pages);
+					r = r.populate('profile_id');
+					r.populate('profiles').exec(function(errReview, reviewData){
+						r.exec(function(errReview, reviewData){
+							Generalfunc.response(200, reviewData, function(response){
+								res.json(response);
+							});
 						});
 					});
-				});
+				}
+				
+				
+
 			});
 		}else{
 			Generalfunc.response(101, {},function(response){
