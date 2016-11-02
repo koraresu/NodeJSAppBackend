@@ -362,6 +362,7 @@ router.post('/emailtofriend', multipartMiddleware, function(req, res){
 											profile: item,
 											isFriend: d
 										};
+										console.log(x);
 										callback(null, x);
 									});
 								});
