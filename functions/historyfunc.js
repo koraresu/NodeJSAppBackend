@@ -156,11 +156,26 @@ exports.insert = function(data, callback){
 		}else{
 			data.id_numerico = c.id_numerico+1;
 		}
+
+		if(data.action == "3"){
+			History.findOne({ profile_id: data.profile_id, de_id: data.de_id, action: "3" }).exec(function(err, historyData){
+				if(!err && historyData){
+					callback(err, historyData);
+				}else{
+					var new_history = new History(data);
+					new_history.save(function(errHistory, historyData){
+							callback(errHistory, historyData);
+					});
+				}
+			});
+		}else{
+			var new_history = new History(data);
+			new_history.save(function(errHistory, historyData){
+					callback(errHistory, historyData);
+			});
+		}
 		
-		var new_history = new History(data);
-		new_history.save(function(errHistory, historyData){
-				callback(errHistory, historyData);
-		});
+		
 	});
 	
 }
