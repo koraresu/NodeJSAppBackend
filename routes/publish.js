@@ -690,11 +690,18 @@ router.post('/write/review', multipartMiddleware, function(req, res){
 												console.log(review);
 
 												async.map(review, function(item, callback){
-													suma+= item.rate;
-													count++;
+													if(isNumber(item.rate)){
+														suma+= item.rate;
+														count++;
+													}
 													callback(null, item);
 												}, function(err, results){
 													var prom = suma/count;
+
+														console.log("SUMA:"+suma);
+														console.log("COUNT:"+count);
+														console.log("PROMEDIO:"+prom);
+														
 														profileData.review_score = prom;
 														profileData.save(function(err, profile){
 															Profile.find({ _id: profile._id }).exec(function(err, profileData){
