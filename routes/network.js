@@ -468,6 +468,7 @@ router.post('/phonetofriend', multipartMiddleware, function(req, res){
 								callback(null, x);
 							});
 						}, function(err, results){
+							console.log(results);
 							split = cleanArray(split);
 							Generalfunc.response(200, {profiles: results, uknown: split}, function(response){
 								res.json(response);
