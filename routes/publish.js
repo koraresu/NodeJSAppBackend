@@ -500,7 +500,7 @@ router.post('/write/review', multipartMiddleware, function(req, res){
 														profileData.review_score = prom;
 														profileData.save(function(err, profile){
 															Profile.find({ _id: profile._id }).exec(function(err, profileData){
-																Review.findOne({ _id: reviewData._id }).exec(function(err, reviewData){
+																Review.findOne({ _id: reviewData._id }).populate('profiles').populate('profile_id').exec(function(err, reviewData){
 																	Generalfunc.response(200, reviewData, function(response){
 																		res.json(response);
 																	});
@@ -516,7 +516,6 @@ router.post('/write/review', multipartMiddleware, function(req, res){
 											
 										});
 									}else{
-										console.log("HOLA");
 										//Review.find({ _id: reviewData._id }).populate('profiles').populate('profile_id').exec(function(errReview, reviewData){
 										var suma  = 0;
 											var count = 0;
@@ -531,7 +530,7 @@ router.post('/write/review', multipartMiddleware, function(req, res){
 														profileData.review_score = prom;
 														profileData.save(function(err, profile){
 															Profile.find({ _id: profile._id }).exec(function(err, profileData){
-																Review.findOne({ _id: reviewData._id }).exec(function(err, reviewData){
+																Review.findOne({ _id: reviewData._id }).populate('profiles').populate('profile_id').exec(function(err, reviewData){
 																	Generalfunc.response(200, reviewData, function(response){
 																		res.json(response);
 																	});
