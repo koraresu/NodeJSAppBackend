@@ -177,12 +177,14 @@ function isNeightbor(profile_id, another_id, callback){
 	});
 }
 function isFriend(profile_id, another_id, callback){
-	Network.findOne({
+	var d = {
 		"profiles": {
 			"$all": [profile_id, another_id]
 		},
 		"accepted": true
-	}).exec(function(errNetwork, networkData){
+	};
+	console.log(d);
+	Network.findOne(d).exec(function(errNetwork, networkData){
 		if(!errNetwork && networkData){
 			if(networkData != null){
 				callback(true);
