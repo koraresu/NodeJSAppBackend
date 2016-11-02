@@ -501,6 +501,7 @@ router.post('/facebooktofriend', multipartMiddleware, function(req, res){
 						if(facebookProfileData.length > 0){
 							async.map(facebookProfileData, function(item, callback){
 								Networkfunc.isFriend(profileData._id, facebookProfileData._id, function(d){
+									console.log("Friend:");
 									console.log(d);
 									var x = {
 									profile: item,
