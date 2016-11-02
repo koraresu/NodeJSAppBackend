@@ -504,16 +504,12 @@ router.post('/facebooktofriend', multipartMiddleware, function(req, res){
 									console.log("Friend:");
 									console.log(d);
 									var x = {
-									profile: item,
-									isFriend: d
-								};
-
-								console.log(x);
-
-								callback(null, x);
+										profile: item,
+										isFriend: d
+									};
+									callback(null, x);
 								});
 							}, function(err, results){
-								console.log(results);
 								split = cleanArray(split);
 								Generalfunc.response(200, {profiles: results, uknown: split}, function(response){
 									res.json(response);
