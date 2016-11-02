@@ -662,8 +662,8 @@ router.post('/write/review', multipartMiddleware, function(req, res){
 														console.log("COUNT:"+count);
 														console.log("PROMEDIO:"+prom);
 														console.log("PROFILE ID:"+profileData._id);
-														profileData.review_score = prom;
-														profileData.save(function(err, profile){
+														publicProfileData.review_score = prom;
+														publicProfileData.save(function(err, profile){
 															Profile.find({ _id: profile._id }).exec(function(err, profileData){
 																Review.findOne({ _id: reviewData._id }).populate('profiles').populate('profile_id').exec(function(err, reviewData){
 																	Generalfunc.response(200, reviewData, function(response){
@@ -703,8 +703,8 @@ router.post('/write/review', multipartMiddleware, function(req, res){
 														console.log("PROMEDIO:"+prom);
 														console.log("PROFILE DATA:"+profileData.review_score);
 														console.log("PROFILE ID:"+profileData._id);
-														profileData.review_score = prom;
-														profileData.save(function(err, profile){
+														publicProfileData.review_score = prom;
+														publicProfileData.save(function(err, profile){
 															Profile.find({ _id: profile._id }).exec(function(err, profileData){
 																Review.findOne({ _id: reviewData._id }).populate('profiles').populate('profile_id').exec(function(err, reviewData){
 																	Generalfunc.response(200, reviewData, function(response){
