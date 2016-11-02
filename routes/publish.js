@@ -506,6 +506,7 @@ router.post('/write/review', multipartMiddleware, function(req, res){
 								},function(errReview, reviewCheck){
 									console.log("Review Count:"+reviewCheck);
 									if(reviewCheck == 1){
+										console.log("Primer Review");
 										Historyfunc.insert({
 											profile_id: publicProfileData._id,
 											de_id: profileData._id,
@@ -543,6 +544,7 @@ router.post('/write/review', multipartMiddleware, function(req, res){
 											
 										});
 									}else{
+										console.log("No es Primer Review");
 										//Review.find({ _id: reviewData._id }).populate('profiles').populate('profile_id').exec(function(errReview, reviewData){
 										var suma  = 0;
 											var count = 0;
