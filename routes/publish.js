@@ -654,9 +654,13 @@ router.post('/write/review', multipartMiddleware, function(req, res){
 														suma+= item.rate;
 														count++;
 													}
-													
+
 													if((review.length-1) == index){
 														var prom = suma/count;
+
+														console.log("SUMA:"+suma);
+														console.log("COUNT:"+count);
+														console.log("PROMEDIO:"+prom);
 
 														profileData.review_score = prom;
 														profileData.save(function(err, profile){
