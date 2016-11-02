@@ -504,7 +504,8 @@ router.post('/write/review', multipartMiddleware, function(req, res){
 										"$all":[publicProfileData._id,profileData._id]
 									}
 								},function(errReview, reviewCheck){
-									console.log("Review Count:"+reviewCheck);
+									console.log("Review Count:");
+									console.log(reviewCheck);
 									if(reviewCheck == 1){
 										console.log("Primer Review");
 										Historyfunc.insert({
