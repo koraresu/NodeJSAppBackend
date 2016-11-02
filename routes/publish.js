@@ -470,6 +470,7 @@ router.post('/write/review', multipartMiddleware, function(req, res){
 								rate:  score
 							}
 						}, function(errHistory, historyData){
+
 							review.save(function(errReview, reviewData){
 								Review.count({
 									profiles:{
@@ -485,18 +486,64 @@ router.post('/write/review', multipartMiddleware, function(req, res){
 											data: {}
 										}, function(errHistory, historyData){
 
-											Review.find({ _id: reviewData._id }).populate('profiles').populate('profile_id').exec(function(errReview, reviewData){
-												Generalfunc.response(200, reviewData, function(response){
-													res.json(response);
+											//Review.find({ _id: reviewData._id }).populate('profiles').populate('profile_id').exec(function(errReview, reviewData){
+											var suma  = 0;
+											var count = 0;
+
+											Review.find({ profile_id: profileData._id }).exec(function(err, review){
+												review.forEach(function(item, index){
+													suma+= item.rate;
+													count++;
+
+													if((review.length-1) == index){
+														var prom = suma/count;
+														profileData.review_score = prom;
+														profileData.save(function(err, profile){
+															Profile.find({ _id: profile._id }).exec(function(err, profileData){
+																Review.findOne({ _id: reviewData._id }).exec(function(err, reviewData){
+																	Generalfunc.response(200, reviewData, function(response){
+																		res.json(response);
+																	});
+																});
+															});
+														})
+													}
 												});
+												
+
+
 											});
+											
 										});
 									}else{
-										Review.find({ _id: reviewData._id }).populate('profiles').populate('profile_id').exec(function(errReview, reviewData){
-											Generalfunc.response(200, reviewData, function(response){
-												res.json(response);
+										console.log("HOLA");
+										//Review.find({ _id: reviewData._id }).populate('profiles').populate('profile_id').exec(function(errReview, reviewData){
+										var suma  = 0;
+											var count = 0;
+
+											Review.find({ profile_id: profileData._id }).exec(function(err, review){
+												review.forEach(function(item, index){
+													suma+= item.rate;
+													count++;
+
+													if((review.length-1) == index){
+														var prom = suma/count;
+														profileData.review_score = prom;
+														profileData.save(function(err, profile){
+															Profile.find({ _id: profile._id }).exec(function(err, profileData){
+																Review.findOne({ _id: reviewData._id }).exec(function(err, reviewData){
+																	Generalfunc.response(200, reviewData, function(response){
+																		res.json(response);
+																	});
+																});
+															});
+														})
+													}
+												});
+												
+
+
 											});
-										});
 									}
 								});
 								
