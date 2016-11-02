@@ -474,31 +474,25 @@ router.post('/emailtofriend', multipartMiddleware, function(req, res){
 			});
 		}else{
 			Generalfunc.response(101, { message: "No Exists Token" }, function(response){
-						res.json(response);
-					});
+				res.json(response);
+			});
 		}
 	});
 });
 router.post('/facebooktofriend', multipartMiddleware, function(req, res){
 	var guid       = req.body.guid;
 	var facebookids     = req.body.facebookid;
-
-
 	var split = facebookids.split(',');
-	console.log(split);
 	Tokenfunc.exist(guid, function(errToken, token){
 		if(errToken){
 			Tokenfunc.toProfile(token.generated_id, function(status, userData, profileData){
 				if(status){
 					var facebook = [];
-
-					console.log(split);
 					var v = {
 						"facebookId": {
 							$in: split
 						}
 					};
-					console.log(v);
 					Profile.find(v).exec(function(profileErr, facebookProfileData){
 						if(facebookProfileData.length > 0){
 							async.map(facebookProfileData, function(item, callback){
@@ -523,12 +517,9 @@ router.post('/facebooktofriend', multipartMiddleware, function(req, res){
 							});
 						}else{
 							Generalfunc.response(113, {}, function(response){
-											res.json(response);
-										});
+								res.json(response);
+							});
 						}
-
-
-						
 					});
 				}else{
 					Generalfunc.response(101, {}, function(response){
@@ -871,15 +862,15 @@ router.post('/recomendar', multipartMiddleware, function(req, res){
 module.exports = router;
 
 function cleanArray(actual) {
-  var newArray = new Array();
-  for (var i = 0; i < actual.length; i++) {
-    if (actual[i]) {
-      newArray.push(actual[i]);
-    }
-  }
-  return newArray;
+	var newArray = new Array();
+	for (var i = 0; i < actual.length; i++) {
+		if (actual[i]) {
+			newArray.push(actual[i]);
+		}
+	}
+	return newArray;
 }
 function isNormalInteger(str) {
-    var n = ~~Number(str);
-    return String(n) === str && n >= 0;
+	var n = ~~Number(str);
+	return String(n) === str && n >= 0;
 }
