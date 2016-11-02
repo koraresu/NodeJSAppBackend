@@ -462,7 +462,7 @@ router.post('/phonetofriend', multipartMiddleware, function(req, res){
 
 							console.log(item);
 
-							Networkfunc.isFriend(profileData._id, facebookProfileData._id, function(d){
+							Networkfunc.isFriend(profileData._id, item._id, function(d){
 								var x = {
 									profile: item,
 									isFriend: d
