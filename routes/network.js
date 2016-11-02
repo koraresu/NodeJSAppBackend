@@ -491,16 +491,19 @@ router.post('/facebooktofriend', multipartMiddleware, function(req, res){
 			Tokenfunc.toProfile(token.generated_id, function(status, userData, profileData){
 				if(status){
 					var facebook = [];
-					console.log(status);
+
 					Profile.find({
 						"facebookId": {
 							$in: split
 						}
 					}).exec(function(profileErr, facebookProfileData){
-						console.log(facebookProfileData.length);
 						if(facebookProfileData.length > 0){
 							async.map(facebookProfileData, function(item, callback){
 								Networkfunc.isFriend(profileData._id, facebookProfileData._id, function(d){
+									console.log("ProfileData:");
+									console.log(profileData._id);
+									console.log("Facebook Profile Data");
+									console.log(facebookProfileData._id);
 									console.log("Friend:");
 									console.log(d);
 									var x = {
