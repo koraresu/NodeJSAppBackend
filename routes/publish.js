@@ -514,7 +514,7 @@ router.post('/write/review', multipartMiddleware, function(req, res){
 											action: "3",
 											data: {}
 										}, function(errHistory, historyData){
-
+											console.log("History!!");
 											//Review.find({ _id: reviewData._id }).populate('profiles').populate('profile_id').exec(function(errReview, reviewData){
 											var suma  = 0;
 											var count = 0;
