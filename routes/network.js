@@ -349,6 +349,26 @@ router.post('/emailtofriend', multipartMiddleware, function(req, res){
 
 		var data = [];
 		if(userData.length > 0){
+
+			async.map(userData, function(item, callback){
+				Profile.findOne({ user_id: item._id }).populate('user_id').exec(function(profileErr, emailProfileData){
+					var x = split.indexOf(emailProfileData.user_id.email);
+					delete split[x];
+					Networkfunc.isFriend(profileData._id, emailProfileData._id, function(d){
+						var x = {
+							profile: item,
+							isFriend: d
+						};
+						callback(null, x);
+					});
+				});
+			}, function(err, results){
+				console.log(split);
+				split = cleanArray(split);
+				Generalfunc.response(200, { profiles: results, uknown: split }, function(response){
+					res.json(response);
+				});
+			});
 			userData.forEach(function(userItem, userIndex){
 
 				var x = split.indexOf(userItem.email);
@@ -358,11 +378,7 @@ router.post('/emailtofriend', multipartMiddleware, function(req, res){
 					data.push(profileData);
 
 					if((userData.length-1) == userIndex){
-						console.log(split);
-						split = cleanArray(split);
-						Generalfunc.response(200, { profiles: data, uknown: split }, function(response){
-							res.json(response);
-						});
+						
 
 					}
 				});
@@ -408,28 +424,6 @@ router.post('/facebooktofriend', multipartMiddleware, function(req, res){
 								Generalfunc.response(200, {profiles: results, uknown: split}, function(response){
 									res.json(response);
 								});
-							});
-							facebookProfileData.forEach(function(item, index){
-								console.log(index);
-								async.map(facebookProfileData, function(item, callback){
-
-									Networkfunc.isFriend(profileData._id, item._id, function(d){
-										var x = {
-											profile: item,
-											isFriend: d
-										};
-
-
-										callback(null, x);
-									});
-								}, function(err, results){
-									console.log(results);
-									split = cleanArray(split);
-									Generalfunc.response(200, {profiles: results}, function(response){
-										res.json(response);
-									});
-								});
-								
 							});
 						}else{
 							Generalfunc.response(113, {}, function(response){
