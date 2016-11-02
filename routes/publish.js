@@ -143,12 +143,11 @@ router.post('/write/news', multipartMiddleware, function(req, res){
 								if(gallery.constructor === Array){
 									gallery.forEach(function(item, index){
 										var file = item;
-										console.log(item);
-										var objectId    = new ObjectID();
+										var objectId  = new ObjectID();
 										var fileName  = file.fieldName;
 										var pathfile  = file.path;
-										var extension = path.extname(pathfile);
-										var file_pic    = shortid.generate() + extension;
+										var extension = mime.detectExtension(item.type);
+										var file_pic  = shortid.generate() + extension;
 
 										var new_path = path.dirname(path.dirname(process.mainModule.filename)) + '/public/gallery/' + file_pic;
 										fs.rename(pathfile, new_path, function(err){
@@ -323,13 +322,11 @@ router.post('/get/news', multipartMiddleware, function(req, res){
 	var pages     = 0;
 
 	if(isNumber(max)){
-		console.log("Max is Number");
 		max = max*1;
 	}else{
 		max = 20;
 	}
 	if(isNumber(page)){
-		console.log("Page is Number");
 		pages = page*1;
 		pages = (pages*max);
 	}else{
@@ -354,7 +351,6 @@ router.post('/get/news', multipartMiddleware, function(req, res){
 						var actTemp = action;
 						action = action.split(",")
 						if(action.length == 1){
-							console.log(action);
 							action = actTemp;
 						}
 						search.action = { "$in": action }
