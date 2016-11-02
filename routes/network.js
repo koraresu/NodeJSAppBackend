@@ -341,38 +341,53 @@ router.post('/emailtofriend', multipartMiddleware, function(req, res){
 	var split = emails.split(',');
 	
 	console.log(split);
+	Tokenfunc.exist(guid, function(errToken, token){
+		if(errToken){
+			Tokenfunc.toProfile(token.generated_id, function(status, userData, profileData){
+				if(status){
+					User.find({
+						"email": { $in: split }
+					}, function(userErr, userData){
+						console.log(userData);
 
-	User.find({
-		"email": { $in: split }
-	}, function(userErr, userData){
-		console.log(userData);
+						var data = [];
+						if(userData.length > 0){
 
-		var data = [];
-		if(userData.length > 0){
-
-			async.map(userData, function(item, callback){
-				Profile.findOne({ user_id: item._id }).populate('user_id').exec(function(profileErr, emailProfileData){
-					var x = split.indexOf(email);
-					delete split[x];
-					Networkfunc.isFriend(profileData._id, emailProfileData._id, function(d){
-						var x = {
-							profile: item,
-							isFriend: d
-						};
-						callback(null, x);
+							async.map(userData, function(item, callback){
+								Profile.findOne({ user_id: item._id }).populate('user_id').exec(function(profileErr, emailProfileData){
+									var x = split.indexOf(emailProfileData.user_id.email);
+									delete split[x];
+									Networkfunc.isFriend(profileData._id, emailProfileData._id, function(d){
+										var x = {
+											profile: item,
+											isFriend: d
+										};
+										callback(null, x);
+									});
+								});
+							}, function(err, results){
+								console.log(split);
+								split = cleanArray(split);
+								Generalfunc.response(200, { profiles: data, uknown: split }, function(response){
+									res.json(response);
+								});
+							});
+						}else{
+							Generalfunc.response(200, { uknown: split}, function(response){
+								res.json(response);
+							});
+						}
 					});
-				});
-			}, function(err, results){
-				console.log(split);
-				split = cleanArray(split);
-				Generalfunc.response(200, { profiles: data, uknown: split }, function(response){
-					res.json(response);
-				});
+				}else{
+					Generalfunc.response(101, {}, function(response){
+						res.json(response);
+					});
+				}
 			});
 		}else{
-			Generalfunc.response(200, { uknown: split}, function(response){
-				res.json(response);
-			});
+			Generalfunc.response(101, {}, function(response){
+						res.json(response);
+					});
 		}
 	});
 });
