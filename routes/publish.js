@@ -639,62 +639,52 @@ router.post('/write/review', multipartMiddleware, function(req, res){
 										"$all":[publicProfileData._id,profileData._id]
 									}
 								},function(errReview, reviewCheck){
-									console.log("Review Count:");
-									console.log(reviewCheck);
 									if(reviewCheck == 1){
-										console.log("Primer Review");
 										Historyfunc.insert({
 											profile_id: publicProfileData._id,
 											de_id: profileData._id,
 											action: "3",
 											data: {}
 										}, function(errHistory, historyData){
-											console.log("History!!");
 											//Review.find({ _id: reviewData._id }).populate('profiles').populate('profile_id').exec(function(errReview, reviewData){
+												var suma  = 0;
+												var count = 0;
+
+												Review.find({ profile_id: publicProfileData._id }).exec(function(err, review){
+													review.forEach(function(item, index){
+														if(isNumber(item.rate)){
+															suma+= item.rate;
+															count++;
+														}
+
+														if((review.length-1) == index){
+															var prom = suma/count;
+
+															console.log("PROFILE ID:"+publicProfileData._id);
+															publicProfileData.review_score = prom;
+															publicProfileData.save(function(err, profile){
+																Profile.find({ _id: publicProfileData._id }).exec(function(err, profileData){
+																	Review.findOne({ _id: reviewData._id }).populate('profiles').populate('profile_id').exec(function(err, reviewData){
+																		Generalfunc.response(200, reviewData, function(response){
+																			res.json(response);
+																		});
+																	});
+																});
+															})
+														}
+													});
+
+
+
+												});
+
+											});
+									}else{
+										//Review.find({ _id: reviewData._id }).populate('profiles').populate('profile_id').exec(function(errReview, reviewData){
 											var suma  = 0;
 											var count = 0;
 
 											Review.find({ profile_id: publicProfileData._id }).exec(function(err, review){
-												console.log(review);
-												review.forEach(function(item, index){
-													if(isNumber(item.rate)){
-														suma+= item.rate;
-														count++;
-													}
-
-													if((review.length-1) == index){
-														var prom = suma/count;
-
-														console.log("SUMA:"+suma);
-														console.log("COUNT:"+count);
-														console.log("PROMEDIO:"+prom);
-														console.log("PROFILE ID:"+profileData._id);
-														publicProfileData.review_score = prom;
-														publicProfileData.save(function(err, profile){
-															Profile.find({ _id: profile._id }).exec(function(err, profileData){
-																Review.findOne({ _id: reviewData._id }).populate('profiles').populate('profile_id').exec(function(err, reviewData){
-																	Generalfunc.response(200, reviewData, function(response){
-																		res.json(response);
-																	});
-																});
-															});
-														})
-													}
-												});
-												
-
-
-											});
-											
-										});
-									}else{
-										console.log("No es Primer Review");
-										//Review.find({ _id: reviewData._id }).populate('profiles').populate('profile_id').exec(function(errReview, reviewData){
-										var suma  = 0;
-											var count = 0;
-
-											Review.find({ profile_id: publicProfileData._id }).exec(function(err, review){
-												console.log(review);
 
 												async.map(review, function(item, callback){
 													if(isNumber(item.rate)){
@@ -704,22 +694,18 @@ router.post('/write/review', multipartMiddleware, function(req, res){
 													callback(null, item);
 												}, function(err, results){
 													var prom = suma/count;
-
-														console.log("SUMA:"+suma);
-														console.log("COUNT:"+count);
-														console.log("PROMEDIO:"+prom);
-														console.log("PROFILE DATA:"+publicProfileData.review_score);
-														console.log("PROFILE ID:"+publicProfileData._id);
-														publicProfileData.review_score = prom;
-														publicProfileData.save(function(err, profile){
-															Profile.find({ _id: profile._id }).exec(function(err, profileData){
-																Review.findOne({ _id: reviewData._id }).populate('profiles').populate('profile_id').exec(function(err, reviewData){
-																	Generalfunc.response(200, reviewData, function(response){
-																		res.json(response);
-																	});
+													
+													console.log("PROFILE ID:"+publicProfileData._id);
+													publicProfileData.review_score = prom;
+													publicProfileData.save(function(err, profile){
+														Profile.find({ _id: publicProfileData._id }).exec(function(err, profileData){
+															Review.findOne({ _id: reviewData._id }).populate('profiles').populate('profile_id').exec(function(err, reviewData){
+																Generalfunc.response(200, reviewData, function(response){
+																	res.json(response);
 																});
 															});
 														});
+													});
 												});												
 
 											});
@@ -738,99 +724,99 @@ router.post('/write/review', multipartMiddleware, function(req, res){
 					}
 					
 				})
-			});
-		}else{
-			Generalfunc.response(101, {}, function(response){
-				res.json(response);
-			});
-		}
-	});
 });
-router.post('/count/review', multipartMiddleware, function(req, res){
-	var guid      = req.body.guid;
-	var public_id = req.body.public_id;
+}else{
+	Generalfunc.response(101, {}, function(response){
+		res.json(response);
+	});
+}
+});
+});
+	router.post('/count/review', multipartMiddleware, function(req, res){
+		var guid      = req.body.guid;
+		var public_id = req.body.public_id;
 
-	Tokenfunc.exist(guid, function(status, tokenData){
-		if(status){
-			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
-				Profilefunc.publicId(public_id, function(statusPublic, publicProfileData){
-					if(statusPublic){
+		Tokenfunc.exist(guid, function(status, tokenData){
+			if(status){
+				Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
+					Profilefunc.publicId(public_id, function(statusPublic, publicProfileData){
+						if(statusPublic){
 
-						Review.find({ profile_id: profileData._id }).exec(function(err, reviewData){
-							res.json(reviewData);
-						})
-					}else{
-						var suma  = 0;
-						var count = 0;
-						var find = Review.find({ profile_id: profileData._id });
-						var data = [];
-						find.exec(function(err, reviewData){
-							reviewData.forEach(function(item, index){
-								suma+= item.rate;
-								count++;
-								data[data.length] = item.rate;
-								if((reviewData.length-1) == index){	
-									var prom = suma/count;
-									res.json({
-										avg: prom,
-										sum: suma,
-										count: count,
-										data: data
-									});
-								}
-								
+							Review.find({ profile_id: profileData._id }).exec(function(err, reviewData){
+								res.json(reviewData);
+							})
+						}else{
+							var suma  = 0;
+							var count = 0;
+							var find = Review.find({ profile_id: profileData._id });
+							var data = [];
+							find.exec(function(err, reviewData){
+								reviewData.forEach(function(item, index){
+									suma+= item.rate;
+									count++;
+									data[data.length] = item.rate;
+									if((reviewData.length-1) == index){	
+										var prom = suma/count;
+										res.json({
+											avg: prom,
+											sum: suma,
+											count: count,
+											data: data
+										});
+									}
+
+								});
+							})
+						}
+					});
+				});
+			}else{
+				Generalfunc.response(101, { message: "No Token" }, function(response){
+					res.json(response);
+				});
+			}
+		});
+	});
+	router.post('/write/recomendar', multipartMiddleware, function(req, res){
+		var guid      = req.body.guid;
+		var busqueda  = req.body.busqueda;
+		var data = [];
+
+		Tokenfunc.exist(guid, function(status, tokenData){
+			if(status){
+				Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
+					if(status){
+						Historyfunc.insert({
+							profile_id: profileData._id,
+							action: 4,
+							data: {
+								busqueda: busqueda
+							}
+						}, function(err, historyData){
+							var profile = format.littleProfile(profileData);
+							var d = format.news(historyData, profile, {});
+							Generalfunc.response(200,d, function(response){
+								res.json(response);
 							});
-						})
+						});
+					}else{
+						Generalfunc.response(113, {}, function(response){
+							res.json(response);
+						});
 					}
 				});
-			});
-		}else{
-			Generalfunc.response(101, { message: "No Token" }, function(response){
-							res.json(response);
-						});
-		}
+			}else{
+				Generalfunc.response(101, {}, function(response){
+					res.json(response);
+				});
+			}
+		});
 	});
-});
-router.post('/write/recomendar', multipartMiddleware, function(req, res){
-	var guid      = req.body.guid;
-	var busqueda  = req.body.busqueda;
-	var data = [];
+	module.exports = router;
 
-	Tokenfunc.exist(guid, function(status, tokenData){
-		if(status){
-			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
-				if(status){
-					Historyfunc.insert({
-						profile_id: profileData._id,
-						action: 4,
-						data: {
-							busqueda: busqueda
-						}
-					}, function(err, historyData){
-						var profile = format.littleProfile(profileData);
-						var d = format.news(historyData, profile, {});
-						Generalfunc.response(200,d, function(response){
-							res.json(response);
-						});
-					});
-				}else{
-					Generalfunc.response(113, {}, function(response){
-						res.json(response);
-					});
-				}
-			});
-		}else{
-			Generalfunc.response(101, {}, function(response){
-				res.json(response);
-			});
-		}
-	});
-});
-module.exports = router;
+	function extension(mime){
 
-function extension(mime){
-
-}
-function isNumber(n) {
-  return !isNaN(parseFloat(n)) && isFinite(n);
-}
+	}
+	function isNumber(n) {
+		return !isNaN(parseFloat(n)) && isFinite(n);
+	}
