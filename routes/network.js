@@ -348,8 +348,6 @@ router.post('/emailtofriend', multipartMiddleware, function(req, res){
 					User.find({
 						"email": { $in: split }
 					}, function(userErr, userData){
-						console.log(userData);
-
 						var data = [];
 						if(userData.length > 0){
 
@@ -359,7 +357,7 @@ router.post('/emailtofriend', multipartMiddleware, function(req, res){
 									delete split[x];
 									Networkfunc.isFriend(profileData._id, emailProfileData._id, function(d){
 										var x = {
-											profile: item,
+											profile: emailProfileData,
 											isFriend: d
 										};
 										console.log(x);
