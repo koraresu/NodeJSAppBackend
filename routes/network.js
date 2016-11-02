@@ -493,11 +493,13 @@ router.post('/facebooktofriend', multipartMiddleware, function(req, res){
 					var facebook = [];
 
 					console.log(split);
-					Profile.find({
+					var v = {
 						"facebookId": {
 							$in: split
 						}
-					}).exec(function(profileErr, facebookProfileData){
+					};
+					console.log(v);
+					Profile.find(v).exec(function(profileErr, facebookProfileData){
 						if(facebookProfileData.length > 0){
 							async.map(facebookProfileData, function(item, callback){
 								Networkfunc.isFriend(profileData._id, facebookProfileData._id, function(d){
