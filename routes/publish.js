@@ -551,12 +551,11 @@ router.post('/write/review', multipartMiddleware, function(req, res){
 											var count = 0;
 
 											Review.find({ profile_id: profileData._id }).exec(function(err, review){
-												review.forEach(function(item, index){
+												async.map(review, function(item, callback){
 													suma+= item.rate;
 													count++;
-
-													if((review.length-1) == index){
-														var prom = suma/count;
+												}, function(err, results){
+													var prom = suma/count;
 														profileData.review_score = prom;
 														profileData.save(function(err, profile){
 															Profile.find({ _id: profile._id }).exec(function(err, profileData){
@@ -566,11 +565,8 @@ router.post('/write/review', multipartMiddleware, function(req, res){
 																	});
 																});
 															});
-														})
-													}
-												});
-												
-
+														});
+												});												
 
 											});
 									}
