@@ -371,7 +371,7 @@ router.post('/emailtofriend', multipartMiddleware, function(req, res){
 				});
 			});
 		}else{
-			Generalfunc.response(200, {}, function(response){
+			Generalfunc.response(101, {}, function(response){
 				res.json(response);
 			});
 		}
