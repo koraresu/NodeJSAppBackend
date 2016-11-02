@@ -456,7 +456,7 @@ router.post('/phonetofriend', multipartMiddleware, function(req, res){
 						}
 					}).exec(function(profileErr, facebookProfileData){
 
-						facebookProfileData.forEach(function(item, index){
+						async.each(facebookProfileData, function(item, callback){
 							var x = split.indexOf(item.phone);
 							delete split[x];
 
@@ -465,16 +465,13 @@ router.post('/phonetofriend', multipartMiddleware, function(req, res){
 								var x = {};
 								x.profile = item;
 								x.isfriend = d;
-								facebook[facebook.length] = x;
-
-								if((facebookProfileData.length-1) == index){
-									split = cleanArray(split);
-									Generalfunc.response(200, {profiles: facebook, uknown: split}, function(response){
-										res.json(response);
-									});
-								}	
-							})
-							
+								callback(null, x);
+							});
+						}, function(err, results){
+							split = cleanArray(split);
+							Generalfunc.response(200, {profiles: facebook, uknown: split}, function(response){
+								res.json(response);
+							});
 						});
 					});
 				}else{
