@@ -469,7 +469,7 @@ router.post('/phonetofriend', multipartMiddleware, function(req, res){
 							});
 						}, function(err, results){
 							split = cleanArray(split);
-							Generalfunc.response(200, {profiles: facebook, uknown: split}, function(response){
+							Generalfunc.response(200, {profiles: results, uknown: split}, function(response){
 								res.json(response);
 							});
 						});
