@@ -146,7 +146,7 @@ router.post('/write/news', multipartMiddleware, function(req, res){
 										var objectId  = new ObjectID();
 										var fileName  = file.fieldName;
 										var pathfile  = file.path;
-										var extension = mime.detectExtension(item.type);
+										var extension = mime.extension(item.type);
 										var file_pic  = shortid.generate() + extension;
 
 										var new_path = path.dirname(path.dirname(process.mainModule.filename)) + '/public/gallery/' + file_pic;
