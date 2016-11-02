@@ -701,7 +701,7 @@ router.post('/write/review', multipartMiddleware, function(req, res){
 														console.log("SUMA:"+suma);
 														console.log("COUNT:"+count);
 														console.log("PROMEDIO:"+prom);
-														
+														console.log("PROFILE DATA:"+profileData.review_score);
 														profileData.review_score = prom;
 														profileData.save(function(err, profile){
 															Profile.find({ _id: profile._id }).exec(function(err, profileData){
