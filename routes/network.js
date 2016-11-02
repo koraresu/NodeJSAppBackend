@@ -460,6 +460,8 @@ router.post('/phonetofriend', multipartMiddleware, function(req, res){
 							var x = split.indexOf(item.phone);
 							delete split[x];
 
+							console.log(item);
+							
 							Networkfunc.isFriend(profileData._id, facebookProfileData._id, function(d){
 								console.log(d);
 								var x = {};
