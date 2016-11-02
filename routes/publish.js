@@ -650,11 +650,14 @@ router.post('/write/review', multipartMiddleware, function(req, res){
 											Review.find({ profile_id: publicProfileData._id }).exec(function(err, review){
 												console.log(review);
 												review.forEach(function(item, index){
-													suma+= item.rate;
-													count++;
-
+													if(isNumber(item.rate)){
+														suma+= item.rate;
+														count++;
+													}
+													
 													if((review.length-1) == index){
 														var prom = suma/count;
+
 														profileData.review_score = prom;
 														profileData.save(function(err, profile){
 															Profile.find({ _id: profile._id }).exec(function(err, profileData){
