@@ -485,7 +485,7 @@ router.post('/facebooktofriend', multipartMiddleware, function(req, res){
 
 
 	var split = facebookids.split(',');
-
+	console.log(split);
 	Tokenfunc.exist(guid, function(errToken, token){
 		if(errToken){
 			Tokenfunc.toProfile(token.generated_id, function(status, userData, profileData){
