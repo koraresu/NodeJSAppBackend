@@ -415,11 +415,18 @@ router.post('/get/review', multipartMiddleware, function(req, res){
 						if(statusPublic){
 							var data = publicProfileData._id;
 
-							var r = Review.find({
+							var d = {
+								profile_id: data
+
+							};
+							/*
+							var d = {
 								profiles: {
 									"$in": [data]
 								}
-							});
+							};
+							*/
+							var r = Review.find(d);
 							r = r.sort( [ ['createdAt', 'descending'] ] );
 							r = r.limit(max);
 							console.log("Pages:"+pages);
