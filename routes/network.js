@@ -352,26 +352,39 @@ router.post('/emailtofriend', multipartMiddleware, function(req, res){
 
 			async.map(userData, function(item, callback){
 				Profile.findOne({ user_id: item._id }).populate('user_id').exec(function(profileErr, emailProfileData){
-					var x = split.indexOf(emailProfileData.user_id.email);
+					var x = split.indexOf(email);
 					delete split[x];
 					Networkfunc.isFriend(profileData._id, emailProfileData._id, function(d){
 						var x = {
 							profile: item,
 							isFriend: d
 						};
-						console.log(x);
 						callback(null, x);
 					});
 				});
 			}, function(err, results){
 				console.log(split);
 				split = cleanArray(split);
-				Generalfunc.response(200, { profiles: results, uknown: split }, function(response){
+				Generalfunc.response(200, { profiles: data, uknown: split }, function(response){
 					res.json(response);
 				});
 			});
+			userData.forEach(function(userItem, userIndex){
+
+				var x = split.indexOf(userItem.email);
+				delete split[x];
+
+				Profile.findOne({ user_id: userItem._id}, function(profileErr, profileData){
+					data.push(profileData);
+
+					if((userData.length-1) == userIndex){
+						
+
+					}
+				});
+			});
 		}else{
-			Generalfunc.response(101, {}, function(response){
+			Generalfunc.response(200, {}, function(response){
 				res.json(response);
 			});
 		}
