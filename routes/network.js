@@ -367,7 +367,8 @@ router.post('/emailtofriend', multipartMiddleware, function(req, res){
 							}, function(err, results){
 								console.log(split);
 								split = cleanArray(split);
-								Generalfunc.response(200, { profiles: data, uknown: split }, function(response){
+								
+								Generalfunc.response(200, { profiles: results, uknown: split }, function(response){
 									res.json(response);
 								});
 							});
