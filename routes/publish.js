@@ -552,9 +552,12 @@ router.post('/write/review', multipartMiddleware, function(req, res){
 											var count = 0;
 
 											Review.find({ profile_id: publicProfileData._id }).exec(function(err, review){
+												console.log(review);
+
 												async.map(review, function(item, callback){
 													suma+= item.rate;
 													count++;
+													callback(null, item);
 												}, function(err, results){
 													var prom = suma/count;
 														profileData.review_score = prom;
