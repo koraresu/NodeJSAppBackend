@@ -143,6 +143,7 @@ router.post('/write/news', multipartMiddleware, function(req, res){
 								if(gallery.constructor === Array){
 									gallery.forEach(function(item, index){
 										var file = item;
+										console.log(item);
 										var objectId    = new ObjectID();
 										var fileName  = file.fieldName;
 										var pathfile  = file.path;
