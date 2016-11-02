@@ -606,6 +606,11 @@ router.post('/write/review', multipartMiddleware, function(req, res){
 		if(status){
 			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
 				Profilefunc.publicId(public_id, function(statusPublic, publicProfileData){
+
+					console.log("PUBLIC_ID:"+public_id);
+					console.log("PublicData:");
+					console.log(publicProfileData);
+
 					if(statusPublic){
 						var review = new Review({
 							title: title,
