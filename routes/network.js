@@ -456,7 +456,7 @@ router.post('/phonetofriend', multipartMiddleware, function(req, res){
 						}
 					}).exec(function(profileErr, facebookProfileData){
 
-						async.each(facebookProfileData, function(item, callback){
+						async.map(facebookProfileData, function(item, callback){
 							var x = split.indexOf(item.phone);
 							delete split[x];
 
@@ -469,7 +469,7 @@ router.post('/phonetofriend', multipartMiddleware, function(req, res){
 								};
 
 								console.log(x);
-								
+
 								callback(null, x);
 							});
 						}, function(err, results){
