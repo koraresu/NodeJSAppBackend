@@ -551,7 +551,7 @@ router.post('/write/review', multipartMiddleware, function(req, res){
 										var suma  = 0;
 											var count = 0;
 
-											Review.find({ profile_id: profileData._id }).exec(function(err, review){
+											Review.find({ profile_id: publicProfileData._id }).exec(function(err, review){
 												async.map(review, function(item, callback){
 													suma+= item.rate;
 													count++;
