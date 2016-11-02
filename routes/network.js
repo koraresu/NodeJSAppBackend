@@ -492,6 +492,7 @@ router.post('/facebooktofriend', multipartMiddleware, function(req, res){
 				if(status){
 					var facebook = [];
 
+					console.log(split);
 					Profile.find({
 						"facebookId": {
 							$in: split
