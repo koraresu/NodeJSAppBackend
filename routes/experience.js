@@ -393,6 +393,56 @@ router.post('/company/claim', multipartMiddleware, function(req, res){
 		}
 	});
 });
+router.post('/company/update', multipartMiddleware, function(req, res){ // Update Description
+	var guid        = req.body.guid;
+	var id          = req.body.id;
+	var description = req.body.description;
+
+	
+	Tokenfunc.exist(guid, function(status, tokenData){
+		if(status){
+			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
+				if(status){
+					if(mongoose.Types.ObjectId.isValid(id)){
+						id = mongoose.Types.ObjectId(id);
+						Company.findOne({ _id: id }).exec(function(err, companyData){
+							if(companyData.profile_id == profileData._id){
+								if(description.length <= 200){
+									companyData.description = description;
+									companyData.save(function(err, companyData){
+										Generalfunc.response(200, companyData, function(response){
+											res.json(response);
+										});
+									});
+								}else{
+									Generalfunc.response(101, { message: "La descripcion es mayor." }, function(response){
+										res.json(response);
+									});
+								}
+							}else{	
+								Generalfunc.response(101, { message: "This profile doesn't have permission to change." }, function(response){
+									res.json(response);
+								});
+							}
+						});
+					}else{
+						Generalfunc.response(101, { message: "id is not valid." }, function(response){
+							res.json(response);
+						});	
+					}
+				}else{
+					Generalfunc.response(101, { message: "token dont have profile."}, function(response){
+						res.json(response);
+					});
+				}
+			});
+		}else{
+			Generalfunc.response(101, { message: "token doesn't exists." }, function(response){
+				res.json(response);
+			});
+		}
+	});
+});
 router.post('/company/getid', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 	var id        = req.body.id;
