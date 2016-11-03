@@ -101,7 +101,7 @@ io.sockets.on('connection', function (socket) {
  socket.on('message', function(h){
    console.log(h);
  });
- socket.emit('text', 'wow. such event. very real time.');
+ socket.emit('text', 'Hola soy un socket');
 });
 
 //gps(io);

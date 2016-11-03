@@ -47,24 +47,28 @@ var add = function(profile_id, name, callback){
 			var skillsID = [];
 			async.each(skills, function(skill, callback){
 				skill = skill.trim();
-				ExistsOrCreate({
-					name: skill
-				}, {
-					name: skill
-				}, function(status, skillData){
-					console.log(skillData);
-					if(profileData.skills.length > 0){
-						var dont = true;
-						skillsID.push(skillData._id);
-						callback();
-					}else{
-						console.log("Profile Skills Vacio");
-						skillsID.push(skillData._id);
-						callback();
-					}
-					
-					console.log(profileData.skills.length);
-				});
+				if(skill == ""){
+					callback();
+				}else{
+					ExistsOrCreate({
+						name: skill
+					}, {
+						name: skill
+					}, function(status, skillData){
+						console.log(skillData);
+						if(profileData.skills.length > 0){
+							var dont = true;
+							skillsID.push(skillData._id);
+							callback();
+						}else{
+							console.log("Profile Skills Vacio");
+							skillsID.push(skillData._id);
+							callback();
+						}
+						
+						console.log(profileData.skills.length);
+					});
+				}
 			}, function(error,results){
 				console.log(skillsID);
 				console.log(profileData.skills);
