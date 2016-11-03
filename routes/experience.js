@@ -410,7 +410,7 @@ router.post('/company/update', multipartMiddleware, function(req, res){ // Updat
 							console.log(typeof companyData.profile_id);
 							console.log(profileData._id);
 							console.log(typeof profileData._id);
-							console.log(companyData.profile_id == profileData._id);
+							console.log(companyData.profile_id.toString() == profileData._id.toString());
 							if(companyData.profile_id == profileData._id){
 								if(description.length <= 200){
 									companyData.description = description;
