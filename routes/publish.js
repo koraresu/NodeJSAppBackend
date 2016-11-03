@@ -389,6 +389,94 @@ router.post('/get/news', multipartMiddleware, function(req, res){
 		}
 	});
 });
+router.post('/get/news/friend', multipartMiddleware, function(req, res){
+	var guid      = req.body.guid;
+	var max       = req.body.max;
+	var page      = req.body.page;
+	var action    = req.body.action;
+	var pages     = 0;
+	var public_id = req.body.public_id;
+
+	if(isNumber(max)){
+		max = max*1;
+	}else{
+		max = 20;
+	}
+	if(isNumber(page)){
+		pages = page*1;
+		pages = (pages*max);
+	}else{
+		pages = 0;
+	}
+
+
+	Tokenfunc.exist(guid, function(status, tokenData){
+		if(status){
+			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
+				if(mongoose.Types.ObjectId.isValid(public_id)){
+					public_id = mongoose.Types.ObjectId(public_id);
+
+					Profile.findOne({ public_id: public_id }).exec(function(err, profileData){
+						Networkfunc.getFriends(profileData._id, function(errFriends, friendsData, friendsId){
+							var friends = friendsId;
+							friends.push(profileData._id);
+
+							var search = new Object();
+							search.profile_id = { "$in": friends }
+							search.action = { "$in": ["1","2","3","4","6","7"]}
+
+							
+
+							if(typeof action == "string"){
+								var actTemp = action;
+								action = action.split(",")
+								if(action.length == 1){
+									action = actTemp;
+								}
+								search.action = { "$in": action }
+							}
+							var r = model.history.find( search );
+							var data = [];
+							
+							r = r.limit(max);
+							r = r.skip(pages);
+							
+							var data = [];
+							r.sort( [ ['createdAt', 'descending'] ] ).populate('profile_id').populate('de_id').exec(function(errHistory,historyData){
+								if(historyData.length > 0){
+									_.each(historyData, function(element, index, list) {
+										var d = format.news(element, element.profile_id, element.de_id);
+										data.push(d);
+										if(index+1 == historyData.length) {
+											Generalfunc.response(200, data, function(response){
+												res.json(response);
+											});
+										}
+									});
+								}else{
+									Generalfunc.response(200, {}, function(response){
+										res.json(response);
+									})
+								}
+							});
+						});
+					});
+				}else{
+					Generalfunc.response(101, {},function(response){
+						res.json(response);
+					});
+				}
+
+				
+				
+			});
+		}else{
+			Generalfunc.response(101, {},function(response){
+				res.json(response);
+			})
+		}
+	});
+});
 router.post('/get/news/show', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 	var news_id   = req.body.id;
