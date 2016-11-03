@@ -408,6 +408,7 @@ router.post('/company/update', multipartMiddleware, function(req, res){ // Updat
 						Company.findOne({ _id: id }).exec(function(err, companyData){
 							console.log(companyData.profile_id);
 							console.log(profileData._id);
+							console.log(companyData.profile_id == profileData._id);
 							if(companyData.profile_id == profileData._id){
 								if(description.length <= 200){
 									companyData.description = description;
