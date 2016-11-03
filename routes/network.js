@@ -219,9 +219,9 @@ router.post('/email/invite', multipartMiddleware, function(req, res){
 						email_invita:  userData.email
 					}, e, "Hola, te invitamos a TheHive, ",function(status, html){
 						if(status){
-							callback(null, {status: status});
+							callback(null, { email: e, status: status});
 						}else{
-							callback(null, {status: status});
+							callback(null, { email: e, status: status});
 						}
 					});
 				}, function(err, results){
