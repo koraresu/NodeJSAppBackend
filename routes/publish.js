@@ -343,7 +343,7 @@ router.post('/get/news', multipartMiddleware, function(req, res){
 
 					var search = new Object();
 					search.profile_id = { "$in": friends }
-					search.action = { "$in": ["1","2","3","6","7"]}
+					search.action = { "$in": ["1","2","3","4","6","7"]}
 
 					
 

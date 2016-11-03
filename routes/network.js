@@ -202,6 +202,37 @@ router.post('/connect/all', multipartMiddleware, function(req, res){
 
 
 });
+router.post('/email/invite', multipartMiddleware, function(req, res){
+	var guid       = req.body.guid;
+	var emails     = req.body.emails;
+	
+
+	var split = emails.split(',');
+	Tokenfunc.exist(guid, function(errToken, token){
+		if(errToken){
+			Tokenfunc.toProfile(token.generated_id, function(status, userData, profileData, profileInfoData){
+				async.map(split, function(item, callback){
+					var e = item.trim();
+					Generalfunc.sendEmail("emailinvite.jade", {
+						email: ,
+						nombre_invita: profileData.first_name+" "+profileData.last_name,
+						email_invita:  userData.email
+					}, e, "Test envio Invitado",function(status, html){
+						if(status){
+							callback(null, status);
+						}else{
+							callback(null, status);
+						}
+					});
+				}, function(err, results){
+					console.log(results);
+				});
+			});
+		}else{
+
+		}
+	});
+});
 // ACCEPT
 // Parameter:
 //  	Token
