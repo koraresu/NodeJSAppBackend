@@ -225,11 +225,15 @@ router.post('/email/invite', multipartMiddleware, function(req, res){
 						}
 					});
 				}, function(err, results){
-					console.log(results);
+					Generalfunc(200, results, function(response){
+						res.json(response);
+					});
 				});
 			});
 		}else{
-
+			Generalfunc(101, {}, function(response){
+				res.json(response);
+			});
 		}
 	});
 });
