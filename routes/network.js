@@ -219,9 +219,9 @@ router.post('/email/invite', multipartMiddleware, function(req, res){
 						email_invita:  userData.email
 					}, e, "Test envio Invitado",function(status, html){
 						if(status){
-							callback(null, status);
+							callback(null, {status: status});
 						}else{
-							callback(null, status);
+							callback(null, {status: status});
 						}
 					});
 				}, function(err, results){
