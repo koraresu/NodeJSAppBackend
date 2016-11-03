@@ -52,6 +52,13 @@ router.get('/bienvenida/:id', function(req, res){
     });
   }
 })
+router.get('/email/invite', function(req, res){
+  res.render('emailinvite', {
+    email: "rkenshin21@gmail.com",
+    nombre_invita: "Esteban Moldovan",
+    email_invita:  "esteban@thehive.com"
+  });
+});
 router.get('/verification/:id',function(req, res){
 	var id = req.params.id;
 

@@ -214,7 +214,7 @@ router.post('/email/invite', multipartMiddleware, function(req, res){
 				async.map(split, function(item, callback){
 					var e = item.trim();
 					Generalfunc.sendEmail("emailinvite.jade", {
-						email: ,
+						email: e,
 						nombre_invita: profileData.first_name+" "+profileData.last_name,
 						email_invita:  userData.email
 					}, e, "Test envio Invitado",function(status, html){
