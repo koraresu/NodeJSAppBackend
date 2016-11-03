@@ -406,9 +406,10 @@ router.post('/company/update', multipartMiddleware, function(req, res){ // Updat
 					if(mongoose.Types.ObjectId.isValid(id)){
 						id = mongoose.Types.ObjectId(id);
 						Company.findOne({ _id: id }).exec(function(err, companyData){
-							console.log(companyData.profile_id);
+
+							console.log(companyData.profile_id.toString());
 							console.log(typeof companyData.profile_id);
-							console.log(profileData._id);
+							console.log(profileData._id.toString());
 							console.log(typeof profileData._id);
 							console.log(companyData.profile_id.toString() == profileData._id.toString());
 							if(companyData.profile_id == profileData._id){
