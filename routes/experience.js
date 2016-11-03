@@ -412,24 +412,29 @@ router.post('/company/update', multipartMiddleware, function(req, res){ // Updat
 							console.log(profileData._id.toString());
 							console.log(typeof profileData._id);
 							console.log(companyData.profile_id.toString() == profileData._id.toString());
-
-							if(companyData.profile_id.toString() === profileData._id.toString()){
-								if(description.length <= 200){
-									companyData.description = description;
-									companyData.save(function(err, companyData){
-										Generalfunc.response(200, companyData, function(response){
+							if(companyData.profile_id != undefined){
+								if(companyData.profile_id.toString() === profileData._id.toString()){
+									if(description.length <= 200){
+										companyData.description = description;
+										companyData.save(function(err, companyData){
+											Generalfunc.response(200, companyData, function(response){
+												res.json(response);
+											});
+										});
+									}else{
+										Generalfunc.response(101, { message: "La descripcion es mayor." }, function(response){
 											res.json(response);
 										});
-									});
-								}else{
-									Generalfunc.response(101, { message: "La descripcion es mayor." }, function(response){
+									}
+								}else{	
+									Generalfunc.response(101, { message: "Este perfil no tiene permisos." }, function(response){
 										res.json(response);
 									});
 								}
-							}else{	
-								Generalfunc.response(101, { message: "This profile doesn't have permission to change." }, function(response){
-									res.json(response);
-								});
+							}else{
+								Generalfunc.response(101, { message: "Este perfil no tiene permisos." }, function(response){
+										res.json(response);
+									});
 							}
 						});
 					}else{
