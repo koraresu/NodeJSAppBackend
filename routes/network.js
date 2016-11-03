@@ -225,13 +225,13 @@ router.post('/email/invite', multipartMiddleware, function(req, res){
 						}
 					});
 				}, function(err, results){
-					Generalfunc(200, results, function(response){
+					Generalfunc.response(200, results, function(response){
 						res.json(response);
 					});
 				});
 			});
 		}else{
-			Generalfunc(101, {}, function(response){
+			Generalfunc.response(101, {}, function(response){
 				res.json(response);
 			});
 		}
