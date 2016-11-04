@@ -485,7 +485,7 @@ router.post('/delete/news', multipartMiddleware, function(req, res){
 		if(status){
 			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
 				if(mongoose.Types.ObjectId.isValid(id)){
-					History.findOne({ _id: id  }).exect(function(err, historyData){
+					History.findOne({ _id: id  }).exec(function(err, historyData){
 						if(profileData._id.toString() == historyData.profile_id.toString()){
 							historyData.delete(function(err){
 								if(!err){
