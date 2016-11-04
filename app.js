@@ -91,24 +91,36 @@ app.use(function(err, req, res, next) {
 })
 
 io.sockets.on('connection', function (socket) {
- console.log('socket connected');
- gps(io);
- //var chat = require('chat')(io);
- 
- socket.on('disconnect', function () {
-   console.log('socket disconnected');
- });
- socket.on('message', function(h){
-   console.log(h);
- });
- socket.emit('text', 'Hola soy un socket');
+  console.log('socket connected');
 });
+var gps = io.of('/gps');
+var clientGPS = [];
+var gpsrouter = require('./routes/gps');
+gps.on('connection', function(socket){
+  clientGPS.push(socket);
+  socket.on('setlocation', function(data){
+    console.log(data);
 
-//gps(io);
-//var chat = require('chat')(io);
+    gpsrouter.set(data.guid, data.gps, function(status, locationData){
+      
+      socket.profile = locationData.profile;
+      socket.gps = locationData.coordinates;
+
+      if(!status){
+        gpsrouter.find(socket.gps, socket.profile, function(err, locationData){
+          socket.emit('getlocation', locationData );
+        });
+        clientGPS.forEach(function(item, index){
+          gpsrouter.find(socket.gps, item.profile, function(err, locationData){
+            item.emit('getlocation', locationData );
+          });
+        });
+      }
+    });
 
 
-
-
+    
+  });
+});
 
 module.exports = app;

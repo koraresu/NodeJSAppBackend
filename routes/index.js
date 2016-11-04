@@ -131,5 +131,8 @@ router.get('/city', function(req, res){
 router.get('/gps', function(req, res){
   res.render('gps', {} );
 });
+router.get('/gps2', function(req, res){
+  res.render('gps2', {} );
+});
 
 module.exports = router;

@@ -6,7 +6,7 @@ var gps = {
 		lat: 20.641821,
 		lng: -105.232301
 	},
-	guid: "581799f3595a03f30c27a24d"
+	guid: "5807e41d4fe3bb8e3802e474"
 };
 
 var gpssocket = io.connect('http://localhost:3000/gps');
