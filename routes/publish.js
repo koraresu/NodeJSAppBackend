@@ -477,6 +477,47 @@ router.post('/get/news/friend', multipartMiddleware, function(req, res){
 		}
 	});
 });
+router.post('/delete/news', multipartMiddleware, function(req, res){
+	var guid      = req.body.guid;
+	var id        = req.body.id;
+
+	Tokenfunc.exist(guid, function(status, tokenData){
+		if(status){
+			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
+				if(mongoose.Types.ObjecId.isValid(id)){
+					History.findOne({ _id: id  }).exect(function(err, historyData){
+						if(profileData._id.toString() == historyData.profile_id.toString()){
+							historyData.delete(function(err){
+								if(!err){
+									Generalfunc.response(200, {
+										deleted: true,
+										history: historyData
+									}, function(response){
+										res.json(response);
+									});
+								}else{
+									Generalfunc.response(101, {},function(response){
+				res.json(response);
+			})
+								}
+								
+							});
+						}else{
+							Generalfunc.response(101, {},function(response){
+				res.json(response);
+			})
+						}
+					});
+				}
+				
+			});
+		}else{
+Generalfunc.response(101, {},function(response){
+				res.json(response);
+			})
+		}
+	});
+});
 router.post('/get/news/show', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 	var news_id   = req.body.id;
