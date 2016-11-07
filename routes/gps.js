@@ -81,18 +81,14 @@ exports.set = function(guid, gps, callback){
 						console.log(err);
 						if(!err && locationData){
 							locationData.coordinates =  coordinates;
-
-
 						}else{
-
 							locationData = new Location({
 								coordinates: coordinates, 
 								profile: profileData._id
 							});
 
 						}
-
-						locationData.save(function(err, locationData){
+						locationData.save(function(err, local){
 							Location.findOne({ _id: locationData._id }).exec(function(err, locationData){
 								callback(false, locationData);
 							});
