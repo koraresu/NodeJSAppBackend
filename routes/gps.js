@@ -78,8 +78,11 @@ exports.set = function(guid, gps, callback){
 						coordinates[0] = gps.lat;
 						coordinates[1] = gps.lng;
 
+						console.log(err);
 						if(!err && locationData){
 							locationData.coordinates =  coordinates;
+
+
 						}else{
 
 							locationData = new Location({
