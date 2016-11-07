@@ -60,7 +60,7 @@ exports.find = function(gps, profile, callback){
 		profile: {
         	$ne: profile
     	}
-	}).limit(5).populate('profile').exec(function(err, locationData){
+	}).limit(4).populate('profile').exec(function(err, locationData){
 		callback(err, locationData);
 	});
 }
