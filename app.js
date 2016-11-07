@@ -110,7 +110,7 @@ gps.on('connection', function(socket){
 
   socket.on('setlocation', function(data){
     if(data.guid == undefined || data.guid == null){
-      newrelic.addToTrace("No GUID");
+      console.log("No GUID");
     }else{
       gpsrouter.set(data.guid, data.gps, function(status, locationData){
       socket.profile = locationData.profile;
@@ -118,13 +118,11 @@ gps.on('connection', function(socket){
       if(!status){
         gpsrouter.find(socket.gps, socket.profile, function(err, locationData){
           console.log("Emit to ME");
-          newrelic.addToTrace(locationData);
           socket.emit('getlocation', locationData );
         });
         clientGPS.forEach(function(item, index){
           gpsrouter.find(socket.gps, item.profile, function(err, locationData){
             console.log("Emit to Others");
-            newrelic.addToTrace(locationData);
             item.emit('getlocation', locationData );
           });
         });
