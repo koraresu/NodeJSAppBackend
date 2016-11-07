@@ -1,4 +1,4 @@
-require('newrelic');
+var newrelic = require('newrelic');
 
 var express      = require('express');
 var path         = require('path');
@@ -115,11 +115,13 @@ gps.on('connection', function(socket){
       if(!status){
         gpsrouter.find(socket.gps, socket.profile, function(err, locationData){
           console.log("Emit to ME");
+          newrelic.addToTrace(locationData);
           socket.emit('getlocation', locationData );
         });
         clientGPS.forEach(function(item, index){
           gpsrouter.find(socket.gps, item.profile, function(err, locationData){
             console.log("Emit to Others");
+            newrelic.addToTrace(locationData);
             item.emit('getlocation', locationData );
           });
         });
