@@ -98,28 +98,33 @@ var clientGPS = [];
 var gpsrouter = require('./routes/gps');
 gps.on('connection', function(socket){
   clientGPS.push(socket);
-  socket.on('setlocation', function(data){
-    console.log(data);
+  socket.on('connect', function () { 
+    console.log("Connected");
+        socket.on('disconnected', function() {
+          gpsrouter.delete(data.guid, function(status){
 
+          });
+        });
+  });
+
+
+  socket.on('setlocation', function(data){
     gpsrouter.set(data.guid, data.gps, function(status, locationData){
-      
       socket.profile = locationData.profile;
       socket.gps = locationData.coordinates;
-
       if(!status){
         gpsrouter.find(socket.gps, socket.profile, function(err, locationData){
+          console.log("Emit to ME");
           socket.emit('getlocation', locationData );
         });
         clientGPS.forEach(function(item, index){
           gpsrouter.find(socket.gps, item.profile, function(err, locationData){
+            console.log("Emit to Others");
             item.emit('getlocation', locationData );
           });
         });
       }
     });
-
-
-    
   });
 });
 

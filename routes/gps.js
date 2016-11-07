@@ -64,6 +64,9 @@ exports.find = function(gps, profile, callback){
 		callback(err, locationData);
 	});
 }
+exports.delete = function(guid, gps, callback){
+
+}
 exports.set = function(guid, gps, callback){
 
 	Tokenfunc.exist(guid, function(status, tokenData){
@@ -72,13 +75,11 @@ exports.set = function(guid, gps, callback){
 				if(status){
 					var locationData;
 					Location.findOne({ profile: profileData._id }).exec(function(err, locationData){
-						console.log(locationData);
 						
 						var coordinates = [];
 						coordinates[0] = gps.lat;
 						coordinates[1] = gps.lng;
 
-						console.log(err);
 						if(!err && locationData){
 							locationData.coordinates =  coordinates;
 						}else{
