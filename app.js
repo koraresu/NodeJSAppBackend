@@ -109,7 +109,10 @@ gps.on('connection', function(socket){
 
 
   socket.on('setlocation', function(data){
-    gpsrouter.set(data.guid, data.gps, function(status, locationData){
+    if(data.guid == undefined || data.guid == null){
+      newrelic.addToTrace("No GUID");
+    }else{
+      gpsrouter.set(data.guid, data.gps, function(status, locationData){
       socket.profile = locationData.profile;
       socket.gps = locationData.coordinates;
       if(!status){
@@ -127,6 +130,8 @@ gps.on('connection', function(socket){
         });
       }
     });
+    }
+    
   });
 });
 

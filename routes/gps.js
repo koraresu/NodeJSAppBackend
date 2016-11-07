@@ -68,7 +68,7 @@ exports.delete = function(guid, gps, callback){
 
 }
 exports.set = function(guid, gps, callback){
-
+	
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
 			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
