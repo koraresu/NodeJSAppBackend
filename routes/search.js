@@ -32,6 +32,7 @@ var Message      = model.message;
 var City         = model.city;
 var State        = model.state;
 var Country      = model.country;
+var Search       = model.search;
 
 var Generalfunc = require('../functions/generalfunc');
 var Profilefunc = require('../functions/profilefunc');
@@ -249,4 +250,39 @@ router.post('/general/network', multipartMiddleware, function(req, res){
 	});
 });
 
+router.post('save', multipartMiddleware, function(req, res){
+	var guid       = req.body.guid;
+	var text = req.body.search;
+
+	Tokenfunc.exist(guid, function(status, tokenData){
+		if(status){
+			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
+				var actualData = profileData;
+				Profilefunc.logs(profileData, 8, {profile: profileData, search: text }, function(){
+					if(status){
+						var search = new Search({
+							profile_id: profileData._id,
+							text: text
+						});
+						search.save(function(err, searchData){
+							Search.find({ profile_id: profileData._id } ).limit(5).sort({$natural:-1}).exec(function(err, searchData){
+								Generalfunc.response(200, , function(response){
+									res.json(response);
+								});
+							});
+						});
+					}else{
+						Generalfunc.response(101, {}, function(response){
+							res.json(response);
+						});
+					}
+				});
+			});
+		}else{
+			Generalfunc.response(101, {}, function(response){
+				res.json(response);
+			});
+		}
+	});
+});
 module.exports = router;
