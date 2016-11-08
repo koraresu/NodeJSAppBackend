@@ -753,6 +753,57 @@ router.post('/experience', multipartMiddleware, function(req, res){
 		}
 	});
 });
+router.post('/dedicas', multipartMiddleware, function(req, res){
+	var guid      = req.body.guid;
+
+	var type       = req.body.type;
+	var speciality = req.body.speciality;
+	var ocupation  = req.body.ocupation;
+
+	Tokenfunc.exist(guid, function(status, tokenData){
+		if(status){
+			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
+				Profile.findOne({ _id: profileData._id}, function(errProfile, profileData){
+					Experiencefunc.specialityExistsOrCreate({
+						name: speciality
+					},{
+						name: speciality
+					}, function(status, specialityData){
+						Experiencefunc.jobExistsOrCreate({
+							name: ocupation,
+							type: 0
+						},{
+							name: ocupation,
+							type: 0
+						}, function(statusJob, jobData){
+							profileData.job = {
+								id: jobData._id,
+								name: jobData.name
+							};
+							profileData.speciality = {
+								id: specialityData._id,
+								name: specialityData.name
+							};
+
+							profileData.save(function(err, profile){
+								Profile.findOne({ _id: profileData._id}).exec(function(err, profileData){
+									Generalfunc.response(200, profileData, function(response){
+										res.json(response);
+									});
+								});
+							});
+						});
+					});
+				});
+			});
+		}else{
+			Generalfunc.response(101, {}, function(response){
+				res.json(response);
+			});
+		}
+	});
+
+});
 // UPDATE EXPERIENCE
 // Parameter:
 //  	Token

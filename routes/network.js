@@ -57,62 +57,24 @@ router.post('/connect', multipartMiddleware, function(req, res){
 	var guid       = req.body.guid;
 	var public_id = req.body.public_id;
 	
-	public_id = mongoose.Types.ObjectId(public_id);
-	Tokenfunc.exist(guid, function(errToken, token){
+	if(mongoose.Types.ObjectId.isValid(public_id)){
+		public_id = mongoose.Types.ObjectId(public_id);
+		Tokenfunc.exist(guid, function(errToken, token){
 		if(errToken){
 			Tokenfunc.toProfile(token.generated_id, function(status, userData, profileData, profileInfoData){
-				console.log("Token");
 				Networkfunc.PublicId(public_id, function(statusPublic, profileAnotherData){
-					if(statusPublic){
-						console.log(profileAnotherData);
-						var find = {
-							"profiles": {
-								"$all": [profileData._id,profileAnotherData._id],
-							}
-						};
-						console.log(find);
-						Network.findOne(find, function(errNetwork, networkData){
-							if(!errNetwork && networkData){
-								Generalfunc.response(200, networkData, function(response){
-									res.json(response);
-								});
-							}else{
-								var network = new Network({
-									accepted: true,
-									profiles: [
-									profileData._id,
-									profileAnotherData._id
-									]
-								});
-								network.save(function(err, networkData){
-									var notification = new Notification({
-										tipo: 3,
-										profile: profileAnotherData._id,
-										profile_emisor: profileData._id,
-									});
-									notification.save(function(errNotification, notificationData){
-										var data = {
-											"accepted": networkData.accepted,
-											"public_id": profileAnotherData.public_id
-										};
-										Generalfunc.response(200, data,  function(response){
-											res.json(response);
-										});	
-									})
-									
-								});
-							}
-						});
-					}else{
-						res.send("No ProfileAnother");
-					}
-					
+					console.log(public_id);
+					console.log(statusPublic);
+					console.log(profileAnotherData);
 				});
 			});
 		}else{
-			res.send("No Token");
+
 		}
-	});
+	}
+	
+
+
 });
 router.post('/connect/all', multipartMiddleware, function(req, res){
 	var guid       = req.body.guid;
