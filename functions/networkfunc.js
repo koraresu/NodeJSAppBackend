@@ -97,11 +97,15 @@ function checkconversation(profile_a, profile_b, callback){
 	});
 }
 function PublicId(public_id, callback){
-	console.log("PublicId:");
+	console.log("PUBLIC_ID:");
 	console.log(public_id);
 	Profile.findOne({ public_id: public_id}).exec(function(errProfile, profileData){
+		console.log("ERROR PROFILE:");
 		console.log(errProfile);
 		if(!errProfile && profileData){
+			
+			console.log(profileData);
+
 			callback(true, profileData);
 		}else{
 			callback(false,{});
