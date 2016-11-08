@@ -63,10 +63,6 @@ router.post('/connect', multipartMiddleware, function(req, res){
 		if(errToken){
 			Tokenfunc.toProfile(token.generated_id, function(status, userData, profileData, profileInfoData){
 				Networkfunc.PublicId(public_id, function(statusPublic, profileAnotherData){
-					console.log(public_id);
-					console.log(statusPublic);
-					console.log(profileAnotherData);
-
 					if(statusPublic){
 
 						var find = {
@@ -355,6 +351,45 @@ router.post('/unfriend', multipartMiddleware, function(req, res){
 	var guid       = req.body.guid;
 	var public_id = req.body.public_id;
 
+	if(mongoose.Types.ObjectId.isValid(public_id)){
+		public_id = mongoose.Types.ObjectId(public_id);
+		Tokenfunc.exist(guid, function(errToken, token){
+			if(errToken){
+				Tokenfunc.toProfile(token.generated_id, function(status, userData, profileData, profileInfoData){
+					Networkfunc.PublicId(public_id, function(statusPublic, profileAnotherData){
+						if(statusPublic){
+							var find = {
+								"profiles": {
+									"$all": [profileData._id,profileAnotherData._id],
+								}
+							};
+							console.log(find);
+							Network.findOne(find).exec(function(errNetwork, networkData){
+								console.log(networkData);
+							});
+						}else{
+							Generalfunc.response(101, {}, function(response){
+								res.json(response);
+							});
+						}
+					});
+				});
+			}else{
+				Generalfunc.response(101, {}, function(response){
+					res.json(response);
+				});
+			}
+		});
+	}else{
+		Generalfunc.response(101, {}, function(response){
+			res.json(response);
+		});
+	}
+});
+/*
+	var guid       = req.body.guid;
+	var public_id = req.body.public_id;
+
 	public_id = mongoose.Types.ObjectId(public_id);
 	Tokenfunc.exist(guid, function(errToken, token){
 		if(errToken){
@@ -407,8 +442,8 @@ router.post('/unfriend', multipartMiddleware, function(req, res){
 			});
 		}
 	});
-
 });
+*/
 // GET
 // Parameter:
 //  	Token
