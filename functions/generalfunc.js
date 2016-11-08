@@ -103,7 +103,7 @@ exports.response = function(type,item, callback){
 			callback({ status: 'error', code: type, message: "Email y/o contraseña es incorrecto", data: item});
 		break;
 		case 112:
-			callback({ status: 'error', code: type, message: "El correo electrónico ya fue utlizado.", data: item});
+			callback({ status: 'error', code: type, message: "El correo electrónico ya fue utilizado.", data: item});
 		break;
 		case 113:
 			callback({ status: 'error', code: type, message: "Perfil inexistente", data: item});
@@ -115,7 +115,7 @@ exports.response = function(type,item, callback){
 			callback({ status: 'error', code: type, message: "No encontrado", data: item});
 		break;
 		default:
-			callback({ status: 'unknown', code: type, message: "Se ha producido un error", data: item});
+			callback({ status: 'unknown', code: type, message: "Se ha producido un Error", data: item});
 		break;
 	}
 }
