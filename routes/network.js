@@ -66,6 +66,52 @@ router.post('/connect', multipartMiddleware, function(req, res){
 					console.log(public_id);
 					console.log(statusPublic);
 					console.log(profileAnotherData);
+
+					if(statusPublic){
+
+						var find = {
+							"profiles": {
+								"$all": [profileData._id,profileAnotherData._id],
+							}
+						};
+						console.log(find);
+						Network.findOne(find, function(errNetwork, networkData){
+							if(!errNetwork && networkData){
+								Generalfunc.response(200, networkData, function(response){
+									res.json(response);
+								});
+							}else{
+								var network = new Network({
+									accepted: true,
+									profiles: [
+									profileData._id,
+									profileAnotherData._id
+									]
+								});
+								network.save(function(err, network){
+									Network.findOne({ _id: networkData._id}).exec(function(errNetwork, networkData){
+										var notification = new Notification({
+											tipo: 3,
+											profile: profileAnotherData._id,
+											profile_emisor: profileData._id,
+										});
+										notification.save(function(errNotification, notificationData){
+											var data = {
+												"accepted": networkData.accepted,
+												"public_id": profileAnotherData.public_id
+											};
+											Generalfunc.response(200, data,  function(response){
+												res.json(response);
+											});	
+										});
+									});
+								});
+							}
+						});
+
+					}else{
+
+					}
 				});
 			});
 		}else{

@@ -528,31 +528,37 @@ router.post('/get/friend', multipartMiddleware, function(req, res){
 router.post('/changepassword', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 	var password  = req.body.password;
-	Tokenfunc.exist(guid, function(status, tokenData){
-		if(status){
-			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
-				if(status){
-					User.findOne({ _id: profileData.user_id }, function(errUser, userData){
-						userData.password = Profilefunc.generate_password(password);
-						userData.save(function(errUser, userData){
-							Profilefunc.logs(profileData, 27, userData, function(){
-								res.json(userData);
+	if(password != undefined){
+		Tokenfunc.exist(guid, function(status, tokenData){
+			if(status){
+				Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
+					if(status){
+						User.findOne({ _id: profileData.user_id }, function(errUser, userData){
+							userData.password = Profilefunc.generate_password(password);
+							userData.save(function(errUser, userData){
+								Profilefunc.logs(profileData, 27, userData, function(){
+									res.json(userData);
+								});
 							});
 						});
-					});
-					
-				}else{
-					Generalfunc.response(111,{ },function(response){
-						res.json(response);
-					});
-				}
-			});
-		}else{
-			Generalfunc.response(111,{ },function(response){
-				res.json(response);
-			});
-		}
-	});
+						
+					}else{
+						Generalfunc.response(111,{ },function(response){
+							res.json(response);
+						});
+					}
+				});
+			}else{
+				Generalfunc.response(111,{ },function(response){
+					res.json(response);
+				});
+			}
+		});	
+	}else{
+		Generalfunc.response(111,{ },function(response){
+			res.json(response);
+		});
+	}
 });
 router.post('/checkpassword', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
