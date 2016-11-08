@@ -363,9 +363,19 @@ router.post('/unfriend', multipartMiddleware, function(req, res){
 									"$all": [profileData._id,profileAnotherData._id],
 								}
 							};
-							console.log(find);
 							Network.findOne(find).exec(function(errNetwork, networkData){
-								console.log(networkData);
+
+								Network.remove({ _id: networkData._id }, function(err) {
+									if (!err) {
+										Generalfunc.response(200, { data: networkData, status:"deleted"}, function(response){
+											res.json(response);
+										});
+									} else {
+										Generalfunc.response(101, {}, function(response){
+											res.json(response);
+										});
+									}
+								});
 							});
 						}else{
 							Generalfunc.response(101, {}, function(response){
