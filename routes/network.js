@@ -71,8 +71,8 @@ router.post('/connect', multipartMiddleware, function(req, res){
 		}else{
 
 		}
+		});
 	}
-	
 
 
 });
