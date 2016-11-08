@@ -89,7 +89,7 @@ router.post('/connect', multipartMiddleware, function(req, res){
 									]
 								});
 								network.save(function(err, networkData){
-									Network.findOne({ _id: networkData._id}).exec(function(errNetwork, networkData){
+									Network.findOne({ _id: networkData._id}).populate('profiles').exec(function(errNetwork, networkData){
 										var notification = new Notification({
 											tipo: 3,
 											profile: profileAnotherData._id,
