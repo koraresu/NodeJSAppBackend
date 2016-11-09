@@ -7,7 +7,7 @@ var logger       = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser   = require('body-parser');
 var cors         = require('cors');
-var socket_io    = require( "socket.io" );
+var socket_io    = require('socket.io')(3000, { transports: ['websocket', 'polling'] });
 
 const pathDir = __dirname;
 
@@ -102,8 +102,8 @@ gps.on('connection', function(socket){
     console.log("Connected");
   });
   socket.on('disconnect', function () {
-    console.log("DIsconnected");
-    socket.emit('disconnected');
+    console.log("Disconnected");
+    socket.emit('Disconnected');
   });
 
   socket.on('setlocation', function(data){
