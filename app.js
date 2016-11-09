@@ -100,13 +100,11 @@ gps.on('connection', function(socket){
   clientGPS.push(socket);
   socket.on('connect', function () { 
     console.log("Connected");
-        socket.on('disconnected', function() {
-          gpsrouter.delete(data.guid, function(status){
-
-          });
-        });
   });
-
+  socket.on('disconnect', function () {
+    console.log("DIsconnected");
+    socket.emit('disconnected');
+  });
 
   socket.on('setlocation', function(data){
     console.log(data);
@@ -134,6 +132,7 @@ gps.on('connection', function(socket){
     }
     
   });
+
 });
 
 module.exports = app;
