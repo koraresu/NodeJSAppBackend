@@ -109,6 +109,7 @@ gps.on('connection', function(socket){
 
 
   socket.on('setlocation', function(data){
+    console.log(data);
     if(data.guid == undefined || data.guid == null){
       console.log("No GUID");
     }else{
