@@ -118,11 +118,13 @@ gps.on('connection', function(socket){
       if(!status){
         gpsrouter.find(socket.gps, socket.profile, function(err, locationData){
           console.log("Emit to ME");
+          console.log(locationData);
           socket.emit('getlocation', locationData );
         });
         clientGPS.forEach(function(item, index){
           gpsrouter.find(socket.gps, item.profile, function(err, locationData){
             console.log("Emit to Others");
+            console.log(locationData);
             item.emit('getlocation', locationData );
           });
         });
