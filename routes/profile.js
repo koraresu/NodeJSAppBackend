@@ -837,159 +837,92 @@ router.post('/update-experience', multipartMiddleware, function(req, res){
 	var sector     = req.body.sector;
 	var ocupation  = req.body.ocupation;
 
-	console.log("ID: '"+id+"'");
-	var d = {};
-	if(id != undefined){
-		id = id.trim();
-		
-		if(mongoose.Types.ObjectId.isValid(id)){
-			id = mongoose.Types.ObjectId(id);
-			d._id = id;
-		}
-	}
-
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
 			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
-				console.log(profileData._id);
-				d.profile_id = profileData._id;
-				if(id == undefined){
-					Experiencefunc.companyExistsOrCreate({
-						name: company
-					}, {
-						name: company
-					}, function(statusCompany, companyData){
-						Experiencefunc.jobExistsOrCreate({
-							name: ocupation
+
+				if(id != undefined){
+					if(mongoose.Types.ObjectId.isValid(id)){
+						id = mongoose.Types.ObjectId(id);
+					}
+				}
+
+				var data = {};
+
+				Experiencefunc.companyExistsOrCreate({
+					name: company
+				}, {
+					name: company
+				}, function(statusCompany, companyData){
+					Experiencefunc.jobExistsOrCreate({
+						name: ocupation
+					},{
+						name: ocupation
+					},function(statusJob, ocupationData){
+						Experiencefunc.sectorExistsOrCreate({
+							name: sector
 						},{
-							name: ocupation
-						},function(statusJob, ocupationData){
-							Experiencefunc.sectorExistsOrCreate({
-								name: sector
-							},{
-								name: sector
-							}, function(statusSector, sectorData){
-								
-								var profile_id = profileData._id;
-								var type = 1;
-								var exp = new Experience();
+							name: sector
+						}, function(statusSector, sectorData){
 
-								var data = {
-									profile_id: profile_id,
-									type: type,
-									ocupation: {
-										id:   ocupationData._id,
-										name: ocupationData.name
-									},
-									company: {
-										id: companyData._id,
-										name: companyData.name
-									},
-									sector: {
-										id: sectorData._id,
-										name: sectorData.name
-									}
+							if(sector != undefined){
+								data.sector = {
+									id: sectorData._id,
+									name: sectorData.name
 								};
-
-								
-								var experienceData = new Experience(data);
-								
-
-
-
-								experienceData.save(function(err, experienceData){
-									if(!err && experienceData){
+							}
+							if(company != undefined){
+								data.company = {
+									id: companyData._id,
+									name: companyData.name
+								};
+							}
+							if(ocupation != undefined){
+								data.ocupation = {
+									id:   ocupationData._id,
+									name: ocupationData.name
+								};
+							}
+							data.profile_id = profileData._id;
+							var find = {};
+							if(id != undefined){
+								if(mongoose.Types.ObjectId.isValid(id)){
+									find = { _id: id };
+									Experience.findOne(data).exec(function(err, experienceData){
+										if(!err && experienceData){
+											Experiencefunc.profileGenerate(profileData, function(profileData){
+												Generalfunc.response(200, profileData, function(response){
+													res.json(response);
+												});
+											});
+										}else{
+											res.json({ a: "a" });
+										}
+									});
+								}else{
+									var experienceData = new Experience(data);
+									experienceData.save(function(err, experienceData){
 										Experiencefunc.profileGenerate(profileData, function(profileData){
 											Generalfunc.response(200, profileData, function(response){
 												res.json(response);
 											});
 										});
-										
-									}else{
-										Generalfunc.response(101, experienceData, function(response){
+									});
+								}
+							}else{
+								var experienceData = new Experience(data);
+								experienceData.save(function(err, experienceData){
+									Experiencefunc.profileGenerate(profileData, function(profileData){
+										Generalfunc.response(200, profileData, function(response){
 											res.json(response);
 										});
-									}
-								});
-
-							});
-						});
-					});
-				}else{
-					Experience.findOne(d, function(errorExp, experienceData){
-						Experiencefunc.companyExistsOrCreate({
-							name: company
-						}, {
-							name: company
-						}, function(statusCompany, companyData){
-							Experiencefunc.jobExistsOrCreate({
-								name: ocupation
-							},{
-								name: ocupation
-							},function(statusJob, ocupationData){
-								Experiencefunc.sectorExistsOrCreate({
-									name: sector
-								},{
-									name: sector
-								}, function(statusSector, sectorData){
-
-									var profile_id = "";
-									var type = "";
-									var exp = "";
-									if(experienceData == null){
-										profile_id = profileData._id;
-										type = 1;
-										exp = new Experience();
-									}else{
-										profile_id = experienceData.profile_id;
-										type = 1;
-									}
-
-									var data = {
-										profile_id: profile_id,
-										type: type,
-										ocupation: {
-											id:   ocupationData._id,
-											name: ocupationData.name
-										},
-										company: {
-											id: companyData._id,
-											name: companyData.name
-										},
-										sector: {
-											id: sectorData._id,
-											name: sectorData.name
-										}
-									};
-
-									if(experienceData == null){
-										experienceData = new Experience(data);
-									}else{
-										experienceData.type = data.type;
-										experienceData.ocupation = data.ocupation;
-										experienceData.company = data.company;
-										experienceData.sector = data.sector;
-									}
-
-
-
-									experienceData.save(function(err, experienceData){
-										if(!err && experienceData){
-											Generalfunc.response(200, experienceData, function(response){
-												res.json(response);
-											})
-										}else{
-											Generalfunc.response(101, experienceData, function(response){
-												res.json(response);
-											});
-										}
 									});
-
 								});
-							});
+							}
 						});
 					});
-				}
+				});
+
 				
 			});
 		}else{
@@ -999,90 +932,6 @@ router.post('/update-experience', multipartMiddleware, function(req, res){
 		}
 	});
 });
-/*
-router.post('/update-experience', multipartMiddleware, function(req, res){
-	var guid       = req.body.guid;
-
-	var type       = req.body.type;
-	var company    = req.body.company;
-	var job        = req.body.job;
-	var speciality = req.body.speciality;
-	var sector     = req.body.sector;
-	var ocupation  = req.body.ocupation;
-
-	var birthday   = req.body.birthday;
-
-
-	if(typeof company == "undefined"){
-		company = [];
-	}
-	if(typeof ocupation == "undefined"){
-		ocupation = [];
-	}
-	if(typeof sector == "undefined"){
-		sector = [];
-	}
-
-	if(typeof req.body.company_uno != "undefined"){
-		company[0] = req.body.company_uno;
-	}
-	if(typeof req.body.company_dos != "undefined"){
-		company[1] = req.body.company_dos;
-	}
-
-	if(typeof req.body.ocupation_uno != "undefined"){
-		ocupation[0] = req.body.ocupation_uno;
-	}
-	if(typeof req.body.ocupation_dos != "undefined"){
-		ocupation[1] = req.body.ocupation_dos;
-	}
-	if(typeof req.body.sector_uno != "undefined"){
-		sector[0] = req.body.sector_uno;
-	}
-	if(typeof req.body.sector_dos != "undefined"){
-		sector[1] = req.body.sector_dos;
-	}
-
-	Tokenfunc.exist(guid, function(status, tokenData){
-		if(status){
-			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
-				Profilefunc.update(profileData._id, {
-					first_name: nombre, 
-					last_name: apellido,
-					birthday: birthday,
-					status: statusReq,
-					speciality: speciality,
-					job: job,
-					phone: phone
-				}, function(statusProfile, profileData){
-					Experiencefunc.insertOrExists(profileData,ocupation, company, sector, function(statusExperience, experienceData){
-						profileData.experiences = [];
-						Experience.find({ profile_id: profileData._id}).exec(function(errExperience, experiencesData){
-							profileData.experiences = experiencesData.map(function(o){
-								return o._id;
-							});
-							profileData.save(function(errProfile, profileData){
-								Profile.findOne({ _id: profileData._id }).populate('experiences').populate('skills').populate('user_id').exec(function(errProfile, profileData){
-									
-									format.profileformat(profileData, function(profileData){
-										Generalfunc.response( 200, profileData, function(response){
-											res.json(response);
-										});
-									});
-								});
-							});
-						});
-					});
-				});
-			});
-		}else{
-			Generalfunc.response(101, {}, function(response){
-				res.json(response);
-			})
-		}
-	});
-});
-*/
 // ADD SKILL
 // Parameter:
 //  	Token
@@ -1477,4 +1326,14 @@ function explDate(birthday){
 	var year   = x[2];
 
 	return year+"-"+month+"-"+day;
+}
+function insertUpdateExperience(err, profileData, experienceData, callback){
+	if(!err && experienceData){
+		Experiencefunc.profileGenerate(profileData, function(profileData){
+			callback(true, profileData, experienceData);
+		});
+		
+	}else{
+		callback(true, profileData, experienceData);
+	}
 }

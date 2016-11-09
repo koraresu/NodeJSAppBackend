@@ -9,7 +9,7 @@ var gps = {
 	guid: "5807e41d4fe3bb8e3802e474"
 };
 
-var gpssocket = io.connect('http://localhost:3000/gps');
+var gpssocket = io.connect('http://67.222.22.154:3000/gps');
 gpssocket.on('connect', function() {
 	console.log("CONNECT");
 	gpssocket.on('getlocation',function(data){

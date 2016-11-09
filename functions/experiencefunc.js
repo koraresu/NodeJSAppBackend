@@ -26,6 +26,7 @@ var City         = model.city;
 var State        = model.state;
 var Country      = model.country;
 
+
 function checkExperience(profileData, type, data, callback){
 	if(type == 0){
 		console.log(data);

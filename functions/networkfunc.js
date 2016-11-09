@@ -202,8 +202,12 @@ function isFriend(profile_id, another_id, callback){
 }
 function type(profileID, anotherID, callback){
 	getFriends(anotherID._id, function(errNetwork, friends, friendsId){
+		console.log(friendsId);
 		var its = friendsId.filter(function(o){
-			return o.toString() != profileID._id.toString()
+			var a = o.toString();
+			var b = profileID._id.toString();
+
+			return a != b
 		});
 		if(friendsId.length == its.length){
 			isNeightbor(profileID, anotherID, function(status, friendId){
@@ -232,4 +236,13 @@ exports.addReview           = addReview
 exports.addNetwork          = addNetwork
 function trimUnderscores(string) {
     return string.split(' ').join('');
+}
+function cleanArray(actual) {
+	var newArray = new Array();
+	for (var i = 0; i < actual.length; i++) {
+		if (actual[i]) {
+			newArray.push(actual[i]);
+		}
+	}
+	return newArray;
 }
