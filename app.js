@@ -7,7 +7,7 @@ var logger       = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser   = require('body-parser');
 var cors         = require('cors');
-var socket_io    = require('socket.io')(3000, { transports: ['websocket', 'polling'] });
+var socket_io    = require('socket.io');
 
 const pathDir = __dirname;
 
@@ -28,7 +28,7 @@ var gps = require('./routes/gps');
 
 var app = express();
 
-var io           = socket_io();
+var io           = socket_io(3000, { transports: ['websocket', 'polling'] });
 app.io           = io;
 
 // view engine setup
