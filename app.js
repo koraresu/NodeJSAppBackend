@@ -28,7 +28,7 @@ var gps = require('./routes/gps');
 
 var app = express();
 
-var io           = socket_io(3001);
+var io           = socket_io();
 app.io           = io;
 
 // view engine setup
