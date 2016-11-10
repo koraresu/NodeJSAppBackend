@@ -932,6 +932,48 @@ router.post('/update-experience', multipartMiddleware, function(req, res){
 		}
 	});
 });
+router.post('/delete-experience', multipartMiddleware, function(req, res){
+	var guid       = req.body.guid;
+
+	var id         = req.body.id;
+
+	Tokenfunc.exist(guid, function(status, tokenData){
+		if(status){
+			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
+
+				if(id != undefined){
+					if(mongoose.Types.ObjectId.isValid(id)){
+						id = mongoose.Types.ObjectId(id);
+
+						Experience.findOne({ _id: id }).exec(function(err, experienceData){
+							if(!err && experienceData){
+								Experience.remove({ _id: experienceData._id }, function(err) {
+									Profilefunc.formatoProfile(profileData._id,function( profile ){
+										Generalfunc.response(200, profile, function(response){
+											res.json(response);
+										});
+									});
+								});	
+							}else{
+								Generalfunc.response(101, {}, function(response){
+									res.json(response);
+								});
+							}
+						});
+					}
+				}else{
+					Generalfunc.response(101, {}, function(response){
+						res.json(response);
+					});
+				}
+			});
+		}else{
+			Generalfunc.response(101, {}, function(response){
+				res.json(response);
+			});
+		}
+	});
+});
 // ADD SKILL
 // Parameter:
 //  	Token
