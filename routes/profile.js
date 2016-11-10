@@ -955,20 +955,20 @@ router.post('/delete-experience', multipartMiddleware, function(req, res){
 									});
 								});	
 							}else{
-								Generalfunc.response(101, {}, function(response){
+								Generalfunc.response(101, { message: "Experience Unknown" }, function(response){
 									res.json(response);
 								});
 							}
 						});
 					}
 				}else{
-					Generalfunc.response(101, {}, function(response){
+					Generalfunc.response(101, { message: "ID Unknown"}, function(response){
 						res.json(response);
 					});
 				}
 			});
 		}else{
-			Generalfunc.response(101, {}, function(response){
+			Generalfunc.response(101, { message: "Token Unknown"}, function(response){
 				res.json(response);
 			});
 		}
