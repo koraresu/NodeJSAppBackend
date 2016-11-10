@@ -108,28 +108,34 @@ gps.on('connection', function(socket){
 
   socket.on('setlocation', function(data){
     console.log(data);
-    if(data.guid == undefined || data.guid == null){
-      console.log("No GUID");
+    if(data == undefined || data == null){
+      socet.emit('getlocation',{ message: "GET DATA UNDEFINED OR NULL"});
     }else{
-      gpsrouter.set(data.guid, data.gps, function(status, locationData){
-      socket.profile = locationData.profile;
-      socket.gps = locationData.coordinates;
-      if(!status){
-        gpsrouter.find(socket.gps, socket.profile, function(err, locationData){
-          console.log("Emit to ME");
-          console.log(locationData);
-          socket.emit('getlocation', locationData );
-        });
-        clientGPS.forEach(function(item, index){
-          gpsrouter.find(socket.gps, item.profile, function(err, locationData){
-            console.log("Emit to Others");
-            console.log(locationData);
-            item.emit('getlocation', locationData );
-          });
+      if(data.guid == undefined || data.guid == null){
+        console.log("No GUID");
+        socet.emit('getlocation',{ message: "GUID UNDEFINED OR NULL"});
+      }else{
+        gpsrouter.set(data.guid, data.gps, function(status, locationData){
+          socket.profile = locationData.profile;
+          socket.gps = locationData.coordinates;
+          if(!status){
+            gpsrouter.find(socket.gps, socket.profile, function(err, locationData){
+              console.log("Emit to ME");
+              console.log(locationData);
+              socket.emit('getlocation', locationData );
+            });
+            clientGPS.forEach(function(item, index){
+              gpsrouter.find(socket.gps, item.profile, function(err, locationData){
+                console.log("Emit to Others");
+                console.log(locationData);
+                item.emit('getlocation', locationData );
+              });
+            });
+          }
         });
       }
-    });
     }
+
     
   });
 
