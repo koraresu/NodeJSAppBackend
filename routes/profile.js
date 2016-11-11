@@ -960,12 +960,18 @@ router.post('/update-experience', multipartMiddleware, function(req, res){
 								if(mongoose.Types.ObjectId.isValid(id)){
 									find = { _id: id };
 									Experience.findOne(data).exec(function(err, experienceData){
+										console.log(experienceData);
 										if(!err && experienceData){
-											Experiencefunc.profileGenerate(profileData, function(profileData){
-												Generalfunc.response(200, profileData, function(response){
-													res.json(response);
+											experienceData.company = data.company;
+											experienceData.ocupation = data.ocupation;
+											experienceData.save(function(err, experienceData){
+												Experiencefunc.profileGenerate(profileData, function(profileData){
+													Generalfunc.response(200, profileData, function(response){
+														res.json(response);
+													});
 												});
 											});
+											
 										}else{
 											res.json({ a: "a" });
 										}
