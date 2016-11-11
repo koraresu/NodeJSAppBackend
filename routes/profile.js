@@ -623,12 +623,21 @@ router.post('/registro/experience', multipartMiddleware, function(req, res){
 							name: ocupation,
 							type: 1
 						}, function(statusJob, jobData){
-							Profilefunc.formatoProfile(profileData._id,function( profile ){
-								
-									Generalfunc.response(200, profile, function(response){
+
+							profileData.job = {
+								id: jobData._id,
+								name: jobData.name
+							};
+							profileData.speciality = {
+								id: specialityData._id,
+								name: specialityData.name
+							};
+							profileData.save(function(err, profile){
+								Profilefunc.formatoProfile(profileData._id,function( profile ){
+									Generalfunc.response(200, profifle, function(response){
 										res.json(response);
 									});
-								
+								});
 							});
 						});
 					});
