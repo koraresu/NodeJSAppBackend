@@ -634,7 +634,7 @@ router.post('/registro/experience', multipartMiddleware, function(req, res){
 							};
 							profileData.save(function(err, profile){
 								Profilefunc.formatoProfile(profileData._id,function( profile ){
-									Generalfunc.response(200, profifle, function(response){
+									Generalfunc.response(200, profile, function(response){
 										res.json(response);
 									});
 								});
