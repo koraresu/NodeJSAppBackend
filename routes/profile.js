@@ -95,6 +95,11 @@ router.post('/login', multipartMiddleware, function(req, res){
 								}
 								var verified = false;
 
+								var photo = false;
+								if(profileData.profile_pic != undefined || profileData.profile_pic != null){
+									photo = true;
+								}
+
 								if(userData.verified){
 									verified = true;
 								}
@@ -106,6 +111,7 @@ router.post('/login', multipartMiddleware, function(req, res){
 									token: tokenData.generated_id,
 									verified: verified,
 									experiences: all,
+									photo: photo,
 									profile: profileData
 								}, function(response){
 									res.json(response);
@@ -1267,10 +1273,15 @@ router.post('/token/exists', multipartMiddleware, function(req, res){
 							var exp = statusExperience;
 							var spe = false;
 							var all = false;
+
 							if(profileData.speciality != undefined){
 								if(profileData.speciality.name != undefined){
 									spe = true;
 								}
+							}
+							var photo = false;
+							if(profileData.profile_pic != undefined || profileData.profile_pic != null){
+								photo = true;
 							}
 							var verified = false;
 
@@ -1287,6 +1298,7 @@ router.post('/token/exists', multipartMiddleware, function(req, res){
 									token: tokenData.generated_id,
 									verified: verified,
 									experiences: all,
+									photo: photo,
 									profile: profileData
 								}, function(response){
 									res.json(response);
