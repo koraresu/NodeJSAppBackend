@@ -600,6 +600,51 @@ router.post('/checkpassword', multipartMiddleware, function(req, res){
 		}
 	});
 });
+
+router.post('/registro/experience', multipartMiddleware, function(req, res){
+	var guid      = req.body.guid;
+	
+	var speciality = req.body.speciality;	
+	var ocupation  = req.body.ocupation;
+
+	Tokenfunc.exist(guid, function(status, tokenData){
+		if(status){
+			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
+				if(status){
+					Experiencefunc.specialityExistsOrCreate({
+						name: speciality
+					}, {
+						name: speciality
+					}, function(statusSpeciality, specialityData){
+						Experiencefunc.jobExistsOrCreate({
+							name: ocupation,
+							type: 1
+						}, {
+							name: ocupation,
+							type: 1
+						}, function(statusJob, jobData){
+							Profilefunc.formatoProfile(profileData._id,function( profile ){
+								
+									Generalfunc.response(200, profile, function(response){
+										res.json(response);
+									});
+								
+							});
+						});
+					});
+				}else{
+					Generalfunc.response(101, {}, function(response){
+						res.json(response);
+					});
+				}
+			});
+		}else{
+			Generalfunc.response(101, {}, function(response){
+				res.json(response);
+			});
+		}
+	});
+});
 // UPDATE
 // Parameter:
 //  	Token
@@ -1188,6 +1233,8 @@ router.post('/setprofilepic', multipartMiddleware, function(req, res){
 //		Verificado
 router.post('/token/exists', multipartMiddleware, function(req, res){
 	var guid = req.body.guid;
+
+	console.log(guid);
 
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
