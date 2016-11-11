@@ -58,6 +58,50 @@ body .cont .content .main .alert .message i {
   display: inline;
   padding: 0 5px;
 }
+body .cont .content .forgot form .name {
+  font-size: 25px;
+  padding: 10px 0;
+}
+body .cont .content .forgot form .name span {
+  display: inline;
+  padding-right: 5px;
+}
+body .cont .content .forgot form .name strong {
+  color: #f2a900;
+  font-weight: normal;
+}
+body .cont .content .forgot form label {
+  background-color: #f2f2f2;
+  padding: 10px 0;
+}
+body .cont .content .forgot form label input {
+  border: 0;
+  border-bottom: 1px solid rgba(35,34,34,0.5);
+  display: block;
+  border-radius: 0;
+  background-color: transparent;
+  font-size: 13px;
+  width: 100%;
+  box-sizing: border-box;
+  font-weight: 100;
+  padding: 9px;
+  position: relative;
+  z-index: 10;
+}
+body .cont .content .forgot form input[type="button"] {
+  background-color: #f6be00;
+  font-size: 18px;
+  color: #fff;
+  padding: 7px 5px;
+  font-weight: 200;
+  text-align: center;
+  border-radius: 4px;
+  border: 0;
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  margin-top: 15px;
+}
 @media (max-width: 600px) {
   body .cont {
     padding: 20px 10px;

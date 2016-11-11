@@ -17,6 +17,7 @@ var History     = model.history;
 var Feedback    = model.feedback;
 var Review      = model.review;
 var Log         = model.log;
+var Forgot      = model.forgot;
 var Skill       = model.skill;
 var Speciality  = model.speciality;
 var Sector      = model.sector;
@@ -127,7 +128,15 @@ router.get('/city', function(req, res){
   });
 
 });
-
+router.get('/forgot/:generated', function(req, res){
+  var generated_id = req.params.generated;
+  Forgot.findOne({ generated_id: generated_id }).populate('user').exec(function(err, forgotData){
+    Profile.findOne({ user_id: forgotData.user._id }).exec(function(err, profileData){
+      res.render('forgot',{ generated: generated_id, email: forgotData.user.email,nombre: profileData.first_name+" "+profileData.last_name });
+    });    
+  });  
+  
+});
 router.get('/gps', function(req, res){
   res.render('gps', {} );
 });
@@ -139,3 +148,4 @@ router.get('/logs', function(req, res){
 });
 
 module.exports = router;
+

@@ -31,6 +31,7 @@ var mongoose    = require('mongoose');
 		var model = require('../model');
 		var Profile     = model.profile;
 		var User        = model.user;
+		var Forgot      = model.forgot;
 		var Token       = model.token;
 		var Job         = model.job;
 		var Company     = model.company;
@@ -133,6 +134,45 @@ router.post('/login', multipartMiddleware, function(req, res){
 		}
 	});
 	
+});
+// FORGOT
+// Parameter
+// 		email     = Email
+// Return (Formato 1)
+//      status
+router.post('/forgot', multipartMiddleware, function(req, res){
+	var email    = req.body.email;
+	User.findOne({
+		email: email
+	}).exec(function(err, userData){
+		if(!err && userData){
+			var forgot = new Forgot({
+				user: userData._id,
+				generated_id: mongoose.Types.ObjectId(),
+				used: false
+			});
+
+			forgot.save(function(err, forgotData){
+				Profile.findOne({ user_id: userData._id }).exec(function(err, profileData){
+					Generalfunc.sendEmail("emailforgot.jade", {
+						nombre: profileData.first_name+" "+profileData.last_name,
+						generated_id: forgotData.generated_id,
+					}, userData.email, "Restablece tu contraseña",function(status, html){
+						console.log(status);
+						if(status){
+							res.json( forgotData );
+						}else{
+
+						}
+					});
+				});
+				
+			});
+		}else{
+			var d = { message: 'no existe email'};
+			res.json(d);
+		}
+	});
 });
 // CREATE
 // Parameter:

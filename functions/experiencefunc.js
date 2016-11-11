@@ -118,7 +118,7 @@ exports.insertOrExists = function(profileData, type, data, callback){
 }
 exports.profileGenerate = function(profileData, callback){
 	profileData.experiences = [];
-	Experience.find({ profile_id: profileData._id}).exec(function(errExperience, experiencesData){
+	Experience.find({ profile_id: profileData._id}).populate('experiences').populate('skills').exec(function(errExperience, experiencesData){
 		profileData.experiences = experiencesData.map(function(o){
 			return o._id;
 		});

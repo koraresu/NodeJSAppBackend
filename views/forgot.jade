@@ -1,0 +1,30 @@
+doctype transitional
+html(xmlns='http://www.w3.org/1999/xhtml')
+  head
+    meta(http-equiv='Content-Type', content='text/html; charset=UTF-8')
+    meta(name="viewport", content="width=device-width, initial-scale=1, user-scalable=no")
+    meta(http-equiv="X-UA-Compatible",content="IE=edge")
+    link(href='https://fonts.googleapis.com/css?family=Roboto:300,500', rel='stylesheet' type='text/css')
+    style(type="text/css"): include ../public/stylesheets/style.css
+    link(rel="shortcut icon",href="http://thehiveapp.mx/favicon.ico",type="image/x-icon")
+    link(rel="icon",href="http://thehiveapp.mx/favicon.ico",type="image/x-icon")
+    title TheHive
+  body
+    div.cont
+      div.content
+        div.header
+          a(href="#")
+            img(src="../images/logo.png")
+        div.forgot
+            form()
+                input(type="hidden",name="generated", value="#{generated}")
+                div.name
+                    span Hola
+                    strong #{nombre}
+                label(style="display:block;")
+                    span Contraseña:
+                    input(type="text",name="password")
+                label(style="display:block;")
+                    span Contraseña Again:
+                    input(type="text",name="password_again")
+                input(type="button",value="Cambiar Contraseña")

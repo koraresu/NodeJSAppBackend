@@ -52,6 +52,16 @@ var profileSchema = new Schema({
 },{
   timestamps: true
 });
+var ForgotSchema = new Schema({
+  user: { type: Schema.Types.ObjectId, ref: 'User' },
+  generated_id: { type: String},
+  used: {
+        type: Boolean,
+        default: false
+    }
+}, {
+  timestamps: true
+});
 var locationSchema = new Schema({
   coordinates: {
     type: [Number],  // [<longitude>, <latitude>]
@@ -239,6 +249,7 @@ exports.review       = db.model( 'Review' , reviewSchema );
 exports.search       = db.model( 'Search' , SearchSchema );
 exports.token        = db.model( 'Token', tokenSchema );
 exports.user         = db.model( 'User' , userSchema );
+exports.forgot       = db.model( 'Forgot', ForgotSchema);
 exports.notification = db.model( 'Notification', NotificationSchema );
 // History
 var history          = db.model( 'History' , HistorySchema );
