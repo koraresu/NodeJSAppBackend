@@ -109,11 +109,11 @@ gps.on('connection', function(socket){
   socket.on('setlocation', function(data){
     console.log(data);
     if(data == undefined || data == null){
-      socet.emit('getlocation',{ message: "GET DATA UNDEFINED OR NULL"});
+      socket.emit('getlocation',{ message: "GET DATA UNDEFINED OR NULL"});
     }else{
       if(data.guid == undefined || data.guid == null){
         console.log("No GUID");
-        socet.emit('getlocation',{ message: "GUID UNDEFINED OR NULL"});
+        socket.emit('getlocation',{ message: "GUID UNDEFINED OR NULL"});
       }else{
         gpsrouter.set(data.guid, data.gps, function(status, locationData){
           socket.profile = locationData.profile;
