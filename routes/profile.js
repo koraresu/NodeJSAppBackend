@@ -85,16 +85,27 @@ router.post('/login', multipartMiddleware, function(req, res){
 					Profilefunc.userProfile(userData, function(statProfile, tokenData, userData, profileData){
 						Profilefunc.logs(profileData, 24, profileData, function(){
 							Experiencefunc.get(profileData._id, function(statusExperience, experiences){
-								var exp = statusExperience;	
+								var exp = statusExperience;
+								var spe = false;
+								var all = false;
+								if(profileData.speciality != undefined){
+									if(profileData.speciality.name != undefined){
+										spe = true;
+									}
+								}
 								var verified = false;
 
 								if(userData.verified){
 									verified = true;
 								}
+
+								if(spe || exp){
+									all = true;
+								}
 								Generalfunc.response(201,{
 									token: tokenData.generated_id,
 									verified: verified,
-									experiences: exp,
+									experiences: all,
 									profile: profileData
 								}, function(response){
 									res.json(response);

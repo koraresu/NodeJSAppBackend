@@ -35,6 +35,7 @@ exports.chat_message = function(message){
 exports.news = function(news, profile, profile_de){
 
 	console.log(profile);
+	console.log(news);
 	
 	profile_de = news.de_id;
 
