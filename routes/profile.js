@@ -962,7 +962,7 @@ router.post('/update-experience', multipartMiddleware, function(req, res){
 									id = mongoose.Types.ObjectId(id);
 									console.log(id);
 									find = { _id: id };
-									Experience.findOne(data).exec(function(err, experienceData){
+									Experience.findOne(find).exec(function(err, experienceData){
 										console.log(experienceData);
 										if(!err && experienceData){
 											experienceData.company = data.company;
