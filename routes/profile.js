@@ -958,6 +958,9 @@ router.post('/update-experience', multipartMiddleware, function(req, res){
 							var find = {};
 							if(id != undefined){
 								if(mongoose.Types.ObjectId.isValid(id)){
+									console.log(id);
+									id = mongoose.Types.ObjectId(id);
+									console.log(id);
 									find = { _id: id };
 									Experience.findOne(data).exec(function(err, experienceData){
 										console.log(experienceData);
