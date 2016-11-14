@@ -49,22 +49,18 @@ var Country      = model.country;
 
 
 router.post('/conversations', multipartMiddleware, function(req, res){
-	var guid         = req.body.guid;
-	var conversation = req.body.conversation;
-	var text         = req.body.message;
+	var guid      = req.body.guid;
 
 	Tokenfunc.exist(guid, function(status, tokenData){
-		console.log(status);
 		if(status){
-			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
+			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
 				if(status){
-
 					Conversation.find({
-						profiles: {
-							"$in" : [profileData._id]
+						profiles:{
+							$in: [ profileData._id ]
 						}
-					}).exec(function(err, conversations){
-						console.log(conversations);
+					}).populate('profiles').exec(function(err, conversationData){
+						res.json(conversationData);
 					});
 				}else{
 
@@ -73,11 +69,75 @@ router.post('/conversations', multipartMiddleware, function(req, res){
 		}else{
 
 		}
-	});				
-
-				
+	});
 });
-router
+router.post('/conversation', multipartMiddleware, function(req, res){
+	var guid      = req.body.guid;
+	var id        = req.body.id;
+
+	Tokenfunc.exist(guid, function(status, tokenData){
+		if(status){
+			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
+				if(status){
+					if(mongoose.Types.ObjectId.isValid(id)){
+						id = mongoose.Types.ObjectId(id);
+						Message.find({
+							conversation: id
+						}).populate('profile_id').exec(function(err, messageData){
+							res.json(messageData);
+						});
+					}else{
+
+					}
+					
+				}else{
+
+				}
+			});
+		}else{
+
+		}
+	});
+});
+
+router.message = function(data, callback){
+	console.log(data);
+
+	var guid      = data.guid;
+	var id        = data.conversation
+	var text      = data.message;
+
+	Tokenfunc.exist(guid, function(status, tokenData){
+		if(status){
+			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
+				if(status){
+					if(mongoose.Types.ObjectId.isValid(id)){
+						id = mongoose.Types.ObjectId(id);
+						var d = {
+							conversation: id,
+							profile_id: profileData._id,
+							message: text
+						};
+						var message = new Message(d);
+						message.save(function(err, messageData){
+							callback(true, messageData);
+						});
+					}else{
+						callback(false, null);
+					}
+					
+				}else{
+					callback(false, null);
+				}
+			});
+		}else{
+			callback(false, null);
+		}
+	});
+
+
+}
+/*
 router.post('/message', multipartMiddleware, function(req, res){
 	var guid         = req.body.guid;
 	var conversation = req.body.conversation;
@@ -122,4 +182,5 @@ router.post('/check/conversation', multipartMiddleware, function(req, res){
 		})
 	});
 });
+*/
 module.exports = router;

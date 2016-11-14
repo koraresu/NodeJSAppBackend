@@ -143,8 +143,8 @@ router.get('/gps', function(req, res){
 router.get('/gps2', function(req, res){
   res.render('gps2', {} );
 });
-router.get('/logs', function(req, res){
-
+router.get('/chat', function(req, res){
+  res.render('chat', {});
 });
 
 module.exports = router;

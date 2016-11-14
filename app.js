@@ -138,7 +138,22 @@ gps.on('connection', function(socket){
 
     
   });
+});
+var chat = io.of('/chat');
+var chatrouter = require('./routes/chat');
+chat.on('connection', function(socket){
+  socket.on('connect', function(data){
 
+  });
+  socket.on('message', function(data){
+    chatrouter.message(data, function(status, messageData){
+      if(status){
+        socket.emit('getmessage', {data: messageData, t:true});
+        socket.broadcast.emit('getmessage', {data: messageData, t:false});
+      }
+    });
+  });
+  socket.on('disconnect', function(){ });
 });
 
 module.exports = app;
