@@ -125,7 +125,7 @@ gps.on('connection', function(socket){
           if(!status){
             gpsrouter.find(socket.gps, socket.profile, function(err, locationData){
               console.log("Emit to ME");
-              console.log(locationData);
+              console.log(socket.guid);
               socket.emit('getlocation', { data: locationData, type: "you" });
             });
             var clientsGPSWY = clientGPS.filter(function(element){
@@ -133,9 +133,8 @@ gps.on('connection', function(socket){
             });
             clientsGPSWY.forEach(function(item, index){
               gpsrouter.find(socket.gps, item.profile, function(err, locationData){
-                
-                console.log(locationData);
-
+                console.log("Emit to Other");
+                console.log(socket.guid);
                 item.emit('getlocation', { data: locationData, type: "other" });
               });
             });
