@@ -126,13 +126,13 @@ gps.on('connection', function(socket){
             gpsrouter.find(socket.gps, socket.profile, function(err, locationData){
               console.log("Emit to ME");
               console.log(locationData);
-              socket.emit('getlocation', locationData );
+              socket.emit('getlocation', { data: locationData, type: "you" });
             });
             clientGPS.forEach(function(item, index){
               gpsrouter.find(socket.gps, item.profile, function(err, locationData){
-                console.log("Emit to Others");
+                
                 console.log(locationData);
-                item.emit('getlocation', locationData );
+                item.emit('getlocation', { data: locationData, type: "other" });
               });
             });
           }
