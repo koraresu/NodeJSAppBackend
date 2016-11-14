@@ -128,10 +128,18 @@ gps.on('connection', function(socket){
               console.log(locationData);
               socket.emit('getlocation', { data: locationData, type: "you" });
             });
-            clientGPS.forEach(function(item, index){
+            var clientsGPSWY = clientGPS.filter(function(element){
+              if(element == socket){
+                return false;
+              }else{
+                return true;
+              }
+            });
+            clientsGPSWY.forEach(function(item, index){
               gpsrouter.find(socket.gps, item.profile, function(err, locationData){
                 
                 console.log(locationData);
+
                 item.emit('getlocation', { data: locationData, type: "other" });
               });
             });
