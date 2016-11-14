@@ -111,6 +111,7 @@ gps.on('connection', function(socket){
   });
 
   socket.on('setlocation', function(data){
+    console.log(gps.clients());
     console.log(data);
     if(data == undefined || data == null){
       socket.emit('getlocation',{ message: "GET DATA UNDEFINED OR NULL"});
