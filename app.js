@@ -111,8 +111,8 @@ gps.on('connection', function(socket){
   });
 
   socket.on('setlocation', function(data){
-    console.log(gps.clients());
-    console.log(data);
+    console.log(io.sockets.clients(); );
+
     if(data == undefined || data == null){
       socket.emit('getlocation',{ message: "GET DATA UNDEFINED OR NULL"});
     }else{
@@ -165,3 +165,22 @@ chat.on('connection', function(socket){
 });
 
 module.exports = app;
+function findClientsSocket(roomId, namespace) {
+    var res = []
+    // the default namespace is "/"
+    , ns = io.of(namespace ||"/");
+
+    if (ns) {
+        for (var id in ns.connected) {
+            if(roomId) {
+                var index = ns.connected[id].rooms.indexOf(roomId);
+                if(index !== -1) {
+                    res.push(ns.connected[id]);
+                }
+            } else {
+                res.push(ns.connected[id]);
+            }
+        }
+    }
+    return res;
+}
