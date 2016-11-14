@@ -98,11 +98,17 @@ exports.news = function(news, profile, profile_de){
 			};
 		break;
 		case "6":
+			var name = "";
+			if(news.data != undefined){
+				if(news.data.name != undefined){
+					name = news.data.name;
+				}
+			}
 			return {
 				"id_n": news.id_numerico,
 				"id": news._id,
 				"type": "6",
-				"skill": news.data.name,
+				"skill": name,
 				"profile": profileNewsFormat(profile),
 				"date": news.createdAt
 			};

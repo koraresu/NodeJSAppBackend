@@ -128,14 +128,50 @@ router.get('/city', function(req, res){
   });
 
 });
+
 router.get('/forgot/:generated', function(req, res){
   var generated_id = req.params.generated;
+
+  var password_again = req.flash('password_again');
+
   Forgot.findOne({ generated_id: generated_id }).populate('user').exec(function(err, forgotData){
-    Profile.findOne({ user_id: forgotData.user._id }).exec(function(err, profileData){
-      res.render('forgot',{ generated: generated_id, email: forgotData.user.email,nombre: profileData.first_name+" "+profileData.last_name });
-    });    
-  });  
+    if(forgotData.used == false){
+      Profile.findOne({ user_id: forgotData.user._id }).exec(function(err, profileData){
+        res.render('forgot',{ message: password_again, generated: generated_id, email: forgotData.user.email,nombre: profileData.first_name+" "+profileData.last_name });
+      });    
+    }else{
+      res.render('forgot_thanks',{ message: "Tu contraseña ha sido actualizada" });
+    }
+    
+  });    
+});
+router.post('/forgot/thanks', function(req, res){
+  console.log(req.body);
+
+  var generated      = req.body.generated;
+  var password       = req.body.password;
+  var password_again = req.body.password_again;
+  if(password == password_again){
+    Forgot.findOne({ generated_id: generated }).populate('user').exec(function(err, forgotData){
+      forgotData.used = true;
+      forgotData.save(function(err, forgot){
+        Profile.findOne({ user_id: forgotData.user._id }).exec(function(err, profileData){
+
+          User.findOne({ _id: forgotData.user._id }).exec(function(err, userData){
+            var pass = Profilefunc.generate_password(password);
+            //userData.password = 
+          });
+
+          res.render('forgot_thanks',{ message: "Tu contraseña ha sido actualizada", generated: generated });
+        });
+      });
+    });  
+  }else{
+    req.flash('password_again', 'Tu contraseña y validacion de contraseña no son iguales.');
+    res.redirect('/forgot/'+generated);
+  }
   
+
 });
 router.get('/gps', function(req, res){
   res.render('gps', {} );
