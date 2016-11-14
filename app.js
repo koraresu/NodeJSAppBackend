@@ -129,11 +129,7 @@ gps.on('connection', function(socket){
               socket.emit('getlocation', { data: locationData, type: "you" });
             });
             var clientsGPSWY = clientGPS.filter(function(element){
-              if(element == socket){
-                return false;
-              }else{
-                return true;
-              }
+              return element == socket;
             });
             clientsGPSWY.forEach(function(item, index){
               gpsrouter.find(socket.gps, item.profile, function(err, locationData){
