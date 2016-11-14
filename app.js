@@ -9,6 +9,8 @@ var bodyParser   = require('body-parser');
 var cors         = require('cors');
 var socket_io    = require('socket.io');
 
+var flash = require('connect-flash');
+
 const pathDir = __dirname;
 
 var routes       = require('./routes/index');
@@ -40,6 +42,8 @@ app.set('view engine', 'jade');
 app.use(logger('dev'));
 app.use(cors());
 app.options('*', cors());
+
+app.use(flash());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
