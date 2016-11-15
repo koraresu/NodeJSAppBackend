@@ -135,7 +135,7 @@ gps.on('connection', function(socket){
             clientsGPSWY.forEach(function(item, index){
               gpsrouter.find(item.id, function(err, locationData){
                 console.log("Emit to Other");
-                console.log(clientGPS[socket.id].data.guid);
+                console.log(socket.id);
 
                 item.emit('getlocation', { data: locationData, type: "other" });
               });
