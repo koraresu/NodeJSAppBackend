@@ -112,7 +112,7 @@ gps.on('connection', function(socket){
     clientGPS.forEach(function(item, index){
       if(item == socket){
         delete clientGPS[index];
-        locationData
+        gpsrouter.delete(socket);
       }
     });
   });
