@@ -254,6 +254,9 @@ router.post('/general/network', multipartMiddleware, function(req, res){
 		}
 	});
 });
+router.post('/friend', multipartMiddleware, function(req, res){
+
+});
 router.post('/get', multipartMiddleware, function(req, res){
 	var guid       = req.body.guid;
 	Tokenfunc.exist(guid, function(status, tokenData){
