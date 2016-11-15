@@ -101,20 +101,32 @@ var gps = io.of('/gps');
 var clientGPS = [];
 var gpsrouter = require('./routes/gps');
 gps.on('connection', function(socket){
-  clientGPS.push(socket);
+  var s = {
+    socket: socket,
+    data: {
+      guid: null,
+      profile: null,
+      gps: null,  
+    }
+  };
+  console.log(socket.id);
+
+  clientGPS[socket.id] = s;
+  
   socket.on('connect', function () { 
     console.log("Connected");
+  });
+  socket.on('connecting', function(data){
+    clientGPS[socket.id].data.guid = data.guid;
   });
   socket.on('disconnect', function () {
     console.log("Disconnected GPS");
     socket.emit('Disconnected');
     console.log("CLIENT GPS:"+clientGPS.length);
-    console.log( clientGPS );
   });
 
   socket.on('setlocation', function(data){
     console.log("CLIENT GPS:"+clientGPS.length);
-    console.log( clientGPS );
 
     if(data == undefined || data == null){
       socket.emit('getlocation',{ message: "GET DATA UNDEFINED OR NULL"});
@@ -124,16 +136,19 @@ gps.on('connection', function(socket){
         socket.emit('getlocation',{ message: "GUID UNDEFINED OR NULL"});
       }else{
         gpsrouter.set(data.guid, data.gps, function(status, locationData){
-          socket.profile = locationData.profile;
-          socket.gps = locationData.coordinates;
+
+          clientGPS[socket.id].data.profile = locationData.profile;
+          clientGPS[socket.id].data.gps = locationData.coordinates;
+
           if(!status){
             var clientsGPSWY = clientGPS.filter(function(element){
-              return element == socket;
+              return element.socket == socket;
             });
             clientsGPSWY.forEach(function(item, index){
-              gpsrouter.find(socket.gps, item.profile, function(err, locationData){
+              gpsrouter.find(clientGPS[socket.id].data.gps, item.profile, function(err, locationData){
                 console.log("Emit to Other");
-                console.log(socket.guid);
+                console.log(clientGPS[socket.id].data.guid);
+
                 item.emit('getlocation', { data: locationData, type: "other" });
               });
             });
