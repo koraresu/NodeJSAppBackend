@@ -101,7 +101,7 @@ var gps = io.of('/gps');
 var clientGPS = [];
 var gpsrouter = require('./routes/gps');
 gps.on('connection', function(socket){
-  clientGPS.append(socket);
+  clientGPS.push(socket);
   socket.on('connect', function () { 
     console.log("Connected");
   });
@@ -163,7 +163,7 @@ chat.on('connection', function(socket){
     });
   });
   socket.on('disconnect', function(){
-    
+
   });
 });
 
