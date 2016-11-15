@@ -105,16 +105,19 @@ gps.on('connection', function(socket){
   socket.on('connect', function () { 
     console.log("Connected");
   });
+
   socket.on('disconnect', function () {
     console.log("Disconnected GPS");
     socket.emit('Disconnected');
     console.log("CLIENT GPS:"+clientGPS.length);
     console.log( clientGPS );
   });
+  socket.on('connecting', function(data){
+    socket.guid = data.guid;
+  });
 
   socket.on('setlocation', function(data){
     console.log("CLIENT GPS:"+clientGPS.length);
-    console.log( clientGPS );
 
     if(data == undefined || data == null){
       socket.emit('getlocation',{ message: "GET DATA UNDEFINED OR NULL"});
