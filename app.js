@@ -108,6 +108,8 @@ gps.on('connection', function(socket){
   socket.on('disconnect', function () {
     console.log("Disconnected GPS");
     socket.emit('Disconnected');
+    console.log("CLIENT GPS:"+clientGPS.length);
+    console.log( clientGPS );
   });
 
   socket.on('setlocation', function(data){
