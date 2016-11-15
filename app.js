@@ -106,7 +106,7 @@ gps.on('connection', function(socket){
     console.log("Connected");
   });
   socket.on('disconnect', function () {
-    console.log("Disconnected");
+    console.log("Disconnected GPS");
     socket.emit('Disconnected');
   });
 
