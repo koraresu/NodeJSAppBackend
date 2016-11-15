@@ -37,31 +37,27 @@ var Tokenfunc    = require('../functions/tokenfunc');
 var Profilefunc  = require('../functions/profilefunc');
 
 
-exports.find = function(gps, profile, callback){
-	var profile;
+exports.find = function(socket, callback){
+	var maxDistance = 8;
+	maxDistance /= 6371;
 
-	if(mongoose.Types.ObjectId.isValid(profile)){
-		profile = mongoose.Types.ObjectId(profile);
-	}
 
-	var limit = 10;
+	var limit = 4;
 
-    // get the max distance or set it to 8 kilometers
-    var maxDistance = 8;
-
-    // we need to convert the distance to radians
-    // the raduis of Earth is approximately 6371 kilometers
-    maxDistance /= 6371;
-	Location.find({ 
-		coordinates: {
-			$near: gps,
-			$maxDistance: maxDistance 
-		},
-		profile: {
-        	$ne: profile
-    	}
-	}).populate('profile').exec(function(err, locationData){
-		callback(err, locationData);
+	Location.findOne({
+		socket: socket
+	}).exec(function(err, locationSocket){
+		Location.find({
+			coordinates: {
+				$near: locationSocket.coordinates,
+				$maxDistance: maxDistance 
+			},
+			socket: {
+				$ne: socket
+			}
+		}).limit(limit).populate('profile').exec(function(err, locationData){
+			callback(err, locationData);
+		});
 	});
 }
 exports.delete = function(socket, callback){
