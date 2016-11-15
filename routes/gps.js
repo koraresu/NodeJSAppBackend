@@ -48,17 +48,22 @@ exports.find = function(socket, callback){
 	Location.findOne({
 		socket: socket
 	}).exec(function(err, locationSocket){
-		Location.find({
-			coordinates: {
-				$near: locationSocket.coordinates,
-				$maxDistance: maxDistance 
-			},
-			socket: {
-				$ne: socket
-			}
-		}).limit(limit).populate('profile').exec(function(err, locationData){
-			callback(err, locationData);
-		});
+		if(!err && locationSocket){
+			Location.find({
+				coordinates: {
+					$near: locationSocket.coordinates,
+					$maxDistance: maxDistance 
+				},
+				socket: {
+					$ne: socket
+				}
+			}).limit(limit).populate('profile').exec(function(err, locationData){
+				callback(err, locationData);
+			});
+		}else{
+			callback(null, null);
+		}
+		
 	});
 }
 exports.delete = function(socket, callback){
