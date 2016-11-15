@@ -114,10 +114,12 @@ gps.on('connection', function(socket){
   });
   socket.on('connecting', function(data){
     socket.guid = data.guid;
+    console.log(socket);
   });
 
   socket.on('setlocation', function(data){
     console.log("CLIENT GPS:"+clientGPS.length);
+    
 
     if(data == undefined || data == null){
       socket.emit('getlocation',{ message: "GET DATA UNDEFINED OR NULL"});
@@ -126,6 +128,11 @@ gps.on('connection', function(socket){
         console.log("No GUID");
         socket.emit('getlocation',{ message: "GUID UNDEFINED OR NULL"});
       }else{
+        
+        if(socket.guid == undefined){
+          socket.guid = data.guid;
+        }
+        
         gpsrouter.set(data.guid, data.gps, function(status, locationData){
           socket.profile = locationData.profile;
           socket.gps = locationData.coordinates;
