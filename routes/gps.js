@@ -86,6 +86,7 @@ exports.set = function(guid, gps, socket, callback){
 
 						if(!err && locationData){
 							locationData.coordinates =  coordinates;
+							locationData.socket = socket;
 						}else{
 							locationData = new Location({
 								coordinates: coordinates, 
