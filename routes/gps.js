@@ -58,12 +58,18 @@ exports.find = function(socket, callback){
 				socket: {
 					$ne: socket
 				}
-			}).limit(limit).populate('profile').exec(function(err, locationData){
+			}).populate('profile').exec(function(err, locationData){
 				async.map(locationData,function(item, cb){
 					Networkfunc.isFriend(locationSocket.profile, item.profile, function(status){
-						cb(null, {data:item, isFriend: status});
+						if(status){
+							cb(null, null);
+						}else{
+							cb(null, item);
+						}
+						
 					});
 				}, function(err, results){
+					
 					callback(err, results);
 				})
 			});
