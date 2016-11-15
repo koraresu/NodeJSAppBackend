@@ -130,10 +130,10 @@ gps.on('connection', function(socket){
         gpsrouter.set(data.guid, data.gps,socket.id,  function(status, locationData){
           if(!status){
             var clientsGPSWY = clientGPS.filter(function(element){
-              return element.socket == socket;
+              return element == socket;
             });
             clientsGPSWY.forEach(function(item, index){
-              gpsrouter.find(clientGPS[socket.id].data.gps, item.profile, function(err, locationData){
+              gpsrouter.find(clientGPS.gps, item.profile, function(err, locationData){
                 console.log("Emit to Other");
                 console.log(clientGPS[socket.id].data.guid);
 
