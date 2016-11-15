@@ -38,6 +38,7 @@ var Profilefunc  = require('../functions/profilefunc');
 
 
 exports.find = function(socket, callback){
+	console.log(socket);
 	var maxDistance = 8;
 	maxDistance /= 6371;
 
