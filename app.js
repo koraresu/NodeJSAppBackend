@@ -98,10 +98,10 @@ io.sockets.on('connection', function (socket) {
   console.log('socket connected');
 });
 var gps = io.of('/gps');
-var clientGPS = [];
+var clientGPS = {};
 var gpsrouter = require('./routes/gps');
 gps.on('connection', function(socket){
-  clientGPS.push(socket);
+  clientGPS[socket.id].socket = socket;
   socket.on('connect', function () { 
     console.log("Connected");
   });
@@ -113,8 +113,8 @@ gps.on('connection', function(socket){
     console.log( clientGPS );
   });
   socket.on('connecting', function(data){
-    socket.guid = data.guid;
-    console.log(socket);
+    clientGPS[socket.id].guid = data.guid;
+    console.log("connecting");
   });
 
   socket.on('setlocation', function(data){
@@ -129,19 +129,19 @@ gps.on('connection', function(socket){
         socket.emit('getlocation',{ message: "GUID UNDEFINED OR NULL"});
       }else{
         
-        if(socket.guid == undefined){
-          socket.guid = data.guid;
+        if(clientGPS[socket.id].guid == undefined){
+          clientGPS[socket.id].guid = data.guid;
         }
-        
+
         gpsrouter.set(data.guid, data.gps, function(status, locationData){
-          socket.profile = locationData.profile;
-          socket.gps = locationData.coordinates;
+          clientGPS[socket.id].profile = locationData.profile;
+          clientGPS[socket.id].gps = locationData.coordinates;
           if(!status){
             var clientsGPSWY = clientGPS.filter(function(element){
-              return element == socket;
+              return element.socket == socket;
             });
             clientsGPSWY.forEach(function(item, index){
-              gpsrouter.find(socket.gps, item.profile, function(err, locationData){
+              gpsrouter.find(clientGPS[socket.id].gps, item.profile, function(err, locationData){
                 console.log("Emit to Other");
                 console.log(socket.guid);
                 item.emit('getlocation', { data: locationData, type: "other" });
