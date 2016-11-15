@@ -35,6 +35,7 @@ var Location     = model.location;
 
 var Tokenfunc    = require('../functions/tokenfunc');
 var Profilefunc  = require('../functions/profilefunc');
+var Networkfunc  = require('../functions/networkfunc');
 
 
 exports.find = function(socket, callback){
@@ -58,7 +59,13 @@ exports.find = function(socket, callback){
 					$ne: socket
 				}
 			}).limit(limit).populate('profile').exec(function(err, locationData){
-				callback(err, locationData);
+				async.map(locationData,function(item, cb){
+					Networkfunc.isFriend(locationSocket.profile, item.profile, function(status){
+						cb(null, {data:item, isFriend: status});
+					});
+				}, function(err, results){
+					callback(err, results);
+				})
 			});
 		}else{
 			callback(null, null);
