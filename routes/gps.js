@@ -60,14 +60,18 @@ exports.find = function(gps, profile, callback){
 		profile: {
         	$ne: profile
     	}
-	}).limit(4).populate('profile').exec(function(err, locationData){
+	}).populate('profile').exec(function(err, locationData){
 		callback(err, locationData);
 	});
 }
-exports.delete = function(guid, gps, callback){
-
+exports.delete = function(socket, callback){
+	Location.findOne({ socket: socket}).exec(function(errLocation, locationData){
+		Location.delete({ _id: locationData._id }, function(err){
+			callback(err, errLocation, socket, locationData);
+		});
+	});
 }
-exports.set = function(guid, gps, callback){
+exports.set = function(guid, gps, socket, callback){
 	
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
@@ -85,7 +89,8 @@ exports.set = function(guid, gps, callback){
 						}else{
 							locationData = new Location({
 								coordinates: coordinates, 
-								profile: profileData._id
+								profile: profileData._id,
+								socket: socket
 							});
 
 						}

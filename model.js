@@ -67,7 +67,8 @@ var locationSchema = new Schema({
     type: [Number],  // [<longitude>, <latitude>]
     index: '2d'      // create the geospatial index
   },
-  profile: { type: Schema.Types.ObjectId, ref: 'Profile' }
+  profile: { type: Schema.Types.ObjectId, ref: 'Profile' },
+  socket: { type: Schema.Types.Mixed }
 }, {
   timestamps: true
 });

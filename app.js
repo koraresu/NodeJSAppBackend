@@ -101,28 +101,20 @@ var gps = io.of('/gps');
 var clientGPS = [];
 var gpsrouter = require('./routes/gps');
 gps.on('connection', function(socket){
-  var s = {
-    socket: socket,
-    data: {
-      guid: null,
-      profile: null,
-      gps: null,  
-    }
-  };
-  console.log(socket.id);
-
-  clientGPS[socket.id] = s;
-  
+  clientGPS.append(socket);
   socket.on('connect', function () { 
     console.log("Connected");
   });
   socket.on('connecting', function(data){
-    clientGPS[socket.id].data.guid = data.guid;
+    
   });
   socket.on('disconnect', function () {
-    console.log("Disconnected GPS");
-    socket.emit('Disconnected');
-    console.log("CLIENT GPS:"+clientGPS.length);
+    clientGPS.forEach(function(item, index){
+      if(item == socket){
+        delete clientGPS[index];
+        locationData
+      }
+    });
   });
 
   socket.on('setlocation', function(data){
@@ -135,11 +127,7 @@ gps.on('connection', function(socket){
         console.log("No GUID");
         socket.emit('getlocation',{ message: "GUID UNDEFINED OR NULL"});
       }else{
-        gpsrouter.set(data.guid, data.gps, function(status, locationData){
-
-          clientGPS[socket.id].data.profile = locationData.profile;
-          clientGPS[socket.id].data.gps = locationData.coordinates;
-
+        gpsrouter.set(data.guid, data.gps,socket.id,  function(status, locationData){
           if(!status){
             var clientsGPSWY = clientGPS.filter(function(element){
               return element.socket == socket;
@@ -174,7 +162,9 @@ chat.on('connection', function(socket){
       }
     });
   });
-  socket.on('disconnect', function(){ });
+  socket.on('disconnect', function(){
+    
+  });
 });
 
 module.exports = app;
