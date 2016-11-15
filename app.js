@@ -98,7 +98,7 @@ io.sockets.on('connection', function (socket) {
   console.log('socket connected');
 });
 var gps = io.of('/gps');
-var clientGPS = {};
+var clientGPS = [];
 var gpsrouter = require('./routes/gps');
 gps.on('connection', function(socket){
   clientGPS[socket.id] = {
