@@ -101,6 +101,11 @@ var gps = io.of('/gps');
 var clientGPS = {};
 var gpsrouter = require('./routes/gps');
 gps.on('connection', function(socket){
+  clientGPS[socket.id] = {
+    socket: null,
+    guid: null,
+    profile: null
+  };
   clientGPS[socket.id].socket = socket;
   socket.on('connect', function () { 
     console.log("Connected");
@@ -129,7 +134,7 @@ gps.on('connection', function(socket){
         socket.emit('getlocation',{ message: "GUID UNDEFINED OR NULL"});
       }else{
         
-        if(clientGPS[socket.id].guid == undefined){
+        if(clientGPS[socket.id].guid == null){
           clientGPS[socket.id].guid = data.guid;
         }
 
