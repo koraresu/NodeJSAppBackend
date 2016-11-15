@@ -101,30 +101,20 @@ var gps = io.of('/gps');
 var clientGPS = [];
 var gpsrouter = require('./routes/gps');
 gps.on('connection', function(socket){
-  clientGPS[socket.id] = {
-    socket: null,
-    guid: null,
-    profile: null
-  };
-  clientGPS[socket.id].socket = socket;
+  clientGPS.push(socket);
   socket.on('connect', function () { 
     console.log("Connected");
   });
-
   socket.on('disconnect', function () {
     console.log("Disconnected GPS");
     socket.emit('Disconnected');
     console.log("CLIENT GPS:"+clientGPS.length);
     console.log( clientGPS );
   });
-  socket.on('connecting', function(data){
-    clientGPS[socket.id].guid = data.guid;
-    console.log("connecting");
-  });
 
   socket.on('setlocation', function(data){
     console.log("CLIENT GPS:"+clientGPS.length);
-    
+    console.log( clientGPS );
 
     if(data == undefined || data == null){
       socket.emit('getlocation',{ message: "GET DATA UNDEFINED OR NULL"});
@@ -133,20 +123,15 @@ gps.on('connection', function(socket){
         console.log("No GUID");
         socket.emit('getlocation',{ message: "GUID UNDEFINED OR NULL"});
       }else{
-        
-        if(clientGPS[socket.id].guid == null){
-          clientGPS[socket.id].guid = data.guid;
-        }
-
         gpsrouter.set(data.guid, data.gps, function(status, locationData){
-          clientGPS[socket.id].profile = locationData.profile;
-          clientGPS[socket.id].gps = locationData.coordinates;
+          socket.profile = locationData.profile;
+          socket.gps = locationData.coordinates;
           if(!status){
             var clientsGPSWY = clientGPS.filter(function(element){
-              return element.socket == socket;
+              return element == socket;
             });
             clientsGPSWY.forEach(function(item, index){
-              gpsrouter.find(clientGPS[socket.id].gps, item.profile, function(err, locationData){
+              gpsrouter.find(socket.gps, item.profile, function(err, locationData){
                 console.log("Emit to Other");
                 console.log(socket.guid);
                 item.emit('getlocation', { data: locationData, type: "other" });
