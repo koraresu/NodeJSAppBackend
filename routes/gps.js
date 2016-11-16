@@ -55,6 +55,23 @@ exports.find = function(socket, callback){
 		console.log(locationSocket);
 		if(!err && locationSocket){
 			console.log("Location Socket After");
+
+			Network.find({
+				"profiles": {
+					"$in": [profile_id]
+				},
+				"accepted": true
+			}).exec(function(errNetwork, networkData){
+				async.map(networkData, function(item, cb){
+					var a = item.profiles.filter(function(o){
+						return o.toString() != profile_id.toString() 
+					});
+					console.log(a);
+				}, function(err, results){
+
+				});
+			});
+			/*
 			Networkfunc.getListFriends(locationSocket.profile, function(errNetwork, friends, data){
 				console.log(friends);
 				var l = {
@@ -74,6 +91,7 @@ exports.find = function(socket, callback){
 					callback(err, locationData );
 				});
 			});
+			*/
 		}else{
 			callback(err, null);
 		}
