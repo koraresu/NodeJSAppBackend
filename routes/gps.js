@@ -76,9 +76,14 @@ exports.find = function(socket, callback){
 }
 exports.delete = function(socket, callback){
 	Location.findOne({ socket: socket}).exec(function(errLocation, locationData){
-		Location.delete({ _id: locationData._id }, function(err){
-			callback(err, errLocation, socket, locationData);
-		});
+		if(!err && locationData){
+			Location.delete({ _id: locationData._id }, function(err){
+				callback(err, errLocation, socket, locationData);
+			});	
+		}else{
+			callback(err, errLocation, socket, null);
+		}
+		
 	});
 }
 exports.set = function(guid, gps, socket, callback){
