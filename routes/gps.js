@@ -56,9 +56,11 @@ exports.find = function(socket, callback){
 		if(!err && locationSocket){
 			console.log("Location Socket After");
 
+
+
 			Network.find({
 				"profiles": {
-					"$in": [profile_id]
+					"$in": [locationSocket.profile]
 				},
 				"accepted": true
 			}).exec(function(errNetwork, networkData){
