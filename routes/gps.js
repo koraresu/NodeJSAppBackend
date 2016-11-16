@@ -70,8 +70,11 @@ exports.find = function(socket, callback){
 						return o.toString() != profile_id.toString() 
 					});
 					console.log(a);
-				}, function(err, results){
 
+					cb(null, a);
+				}, function(err, results){
+					console.log("RESULTS:");
+					console.log(results);
 				});
 			});
 			/*
