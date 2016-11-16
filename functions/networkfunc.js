@@ -112,6 +112,35 @@ function PublicId(public_id, callback){
 		}
 	});
 }
+function getListFriends(profile_id,callback){
+	if(typeof profile_id == "object"){
+		var profile_id = mongoose.Types.ObjectId(profile_id);	
+	}
+	var data = [];
+	Network.find({
+		"profiles": {
+			"$in": [profile_id]
+		},
+		"accepted": true
+	}).exec(function(errNetwork, networkData){		
+		if(networkData.length > 0){
+			networkData.forEach(function(friend, index, friends){
+
+				var a = friend.profiles.filter(function(o){
+					return o.toString() != profile_id.toString() 
+				});
+				a = a[0];
+				
+				console.log(a);
+				
+			});
+		}else{
+			callback(errNetwork, {}, []);
+		}
+		
+		
+	});
+}
 function getFriends(profile_id,callback){
 	if(typeof profile_id == "object"){
 		var profile_id = mongoose.Types.ObjectId(profile_id);	
