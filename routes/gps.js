@@ -52,7 +52,7 @@ exports.find = function(socket, callback){
 	}).exec(function(err, locationSocket){
 		if(!err && locationSocket){
 			Networkfunc.getFriends(locationSocket.profile, function(errNetwork, friends, data){
-
+				console.log(friends);
 				Location.find({
 					coordinates: {
 						$near: locationSocket.coordinates,
@@ -64,7 +64,7 @@ exports.find = function(socket, callback){
 					profile: {
 						$nin: friends
 					}
-				}).populate('profile').exec(function(err, locationData){
+				}).limit(limit).populate('profile').exec(function(err, locationData){
 					callback(err, locationData );
 				});
 			});
