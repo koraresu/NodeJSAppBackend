@@ -130,7 +130,7 @@ function getListFriends(profile_id,callback){
 					return o.toString() != profile_id.toString() 
 				});
 				a = a[0];
-				
+				console.log("A");
 				console.log(a);
 				
 			});
