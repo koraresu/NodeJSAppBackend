@@ -76,7 +76,7 @@ exports.find = function(socket, callback){
 }
 exports.delete = function(socket, callback){
 	Location.findOne({ socket: socket}).exec(function(errLocation, locationData){
-		if(!err && locationData){
+		if(!errLocation && locationData){
 			Location.delete({ _id: locationData._id }, function(err){
 				callback(err, errLocation, socket, locationData);
 			});	
