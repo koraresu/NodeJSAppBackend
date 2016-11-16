@@ -53,7 +53,7 @@ exports.find = function(socket, callback){
 		console.log(err);
 		console.log(locationSocket);
 		if(!err && locationSocket){
-			Networkfunc.getFriends(locationSocket.profile, function(errNetwork, friends, data){
+			Networkfunc.getListFriends(locationSocket.profile, function(errNetwork, friends, data){
 				console.log(friends);
 				var l = {
 					coordinates: {
