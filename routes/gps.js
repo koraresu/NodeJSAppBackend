@@ -69,7 +69,7 @@ exports.find = function(socket, callback){
 				});
 			});
 		}else{
-			callback(null, null);
+			callback(err, null);
 		}
 		
 	});
@@ -81,7 +81,7 @@ exports.delete = function(socket, callback){
 				callback(err, errLocation, socket, locationData);
 			});	
 		}else{
-			callback(err, errLocation, socket, null);
+			callback(errLocation, errLocation, socket, null);
 		}
 		
 	});
