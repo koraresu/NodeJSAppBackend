@@ -259,6 +259,7 @@ exports.isNeightbor         = isNeightbor
 exports.isFriend            = isFriend
 exports.PublicId            = PublicId
 exports.getFriends          = getFriends
+exports.getListFriends      = getListFriends
 exports.checkconversation   = checkconversation
 exports.message             = message
 exports.addReview           = addReview
