@@ -50,6 +50,7 @@ exports.find = function(socket, callback){
 	Location.findOne({
 		socket: socket
 	}).exec(function(err, locationSocket){
+		var profile_id = locationSocket.profile;
 		console.log(err);
 		console.log("Location Socket Before");
 		console.log(locationSocket);
@@ -60,7 +61,7 @@ exports.find = function(socket, callback){
 
 			Network.find({
 				"profiles": {
-					"$in": [locationSocket.profile]
+					"$in": [profile_id]
 				},
 				"accepted": true
 			}).exec(function(errNetwork, networkData){
