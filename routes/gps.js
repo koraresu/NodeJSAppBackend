@@ -50,6 +50,8 @@ exports.find = function(socket, callback){
 	Location.findOne({
 		socket: socket
 	}).exec(function(err, locationSocket){
+		console.log(err);
+		console.log(locationSocket);
 		if(!err && locationSocket){
 			Networkfunc.getFriends(locationSocket.profile, function(errNetwork, friends, data){
 				console.log(friends);
