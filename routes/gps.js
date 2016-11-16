@@ -50,11 +50,11 @@ exports.find = function(socket, callback){
 	Location.findOne({
 		socket: socket
 	}).exec(function(err, locationSocket){
-		var profile_id = locationSocket.profile;
 		console.log(err);
 		console.log("Location Socket Before");
 		console.log(locationSocket);
 		if(!err && locationSocket){
+			var profile_id = locationSocket.profile;
 			console.log("Location Socket After");
 
 
