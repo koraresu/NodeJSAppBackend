@@ -36,6 +36,7 @@ var Location     = model.location;
 var Tokenfunc    = require('../functions/tokenfunc');
 var Profilefunc  = require('../functions/profilefunc');
 var Networkfunc  = require('../functions/networkfunc');
+var Generalfunc  = require('../functions/generalfunc');
 
 
 exports.find = function(socket, callback){
@@ -50,28 +51,22 @@ exports.find = function(socket, callback){
 		socket: socket
 	}).exec(function(err, locationSocket){
 		if(!err && locationSocket){
-			Location.find({
-				coordinates: {
-					$near: locationSocket.coordinates,
-					$maxDistance: maxDistance 
-				},
-				socket: {
-					$ne: socket
-				}
-			}).populate('profile').exec(function(err, locationData){
-				async.map(locationData,function(item, cb){
-					Networkfunc.isFriend(locationSocket.profile, item.profile, function(status){
-						if(status){
-							cb(null, null);
-						}else{
-							cb(null, item);
-						}
-						
-					});
-				}, function(err, results){
-					
-					callback(err, results);
-				})
+			Networkfunc.getFriends(locationSocket.profile, function(errNetwork, friends, data){
+
+				Location.find({
+					coordinates: {
+						$near: locationSocket.coordinates,
+						$maxDistance: maxDistance 
+					},
+					socket: {
+						$ne: socket
+					},
+					profile: {
+						$nin: friends
+					}
+				}).populate('profile').exec(function(err, locationData){
+					callback(err, locationData );
+				});
 			});
 		}else{
 			callback(null, null);
