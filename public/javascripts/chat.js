@@ -53,8 +53,6 @@ function addMessage(data){
 	$('#messages').append('<div class="message"><div class="profile_pic"><img src="http://localhost:3000/profilepic/'+data.profile_id.profile_pic+'" /></div><div class="text">'+data.message+'</div></div>');
 
 	var element = document.getElementById("messages");
-	
-
 	heightScroll(element, function(top, height, bottom, total){
 		element.scrollTop = bottom;	
 	},function(top, height, bottom, total){
