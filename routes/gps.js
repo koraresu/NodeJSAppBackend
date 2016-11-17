@@ -85,16 +85,7 @@ exports.find = function(socket, callback){
 	});
 }
 exports.delete = function(socket, callback){
-	Location.findOne({ socket: socket}).exec(function(errLocation, locationData){
-		if(!errLocation && locationData){
-			Location.delete({ _id: locationData._id }, function(err){
-				callback(err, errLocation, socket, locationData);
-			});	
-		}else{
-			callback(errLocation, errLocation, socket, null);
-		}
-		
-	});
+	console.log("DELETE");
 }
 exports.set = function(guid, gps, socket, callback){
 	
