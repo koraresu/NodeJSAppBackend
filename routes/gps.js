@@ -54,47 +54,30 @@ exports.find = function(socket, callback){
 		console.log("Location Socket Before");
 		console.log(locationSocket);
 		if(!err && locationSocket){
-			var profile_id = locationSocket.profile;
-			console.log("Location Socket After");
 
+			Location.find({
+ 				coordinates: {
+ 					$near: locationSocket.coordinates,
+ 					$maxDistance: maxDistance 
+ 				},
+ 				socket: {
+ 					$ne: socket
+ 				}
+ 			}).limit(limit).populate('profile').exec(function(err, locationData){
+ 				async.map(locationData, function(item, cb){
+ 					Networkfunc.isFriend(locationSocket.profile, item.profile._id, function(status){
+ 						if(status){
+ 							cb(null, null);
+ 						}else{
+ 							cb(null, item);
+ 						}
+ 					});
+ 				}, function(err, results){
+ 					results = Generalfunc.cleanArray(results);
+ 					callback(err, results);
+ 				});
+ 			});
 
-			var l = {
-				"profiles": {
-					"$in": [profile_id]
-				},
-				"accepted": true
-			};
-			console.log("L:");
-			console.log(l);
-			Network.find(l).exec(function(errNetwork, networkData){
-				async.map(networkData, function(item, cb){
-					cb(null, item);
-				}, function(err, results){
-					console.log("RESULTS:");
-					console.log(results);
-				});
-			});
-			/*
-			Networkfunc.getListFriends(locationSocket.profile, function(errNetwork, friends, data){
-				console.log(friends);
-				var l = {
-					coordinates: {
-						$near: locationSocket.coordinates,
-						$maxDistance: maxDistance 
-					},
-					socket: {
-						$ne: socket
-					},
-					profile: {
-						$nin: friends
-					}
-				};
-				console.log(l);
-				Location.find(l).limit(limit).populate('profile').exec(function(err, locationData){
-					callback(err, locationData );
-				});
-			});
-			*/
 		}else{
 			callback(err, null);
 		}
