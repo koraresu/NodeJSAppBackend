@@ -77,6 +77,7 @@ exports.add = function(type, profile_id, data, callback){
 			d = {
 				tipo: type,
 				profile: profile_id,
+				profile_emisor: data.profile_emisor,
 			};
 		break;
 		case 1:

@@ -600,7 +600,7 @@ router.post('/facebooktofriend', multipartMiddleware, function(req, res){
 								});
 							});
 						}else{
-							Generalfunc.response(113, {}, function(response){
+							Generalfunc.response(200, {profiles: [], uknown: split}, function(response){
 								res.json(response);
 							});
 						}
