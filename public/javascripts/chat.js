@@ -50,5 +50,29 @@ function get(element){
 }
 function addMessage(data){
 	console.log(data);
-	$('#messages').append('<div class="message">'+data.message+'</div>');
+	$('#messages').append('<div class="message"><div class="profile_pic"><img src="http://localhost:3000/profilepic/'+data.profile_id.profile_pic+'" /></div><div class="text">'+data.message+'</div></div>');
+
+	var element = document.getElementById("messages");
+	
+
+	heightScroll(element, function(top, height, bottom, total){
+		element.scrollTop = bottom;	
+	},function(top, height, bottom, total){
+		console.log("No Scroll");
+	});
+}
+function heightScroll(element,cbScroll,cbNoScroll){
+	var top = element.scrollTop;
+	var height = element.clientHeight;
+	var bottom = element.scrollHeight;
+
+	var total = top+height;	
+
+	console.log(top+"|"+height+"|"+total+"|"+bottom);
+
+	if(total == bottom){
+		cbScroll(top, height, bottom, total);
+	}else{
+		cbNoScroll(top, height, bottom, total);
+	}
 }

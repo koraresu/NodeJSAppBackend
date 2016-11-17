@@ -6,6 +6,21 @@ body {
 }
 #messages {
   height: calc(100% - 100px);
+  overflow: hidden;
+  overflow-y: scroll;
+}
+#messages .message {
+  padding: 5px;
+}
+#messages .message .profile_pic {
+  display: block;
+}
+#messages .message .text {
+  background-color: #808080;
+  padding: 10px;
+  max-width: 50%;
+  display: inline-block;
+  color: #fff;
 }
 form {
   width: 100%;
