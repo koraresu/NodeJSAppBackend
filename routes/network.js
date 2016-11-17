@@ -471,23 +471,15 @@ router.post('/get', multipartMiddleware, function(req, res){
 					var data = [];
 					var profile_id = profileData._id;
 
-					Networkfunc.getFriends(profile_id, function(err, networkData, friendsId){
-						if(!err && networkData){
-							var query = Profile.find({
-								_id:{
-									"$in": friendsId
-								}
-							});
-							format.profilequeryformat(query,function(errProfile, profileData){
-								Generalfunc.response(200, profileData, function(response){
-									res.json(response);
-								});
-							});
-						}else{
-							Generalfunc.response(404, {}, function(response){
-								res.json(response);
-							});
+					Network.find({
+						profiles: {
+							$in: [profileData._id]
 						}
+					}).select('-__v -updatedAt').populate('profiles').exec(function(err, networkData){
+						Generalfunc.response(200, networkData, function(response){
+							res.json(response);
+						});
+						
 					});
 				}else{
 					Generalfunc.response(113, {}, function(response){
