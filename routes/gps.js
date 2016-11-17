@@ -66,12 +66,7 @@ exports.find = function(socket, callback){
 				"accepted": true
 			}).exec(function(errNetwork, networkData){
 				async.map(networkData, function(item, cb){
-					var a = item.profiles.filter(function(o){
-						return o.toString() != profile_id.toString() 
-					});
-					console.log(a);
-
-					cb(null, a);
+					cb(null, item);
 				}, function(err, results){
 					console.log("RESULTS:");
 					console.log(results);
