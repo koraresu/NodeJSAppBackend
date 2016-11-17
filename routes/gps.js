@@ -58,13 +58,15 @@ exports.find = function(socket, callback){
 			console.log("Location Socket After");
 
 
-
-			Network.find({
+			var l = {
 				"profiles": {
 					"$in": [profile_id]
 				},
 				"accepted": true
-			}).exec(function(errNetwork, networkData){
+			};
+			console.log("L:");
+			console.log(l);
+			Network.find(l).exec(function(errNetwork, networkData){
 				async.map(networkData, function(item, cb){
 					cb(null, item);
 				}, function(err, results){
