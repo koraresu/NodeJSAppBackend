@@ -112,10 +112,9 @@ gps.on('connection', function(socket){
     clientGPS.forEach(function(item, index){
       if(item == socket){
         delete clientGPS[index];
-        gpsrouter.delete(socket, function(err, errLocation, socket, locationData){
+        gpsrouter.delete(socket, function(err, socket){
           console.log(err);
-          console.log(errLocation);
-          console.log(locationData);
+          console.log(socket);
         });
       }
     });

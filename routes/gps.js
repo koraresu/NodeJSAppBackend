@@ -85,8 +85,9 @@ exports.find = function(socket, callback){
 	});
 }
 exports.delete = function(socket, callback){
-	console.log("DELETE");
-	callback(null, null);
+	Location.remove({ socket: socket }).exec(function(err){
+		callback(err, socket);
+	});
 }
 exports.set = function(guid, gps, socket, callback){
 	
