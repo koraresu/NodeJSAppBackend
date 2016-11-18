@@ -35,12 +35,13 @@ var Country      = model.country;
 
 var format             = require('../functions/format');
 
-var Generalfunc = require('../functions/generalfunc');
-var Profilefunc = require('../functions/profilefunc');
-var Experiencefunc = require('../functions/experiencefunc');
-var Tokenfunc = require('../functions/tokenfunc');
-var Skillfunc = require('../functions/skillfunc');
-var Networkfunc = require('../functions/networkfunc');
+var Generalfunc      = require('../functions/generalfunc');
+var Profilefunc      = require('../functions/profilefunc');
+var Experiencefunc   = require('../functions/experiencefunc');
+var Tokenfunc        = require('../functions/tokenfunc');
+var Skillfunc        = require('../functions/skillfunc');
+var Networkfunc      = require('../functions/networkfunc');
+var Notificationfunc = require('../functions/notificationfunc');
 /* GET home page. */
 
 
@@ -78,7 +79,7 @@ router.post('/connect', multipartMiddleware, function(req, res){
 								});
 							}else{
 								var network = new Network({
-									accepted: true,
+									accepted: false,
 									profiles: [
 									profileData._id,
 									profileAnotherData._id
@@ -86,20 +87,24 @@ router.post('/connect', multipartMiddleware, function(req, res){
 								});
 								network.save(function(err, networkData){
 									Network.findOne({ _id: networkData._id}).populate('profiles').exec(function(errNetwork, networkData){
-										var notification = new Notification({
-											tipo: 3,
-											profile: profileAnotherData._id,
+											
+
+										Notificationfunc.add({
+                  							tipo: 3,
+                  							profile: profileAnotherData._id,
 											profile_emisor: profileData._id,
-										});
-										notification.save(function(errNotification, notificationData){
-											var data = {
+											network: networkData._id,
+											clicked: false,
+                  							status: false
+                						}, function(status, notificationData){
+                							var data = {
 												"accepted": networkData.accepted,
 												"public_id": profileAnotherData.public_id
 											};
 											Generalfunc.response(200, data,  function(response){
 												res.json(response);
 											});	
-										});
+                						});
 									});
 								});
 							}
@@ -156,20 +161,23 @@ router.post('/connect/all', multipartMiddleware, function(req, res){
 										callback(null, data);
 									}else{
 										var network = new Network({
-											accepted: true,
+											accepted: false,
 											profiles: [
 											profileData._id,
 											profileAnotherData._id
 											]
 										});
 										network.save(function(err, networkData){
-											var notification = new Notification({
-												tipo: 3,
-												profile: profileAnotherData._id,
+
+											Notificationfunc.add({
+	                  							tipo: 3,
+	                  							profile: profileAnotherData._id,
 												profile_emisor: profileData._id,
-											});
-											notification.save(function(errNotification, notificationData){
-												Network.findOne({ _id: networkData._id }).populate('profiles').exec(function(err, networkData){
+												network: networkData._id,
+												clicked: true,
+	                  							status: true
+                							}, function(status, notificationData){
+                								Network.findOne({ _id: networkData._id }).populate('profiles').exec(function(err, networkData){
 													var data = {
 														"accepted": networkData.accepted,
 														"public_id": profileAnotherData.public_id,
@@ -177,6 +185,13 @@ router.post('/connect/all', multipartMiddleware, function(req, res){
 													};
 													callback(null, data);
 												});
+                							});
+											var notification = new Notification({
+												tipo: 3,
+												
+											});
+											notification.save(function(errNotification, notificationData){
+												
 												
 											});
 										});
@@ -276,20 +291,36 @@ router.post('/accept', multipartMiddleware, function(req, res){
 							if(!errNetwork && networkData){
 								networkData.accepted = true;
 								networkData.save(function(err, network){
-									var notification = new Notification({
+									Notificationfunc.add({
 										tipo: 4,
-										profile: profileData._id,
-										profile_emisor: profileAnotherData._id,
-									});
-									notification.save(function(errNotification, notificationData){
-										var data = {
-											"accepted": network.accepted,
-											"public_id": profileAnotherData.public_id
-										};
-										
-										Generalfunc.response(200, data, function(response){
-											res.json(response);
+										profile: profileAnotherData._id,
+										profile_emisor: profileData._id,
+										network: networkData._id,
+										status: true,
+										click: true
+									},function(errNotification, notificationData){
+										Notification.findOne({ tipo: 3, network: networkData._id }).exec(function(err, notificationPreData){
+											if(!err && notificationPreData){
+												notificationPreData.clicked = true;
+												notificationPreData.status = networkData.accepted;
+												notificationPreData.save(function(err, notiPre){
+													var data = {
+														"accepted": network.accepted,
+														"public_id": profileAnotherData.public_id
+													};
+													Generalfunc.response(200, data, function(response){
+														res.json(response);
+													});
+												});	
+											}else{
+												Generalfunc.response(101, { message: "No se encuentra la Notificación."}, function(response){
+													res.json(response);
+												});
+											}
+											
 										});
+
+										
 									});
 								});
 							}else{
@@ -898,8 +929,19 @@ router.post('/recomendar', multipartMiddleware, function(req, res){
 	var p_recomend_id = req.body.recomendar_id;
 	var history_id    = req.body.history_id;
 
-	history_id        = mongoose.Types.ObjectId(history_id);
-	public_id = mongoose.Types.ObjectId(public_id);
+	console.log("HistoryID:");
+	console.log(history_id);
+	if(mongoose.Types.ObjectId.isValid(history_id)){
+		history_id        = mongoose.Types.ObjectId(history_id);	
+	}
+	if(mongoose.Types.ObjectId.isValid(public_id)){
+		public_id = mongoose.Types.ObjectId(public_id);
+	}
+	if(mongoose.Types.ObjectId.isValid(p_recomend_id)){
+		p_recomend_id = mongoose.Types.ObjectId(p_recomend_id);
+	}
+	console.log("HistoryID:");
+	console.log(history_id);
 
 	Tokenfunc.exist(guid, function(errToken, token){
 		if(errToken){
@@ -907,15 +949,16 @@ router.post('/recomendar', multipartMiddleware, function(req, res){
 				
 				Networkfunc.PublicId(public_id, function(statusPublic, profileAnotherData){
 					if(statusPublic){
-						Networkfunc.PublicId(public_id, function(statusRecomend, profileRecomendData){
+						Networkfunc.PublicId(p_recomend_id, function(statusRecomend, profileRecomendData){
 							if(statusRecomend){
-								var notification = new Notification({
+								var d = {
 									tipo: 1, // 0 = se ha unido | 1 = recomendación | 2 = share contacto | 3 = Envio Solucitud | 4 = Respondio Solicitud
 									profile: profileAnotherData._id,
 									profile_emisor: profileData._id,
 									profile_mensaje: profileRecomendData._id,
 									busqueda: history_id
-								});
+								};
+								var notification = new Notification(d);
 								notification.save(function(errNotification, notificationData){
 									var data = {
 										profile_emisor: profileData.public_id,

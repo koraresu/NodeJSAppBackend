@@ -204,7 +204,10 @@ var NotificationSchema = new Schema({
   profile: { type: Schema.Types.ObjectId, ref: 'Profile' },
   profile_emisor: { type: Schema.Types.ObjectId, ref: 'Profile' },
   profile_mensaje: { type: Schema.Types.ObjectId, ref: 'Profile' },
-  busqueda: { type: Schema.Types.ObjectId, ref: 'History' }
+  busqueda: { type: Schema.Types.ObjectId, ref: 'History' },
+  network: { type: Schema.Types.ObjectId, ref: 'Network' },
+  clicked: false,
+  status: false
 },{
   timestamps: true
 });
