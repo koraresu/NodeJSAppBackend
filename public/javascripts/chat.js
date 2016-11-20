@@ -12,14 +12,25 @@ $(function() {
 	})
 	chatsocket.on('getmessage', function(data){
 		var d = data.data;
-		addMessage(d);
+		console.log(data);
+		if(data.t){
+			addMessage(d,'other');	
+		}else{
+			addMessage(d, 'yours');
+		}
+		
 	})
 	$.post('http://localhost:3000/api/chat/conversation',{
 		guid: guid,
 		id: conversation
 	}, function(data){
 		$.each(data, function(index, item){
-			addMessage(item);
+			if(item.t){
+				addMessage(item.data,'other');
+			}else{
+				addMessage(item.data, 'yours');
+			}
+			
 		});
 	});
 	
@@ -48,9 +59,14 @@ function get(element){
 
 	return type2[element];
 }
-function addMessage(data){
+function addMessage(data,type){
 	console.log(data);
-	$('#messages').append('<div class="message"><div class="profile_pic"><img src="http://localhost:3000/profilepic/'+data.profile_id.profile_pic+'" /></div><div class="text">'+data.message+'</div></div>');
+	if(type == undefined){
+		type = "";
+	}
+
+	console.log(type);
+	$('#messages').append('<div class="message '+type+'"><div class="profile_pic"><img src="http://localhost:3000/profilepic/'+data.profile_id.profile_pic+'" /></div><div class="text">'+data.message+'</div></div>');
 
 	var element = document.getElementById("messages");
 	heightScroll(element, function(top, height, bottom, total){
@@ -71,6 +87,6 @@ function heightScroll(element,cbScroll,cbNoScroll){
 	if(total == bottom){
 		cbScroll(top, height, bottom, total);
 	}else{
-		cbNoScroll(top, height, bottom, total);
+		cbScroll(top, height, bottom, total);
 	}
 }

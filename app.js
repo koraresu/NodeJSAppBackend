@@ -155,13 +155,13 @@ var chat = io.of('/chat');
 var chatrouter = require('./routes/chat');
 chat.on('connection', function(socket){
   socket.on('connect', function(data){
-
+    socket.guid = data.guid;
   });
   socket.on('message', function(data){
     chatrouter.message(data, function(status, messageData){
       if(status){
-        socket.emit('getmessage', {data: messageData, t:true});
-        socket.broadcast.emit('getmessage', {data: messageData, t:false});
+        socket.emit('getmessage', {data: messageData, t:false});
+        socket.broadcast.emit('getmessage', {data: messageData, t:true });
       }
     });
   });

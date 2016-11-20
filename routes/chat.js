@@ -6,6 +6,7 @@ var multipartMiddleware = multipart();
 var path = require('path');
 var fs = require('fs');
 var _ = require('underscore');
+var async = require('async');
 
 var faker = require('faker');
 faker.locale = "es_MX";
@@ -84,7 +85,13 @@ router.post('/conversation', multipartMiddleware, function(req, res){
 						Message.find({
 							conversation: id
 						}).populate('profile_id').exec(function(err, messageData){
-							res.json(messageData);
+							console.log(messageData);
+							async.map(messageData, function(item, callback){
+								var d = (item.profile_id._id.toString() != profileData._id.toString());
+								callback( null, { data: item, t: d});
+							}, function(err, results){
+								res.json(results);	
+							})
 						});
 					}else{
 
