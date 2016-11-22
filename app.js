@@ -109,7 +109,7 @@ gps.on('connection', function(socket){
     
   });
   socket.on('disconnect', function () {
-    gpsrouter.delete(socket, function(err, s){
+    gpsrouter.delete(socket.id.toString(), function(err, s){
       clientGPS.forEach(function(item, index){
         if(item == socket){
           delete clientGPS[index];
