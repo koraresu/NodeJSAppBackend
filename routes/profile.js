@@ -752,6 +752,7 @@ router.post('/update', multipartMiddleware, function(req, res){
 	var job        = req.body.job;
 	var speciality = req.body.speciality;	
 	var birthday   = req.body.birthday;
+	var phone      = req.body.phone;
 
 	var type       = req.body.type;
 	var company    = req.body.company;
@@ -765,6 +766,7 @@ router.post('/update', multipartMiddleware, function(req, res){
 			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
 				profileData.first_name = nombre;
 				profileData.last_name  = apellido;
+				
 				Experiencefunc.specialityExistsOrCreate({
 					name: speciality
 				}, {
@@ -795,6 +797,7 @@ router.post('/update', multipartMiddleware, function(req, res){
 							profileData.job = job;
 							profileData.speciality = speciality;
 							profileData.status = statusReq;
+							profileData.phone  = phone; 
 
 							if(birthday != undefined){
 								birthday = explDate(birthday);
