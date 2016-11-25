@@ -47,6 +47,8 @@ router.post('/general', multipartMiddleware, function(req, res){
 	var text = req.body.search;
 	var guid       = req.body.guid;
 
+	text = omitir(text);
+
 	var reg  = new RegExp(text, "i");
 
 	var data = [];
@@ -118,6 +120,9 @@ router.post('/general', multipartMiddleware, function(req, res){
 router.post('/general/network', multipartMiddleware, function(req, res){
 	var text = req.body.search;
 	var guid       = req.body.guid;
+
+
+	text = omitir(text);
 
 	var reg  = new RegExp(text, "i");
 
@@ -315,3 +320,12 @@ router.post('/save', multipartMiddleware, function(req, res){
 	});
 });
 module.exports = router;
+function omitir(text){
+
+	text = text.replace('busco', '');
+	text = text.replace('buscó', '');
+	text = text.replace('necesito', '');
+	text = text.replace('necesitó', '');
+
+	return text;
+}
