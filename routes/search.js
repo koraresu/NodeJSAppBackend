@@ -327,5 +327,6 @@ function omitir(text){
 	text = text.replace('necesito', '');
 	text = text.replace('necesitó', '');
 
+	text = text.trim();
 	return text;
 }
