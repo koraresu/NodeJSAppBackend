@@ -56,7 +56,8 @@ var Notificationfunc = require('../functions/notificationfunc');
 // 		Profile
 router.post('/connect', multipartMiddleware, function(req, res){
 	var guid       = req.body.guid;
-	var public_id = req.body.public_id;
+	var public_id  = req.body.public_id;
+	var section    = req.body.section;
 	
 	if(mongoose.Types.ObjectId.isValid(public_id)){
 		public_id = mongoose.Types.ObjectId(public_id);
@@ -78,8 +79,12 @@ router.post('/connect', multipartMiddleware, function(req, res){
 									res.json(response);
 								});
 							}else{
+								var accepted = false;
+								if(section == "gps"){
+									accepted = true;
+								}
 								var network = new Network({
-									accepted: false,
+									accepted: accepted,
 									profiles: [
 									profileData._id,
 									profileAnotherData._id
