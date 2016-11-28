@@ -145,6 +145,7 @@ router.get('/forgot/:generated', function(req, res){
 
   var password_again = req.flash('password_again');
 
+  console.log(password_again);
   Forgot.findOne({ generated_id: generated_id }).populate('user').exec(function(err, forgotData){
     if(!err && forgotData){
       if(forgotData.used == false){
@@ -179,9 +180,9 @@ router.post('/forgot/thanks', function(req, res){
             userData.password = pass;
             userData.save(function(err, user){
               if(!err && user){
-                res.render('forgot_thanks',{ message: "Tu contraseña ha sido actualizada", generated: generated });  
+                res.render('forgot_thanks',{ message: "Tu contraseña ha sido actualizada", icon: "right.png", generated: generated });  
               }else{
-                res.render('forgot_thanks',{ message: "Un error ha sucedido.", generated: generated });
+                res.render('forgot_thanks',{ message: "Un error ha sucedido.", icon: "right.png", generated: generated });
               }
               
             });
