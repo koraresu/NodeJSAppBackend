@@ -176,10 +176,18 @@ router.post('/forgot/thanks', function(req, res){
 
           User.findOne({ _id: forgotData.user._id }).exec(function(err, userData){
             var pass = Profilefunc.generate_password(password);
-            //userData.password = 
+            userData.password = pass;
+            userData.save(function(err, user){
+              if(!err && user){
+                res.render('forgot_thanks',{ message: "Tu contraseña ha sido actualizada", generated: generated });  
+              }else{
+                res.render('forgot_thanks',{ message: "Un error ha sucedido.", generated: generated });
+              }
+              
+            });
           });
 
-          res.render('forgot_thanks',{ message: "Tu contraseña ha sido actualizada", generated: generated });
+          
         });
       });
     });  
