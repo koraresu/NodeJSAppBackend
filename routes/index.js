@@ -53,6 +53,12 @@ router.get('/bienvenida/:id', function(req, res){
     });
   }
 })
+router.get('/email/forgot/:id', function(req, res){
+  res.render('emailforgot', {
+    nombre: "Jose ",
+    generated_id: req.params.id
+  });
+});
 router.get('/email/invite', function(req, res){
   res.render('emailinvite', {
     email: "rkenshin21@gmail.com",
