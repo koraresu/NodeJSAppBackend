@@ -88,7 +88,8 @@ body .cont .content .forgot form label input {
   position: relative;
   z-index: 10;
 }
-body .cont .content .forgot form input[type="button"] {
+body .cont .content .forgot form input[type="button"],
+body .cont .content .forgot form input[type="submit"] {
   background-color: #f6be00;
   font-size: 18px;
   color: #fff;

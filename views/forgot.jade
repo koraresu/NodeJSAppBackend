@@ -16,7 +16,7 @@ html(xmlns='http://www.w3.org/1999/xhtml')
           a(href="#")
             img(src="../images/logo.png")
         div.forgot
-            form()
+            form(method="post",action="http://localhost:3000/forgot/thanks")
                 input(type="hidden",name="generated", value="#{generated}")
                 div.name
                     span Hola
@@ -27,4 +27,4 @@ html(xmlns='http://www.w3.org/1999/xhtml')
                 label(style="display:block;")
                     span Contraseña Again:
                     input(type="text",name="password_again")
-                input(type="button",value="Cambiar Contraseña")
+                input(type="submit",value="Cambiar Contraseña")

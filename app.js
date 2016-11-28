@@ -8,6 +8,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser   = require('body-parser');
 var cors         = require('cors');
 var socket_io    = require('socket.io');
+var cookieSession = require('cookie-session')
 
 var flash = require('connect-flash');
 
@@ -42,7 +43,13 @@ app.set('view engine', 'jade');
 app.use(logger('dev'));
 app.use(cors());
 app.options('*', cors());
-
+app.use(cookieSession({
+  name: 'session',
+  keys: ['key1', 'key2'],
+ 
+  // Cookie Options 
+  maxAge: 24 * 60 * 60 * 1000 // 24 hours 
+}))
 app.use(flash());
 
 app.use(bodyParser.json());

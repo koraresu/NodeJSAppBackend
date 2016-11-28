@@ -146,14 +146,17 @@ router.get('/forgot/:generated', function(req, res){
   var password_again = req.flash('password_again');
 
   Forgot.findOne({ generated_id: generated_id }).populate('user').exec(function(err, forgotData){
-    if(forgotData.used == false){
-      Profile.findOne({ user_id: forgotData.user._id }).exec(function(err, profileData){
-        res.render('forgot',{ message: password_again, generated: generated_id, email: forgotData.user.email,nombre: profileData.first_name+" "+profileData.last_name });
-      });    
+    if(!err && forgotData){
+      if(forgotData.used == false){
+        Profile.findOne({ user_id: forgotData.user._id }).exec(function(err, profileData){
+          res.render('forgot',{ message: password_again, generated: generated_id, email: forgotData.user.email,nombre: profileData.first_name+" "+profileData.last_name });
+        });    
+      }else{
+        res.render('forgot_thanks',{ message: "Tu contraseña ya ha sido actualizada" });
+      }
     }else{
-      res.render('forgot_thanks',{ message: "Tu contraseña ha sido actualizada" });
+      res.render('forgot_thanks',{ message:'Error' });
     }
-    
   });    
 });
 router.post('/forgot/thanks', function(req, res){
@@ -162,7 +165,10 @@ router.post('/forgot/thanks', function(req, res){
   var generated      = req.body.generated;
   var password       = req.body.password;
   var password_again = req.body.password_again;
+  
   if(password == password_again){
+    console.log("Password Iguales");
+
     Forgot.findOne({ generated_id: generated }).populate('user').exec(function(err, forgotData){
       forgotData.used = true;
       forgotData.save(function(err, forgot){
@@ -178,11 +184,11 @@ router.post('/forgot/thanks', function(req, res){
       });
     });  
   }else{
+    console.log("Password Diferentes");
+
     req.flash('password_again', 'Tu contraseña y validacion de contraseña no son iguales.');
     res.redirect('/forgot/'+generated);
   }
-  
-
 });
 router.get('/gps', function(req, res){
   res.render('gps', {} );
