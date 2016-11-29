@@ -322,11 +322,15 @@ router.post('/save', multipartMiddleware, function(req, res){
 module.exports = router;
 function omitir(text){
 
-	text = text.replace('busco', '');
-	text = text.replace('buscó', '');
-	text = text.replace('necesito', '');
-	text = text.replace('necesitó', '');
+	if(text == undefined){
+		return "";
+	}else{
+		text = text.replace('busco', '');
+		text = text.replace('buscó', '');
+		text = text.replace('necesito', '');
+		text = text.replace('necesitó', '');
 
-	text = text.trim();
-	return text;
+		text = text.trim();
+		return text;
+	}
 }
