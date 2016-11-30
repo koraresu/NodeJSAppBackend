@@ -66,7 +66,8 @@ function addMessage(data,type){
 	}
 
 	console.log(type);
-	$('#messages').append('<div class="message '+type+'"><div class="profile_pic"><img src="http://localhost:3000/profilepic/'+data.profile_id.profile_pic+'" /></div><div class="text">'+data.message+'</div></div>');
+	var name = data.profile_id.first_name + " " + data.profile_id.last_name;
+	$('#messages').append('<div class="message '+type+'"> <div class="profile_pic"> <img src="http://localhost:3000/profilepic/'+data.profile_id.profile_pic+'" /> </div> <div class="element"> <div class="username">'+name+'</div> <div class="text">'+data.message+'</div> </div> </div>');
 
 	var element = document.getElementById("messages");
 	heightScroll(element, function(top, height, bottom, total){

@@ -16,6 +16,7 @@ body {
 }
 #messages .message .profile_pic {
   display: block;
+  visibility: hidden;
   background-color: #000;
   width: 50px;
   height: 50px;
@@ -25,7 +26,13 @@ body {
 #messages .message .profile_pic img {
   display: none;
 }
-#messages .message .text {
+#messages .message .element {
+  display: block;
+}
+#messages .message .element .username {
+  font-size: 12px;
+}
+#messages .message .element .text {
   background-color: #808080;
   padding: 10px;
   max-width: 50%;
@@ -38,8 +45,10 @@ body {
 #messages .message.yours .profile_pic {
   left: 0;
 }
-#messages .message.yours .text {
+#messages .message.yours .element {
   margin-left: 50px;
+}
+#messages .message.yours .element .text {
   background-color: #81daf5;
 }
 #messages .message.other {
@@ -48,8 +57,10 @@ body {
 #messages .message.other .profile_pic {
   right: 0;
 }
-#messages .message.other .text {
+#messages .message.other .element {
   margin-right: 50px;
+}
+#messages .message.other .element .text {
   background-color: #d8d8d8;
   color: #585858;
 }

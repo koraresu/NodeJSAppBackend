@@ -965,14 +965,24 @@ router.post('/recomendar', multipartMiddleware, function(req, res){
 								};
 								var notification = new Notification(d);
 								notification.save(function(errNotification, notificationData){
+									/*
 									var data = {
 										profile_emisor: profileData.public_id,
 										profile_mensaje: profileRecomendData.public_id,
 										busqueda: history_id
 									};
-									Generalfunc.response(200, data, function(response){
-										res.json(response);
+									*/
+									History.findOne({ _id: history_id}).exec(function(err, historyData){
+										var data = {
+											profile_emisor: profileData,
+											profile_mensaje: profileRecomendData,
+											busqueda: historyData
+										};
+										Generalfunc.response(200, data, function(response){
+											res.json(response);
+										});
 									});
+									
 								});
 							}else{
 

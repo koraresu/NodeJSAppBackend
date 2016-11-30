@@ -13,6 +13,7 @@ body
 		min-height 50px
 		.profile_pic
 			display block
+			visibility hidden
 			background-color #000
 			width 50px
 			height 50px
@@ -20,28 +21,33 @@ body
 			top 0
 			img
 				display none
-		.text
-			background-color gray
-			padding 10px
-			max-width 50%
-			display inline-block
-			color #FFF
+		.element
+			display block
+			.username
+				font-size 12px
+			.text
+				background-color gray
+				padding 10px
+				max-width 50%
+				display inline-block
+				color #FFF
 		&.yours
 			text-align left
 			.profile_pic
 				left 0
-				
-			.text
+			.element
 				margin-left 50px
-				background-color #81DAF5
+				.text
+					background-color #81DAF5
 		&.other
 			text-align right
 			.profile_pic
 				right 0
-			.text
+			.element
 				margin-right 50px
-				background-color #D8D8D8
-				color #585858
+				.text
+					background-color #D8D8D8
+					color #585858
 form
 	width 100%
 	padding 0
