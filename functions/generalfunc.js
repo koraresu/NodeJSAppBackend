@@ -62,7 +62,13 @@ var sendMail = function(toAddress, subject, content, next){
 		from: "hola@thehiveapp.mx",
 		to: toAddress,
 		subject: subject,
-		html: content
+		html: content,
+		list: {
+			unsubscribe: {
+            	url: 'http://thehiveapp.mx:3000/unsubscribe?email='+toAddress,
+            	comment: 'Comment'
+        	}
+		}
 	};
 	console.log("Mail Options:");
 	console.log(mailOptions);

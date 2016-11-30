@@ -59,6 +59,9 @@ router.get('/email/forgot/:id', function(req, res){
     generated_id: req.params.id
   });
 });
+router.get('/unsubscribe', function(req, res){
+  res.render('unsubscribe',{});
+});
 router.get('/email/invite', function(req, res){
   res.render('emailinvite', {
     email: "rkenshin21@gmail.com",
