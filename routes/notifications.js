@@ -90,7 +90,7 @@ router.post('/accept', multipartMiddleware, function(req, res){
 						.populate('network')
 						.sort('-_id')
 						.exec(function(err,notificationData){
-							Network.findOne({ _id: notificationData._id }).exec(function(errNetwork, networkData){
+							Network.findOne({ _id: notificationData.network }).exec(function(errNetwork, networkData){
 								if(typeof(accept) === "boolean"){
 									networkData.clicked = true;
 									networkData.status = accept;
@@ -104,7 +104,6 @@ router.post('/accept', multipartMiddleware, function(req, res){
 										res.json(response);
 									});
 								}
-								
 							});
 							/*
 							
