@@ -73,7 +73,7 @@ router.post('/accept', multipartMiddleware, function(req, res){
 		if(status){
 			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
 				if(status){
-					if(mongoose.Types.objectId.isValid(id)){
+					if(mongoose.Types.ObjectId.isValid(id)){
 						Notification.findOne({ _id: id }).select('-__v -updatedAt').populate('profile').populate('profile_emisor').populate('profile_mensaje').sort('-_id').exec(function(err,notificationData){
 							Generalfunc.response(200, notificationData, function(response){
 								res.json(response);
