@@ -43,14 +43,6 @@ var City         = model.city;
 var State        = model.state;
 var Country      = model.country;
 
-
-
-
-
-
-
-
-
 router.post('/get', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 
@@ -74,63 +66,28 @@ router.post('/get', multipartMiddleware, function(req, res){
 		}
 	});
 });
-router.post('/add', multipartMiddleware, function(req, res){
+router.post('/accept', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
-	var type      = req.body.type;
+	var id        = req.body.id;
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
 			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
 				if(status){
-					var data = {};
-					switch(type){
-						case "0":
-							var data = {};
-							Notificationfunc.add(0, profileData._id,data, function(status, notificationData){
-								res.json(notificationData);
-							});
-						break;
-						case "1":
-							var data = {
-								profile_emisor: mongoose.Types.ObjectId("577ae1951a03379a3d80197d"),
-								profile_mensaje: mongoose.Types.ObjectId("577ae1951a03379a3d80197d"),
-								busqueda: mongoose.Types.ObjectId("577c2f388369782f159cfc1d")
-							};
-							Notificationfunc.add(1, profileData._id,data, function(status, notificationData){
-								res.json(notificationData);
-							});
-						break;
-						case "2":
-							var data = {
-								profile_emisor: mongoose.Types.ObjectId("577ae1951a03379a3d80197d"),
-								profile_mensaje: mongoose.Types.ObjectId("577ae1951a03379a3d80197d"),
-							};
-							Notificationfunc.add(2, profileData._id,data, function(status, notificationData){
-								res.json(notificationData);
-							});
-						break;
-						case "3":
-							var data = {
-								profile_emisor: mongoose.Types.ObjectId("577ae1951a03379a3d80197d")
-							};
-							Notificationfunc.add(3, profileData._id,data, function(status, notificationData){
-								res.json(notificationData);
-							});
-						break;
-						case "4":
-							var data = {
-								profile_emisor: mongoose.Types.ObjectId("577ae1951a03379a3d80197d")
-							};
-							Notificationfunc.add(4, profileData._id,data, function(status, notificationData){
-								res.json(notificationData);
-							});
-						break;
-					}
+					Notification.find({ _id: id }).select('-__v -updatedAt').populate('profile').populate('profile_emisor').populate('profile_mensaje').sort('-_id').exec(function(err,notificationData){
+						Generalfunc.response(200, notificationData, function(response){
+							res.json(response);
+						});
+					});
 				}else{
-					res.send("no Profile");
+					Generalfunc.response(101, {}, function(response){
+						res.json(response);
+					});
 				}
 			});
 		}else{
-			res.send("No Token");
+			Generalfunc.response(101, {}, function(response){
+				res.json(response);
+			});
 		}
 	});
 });
