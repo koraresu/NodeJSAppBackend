@@ -95,37 +95,57 @@ router.post('/accept', multipartMiddleware, function(req, res){
 						.populate('network')
 						.sort('-_id')
 						.exec(function(err,notificationData){
-							Network.findOne({ _id: notificationData.network }).exec(function(errNetwork, networkData){
-								console.log(typeof(accept));
-								if(typeof(accept) === "boolean"){
-
-									if(notificationData.clicked == false){
-										notificationData.clicked = true;
-										notificationData.status = accept;
-										notificationData.save(function(err, notification){
-											networkData.accepted = accept;
-											networkData.save(function(errNet, network){
-												Generalfunc.response(200, {notification: notification, network: network }, function(response){
-													res.json(response);
-												});
-											});
-										});
-									}else{
-										Generalfunc.response(200, {notification: notificationData, network: networkData }, function(response){
-											res.json(response);
-										});
-									}
-
-									
-								}else{
-									Generalfunc.response(200, {notification: notificationData, network: networkData }, function(response){
+							switch(notificationData.tipo){
+								case 0:
+									Generalfunc.response(200, notificationData, function(response){
 										res.json(response);
 									});
-								}
-							});
-							/*
-							
-							*/
+								break;
+								case 1:
+									Generalfunc.response(200, notificationData, function(response){
+										res.json(response);
+									});
+								break;
+								case 2:
+									Generalfunc.response(200, notificationData, function(response){
+										res.json(response);
+									});
+								break;
+								case 3:
+									Network.findOne({ _id: notificationData.network }).exec(function(errNetwork, networkData){
+										console.log(typeof(accept));
+										if(typeof(accept) === "boolean"){
+											if(notificationData.clicked == false){
+												notificationData.clicked = true;
+												notificationData.status = accept;
+												notificationData.save(function(err, notification){
+													networkData.accepted = accept;
+													networkData.save(function(errNet, network){
+														Generalfunc.response(200, {notification: notification, network: network }, function(response){
+															res.json(response);
+														});
+													});
+												});
+											}else{
+												Generalfunc.response(200, {notification: notificationData, network: networkData }, function(response){
+													res.json(response);
+												});
+											}
+
+											
+										}else{
+											Generalfunc.response(200, {notification: notificationData, network: networkData }, function(response){
+												res.json(response);
+											});
+										}
+									});
+								break;
+								case 4:
+									Generalfunc.response(200, notificationData, function(response){
+										res.json(response);
+									});
+								break;
+							}
 						});
 					}else{
 						Generalfunc.response(101, {}, function(response){
