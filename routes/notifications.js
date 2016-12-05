@@ -73,7 +73,7 @@ router.post('/accept', multipartMiddleware, function(req, res){
 		if(status){
 			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
 				if(status){
-					Notification.find({ _id: id }).select('-__v -updatedAt').populate('profile').populate('profile_emisor').populate('profile_mensaje').sort('-_id').exec(function(err,notificationData){
+					Notification.findOne({ _id: id }).select('-__v -updatedAt').populate('profile').populate('profile_emisor').populate('profile_mensaje').sort('-_id').exec(function(err,notificationData){
 						Generalfunc.response(200, notificationData, function(response){
 							res.json(response);
 						});
