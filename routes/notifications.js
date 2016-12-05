@@ -75,6 +75,7 @@ router.post('/get', multipartMiddleware, function(req, res){
 router.post('/accept', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 	var id        = req.body.id;
+	var accept    = req.body.accept;
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
 			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
@@ -83,15 +84,31 @@ router.post('/accept', multipartMiddleware, function(req, res){
 						Notification
 						.findOne({ _id: id })
 						.select('-__v -updatedAt')
-						.populate('profile')
-						.populate('profile_emisor')
-						.populate('profile_mensaje')
+						//.populate('profile')
+						//.populate('profile_emisor')
+						//.populate('profile_mensaje')
 						.populate('network')
 						.sort('-_id')
 						.exec(function(err,notificationData){
-							Generalfunc.response(200, notificationData, function(response){
-								res.json(response);
+							Network.findOne({ _id: notificationData._id }).exec(function(errNetwork, networkData){
+								if(typeof(accept) === "boolean"){
+									networkData.clicked = true;
+									networkData.status = accept;
+									networkData.save(function(err, network){
+										Generalfunc.response(200, {notification: notificationData, network: networkData }, function(response){
+											res.json(response);
+										});
+									});
+								}else{
+									Generalfunc.response(200, {notification: notificationData, network: networkData }, function(response){
+										res.json(response);
+									});
+								}
+								
 							});
+							/*
+							
+							*/
 						});
 					}else{
 						Generalfunc.response(101, {}, function(response){
