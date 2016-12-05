@@ -156,10 +156,10 @@ router.get('/forgot/:generated', function(req, res){
           res.render('forgot',{ message: password_again, generated: generated_id, email: forgotData.user.email,nombre: profileData.first_name+" "+profileData.last_name });
         });    
       }else{
-        res.render('forgot_thanks',{ message: "Tu contraseña ya ha sido actualizada" });
+        res.render('forgot_thanks',{ message: "Tu contraseña ya ha sido actualizada", icon: "right.png" });
       }
     }else{
-      res.render('forgot_thanks',{ message:'Error' });
+      res.render('forgot_thanks',{ message:"Error", icon: "wrong.png" });
     }
   });    
 });
