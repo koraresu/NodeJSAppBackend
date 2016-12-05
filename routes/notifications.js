@@ -96,6 +96,7 @@ router.post('/accept', multipartMiddleware, function(req, res){
 						.sort('-_id')
 						.exec(function(err,notificationData){
 							Network.findOne({ _id: notificationData.network }).exec(function(errNetwork, networkData){
+								console.log(typeof(accept));
 								if(typeof(accept) === "boolean"){
 									networkData.clicked = true;
 									networkData.status = accept;
