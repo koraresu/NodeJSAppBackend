@@ -89,9 +89,9 @@ router.post('/accept', multipartMiddleware, function(req, res){
 						Notification
 						.findOne({ _id: id })
 						.select('-__v -updatedAt')
-						//.populate('profile')
-						//.populate('profile_emisor')
-						//.populate('profile_mensaje')
+						.populate('profile')
+						.populate('profile_emisor','first_name last_name public_id profile_pic review_score')
+						.populate('profile_mensaje','first_name last_name public_id profile_pic review_score')
 						.populate('network')
 						.sort('-_id')
 						.exec(function(err,notificationData){
