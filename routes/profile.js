@@ -537,7 +537,7 @@ router.post('/get/friends', multipartMiddleware, function(req, res){
 						profiles: {
 							$in: [profileData._id]
 						}
-					}).exec(function(errNetwork, networkData){
+					}).populate('profiles').exec(function(errNetwork, networkData){
 						Generalfunc.response(200, networkData, function(response){
 							res.json(response);
 						});
