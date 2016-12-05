@@ -101,7 +101,7 @@ router.post('/accept', multipartMiddleware, function(req, res){
 									networkData.clicked = true;
 									networkData.status = accept;
 									networkData.save(function(err, network){
-										Generalfunc.response(200, {notification: notificationData, network: networkData }, function(response){
+										Generalfunc.response(200, {notification: notificationData, network: network }, function(response){
 											res.json(response);
 										});
 									});
