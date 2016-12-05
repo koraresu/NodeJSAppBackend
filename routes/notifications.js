@@ -145,6 +145,11 @@ router.post('/accept', multipartMiddleware, function(req, res){
 										res.json(response);
 									});
 								break;
+								default:
+									Generalfunc.response(200, notificationData, function(response){
+										res.json(response);
+									});
+								break;
 							}
 						});
 					}else{
