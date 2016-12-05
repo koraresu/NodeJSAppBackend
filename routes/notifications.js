@@ -79,6 +79,8 @@ router.post('/accept', multipartMiddleware, function(req, res){
 
 	accept = (accept === "true");
 	
+	console.log(accept);
+
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
 			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
