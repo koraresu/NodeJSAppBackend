@@ -98,16 +98,25 @@ router.post('/accept', multipartMiddleware, function(req, res){
 							Network.findOne({ _id: notificationData.network }).exec(function(errNetwork, networkData){
 								console.log(typeof(accept));
 								if(typeof(accept) === "boolean"){
-									notificationData.clicked = true;
-									notificationData.status = accept;
-									notificationData.save(function(err, notification){
-										networkData.accepted = accept;
-										networkData.save(function(errNet, network){
-											Generalfunc.response(200, {notification: notification, network: network }, function(response){
-												res.json(response);
+
+									if(notificationData.clicked == false){
+										notificationData.clicked = true;
+										notificationData.status = accept;
+										notificationData.save(function(err, notification){
+											networkData.accepted = accept;
+											networkData.save(function(errNet, network){
+												Generalfunc.response(200, {notification: notification, network: network }, function(response){
+													res.json(response);
+												});
 											});
 										});
-									});
+									}else{
+										Generalfunc.response(200, {notification: notificationData, network: networkData }, function(response){
+											res.json(response);
+										});
+									}
+
+									
 								}else{
 									Generalfunc.response(200, {notification: notificationData, network: networkData }, function(response){
 										res.json(response);
