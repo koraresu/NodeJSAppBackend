@@ -13,6 +13,7 @@ var async = require("async");
 
 var Generalfunc = require('./generalfunc');
 var Experiencefunc = require('./experiencefunc');
+var Networkfunc = require('./networkfunc');
 
 var model = require('../model');
 
@@ -37,6 +38,7 @@ var Message      = model.message;
 var City         = model.city;
 var State        = model.state;
 var Country      = model.country;
+
 
 var format = require('./format');
 
@@ -91,34 +93,35 @@ function formatoProfile(profile_id,cb){
 
 				Experience.find({ profile_id: profileData._id}, function(errExperience, experienceData){
 					Review.find({ profile_id: profileData._id }).sort( [ ['createdAt', 'descending'] ] ).limit(2).populate('profiles').exec(function(errReview, reviewData){
-
-						getTrabajo(profileData._id, function(errTrabajo, trabajoData){
-							var data = {
-								profile: {
-									"_id": profileData._id,
-									"first_name": profileData.first_name,
-									"last_name": profileData.last_name,
-									"public_id": profileData.public_id,
-									"email": email,
-									"verified": verified,
-									"info": profileData.info,
-									"skills": profileData.skills,
-									"experiences": profileData.experiences,
-									"birthday": profileData.birthday,
-									"job": profileData.job,
-									"speciality": profileData.speciality,
-									"profile_pic": profileData.profile_pic,
-									"status": profileData.status,
-									"qrcode": profileData.qrcode,
-									"review_score": profileData.review_score,
-									"phone": profileData.phone 
-								},
-								review: reviewData,
-								trabajo: trabajoData
-							};
-							cb(data);
-						})
-						
+						Networkfunc.getListFriends(profile_id, function(errNetwork, networkData, listNetwork){
+							getTrabajo(profileData._id, function(errTrabajo, trabajoData){
+								var data = {
+									profile: {
+										"_id": profileData._id,
+										"first_name": profileData.first_name,
+										"last_name": profileData.last_name,
+										"public_id": profileData.public_id,
+										"email": email,
+										"verified": verified,
+										"info": profileData.info,
+										"skills": profileData.skills,
+										"experiences": profileData.experiences,
+										"birthday": profileData.birthday,
+										"job": profileData.job,
+										"speciality": profileData.speciality,
+										"profile_pic": profileData.profile_pic,
+										"status": profileData.status,
+										"qrcode": profileData.qrcode,
+										"review_score": profileData.review_score,
+										"phone": profileData.phone 
+									},
+									review: reviewData,
+									trabajo: trabajoData,
+									friends: networkData
+								};
+								cb(data);
+							});
+						});
 					});
 				});
 		});
