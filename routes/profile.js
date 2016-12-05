@@ -527,6 +527,35 @@ router.post('/setfacebook',multipartMiddleware, function(req, res){
 		}
 	});
 });
+router.post('/get/friends', multipartMiddleware, function(req, res){
+	var guid      = req.body.guid;
+	Tokenfunc.exist(guid, function(status, tokenData){
+		if(status){
+			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
+				if(status){
+					Network.find({
+						profiles: {
+							$in: [profileData._id]
+						}
+					}).exec(function(errNetwork, networkData){
+						Generalfunc.response(200, networkData, function(response){
+							res.json(response);
+						});
+					});
+				}else{
+					Generalfunc.response(101, {}, function(response){
+						res.json(response);
+					});
+				}
+			});
+		}else{
+			Generalfunc.response(101, {}, function(response){
+				res.json(response);
+			});
+		}
+	});
+
+});
 router.post('/get/friend', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 	var public_id = req.body.public_id;
