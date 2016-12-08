@@ -980,7 +980,12 @@ router.post('/update-experience', multipartMiddleware, function(req, res){
 	var company    = req.body.company;
 
 	var sector     = req.body.sector;
-	var ocupation  = req.body.ocupation;
+	var ocupation  = req.body.job;
+
+
+	console.log(ocupation);
+	console.log(company);
+	console.log(sector);
 
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
