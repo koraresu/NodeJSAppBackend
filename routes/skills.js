@@ -126,8 +126,11 @@ Nombre de Objectos de Documentos:
 				case 200:
 
 				x.forEach(function(item, index){
-					console.log(index+"|"+(x.length-1)+"|"+item)
-					Skillfunc.add(profileData._id,item, function(status, skillData, profileData){
+					console.log(index+"|"+(x.length-1)+"|"+item);
+
+					item = Generalfunc.capitalize(item);
+					
+					Skillfunc.add(profileData._id, item, function(status, skillData, profileData){
 
 						if((x.length-1) == index){
 

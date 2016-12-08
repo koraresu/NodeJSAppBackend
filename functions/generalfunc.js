@@ -157,3 +157,6 @@ exports.sendEmail = function(file, data,email, asunto, callback){
   	});
   	
 }
+exports.capitalize = function(s){
+    return s.toLowerCase().replace( /\b./g, function(a){ return a.toUpperCase(); } );
+};
