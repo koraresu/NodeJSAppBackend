@@ -90,27 +90,12 @@ router.post('/accept', multipartMiddleware, function(req, res){
 						.findOne({ _id: id })
 						.select('-__v -updatedAt')
 						.populate('profile')
-						.populate('profile_emisor','first_name last_name public_id profile_pic review_score')
-						.populate('profile_mensaje','first_name last_name public_id profile_pic review_score')
+						.populate('profile_emisor','_id first_name last_name public_id profile_pic review_score')
+						.populate('profile_mensaje','_id first_name last_name public_id profile_pic review_score')
 						.populate('network')
 						.sort('-_id')
 						.exec(function(err,notificationData){
 							switch(notificationData.tipo){
-								case 0:
-									Generalfunc.response(200, notificationData, function(response){
-										res.json(response);
-									});
-								break;
-								case 1:
-									Generalfunc.response(200, notificationData, function(response){
-										res.json(response);
-									});
-								break;
-								case 2:
-									Generalfunc.response(200, notificationData, function(response){
-										res.json(response);
-									});
-								break;
 								case 3:
 									Network.findOne({ _id: notificationData.network }).exec(function(errNetwork, networkData){
 										console.log(typeof(accept));
@@ -121,8 +106,19 @@ router.post('/accept', multipartMiddleware, function(req, res){
 												notificationData.save(function(err, notification){
 													networkData.accepted = accept;
 													networkData.save(function(errNet, network){
-														Generalfunc.response(200, {notification: notification, network: network }, function(response){
-															res.json(response);
+
+
+														Notificationfunc.add({
+															tipo: 4,
+															profile: notificationData.profile_emisor._id,
+															profile_emisor: notificationData.profile._id,
+															network: network._id,
+															status: true,
+															click: true
+														},function(errNotification, notificationData){
+															Generalfunc.response(200, {notification: notification, network: network }, function(response){
+																res.json(response);
+															});
 														});
 													});
 												});
@@ -138,11 +134,6 @@ router.post('/accept', multipartMiddleware, function(req, res){
 												res.json(response);
 											});
 										}
-									});
-								break;
-								case 4:
-									Generalfunc.response(200, notificationData, function(response){
-										res.json(response);
 									});
 								break;
 								default:
@@ -169,6 +160,9 @@ router.post('/accept', multipartMiddleware, function(req, res){
 			});
 		}
 	});
+});
+router.post('/', multipartMiddleware, function(req, res){
+
 });
 
 
