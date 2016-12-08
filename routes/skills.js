@@ -79,6 +79,8 @@ Nombre de Objectos de Documentos:
 			if(status){
 				Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
 					if(status){
+
+						name = Generalfunc.capitalize(name);
 						Skillfunc.add(profileData._id,name, function(status, skillData, profileData){
 							console.log("Skill Function");
 							console.log(status);
