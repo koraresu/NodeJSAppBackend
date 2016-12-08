@@ -980,7 +980,7 @@ router.post('/update-experience', multipartMiddleware, function(req, res){
 	var company    = req.body.company;
 
 	var sector     = req.body.sector;
-	var ocupation  = req.body.job;
+	var ocupation  = req.body.ocupation;
 
 
 	console.log(ocupation);
