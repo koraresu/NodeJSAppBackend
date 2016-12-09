@@ -75,11 +75,17 @@ exports.news = function(news, profile, profile_de){
 			};
 		break;
 		case "4":
+			var busqueda = "";
+			if(news.data != undefined){
+				if(news.data.busqueda != undefined){
+					busqueda = news.data.busqueda;
+				}
+			}
 			return {
 				"id_n": news.id_numerico,
 				"id": news._id,
 				"type": "4",       // Action 
-				"busqueda": news.data.busqueda,
+				"busqueda": busqueda,
 				"profile": profileNewsFormat(profile),
 				"profile_friend": profileNewsFormat(profile_de),
 				"date": news.createdAt

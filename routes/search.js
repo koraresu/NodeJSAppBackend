@@ -288,7 +288,7 @@ router.post('/get', multipartMiddleware, function(req, res){
 });
 router.post('/save', multipartMiddleware, function(req, res){
 	var guid       = req.body.guid;
-	var text = req.body.search;
+	var text       = req.body.search;
 
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
