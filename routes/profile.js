@@ -296,11 +296,7 @@ router.post('/login-facebook', multipartMiddleware, function(req, res){
 	User.findOne({ email: email}, function(errUser, userData){
 		if(!errUser && userData){
 
-			var verified = false;
-
-			if(userData.verified){
-				verified = true;
-			}
+			var verified = true;
 
 			Token.findOne({ user_id: userData._id}, function(errToken, tokenData){
 				Profile.findOne({ user_id: userData._id}, function(errProfile, profileData){
@@ -359,7 +355,7 @@ router.post('/login-facebook', multipartMiddleware, function(req, res){
 				email: email
 			},{
 				email: email,
-				verified: false,
+				verified: true,
 				type: 1
 			},{
 				first_name: first_name,
