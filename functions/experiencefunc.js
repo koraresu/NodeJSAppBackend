@@ -193,7 +193,7 @@ exports.experienceJobGet = function(name, callback){
 	var text = name;
 	var reg  = new RegExp(text, "i");
 
-	Job.find({ name: reg }).sort({ name: "asc" }).exec(function(err, jobData){
+	Job.find({ name: reg, name: { $nin: ["", null ]}  }).sort({ name: "asc" }).exec(function(err, jobData){
 		callback(err, jobData);
 	});
 }
