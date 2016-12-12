@@ -108,14 +108,17 @@ router.post('/login', multipartMiddleware, function(req, res){
 								if(spe || exp){
 									all = true;
 								}
-								Generalfunc.response(201,{
-									token: tokenData.generated_id,
-									verified: verified,
-									experiences: all,
-									photo: photo,
-									profile: profileData
-								}, function(response){
-									res.json(response);
+								Network.findOne({ profiles: { $in: [profileData._id] } }).exec(function(errNetwork, networkData){
+									Generalfunc.response(201,{
+										token: tokenData.generated_id,
+										verified: verified,
+										experiences: all,
+										photo: photo,
+										profile: profileData,
+										network: networkData
+									}, function(response){
+										res.json(response);
+									});
 								});
 							});
 						});
