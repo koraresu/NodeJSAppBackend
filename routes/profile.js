@@ -1378,15 +1378,19 @@ router.post('/token/exists', multipartMiddleware, function(req, res){
 								all = true;
 							}
 							Profilefunc.logs(profileData, 14, profileData, function(){
-								Generalfunc.response(200,{
-									token: tokenData.generated_id,
-									verified: verified,
-									experiences: all,
-									photo: photo,
-									profile: profileData
-								}, function(response){
-									res.json(response);
+								Network.find({ profiles: { $in:[ profileData._id ] } }).exec(function(errNetwork, networkData){
+									Generalfunc.response(200,{
+										token: tokenData.generated_id,
+										verified: verified,
+										experiences: all,
+										photo: photo,
+										profile: profileData,
+										network: networkData
+									}, function(response){
+										res.json(response);
+									});
 								});
+								
 							});
 						});
 
