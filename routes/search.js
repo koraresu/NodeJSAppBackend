@@ -296,18 +296,29 @@ router.post('/save', multipartMiddleware, function(req, res){
 				if(status){
 
 					Search.findOne({ text: text }).sort({"createdAt":-1}).exec(function(errS, sData){
-						if(sData.text != text){
-							var search = new Search({
-								profile_id: profileData._id,
-								text: text
-							});
-							search.save(function(err, searchData){
+						console.log(sData);
+
+
+						if(!errS && sData){
+							if(sData.text != text){
+								var search = new Search({
+									profile_id: profileData._id,
+									text: text
+								});
+								search.save(function(err, searchData){
+									Search.find({ profile_id: profileData._id } ).limit(5).sort({"createdAt":-1}).exec(function(err, searchData){
+										Generalfunc.response(200, searchData, function(response){
+											res.json(response);
+										});
+									});
+								});
+							}else{
 								Search.find({ profile_id: profileData._id } ).limit(5).sort({"createdAt":-1}).exec(function(err, searchData){
 									Generalfunc.response(200, searchData, function(response){
 										res.json(response);
 									});
 								});
-							});
+							}
 						}else{
 							Search.find({ profile_id: profileData._id } ).limit(5).sort({"createdAt":-1}).exec(function(err, searchData){
 								Generalfunc.response(200, searchData, function(response){
@@ -315,6 +326,7 @@ router.post('/save', multipartMiddleware, function(req, res){
 								});
 							});
 						}
+						
 					});
 					
 				}else{
