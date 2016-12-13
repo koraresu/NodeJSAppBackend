@@ -278,6 +278,7 @@ function type(profileID, anotherID, callback){
 exports.type                = type
 exports.isNeightbor         = isNeightbor
 exports.isFriend            = isFriend
+exports.typeFriend            = typeFriend
 exports.PublicId            = PublicId
 exports.getFriends          = getFriends
 exports.getListFriends      = getListFriends
