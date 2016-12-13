@@ -571,11 +571,18 @@ router.post('/get/friend', multipartMiddleware, function(req, res){
 							if(anotherStatus){
 								Networkfunc.typeFriend(profileData._id, profileAnotherData._id, function(statusFriend){
 
-
+									console.log(statusFriend)
 									if( statusFriend == 2 || statusFriend == 1){
 										if(statusFriend == 2){
 											Profilefunc.formatoProfile(profileAnotherData._id,function( profile ){
-												var c = profile.concat({ "statusFriend": statusFriend });
+												
+												var c = {
+													"profile": profile.profile,
+													"review": profile.review,
+													"trabajo": profile.trabajo,
+													"network": profile.network,
+													"statusFriend": statusFriend
+												};
 												console.log(c);
 												//Generalfunc.response(200, profile, function(response){
 												Generalfunc.response(200, c, function(response){
