@@ -576,6 +576,7 @@ router.post('/get/friend', multipartMiddleware, function(req, res){
 										if(statusFriend == 2){
 											Profilefunc.formatoProfile(profileAnotherData._id,function( profile ){
 												var c = profile.concat({ "statusFriend": statusFriend });
+												console.log(c);
 												//Generalfunc.response(200, profile, function(response){
 												Generalfunc.response(200, c, function(response){
 													res.json(response);
