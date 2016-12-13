@@ -569,13 +569,25 @@ router.post('/get/friend', multipartMiddleware, function(req, res){
 					if(status){
 						Profilefunc.publicId(public_id, function(anotherStatus, profileAnotherData){
 							if(anotherStatus){
-								Networkfunc.isFriend(profileData._id, profileAnotherData._id, function(statusFriend){
-									if(statusFriend){
-										Profilefunc.formatoProfile(profileAnotherData._id,function( profile ){
-											Generalfunc.response(200, profile, function(response){
-												res.json(response);
+								Networkfunc.typeFriend(profileData._id, profileAnotherData._id, function(statusFriend){
+
+
+									if( statusFriend == 2 || statusFriend == 1){
+										if(statusFriend == 2){
+											Profilefunc.formatoProfile(profileAnotherData._id,function( profile ){
+												var c = profile.concat({ "statusFriend": statusFriend });
+												//Generalfunc.response(200, profile, function(response){
+												Generalfunc.response(200, c, function(response){
+													res.json(response);
+												});
 											});
-										});
+										}else{
+											Profilefunc.formatoProfile(profileAnotherData._id,function( profile ){
+												Generalfunc.response(200, profile, function(response){
+													res.json(response);
+												});
+											});
+										}
 									}else{
 										if(profileAnotherData.status == 0){
 											Profilefunc.formatoProfile(profileAnotherData._id,function( profile ){

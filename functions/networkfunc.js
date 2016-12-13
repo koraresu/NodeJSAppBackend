@@ -230,6 +230,26 @@ function isFriend(profile_id, another_id, callback){
 		}
 	});	
 }
+function typeFriend(profile_id, another_id, callback){
+	var d = {
+		"profiles": {
+			"$all": [profile_id, another_id]
+		}
+	};
+	console.log(d);
+	Network.findOne(d).exec(function(errNetwork, networkData){
+		if(!errNetwork && networkData){
+			if(networkData.accepted == true){
+				callback(2);
+			}else{
+				callback(1);
+			}
+			
+		}else{
+			callback(0);
+		}
+	});	
+}
 function type(profileID, anotherID, callback){
 	getFriends(anotherID._id, function(errNetwork, friends, friendsId){
 		console.log(friendsId);
