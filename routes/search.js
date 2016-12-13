@@ -295,7 +295,7 @@ router.post('/save', multipartMiddleware, function(req, res){
 			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
 				if(status){
 
-					Search.sort({"createdAt":-1}).findOne({ text: text }).exec(function(errS, sData){
+					Search.findOne({ text: text }).sort({"createdAt":-1}).exec(function(errS, sData){
 						if(sData.text != text){
 							var search = new Search({
 								profile_id: profileData._id,
