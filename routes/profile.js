@@ -590,8 +590,17 @@ router.post('/get/friend', multipartMiddleware, function(req, res){
 												});
 											});
 										}else{
+
 											Profilefunc.formatoProfile(profileAnotherData._id,function( profile ){
-												Generalfunc.response(200, profile, function(response){
+												var c = {
+													"profile": profile.profile,
+													"review": profile.review,
+													"trabajo": profile.trabajo,
+													"network": profile.network,
+													"statusFriend": statusFriend
+												};
+												//Generalfunc.response(200, profile, function(response){
+												Generalfunc.response(200, c, function(response){
 													res.json(response);
 												});
 											});
