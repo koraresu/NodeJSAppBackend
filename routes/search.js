@@ -320,13 +320,18 @@ router.post('/save', multipartMiddleware, function(req, res){
 								});
 							}
 						}else{
-							Search.find({ profile_id: profileData._id } ).limit(5).sort({"createdAt":-1}).exec(function(err, searchData){
-								Generalfunc.response(200, searchData, function(response){
-									res.json(response);
+							var search = new Search({
+								profile_id: profileData._id,
+								text: text
+							});
+							search.save(function(err, searchData){
+								Search.find({ profile_id: profileData._id } ).limit(5).sort({"createdAt":-1}).exec(function(err, searchData){
+									Generalfunc.response(200, searchData, function(response){
+										res.json(response);
+									});
 								});
 							});
 						}
-						
 					});
 					
 				}else{
