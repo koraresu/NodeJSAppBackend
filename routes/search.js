@@ -268,7 +268,7 @@ router.post('/get', multipartMiddleware, function(req, res){
 		if(status){
 			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
 				if(status){
-					Search.find({ profile_id: profileData._id } ).limit(5).sort({$natural:-1}).exec(function(err, searchData){
+					Search.find({ profile_id: profileData._id } ).limit(5).sort({"createdAt":-1}).exec(function(err, searchData){
 						Generalfunc.response(200, searchData, function(response){
 							res.json(response);
 						});
@@ -294,17 +294,29 @@ router.post('/save', multipartMiddleware, function(req, res){
 		if(status){
 			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
 				if(status){
-					var search = new Search({
-						profile_id: profileData._id,
-						text: text
-					});
-					search.save(function(err, searchData){
-						Search.find({ profile_id: profileData._id } ).limit(5).sort({$natural:-1}).exec(function(err, searchData){
-							Generalfunc.response(200, searchData, function(response){
-								res.json(response);
+
+					Search.sort({"createdAt":-1}).findOne({ text: text }).exec(function(errS, sData){
+						if(sData.text != text){
+							var search = new Search({
+								profile_id: profileData._id,
+								text: text
 							});
-						});
+							search.save(function(err, searchData){
+								Search.find({ profile_id: profileData._id } ).limit(5).sort({"createdAt":-1}).exec(function(err, searchData){
+									Generalfunc.response(200, searchData, function(response){
+										res.json(response);
+									});
+								});
+							});
+						}else{
+							Search.find({ profile_id: profileData._id } ).limit(5).sort({"createdAt":-1}).exec(function(err, searchData){
+								Generalfunc.response(200, searchData, function(response){
+									res.json(response);
+								});
+							});
+						}
 					});
+					
 				}else{
 					Generalfunc.response(101, {}, function(response){
 						res.json(response);
