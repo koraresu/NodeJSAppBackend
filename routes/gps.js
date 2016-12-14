@@ -45,7 +45,7 @@ exports.find = function(socket, callback){
 	maxDistance /= 6371;
 
 
-	var limit = 4;
+	var limit = 8;
 
 	Location.findOne({
 		socket: socket
