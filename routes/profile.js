@@ -627,7 +627,7 @@ router.post('/get/friend', multipartMiddleware, function(req, res){
 											Profilefunc.formatoProfile(profileAnotherData._id,function( profile ){
 												Networkfunc.type(profileData._id, profileAnotherData._id,function(statusIsFriendA, dataTypeFriend){
 													var privado = "";
-													switch(profile.status){
+													switch(profile.profile.status){
 														case 0:
 															privado = "A";
 														break;
@@ -660,7 +660,7 @@ router.post('/get/friend', multipartMiddleware, function(req, res){
 											Profilefunc.formatoProfile(profileAnotherData._id,function( profile ){
 												Networkfunc.type(profileData._id, profileAnotherData._id,function(statusIsFriendA, dataTypeFriend){
 													var privado = "";
-													switch(profile.status){
+													switch(profile.profile.status){
 														case 0:
 															privado = "A";
 															privado +="-"+statusFriendA;
@@ -695,7 +695,7 @@ router.post('/get/friend', multipartMiddleware, function(req, res){
 											Profilefunc.formatoProfile(profileAnotherData._id,function( profile ){
 												Networkfunc.type(profileData._id, profileAnotherData._id,function(statusIsFriendA, dataTypeFriend){
 													var privado = "";
-													switch(profile.status){
+													switch(profile.profile.status){
 														case 0:
 															privado = "A";
 															privado +="-"+statusFriendA;
@@ -727,7 +727,7 @@ router.post('/get/friend', multipartMiddleware, function(req, res){
 											Profilefunc.formatoProfile(profileAnotherData._id,function( profile ){
 												Networkfunc.type(profileData._id, profileAnotherData._id,function(statusIsFriendA, dataTypeFriend){
 													var privado = "";
-													switch(profile.status){
+													switch(profile.profile.status){
 														case 0:
 															privado = "A";
 															privado +="-"+statusFriendA;
