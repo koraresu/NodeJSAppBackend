@@ -693,31 +693,65 @@ router.post('/get/friend', multipartMiddleware, function(req, res){
 									}else{
 										if(profileAnotherData.status == 0){
 											Profilefunc.formatoProfile(profileAnotherData._id,function( profile ){
-												var c = {
-													"profile": profile.profile,
-													"review": profile.review,
-													"trabajo": profile.trabajo,
-													"network": profile.network,
-													"statusFriend": statusFriend
-												};
-												//Generalfunc.response(200, profile, function(response){
-												Generalfunc.response(200, c, function(response){
-													res.json(response);
+												Networkfunc.type(profileData._id, profileAnotherData._id,function(statusIsFriendA, dataTypeFriend){
+													var privado = "";
+													switch(profile.status){
+														case 0:
+															privado = "A";
+															privado +="-"+statusFriendA;
+														break;
+														case 1:
+															privado = "B";
+															privado +="-"+statusFriendA;
+														break;
+														case 2:
+															privado = "C";
+															privado +="-"+statusFriendA;
+														break;
+													}
+													var c = {
+														"profile": profile.profile,
+														"review": profile.review,
+														"trabajo": profile.trabajo,
+														"network": profile.network,
+														"statusFriend": statusFriend
+													};
+													//Generalfunc.response(200, profile, function(response){
+													Generalfunc.response(200, c, function(response){
+														res.json(response);
+													});
 												});
 											});	
 										}else{
 											Profilefunc.formatoProfile(profileAnotherData._id,function( profile ){
-												var c = {
-													"profile": profile.profile,
-													"review": profile.review,
-													"trabajo": profile.trabajo,
-													"network": profile.network,
-													"statusFriend": statusFriend
-												};
-												//Generalfunc.response(114, profile, function(response){
-												Generalfunc.response(114, c, function(response){
-													res.json(response);
-												});	
+												Networkfunc.type(profileData._id, profileAnotherData._id,function(statusIsFriendA, dataTypeFriend){
+													var privado = "";
+													switch(profile.status){
+														case 0:
+															privado = "A";
+															privado +="-"+statusFriendA;
+														break;
+														case 1:
+															privado = "B";
+															privado +="-"+statusFriendA;
+														break;
+														case 2:
+															privado = "C";
+															privado +="-"+statusFriendA;
+														break;
+													}
+													var c = {
+														"profile": profile.profile,
+														"review": profile.review,
+														"trabajo": profile.trabajo,
+														"network": profile.network,
+														"statusFriend": statusFriend
+													};
+													//Generalfunc.response(114, profile, function(response){
+													Generalfunc.response(114, c, function(response){
+														res.json(response);
+													});	
+												});
 											});
 										}
 									}
