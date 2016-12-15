@@ -531,6 +531,8 @@ router.post('/get/friends', multipartMiddleware, function(req, res){
 	var public_id = req.body.public_id;
 	var accepted  = req.body.accepted;
 
+	console.log( "Accepted:" );
+	console.log( req.body.accepted );
 	if( req.body.accepted == undefined){
 		accepted = true;
 	}else{
