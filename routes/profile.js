@@ -529,7 +529,13 @@ router.post('/setfacebook',multipartMiddleware, function(req, res){
 router.post('/get/friends', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 	var public_id = req.body.public_id;
+	var accepted  = req.body.accepted;
 
+	if(accepted == "true"){
+		accepted = true;
+	}else{
+		accepted = false;
+	}
 
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
@@ -539,13 +545,14 @@ router.post('/get/friends', multipartMiddleware, function(req, res){
 					if(mongoose.Types.ObjectId.isValid( public_id )){
 
 						public_id = mongoose.Types.ObjectId( public_id );
-						
+
 						Profile.findOne({ public_id: public_id }).exec(function(errProfileAnother, profileAnotherData){
 
 							if(!errProfileAnother && profileAnotherData){
 								Network.find({
 									profiles: {
-										$in: [profileAnotherData._id]
+										$in: [profileAnotherData._id],
+										accepted: accepted
 									}
 								}).populate('profiles').exec(function(errNetwork, networkData){
 									Generalfunc.response(200, networkData, function(response){
@@ -564,7 +571,8 @@ router.post('/get/friends', multipartMiddleware, function(req, res){
 
 						Network.find({
 							profiles: {
-								$in: [profileData._id]
+								$in: [profileData._id],
+								accepted: accepted
 							}
 						}).populate('profiles').exec(function(errNetwork, networkData){
 							Generalfunc.response(200, networkData, function(response){
