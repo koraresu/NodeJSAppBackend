@@ -543,6 +543,7 @@ router.post('/get/friends', multipartMiddleware, function(req, res){
 		}
 	}
 	
+	console.log( accepted );
 
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
