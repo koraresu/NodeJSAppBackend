@@ -557,12 +557,13 @@ router.post('/get/friends', multipartMiddleware, function(req, res){
 						Profile.findOne({ public_id: public_id }).exec(function(errProfileAnother, profileAnotherData){
 
 							if(!errProfileAnother && profileAnotherData){
-								Network.find({
+								var d = {
 									profiles: {
 										$in: [profileAnotherData._id],
 										accepted: accepted
 									}
-								}).populate('profiles').exec(function(errNetwork, networkData){
+								};
+								Network.find(d).populate('profiles').exec(function(errNetwork, networkData){
 									Generalfunc.response(200, networkData, function(response){
 										res.json(response);
 									});
@@ -576,13 +577,13 @@ router.post('/get/friends', multipartMiddleware, function(req, res){
 
 						
 					}else{
-
-						Network.find({
+						var d = {
 							profiles: {
 								$in: [profileData._id],
 								accepted: accepted
 							}
-						}).populate('profiles').exec(function(errNetwork, networkData){
+						};
+						Network.find(d).populate('profiles').exec(function(errNetwork, networkData){
 							Generalfunc.response(200, networkData, function(response){
 								res.json(response);
 							});
