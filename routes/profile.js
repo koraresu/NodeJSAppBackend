@@ -626,48 +626,44 @@ router.post('/get/friend', multipartMiddleware, function(req, res){
 										if(statusFriend == 2){
 											Profilefunc.formatoProfile(profileAnotherData._id,function( profile ){
 												Networkfunc.type(profileData._id, profileAnotherData._id,function(statusIsFriendA, dataTypeFriend){
-													var privado = "";
+													var privado = false;
 													switch(profile.profile.status){
 														case 0:
-															privado = "A";
-															
 															switch(statusIsFriendA){
 																case 0:
-																	privado +="- Permitido";
+																	privado = true;
 																break;
 																case 1:
-																	privado +="- Permitido";
+																	privado = true;
 																break;
 																case 2:
-																	privado +="- Permitido";
+																	privado = true;
 																break;
 															}
 														break;
 														case 1:
-															privado = "B";
 															switch(statusIsFriendA){
 																case 0:
-																	privado +="- No Permitido";
+																	privado = false;
 																break;
 																case 1:
-																	privado +="- Permitido";
+																	privado = true;
 																break;
 																case 2:
-																	privado +="- Permitido";
+																	privado = true;
 																break;
 															}
 														break;
 														case 2:
-															privado = "C";
 															switch(statusIsFriendA){
 																case 0:
-																	privado +="- No Permitido";
+																	privado = false;
 																break;
 																case 1:
-																	privado +="- No Permitido";
+																	privado = false;
 																break;
 																case 2:
-																	privado +="- Permitido";
+																	privado = true;
 																break;
 															}
 														break;
@@ -693,48 +689,44 @@ router.post('/get/friend', multipartMiddleware, function(req, res){
 
 											Profilefunc.formatoProfile(profileAnotherData._id,function( profile ){
 												Networkfunc.type(profileData._id, profileAnotherData._id,function(statusIsFriendA, dataTypeFriend){
-													var privado = "";
+													var privado = false;
 													switch(profile.profile.status){
 														case 0:
-															privado = "A";
-															
 															switch(statusIsFriendA){
 																case 0:
-																	privado +="- Permitido";
+																	privado = true;
 																break;
 																case 1:
-																	privado +="- Permitido";
+																	privado = true;
 																break;
 																case 2:
-																	privado +="- Permitido";
+																	privado = true;
 																break;
 															}
 														break;
 														case 1:
-															privado = "B";
 															switch(statusIsFriendA){
 																case 0:
-																	privado +="- No Permitido";
+																	privado = false;
 																break;
 																case 1:
-																	privado +="- Permitido";
+																	privado = true;
 																break;
 																case 2:
-																	privado +="- Permitido";
+																	privado = true;
 																break;
 															}
 														break;
 														case 2:
-															privado = "C";
 															switch(statusIsFriendA){
 																case 0:
-																	privado +="- No Permitido";
+																	privado = false;
 																break;
 																case 1:
-																	privado +="- No Permitido";
+																	privado = false;
 																break;
 																case 2:
-																	privado +="- Permitido";
+																	privado = true;
 																break;
 															}
 														break;
@@ -759,52 +751,49 @@ router.post('/get/friend', multipartMiddleware, function(req, res){
 										if(profileAnotherData.status == 0){
 											Profilefunc.formatoProfile(profileAnotherData._id,function( profile ){
 												Networkfunc.type(profileData._id, profileAnotherData._id,function(statusIsFriendA, dataTypeFriend){
-													var privado = "";
+													var privado = false;
 													switch(profile.profile.status){
 														case 0:
-															privado = "A";
-															
 															switch(statusIsFriendA){
 																case 0:
-																	privado +="- Permitido";
+																	privado = true;
 																break;
 																case 1:
-																	privado +="- Permitido";
+																	privado = true;
 																break;
 																case 2:
-																	privado +="- Permitido";
+																	privado = true;
 																break;
 															}
 														break;
 														case 1:
-															privado = "B";
 															switch(statusIsFriendA){
 																case 0:
-																	privado +="- No Permitido";
+																	privado = false;
 																break;
 																case 1:
-																	privado +="- Permitido";
+																	privado = true;
 																break;
 																case 2:
-																	privado +="- Permitido";
+																	privado = true;
 																break;
 															}
 														break;
 														case 2:
-															privado = "C";
 															switch(statusIsFriendA){
 																case 0:
-																	privado +="- No Permitido";
+																	privado = false;
 																break;
 																case 1:
-																	privado +="- No Permitido";
+																	privado = false;
 																break;
 																case 2:
-																	privado +="- Permitido";
+																	privado = true;
 																break;
 															}
 														break;
 													}
+
 													var c = {
 														"profile": profile.profile,
 														"review": profile.review,
@@ -822,52 +811,49 @@ router.post('/get/friend', multipartMiddleware, function(req, res){
 										}else{
 											Profilefunc.formatoProfile(profileAnotherData._id,function( profile ){
 												Networkfunc.type(profileData._id, profileAnotherData._id,function(statusIsFriendA, dataTypeFriend){
-													var privado = "";
+													var privado = false;
 													switch(profile.profile.status){
 														case 0:
-															privado = "A";
-															
 															switch(statusIsFriendA){
 																case 0:
-																	privado +="- Permitido";
+																	privado = true;
 																break;
 																case 1:
-																	privado +="- Permitido";
+																	privado = true;
 																break;
 																case 2:
-																	privado +="- Permitido";
+																	privado = true;
 																break;
 															}
 														break;
 														case 1:
-															privado = "B";
 															switch(statusIsFriendA){
 																case 0:
-																	privado +="- No Permitido";
+																	privado = false;
 																break;
 																case 1:
-																	privado +="- Permitido";
+																	privado = true;
 																break;
 																case 2:
-																	privado +="- Permitido";
+																	privado = true;
 																break;
 															}
 														break;
 														case 2:
-															privado = "C";
 															switch(statusIsFriendA){
 																case 0:
-																	privado +="- No Permitido";
+																	privado = false;
 																break;
 																case 1:
-																	privado +="- No Permitido";
+																	privado = false;
 																break;
 																case 2:
-																	privado +="- Permitido";
+																	privado = true;
 																break;
 															}
 														break;
 													}
+													
 													var c = {
 														"profile": profile.profile,
 														"review": profile.review,
