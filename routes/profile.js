@@ -714,7 +714,8 @@ router.post('/get/friend', multipartMiddleware, function(req, res){
 														"review": profile.review,
 														"trabajo": profile.trabajo,
 														"network": profile.network,
-														"statusFriend": statusFriend
+														"statusFriend": statusFriend,
+														"privado": privado
 													};
 													//Generalfunc.response(200, profile, function(response){
 													Generalfunc.response(200, c, function(response){
@@ -745,7 +746,8 @@ router.post('/get/friend', multipartMiddleware, function(req, res){
 														"review": profile.review,
 														"trabajo": profile.trabajo,
 														"network": profile.network,
-														"statusFriend": statusFriend
+														"statusFriend": statusFriend,
+														"privado": privado
 													};
 													//Generalfunc.response(114, profile, function(response){
 													Generalfunc.response(114, c, function(response){
