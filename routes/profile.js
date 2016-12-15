@@ -528,19 +528,44 @@ router.post('/setfacebook',multipartMiddleware, function(req, res){
 });
 router.post('/get/friends', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
+	var public_id = req.body.public_id;
+
+
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
 			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
 				if(status){
-					Network.find({
-						profiles: {
-							$in: [profileData._id]
-						}
-					}).populate('profiles').exec(function(errNetwork, networkData){
-						Generalfunc.response(200, networkData, function(response){
-							res.json(response);
+
+					if(mongoose.Types.ObjectId.isValid( public_id )){
+
+						Profile.findOne({ public_id: public_id }).exec(function(errProfileAnother, profileAnotherData){
+
+							Network.find({
+								profiles: {
+									$in: [profileAnotherData._id]
+								}
+							}).populate('profiles').exec(function(errNetwork, networkData){
+								Generalfunc.response(200, networkData, function(response){
+									res.json(response);
+								});
+							});
+
 						});
-					});
+
+						
+					}else{
+
+						Network.find({
+							profiles: {
+								$in: [profileData._id]
+							}
+						}).populate('profiles').exec(function(errNetwork, networkData){
+							Generalfunc.response(200, networkData, function(response){
+								res.json(response);
+							});
+						});
+
+					}
 				}else{
 					Generalfunc.response(101, {}, function(response){
 						res.json(response);
