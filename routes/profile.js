@@ -531,11 +531,16 @@ router.post('/get/friends', multipartMiddleware, function(req, res){
 	var public_id = req.body.public_id;
 	var accepted  = req.body.accepted;
 
-	if(accepted == "true"){
+	if( req.body.accepted != undefined){
 		accepted = true;
 	}else{
-		accepted = false;
+		if(accepted == "true"){
+			accepted = true;
+		}else{
+			accepted = false;
+		}
 	}
+	
 
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
