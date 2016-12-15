@@ -630,15 +630,46 @@ router.post('/get/friend', multipartMiddleware, function(req, res){
 													switch(profile.profile.status){
 														case 0:
 															privado = "A";
-															privado +="-"+statusIsFriendA;
+															
+															switch(statusIsFriendA){
+																case 0:
+																	privado +="- Permitido";
+																break;
+																case 1:
+																	privado +="- Permitido";
+																break;
+																case 2:
+																	privado +="- Permitido";
+																break;
+															}
 														break;
 														case 1:
 															privado = "B";
-															privado +="-"+statusIsFriendA;
+															switch(statusIsFriendA){
+																case 0:
+																	privado +="- No Permitido";
+																break;
+																case 1:
+																	privado +="- Permitido";
+																break;
+																case 2:
+																	privado +="- Permitido";
+																break;
+															}
 														break;
 														case 2:
 															privado = "C";
-															privado +="-"+statusIsFriendA;
+															switch(statusIsFriendA){
+																case 0:
+																	privado +="- No Permitido";
+																break;
+																case 1:
+																	privado +="- No Permitido";
+																break;
+																case 2:
+																	privado +="- Permitido";
+																break;
+															}
 														break;
 													}
 
@@ -666,15 +697,46 @@ router.post('/get/friend', multipartMiddleware, function(req, res){
 													switch(profile.profile.status){
 														case 0:
 															privado = "A";
-															privado +="-"+statusIsFriendA;
+															
+															switch(statusIsFriendA){
+																case 0:
+																	privado +="- Permitido";
+																break;
+																case 1:
+																	privado +="- Permitido";
+																break;
+																case 2:
+																	privado +="- Permitido";
+																break;
+															}
 														break;
 														case 1:
 															privado = "B";
-															privado +="-"+statusIsFriendA;
+															switch(statusIsFriendA){
+																case 0:
+																	privado +="- No Permitido";
+																break;
+																case 1:
+																	privado +="- Permitido";
+																break;
+																case 2:
+																	privado +="- Permitido";
+																break;
+															}
 														break;
 														case 2:
 															privado = "C";
-															privado +="-"+statusIsFriendA;
+															switch(statusIsFriendA){
+																case 0:
+																	privado +="- No Permitido";
+																break;
+																case 1:
+																	privado +="- No Permitido";
+																break;
+																case 2:
+																	privado +="- Permitido";
+																break;
+															}
 														break;
 													}
 													
@@ -701,15 +763,46 @@ router.post('/get/friend', multipartMiddleware, function(req, res){
 													switch(profile.profile.status){
 														case 0:
 															privado = "A";
-															privado +="-"+statusIsFriendA;
+															
+															switch(statusIsFriendA){
+																case 0:
+																	privado +="- Permitido";
+																break;
+																case 1:
+																	privado +="- Permitido";
+																break;
+																case 2:
+																	privado +="- Permitido";
+																break;
+															}
 														break;
 														case 1:
 															privado = "B";
-															privado +="-"+statusIsFriendA;
+															switch(statusIsFriendA){
+																case 0:
+																	privado +="- No Permitido";
+																break;
+																case 1:
+																	privado +="- Permitido";
+																break;
+																case 2:
+																	privado +="- Permitido";
+																break;
+															}
 														break;
 														case 2:
 															privado = "C";
-															privado +="-"+statusIsFriendA;
+															switch(statusIsFriendA){
+																case 0:
+																	privado +="- No Permitido";
+																break;
+																case 1:
+																	privado +="- No Permitido";
+																break;
+																case 2:
+																	privado +="- Permitido";
+																break;
+															}
 														break;
 													}
 													var c = {
@@ -733,15 +826,46 @@ router.post('/get/friend', multipartMiddleware, function(req, res){
 													switch(profile.profile.status){
 														case 0:
 															privado = "A";
-															privado +="-"+statusIsFriendA;
+															
+															switch(statusIsFriendA){
+																case 0:
+																	privado +="- Permitido";
+																break;
+																case 1:
+																	privado +="- Permitido";
+																break;
+																case 2:
+																	privado +="- Permitido";
+																break;
+															}
 														break;
 														case 1:
 															privado = "B";
-															privado +="-"+statusIsFriendA;
+															switch(statusIsFriendA){
+																case 0:
+																	privado +="- No Permitido";
+																break;
+																case 1:
+																	privado +="- Permitido";
+																break;
+																case 2:
+																	privado +="- Permitido";
+																break;
+															}
 														break;
 														case 2:
 															privado = "C";
-															privado +="-"+statusIsFriendA;
+															switch(statusIsFriendA){
+																case 0:
+																	privado +="- No Permitido";
+																break;
+																case 1:
+																	privado +="- No Permitido";
+																break;
+																case 2:
+																	privado +="- Permitido";
+																break;
+															}
 														break;
 													}
 													var c = {
