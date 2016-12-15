@@ -13,6 +13,7 @@ var async = require("async");
 
 var Generalfunc = require('./generalfunc');
 var Experiencefunc = require('./experiencefunc');
+var Networkfunc = require('./networkfunc');
 
 var model = require('../model');
 
@@ -67,7 +68,6 @@ function getTrabajo(profile_id, callback){
 	});
 	
 }
-
 function formatoProfile(profile_id,cb){
 	
 		if(typeof profile_id != "object"){
@@ -501,7 +501,7 @@ function IsJsonString(str) {
 }
 exports.logs = logs
 exports.permitedData = permitedData
-exports.generate_email_bienvenida   = generate_email_bienvenida
+exports.generate_email_bienvenida     = generate_email_bienvenida
 exports.generate_email_verification   = generate_email_verification
 exports.userProfileInsertIfDontExists = userProfileInsertIfDontExists
 exports.generate_password             = generate_Password
