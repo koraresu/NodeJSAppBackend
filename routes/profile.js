@@ -625,15 +625,27 @@ router.post('/get/friend', multipartMiddleware, function(req, res){
 									if( statusFriend == 2 || statusFriend == 1){
 										if(statusFriend == 2){
 											Profilefunc.formatoProfile(profileAnotherData._id,function( profile ){
-												Networkfunc.type(profileData._id, profileAnotherData._id,function(statusIsFriend, dataTypeFriend){
-													
+												Networkfunc.type(profileData._id, profileAnotherData._id,function(statusIsFriendA, dataTypeFriend){
+													var privado = "";
+													switch(profile.status){
+														case 0:
+															privado = "A";
+														break;
+														case 1:
+															privado = "B";
+														break;
+														case 2:
+															privado = "C";
+														break;
+													}
+
 													var c = {
 														"profile": profile.profile,
 														"review": profile.review,
 														"trabajo": profile.trabajo,
 														"network": profile.network,
 														"statusFriend": statusFriend,
-
+														"privado": privado
 													};
 													console.log(c);
 													//Generalfunc.response(200, profile, function(response){
@@ -646,16 +658,35 @@ router.post('/get/friend', multipartMiddleware, function(req, res){
 										}else{
 
 											Profilefunc.formatoProfile(profileAnotherData._id,function( profile ){
-												var c = {
-													"profile": profile.profile,
-													"review": profile.review,
-													"trabajo": profile.trabajo,
-													"network": profile.network,
-													"statusFriend": statusFriend
-												};
-												//Generalfunc.response(200, profile, function(response){
-												Generalfunc.response(200, c, function(response){
-													res.json(response);
+												Networkfunc.type(profileData._id, profileAnotherData._id,function(statusIsFriendA, dataTypeFriend){
+													var privado = "";
+													switch(profile.status){
+														case 0:
+															privado = "A";
+															privado +="-"+statusFriendA;
+														break;
+														case 1:
+															privado = "B";
+															privado +="-"+statusFriendA;
+														break;
+														case 2:
+															privado = "C";
+															privado +="-"+statusFriendA;
+														break;
+													}
+													
+													var c = {
+														"profile": profile.profile,
+														"review": profile.review,
+														"trabajo": profile.trabajo,
+														"network": profile.network,
+														"statusFriend": statusFriend,
+														"privado": privado
+													};
+													//Generalfunc.response(200, profile, function(response){
+													Generalfunc.response(200, c, function(response){
+														res.json(response);
+													});
 												});
 											});
 										}
