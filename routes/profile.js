@@ -560,8 +560,8 @@ router.post('/get/friends', multipartMiddleware, function(req, res){
 								var d = {
 									profiles: {
 										$in: [profileAnotherData._id],
-										accepted: accepted
-									}
+									},
+									accepted: accepted
 								};
 								console.log( d );
 								Network.find(d).populate('profiles').exec(function(errNetwork, networkData){
@@ -581,8 +581,8 @@ router.post('/get/friends', multipartMiddleware, function(req, res){
 						var d = {
 							profiles: {
 								$in: [profileData._id],
-								accepted: accepted
-							}
+							},
+							accepted: accepted
 						};
 						console.log( d );
 						Network.find(d).populate('profiles').exec(function(errNetwork, networkData){
