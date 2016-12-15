@@ -563,6 +563,7 @@ router.post('/get/friends', multipartMiddleware, function(req, res){
 										accepted: accepted
 									}
 								};
+								console.log( d );
 								Network.find(d).populate('profiles').exec(function(errNetwork, networkData){
 									Generalfunc.response(200, networkData, function(response){
 										res.json(response);
@@ -583,6 +584,7 @@ router.post('/get/friends', multipartMiddleware, function(req, res){
 								accepted: accepted
 							}
 						};
+						console.log( d );
 						Network.find(d).populate('profiles').exec(function(errNetwork, networkData){
 							Generalfunc.response(200, networkData, function(response){
 								res.json(response);
