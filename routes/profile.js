@@ -630,12 +630,15 @@ router.post('/get/friend', multipartMiddleware, function(req, res){
 													switch(profile.profile.status){
 														case 0:
 															privado = "A";
+															privado +="-"+statusIsFriendA;
 														break;
 														case 1:
 															privado = "B";
+															privado +="-"+statusIsFriendA;
 														break;
 														case 2:
 															privado = "C";
+															privado +="-"+statusIsFriendA;
 														break;
 													}
 
@@ -663,15 +666,15 @@ router.post('/get/friend', multipartMiddleware, function(req, res){
 													switch(profile.profile.status){
 														case 0:
 															privado = "A";
-															privado +="-"+statusFriendA;
+															privado +="-"+statusIsFriendA;
 														break;
 														case 1:
 															privado = "B";
-															privado +="-"+statusFriendA;
+															privado +="-"+statusIsFriendA;
 														break;
 														case 2:
 															privado = "C";
-															privado +="-"+statusFriendA;
+															privado +="-"+statusIsFriendA;
 														break;
 													}
 													
@@ -698,15 +701,15 @@ router.post('/get/friend', multipartMiddleware, function(req, res){
 													switch(profile.profile.status){
 														case 0:
 															privado = "A";
-															privado +="-"+statusFriendA;
+															privado +="-"+statusIsFriendA;
 														break;
 														case 1:
 															privado = "B";
-															privado +="-"+statusFriendA;
+															privado +="-"+statusIsFriendA;
 														break;
 														case 2:
 															privado = "C";
-															privado +="-"+statusFriendA;
+															privado +="-"+statusIsFriendA;
 														break;
 													}
 													var c = {
@@ -730,15 +733,15 @@ router.post('/get/friend', multipartMiddleware, function(req, res){
 													switch(profile.profile.status){
 														case 0:
 															privado = "A";
-															privado +="-"+statusFriendA;
+															privado +="-"+statusIsFriendA;
 														break;
 														case 1:
 															privado = "B";
-															privado +="-"+statusFriendA;
+															privado +="-"+statusIsFriendA;
 														break;
 														case 2:
 															privado = "C";
-															privado +="-"+statusFriendA;
+															privado +="-"+statusIsFriendA;
 														break;
 													}
 													var c = {
