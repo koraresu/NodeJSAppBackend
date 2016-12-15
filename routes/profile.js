@@ -538,6 +538,8 @@ router.post('/get/friends', multipartMiddleware, function(req, res){
 
 					if(mongoose.Types.ObjectId.isValid( public_id )){
 
+						public_id = mongoose.Types.ObjectId( public_id );
+						
 						Profile.findOne({ public_id: public_id }).exec(function(errProfileAnother, profileAnotherData){
 
 							if(!errProfileAnother && profileAnotherData){
