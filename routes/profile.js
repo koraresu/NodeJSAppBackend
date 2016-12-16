@@ -571,16 +571,19 @@ router.post('/get/friends', multipartMiddleware, function(req, res){
 										var second = profiles[1];
 										
 										var p = {};
-
+										var d = "";
 										if(first._id == profileData._id){
 											p = first;
+											d = "f";
 										}else{
 											p = second;
+											d = "s";
 										}
 
 										ca( null, {
 											profile: p,
-											accepted: item.accepted
+											accepted: item.accepted,
+											geting: d
 										} );
 									}, function(err, results){
 										console.log( err );
