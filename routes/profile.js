@@ -583,6 +583,8 @@ router.post('/get/friends', multipartMiddleware, function(req, res){
 											accepted: item.accepted
 										} );
 									}, function(err, results){
+										console.log( err );
+										console.log( results );
 										Generalfunc.response(200, results, function(response){
 											res.json(response);
 										});
