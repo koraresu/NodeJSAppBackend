@@ -566,7 +566,29 @@ router.post('/get/friends', multipartMiddleware, function(req, res){
 								console.log( d );
 								Network.find(d).populate('profiles').exec(function(errNetwork, networkData){
 
-									
+									async.map(networkData, function(item, callback){
+
+										var profiles = item.profiles;
+
+										var first  = profiles[0];
+										var second = profiles[1];
+										var p;
+										if(first._id == profileData._id){
+											p = second;
+										}else{
+											p = first;
+										}
+
+										var a = {
+											profile: p,
+											accepted: item.accepted
+										};
+										callback( null, a );
+									}, function(err, results){
+										Generalfunc.response(200, results, function(response){
+											res.json(response);
+										});
+									});
 
 									
 								});

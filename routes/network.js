@@ -907,7 +907,6 @@ router.post('/recomendar', multipartMiddleware, function(req, res){
 											clicked: false,
                   							status: false
                 				}, function(status, notificationData){
-								notification.save(function(errNotification, notificationData){
 									/*
 									var data = {
 										profile_emisor: profileData.public_id,
@@ -937,7 +936,7 @@ router.post('/recomendar', multipartMiddleware, function(req, res){
 
 					}
 				});
-			});
+			} );
 		}else{
 
 		}
