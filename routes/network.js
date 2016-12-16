@@ -870,7 +870,8 @@ router.post('/recomendar', multipartMiddleware, function(req, res){
 	var p_recomend_id = req.body.recomendar_id;
 	var history_id    = req.body.history_id;
 
-	var d = {};
+	var d = {};// Notificación a persona recibe recomendación.
+	var e = {};// Notificación a persona recomiendan. 
 
 	if(mongoose.Types.ObjectId.isValid(history_id)){
 		history_id        = mongoose.Types.ObjectId(history_id);	
@@ -899,35 +900,44 @@ router.post('/recomendar', multipartMiddleware, function(req, res){
 								d.profile_emisor  = profileData._id;
 								d.profile_mensaje = profileRecomendData._id;
 
+								e.tipo            = 2;
+								e.profile         = profileRecomendData._id;
+								e.profile_emisor  = profileData._id;
+								e.profile_mensaje = profileAnotherData._id;
+
 								if(mongoose.Types.ObjectId.isValid(history_id)){
 									d.busqueda = history_id;
+									e.busqueda = history_id;
 								}
 
-								create_notificacion_recomendacion(d, function(status, notificationData){
-									if(mongoose.Types.ObjectId.isValid(history_id)){
-										History.findOne({ _id: history_id}).exec(function(err, historyData){
-											
+
+								create_notificacion_recomendacion(d, function(statusAn, notificationAnData){
+									create_notificacion_recomendacion(d, function(status, notificationData){
+										if(mongoose.Types.ObjectId.isValid(history_id)){
+											History.findOne({ _id: history_id}).exec(function(err, historyData){
+												
+												var data = {
+													profile: profileAnotherData._id,
+													profile_emisor: profileData,
+													profile_mensaje: profileRecomendData,
+													busqueda: historyData
+												};
+												Generalfunc.response(200, data, function(response){
+													res.json(response);
+												});
+											});
+										}else{
 											var data = {
 												profile: profileAnotherData._id,
 												profile_emisor: profileData,
 												profile_mensaje: profileRecomendData,
-												busqueda: historyData
 											};
 											Generalfunc.response(200, data, function(response){
 												res.json(response);
 											});
-										});
-									}else{
-										var data = {
-											profile: profileAnotherData._id,
-											profile_emisor: profileData,
-											profile_mensaje: profileRecomendData,
-										};
-										Generalfunc.response(200, data, function(response){
-											res.json(response);
-										});
-									}
-									
+										}
+										
+									});
 								});
 							}else{
 								Generalfunc.response(101, {}, function(response){
