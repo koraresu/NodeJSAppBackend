@@ -92,14 +92,7 @@ router.get('/verification/:id',function(req, res){
               nombre: profileData.first_name,
             }, userData.email, "¡Bienvenido a la Colmena!",function(status, html){
               if(status){
-
-                Notificationfunc.add({
-                  tipo: 0,
-                  profile: profileData._id,
-                  status: false
-                }, function(){
-                  res.render('verified', { email: userData.email, status: true });  
-                });
+                res.render('verified', { email: userData.email, status: true });
               }else{
                 res.render('verified', { email: userData.email, status: false, message: "Error al enviar el correo de bienvenida" });
               }     

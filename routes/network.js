@@ -899,7 +899,14 @@ router.post('/recomendar', multipartMiddleware, function(req, res){
 									profile_mensaje: profileRecomendData._id,
 									busqueda: history_id
 								};
-								var notification = new Notification(d);
+								Notificationfunc.add({
+                  							tipo: 3,
+                  							profile: profileAnotherData._id,
+											profile_emisor: profileData._id,
+											network: networkData._id,
+											clicked: false,
+                  							status: false
+                				}, function(status, notificationData){
 								notification.save(function(errNotification, notificationData){
 									/*
 									var data = {
