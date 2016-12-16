@@ -9,6 +9,8 @@ var fs = require('fs');
 var _ = require('underscore');
 var mime = require('mime');
 
+var async = require('async');
+
 var appDir = path.dirname(path.dirname(require.main.filename));
 
 var faker = require('faker');
@@ -566,7 +568,7 @@ router.post('/get/friends', multipartMiddleware, function(req, res){
 								console.log( d );
 								Network.find(d).populate('profiles').exec(function(errNetwork, networkData){
 
-									async.map(networkData, function(item, callback){
+									async.map( networkData , function(item, callback){
 
 										var profiles = item.profiles;
 
@@ -579,11 +581,10 @@ router.post('/get/friends', multipartMiddleware, function(req, res){
 											p = first;
 										}
 
-										var a = {
+										callback( null, {
 											profile: p,
 											accepted: item.accepted
-										};
-										callback( null, a );
+										} );
 									}, function(err, results){
 										Generalfunc.response(200, results, function(response){
 											res.json(response);
