@@ -587,8 +587,6 @@ router.post('/get/friends', multipartMiddleware, function(req, res){
 											geting: d
 										} );
 									}, function(err, results){
-										console.log( err );
-										console.log( results );
 										Generalfunc.response(200, { profile: profileAnotherData, friends: results }, function(response){
 											res.json(response);
 										});
@@ -611,7 +609,7 @@ router.post('/get/friends', multipartMiddleware, function(req, res){
 							},
 							accepted: accepted
 						};
-						
+
 						Network.find(d).populate('profiles').exec(function(errNetwork, networkData){
 							async.map( networkData , function(item, ca){
 
