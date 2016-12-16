@@ -572,6 +572,7 @@ router.post('/get/friends', multipartMiddleware, function(req, res){
 										
 										var p = {};
 										var d = "";
+										console.log( first._id + " == " + profileData._id );
 										if(first._id == profileData._id){
 											p = first;
 											d = "f";
@@ -621,6 +622,8 @@ router.post('/get/friends', multipartMiddleware, function(req, res){
 										
 										var p = {};
 
+										first._id == profileData._id
+										
 										if(first._id == profileData._id){
 											p = second;
 										}else{
