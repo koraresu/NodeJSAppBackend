@@ -533,8 +533,6 @@ router.post('/get/friends', multipartMiddleware, function(req, res){
 	var public_id = req.body.public_id;
 	var accepted  = req.body.accepted;
 
-	console.log( "Accepted:" );
-	console.log( req.body.accepted );
 	if( req.body.accepted == undefined){
 		accepted = true;
 	}else{
@@ -544,8 +542,6 @@ router.post('/get/friends', multipartMiddleware, function(req, res){
 			accepted = false;
 		}
 	}
-	
-	console.log( accepted );
 
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
@@ -565,23 +561,24 @@ router.post('/get/friends', multipartMiddleware, function(req, res){
 									},
 									accepted: accepted
 								};
-								console.log( d );
-								Network.find(d).populate('profiles').exec(function(errNetwork, networkData){
 
-									async.map( networkData , function(item, callback){
+								Network.find(d).populate('profiles').exec(function(errNetwork, networkData){
+									async.map( networkData , function(item, ca){
 
 										var profiles = item.profiles;
 
 										var first  = profiles[0];
 										var second = profiles[1];
-										var p;
+										
+										var p = {};
+
 										if(first._id == profileData._id){
 											p = second;
 										}else{
 											p = first;
 										}
 
-										callback( null, {
+										ca( null, {
 											profile: p,
 											accepted: item.accepted
 										} );
