@@ -585,7 +585,7 @@ router.post('/get/friends', multipartMiddleware, function(req, res){
 									}, function(err, results){
 										console.log( err );
 										console.log( results );
-										Generalfunc.response(200, results, function(response){
+										Generalfunc.response(200, { profile: profileAnotherData, friends: results }, function(response){
 											res.json(response);
 										});
 									});
@@ -631,7 +631,7 @@ router.post('/get/friends', multipartMiddleware, function(req, res){
 									}, function(err, results){
 										console.log( err );
 										console.log( results );
-										Generalfunc.response(200, results, function(response){
+										Generalfunc.response(200, { profile: profileData, friends: results }, function(response){
 											res.json(response);
 										});
 									});
