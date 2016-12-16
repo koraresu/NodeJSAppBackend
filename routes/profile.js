@@ -572,7 +572,7 @@ router.post('/get/friends', multipartMiddleware, function(req, res){
 										
 										var p = {};
 										var d = "";
-										if(first._id.toString() == profileData._id.toString()){
+										if(first._id.toString() == profileAnotherData._id.toString()){
 											p = second;
 											d = "s";
 										}else{
@@ -580,7 +580,7 @@ router.post('/get/friends', multipartMiddleware, function(req, res){
 											d = "f";
 										}
 
-										console.log( first._id + " == " + profileData._id + " | " + p._id + " | " + d );
+										console.log( first._id + " == " + profileAnotherData._id + " | " + p._id + " | " + d );
 
 										ca( null, {
 											profile: p,
