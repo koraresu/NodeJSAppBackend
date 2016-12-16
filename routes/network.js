@@ -872,8 +872,6 @@ router.post('/recomendar', multipartMiddleware, function(req, res){
 
 	var d = {};
 
-	console.log("HistoryID:");
-	console.log(history_id);
 	if(mongoose.Types.ObjectId.isValid(history_id)){
 		history_id        = mongoose.Types.ObjectId(history_id);	
 	}
@@ -955,9 +953,9 @@ module.exports = router;
 
 function create_notificacion_recomendacion(data, callback){
 	if(data.busqueda == undefined){
-		Notificationfunc.add(d, ,callback);	
+		Notificationfunc.add(d, callback);	
 	}else{
-		Notificationfunc.add(d, ,callback);	
+		Notificationfunc.add(d,callback);	
 	}
 	
 }
