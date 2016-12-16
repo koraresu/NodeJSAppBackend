@@ -953,11 +953,10 @@ module.exports = router;
 
 function create_notificacion_recomendacion(data, callback){
 	if(data.busqueda == undefined){
-		Notificationfunc.add(d, callback);	
+		Notificationfunc.add(data, callback);	
 	}else{
-		Notificationfunc.add(d,callback);	
+		Notificationfunc.add(data,callback);	
 	}
-	
 }
 function cleanArray(actual) {
 	var newArray = new Array();
