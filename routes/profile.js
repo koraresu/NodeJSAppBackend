@@ -575,14 +575,12 @@ router.post('/get/friends', multipartMiddleware, function(req, res){
 										if(first._id.toString() == profileData._id.toString()){
 											p = second;
 											d = "s";
-
-											console.log( first._id + " == " + profileData._id + " | " + p._id + " | " + d );
 										}else{
 											p = first;
 											d = "f";
-
-											console.log( first._id + " == " + profileData._id + " | " + p._id + " | " + d );
 										}
+
+										console.log( first._id + " == " + profileData._id + " | " + p._id + " | " + d );
 
 										ca( null, {
 											profile: p,
@@ -622,23 +620,17 @@ router.post('/get/friends', multipartMiddleware, function(req, res){
 										var second = profiles[1];
 										
 										var p = {};
-
-										var first  = profiles[0];
-										var second = profiles[1];
-										
-										var p = {};
 										var d = "";
+										
 										if(first._id.toString() == profileData._id.toString()){
 											p = second;
 											d = "s";
-
-											console.log( first._id + " == " + profileData._id + " | " + p._id + " | " + d );
 										}else{
 											p = first;
 											d = "f";
-
-											console.log( first._id + " == " + profileData._id + " | " + p._id + " | " + d );
 										}
+
+										console.log( first._id + " == " + profileData._id + " | " + p._id + " | " + d );
 
 
 										ca( null, {
