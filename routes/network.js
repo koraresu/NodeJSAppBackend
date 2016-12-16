@@ -870,6 +870,8 @@ router.post('/recomendar', multipartMiddleware, function(req, res){
 	var p_recomend_id = req.body.recomendar_id;
 	var history_id    = req.body.history_id;
 
+	var d = {};
+
 	console.log("HistoryID:");
 	console.log(history_id);
 	if(mongoose.Types.ObjectId.isValid(history_id)){
@@ -892,59 +894,73 @@ router.post('/recomendar', multipartMiddleware, function(req, res){
 					if(statusPublic){
 						Networkfunc.PublicId(p_recomend_id, function(statusRecomend, profileRecomendData){
 							if(statusRecomend){
-								var d = {
-									tipo: 1, // 0 = se ha unido | 1 = recomendación | 2 = share contacto | 3 = Envio Solucitud | 4 = Respondio Solicitud
-									profile: profileAnotherData._id,
-									profile_emisor: profileData._id,
-									profile_mensaje: profileRecomendData._id,
-									busqueda: history_id
-								};
-								Notificationfunc.add({
-                  							tipo: 3,
-                  							profile: profileAnotherData._id,
-											profile_emisor: profileData._id,
-											network: networkData._id,
-											clicked: false,
-                  							status: false
-                				}, function(status, notificationData){
-									/*
-									var data = {
-										profile_emisor: profileData.public_id,
-										profile_mensaje: profileRecomendData.public_id,
-										busqueda: history_id
-									};
-									*/
-									History.findOne({ _id: history_id}).exec(function(err, historyData){
+
+								d.tipo = 1;
+
+								d.profile         = profileAnotherData._id;
+								d.profile_emisor  = profileData._id;
+								d.profile_mensaje = profileRecomendData._id;
+
+								if(mongoose.Types.ObjectId.isValid(history_id)){
+									d.busqueda = history_id;
+								}
+
+								create_notificacion_recomendacion(d, function(status, notificationData){
+									if(mongoose.Types.ObjectId.isValid(history_id)){
+										History.findOne({ _id: history_id}).exec(function(err, historyData){
+											
+											var data = {
+												profile: profileAnotherData._id,
+												profile_emisor: profileData,
+												profile_mensaje: profileRecomendData,
+												busqueda: historyData
+											};
+											Generalfunc.response(200, data, function(response){
+												res.json(response);
+											});
+										});
+									}else{
 										var data = {
+											profile: profileAnotherData._id,
 											profile_emisor: profileData,
 											profile_mensaje: profileRecomendData,
-											busqueda: historyData
 										};
 										Generalfunc.response(200, data, function(response){
 											res.json(response);
 										});
-									});
+									}
 									
 								});
 							}else{
-
+								Generalfunc.response(101, {}, function(response){
+									res.json( response );
+								});
 							}
 						});
-
-						
 					}else{
-
+						Generalfunc.response(101, {}, function(response){
+							res.json( response );
+						});
 					}
 				});
 			} );
 		}else{
-
+			Generalfunc.response(101, {}, function(response){
+				res.json( response );
+			});
 		}
 	});
 });
-
 module.exports = router;
 
+function create_notificacion_recomendacion(data, callback){
+	if(data.busqueda == undefined){
+		Notificationfunc.add(d, ,callback);	
+	}else{
+		Notificationfunc.add(d, ,callback);	
+	}
+	
+}
 function cleanArray(actual) {
 	var newArray = new Array();
 	for (var i = 0; i < actual.length; i++) {
