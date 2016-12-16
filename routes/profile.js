@@ -622,13 +622,20 @@ router.post('/get/friends', multipartMiddleware, function(req, res){
 										
 										var p = {};
 
-										first._id == profileData._id
+										var first  = profiles[0];
+										var second = profiles[1];
 										
+										var p = {};
+										var d = "";
+										console.log( first._id + " == " + profileData._id );
 										if(first._id == profileData._id){
-											p = second;
-										}else{
 											p = first;
+											d = "f";
+										}else{
+											p = second;
+											d = "s";
 										}
+
 
 										ca( null, {
 											profile: p,
