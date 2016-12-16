@@ -573,9 +573,9 @@ router.post('/get/friends', multipartMiddleware, function(req, res){
 										var p = {};
 
 										if(first._id == profileData._id){
-											p = second;
-										}else{
 											p = first;
+										}else{
+											p = second;
 										}
 
 										ca( null, {
