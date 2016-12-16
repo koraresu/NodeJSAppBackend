@@ -911,7 +911,7 @@ router.post('/recomendar', multipartMiddleware, function(req, res){
 								}
 
 
-								create_notificacion_recomendacion(d, function(statusAn, notificationAnData){
+								create_notificacion_recomendacion(e, function(statusAn, notificationAnData){
 									create_notificacion_recomendacion(d, function(status, notificationData){
 										if(mongoose.Types.ObjectId.isValid(history_id)){
 											History.findOne({ _id: history_id}).exec(function(err, historyData){
