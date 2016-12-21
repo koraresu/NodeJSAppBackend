@@ -134,9 +134,15 @@ var MessageSchema = new Schema({
 
 var jobSchema = new Schema({
   name: String,
-  type: Number   // Profesion = 0 || Puesto = 1
+  type: Number,   // Profesion = 0 || Puesto = 1
+  parent: { type: Schema.Types.ObjectId, ref: 'JobArea' }
 },{
   timestamps: true
+});
+var jobAreaSchema = new Schema({
+  name: String,
+  id_data: Number,
+  value: String
 });
 
 var FeedbackSchema = new Schema({
@@ -180,6 +186,7 @@ var skillsSchema = new Schema({
 });
 var specialitySchema = new Schema({
   name: String,
+  parent: { type: Schema.Types.ObjectId, ref: 'Job' }
 },{
   timestamps: true
 });
@@ -241,6 +248,7 @@ var CiudadSchema = new Schema({
 exports.company      = db.model( 'Company' , companySchema );
 exports.experience   = db.model( 'Experience' , experienceSchema );
 exports.job          = db.model( 'Job' , jobSchema );
+exports.area         = db.model( 'JobArea' , jobAreaSchema );
 exports.location     = db.model( 'GPS', locationSchema);
 exports.company_claim     = db.model( 'CompanyClaim', CompanyClaimSchema);
 exports.skill        = db.model( 'Skill' , skillsSchema );
