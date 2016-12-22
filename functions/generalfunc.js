@@ -160,3 +160,7 @@ exports.sendEmail = function(file, data,email, asunto, callback){
 exports.capitalize = function(s){
     return s.toLowerCase().replace( /\b./g, function(a){ return a.toUpperCase(); } );
 };
+exports.precise_round = function(num, decimals) {
+   var t = Math.pow(10, decimals);   
+   return (Math.round((num * t) + (decimals>0?1:0)*(Math.sign(num) * (10 / Math.pow(100, decimals)))) / t).toFixed(decimals);
+}
