@@ -114,7 +114,7 @@ function formatoProfile(profile_id,cb){
 										"profile_pic": profileData.profile_pic,
 										"status": profileData.status,
 										"qrcode": profileData.qrcode,
-										"review_score": Generalfunc.precise_round( profileData.review_score ),
+										"review_score": Generalfunc.precise_round( profileData.review_score, 2 ),
 										"phone": profileData.phone 
 									},
 									review: reviewData,
