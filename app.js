@@ -162,7 +162,7 @@ chat.on('connection', function(socket){
   socket.on('connect', function(data){
     socket.guid = data.guid;
 
-    var conversations = chatrouter.conversationsJoin(socket, funtion(status, socketD){
+    var conversations = chatrouter.conversationsJoin(socket, function(status, socketD){
 
     });
 
