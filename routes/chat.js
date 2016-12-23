@@ -107,6 +107,33 @@ router.post('/conversation', multipartMiddleware, function(req, res){
 	});
 });
 
+router.conversationsJoin = function(socket, callback){
+	var guid = socket.guid;
+	Tokenfunc.exist(guid, function(status, tokenData){
+		if(status){
+			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
+				if(status){
+					Conversation.find({
+						profiles:{
+							$in: [ profileData._id ]
+						}
+					}).exec(function(errJoin, joinData){
+						joinData.forEach(function(value, index){
+							socket.join(value._id);
+							if((joinData.length-1) == index){
+								callback(true, socket);
+							}
+						});
+					});
+				}else{
+					callback(false, socket);
+				}
+			}),
+		}else{
+			callback(false, socket);
+		}
+	});
+}
 router.message = function(data, callback){
 	console.log(data);
 

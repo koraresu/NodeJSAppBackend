@@ -161,17 +161,23 @@ var chatrouter = require('./routes/chat');
 chat.on('connection', function(socket){
   socket.on('connect', function(data){
     socket.guid = data.guid;
+
+    var conversations = chatrouter.conversationsJoin(socket, funtion(status, socketD){
+
+    });
+
   });
   socket.on('message', function(data){
     chatrouter.message(data, function(status, messageData){
       if(status){
-        socket.emit('getmessage', {data: messageData, t:false});
-        socket.broadcast.emit('getmessage', {data: messageData, t:true });
+        //socket.emit('getmessage', {data: messageData, t:false});
+        io.to(messageData.conversation).emit({data: messageData, t:true, accion: 'message' });
+        //socket.broadcast.emit('getmessage', {data: messageData, t:true });
       }
     });
   });
   socket.on('disconnect', function(){
-
+    io.to(messageData.conversation).emit({data: messageData, t:true, accion: 'disconnect' });
   });
 });
 
