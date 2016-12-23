@@ -128,7 +128,7 @@ router.conversationsJoin = function(socket, callback){
 				}else{
 					callback(false, socket);
 				}
-			}),
+			});
 		}else{
 			callback(false, socket);
 		}
