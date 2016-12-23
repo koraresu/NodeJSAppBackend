@@ -170,9 +170,8 @@ chat.on('connection', function(socket){
   socket.on('message', function(data){
     chatrouter.message(data, function(status, messageData){
       if(status){
-        //socket.emit('getmessage', {data: messageData, t:false});
-        io.to(messageData.conversation).emit({data: messageData, t:true, accion: 'message' });
-        //socket.broadcast.emit('getmessage', {data: messageData, t:true });
+        socket.to(messageData.conversation).emit({data: messageData, t:true, accion: 'message' });
+        socket.broadcast.to(messageData.conversation).emit({data: messageData, t:true, accion: 'message' });
       }
     });
   });
