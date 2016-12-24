@@ -65,11 +65,20 @@ exports.news = function(news, profile, profile_de){
 			};
 		break;
 		case "3":
+			var title = "";
+			if((profile.first_name != undefined) && (profile_de.first_name)){
+				title = profile.first_name+" "+profile.last_name+" y "+profile_de.first_name+" "+profile_de.last_name;	
+			}else if((profile.first_name == undefined) && profile_de.first_name != undefined){
+				title = profile_de.first_name+" "+profile_de.last_name;	
+			}else if((profile_de.first_name == undefined) && profile.first_name != undefined){
+				title = profile.first_name+" "+profile.last_name;	
+			}
+			
 			return {
 				"id_n": news.id_numerico,
 				"id": news._id,
 				"type": "3",       // Action 
-				"titulo": profile.first_name+" "+profile.last_name+" y "+profile_de.first_name+" "+profile_de.last_name,
+				"titulo": title,
 				"profile": profileNewsFormat(profile),
 				"date": news.createdAt
 			};

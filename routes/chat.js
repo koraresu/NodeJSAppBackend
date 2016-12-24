@@ -134,6 +134,8 @@ router.conversationsJoin = function(socket, callback){
 		}
 	});
 }
+router.setOnline = function(socket, callback){
+}
 router.message = function(data, callback){
 	console.log(data);
 

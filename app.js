@@ -159,9 +159,12 @@ gps.on('connection', function(socket){
 var chat = io.of('/chat');
 var chatrouter = require('./routes/chat');
 chat.on('connection', function(socket){
+
   socket.on('connect', function(data){
     socket.guid = data.guid;
+    chatrouter.setOnline(socket, function(){
 
+    });
     var conversations = chatrouter.conversationsJoin(socket, function(status, socketD){
       socket.emit('conversationsjoin',{status:true});
     });
@@ -176,7 +179,7 @@ chat.on('connection', function(socket){
     });
   });
   socket.on('disconnect', function(){
-    io.to(messageData.conversation).emit({data: messageData, t:true, accion: 'disconnect' });
+    io.to(messageData.conversation).emit('desconnected',{data: messageData, t:true });
   });
 });
 
