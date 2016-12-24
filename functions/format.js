@@ -66,12 +66,18 @@ exports.news = function(news, profile, profile_de){
 		break;
 		case "3":
 			var title = "";
-			if((profile.first_name != undefined) && (profile_de.first_name)){
-				title = profile.first_name+" "+profile.last_name+" y "+profile_de.first_name+" "+profile_de.last_name;	
-			}else if((profile.first_name == undefined) && profile_de.first_name != undefined){
-				title = profile_de.first_name+" "+profile_de.last_name;	
-			}else if((profile_de.first_name == undefined) && profile.first_name != undefined){
-				title = profile.first_name+" "+profile.last_name;	
+
+			console.log(profile);
+			console.log(profile_de);
+
+			if(profile != undefined && profile_de != undefined){
+				if((profile.first_name != undefined) && (profile_de.first_name)){
+					title = profile.first_name+" "+profile.last_name+" y "+profile_de.first_name+" "+profile_de.last_name;	
+				}else if((profile.first_name == undefined) && profile_de.first_name != undefined){
+					title = profile_de.first_name+" "+profile_de.last_name;	
+				}else if((profile_de.first_name == undefined) && profile.first_name != undefined){
+					title = profile.first_name+" "+profile.last_name;	
+				}	
 			}
 			
 			return {
