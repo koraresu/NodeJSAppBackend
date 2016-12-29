@@ -173,13 +173,15 @@ chat.on('connection', function(socket){
   socket.on('message', function(data){
     chatrouter.message(data, function(status, messageData){
       if(status){
-        socket.to(messageData.conversation).emit('message',{data: messageData, t:true, accion: 'message' });
-        socket.broadcast.to(messageData.conversation).emit('message',{data: messageData, t:true, accion: 'message' });
+        socket.in(messageData.conversation).emit('message',{data: messageData, t:true, accion: 'message' });
+        socket.broadcast.in(messageData.conversation).emit('message',{data: messageData, t:true, accion: 'message' });
       }
     });
   });
   socket.on('disconnect', function(){
-    
+    socket.rooms.forEach(function(room){
+         io.in(room).emit('user:disconnect', {id: socket.id,data: messageData, t:true });
+     });
   });
 });
 
