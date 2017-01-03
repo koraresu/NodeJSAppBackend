@@ -116,6 +116,7 @@ router.post('/new/conversation', multipartMiddleware, function(req, res){
 			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
 				if(status){
 					if(mongoose.Types.ObjectId.isValid(public_id)){
+						public_id = mongoose.Types.ObjectId(public_id);
 						Networkfunc.PublicId(public_id, function(statusPublic, profileAnotherData){
 							console.log( public_id );
 							console.log( statusPublic );
