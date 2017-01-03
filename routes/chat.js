@@ -43,6 +43,7 @@ var Sector      = model.sector;
 var Notification = model.notification;
 var Feedback     = model.feedback;
 var Conversation = model.conversation;
+var Online       = model.online;
 var Message      = model.message;
 var City         = model.city;
 var State        = model.state;
@@ -117,11 +118,11 @@ router.conversationsJoin = function(socket, callback){
 						profiles:{
 							$in: [ profileData._id ]
 						}
-					}).exec(function(errJoin, joinData){
+					}).populate('profiles').populate('message').exec(function(errJoin, joinData){
 						joinData.forEach(function(value, index){
-							socket.join(value._id);
+							socket.join(value._id.toString());
 							if((joinData.length-1) == index){
-								callback(true, socket);
+								callback(true, joinData);
 							}
 						});
 					});
@@ -135,6 +136,36 @@ router.conversationsJoin = function(socket, callback){
 	});
 }
 router.setOnline = function(socket, callback){
+
+	var guid = socket.guid;
+	Tokenfunc.exist(guid, function(status, tokenData){
+		if(status){
+			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
+				if(status){
+					var online = new Online({
+						profiles: profileData._id,
+						socket: socket.id.toString()
+					});
+					online.save(function(err, onlineData){
+						callback(true, socket, profileData );
+					});
+				}else{
+					callback(false, socket);
+				}
+			});
+		}else{
+			callback(false, socket);
+		}
+	});
+	/*
+	
+	*/
+	callback(socket);
+}
+router.unsetOnline = function(socket, callback){
+	Online.remove({ socket: socket }).exec(function(err){
+		callback(err, socket);
+	});
 }
 router.message = function(data, callback){
 	console.log(data);
@@ -156,7 +187,12 @@ router.message = function(data, callback){
 						};
 						var message = new Message(d);
 						message.save(function(err, messageData){
-							callback(true, messageData);
+							Conversation.findOne({ _id: id }).exec(function(errConv, convData){
+								convData.message = messageData._id;
+								convData.save(function(errCon, conData){
+									callback(true, messageData);
+								});
+							});
 						});
 					}else{
 						callback(false, null);

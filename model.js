@@ -117,10 +117,16 @@ var experienceSchema = new Schema({
 },{
   timestamps: true
 });
+var OnlineSchema = new Schema({
+  profiles: { type: Schema.Types.ObjectId, ref: 'Profile' },
+  socket: { type: Schema.Types.Mixed }
+},{
+  timestamps: true
+});
 var ConversationSchema = new Schema({
   profiles: [ { type: Schema.Types.ObjectId, ref: 'Profile' } ],
   status: { type: String },
-  messages: { type: Schema.Types.Mixed }
+  message: { type: Schema.Types.ObjectId, ref: 'Message' }
 },{
   timestamps: true
 });
@@ -268,6 +274,7 @@ var history          = db.model( 'History' , HistorySchema );
 exports.history      = history;
 exports.feedback     = db.model( 'Feedback' , FeedbackSchema );
 // Chat
+exports.online       = db.model( 'Online', OnlineSchema );
 exports.conversation = db.model( 'Conversation' , ConversationSchema );
 exports.message      = db.model( 'Message' , MessageSchema );
 exports.log          = db.model( 'Log' , LogSchema );

@@ -1,56 +1,17 @@
-var chatsocket = io.connect('http://localhost:3000/chat');
-$(function() {
-	
-	var guid = get(1);
-	var conversation = get(2);
-	
-	console.log(guid);
-	console.log(conversation);
-
-	chatsocket.emit('connect', {
-		guid: guid
-	})
-	chatsocket.on('getmessage', function(data){
-		var d = data.data;
-		console.log(data);
-		if(data.t){
-			addMessage(d,'other');	
-		}else{
-			addMessage(d, 'yours');
-		}
-		
-	})
-	$.post('http://localhost:3000/api/chat/conversation',{
-		guid: guid,
-		id: conversation
-	}, function(data){
-		$.each(data, function(index, item){
-			if(item.t){
-				addMessage(item.data,'other');
-			}else{
-				addMessage(item.data, 'yours');
-			}
-			
-		});
-	});
-	
-
-	$('#message').on('keypress',function(e){
-		var message = $('#message').val()
-
-		var p = e.which;
-		if(p==13){
-			$('#message').val("");
-			chatsocket.emit('message', {
-				guid: guid,
-				message: message,
-				conversation: conversation
-			});
-		}
+var socket = io('http://localhost:3000/');
+var guid = "578c3985021e94d11de142cd";
+socket.emit('entrando',guid);
+socket.on('conversationsjoin', function(data){
+	console.log(data);
+	$('#conversations ul').html("");
+	data.forEach(function(item, index){
+		console.log(item);
+		$('#conversations ul').append("<li>"+item._id+"</li>")
 	});
 });
-
-
+socket.on('message', function(data){
+	console.log(data);
+});
 
 function get(element){
 	var type = window.location.hash.substr(1);

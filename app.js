@@ -156,33 +156,44 @@ gps.on('connection', function(socket){
     
   });
 });
-var chat = io.of('/chat');
 var chatrouter = require('./routes/chat');
-chat.on('connection', function(socket){
 
-  socket.on('connect', function(data){
-    socket.guid = data.guid;
-    chatrouter.setOnline(socket, function(){
+io.on('connection', function(socket){
+  socket.on('entrando', function(msg){
+    console.log( msg );
+    socket.guid = msg;
+    chatrouter.setOnline(socket, function(status, socketData, profileData){
+      console.log(status);
+      console.log(socketData);
+      console.log(profileData);
 
+      var conversations = chatrouter.conversationsJoin(socket, function(status, roomsData){
+        socket.emit('conversationsjoin',roomsData);
+      });
     });
-    var conversations = chatrouter.conversationsJoin(socket, function(status, socketD){
-      socket.emit('conversationsjoin',{status:true});
-    });
-
   });
   socket.on('message', function(data){
     chatrouter.message(data, function(status, messageData){
+      console.log("STATUS:");
+      console.log(status);
       if(status){
-        socket.in(messageData.conversation).emit('message',{data: messageData, t:true, accion: 'message' });
-        socket.broadcast.in(messageData.conversation).emit('message',{data: messageData, t:true, accion: 'message' });
+        console.log( messageData.conversation );
+        
+        console.log( "Rooms:" );
+        console.log(  socket.rooms );
+        //socket.emit('message',{data: messageData, t:true, accion: 'message' });
+
+        socket.to(messageData.conversation.toString()).emit('message',{data: messageData, t:true, accion: 'message' });
+        socket.broadcast.to(messageData.conversation.toString()).emit('message',{data: messageData, t:true, accion: 'message' });
       }
     });
   });
-  socket.on('disconnect', function(){
-    socket.rooms.forEach(function(room){
-         io.in(room).emit('user:disconnect', {id: socket.id,data: messageData, t:true });
-     });
+  socket.on('disconnect', function () {
+    chatrouter.delete(socket.id.toString(), function(err, s){
+      console.log(s);
+    });
   });
+
 });
 
 module.exports = app;
