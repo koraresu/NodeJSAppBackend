@@ -61,7 +61,7 @@ router.post('/conversations', multipartMiddleware, function(req, res){
 						profiles:{
 							$in: [ profileData._id ]
 						}
-					}).populate('profiles').exec(function(err, conversationData){
+					}).populate('profiles').populate('message').exec(function(err, conversationData){
 						res.json(conversationData);
 					});
 				}else{
