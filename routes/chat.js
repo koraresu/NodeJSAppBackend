@@ -115,7 +115,7 @@ router.post('/new/conversation', multipartMiddleware, function(req, res){
 		if(status){
 			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
 				if(status){
-					if(mongoose.Types.ObjectId.isValid(id)){
+					if(mongoose.Types.ObjectId.isValid(public_id)){
 						Networkfunc.PublicId(public_id, function(statusPublic, profileAnotherData){
 							if(statusPublic){
 								var find = {
