@@ -630,7 +630,10 @@ router.post('/get/friends', multipartMiddleware, function(req, res){
 											d = "f";
 										}
 
-										console.log( first._id + " == " + profileData._id + " | " + p._id + " | " + d );
+										console.log("First:"+first._id );
+										console.log("ProfileData:"+profileData._id );
+										console.log("P:"+p._id);
+										console.log("D:"+d);
 
 
 										ca( null, {
