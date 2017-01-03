@@ -117,6 +117,8 @@ router.post('/new/conversation', multipartMiddleware, function(req, res){
 				if(status){
 					if(mongoose.Types.ObjectId.isValid(public_id)){
 						Networkfunc.PublicId(public_id, function(statusPublic, profileAnotherData){
+							console.log( public_id );
+							console.log( statusPublic );
 							if(statusPublic){
 								var find = {
 									"profiles": {
