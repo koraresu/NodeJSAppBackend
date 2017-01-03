@@ -615,7 +615,7 @@ router.post('/get/friends', multipartMiddleware, function(req, res){
 							async.map( networkData , function(item, ca){
 
 										var profiles = item.profiles;
-
+										console.log(profiles);
 										var first  = profiles[0];
 										var second = profiles[1];
 										
