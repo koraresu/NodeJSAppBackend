@@ -107,6 +107,61 @@ router.post('/conversation', multipartMiddleware, function(req, res){
 		}
 	});
 });
+router.post('/new/conversation', multipartMiddleware, function(req, res){
+	var guid       = req.body.guid;
+	var public_id  = req.body.public_id;
+
+	Tokenfunc.exist(guid, function(status, tokenData){
+		if(status){
+			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
+				if(status){
+					if(mongoose.Types.ObjectId.isValid(id)){
+						Networkfunc.PublicId(public_id, function(statusPublic, profileAnotherData){
+							if(statusPublic){
+								var find = {
+									"profiles": {
+										"$all": [profileData._id,profileAnotherData._id],
+									}
+								};
+
+								Conversation.findOne(find).populate('profiles').exec(function(errConversation, conversationData){
+									if(!errConversation && conversationData){
+										Generalfunc.response(200, conversationData, function(response){
+												res.json(response);
+											});
+									}else{
+										var conversation = new Conversation({
+											profiles: [
+											profileData._id,
+											profileAnotherData._id
+											]
+										});
+										conversation.save(function(errConversation, conversationData){
+											Conversation.findOne({ _id: conversationData._id }).populate('profiles').exec(function(errConversation, conversationData){
+												Generalfunc.response(200, conversationData, function(response){
+													res.json(response);
+												});
+											});
+										});
+									}
+								});
+
+							}else{
+
+							}
+					}else{
+
+					}
+				}else{
+
+				}
+			});
+		}else{
+
+		}
+	});
+});
+
 
 router.conversationsJoin = function(socket, callback){
 	var guid = socket.guid;
