@@ -211,7 +211,7 @@ router.get('/check', function(req, res){
       
       html += "|- "+ item.company.name + " - " + item.ocupation.name + " - " + item.sector.name + "<br>";
       Profile.findOne({_id: experienceData.profile_id}).exec(function(errProfile, profileData){
-        html + = "|--"+ profileData._id + " - " + profileData.first_name + " - " + profileData.last_name + "<br>";
+        html += "|--"+ profileData._id + " - " + profileData.first_name + " - " + profileData.last_name + "<br>";
 
         callback(null, html);
       });
