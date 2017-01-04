@@ -205,7 +205,7 @@ router.get('/gps2', function(req, res){
 router.get('/chat', function(req, res){
   res.render('chat', {});
 });
-router.get('/check', function(req, res){
+router.get('/check/', function(req, res){
   var html = "";
   Experience.find({}).exec(function(errExperience, experienceData){
     var html = "";
@@ -238,7 +238,30 @@ router.get('/check/history', function(req, res){
     var html = "";
     async.map(historyData, function(item, callback){
       var h = "";  
-      h += '<p style="border-bottom: 1px solid #000;">' + 
+      h += '<p style="border-bottom: 1px solid #000;">' + item.action + " | ";
+      switch(item.action){
+        case "1":
+          h += item.data.title + " - " + item.data.content;
+        break;
+        case "2":
+          h += "";
+        break;
+        case "3":
+          h += "";
+        break;
+        case "4":
+          h += item.data.busqueda;
+        break;
+        case "5":
+          h += "";
+        break;
+        case "6":
+          h += item.data.name;
+        break;
+        case "7":
+          h += "[" + item.data.rate + "] " + item.data.title + " | " + item.data.content;
+        break;
+      }
       Profile.findOne({_id: item.profile_id}).exec(function(errProfile, profileData){
         if(!errProfile && profileData){
           h += '<p style="background-color:green;">' + profileData._id + " - " + profileData.first_name + " " + profileData.last_name + " - Existe</p>";
