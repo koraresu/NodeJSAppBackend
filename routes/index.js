@@ -4,6 +4,7 @@ var mongoose    = require('mongoose');
 var router = express.Router();
 var _jade = require('jade');
 var fs = require('fs');
+var async = require('async');
 
 var model = require('../model');
 var Profile     = model.profile;
