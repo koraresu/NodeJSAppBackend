@@ -256,7 +256,11 @@ router.get('/check/history', function(req, res){
           h += "";
         break;
         case "6":
-          h += item.data.name;
+          if(item.data != undefined){
+            if(item.data.name != undefined){
+              h += item.data.name;    
+            }
+          }
         break;
         case "7":
           h += "[" + item.data.rate + "] " + item.data.title + " | " + item.data.content;
