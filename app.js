@@ -188,11 +188,6 @@ io.on('connection', function(socket){
       }
     });
   });
-  socket.on('conversation', function(data){
-    chatrouter.conversation(data, function(){
-
-    });
-  });
   socket.on('disconnect', function () {
     chatrouter.delete(socket.id.toString(), function(err, s){
       console.log(s);
