@@ -16,7 +16,10 @@ var HistorySchema = new Schema({
 },{
   timestamps: true
 });
-
+HistorySchema.post('save', function(error, doc, next) {
+  next();
+});
+/*******************************************/
 var profileSchema = new Schema({
   first_name: String,
   last_name: String,
@@ -52,6 +55,10 @@ var profileSchema = new Schema({
 },{
   timestamps: true
 });
+profileSchema.post('save', function(error, doc, next) {
+  next();
+});
+/*******************************************/
 var ForgotSchema = new Schema({
   user: { type: Schema.Types.ObjectId, ref: 'User' },
   generated_id: { type: String},
@@ -62,6 +69,10 @@ var ForgotSchema = new Schema({
 }, {
   timestamps: true
 });
+ForgotSchema.post('save', function(error, doc, next) {
+  next();
+});
+/*******************************************/
 var locationSchema = new Schema({
   coordinates: {
     type: [Number],  // [<longitude>, <latitude>]
@@ -72,19 +83,30 @@ var locationSchema = new Schema({
 }, {
   timestamps: true
 });
+locationSchema.post('save', function(error, doc, next) {
+  next();
+});
+/*******************************************/
 var CompanyClaimSchema = new Schema({
   profile: { type: Schema.Types.ObjectId, ref: 'Profile' },
   company: { type: Schema.Types.ObjectId, ref: 'Company' }
 }, {
   timestamps: true
 });
+CompanyClaimSchema.post('save', function(error, doc, next) {
+  next();
+});
+/*******************************************/
 var NetworkSchema = new Schema({
 	accepted: Boolean,
 	profiles: [{ type: Schema.Types.ObjectId, ref: 'Profile' }]
 },{
   timestamps: true
 });
-
+NetworkSchema.post('save', function(error, doc, next) {
+  next();
+});
+/*******************************************/
 var companySchema = new Schema({
   name:  String,
   images: String,
@@ -97,8 +119,10 @@ var companySchema = new Schema({
 },{
   timestamps: true
 });
-
-
+companySchema.post('save', function(error, doc, next) {
+  next();
+});
+/*******************************************/
 var experienceSchema = new Schema({
   type: Number,  // 0 = Independiente | 1 = Empresa
   ocupation: {
@@ -117,12 +141,20 @@ var experienceSchema = new Schema({
 },{
   timestamps: true
 });
+experienceSchema.post('save', function(error, doc, next) {
+  next();
+});
+/*******************************************/
 var OnlineSchema = new Schema({
   profiles: { type: Schema.Types.ObjectId, ref: 'Profile' },
   socket: { type: Schema.Types.Mixed }
 },{
   timestamps: true
 });
+OnlineSchema.post('save', function(error, doc, next) {
+  next();
+});
+/*******************************************/
 var ConversationSchema = new Schema({
   profiles: [ { type: Schema.Types.ObjectId, ref: 'Profile' } ],
   status: { type: String },
@@ -130,6 +162,10 @@ var ConversationSchema = new Schema({
 },{
   timestamps: true
 });
+ConversationSchema.post('save', function(error, doc, next) {
+  next();
+});
+/*******************************************/
 var MessageSchema = new Schema({
   conversation: { type: Schema.Types.ObjectId, ref: 'Conversation' },
   profile_id: { type: Schema.Types.ObjectId, ref: 'Profile' },
@@ -137,7 +173,10 @@ var MessageSchema = new Schema({
 },{
   timestamps: true
 });
-
+MessageSchema.post('save', function(error, doc, next) {
+  next();
+});
+/*******************************************/
 var jobSchema = new Schema({
   name: String,
   type: Number,   // Profesion = 0 || Puesto = 1
@@ -145,12 +184,19 @@ var jobSchema = new Schema({
 },{
   timestamps: true
 });
+jobSchema.post('save', function(error, doc, next) {
+  next();
+});
+/*******************************************/
 var jobAreaSchema = new Schema({
   name: String,
   id_data: Number,
   value: String
 });
-
+jobAreaSchema.post('save', function(error, doc, next) {
+  next();
+});
+/*******************************************/
 var FeedbackSchema = new Schema({
 	profile_id: { type: Schema.Types.ObjectId, ref: 'Profile' },
 	title: { type: String },
@@ -158,6 +204,10 @@ var FeedbackSchema = new Schema({
 },{
   timestamps: true
 });
+FeedbackSchema.post('save', function(error, doc, next) {
+  next();
+});
+/*******************************************/
 var reviewSchema = new Schema({
 	title:      String,
 	content:    String,
@@ -167,12 +217,20 @@ var reviewSchema = new Schema({
 },{
   timestamps: true
 });
+reviewSchema.post('save', function(error, doc, next) {
+  next();
+});
+/*******************************************/
 var SearchSchema = new Schema({
   profile_id: { type: Schema.Types.ObjectId, ref: 'Profile' },
   text: { type: String }
 },{
   timestamps: true
 });
+SearchSchema.post('save', function(error, doc, next) {
+  next();
+});
+/*******************************************/
 var sectorSchema = new Schema({
   name:  String,
   images: String,
@@ -184,25 +242,39 @@ var sectorSchema = new Schema({
 },{
   timestamps: true
 });
-
+sectorSchema.post('save', function(error, doc, next) {
+  next();
+});
+/*******************************************/
 var skillsSchema = new Schema({
   name:   { type: String },
 },{
   timestamps: true
 });
+skillsSchema.post('save', function(error, doc, next) {
+  next();
+});
+/*******************************************/
 var specialitySchema = new Schema({
   name: String,
   parent: { type: Schema.Types.ObjectId, ref: 'Job' }
 },{
   timestamps: true
 });
+specialitySchema.post('save', function(error, doc, next) {
+  next();
+});
+/*******************************************/
 var tokenSchema = new Schema({  
   generated_id: { type: String},
   user_id: { type: Schema.Types.ObjectId, ref: 'User' }
 },{
   timestamps: true
 });
-
+tokenSchema.post('save', function(error, doc, next) {
+  next();
+});
+/*******************************************/
 var userSchema = new Schema({
   email: { type: String },
   password: { type: String },
@@ -211,7 +283,10 @@ var userSchema = new Schema({
 },{
   timestamps: true
 });
-
+userSchema.post('save', function(error, doc, next) {
+  next();
+});
+/*******************************************/
 var NotificationSchema = new Schema({
   tipo: Number, // 0 = se ha unido | 1 = recomendación | 2 = te recomiendan | 3 = Envio Solucitud | 4 = Respondio Solicitud
   profile: { type: Schema.Types.ObjectId, ref: 'Profile' },
@@ -224,6 +299,10 @@ var NotificationSchema = new Schema({
 },{
   timestamps: true
 });
+NotificationSchema.post('save', function(error, doc, next) {
+  next();
+});
+/*******************************************/
 var LogSchema = new Schema({
   code: Number,
   profile: { type: Schema.Types.ObjectId, ref: 'Profile' },
@@ -231,16 +310,27 @@ var LogSchema = new Schema({
 },{
   timestamps: true
 });
-
+LogSchema.post('save', function(error, doc, next) {
+  next();
+});
+/*******************************************/
 var PaisSchema = new Schema({
   name: { type: String }
 });
+PaisSchema.post('save', function(error, doc, next) {
+  next();
+});
+/*******************************************/
 var EstadoSchema = new Schema({
     "id" : { type: String },
     "key" : { type: String },
     "name" : { type: String },
     "shortname" : { type: String }
 });
+EstadoSchema.post('save', function(error, doc, next) {
+  next();
+});
+/*******************************************/
 var CiudadSchema = new Schema({
     "id" : { type: String },
     "key" : { type: String },
@@ -248,7 +338,10 @@ var CiudadSchema = new Schema({
     "name" : { type: String },
     "shortname" : { type: String }
 });
-
+CiudadSchema.post('save', function(error, doc, next) {
+  next();
+});
+/*******************************************/
 
 // Company
 exports.company      = db.model( 'Company' , companySchema );
