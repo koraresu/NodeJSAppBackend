@@ -210,14 +210,14 @@ router.get('/check', function(req, res){
   Experience.find({}).exec(function(errExperience, experienceData){
     async.map(experienceData, function(item, callback){
       
-      html += "|- "+ item.company.name + " - " + item.ocupation.name + " - " + item.sector.name + "<br>";
+      html += "<p>"+ item.company.name + " - " + item.ocupation.name + " - " + item.sector.name + "<br>";
       Profile.findOne({_id: experienceData.profile_id}).exec(function(errProfile, profileData){
         if(!errProfile && profileData){
-          html += "|-- " + profileData._id + " - " + profileData.first_name + " - " + profileData.last_name + "Existe<br>";
+          html += "<p>" + profileData._id + " - " + profileData.first_name + " - " + profileData.last_name + "Existe</p>";
         }else{
-          html += "|-- " + experienceData.profile_id + " - NoExiste<br>";
+          html += "<p>" + experienceData.profile_id + " - NoExiste</p>";
         }
-        
+        html += "</p>";
 
         callback(null, html);
       });
