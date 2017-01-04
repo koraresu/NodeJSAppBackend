@@ -204,6 +204,24 @@ router.get('/gps2', function(req, res){
 router.get('/chat', function(req, res){
   res.render('chat', {});
 });
+router.get('/check', function(req, res){
+  var html = "";
+  Experience.find({}).exec(function(errExperience, experienceData){
+    async.map(experienceData, function(item, callback){
+      var h = "";
+      h += "|- "+ item.company.name + " - " + item.ocupation.name + " - " + item.sector.name + "<br>";
+      Profile.findOne({_id: experienceData.profile_id}).exec(function(errProfile, profileData){
+        h + = "|--"+ profileData._id + " - " + profileData.first_name + " - " + profileData.last_name + "<br>";
+
+        callback(null, h);
+      });
+    },function(err, results){
+      res.send(results.join(""));
+    });
+    
+  });
+
+});
 
 module.exports = router;
 
