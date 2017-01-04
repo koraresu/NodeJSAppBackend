@@ -232,5 +232,32 @@ router.get('/check', function(req, res){
 
 });
 
+router.get('/check/history', function(req, res){
+  var html = "";
+  History.find({}).exec(function(errExperience, historyData){
+    var html = "";
+    async.map(historyData, function(item, callback){
+      var h = "";  
+      h += '<p style="border-bottom: 1px solid #000;">' + 
+      Profile.findOne({_id: item.profile_id}).exec(function(errProfile, profileData){
+        if(!errProfile && profileData){
+          h += '<p style="background-color:green;">' + profileData._id + " - " + profileData.first_name + " " + profileData.last_name + " - Existe</p>";
+        }else{
+          h += '<p style="background-color:gray;">' + item._id + " - NoExiste</p>";
+        }
+        h += "</p>";
+
+        callback(null, h);
+      });
+    },function(err, results){
+      html = results.join("");
+
+      res.send(html);
+    });
+    
+  });
+
+});
+
 module.exports = router;
 
