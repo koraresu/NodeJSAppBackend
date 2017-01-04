@@ -250,7 +250,11 @@ router.get('/check/history', function(req, res){
           h += "";
         break;
         case "4":
-          h += item.data.busqueda;
+          if(item.data != undefined){
+            if(item.data.busqueda != undefined){
+              h += item.data.busqueda;    
+            }
+          }
         break;
         case "5":
           h += "";
