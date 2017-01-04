@@ -224,6 +224,8 @@ router.get('/check', function(req, res){
       });
     },function(err, results){
       html = results.join("");
+
+      res.send(html);
     });
     
   });
