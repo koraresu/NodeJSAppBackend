@@ -928,7 +928,7 @@ router.post('/recomendar', multipartMiddleware, function(req, res){
 											});
 										}else{
 											var data = {
-												profile: profileAnotherData._id,
+												profile: profileAnotherData,
 												profile_emisor: profileData,
 												profile_mensaje: profileRecomendData,
 											};
