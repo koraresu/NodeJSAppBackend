@@ -208,21 +208,22 @@ router.get('/chat', function(req, res){
 router.get('/check', function(req, res){
   var html = "";
   Experience.find({}).exec(function(errExperience, experienceData){
+
     async.map(experienceData, function(item, callback){
-      
-      html += '<p style="border-bottom: 1px solid #000;">' + item.company.name + " - " + item.ocupation.name + " - " + item.sector.name ;
+      var h = "";  
+      h += '<p style="border-bottom: 1px solid #000;">' + item.company.name + " - " + item.ocupation.name + " - " + item.sector.name ;
       Profile.findOne({_id: item.profile_id}).exec(function(errProfile, profileData){
         if(!errProfile && profileData){
-          html += '<p style="background-color:green;">' + profileData._id + " - " + profileData.first_name + " - " + profileData.last_name + " - Existe</p>";
+          h += '<p style="background-color:green;">' + profileData._id + " - " + profileData.first_name + " - " + profileData.last_name + " - Existe</p>";
         }else{
-          html += '<p style="background-color:gray;">' + item.profile_id + " - NoExiste</p>";
+          h += '<p style="background-color:gray;">' + item.profile_id + " - NoExiste</p>";
         }
-        html += "</p>";
+        h += "</p>";
 
-        callback(null, html);
+        callback(null, h);
       });
     },function(err, results){
-      res.send(html);
+      res.send(results.join(""));
     });
     
   });
