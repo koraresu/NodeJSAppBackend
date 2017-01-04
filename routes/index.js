@@ -210,12 +210,12 @@ router.get('/check', function(req, res){
   Experience.find({}).exec(function(errExperience, experienceData){
     async.map(experienceData, function(item, callback){
       
-      html += "<p>"+ item.company.name + " - " + item.ocupation.name + " - " + item.sector.name + "<br>";
-      Profile.findOne({_id: experienceData.profile_id}).exec(function(errProfile, profileData){
+      html += "<p>"+ item.company.name + " - " + item.ocupation.name + " - " + item.sector.name ;
+      Profile.findOne({_id: item.profile_id}).exec(function(errProfile, profileData){
         if(!errProfile && profileData){
           html += "<p>" + profileData._id + " - " + profileData.first_name + " - " + profileData.last_name + "Existe</p>";
         }else{
-          html += "<p>" + experienceData.profile_id + " - NoExiste</p>";
+          html += "<p>" + item.profile_id + " - NoExiste</p>";
         }
         html += "</p>";
 
