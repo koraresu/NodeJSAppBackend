@@ -181,10 +181,9 @@ io.on('connection', function(socket){
         
         console.log( "Rooms:" );
         console.log(  socket.rooms );
-        //socket.emit('message',{data: messageData, t:true, accion: 'message' });
-        io.sockets.in(messageData.conversation.toString()).emit('message',{data: messageData, t:true, accion: 'message' });
-        //socket.to(messageData.conversation.toString()).emit('message',{data: messageData, t:true, accion: 'message' });
-        //socket.broadcast.to(messageData.conversation.toString()).emit('message',{data: messageData, t:true, accion: 'message' });
+        
+        //io.sockets.in(messageData.conversation.toString()).emit('message',{data: messageData, t:true, accion: 'message' });
+        socket.broadcast.to(messageData.conversation.toString()).emit('message',{data: messageData, t:true, accion: 'message' });
       }
     });
   });
