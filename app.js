@@ -183,7 +183,8 @@ io.on('connection', function(socket){
         console.log(  socket.rooms );
         
         //io.sockets.in(messageData.conversation.toString()).emit('message',{data: messageData, t:true, accion: 'message' });
-        socket.broadcast.to(messageData.conversation.toString()).emit('message',{data: messageData, t:true, accion: 'message' });
+        socket.emit('message',{data: messageData, t:true, accion: 'message' });
+        socket.broadcast.to(messageData.conversation.toString()).emit('message',{data: messageData, t:false, accion: 'message' });
       }
     });
   });
