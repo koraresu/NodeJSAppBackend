@@ -188,11 +188,11 @@ router.conversationsJoin = function(socket, callback){
 						});
 					});
 				}else{
-					callback(false, socket);
+					callback(false, {});
 				}
 			});
 		}else{
-			callback(false, socket);
+			callback(false, {});
 		}
 	});
 }
