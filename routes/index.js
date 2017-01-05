@@ -202,8 +202,11 @@ router.get('/gps', function(req, res){
 router.get('/gps2', function(req, res){
   res.render('gps2', {} );
 });
-router.get('/chat', function(req, res){
-  res.render('chat', {});
+router.get('/chat/2', function(req, res){
+  res.render('chat2', {});
+});
+router.get('/chat/1', function(req, res){
+  res.render('chat1', {});
 });
 router.get('/check/', function(req, res){
   var html = "";
