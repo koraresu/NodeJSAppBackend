@@ -224,7 +224,7 @@ router.setOnline = function(socket, callback){
 	callback(socket);
 }
 router.unsetOnline = function(socket, callback){
-	Online.remove({ socket: socket }).exec(function(err){
+	Online.remove({ socket: socket.id }).exec(function(err){
 		callback(err, socket);
 	});
 }

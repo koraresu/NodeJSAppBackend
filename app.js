@@ -184,6 +184,9 @@ io.on('connection', function(socket){
       }
     });
   });
+  socket.on('conversations', function(data){
+    socket.emit('conversations', socket.rooms);
+  });
   socket.on('disconnect', function () {
     chatrouter.delete(socket.id.toString(), function(err, s){
       console.log(s);
