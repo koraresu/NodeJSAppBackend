@@ -164,7 +164,7 @@ io.on('connection', function(socket){
     chatrouter.setOnline(socket, function(status, socketData, profileData){
       var conversations = chatrouter.conversationsJoin(socket, function(status, roomsData){
         console.log(roomsData);
-        //socket.emit('conversationsjoin',roomsData);
+        socket.emit('conversationsjoin',roomsData);
       });
     });
   });
