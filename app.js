@@ -163,6 +163,7 @@ io.on('connection', function(socket){
     socket.guid = msg;
     chatrouter.setOnline(socket, function(status, socketData, profileData){
       var conversations = chatrouter.conversationsJoin(socket, function(status, roomsData){
+        console.log(roomsData);
         //socket.emit('conversationsjoin',roomsData);
       });
     });
