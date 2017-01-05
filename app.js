@@ -160,15 +160,10 @@ var chatrouter = require('./routes/chat');
 
 io.on('connection', function(socket){
   socket.on('entrando', function(msg){
-    console.log( msg );
     socket.guid = msg;
     chatrouter.setOnline(socket, function(status, socketData, profileData){
-      console.log(status);
-      console.log(socketData);
-      console.log(profileData);
-
       var conversations = chatrouter.conversationsJoin(socket, function(status, roomsData){
-        socket.emit('conversationsjoin',roomsData);
+        //socket.emit('conversationsjoin',roomsData);
       });
     });
   });
