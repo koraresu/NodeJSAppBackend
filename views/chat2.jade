@@ -1,0 +1,14 @@
+doctype html
+html
+  head
+    title= title
+    script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js")
+    script(src="http://67.222.22.154:3000/socket.io/socket.io.js")
+    script(src="/javascripts/chat2.js")
+    link(rel='stylesheet', href='/stylesheets/chat.css')
+  body
+    div#conversations
+      ul
+    div#messages
+    form()
+      textarea#message
