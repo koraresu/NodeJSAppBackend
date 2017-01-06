@@ -106,7 +106,7 @@ router.post('/conversation', multipartMiddleware, function(req, res){
 							}, function(err, results){
 								Conversation.findOne({
 									_id: id
-								}}).populate('profiles').exec(function(errConversation, conversationData){
+								}).populate('profiles').exec(function(errConversation, conversationData){
 
 									var x = Generalfunc.profile_ajeno(profileData._id, conversationData.profiles);
 									var title = x.first_name + " " + x.last_name;
