@@ -166,8 +166,16 @@ exports.precise_round = function(num, decimals) {
 	return result/1;
 }
 exports.profile_ajeno = function(profileID,profiles){
+
+
 	var first  = profiles[0];
 	var second = profiles[1];
+
+	console.log("First:");
+	console.log( first );
+
+	console.log("Second:");
+	console.log( second );
 
 
 	if(first._id == profileID){
