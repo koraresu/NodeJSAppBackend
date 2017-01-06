@@ -88,7 +88,7 @@ router.post('/conversation', multipartMiddleware, function(req, res){
 						}).populate('profile_id').sort('-createdAt').limit(10).exec(function(err, messageData){
 							console.log(messageData);
 							async.map(messageData, function(item, callback){
-								var d = (item.profile_id._id.toString() != profileData._id.toString());
+								var d = (item.profile_id._id.toString() == profileData._id.toString());
 								callback( null, { data: item, t: d});
 							}, function(err, results){
 								res.json(results);	
