@@ -167,11 +167,7 @@ exports.precise_round = function(num, decimals) {
 }
 exports.profile_ajeno = function(profileID,profiles){
 	var ajenos = profiles.filter(function(item){
-	    if(item._id != profileID){
-			return true;
-	    }else{
-			return false;
-	    }
+	    return (item._id == profileID);
 	});
 
 	return ajenos[0];
