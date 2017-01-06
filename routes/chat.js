@@ -247,9 +247,10 @@ router.message = function(data, callback){
 							message: text
 						};
 						var message = new Message(d);
-						message.save(function(err, messageData){
-							console.log( messageData._id );
-							Message.findOne({ _id: messageData._id}).populate('profile_id').exec(function(err, messageData){
+						message.save(function(err, mData){
+
+							console.log( mData );
+							Message.findOne({ _id: mData._id}).populate('profile_id').exec(function(err, messageData){
 								Conversation.findOne({ _id: id }).exec(function(errConv, convData){
 									convData.message = messageData._id;
 									convData.save(function(errCon, conData){
