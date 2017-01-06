@@ -1,5 +1,5 @@
 var socket = io('http://67.222.22.154:3000/');
-var guid = "582cfd32ca3d323d55301782";
+var guid = "586ecc8fe8dcd81c45ba8daa";
 socket.emit('entrando',guid);
 socket.on('conversationsjoin', function(data){
 	console.log(data);
