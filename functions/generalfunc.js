@@ -153,7 +153,7 @@ exports.sendEmail = function(file, data,email, asunto, callback){
 					callback(true, html);
 				}
 			});
-    	}
+    	}	
   	});
   	
 }
@@ -166,9 +166,13 @@ exports.precise_round = function(num, decimals) {
 	return result/1;
 }
 exports.profile_ajeno = function(profileID,profiles){
-	var ajenos = profiles.filter(function(item){
-	    return (item._id == profileID);
-	});
+	var first  = profiles[0];
+	var second = profiles[1];
 
-	return ajenos[0];
+
+	if(first._id == profileID){
+		return second;
+	}else{
+		return first;
+	}
 }
