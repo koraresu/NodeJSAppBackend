@@ -165,6 +165,14 @@ exports.precise_round = function(num, decimals) {
 	var result = (Math.round((num * t) + (decimals>0?1:0)*(Math.sign(num) * (10 / Math.pow(100, decimals)))) / t).toFixed(decimals);
 	return result/1;
 }
-exports.profile_ajeno = function(profiles){
-	
+exports.profile_ajeno = function(profileID,profiles){
+	var ajenos = profiles.filter(function(item){
+	    if(item._id != profileID){
+			return true;
+	    }else{
+			return false;
+	    }
+	});
+
+	return ajenos[0];
 }

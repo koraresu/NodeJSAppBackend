@@ -79,6 +79,8 @@ router.post('/conversation', multipartMiddleware, function(req, res){
 
 	var page      = req.body.page;
 
+	var limit = 10;
+
 
 	if(page == undefined){
 		page = 1;
@@ -86,7 +88,7 @@ router.post('/conversation', multipartMiddleware, function(req, res){
 
 
 	page = page-1;
-	offset = page*10;
+	offset = page*limit;
 
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
@@ -96,13 +98,24 @@ router.post('/conversation', multipartMiddleware, function(req, res){
 						id = mongoose.Types.ObjectId(id);
 						Message.find({
 							conversation: id
-						}).populate('profile_id').sort({$natural:-1}).limit(10).skip(offset).exec(function(err, messageData){
+						}).populate('profile_id').sort({$natural:-1}).limit(limit).skip(offset).exec(function(err, messageData){
 							console.log(messageData);
 							async.map(messageData, function(item, callback){
 								var d = (item.profile_id._id.toString() == profileData._id.toString());
 								callback( null, { data: item, t: d});
 							}, function(err, results){
-								res.json(results);	
+								Conversation.findOne({
+									_id: id
+								}}).populate('profiles').exec(function(errConversation, conversationData){
+
+									var x = Generalfunc.profile_ajeno(profileData._id, conversationData.profiles);
+									var title = x.first_name + " " + x.last_name;
+
+									Generalfunc.response(200, { title: title,conversation: conversationData, messages: results}, function(response){
+										res.json(response);
+									});
+								});
+								
 							})
 						});
 					}else{
