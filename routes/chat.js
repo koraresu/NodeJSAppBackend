@@ -77,6 +77,17 @@ router.post('/conversation', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 	var id        = req.body.id;
 
+	var page      = req.body.page;
+
+
+	if(page == undefined){
+		page = 1;
+	}
+
+
+	page = page-1;
+	offset = page*10;
+
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
 			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
@@ -85,7 +96,7 @@ router.post('/conversation', multipartMiddleware, function(req, res){
 						id = mongoose.Types.ObjectId(id);
 						Message.find({
 							conversation: id
-						}).populate('profile_id').sort({$natural:-1}).limit(10).exec(function(err, messageData){
+						}).populate('profile_id').sort({$natural:-1}).limit(10).skip(offset).exec(function(err, messageData){
 							console.log(messageData);
 							async.map(messageData, function(item, callback){
 								var d = (item.profile_id._id.toString() == profileData._id.toString());
