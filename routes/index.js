@@ -208,6 +208,10 @@ router.get('/chat/2', function(req, res){
 router.get('/chat/1', function(req, res){
   res.render('chat1', {});
 });
+router.get('/chat/3', function(req, res){
+  res.render('chat3', {});
+});
+
 router.get('/check/', function(req, res){
   var html = "";
   Experience.find({}).exec(function(errExperience, experienceData){
