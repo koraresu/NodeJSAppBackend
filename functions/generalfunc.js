@@ -180,7 +180,7 @@ exports.profile_ajeno = function(profileID,profiles){
 	console.log( second );
 
 
-	if(first._id == profileID){
+	if(first._id.toString() == profileID.toString()){
 		return second;
 	}else{
 		return first;
