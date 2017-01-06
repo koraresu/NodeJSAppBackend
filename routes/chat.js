@@ -220,11 +220,13 @@ router.conversationsJoin = function(socket, callback){
 	});
 }
 router.setOnline = function(socket, callback){
-
 	var guid = socket.guid;
+
+	console.log( guid );
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
 			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
+				console.log( profileData );
 				if(status){
 					var online = new Online({
 						profiles: profileData._id,
