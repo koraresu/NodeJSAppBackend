@@ -253,10 +253,15 @@ router.message = function(data, callback){
 							Message.findOne({ _id: mData._id}).populate('profile_id').exec(function(err, messageData){
 								console.log( messageData );
 								Conversation.findOne({ _id: id }).exec(function(errConv, convData){
-									convData.message = messageData._id;
-									convData.save(function(errCon, conData){
-										callback(true, messageData);
-									});
+									if(!errConv && convData){
+										convData.message = messageData._id;
+										convData.save(function(errCon, conData){
+											callback(true, messageData);
+										});	
+									}else{
+										callback(true, messageData);	
+									}
+									
 								});
 							});
 						});
