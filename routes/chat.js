@@ -99,7 +99,6 @@ router.post('/conversation', multipartMiddleware, function(req, res){
 						Message.find({
 							conversation: id
 						}).populate('profile_id').sort({$natural:-1}).limit(limit).skip(offset).exec(function(err, messageData){
-							console.log(messageData);
 							async.map(messageData, function(item, callback){
 								var d = (item.profile_id._id.toString() == profileData._id.toString());
 								callback( null, { data: item, t: d});
