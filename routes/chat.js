@@ -85,7 +85,7 @@ router.post('/conversation', multipartMiddleware, function(req, res){
 						id = mongoose.Types.ObjectId(id);
 						Message.find({
 							conversation: id
-						}).populate('profile_id').sort('+createdAt').limit(10).exec(function(err, messageData){
+						}).populate('profile_id').sort({$natural:1}).limit(10).exec(function(err, messageData){
 							console.log(messageData);
 							async.map(messageData, function(item, callback){
 								var d = (item.profile_id._id.toString() == profileData._id.toString());
