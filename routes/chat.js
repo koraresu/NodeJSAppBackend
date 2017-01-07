@@ -61,7 +61,7 @@ router.post('/conversations', multipartMiddleware, function(req, res){
 						profiles:{
 							$in: [ profileData._id ]
 						}
-					}).populate('profiles').populate('message').exec(function(err, conversationData){
+					}).populate('profiles').populate('message').sort({ updatedAt: -1 }).exec(function(err, conversationData){
 						res.json(conversationData);
 					});
 				}else{
