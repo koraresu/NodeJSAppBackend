@@ -305,4 +305,9 @@ router.message = function(data, callback){
 
 
 }
+router.delete = function(socket, callback){
+	Online.remove({ socket: socket }).exec(function(err){
+		callback(err, socket);
+	});
+}
 module.exports = router;
