@@ -35,6 +35,16 @@ var Generalfunc = require('../functions/generalfunc');
 var Notificationfunc = require('../functions/notificationfunc');
 
 
+var apns = require("apns"), options, connection, notification;
+
+options = {
+   keyFile : "conf/key.pem",
+   certFile : "conf/cert.pem",
+   debug : true
+};
+
+connection = new apns.Connection(options);
+
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -210,6 +220,17 @@ router.get('/chat/1', function(req, res){
 });
 router.get('/chat/3', function(req, res){
   res.render('chat3', {});
+});
+router.get('/send/notification/:device_id', function(req, res){
+  var goodToken = req.params.device_id,
+    notification = new apns.Notification(),
+    device = new apns.Device(goodToken);
+
+  notification.alert = "Hello World (must not be sent) !";
+  notification.device = device;
+  connection.sendNotification(notification);
+
+  res.render('index',{});
 });
 
 router.get('/check/', function(req, res){

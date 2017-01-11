@@ -27,6 +27,19 @@ var chat         = require('./routes/chat');
 var notification = require('./routes/notifications');
 var gps          = require('./routes/gps');
 
+/**
+  Apple Push Notification
+**/
+var apns = require("apns"), options, connection, notification;
+
+options = {
+   keyFile : "conf/key.pem",
+   certFile : "conf/cert.pem",
+   debug : true
+};
+
+connection = new apns.Connection(options);
+
 
 var app = express();
 
@@ -180,6 +193,13 @@ io.on('connection', function(socket){
         //io.sockets.in(messageData.conversation.toString()).emit('message',{data: messageData, t:true, accion: 'message' });
         socket.emit('message',{data: messageData, t:true, accion: 'message' });
         socket.broadcast.to(messageData.conversation.toString()).emit('message',{data: messageData, t:false, accion: 'message' });
+
+        /******* Apple Push Notification *****/
+        notification = new apns.Notification();
+        notification.device = new apns.Device("iphone_token");
+        notification.alert = "Hello World !";
+
+        connection.sendNotification(notification);
       }
     });
   });
