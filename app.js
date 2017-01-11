@@ -25,8 +25,34 @@ var publish      = require('./routes/publish');
 var extra        = require('./routes/extra');
 var chat         = require('./routes/chat');
 var notification = require('./routes/notifications');
+var gps          = require('./routes/gps');
 
-var gps = require('./routes/gps');
+var apn = require('apn');
+
+var options = {
+  token: {
+    key: "./key.pem",
+    keyId: "T0K3NK3Y1D",
+    teamId: "58GA47LFA6",
+  },
+  production: false,
+};
+
+var apnProvider = new apn.Provider(options);
+
+let deviceToken = "ec1aef011ade009f9ddd5fa404df5edbef048ab3";
+var note = new apn.Notification();
+
+note.expiry = Math.floor(Date.now() / 1000) + 3600; // Expires 1 hour from now.
+note.badge = 3;
+note.sound = "ping.aiff";
+note.alert = "You have a new message";
+note.payload = {'messageFrom': 'John Appleseed'};
+note.topic = "1164208927";
+
+apnProvider.send(note, deviceToken).then( (result) => {
+  console.log( result );
+});
 
 
 var app = express();
@@ -194,6 +220,7 @@ io.on('connection', function(socket){
   });
 
 });
+
 
 module.exports = app;
 function findClientsSocket(roomId, namespace) {
