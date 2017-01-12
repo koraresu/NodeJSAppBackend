@@ -190,15 +190,17 @@ io.on('connection', function(socket){
     });
   });
   socket.on('device', function(msg){
+    console.log("DEVICE");
+    console.log("MSG:");
+    console.log( msg );
+    console.log("GUID:" + socket.guid );
     chatrouter.setDevice(socket.guid, msg, function(status, deviceData, profileData){
       console.log( deviceData );
-
     });
   });
   socket.on('message', function(data){
     chatrouter.message(data, function(status, messageData){
       if(status){
-        
         //io.sockets.in(messageData.conversation.toString()).emit('message',{data: messageData, t:true, accion: 'message' });
         socket.emit('message',{data: messageData, t:true, accion: 'message' });
         socket.broadcast.to(messageData.conversation.toString()).emit('message',{data: messageData, t:false, accion: 'message' });

@@ -59,7 +59,7 @@ profileSchema.post('save', function(error, doc, next) {
   next();
 });
 var deviceSchema = new Schema({
-  token:   { type: String},
+  token:   String,
   profile: { type: Schema.Types.ObjectId, ref: 'Profile' },
   info: { type: Schema.Types.Mixed }
 });

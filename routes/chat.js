@@ -262,10 +262,10 @@ router.setOnline = function(guid,socket, callback){
 		}
 	});
 }
-router.setDevice = function(guid, device, callback){
+router.setDevice = function(guid, deviceID, callback){
 	console.log(" SET DEVICE ");
 	console.log("GUID:" + guid );
-	console.log("TOKEN:" + device );
+	console.log("TOKEN:" + deviceID );
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
 			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
@@ -277,7 +277,7 @@ router.setDevice = function(guid, device, callback){
 						}else{
 							var deviceEl = new Device({
 								profile: profileData._id,
-								token:   device
+								token:   deviceID
 							});
 							deviceEl.save(function(err, deviceData){
 								console.log("DEviceData:");
@@ -288,11 +288,11 @@ router.setDevice = function(guid, device, callback){
 						}
 					});
 				}else{
-					callback(false, device);
+					callback(false, deviceID);
 				}
 			});
 		}else{
-			callback(false, device);
+			callback(false, deviceID);
 		}
 	});
 }
