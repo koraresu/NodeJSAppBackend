@@ -238,7 +238,7 @@ router.conversationsJoin = function(socket, callback){
 		}
 	});
 }
-router.setOnline = function(guid, device,socket, callback){
+router.setOnline = function(guid,socket, callback){
 	console.log(" SET ONLINE ");
 	console.log("GUID:" + guid );
 	console.log("DEVICE:" + device );
