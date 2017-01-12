@@ -271,7 +271,7 @@ router.setDevice = function(guid, device, callback){
 			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
 				if(status){
 
-					Device.findOne({ profiles: profileData._id }).exec(function(errDevice, deviceData){
+					Device.findOne({ profile: profileData._id }).exec(function(errDevice, deviceData){
 						if(!errDevice && deviceData){
 							deviceData.active = true;
 							device.save(function(err, deviceData){
@@ -279,7 +279,7 @@ router.setDevice = function(guid, device, callback){
 							});
 						}else{
 							var device = new Device({
-								profiles: profileData._id,
+								profile: profileData._id,
 								token:   device,
 								active: true
 							});
