@@ -161,8 +161,7 @@ router.post('/new/conversation', multipartMiddleware, function(req, res){
 					if(mongoose.Types.ObjectId.isValid(public_id)){
 						public_id = mongoose.Types.ObjectId(public_id);
 						Networkfunc.PublicId(public_id, function(statusPublic, profileAnotherData){
-							console.log( public_id );
-							console.log( statusPublic );
+							
 							if(statusPublic){
 								var find = {
 									"profiles": {
@@ -314,9 +313,7 @@ router.message = function(data, callback){
 						var message = new Message(d);
 						message.save(function(err, mData){
 
-							console.log( mData );
 							Message.findOne({ _id: mData._id}).populate('profile_id').exec(function(err, messageData){
-								console.log( messageData );
 								Conversation.findOne({ _id: id }).exec(function(errConv, convData){
 									if(!errConv && convData){
 										convData.message = messageData._id;
@@ -370,9 +367,11 @@ router.sendPush = function(device_id, message, payload){
   });
 }
 router.deviceajeno = function(conversation, socket, callback){
-	
+
 	Conversation.findOne({ _id: mongoose.Types.ObjectId(conversation) }).exec(function(errConversation, conversationData){
+			console.log( socket.id );
 				Online.findOne({ socket: socket.id }).exec(function(errOnline, onlineData){
+					console.log( onlineData );
 					if(!errOnline && onlineData){
 						var otro = Generalfunc.profile_ajeno(onlineData.profiles, conversationData.profiles);
 						console.log( otro );
