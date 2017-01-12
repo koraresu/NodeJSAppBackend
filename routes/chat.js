@@ -261,10 +261,6 @@ router.setOnline = function(guid,socket, callback){
 			callback(false, socket);
 		}
 	});
-	/*
-	
-	*/
-	callback(socket);
 }
 router.setDevice = function(guid, device, callback){
 	console.log(" SET ONLINE ");
@@ -293,17 +289,13 @@ router.setDevice = function(guid, device, callback){
 						}
 					});
 				}else{
-					callback(false, socket);
+					callback(false, device);
 				}
 			});
 		}else{
-			callback(false, socket);
+			callback(false, device);
 		}
 	});
-	/*
-	
-	*/
-	callback(socket);
 }
 router.unsetOnline = function(socket, callback){
 	Online.remove({ socket: socket.id }).exec(function(err){
