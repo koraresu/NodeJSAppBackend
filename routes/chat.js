@@ -279,6 +279,8 @@ router.setDevice = function(guid, deviceID, callback){
 								profile: profileData._id,
 								token:   deviceID
 							}
+							console.log("D:");
+							console.log(d);
 							var deviceEl = new Device(d);
 							deviceEl.save(function(err, deviceData){
 								console.log("DEviceData:");
