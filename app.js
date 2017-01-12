@@ -190,7 +190,10 @@ io.on('connection', function(socket){
     });
   });
   socket.on('device', function(msg){
+    chatrouter.setDevice(socket.guid, msg, function(status, deviceData, profileData){
+      console.log( deviceData );
 
+    });
   });
   socket.on('message', function(data){
     chatrouter.message(data, function(status, messageData){

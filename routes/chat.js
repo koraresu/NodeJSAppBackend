@@ -288,7 +288,7 @@ router.setDevice = function(guid, device, callback){
 								active: true
 							});
 							device.save(function(err, deviceData){
-								callback(true, device, deviceData );
+								callback(true, deviceData, profileData );
 							});
 						}
 					});
