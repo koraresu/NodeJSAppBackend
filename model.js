@@ -61,7 +61,8 @@ profileSchema.post('save', function(error, doc, next) {
 var deviceSchema = new Schema({
   token:   String,
   profile: { type: Schema.Types.ObjectId, ref: 'Profile' },
-  info: { type: Schema.Types.Mixed }
+  info: { type: Schema.Types.Mixed },
+  active: Boolean
 });
 deviceSchema.post('save', function(err, doc, next){
   next();
