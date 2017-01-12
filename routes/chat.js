@@ -275,10 +275,11 @@ router.setDevice = function(guid, deviceID, callback){
 						if(!errDevice && deviceData){
 							callback(true, deviceData, profileData );
 						}else{
-							var deviceEl = new Device({
+							var d = {
 								profile: profileData._id,
 								token:   deviceID
-							});
+							}
+							var deviceEl = new Device(d);
 							deviceEl.save(function(err, deviceData){
 								console.log("DEviceData:");
 								console.log(deviceData);
