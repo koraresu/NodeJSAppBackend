@@ -241,7 +241,7 @@ router.conversationsJoin = function(socket, callback){
 router.setOnline = function(guid,socket, callback){
 	console.log(" SET ONLINE ");
 	console.log("GUID:" + guid );
-	console.log("DEVICE:" + device );
+	
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
 			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
