@@ -238,10 +238,10 @@ router.conversationsJoin = function(socket, callback){
 		}
 	});
 }
-router.setOnline = function(socket, callback){
-	var guid = socket.guid;
-	var device = socket.device;
-	console.log( guid );
+router.setOnline = function(guid, device, callback){
+	console.log(" SET ONLINE ");
+	console.log("GUID:" + guid );
+	console.log("DEVICE:" + device );
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
 			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
