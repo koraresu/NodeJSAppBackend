@@ -375,8 +375,13 @@ router.deviceajeno = function(conversation, guid, callback){
 			if(status){
 				Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
 					if(status){
-						var otro = Generalfunc.profile_ajeno(profileData, conversationData.profiles);
+						var otro = Generalfunc.profile_ajeno(profileData._id, conversationData.profiles);
+						console.log( otro );
 						Device.findOne({ profile: otro }).exec(function(errDevice, deviceData){
+							console.log( "ErroDevice:");
+							console.log( errDevice );
+							console.log("DeviceData:");
+							console.log( deviceData );
 							callback(true, conversationData, deviceData);
 						})
 					}else{
