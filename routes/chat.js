@@ -389,26 +389,7 @@ router.deviceajeno = function(conversation, socket, callback){
         console.log("Conversation:" + conversation );
 
 	Conversation.findOne({ _id: mongoose.Types.ObjectId(conversation) }).exec(function(errConversation, conversationData){
-				Online.findOne({ socket: socket }).exec(function(errOnline, onlineData){
-					console.log( onlineData );
-					if(!errOnline && onlineData){
-						console.log( conversation.profiles );
-						var otro = Generalfunc.profile_ajeno(onlineData.profiles, conversationData.profiles);
-						console.log( otro );
-						Device.findOne({ profile: otro }).exec(function(errDevice, deviceData){
-							console.log( "ErroDevice:");
-							console.log( errDevice );
-							console.log("DeviceData:");
-							console.log( deviceData );
-							callback(true, conversationData, deviceData);
-						})
-					}else{
-						console.log("Token2Profile Fail");
-						callback(false);
-					}
-				});
-			
-		
+		console.log(conversationData);
 	});
 }
 module.exports = router;
