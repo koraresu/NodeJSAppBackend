@@ -369,14 +369,12 @@ router.sendPush = function(device_id, message, payload){
     res.render('notifications',{ result: result });
   });
 }
-router.deviceajeno = function(conversation, guid, callback){
+router.deviceajeno = function(conversation, socket, callback){
 	console.log(guid);
 	Conversation.findOne({ _id: mongoose.Types.ObjectId(conversation) }).exec(function(errConversation, conversationData){
-		Tokenfunc.exist(guid, function(status, tokenData){
-			if(status){
-				Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
-					if(status){
-						var otro = Generalfunc.profile_ajeno(profileData._id, conversationData.profiles);
+				Online.findOne({ socket: socket.id }).exec(function(errOnline, onlineData){
+					if(!errOnline && onlineData){
+						var otro = Generalfunc.profile_ajeno(onlineData.profiles, conversationData.profiles);
 						console.log( otro );
 						Device.findOne({ profile: otro }).exec(function(errDevice, deviceData){
 							console.log( "ErroDevice:");
@@ -390,11 +388,8 @@ router.deviceajeno = function(conversation, guid, callback){
 						callback(false);
 					}
 				});
-			}else{
-				console.log("Token Fail");
-				callback(false);
-			}
-		});
+			
+		
 	});
 }
 module.exports = router;
