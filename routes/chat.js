@@ -278,12 +278,12 @@ router.setDevice = function(guid, device, callback){
 								callback(true, device, deviceData );
 							});
 						}else{
-							var device = new Device({
+							var deviceEl = new Device({
 								profile: profileData._id,
 								token:   device,
 								active: true
 							});
-							device.save(function(err, deviceData){
+							deviceEl.save(function(err, deviceData){
 								callback(true, deviceData, profileData );
 							});
 						}
