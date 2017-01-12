@@ -263,7 +263,7 @@ router.setOnline = function(guid,socket, callback){
 	});
 }
 router.setDevice = function(guid, device, callback){
-	console.log(" SET ONLINE ");
+	console.log(" SET DEVICE ");
 	console.log("GUID:" + guid );
 
 	Tokenfunc.exist(guid, function(status, tokenData){
