@@ -33,15 +33,11 @@ exports.chat_message = function(message){
 	};
 }
 exports.news = function(news, profile, profile_de){
-
-	console.log(profile);
-	console.log(news);
 	
 	profile_de = news.de_id;
 
 	switch(news.action){
 		case "1":
-			console.log(news.id_numerico);
 
 			return {
 				"id_n": news.id_numerico,
