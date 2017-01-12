@@ -370,6 +370,7 @@ router.sendPush = function(device_id, message, payload){
   });
 }
 router.deviceajeno = function(conversation, guid, callback){
+	console.log(guid);
 	Conversation.findOne({ _id: mongoose.Types.ObjectId(conversation) }).exec(function(errConversation, conversationData){
 		Tokenfunc.exist(guid, function(status, tokenData){
 			if(status){

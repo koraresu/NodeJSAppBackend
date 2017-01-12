@@ -199,6 +199,7 @@ io.on('connection', function(socket){
         socket.broadcast.to(messageData.conversation.toString()).emit('message',{data: messageData, t:false, accion: 'message' });
 
         /******* Apple Push Notification *****/
+        console.log(socket.guid);
         chatrouter.deviceajeno(messageData.conversation.toString(), socket.guid, function(status, conversationData, deviceData){
           console.log(status);
           console.log("Device Data");
