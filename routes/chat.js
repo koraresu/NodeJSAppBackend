@@ -389,7 +389,11 @@ router.deviceajeno = function(conversation, socket, callback){
         console.log("Conversation:" + conversation );
 
 	Conversation.findOne({ _id: mongoose.Types.ObjectId(conversation) }).exec(function(errConversation, conversationData){
-		console.log(conversationData);
+		var profiles = conversationData.profiles;
+		Online.findOne({ socket: socket }).exec(function(errOnline, onlineData){
+			console.log( onlineData );
+			callback(true, conversationData, onlineData);
+		});
 	});
 }
 module.exports = router;
