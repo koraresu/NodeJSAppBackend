@@ -27,7 +27,7 @@ var State        = model.state;
 var Country      = model.country;
 
 exports.generate_history = function(type, profileData, data, cb){
-	console.log(data);
+	//console.log(data);
 	profile_id = data.profile;
 
 	switch(type){
