@@ -265,7 +265,7 @@ router.setOnline = function(guid,socket, callback){
 router.setDevice = function(guid, device, callback){
 	console.log(" SET DEVICE ");
 	console.log("GUID:" + guid );
-
+	console.log("TOKEN:" + device );
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
 			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
