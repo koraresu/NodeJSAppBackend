@@ -192,8 +192,6 @@ io.on('connection', function(socket){
   });
   socket.on('message', function(data){
     chatrouter.message(data, function(status, messageData){
-      console.log("STATUS:");
-      console.log(status);
       if(status){
         
         //io.sockets.in(messageData.conversation.toString()).emit('message',{data: messageData, t:true, accion: 'message' });
@@ -202,6 +200,7 @@ io.on('connection', function(socket){
 
         /******* Apple Push Notification *****/
         chatrouter.deviceajeno(messageData.conversation.toString(), socket.guid, function(status, conversationData, deviceData){
+          console.log(status);
           console.log("Device Data");
           console.log( deviceData );
             //chatrouter.sendPush(s.device, data.message, messageData.profile_id.first_name+" "+messageData.profile_id.last_name);
