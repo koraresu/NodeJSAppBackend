@@ -370,7 +370,7 @@ router.sendPush = function(device_id, message, payload){
   });
 }
 router.deviceajeno = function(conversation, socket, callback){
-	console.log(guid);
+	
 	Conversation.findOne({ _id: mongoose.Types.ObjectId(conversation) }).exec(function(errConversation, conversationData){
 				Online.findOne({ socket: socket.id }).exec(function(errOnline, onlineData){
 					if(!errOnline && onlineData){
