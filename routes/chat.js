@@ -367,6 +367,11 @@ router.sendPush = function(device_id, message, payload){
   });
 }
 router.deviceajeno = function(conversation, socket, callback){
+
+	console.log("/******* Chat Apple Push Notification *****/");
+        console.log("Socket:"+socket);
+        console.log("Conversation:" + conversation );
+
 	Conversation.findOne({ _id: mongoose.Types.ObjectId(conversation) }).exec(function(errConversation, conversationData){
 				Online.findOne({ socket: socket }).exec(function(errOnline, onlineData){
 					console.log( onlineData );
