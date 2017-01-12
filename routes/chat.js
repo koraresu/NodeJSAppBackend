@@ -11,6 +11,25 @@ var async = require('async');
 var faker = require('faker');
 faker.locale = "es_MX";
 var mongoose    = require('mongoose');
+
+var apn = require('apn');
+
+options = {
+   keyFile : "conf/key.pem",
+   certFile : "conf/cert.pem",
+   debug : true
+};
+var options = {
+  token: {
+    key: "conf/key.p8",
+    keyId: "822637C6D9",
+    teamId: "58GA47LFA6",
+  },
+  cert: "conf/cert.pem",
+  production: false,
+};
+var apnProvider = new apn.Provider(options);
+
 /*
 	Nombre de Modelos:
 		Toda las variables de modelo se nombrara, con el nombre del archivo, eliminando _ 
@@ -44,6 +63,7 @@ var Notification = model.notification;
 var Feedback     = model.feedback;
 var Conversation = model.conversation;
 var Online       = model.online;
+var Device       = model.device;
 var Message      = model.message;
 var City         = model.city;
 var State        = model.state;
@@ -221,7 +241,7 @@ router.conversationsJoin = function(socket, callback){
 }
 router.setOnline = function(socket, callback){
 	var guid = socket.guid;
-
+	var device = socket.device;
 	console.log( guid );
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
@@ -233,7 +253,27 @@ router.setOnline = function(socket, callback){
 						socket: socket.id.toString()
 					});
 					online.save(function(err, onlineData){
-						callback(true, socket, profileData );
+						var d = { 
+							token:   device,
+							profile: profileData._id,
+							info: [],
+							active: true
+						};
+						Device.findOne({ 
+							token:   device,
+							profile: profileData._id
+							
+						}).exec(function(errDevice, deviceData){
+							if(!errDevice && deviceData){
+								deviceData.active = true;
+							}else{
+								var deviceData = new Device(d);
+							}
+							deviceData.save(function(errDevice, deviceData){
+								callback(true, socket, profileData, deviceData );		
+							});
+						});
+						
 					});
 				}else{
 					callback(false, socket);
@@ -309,5 +349,24 @@ router.delete = function(socket, callback){
 	Online.remove({ socket: socket }).exec(function(err){
 		callback(err, socket);
 	});
+}
+router.sendPush = function(device_id, message, payload){
+	var note = new apn.Notification();
+  var deviceToken = req.params.device_id;
+  note.expiry = Math.floor(Date.now() / 1000) + 3600; // Expires 1 hour from now.
+  note.badge = 3;
+  note.sound = "ping.aiff";
+  note.alert = message;
+  note.payload = {'messageFrom': payload};
+  note.topic = "com.thehiveapp.thehive";
+  apnProvider.send(note, deviceToken).then( (result) => {
+    console.log( result );
+    if(result.failed[0] != undefined){
+      if(result.failed[0].error != undefined){
+        console.log( result.failed[0].error );
+      }
+    }
+    res.render('notifications',{ result: result });
+  });
 }
 module.exports = router;

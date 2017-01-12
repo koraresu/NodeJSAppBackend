@@ -7,7 +7,6 @@
   },
   "dependencies": {
     "apn": "^2.1.2",
-    "apns": "^0.1.0",
     "async": "^2.0.0-rc.6",
     "bcrypt": "^0.8.7",
     "bcrypt-nodejs": "0.0.3",

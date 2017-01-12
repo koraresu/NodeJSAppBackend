@@ -378,6 +378,7 @@ var history          = db.model( 'History' , HistorySchema );
 exports.history      = history;
 exports.feedback     = db.model( 'Feedback' , FeedbackSchema );
 // Chat
+exports.device       = db.model( 'Device', deviceSchema );
 exports.online       = db.model( 'Online', OnlineSchema );
 exports.conversation = db.model( 'Conversation' , ConversationSchema );
 exports.message      = db.model( 'Message' , MessageSchema );

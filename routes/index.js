@@ -34,18 +34,23 @@ var Profilefunc = require('../functions/profilefunc');
 var Generalfunc = require('../functions/generalfunc');
 var Notificationfunc = require('../functions/notificationfunc');
 
-
-var apns = require("apns"), options, connection, notification;
+var apn = require('apn');
 
 options = {
    keyFile : "conf/key.pem",
    certFile : "conf/cert.pem",
    debug : true
 };
-
-connection = new apns.Connection(options);
-
-
+var options = {
+  token: {
+    key: "conf/key.p8",
+    keyId: "822637C6D9",
+    teamId: "58GA47LFA6",
+  },
+  cert: "conf/cert.pem",
+  production: false,
+};
+var apnProvider = new apn.Provider(options);
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
@@ -222,15 +227,23 @@ router.get('/chat/3', function(req, res){
   res.render('chat3', {});
 });
 router.get('/send/notification/:device_id', function(req, res){
-  var goodToken = req.params.device_id,
-    notification = new apns.Notification(),
-    device = new apns.Device(goodToken);
-
-  notification.alert = "Hello World (must not be sent) !";
-  notification.device = device;
-  connection.sendNotification(notification);
-
-  res.render('index',{});
+  var note = new apn.Notification();
+  var deviceToken = req.params.device_id;
+  note.expiry = Math.floor(Date.now() / 1000) + 3600; // Expires 1 hour from now.
+  note.badge = 3;
+  note.sound = "ping.aiff";
+  note.alert = "You have a new message";
+  note.payload = {'messageFrom': 'John Appleseed'};
+  note.topic = "com.thehiveapp.thehive";
+  apnProvider.send(note, deviceToken).then( (result) => {
+    console.log( result );
+    if(result.failed[0] != undefined){
+      if(result.failed[0].error != undefined){
+        console.log( result.failed[0].error );
+      }
+    }
+    res.render('notifications',{ result: result });
+  });
 });
 
 router.get('/check/', function(req, res){

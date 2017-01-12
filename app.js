@@ -30,16 +30,24 @@ var gps          = require('./routes/gps');
 /**
   Apple Push Notification
 **/
-var apns = require("apns"), options, connection, notification;
+var apn = require('apn');
 
 options = {
    keyFile : "conf/key.pem",
    certFile : "conf/cert.pem",
    debug : true
 };
+var options = {
+  token: {
+    key: "conf/key.p8",
+    keyId: "822637C6D9",
+    teamId: "58GA47LFA6",
+  },
+  cert: "conf/cert.pem",
+  production: false,
+};
 
-connection = new apns.Connection(options);
-
+var apnProvider = new apn.Provider(options);
 
 var app = express();
 
@@ -172,8 +180,10 @@ var chatrouter = require('./routes/chat');
 
 io.on('connection', function(socket){
   socket.on('entrando', function(msg){
-    socket.guid = msg;
-    chatrouter.setOnline(socket, function(status, socketData, profileData){
+    socket.guid = msg.guid;
+    socket.device = msg.device_id;
+
+    chatrouter.setOnline(socket, function(status, socketData, profileData, deviceData){
       var conversations = chatrouter.conversationsJoin(socket, function(status, roomsData){
         console.log(roomsData);
         socket.emit('conversationsjoin',roomsData);
@@ -195,11 +205,18 @@ io.on('connection', function(socket){
         socket.broadcast.to(messageData.conversation.toString()).emit('message',{data: messageData, t:false, accion: 'message' });
 
         /******* Apple Push Notification *****/
-        notification = new apns.Notification();
-        notification.device = new apns.Device("iphone_token");
-        notification.alert = "Hello World !";
+        var s = "";
+        var sioRoom = io.sockets.adapter.rooms[messageData.conversation.toString()];
+        if( sioRoom ) { 
+          Object.keys(sioRoom.sockets).forEach( function(socketId){
+            console.log("sioRoom client socket Id: " + socketId );
+            //chatrouter.sendPush(s.device, data.message, messageData.profile_id.first_name+" "+messageData.profile_id.last_name);
+          }); 
+        }
 
-        connection.sendNotification(notification);
+        /*
+        
+        */
       }
     });
   });
