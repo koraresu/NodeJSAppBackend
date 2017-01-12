@@ -180,15 +180,17 @@ var chatrouter = require('./routes/chat');
 
 io.on('connection', function(socket){
   socket.on('entrando', function(msg){
-    socket.guid = msg.guid;
-    socket.device = msg.device_id;
+    socket.guid = msg;
 
-    chatrouter.setOnline(msg.guid, msg.device_id, socket.id, function(status, socketData, profileData, deviceData){
+    chatrouter.setOnline(msg.guid, socket.id, function(status, socketData, profileData){
       var conversations = chatrouter.conversationsJoin(socket, function(status, roomsData){
         console.log(roomsData);
         socket.emit('conversationsjoin',roomsData);
       });
     });
+  });
+  socket.on('device', function(msg){
+
   });
   socket.on('message', function(data){
     chatrouter.message(data, function(status, messageData){
@@ -199,15 +201,6 @@ io.on('connection', function(socket){
         socket.broadcast.to(messageData.conversation.toString()).emit('message',{data: messageData, t:false, accion: 'message' });
 
         /******* Apple Push Notification *****/
-        console.log("/******* Apple Push Notification *****/");
-        console.log("Socket:"+socket.id);
-        console.log("Conversation:" + messageData.conversation.toString() );
-        chatrouter.deviceajeno(messageData.conversation.toString(), socket.id, function(status, conversationData, deviceData){
-          console.log(status);
-          console.log("Device Data");
-          console.log( deviceData );
-            //chatrouter.sendPush(s.device, data.message, messageData.profile_id.first_name+" "+messageData.profile_id.last_name);
-        });
       }
     });
   });

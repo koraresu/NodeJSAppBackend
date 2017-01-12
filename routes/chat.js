@@ -245,34 +245,13 @@ router.setOnline = function(guid, device,socket, callback){
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
 			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
-				console.log( profileData );
 				if(status){
 					var online = new Online({
 						profiles: profileData._id,
 						socket: socket.toString()
 					});
 					online.save(function(err, onlineData){
-						var d = { 
-							token:   device,
-							profile: profileData._id,
-							info: [],
-							active: true
-						};
-						Device.findOne({ 
-							token:   device,
-							profile: profileData._id
-							
-						}).exec(function(errDevice, deviceData){
-							if(!errDevice && deviceData){
-								deviceData.active = true;
-							}else{
-								var deviceData = new Device(d);
-							}
-							deviceData.save(function(errDevice, deviceData){
-								callback(true, socket, profileData, deviceData );		
-							});
-						});
-						
+						callback(true, socket, profileData );
 					});
 				}else{
 					callback(false, socket);
@@ -376,6 +355,7 @@ router.deviceajeno = function(conversation, socket, callback){
 				Online.findOne({ socket: socket }).exec(function(errOnline, onlineData){
 					console.log( onlineData );
 					if(!errOnline && onlineData){
+						console.log( conversation.profiles );
 						var otro = Generalfunc.profile_ajeno(onlineData.profiles, conversationData.profiles);
 						console.log( otro );
 						Device.findOne({ profile: otro }).exec(function(errDevice, deviceData){
