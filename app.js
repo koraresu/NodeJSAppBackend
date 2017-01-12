@@ -183,7 +183,7 @@ io.on('connection', function(socket){
     socket.guid = msg.guid;
     socket.device = msg.device_id;
 
-    chatrouter.setOnline(msg.guid, msg.device_id, function(status, socketData, profileData, deviceData){
+    chatrouter.setOnline(msg.guid, msg.device_id, socket.id, function(status, socketData, profileData, deviceData){
       var conversations = chatrouter.conversationsJoin(socket, function(status, roomsData){
         console.log(roomsData);
         socket.emit('conversationsjoin',roomsData);

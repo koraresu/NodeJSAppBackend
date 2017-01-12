@@ -238,7 +238,7 @@ router.conversationsJoin = function(socket, callback){
 		}
 	});
 }
-router.setOnline = function(guid, device, callback){
+router.setOnline = function(guid, device,socket, callback){
 	console.log(" SET ONLINE ");
 	console.log("GUID:" + guid );
 	console.log("DEVICE:" + device );
@@ -249,7 +249,7 @@ router.setOnline = function(guid, device, callback){
 				if(status){
 					var online = new Online({
 						profiles: profileData._id,
-						socket: socket.id.toString()
+						socket: socket.toString()
 					});
 					online.save(function(err, onlineData){
 						var d = { 
