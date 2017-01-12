@@ -274,7 +274,7 @@ router.setDevice = function(guid, deviceID, callback){
 			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
 				if(status){
 
-					Device.findOne({ profile: profileData._id }).exec(function(errDevice, deviceData){
+					Device.findOne({ profile: profileData._id, token: deviceID }).exec(function(errDevice, deviceData){
 						if(!errDevice && deviceData){
 							callback(true, deviceData, profileData );
 						}else{
