@@ -385,10 +385,12 @@ router.deviceajeno = function(conversation, guid, callback){
 							callback(true, conversationData, deviceData);
 						})
 					}else{
+						console.log("Token2Profile Fail");
 						callback(false);
 					}
 				});
 			}else{
+				console.log("Token Fail");
 				callback(false);
 			}
 		});
