@@ -246,10 +246,13 @@ router.setOnline = function(guid,socket, callback){
 		if(status){
 			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
 				if(status){
-					var online = new Online({
+					var d = {
 						profiles: profileData._id,
 						socket: socket.toString()
-					});
+					};
+					console.log("D:");
+					console.log(d);
+					var online = new Online(d);
 					online.save(function(err, onlineData){
 						callback(true, socket, profileData );
 					});
