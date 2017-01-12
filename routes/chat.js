@@ -274,7 +274,7 @@ router.setDevice = function(guid, device, callback){
 					Device.findOne({ profile: profileData._id }).exec(function(errDevice, deviceData){
 						if(!errDevice && deviceData){
 							deviceData.active = true;
-							device.save(function(err, deviceData){
+							deviceData.save(function(err, deviceData){
 								callback(true, device, deviceData );
 							});
 						}else{
