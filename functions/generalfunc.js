@@ -56,8 +56,8 @@ var transporter    = nodemailer.createTransport(smtpConfig,{
 	debug: true
 });
 var sendMail = function(toAddress, subject, content, next){
-	console.log("SmtpConfig:")
-	console.log(smtpConfig);
+	//console.log("SmtpConfig:")
+	//console.log(smtpConfig);
 	var mailOptions = {
 		from: "hola@thehiveapp.mx",
 		to: toAddress,
@@ -70,15 +70,15 @@ var sendMail = function(toAddress, subject, content, next){
         	}
 		}
 	};
-	console.log("Mail Options:");
-	console.log(mailOptions);
+	//console.log("Mail Options:");
+	//console.log(mailOptions);
 
 	transporter.sendMail(mailOptions, function(error, info){
-		console.log("Email: [Error]");
-		console.log(error);
+		//console.log("Email: [Error]");
+		//console.log(error);
   	
-		console.log("Email: [Info]");
-		console.log(info);
+		//console.log("Email: [Info]");
+		//console.log(info);
 
 		return next();
 	});
@@ -167,17 +167,17 @@ exports.precise_round = function(num, decimals) {
 }
 exports.profile_ajeno = function(profileID,profiles){
 
-	console.log("ProfileID:");
-	console.log( profileID );
+	//console.log("ProfileID:");
+	//console.log( profileID );
 
 	var first  = profiles[0];
 	var second = profiles[1];
 
-	console.log("First:");
-	console.log( first );
+	//console.log("First:");
+	//console.log( first );
 
-	console.log("Second:");
-	console.log( second );
+	//console.log("Second:");
+	//console.log( second );
 
 
 	if(first._id.toString() == profileID.toString()){
