@@ -61,10 +61,7 @@ profileSchema.post('save', function(error, doc, next) {
 var deviceSchema = new Schema({
   token:   { type: String},
   profile: { type: Schema.Types.ObjectId, ref: 'Profile' },
-  info: { type: Schema.Types.Mixed },
-  active: { type: Boolean}
-}, {
-  timestamps: true
+  info: { type: Schema.Types.Mixed }
 });
 deviceSchema.post('save', function(err, doc, next){
   next();
