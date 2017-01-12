@@ -369,4 +369,24 @@ router.sendPush = function(device_id, message, payload){
     res.render('notifications',{ result: result });
   });
 }
+router.deviceajeno = function(conversation, guid, callback){
+	Conversation.findOne({ _id: mongoose.Types.ObjectId(conversation) }).exec(function(errConversation, conversationData){
+		Tokenfunc.exist(guid, function(status, tokenData){
+			if(status){
+				Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
+					if(status){
+						var otro = Generalfunc.profile_ajeno(profileData, conversationData.profiles);
+						Device.findOne({ profile: otro }).exec(function(errDevice, deviceData){
+							callback(true, conversationData, deviceData);
+						})
+					}else{
+						callback(false);
+					}
+				});
+			}else{
+				callback(false);
+			}
+		});
+	});
+}
 module.exports = router;

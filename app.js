@@ -195,28 +195,17 @@ io.on('connection', function(socket){
       console.log("STATUS:");
       console.log(status);
       if(status){
-        console.log( messageData.conversation );
-        
-        console.log( "Rooms:" );
-        console.log(  socket.rooms );
         
         //io.sockets.in(messageData.conversation.toString()).emit('message',{data: messageData, t:true, accion: 'message' });
         socket.emit('message',{data: messageData, t:true, accion: 'message' });
         socket.broadcast.to(messageData.conversation.toString()).emit('message',{data: messageData, t:false, accion: 'message' });
 
         /******* Apple Push Notification *****/
-        var s = "";
-        var sioRoom = io.sockets.adapter.rooms[messageData.conversation.toString()];
-        if( sioRoom ) { 
-          Object.keys(sioRoom.sockets).forEach( function(socketId){
-            console.log("sioRoom client socket Id: " + socketId );
+        chatrouter.deviceajeno(messageData.conversation.toString(), guid, function(status, conversationData, deviceData){
+          console.log("Device Data");
+          console.log( deviceData );
             //chatrouter.sendPush(s.device, data.message, messageData.profile_id.first_name+" "+messageData.profile_id.last_name);
-          }); 
-        }
-
-        /*
-        
-        */
+        });
       }
     });
   });
@@ -251,4 +240,7 @@ function findClientsSocket(roomId, namespace) {
         }
     }
     return res;
+}
+function findSocketInRoom(){
+
 }
