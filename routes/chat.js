@@ -363,7 +363,7 @@ router.delete = function(socket, callback){
 		callback(err, socket);
 	});
 }
-router.sendPush = function(device_id, message, payload){
+router.sendPush = function(device_id, message, payload, callback){
 	var note = new apn.Notification();
   var deviceToken = req.params.device_id;
   note.expiry = Math.floor(Date.now() / 1000) + 3600; // Expires 1 hour from now.
@@ -373,13 +373,12 @@ router.sendPush = function(device_id, message, payload){
   note.payload = {'messageFrom': payload};
   note.topic = "com.thehiveapp.thehive";
   apnProvider.send(note, deviceToken).then( (result) => {
-    console.log( result );
     if(result.failed[0] != undefined){
       if(result.failed[0].error != undefined){
         console.log( result.failed[0].error );
       }
     }
-    res.render('notifications',{ result: result });
+    callback(result);
   });
 }
 router.deviceajeno = function(conversation, socket, callback){
@@ -407,12 +406,20 @@ router.deviceajeno = function(conversation, socket, callback){
 			var t = "";
 
 			if(onlineData.profiles.toString() == first.toString()){
-				t = first.toString();
+				t = second;
 			}else{
-				t = second.toString();
+				t = first;
 			}
 			
 			console.log("Tercero:" + t );
+
+			Device.findOne({ profile: t }).exec(function(errDevice, deviceData){
+				if(!errDevice && deviceData){
+					callback(true,deviceData);
+				}else{
+					callback(false,{});
+				}
+			});
 		});
 	});
 }

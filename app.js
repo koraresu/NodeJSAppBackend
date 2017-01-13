@@ -206,8 +206,14 @@ io.on('connection', function(socket){
 
         /******* Apple Push Notification *****/
         console.log("/******* Apple Push Notification *****/");
-        chatrouter.deviceajeno(messageData.conversation.toString(), socket.id, function(statusDevice, conversationData, deviceData){
+        chatrouter.deviceajeno(messageData.conversation.toString(), socket.id, function(statusDevice, deviceData){
+          if(statusDevice){
+            chatrouter.sendPush(deviceData.token, data.message, function(result){
+              console.log( result );
+            });
+          }else{
 
+          }
         });
       }
     });
