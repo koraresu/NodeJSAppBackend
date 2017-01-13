@@ -395,10 +395,8 @@ router.deviceajeno = function(conversation, socket, callback){
 			console.log( onlineData );
 			console.log( "OnlineData Profiles:");
 			console.log( onlineData.profiles );
-			var ajeno = Generalfunc.profile_ajeno(onlineData.profiles, profiles);
-			console.log("Ajeno:");
-			console.log( ajeno );
-			callback(true, conversationData, onlineData);
+			console.log("Tamaño:");
+			console.log(profile.length);
 		});
 	});
 }
