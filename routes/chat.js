@@ -404,11 +404,15 @@ router.deviceajeno = function(conversation, socket, callback){
 			console.log("F:"+first.toString());
 			console.log("S:"+second.toString());
 
+			var t = "";
+
 			if(onlineData.profiles.toString() == first.toString()){
-				console.log("First:"  + first.toString());
+				t = first.toString();
 			}else{
-				console.log("Second:" + second.toString());
+				t = second.toString();
 			}
+			
+			console.log("Tercero:" + t );
 		});
 	});
 }
