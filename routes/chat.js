@@ -274,28 +274,38 @@ router.setDevice = function(guid, deviceID, callback){
 			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
 				if(status){
 
-					Device.findOne({ profile: profileData._id, token: deviceID }).exec(function(errDevice, deviceData){
+					Device.find({ profile: profileData._id, token: deviceID }).exec(function(errDevice, deviceData){
 						if(!errDevice && deviceData){
-							deviceData.token = deviceID;
-							deviceData.active = true;
-							deviceData.save(function(errD, dData){
-								callback(true, deviceData, profileData );
-							});
-						}else{
-							var d = {
-								profile: profileData._id,
-								token:   deviceID,
-								active: true
+							if(deviceData.length > 0){
+								Device.find({ profile: profileData._id }).exec(function(errDevice, deviceData){
+									async.map(deviceData, function(item, ca){
+										ca(null, item.token);
+									}, function(err, results){
+										callback(true, results, profileData );	
+									});
+								});
+							}else{
+								var d = {
+									profile: profileData._id,
+									token:   deviceID,
+									active: true
+								}
+								console.log("D:");
+								console.log(d);
+								var deviceEl = new Device(d);
+								deviceEl.save(function(err, deviceData){
+									Device.find({ profile: profileData._id }).exec(function(errDevice, deviceData){
+										async.map(deviceData, function(item, ca){
+											ca(null, item.token);
+										}, function(err, results){
+											callback(true, results, profileData );	
+										});
+									});
+								});
 							}
-							console.log("D:");
-							console.log(d);
-							var deviceEl = new Device(d);
-							deviceEl.save(function(err, deviceData){
-								console.log("DEviceData:");
-								console.log(deviceData);
-								
-								callback(true, deviceData, profileData );
-							});
+							
+						}else{
+							callback(false, deviceID);
 						}
 					});
 				}else{
@@ -417,9 +427,13 @@ router.deviceajeno = function(conversation, socket, callback){
 			
 			console.log("Tercero:" + t );
 
-			Device.findOne({ profile: t }).exec(function(errDevice, deviceData){
+			Device.find({ profile: t }).exec(function(errDevice, deviceData){
 				if(!errDevice && deviceData){
-					callback(true,deviceData);
+					async.map(deviceData, function(item, ca){
+						ca(null, item.token);
+					}, function(err, results){
+						callback(true, results);
+					});
 				}else{
 					callback(false,{});
 				}

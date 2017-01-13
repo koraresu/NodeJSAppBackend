@@ -9,6 +9,7 @@ var bodyParser   = require('body-parser');
 var cors         = require('cors');
 var socket_io    = require('socket.io');
 var cookieSession = require('cookie-session')
+var async = require('async');
 
 var flash = require('connect-flash');
 
@@ -206,13 +207,14 @@ io.on('connection', function(socket){
 
         /******* Apple Push Notification *****/
         console.log("/******* Apple Push Notification *****/");
-        chatrouter.deviceajeno(messageData.conversation.toString(), socket.id, function(statusDevice, deviceData){
-          console.log(statusDevice);
-            console.log(deviceData);
-
+        chatrouter.deviceajeno(messageData.conversation.toString(), socket.id, function(statusDevice, devices){
           if(statusDevice){
-            chatrouter.sendPush(deviceData.token, data.message, function(result){
-              console.log( result );
+            async.map(devices, function(i, c){
+              chatrouter.sendPush(i, data.message, function(result){
+                c(null, result );
+              });
+            }, function(err, results){
+              console.log( results );
             });
           }
         });
