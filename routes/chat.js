@@ -388,6 +388,7 @@ router.deviceajeno = function(conversation, socket, callback){
 
 	Conversation.findOne({ _id: mongoose.Types.ObjectId(conversation) }).exec(function(errConversation, conversationData){
 		var profiles = conversationData.profiles;
+		
 		Online.findOne({ socket: socket }).exec(function(errOnline, onlineData){
 			console.log( "OnlineData:" );
 			console.log( onlineData );
