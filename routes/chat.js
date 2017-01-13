@@ -397,6 +397,15 @@ router.deviceajeno = function(conversation, socket, callback){
 			console.log( onlineData.profiles );
 			console.log("Tamaño:");
 			console.log(profiles.length);
+
+			var first  = profiles[0];
+			var second = profiles[1];
+
+			if(onlineData.profiles.toString() == first.toString()){
+				console.log("First:"  + first.toString());
+			}else{
+				console.log("Second:" + second.toString());
+			}
 		});
 	});
 }
