@@ -401,6 +401,9 @@ router.deviceajeno = function(conversation, socket, callback){
 			var first  = profiles[0];
 			var second = profiles[1];
 
+			console.log("F:"+first.toString());
+			console.log("S:"+second.toString());
+
 			if(onlineData.profiles.toString() == first.toString()){
 				console.log("First:"  + first.toString());
 			}else{
