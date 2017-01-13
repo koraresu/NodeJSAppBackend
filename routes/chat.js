@@ -363,9 +363,8 @@ router.delete = function(socket, callback){
 		callback(err, socket);
 	});
 }
-router.sendPush = function(device_id, message, payload, callback){
+router.sendPush = function(deviceToken, message, payload, callback){
 	var note = new apn.Notification();
-  var deviceToken = req.params.device_id;
   note.expiry = Math.floor(Date.now() / 1000) + 3600; // Expires 1 hour from now.
   note.badge = 3;
   note.sound = "ping.aiff";
