@@ -207,12 +207,13 @@ io.on('connection', function(socket){
         /******* Apple Push Notification *****/
         console.log("/******* Apple Push Notification *****/");
         chatrouter.deviceajeno(messageData.conversation.toString(), socket.id, function(statusDevice, deviceData){
+          console.log(statusDevice);
+            console.log(deviceData);
+            
           if(statusDevice){
             chatrouter.sendPush(deviceData.token, data.message, function(result){
               console.log( result );
             });
-          }else{
-
           }
         });
       }
