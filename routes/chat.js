@@ -377,13 +377,13 @@ router.delete = function(socket, callback){
 		callback(err, socket);
 	});
 }
-router.sendPush = function(deviceToken, message, payload, callback){
+router.sendPush = function(deviceToken, message, name, conversation, callback){
 	var note = new apn.Notification();
   note.expiry = Math.floor(Date.now() / 1000) + 3600; // Expires 1 hour from now.
   note.badge = 3;
   note.sound = "ping.aiff";
   note.alert = message;
-  note.payload = {'messageFrom': payload};
+  note.payload = {'messageFrom': name, 'conversation': conversation };
   note.topic = "com.thehiveapp.thehive";
   apnProvider.send(note, deviceToken).then( (result) => {
     if(result.failed[0] != undefined){

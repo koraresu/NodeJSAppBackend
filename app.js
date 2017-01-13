@@ -212,7 +212,7 @@ io.on('connection', function(socket){
             var name_push = messageData.profile_id.first_name + " " + messageData.profile_id.last_name;
             var message_push = name_push + ": " + data.message;
             async.map(devices, function(i, c){
-              chatrouter.sendPush(i, message_push, name_push,  function(result){
+              chatrouter.sendPush(i, message_push, name_push, messageData.conversation.toString() ,  function(result){
                 c(null, result );
               });
             }, function(err, results){
