@@ -392,6 +392,8 @@ router.deviceajeno = function(conversation, socket, callback){
 		var profiles = conversationData.profiles;
 		Online.findOne({ socket: socket }).exec(function(errOnline, onlineData){
 			console.log( onlineData );
+			console.log( onlineData.profiles );
+
 			callback(true, conversationData, onlineData);
 		});
 	});
