@@ -396,7 +396,7 @@ router.deviceajeno = function(conversation, socket, callback){
 			console.log( "OnlineData Profiles:");
 			console.log( onlineData.profiles );
 			console.log("Tamaño:");
-			console.log(profile.length);
+			console.log(profiles.length);
 		});
 	});
 }
