@@ -100,7 +100,7 @@ router.post('/connect', multipartMiddleware, function(req, res){
 											profile_emisor: profileData._id,
 											network: networkData._id,
 											clicked: false,
-                  							status: false
+                  							status: false,
                 						}, function(status, notificationData){
                 							var data = {
 												"accepted": networkData.accepted,
