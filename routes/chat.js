@@ -82,15 +82,19 @@ var apnProvider = new apn.Provider(options);
 									$in: [ profileData._id ]
 								}
 							}).populate('profiles').populate('message').sort({ updatedAt: -1 }).exec(function(err, conversationData){
-								console.log( conversationData );
-								var ajeno = Generalfunc.profile_ajeno(profileData._id, conversationData.profiles);
-								var d = {
-									_id: conversationData._id,
-									last_message: conversationData.message.message,
-									profile: ajeno,
-									date: conversationData.updatedAt
-								};
-								res.json(d);
+								if(!err && conversationData){
+									if(conversationData.profiles != undefined){
+										var ajeno = Generalfunc.profile_ajeno(profileData._id, conversationData.profiles);
+										var d = {
+											_id: conversationData._id,
+											last_message: conversationData.message.message,
+											profile: ajeno,
+											date: conversationData.updatedAt
+										};
+										res.json(d);
+									}
+								}
+								
 							});
 						}else{
 
