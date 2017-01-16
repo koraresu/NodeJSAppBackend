@@ -11,7 +11,7 @@ var async = require('async');
 var faker = require('faker');
 faker.locale = "es_MX";
 var mongoose    = require('mongoose');
-
+var async = require('async');
 var apn = require('apn');
 
 options = {
