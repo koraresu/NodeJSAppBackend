@@ -94,7 +94,7 @@ var apnProvider = new apn.Provider(options);
 												profile: ajeno,
 												date: item.updatedAt
 											};
-											ca(null, item);
+											ca(null, d);
 										}else{
 											ca("solo un perfil", null);
 										}
