@@ -82,6 +82,7 @@ var apnProvider = new apn.Provider(options);
 									$in: [ profileData._id ]
 								}
 							}).populate('profiles').populate('message').sort({ updatedAt: -1 }).exec(function(err, conversationData){
+								console.log( conversationData.profiles );
 								var ajeno = Generalfunc.profile_ajeno(profileData._id, conversationData.profiles);
 								var d = {
 									_id: conversationData._id,
