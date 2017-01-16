@@ -1615,7 +1615,7 @@ router.get('/jobs/db', function(req, res){
       "parent": 20,
       "id": 301,
       "name": "Estilista Canino"
-    }];}
+    }]}
   ];
   res.render('jobs', { jobarea: x });
 });
