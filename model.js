@@ -7,6 +7,31 @@ var Schema     = mongoose.Schema,
     db_lnk          = 'mongodb://localhost:27017/hive',
     db              = mongoose.createConnection(db_lnk);
 
+
+
+var LogSchema = new Schema({
+  table: String,
+  action: String,
+  data: { type: Schema.Types.Mixed }
+},{
+  timestamps: true
+});
+var log = db.model( 'Log' , LogSchema );
+
+var logMiddleware = function(collection, action,doc, ca){
+  var l = new log({
+    table: collection,
+    action: action,
+    data: doc
+  });
+  l.save(function(err, logData){
+    ca(err, logData);
+  });
+}
+
+/*******************************************/
+
+
 var HistorySchema = new Schema({
   id_numerico: { type: Number },
   profile_id: { type: Schema.Types.ObjectId, ref: 'Profile' },
@@ -16,8 +41,25 @@ var HistorySchema = new Schema({
 },{
   timestamps: true
 });
-HistorySchema.post('save', function(error, doc, next) {
-  next();
+HistorySchema.post('save', function(doc, next){
+  logMiddleware("history","save", doc, function(err, logData){
+    next();
+  });
+});
+HistorySchema.post('save', function(doc, next){
+  logMiddleware("history","save", doc, function(err, logData){
+    next();
+  });
+});
+HistorySchema.post('remove', function(doc, next){
+  logMiddleware("history","remove", doc, function(err, logData){
+    next();
+  });
+});
+HistorySchema.post('update', function(doc, next){
+  logMiddleware("history","update", doc, function(err, logData){
+    next();
+  });
 });
 /*******************************************/
 var profileSchema = new Schema({
@@ -55,8 +97,10 @@ var profileSchema = new Schema({
 },{
   timestamps: true
 });
-profileSchema.post('save', function(error, doc, next) {
-  next();
+profileSchema.post('save', function(doc, next){
+  logMiddleware("profile","save", doc, function(err, logData){
+    next();
+  });
 });
 var deviceSchema = new Schema({
   token:   String,
@@ -64,8 +108,21 @@ var deviceSchema = new Schema({
   info: { type: Schema.Types.Mixed },
   active: Boolean
 });
-deviceSchema.post('save', function(err, doc, next){
-  next();
+deviceSchema.post('save', function(doc, next){
+  logMiddleware("device","save", doc, function(err, logData){
+    next();
+  });
+});
+
+deviceSchema.post('remove', function(doc, next){
+  logMiddleware("device","remove", doc, function(err, logData){
+    next();
+  });
+});
+deviceSchema.post('update', function(doc, next){
+  logMiddleware("device","update", doc, function(err, logData){
+    next();
+  });
 });
 /*******************************************/
 var ForgotSchema = new Schema({
@@ -78,9 +135,22 @@ var ForgotSchema = new Schema({
 }, {
   timestamps: true
 });
-ForgotSchema.post('save', function(error, doc, next) {
-  next();
+ForgotSchema.post('save', function(doc, next){
+  logMiddleware("forgot","save", doc, function(err, logData){
+    next();
+  });
 });
+ForgotSchema.post('remove', function(doc, next){
+  logMiddleware("forgot","remove", doc, function(err, logData){
+    next();
+  });
+});
+ForgotSchema.post('update', function(doc, next){
+  logMiddleware("forgot","update", doc, function(err, logData){
+    next();
+  });
+});
+
 /*******************************************/
 var locationSchema = new Schema({
   coordinates: {
@@ -92,9 +162,22 @@ var locationSchema = new Schema({
 }, {
   timestamps: true
 });
-locationSchema.post('save', function(error, doc, next) {
-  next();
+locationSchema.post('save', function(doc, next){
+  logMiddleware("location","save", doc, function(err, logData){
+    next();
+  });
 });
+locationSchema.post('remove', function(doc, next){
+  logMiddleware("location","remove", doc, function(err, logData){
+    next();
+  });
+});
+locationSchema.post('update', function(doc, next){
+  logMiddleware("location","update", doc, function(err, logData){
+    next();
+  });
+});
+
 /*******************************************/
 var CompanyClaimSchema = new Schema({
   profile: { type: Schema.Types.ObjectId, ref: 'Profile' },
@@ -102,9 +185,22 @@ var CompanyClaimSchema = new Schema({
 }, {
   timestamps: true
 });
-CompanyClaimSchema.post('save', function(error, doc, next) {
-  next();
+CompanyClaimSchema.post('save', function(doc, next){
+  logMiddleware("company-claim","save", doc, function(err, logData){
+    next();
+  });
 });
+CompanyClaimSchema.post('remove', function(doc, next){
+  logMiddleware("company-claim","remove", doc, function(err, logData){
+    next();
+  });
+});
+CompanyClaimSchema.post('update', function(doc, next){
+  logMiddleware("company-claim","update", doc, function(err, logData){
+    next();
+  });
+});
+
 /*******************************************/
 var NetworkSchema = new Schema({
 	accepted: Boolean,
@@ -112,9 +208,22 @@ var NetworkSchema = new Schema({
 },{
   timestamps: true
 });
-NetworkSchema.post('save', function(error, doc, next) {
-  next();
+NetworkSchema.post('save', function(doc, next){
+  logMiddleware("network","save", doc, function(err, logData){
+    next();
+  });
 });
+NetworkSchema.post('remove', function(doc, next){
+  logMiddleware("network","remove", doc, function(err, logData){
+    next();
+  });
+});
+NetworkSchema.post('update', function(doc, next){
+  logMiddleware("network","update", doc, function(err, logData){
+    next();
+  });
+});
+
 /*******************************************/
 var companySchema = new Schema({
   name:  String,
@@ -128,9 +237,22 @@ var companySchema = new Schema({
 },{
   timestamps: true
 });
-companySchema.post('save', function(error, doc, next) {
-  next();
+companySchema.post('save', function(doc, next){
+  logMiddleware("company","save", doc, function(err, logData){
+    next();
+  });
 });
+companySchema.post('remove', function(doc, next){
+  logMiddleware("company","remove", doc, function(err, logData){
+    next();
+  });
+});
+companySchema.post('update', function(doc, next){
+  logMiddleware("company","update", doc, function(err, logData){
+    next();
+  });
+});
+
 /*******************************************/
 var experienceSchema = new Schema({
   type: Number,  // 0 = Independiente | 1 = Empresa
@@ -150,9 +272,22 @@ var experienceSchema = new Schema({
 },{
   timestamps: true
 });
-experienceSchema.post('save', function(error, doc, next) {
-  next();
+experienceSchema.post('save', function(doc, next){
+  logMiddleware("experiences","save", doc, function(err, logData){
+    next();
+  });
 });
+experienceSchema.post('remove', function(doc, next){
+  logMiddleware("experiences","remove", doc, function(err, logData){
+    next();
+  });
+});
+experienceSchema.post('update', function(doc, next){
+  logMiddleware("experiences","update", doc, function(err, logData){
+    next();
+  });
+});
+
 /*******************************************/
 var OnlineSchema = new Schema({
   profiles: { type: Schema.Types.ObjectId, ref: 'Profile' },
@@ -160,8 +295,20 @@ var OnlineSchema = new Schema({
 },{
   timestamps: true
 });
-OnlineSchema.post('save', function(error, doc, next) {
-  next();
+OnlineSchema.post('save', function(doc, next){
+  logMiddleware("online","save", doc, function(err, logData){
+    next();
+  });
+});
+OnlineSchema.post('remove', function(doc, next){
+  logMiddleware("online","remove", doc, function(err, logData){
+    next();
+  });
+});
+OnlineSchema.post('update', function(doc, next){
+  logMiddleware("online","update", doc, function(err, logData){
+    next();
+  });
 });
 /*******************************************/
 var ConversationSchema = new Schema({
@@ -171,8 +318,10 @@ var ConversationSchema = new Schema({
 },{
   timestamps: true
 });
-ConversationSchema.post('save', function(error, doc, next) {
-  next();
+ConversationSchema.post('save', function(doc, next){
+  logMiddleware("conversation","save", doc, function(err, logData){
+    next();
+  });
 });
 /*******************************************/
 var MessageSchema = new Schema({
@@ -182,29 +331,46 @@ var MessageSchema = new Schema({
 },{
   timestamps: true
 });
-MessageSchema.post('save', function(error, doc, next) {
-  next();
+MessageSchema.post('save', function(doc, next){
+  logMiddleware("message","save", doc, function(err, logData){
+    next();
+  });
 });
+MessageSchema.post('remove', function(doc, next){
+  logMiddleware("message","remove", doc, function(err, logData){
+    next();
+  });
+});
+MessageSchema.post('update', function(doc, next){
+  logMiddleware("message","update", doc, function(err, logData){
+    next();
+  });
+});
+
 /*******************************************/
 var jobSchema = new Schema({
   name: String,
   type: Number,   // Profesion = 0 || Puesto = 1
-  parent: { type: Schema.Types.ObjectId, ref: 'JobArea' }
+  parent: { type: Schema.Types.ObjectId, ref: 'Sector' }
 },{
   timestamps: true
 });
-jobSchema.post('save', function(error, doc, next) {
-  next();
+jobSchema.post('save', function(doc, next){
+  logMiddleware("job","save", doc, function(err, logData){
+    next();
+  });
 });
-/*******************************************/
-var jobAreaSchema = new Schema({
-  name: String,
-  id_data: Number,
-  value: String
+jobSchema.post('remove', function(doc, next){
+  logMiddleware("job","remove", doc, function(err, logData){
+    next();
+  });
 });
-jobAreaSchema.post('save', function(error, doc, next) {
-  next();
+jobSchema.post('update', function(doc, next){
+  logMiddleware("job","update", doc, function(err, logData){
+    next();
+  });
 });
+
 /*******************************************/
 var FeedbackSchema = new Schema({
 	profile_id: { type: Schema.Types.ObjectId, ref: 'Profile' },
@@ -213,9 +379,22 @@ var FeedbackSchema = new Schema({
 },{
   timestamps: true
 });
-FeedbackSchema.post('save', function(error, doc, next) {
-  next();
+FeedbackSchema.post('save', function(doc, next){
+  logMiddleware("feedback","save", doc, function(err, logData){
+    next();
+  });
 });
+FeedbackSchema.post('remove', function(doc, next){
+  logMiddleware("feedback","remove", doc, function(err, logData){
+    next();
+  });
+});
+FeedbackSchema.post('update', function(doc, next){
+  logMiddleware("feedback","update", doc, function(err, logData){
+    next();
+  });
+});
+
 /*******************************************/
 var reviewSchema = new Schema({
 	title:      String,
@@ -226,9 +405,22 @@ var reviewSchema = new Schema({
 },{
   timestamps: true
 });
-reviewSchema.post('save', function(error, doc, next) {
-  next();
+reviewSchema.post('save', function(doc, next){
+  logMiddleware("review","save", doc, function(err, logData){
+    next();
+  });
 });
+reviewSchema.post('remove', function(doc, next){
+  logMiddleware("review","remove", doc, function(err, logData){
+    next();
+  });
+});
+reviewSchema.post('update', function(doc, next){
+  logMiddleware("review","update", doc, function(err, logData){
+    next();
+  });
+});
+
 /*******************************************/
 var SearchSchema = new Schema({
   profile_id: { type: Schema.Types.ObjectId, ref: 'Profile' },
@@ -236,9 +428,22 @@ var SearchSchema = new Schema({
 },{
   timestamps: true
 });
-SearchSchema.post('save', function(error, doc, next) {
-  next();
+SearchSchema.post('save', function(doc, next){
+  logMiddleware("search","save", doc, function(err, logData){
+    next();
+  });
 });
+SearchSchema.post('remove', function(doc, next){
+  logMiddleware("search","remove", doc, function(err, logData){
+    next();
+  });
+});
+SearchSchema.post('update', function(doc, next){
+  logMiddleware("search","update", doc, function(err, logData){
+    next();
+  });
+});
+
 /*******************************************/
 var sectorSchema = new Schema({
   name:  String,
@@ -251,18 +456,46 @@ var sectorSchema = new Schema({
 },{
   timestamps: true
 });
-sectorSchema.post('save', function(error, doc, next) {
-  next();
+
+sectorSchema.post('save', function(doc, next){
+  logMiddleware("sector","save", doc, function(err, logData){
+    next();
+  });
 });
+sectorSchema.post('remove', function(doc, next){
+  logMiddleware("sector","remove", doc, function(err, logData){
+    next();
+  });
+});
+sectorSchema.post('update', function(doc, next){
+  logMiddleware("sector","update", doc, function(err, logData){
+    next();
+  });
+});
+
+
 /*******************************************/
 var skillsSchema = new Schema({
   name:   { type: String },
 },{
   timestamps: true
 });
-skillsSchema.post('save', function(error, doc, next) {
-  next();
+skillsSchema.post('save', function(doc, next){
+  logMiddleware("skills","save", doc, function(err, logData){
+    next();
+  });
 });
+skillsSchema.post('remove', function(doc, next){
+  logMiddleware("skills","remove", doc, function(err, logData){
+    next();
+  });
+});
+skillsSchema.post('update', function(doc, next){
+  logMiddleware("skills","update", doc, function(err, logData){
+    next();
+  });
+});
+
 /*******************************************/
 var specialitySchema = new Schema({
   name: String,
@@ -270,9 +503,22 @@ var specialitySchema = new Schema({
 },{
   timestamps: true
 });
-specialitySchema.post('save', function(error, doc, next) {
-  next();
+specialitySchema.post('save', function(doc, next){
+  logMiddleware("speciality","save", doc, function(err, logData){
+    next();
+  });
 });
+specialitySchema.post('remove', function(doc, next){
+  logMiddleware("speciality","remove", doc, function(err, logData){
+    next();
+  });
+});
+specialitySchema.post('update', function(doc, next){
+  logMiddleware("speciality","update", doc, function(err, logData){
+    next();
+  });
+});
+
 /*******************************************/
 var tokenSchema = new Schema({  
   generated_id: { type: String},
@@ -280,9 +526,22 @@ var tokenSchema = new Schema({
 },{
   timestamps: true
 });
-tokenSchema.post('save', function(error, doc, next) {
-  next();
+tokenSchema.post('save', function(doc, next){
+  logMiddleware("token","save", doc, function(err, logData){
+    next();
+  });
 });
+tokenSchema.post('remove', function(doc, next){
+  logMiddleware("token","remove", doc, function(err, logData){
+    next();
+  });
+});
+tokenSchema.post('update', function(doc, next){
+  logMiddleware("token","update", doc, function(err, logData){
+    next();
+  });
+});
+
 /*******************************************/
 var userSchema = new Schema({
   email: { type: String },
@@ -292,9 +551,22 @@ var userSchema = new Schema({
 },{
   timestamps: true
 });
-userSchema.post('save', function(error, doc, next) {
-  next();
+userSchema.post('save', function(doc, next){
+  logMiddleware("user","save", doc, function(err, logData){
+    next();
+  });
 });
+userSchema.post('remove', function(doc, next){
+  logMiddleware("user","remove", doc, function(err, logData){
+    next();
+  });
+});
+userSchema.post('update', function(doc, next){
+  logMiddleware("user","update", doc, function(err, logData){
+    next();
+  });
+});
+
 /*******************************************/
 var NotificationSchema = new Schema({
   tipo: Number, // 0 = se ha unido | 1 = recomendación | 2 = te recomiendan | 3 = Envio Solucitud | 4 = Respondio Solicitud
@@ -308,27 +580,43 @@ var NotificationSchema = new Schema({
 },{
   timestamps: true
 });
-NotificationSchema.post('save', function(error, doc, next) {
-  next();
+NotificationSchema.post('save', function(doc, next){
+  logMiddleware("notification","save", doc, function(err, logData){
+    next();
+  });
 });
-/*******************************************/
-var LogSchema = new Schema({
-  code: Number,
-  profile: { type: Schema.Types.ObjectId, ref: 'Profile' },
-  data: { type: Schema.Types.Mixed }
-},{
-  timestamps: true
+NotificationSchema.post('remove', function(doc, next){
+  logMiddleware("notification","remove", doc, function(err, logData){
+    next();
+  });
 });
-LogSchema.post('save', function(error, doc, next) {
-  next();
+NotificationSchema.post('update', function(doc, next){
+  logMiddleware("notification","update", doc, function(err, logData){
+    next();
+  });
 });
+
+
 /*******************************************/
 var PaisSchema = new Schema({
   name: { type: String }
 });
-PaisSchema.post('save', function(error, doc, next) {
-  next();
+PaisSchema.post('save', function(doc, next){
+  logMiddleware("pais","save", doc, function(err, logData){
+    next();
+  });
 });
+PaisSchema.post('remove', function(doc, next){
+  logMiddleware("pais","remove", doc, function(err, logData){
+    next();
+  });
+});
+PaisSchema.post('update', function(doc, next){
+  logMiddleware("pais","update", doc, function(err, logData){
+    next();
+  });
+});
+
 /*******************************************/
 var EstadoSchema = new Schema({
     "id" : { type: String },
@@ -336,9 +624,22 @@ var EstadoSchema = new Schema({
     "name" : { type: String },
     "shortname" : { type: String }
 });
-EstadoSchema.post('save', function(error, doc, next) {
-  next();
+EstadoSchema.post('save', function(doc, next){
+  logMiddleware("estado","save", doc, function(err, logData){
+    next();
+  });
 });
+EstadoSchema.post('remove', function(doc, next){
+  logMiddleware("estado","remove", doc, function(err, logData){
+    next();
+  });
+});
+EstadoSchema.post('update', function(doc, next){
+  logMiddleware("estado","update", doc, function(err, logData){
+    next();
+  });
+});
+
 /*******************************************/
 var CiudadSchema = new Schema({
     "id" : { type: String },
@@ -347,16 +648,29 @@ var CiudadSchema = new Schema({
     "name" : { type: String },
     "shortname" : { type: String }
 });
-CiudadSchema.post('save', function(error, doc, next) {
-  next();
+CiudadSchema.post('save', function(doc, next){
+  logMiddleware("ciudad","save", doc, function(err, logData){
+    next();
+  });
 });
+CiudadSchema.post('remove', function(doc, next){
+  logMiddleware("ciudad","remove", doc, function(err, logData){
+    next();
+  });
+});
+CiudadSchema.post('update', function(doc, next){
+  logMiddleware("ciudad","update", doc, function(err, logData){
+    next();
+  });
+});
+
+
 /*******************************************/
 
 // Company
 exports.company      = db.model( 'Company' , companySchema );
 exports.experience   = db.model( 'Experience' , experienceSchema );
 exports.job          = db.model( 'Job' , jobSchema );
-exports.area         = db.model( 'JobArea' , jobAreaSchema );
 exports.location     = db.model( 'GPS', locationSchema);
 exports.company_claim     = db.model( 'CompanyClaim', CompanyClaimSchema);
 exports.skill        = db.model( 'Skill' , skillsSchema );

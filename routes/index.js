@@ -1618,7 +1618,36 @@ router.get('/jobs/db', function(req, res){
     }]}
   ];
   console.log("Tamaño:" + x.length );
-  res.render('jobs', { jobarea: x });
+  async.map(x, function(item, ca){
+    console.log(item);
+
+    var s = new Sector({
+      name: item.name
+    });
+
+    s.save(function(err, sectorData){
+      async.map(item.subcat, function(i, call){
+        var n = i.name;
+
+        var j = new Job({
+          name: n,
+          type: 1,
+          parent: sectorData._id
+        });
+
+        j.save(function(err, jobData){
+          call(null, jobData);
+        });
+
+      }, function(e, r){
+        ca(null, {sector: sectorData, job: r});
+      });
+    });
+  }, function(err, results){
+
+    res.render('jobs', { jobarea: results });
+  });
+  
 });
 module.exports = router;
 

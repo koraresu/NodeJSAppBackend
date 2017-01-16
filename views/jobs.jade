@@ -7,11 +7,7 @@ html
     script(src="/javascripts/chat.js")
     link(rel='stylesheet', href='/stylesheets/chat.css')
   body
-    span Tamaño: #{jobarea.length}
     ul
-      each jobarea in area
+      for area in jobarea
         li
-          span A
-          ul
-          each area.subcat in job
-            li B
+          span #{area.name}
