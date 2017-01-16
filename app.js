@@ -202,8 +202,11 @@ io.on('connection', function(socket){
     chatrouter.message(data, function(status, messageData){
       if(status){
         //io.sockets.in(messageData.conversation.toString()).emit('message',{data: messageData, t:true, accion: 'message' });
-        socket.emit('message',{data: messageData, t:true, accion: 'message' });
-        socket.broadcast.to(messageData.conversation.toString()).emit('message',{data: messageData, t:false, accion: 'message' });
+
+        var d = messageData;
+        
+        socket.emit('message',{data: d, t:true, accion: 'message' });
+        socket.broadcast.to(messageData.conversation.toString()).emit('message',{data: d, t:false, accion: 'message' });
 
         /******* Apple Push Notification *****/
         console.log("/******* Apple Push Notification *****/");
