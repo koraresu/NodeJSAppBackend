@@ -88,10 +88,14 @@ var apnProvider = new apn.Provider(options);
 									async.map(conversationData, function(item, ca){
 										if(item.profiles.length > 1){
 											var ajeno = Generalfunc.profile_ajeno(profileData._id, item.profiles);
+											var aj = {
+												name: ajeno.first_name + " " + ajeno.last_name,
+												profile_pic: ajeno.profile_pic
+											};
 											var d = {
 												_id: item._id,
 												last_message: item.message.message,
-												profile: ajeno,
+												profile: aj,
 												date: item.updatedAt
 											};
 											ca(null, d);
