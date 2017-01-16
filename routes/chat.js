@@ -86,7 +86,7 @@ var apnProvider = new apn.Provider(options);
 									console.log("Conversation Data:");
 									console.log( conversationData );
 									async.map(conversationData, function(item, ca){
-										if(item.profiles > 1){
+										if(item.profiles.length > 1){
 											var ajeno = Generalfunc.profile_ajeno(profileData._id, item.profiles);
 											var d = {
 												_id: item._id,
