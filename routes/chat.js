@@ -83,15 +83,22 @@ var apnProvider = new apn.Provider(options);
 								}
 							}).populate('profiles').populate('message').sort({ updatedAt: -1 }).exec(function(err, conversationData){
 								if(!err && conversationData){
-									if(conversationData.profiles != undefined){
-										var ajeno = Generalfunc.profile_ajeno(profileData._id, conversationData.profiles);
-										var d = {
-											_id: conversationData._id,
-											last_message: conversationData.message.message,
-											profile: ajeno,
-											date: conversationData.updatedAt
-										};
-										res.json(d);
+									async(conversationData, function(item, ca){
+										if(item.profiles > 1){
+											var ajeno = Generalfunc.profile_ajeno(profileData._id, item.profiles);
+											var d = {
+												_id: item._id,
+												last_message: item.message.message,
+												profile: ajeno,
+												date: item.updatedAt
+											};
+											ca(null, d);
+										}else{
+											ca("solo un perfil", null);
+										}
+									}, function(err, results){
+										res.json(results);
+									});
 									}else{
 										Generalfunc.response(101, {}, function(response){
 											res.json(response);
