@@ -92,16 +92,28 @@ var apnProvider = new apn.Provider(options);
 											date: conversationData.updatedAt
 										};
 										res.json(d);
+									}else{
+										Generalfunc.response(101, {}, function(response){
+											res.json(response);
+										});
 									}
+								}else{
+									Generalfunc.response(101, {}, function(response){
+											res.json(response);
+										});
 								}
 								
 							});
 						}else{
-
+							Generalfunc.response(101, {}, function(response){
+											res.json(response);
+										});
 						}
 					});
 				}else{
-
+					Generalfunc.response(101, {}, function(response){
+											res.json(response);
+										});
 				}
 			});
 		});
