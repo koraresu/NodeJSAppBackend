@@ -97,6 +97,7 @@ var apnProvider = new apn.Provider(options);
 											ca("solo un perfil", null);
 										}
 									}, function(err, results){
+										console.log( err );
 										res.json(results);
 									});
 								}else{
