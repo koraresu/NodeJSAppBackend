@@ -1617,7 +1617,7 @@ router.get('/jobs/db', function(req, res){
       "name": "Estilista Canino"
     }]}
   ];
-  res.render('index', { jobarea: x });
+  res.render('jobs', { jobarea: x });
 });
 module.exports = router;
 
