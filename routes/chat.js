@@ -83,7 +83,7 @@ var apnProvider = new apn.Provider(options);
 								}
 							}).populate('profiles').populate('message').sort({ updatedAt: -1 }).exec(function(err, conversationData){
 								if(!err && conversationData){
-									async(conversationData, function(item, ca){
+									async.map(conversationData, function(item, ca){
 										if(item.profiles > 1){
 											var ajeno = Generalfunc.profile_ajeno(profileData._id, item.profiles);
 											var d = {
