@@ -1,0 +1,16 @@
+doctype html
+html
+  head
+    title A
+    script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js")
+    script(src="http://localhost:3000/socket.io/socket.io.js")
+    script(src="/javascripts/chat.js")
+    link(rel='stylesheet', href='/stylesheets/chat.css')
+  body
+    ul
+      each jobarea in area
+        li
+          span #{area.name}
+          ul
+          each area.subcat in job
+            li #{job.name}
