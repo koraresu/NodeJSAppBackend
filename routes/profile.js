@@ -420,6 +420,35 @@ router.post('/login-facebook', multipartMiddleware, function(req, res){
 		}
 	});
 });
+// CHECK FACEBOOK
+// Parameter:
+// 		facebook_id
+// Return (Formato 2)
+// 		
+router.post('/check-facebook', multipartMiddleware, function(req, res){
+	var facebookID = req.body.facebook_id;
+	var email      = req.body.email;
+
+	Profile.findOne({ facebookId: facebookId }).exec(function(err, profileData){
+		if(!err && profileData){
+			User.findOne({ email: email}, function(errUser, userData){
+				if(!errUser && userData){
+					Generalfunc.response(200, { user: userData, profile: profileData}, function(response){
+						res.json(response);
+					});
+				}else{
+					Generalfunc.response(404, {}, function(response){
+						res.json(response);
+					});
+				}
+			});
+		}else{
+			Generalfunc.response(404, {}, function(response){
+				res.json(response);
+			});
+		}
+	});
+});
 
 // GET
 // Parameter:

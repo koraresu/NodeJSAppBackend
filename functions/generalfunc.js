@@ -121,7 +121,7 @@ exports.response = function(type,item, callback){
 			callback({ status: 'error', code: type, message: "No encontrado", data: item});
 		break;
 		default:
-			callback({ status: 'unknown', code: type, message: "Se ha producido un Error", data: item});
+			callback({ status: 'unknown', code: type, message: item.message, data: item.data});
 		break;
 	}
 }

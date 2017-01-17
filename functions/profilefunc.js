@@ -477,19 +477,7 @@ function permitedData(getter, info_profile, callback){
 	callback(true);
 }
 function logs(profile, code, data, callback){
-	data = JSON.stringify(data);
-	data = JSON.parse(data);
-	
-	var d = {
-		code: code,
-		profile: profile,
-		data: data
-	};
-
-	var log = new Log(d);
-	log.save(function(err, logData){
-		callback(err, logData);
-	});
+	callback(err, logData);
 }
 function IsJsonString(str) {
     try {
