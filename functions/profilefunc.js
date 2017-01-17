@@ -477,7 +477,8 @@ function permitedData(getter, info_profile, callback){
 	callback(true);
 }
 function logs(profile, code, data, callback){
-	callback(err, logData);
+
+	callback();
 }
 function IsJsonString(str) {
     try {
