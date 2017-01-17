@@ -426,18 +426,18 @@ router.post('/login-facebook', multipartMiddleware, function(req, res){
 // Return (Formato 2)
 // 		
 router.post('/check-facebook', multipartMiddleware, function(req, res){
-	var facebookID = req.body.facebook_id;
+	var facebookId = req.body.facebook_id;
 	var email      = req.body.email;
 
 	Profile.findOne({ facebookId: facebookId }).exec(function(err, profileData){
 		if(!err && profileData){
 			User.findOne({ email: email}, function(errUser, userData){
 				if(!errUser && userData){
-					Generalfunc.response(200, { user: userData, profile: profileData}, function(response){
+					Generalfunc.response(200, { status: true}, function(response){
 						res.json(response);
 					});
 				}else{
-					Generalfunc.response(404, {}, function(response){
+					Generalfunc.response(200, { status: false}, function(response){
 						res.json(response);
 					});
 				}
