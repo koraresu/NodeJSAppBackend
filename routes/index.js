@@ -245,7 +245,6 @@ router.get('/send/notification/:device_id', function(req, res){
     res.render('notifications',{ result: result });
   });
 });
-
 router.get('/check/', function(req, res){
   var html = "";
   Experience.find({}).exec(function(errExperience, experienceData){
