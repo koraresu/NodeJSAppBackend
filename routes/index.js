@@ -226,22 +226,19 @@ router.get('/chat/1', function(req, res){
 router.get('/chat/3', function(req, res){
   res.render('chat3', {});
 });
-router.get('/send/notification/:device_id', function(req, res){
-  var note = new apn.Notification();
-  var deviceToken = req.params.device_id;
-  note.expiry = Math.floor(Date.now() / 1000) + 3600; // Expires 1 hour from now.
-  note.badge = 3;
-  note.sound = "ping.aiff";
-  note.alert = "You have a new message";
-  note.payload = {'messageFrom': 'John Appleseed'};
-  note.topic = "com.thehiveapp.thehive";
-  apnProvider.send(note, deviceToken).then( (result) => {
-    console.log( result );
-    if(result.failed[0] != undefined){
-      if(result.failed[0].error != undefined){
-        console.log( result.failed[0].error );
-      }
-    }
+router.get('/send/notifications/:device_id', function(req, res){
+  Generalfunc.sendPush(req.params.device_id, {
+    "type": "notification",
+    "data": "ABC"
+  }, "Probando!!", 0, null, function(){
+    res.render('notifications',{ result: result });
+  });
+});
+router.get('/send/chat/mensaje/:device_id', function(req, res){
+  Generalfunc.sendPush(req.params.device_id, {
+    "type": "chat",
+    "data": "ABC"
+  }, "Probando!!", 0, null, function(){
     res.render('notifications',{ result: result });
   });
 });

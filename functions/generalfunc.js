@@ -186,3 +186,25 @@ exports.profile_ajeno = function(profileID,profiles){
 		return first;
 	}
 }
+exports.sendPush = function(device, payload, message, badge, sound, ca){
+	if(sound == undefined || sound == null){
+		sound = "ping.aiff";
+	}
+	var note = new apn.Notification();
+	var deviceToken = device;
+	note.expiry = Math.floor(Date.now() / 1000) + 3600; // Expires 1 hour from now.
+	note.badge = badge;
+	note.sound = sound;
+	note.alert = message;
+	note.payload = payload;
+	note.topic = "com.thehiveapp.thehive";
+	apnProvider.send(note, deviceToken).then( (result) => {
+		console.log( result );
+		if(result.failed[0] != undefined){
+			if(result.failed[0].error != undefined){
+				console.log( result.failed[0].error );
+			}
+		}
+    	ca(result);
+	});
+}

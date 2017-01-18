@@ -341,11 +341,12 @@ router.post('/login-facebook', multipartMiddleware, function(req, res){
 					Experiencefunc.get(profileData._id, function(statusExperience, experiences){
 						var exp = statusExperience;	
 						profileData.save(function(errProfile, profileData){
-							Profilefunc.logs(profileData, 19, profileData, function(){
+							Profilefunc.formatoProfile(profileData._id, function(profileData){
 								Generalfunc.response(201,{
 									token: tokenData.generated_id,
 									verified: verified,
 									experiences: exp,
+									profile: profileData
 								}, function(response){
 									res.json(response);
 								});
