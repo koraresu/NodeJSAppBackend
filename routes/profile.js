@@ -341,7 +341,7 @@ router.post('/login-facebook', multipartMiddleware, function(req, res){
 					Experiencefunc.get(profileData._id, function(statusExperience, experiences){
 						var exp = statusExperience;	
 						profileData.save(function(errProfile, profileData){
-							Profilefunc.formatoProfile(profileData._id, function(profileData){
+							Profile.findOne({ _id: profileData._id }).populate('skills').populate('experiences').exec(function(err, profileData){
 								Generalfunc.response(201,{
 									token: tokenData.generated_id,
 									verified: verified,
