@@ -199,6 +199,7 @@ io.on('connection', function(socket){
     });
   });
   socket.on('message', function(data){
+    console.log( data );
     chatrouter.message(data, function(status, messageData){
       if(status){
         //io.sockets.in(messageData.conversation.toString()).emit('message',{data: messageData, t:true, accion: 'message' });
@@ -230,6 +231,7 @@ io.on('connection', function(socket){
     socket.emit('conversations', socket.rooms);
   });
   socket.on('disconnect', function () {
+    socket.emit("disconnect", "ABC");
     chatrouter.delete(socket.id.toString(), function(err, s){
       console.log(s);
     });

@@ -47,6 +47,7 @@ var mongoose    = require('mongoose');
 		var Speciality  = model.speciality;
 		var Sector      = model.sector;
 		var Notification = model.notification;
+		var Device       = model.device;
 		var Feedback     = model.feedback;
 		var Conversation = model.conversation;
 		var Message      = model.message;
@@ -139,6 +140,42 @@ router.post('/login', multipartMiddleware, function(req, res){
 		}
 	});
 	
+});
+// LOGOUT
+// Parameter
+// 		guid
+// Return (Formato 1)
+//      devices Deleted
+router.post('/logout', multipartMiddleware, function(req, res){
+	var guid      = req.body.guid;
+	Tokenfunc.exist(guid, function(status, tokenData){
+		if(status){
+			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
+				if(status){
+					Device.remove({ profile: profileData._id }).exec(function(err, deviceData){
+						if(!err && deviceData){
+							Generalfunc.response(200, { status: true,devices: deviceData }, function(response){
+								res.json( response );
+							});
+						}else{
+							Generalfunc.response(101, { status: false }, function(response){
+								res.json( response );
+							});
+						}
+						
+					});
+				}else{
+					Generalfunc.response(101, { status: false }, function(response){
+						res.json( response );
+					});
+				}
+			});
+		}else{
+			Generalfunc.response(101, { status: false }, function(response){
+				res.json( response );
+			});
+		}
+	});
 });
 // FORGOT
 // Parameter
