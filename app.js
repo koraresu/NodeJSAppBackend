@@ -231,7 +231,7 @@ io.on('connection', function(socket){
     socket.emit('conversations', socket.rooms);
   });
   socket.on('disconnect', function () {
-    socket.emit("disconnect", "ABC");
+    console.log("Disconnect");
     chatrouter.delete(socket.id.toString(), function(err, s){
       console.log(s);
     });
