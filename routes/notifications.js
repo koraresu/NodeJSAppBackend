@@ -109,7 +109,7 @@ router.post('/accept', multipartMiddleware, function(req, res){
 															if(!errNot && notData){
 																notData.status  = true;
 																notData.clicked = true;
-																notData.save(,function(errNotification, notificationData){
+																notData.save(function(errNotification, notificationData){
 																	Generalfunc.response(200, {notification: notification, network: network }, function(response){
 																		res.json(response);
 																	});
