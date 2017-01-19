@@ -105,19 +105,31 @@ router.post('/accept', multipartMiddleware, function(req, res){
 													networkData.accepted = accept;
 													networkData.save(function(errNet, network){
 
-
-														Notificationfunc.add({
-															tipo: 4,
-															profile: notificationData.profile_emisor._id,
-															profile_emisor: notificationData.profile._id,
-															network: network._id,
-															status: true,
-															click: true
-														},function(errNotification, notificationData){
-															Generalfunc.response(200, {notification: notification, network: network }, function(response){
-																res.json(response);
-															});
+														Notification.findOne({ network: network._id }).exec(function(errNot, notData){
+															if(!errNot && notData){
+																notData.status  = true;
+																notData.clicked = true;
+																notData.save(,function(errNotification, notificationData){
+																	Generalfunc.response(200, {notification: notification, network: network }, function(response){
+																		res.json(response);
+																	});
+																});
+															}else{
+																Notificationfunc.add({
+																	tipo: 4,
+																	profile: notificationData.profile_emisor._id,
+																	profile_emisor: notificationData.profile._id,
+																	network: network._id,
+																	status: true,
+																	clicked: true
+																},function(errNotification, notificationData){
+																	Generalfunc.response(200, {notification: notification, network: network }, function(response){
+																		res.json(response);
+																	});
+																});
+															}
 														});
+														
 													});
 												});
 											}else{
