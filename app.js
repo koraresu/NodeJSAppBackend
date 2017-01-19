@@ -199,6 +199,9 @@ io.on('connection', function(socket){
     });
   });
   socket.on('message', function(data){
+    console.log("Mensaje:");
+    console.log("SocketID:" + socket.id);
+    console.log("SocketGUID:" + socket.guid);
     console.log( data );
     chatrouter.message(data, function(status, messageData){
       if(status){
