@@ -92,9 +92,15 @@ var apnProvider = new apn.Provider(options);
 												name: ajeno.first_name + " " + ajeno.last_name,
 												profile_pic: ajeno.profile_pic
 											};
+
+											var m = "";
+											if(item.message != undefined){
+												m = item.message.message;	
+											}
+											
 											var d = {
 												_id: item._id,
-												last_message: item.message.message,
+												last_message: m,
 												profile: aj,
 												date: item.updatedAt
 											};
