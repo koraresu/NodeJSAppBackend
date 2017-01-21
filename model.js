@@ -312,8 +312,8 @@ OnlineSchema.post('update', function(doc, next){
 });
 /*******************************************/
 var ConversationSchema = new Schema({
-  profiles: [ { type: Schema.Types.ObjectId, ref: 'Profile' } ],
-  status: { type: String },
+  profiles:    [ { type: Schema.Types.ObjectId, ref: 'Profile' } ],
+  prop_status: [{ type: Number }], // 2 = Active | 1 = Archive | 0 = Deleted
   message: { type: Schema.Types.ObjectId, ref: 'Message' }
 },{
   timestamps: true

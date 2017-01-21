@@ -87,24 +87,32 @@ var apnProvider = new apn.Provider(options);
 									console.log( conversationData );
 									async.map(conversationData, function(item, ca){
 										if(item.profiles.length > 1){
-											var ajeno = Generalfunc.profile_ajeno(profileData._id, item.profiles);
-											var aj = {
-												name: ajeno.first_name + " " + ajeno.last_name,
-												profile_pic: ajeno.profile_pic
-											};
+											var ajeno = profile_ajeno(profileData._id, item.profiles);
+											var number = ajeno.number;
+											if(conversationData.prop_status[number] == 1){
+												ajeno = ajeno.profile;
+												//var ajeno = Generalfunc.profile_ajeno(profileData._id, item.profiles);
+												var aj = {
+													name: ajeno.first_name + " " + ajeno.last_name,
+													profile_pic: ajeno.profile_pic
+												};
 
-											var m = "";
-											if(item.message != undefined){
-												m = item.message.message;	
+												var m = "";
+												if(item.message != undefined){
+													m = item.message.message;	
+												}
+												
+												var d = {
+													_id: item._id,
+													last_message: m,
+													profile: aj,
+													status: conversationData.prop_status[number],
+													date: item.updatedAt
+												};
+												ca(null, d);
+											}else{
+												ca("Inactive", null);
 											}
-											
-											var d = {
-												_id: item._id,
-												last_message: m,
-												profile: aj,
-												date: item.updatedAt
-											};
-											ca(null, d);
 										}else{
 											ca("solo un perfil", null);
 										}
@@ -179,6 +187,29 @@ var apnProvider = new apn.Provider(options);
 
 							}
 							
+						}else{
+
+						}
+					});
+				}else{
+
+				}
+			});
+		});
+		router.post('/delete/conversation', multipartMiddleware, function(req, res){
+			var guid             = req.body.guid;
+			var conversation_id  = req.body.conversation_id;
+			Tokenfunc.exist(guid, function(status, tokenData){
+				if(status){
+					Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
+						if(status){
+							if(mongoose.Types.ObjectId.isValid(conversation_id)){
+								conversation_id = mongoose.Types.ObjectId(conversation_id);
+
+
+							}else{
+
+							}
 						}else{
 
 						}
@@ -485,3 +516,16 @@ router.deviceajeno = function(conversation, socket, callback){
 	});
 }
 module.exports = router;
+function profile_ajeno(profileID, profiles){
+	var first  = profiles[0];
+	var second = profiles[1];
+
+	var element;
+	var number = -1;
+	if(first._id.toString() == profileID.toString()){
+		element = second;
+	}else{
+		element = first;
+	}
+	return { number: number, profile: element };
+}
