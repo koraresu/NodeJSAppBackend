@@ -525,8 +525,10 @@ function profile_ajeno(profileID, profiles){
 	var number = -1;
 	if(first._id.toString() == profileID.toString()){
 		element = second;
+		number = 1;
 	}else{
 		element = first;
+		number = 0;
 	}
 	return { number: number, profile: element };
 }
