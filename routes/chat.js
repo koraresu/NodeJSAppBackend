@@ -248,7 +248,8 @@ var apnProvider = new apn.Provider(options);
 													profiles: [
 													profileData._id,
 													profileAnotherData._id
-													]
+													],
+													prop_status: [1,1]
 												});
 												conversation.save(function(errConversation, conversationData){
 													Conversation.findOne({ _id: conversationData._id }).populate('profiles').exec(function(errConversation, conversationData){
