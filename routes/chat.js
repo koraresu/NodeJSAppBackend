@@ -477,7 +477,7 @@ var apnProvider = new apn.Provider(options);
   });
 }
 router.accept_notification = function(data, callback){
-	var id = data._id;
+	var id = data.id;
     var guid = data.guid;
 
     Tokenfunc.exist(guid, function(status, tokenData){
