@@ -482,14 +482,19 @@ router.accept_notification = function(data, callback){
 
     Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
+			console.log(" Token OK ");
 			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
 				if(status){
+					console.log("Profile Token OK");
 					if(mongoose.Types.ObjectId.isValid(id)){
+						console.log("ID is Valid");
 						id = mongoose.Types.ObjectId(id);
 						Notification.findOne({ _id: id }).exec(function(err,notificationData){
 							if(!err && notificationData){
+								console.log(" Notification OK");
 								Network.findOne({ network: notificationData.network }).populate('profiles').exec(function(errNetwork, networkData){
 									if(!errNetwork && networkData){
+										console.log("Network OK");
 										networkData.accept = true;
 										networkData.save(function(){
 											console.log("Ajeno:");
@@ -516,19 +521,23 @@ router.accept_notification = function(data, callback){
 										
 
 									}else{
+										console.log("Network Not OK");
 										callback(false, {}, {}, {});
 									}
 								});
 							}
 						});
 					}else{
+						console.log("ID inValid");
 						callback(false, {}, {}, {});
 					}
 				}else{
+					console.log("Profile Token Not OK");
 					callback(false, {}, {}, {});
 				}
 			});
 		}else{
+			console.log(" Token Not OK");
 			callback(false, {}, {}, {});
 		}
 	});
