@@ -89,6 +89,38 @@ var apnProvider = new apn.Provider(options);
 										if(item.profiles.length > 1){
 											var ajeno = profile_ajeno(profileData._id, item.profiles);
 											var number = ajeno.number;
+											if(conversationData.prop_status != undefined){
+												if(conversationData.prop_status[number] != undefined){
+													if(conversationData.prop_status[number] == 1){
+														ajeno = ajeno.profile;
+														//var ajeno = Generalfunc.profile_ajeno(profileData._id, item.profiles);
+														var aj = {
+															name: ajeno.first_name + " " + ajeno.last_name,
+															profile_pic: ajeno.profile_pic
+														};
+
+														var m = "";
+														if(item.message != undefined){
+															m = item.message.message;	
+														}
+														
+														var d = {
+															_id: item._id,
+															last_message: m,
+															profile: aj,
+															status: conversationData.prop_status[number],
+															date: item.updatedAt
+														};
+														ca(null, d);
+													}else{
+														ca("Inactive", null);
+													}
+												}else{
+													ca("Inactive", null);
+												}
+											}else{
+												ca("Inactive", null);
+											}
 											if(conversationData.prop_status[number] == 1){
 												ajeno = ajeno.profile;
 												//var ajeno = Generalfunc.profile_ajeno(profileData._id, item.profiles);
