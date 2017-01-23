@@ -112,7 +112,7 @@ var apnProvider = new apn.Provider(options);
 															_id: item._id,
 															last_message: m,
 															profile: aj,
-															status: conversationData.prop_status[number],
+															status: item.prop_status[number],
 															date: item.updatedAt
 														};
 														ca(null, d);
