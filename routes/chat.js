@@ -497,6 +497,7 @@ router.accept_notification = function(data, callback){
 								console.log(" Notification OK");
 								console.log( notificationData);
 								Network.findOne({ network: notificationData.network }).populate('profiles').exec(function(errNetwork, networkData){
+									console.log(networkData);
 									if(!errNetwork && networkData){
 										console.log("Network OK");
 										networkData.accept = true;
@@ -522,8 +523,6 @@ router.accept_notification = function(data, callback){
 												});
 											});
 										});
-										
-
 									}else{
 										console.log("Network Not OK");
 										console.log(errNetwork);
