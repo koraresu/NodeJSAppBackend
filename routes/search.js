@@ -207,19 +207,19 @@ router.post('/general/network', multipartMiddleware, function(req, res){
 													ids.push(profileItem._id);
 													break;
 													case 1:
-													if(profile.profile.status == 0 || profile.profile.status == 1){
+													
 														profile.friend_data = contacto.first_name+" "+contacto.last_name;
 														profile.friend = t
 														vecinas.push(profile);
 														ids.push(profileItem._id);	
-													}
+													
 													break;
 													case 2:
-													if(profile.profile.status == 0){
+													
 														profile.friend = t
 														otros.push(profile);
 														ids.push(profileItem._id);	
-													}
+													
 													break;
 												}
 												callback();

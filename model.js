@@ -232,7 +232,14 @@ var companySchema = new Schema({
   website: String,
   industry: String,
   type: String,
-  address: String,
+  address: {
+    calle: String,
+    colonia: String,
+    ciudad: String,
+    estado: String,
+    numero: String,
+    postalc: String,
+  },
   profile_id: { type: Schema.Types.ObjectId, ref: 'Profile' }
 },{
   timestamps: true
