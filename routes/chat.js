@@ -532,7 +532,6 @@ router.accept_notification = function(data, callback){
 			callback(false, {}, {}, {});
 		}
 	});
-	callback();
 }
 router.deviceajeno = function(conversation, socket, callback){
 
