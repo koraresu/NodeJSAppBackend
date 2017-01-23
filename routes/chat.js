@@ -492,10 +492,15 @@ router.accept_notification = function(data, callback){
 									if(!errNetwork && networkData){
 										networkData.accept = true;
 										networkData.save(function(){
+											console.log("Ajeno:");
+											console.log(network.profiles);
 											var ajeno = profile_ajeno(profileData._id, networkData.profiles);
+											console.log( ajeno );
 											Online.findOne({
 												profiles: ajeno._id
-											}).exec(function(errOnline, OnlineData){
+											}).exec(function(errOnline, onlineData){
+												console.log(errOnline);
+												console.log(onlineData)
 												Notification
 												.findOne({ _id: notificationData._id })
 												.select('-__v -updatedAt')

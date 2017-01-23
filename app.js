@@ -236,10 +236,12 @@ io.on('connection', function(socket){
   socket.on('notification', function(data){
     console.log( data );
     chatrouter.accept_notification(data, function(status, onlineData, networkData, notificationData){
-      console.log( notificationData);
-      var sock = onlineData.socket;
+      if(status){
+        console.log( notificationData);
+        var sock = onlineData.socket;
 
-      io.sockets.socket(sock).emit('notification', notificationData);
+        io.sockets.socket(sock).emit('notification', notificationData);  
+      }
     });
 
   });
