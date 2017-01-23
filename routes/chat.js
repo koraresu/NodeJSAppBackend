@@ -86,12 +86,16 @@ var apnProvider = new apn.Provider(options);
 									console.log("Conversation Data:");
 									console.log( conversationData );
 									async.map(conversationData, function(item, ca){
+										console.log("Conversation:");
+										console.log(item);
 										if(item.profiles.length > 1){
 											var ajeno = profile_ajeno(profileData._id, item.profiles);
 											var number = ajeno.number;
-											if(conversationData.prop_status != undefined){
-												if(conversationData.prop_status[number] != undefined){
-													if(conversationData.prop_status[number] == 1){
+											console.log("Profile Status:");
+											console.log( item.prop_status );
+											if(item.prop_status != undefined){
+												if(item.prop_status[number] != undefined){
+													if(item.prop_status[number] == 1){
 														ajeno = ajeno.profile;
 														//var ajeno = Generalfunc.profile_ajeno(profileData._id, item.profiles);
 														var aj = {
