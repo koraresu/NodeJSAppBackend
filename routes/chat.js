@@ -476,6 +476,59 @@ var apnProvider = new apn.Provider(options);
   	callback(result);
   });
 }
+router.accept_notification = function(data, callback){
+	var id = data._id;
+    var guid = data.guid;
+
+    Tokenfunc.exist(guid, function(status, tokenData){
+		if(status){
+			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
+				if(status){
+					if(mongoose.Types.ObjectId.isValid(id)){
+						id = mongoose.Types.ObjectId(id);
+						Notification.findOne({ _id: id }).exec(function(err,notificationData){
+							if(!err && notificationData){
+								Network.findOne({ network: notificationData.network }).populate('profiles').exec(function(errNetwork, networkData){
+									if(!errNetwork && networkData){
+										networkData.accept = true;
+										networkData.save(function(){
+											var ajeno = profile_ajeno(profileData._id, networkData.profiles);
+											Online.findOne({
+												profiles: ajeno._id
+											}).exec(function(errOnline, OnlineData){
+												Notification
+												.findOne({ _id: notificationData._id })
+												.select('-__v -updatedAt')
+												.populate('profile')
+												.populate('profile_emisor')
+												.populate('profile_mensaje')
+												.populate('network')
+												.exec(function(err,notificationData){
+													callback(true, onlineData, networkData, notificationData);	
+												});
+											});
+										});
+										
+
+									}else{
+										callback(false, {}, {}, {});
+									}
+								});
+							}
+						});
+					}else{
+						callback(false, {}, {}, {});
+					}
+				}else{
+					callback(false, {}, {}, {});
+				}
+			});
+		}else{
+			callback(false, {}, {}, {});
+		}
+	});
+	callback();
+}
 router.deviceajeno = function(conversation, socket, callback){
 
 	console.log("/******* Chat Apple Push Notification *****/");

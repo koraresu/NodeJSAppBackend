@@ -233,6 +233,14 @@ io.on('connection', function(socket){
   socket.on('conversations', function(data){
     socket.emit('conversations', socket.rooms);
   });
+  socket.on('notification', function(data){
+    chatrouter.accept_notification(data, function(status, onlineData, networkData, notificationData){
+      var sock = onlineData.socket;
+
+      io.sockets.socket(sock).emit('notification', notificationData);
+    });
+
+  });
   socket.on('disconnect', function () {
     console.log("Disconnect");
     chatrouter.delete(socket.id.toString(), function(err, s){
