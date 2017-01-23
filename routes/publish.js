@@ -88,7 +88,6 @@ function save_news(profileData, title, content, gallery,callback){
 		gallery = [];
 	}
 	var h = {
-		title: title,
 		content: content,
 		gallery: gallery
 	};

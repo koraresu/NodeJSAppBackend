@@ -381,7 +381,6 @@ jobSchema.post('update', function(doc, next){
 /*******************************************/
 var FeedbackSchema = new Schema({
 	profile_id: { type: Schema.Types.ObjectId, ref: 'Profile' },
-	title: { type: String },
 	content: { type: String }
 },{
   timestamps: true
