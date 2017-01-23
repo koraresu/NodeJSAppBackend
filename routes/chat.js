@@ -480,6 +480,9 @@ router.accept_notification = function(data, callback){
 	var id = data.id;
     var guid = data.guid;
 
+    console.log("ID: "+id);
+    console.log("GUID: "+guid);
+
     Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
 			console.log(" Token OK ");
