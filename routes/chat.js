@@ -564,6 +564,7 @@ router.notification_accept2C = function(data, success, fail){
     		Generalfunc.isValid(id, function(id){
     			Notificationfunc.getOne2Callback({ _id: id }, function(notificationData){
     				Networkfunc.accept({ _id: notificationData.network }, function(networkData){
+    					console.log("ID:", id );
     					Notificationfunc.click({ _id: id }, function(notificationData){
     						var ajeno = profile_ajeno(profileData._id, networkData.profiles);
     						Online.findOne({
@@ -582,7 +583,7 @@ router.notification_accept2C = function(data, success, fail){
 							});
     					}, function(st){
     						fail(5+"!"+st);
-    					});// Notification Accept
+    					});// Notification Click
     				}, function(st){
     					fail(4+"!"+st);
     				});//Network Accept

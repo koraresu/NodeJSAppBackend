@@ -55,7 +55,7 @@ exports.getOne2Callback = function(search, success, fail){
 		if(!errNotification && notificationData){
 			success(notificationData);
 		}else{
-			fail(false);
+			fail(0);
 		}
 	});
 }
@@ -80,8 +80,12 @@ exports.click = function(search, stat, success, fail){
 		notificationData.clicked = true;
 		notificationData.status  = stat;
 		notificationData.save(function(err, not){
+			console.log(err);
+			console.log(not);
 			if(!err && not){
 				Notification.findOne(search).exec(function(err,notificationData){
+					console.log(err);
+					console.log(notificationData);
 					if(!err && notificationData){
 						success(notificationData);
 					}else{
