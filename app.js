@@ -240,8 +240,6 @@ io.on('connection', function(socket){
   socket.on('notification', function(data){
     console.log( data );
     chatrouter.notification_accept2C(data, function(onlineData, networkData, notificationData){
-      console.log( status );
-      if(status){
         console.log( notificationData);
         console.log( onlineData );
         if(onlineData != null || onlineData != undefined){
@@ -255,7 +253,7 @@ io.on('connection', function(socket){
           }
           
         }
-      }
+      
     }, function(status){
       console.log("Status:" + status);
     });
