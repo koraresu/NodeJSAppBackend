@@ -240,9 +240,14 @@ io.on('connection', function(socket){
       if(status){
         console.log( notificationData);
         console.log( onlineData );
-        var sock = onlineData.socket;
+        if(onlineData != null || onlineData != undefined){
 
-        io.sockets.socket(sock).emit('notification', notificationData);  
+          var sock = onlineData.socket;
+          if(sock != undefined){
+            io.sockets.socket(sock).emit('notification', notificationData);  
+          }
+          
+        }
       }else{
 
       }
