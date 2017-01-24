@@ -503,7 +503,7 @@ router.accept_notification = function(data, callback){
 										networkData.accept = true;
 										networkData.save(function(){
 											console.log("Ajeno:");
-											console.log(network.profiles);
+											console.log(networkData.profiles);
 											var ajeno = profile_ajeno(profileData._id, networkData.profiles);
 											console.log( ajeno );
 											Online.findOne({
