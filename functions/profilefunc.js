@@ -521,3 +521,4 @@ exports.generate_password             = generate_Password
 exports.compare_password              = compare_Password
 exports.publicId                      = PublicId
 exports.tokenToProfile                = tokenToProfile
+exports.tokenToProfile2Callback       = tokenToProfile2Callback
