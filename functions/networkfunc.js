@@ -284,7 +284,7 @@ function accept(search, success, fail){
 			networkData.accepted = true;
 			networkData.save(function(err, network){
 				if(!err && network){
-					Network.findOne(search).exec(function(errNetwork, networkData){
+					Network.findOne(search).populate('profiles').exec(function(errNetwork, networkData){
 						if(!errNetwork && networkData){
 							success(networkData);
 						}else{
