@@ -179,6 +179,9 @@ gps.on('connection', function(socket){
 });
 var chatrouter = require('./routes/chat');
 
+chatrouter.clean(function(err){
+
+});
 io.on('connection', function(socket){
   socket.on('entrando', function(msg){
     socket.guid = msg;
