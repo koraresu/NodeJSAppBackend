@@ -1711,18 +1711,52 @@ router.post('/verify', multipartMiddleware, function(req, res){
 			Tokenfunc.toProfile(tokenData.generated_id, function(statusProfile, userData, profileData, profileInfoData){
 				if(statusProfile){
 					var verified = false;
+					if(userData.type == 1){
+						userData.verified = true;
+						userData.save(function(err, user){
+							if(!err && user){
+								if(userData.verified){
+									verified = true;
+								}
+								Profilefunc.logs(profileData, 13, profileData, function(){
+									Generalfunc.response(200,{	
+										verified: verified
+									}, function(response){
+										res.json(response);
+									});
+								});
+							}else{
+								if(userData.verified){
+									verified = true;
+								}
 
-					if(userData.verified){
-						verified = true;
+
+
+								Profilefunc.logs(profileData, 13, profileData, function(){
+									Generalfunc.response(200,{	
+										verified: verified
+									}, function(response){
+										res.json(response);
+									});
+								});
+							}
+						});
+					}else{
+						if(userData.verified){
+							verified = true;
+						}
+						Profilefunc.logs(profileData, 13, profileData, function(){
+							Generalfunc.response(200,{	
+								verified: verified
+							}, function(response){
+								res.json(response);
+							});
+						});
 					}
 
-					Profilefunc.logs(profileData, 13, profileData, function(){
-						Generalfunc.response(200,{	
-							verified: verified
-						}, function(response){
-							res.json(response);
-						});
-					});
+					
+
+					
 				}else{
 					Generalfunc.response(404,{}, function(response){
 						res.json(response);
