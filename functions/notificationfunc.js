@@ -75,7 +75,7 @@ exports.add = function(d, callback){
 		});
 	}
 }
-exports.click = function(search, stat, succes, fail){
+exports.click = function(search, stat, success, fail){
 	Notification.findOne(search).exec(function(err,notificationData){
 		notificationData.clicked = true;
 		notificationData.status  = stat;
