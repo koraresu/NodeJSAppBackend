@@ -231,9 +231,11 @@ router.post('/create', multipartMiddleware, function(req, res){
 	var password = req.body.password;
 	var phone    = req.body.phone;
 	var facebook = req.body.facebook;
-
+	var typeUser = 0;
 	var facebookData = [];
+
 	if(facebook != undefined || facebook != null || facebook != ""){
+		typeUser = 1;
 		console.log(facebook);
 		facebook = JSON.parse(facebook);
 
@@ -285,7 +287,7 @@ router.post('/create', multipartMiddleware, function(req, res){
 		email: email,
 		password: pass,
 		verified: false,
-		type: 0
+		type: typeUser
 	},{
 		first_name: nombre,
 		last_name: apellido,
