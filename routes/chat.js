@@ -507,24 +507,30 @@ router.accept_notification = function(data, callback){
 										console.log("Network OK");
 										networkData.accept = true;
 										networkData.save(function(){
-											console.log("Ajeno:");
-											console.log(networkData.profiles);
-											var ajeno = profile_ajeno(profileData._id, networkData.profiles);
-											console.log( ajeno );
-											Online.findOne({
-												profiles: ajeno.profile._id
-											}).sort({created_at: -1}).exec(function(errOnline, onlineData){
-												console.log(errOnline);
-												console.log(onlineData)
-												Notification
-												.findOne({ _id: notificationData._id })
-												.select('-__v -updatedAt')
-												.populate('profile')
-												.populate('profile_emisor')
-												.populate('profile_mensaje')
-												.populate('network')
-												.exec(function(err,notificationData){
-													callback(true, onlineData, networkData, notificationData);	
+											notificationData.clicked = true;
+											notificationData.status  = true;
+											notificationData.save(function(err, n){
+												Notification.findOne({ _id: id }).populate('network').exec(function(err,notificationData){
+													console.log("Ajeno:");
+													console.log(networkData.profiles);
+													var ajeno = profile_ajeno(profileData._id, networkData.profiles);
+													console.log( ajeno );
+													Online.findOne({
+														profiles: ajeno.profile._id
+													}).sort({created_at: -1}).exec(function(errOnline, onlineData){
+														console.log(errOnline);
+														console.log(onlineData)
+														Notification
+														.findOne({ _id: notificationData._id })
+														.select('-__v -updatedAt')
+														.populate('profile')
+														.populate('profile_emisor')
+														.populate('profile_mensaje')
+														.populate('network')
+														.exec(function(err,notificationData){
+															callback(true, onlineData, networkData, notificationData);	
+														});
+													});
 												});
 											});
 										});
