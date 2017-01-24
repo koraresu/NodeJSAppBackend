@@ -230,7 +230,49 @@ router.post('/create', multipartMiddleware, function(req, res){
 	var email    = req.body.email;
 	var password = req.body.password;
 	var phone    = req.body.phone;
+	var facebook = req.body.facebook;
 
+	var facebookData = [];
+	if(facebook != undefined || facebook != null || facebook != ""){
+		console.log(facebook);
+		facebook = JSON.parse(facebook);
+
+		facebookId = facebook.fId;
+		facebookTo = facebook.token;
+
+		var result = facebook.result;
+
+        var facebookData = [
+        {
+        	"name": "first_name",
+        	"value": result.first_name
+        },
+        {
+        	"name": "last_name",
+        	"value": result.last_name
+        },
+        {
+        	"name": "name",
+        	"value": result.name
+        },
+        {
+        	"name": "picture",
+        	"value": profilepic
+        },
+        {
+        	"name": "email",
+        	"value": result.email
+        },
+        {
+        	"name": "gender",
+        	"value": result.gender
+        }
+        ];
+
+        console.log("facebookID:" + facebookId );
+        console.log("Token:" + facebookTo );
+        console.log( facebookData );
+	}
 	console.log(email);
 
 	var pass = Profilefunc.generate_password(password);
