@@ -560,7 +560,7 @@ router.notification_accept2C = function(data, success, fail){
 
 
     Tokenfunc.exist2Callback(guid, function(tokenData){
-    	Profilefunc.tokenToProfile2Callback(tokenData.generated_id, function(){
+    	Profilefunc.tokenToProfile2Callback(tokenData.generated_id, function(profileData){
     		Generalfunc.isValid(id, function(id){
     			Notificationfunc.getOne2Callback({ _id: id }, function(notificationData){
     				Networkfunc.accept({ _id: notificationData.network }, function(networkData){
