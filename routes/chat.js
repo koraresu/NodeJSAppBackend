@@ -563,7 +563,7 @@ router.notification_accept2C = function(data, success, fail){
     	Profilefunc.tokenToProfile2Callback(tokenData.generated_id, function(){
     		Generalfunc.isValid(id, function(id){
     			Notificationfunc.getOne2Callback({ _id: id }, function(notificationData){
-    				Networkfunc.accept({ _id: notificationData.network._id }, function(networkData){
+    				Networkfunc.accept({ _id: notificationData.network }, function(networkData){
     					Notificationfunc.click({ _id: id }, function(notificationData){
     						var ajeno = profile_ajeno(profileData._id, networkData.profiles);
     						Online.findOne({
