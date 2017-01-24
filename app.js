@@ -239,6 +239,7 @@ io.on('connection', function(socket){
       console.log( status );
       if(status){
         console.log( notificationData);
+        console.log( onlineData );
         var sock = onlineData.socket;
 
         io.sockets.socket(sock).emit('notification', notificationData);  
