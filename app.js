@@ -183,6 +183,7 @@ chatrouter.clean(function(err){
 
 });
 io.on('connection', function(socket){
+  socket.emit('entra',"Entra");
   socket.on('entrando', function(msg){
     socket.guid = msg;
 
