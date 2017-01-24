@@ -275,6 +275,33 @@ function type(profileID, anotherID, callback){
 		}
 	});
 }
+function getOne2Callback(search, success, fail){
+
+}
+function accept(search, success, fail){
+	Network.findOne(search).exec(function(errNetwork, networkData){
+		if(!errNetwork && networkData){
+			networkData.accepted = true;
+			networkData.save(function(err, network){
+				if(!err && network){
+					Network.findOne(search).exec(function(errNetwork, networkData){
+						if(!errNetwork && networkData){
+							success(networkData);
+						}else{
+							fail();
+						}
+					});
+				}else{
+					fail();
+				}
+			});
+		}else{
+			fail();
+		}
+	});
+}
+exports.accept              = accept
+exports.getOne2Callback     = getOne2Callback
 exports.type                = type
 exports.isNeightbor         = isNeightbor
 exports.isFriend            = isFriend

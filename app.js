@@ -239,7 +239,7 @@ io.on('connection', function(socket){
   });
   socket.on('notification', function(data){
     console.log( data );
-    chatrouter.accept_notification(data, function(status, onlineData, networkData, notificationData){
+    chatrouter.notification_accept2C(data, function(onlineData, networkData, notificationData){
       console.log( status );
       if(status){
         console.log( notificationData);
@@ -255,11 +255,10 @@ io.on('connection', function(socket){
           }
           
         }
-      }else{
-
       }
+    }, function(status){
+      console.log("Status:" + status);
     });
-
   });
   socket.on('disconnect', function () {
     console.log("Disconnect");

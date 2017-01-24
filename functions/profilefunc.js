@@ -379,6 +379,30 @@ function tokenToProfile(guid, callback){
 		}
 	});
 }
+function tokenToProfile2Callback(guid, success, fail){
+	Token.findOne({ generated_id: guid}).exec(function(errToken, token){
+		if(!errToken && token){
+			User.findOne({ _id: token.user_id }, function(errUser, user){
+				if(!errUser && user){
+					user['password'] = null;
+					delete user['password'];
+					Profile.findOne({ user_id: user._id }).exec(function(errProfile, profile){
+						if(!errProfile && profile){
+							success(profile);
+						}else{
+							fail(2);
+						}
+						
+					});
+				}else{
+					fail(1);
+				}
+			});
+		}else{
+			fail(0);
+		}
+	});
+}
 function PublicId(public_id, callback){
 	Profile.findOne({ public_id: mongoose.Types.ObjectId(public_id) }).exec(function(errPublicId, profileData){
 		if(!errPublicId && profileData){

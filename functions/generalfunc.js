@@ -208,3 +208,10 @@ exports.sendPush = function(device, payload, message, badge, sound, ca){
     	ca(result);
 	});
 }
+exports.isValid = function(id, success, fail){
+	if(mongoose.Types.ObjectId.isValid(id)){
+		success(mongoose.Types.ObjectId(id));
+	}else{
+		fail();
+	}
+}

@@ -35,12 +35,13 @@ var apnProvider = new apn.Provider(options);
 		Toda las variables de modelo se nombrara, con el nombre del archivo, eliminando _ 
 		y cambiando la siguiente letras al _ por mayuscula. Iniciando la primera letra en mayuscula.
 		*/
-		var Generalfunc    = require('../functions/generalfunc');
-		var Profilefunc    = require('../functions/profilefunc');
-		var Experiencefunc = require('../functions/experiencefunc');
-		var Tokenfunc      = require('../functions/tokenfunc');
-		var Skillfunc      = require('../functions/skillfunc');
-		var Networkfunc    = require('../functions/networkfunc');
+		var Generalfunc      = require('../functions/generalfunc');
+		var Profilefunc      = require('../functions/profilefunc');
+		var Experiencefunc   = require('../functions/experiencefunc');
+		var Tokenfunc        = require('../functions/tokenfunc');
+		var Skillfunc        = require('../functions/skillfunc');
+		var Networkfunc      = require('../functions/networkfunc');
+		var Notificationfunc = require('../functions/notificationfunc');
 
 		var format         = require('../functions/format');
 
@@ -484,10 +485,6 @@ var apnProvider = new apn.Provider(options);
 router.accept_notification = function(data, callback){
 	var id = data.id;
     var guid = data.guid;
-
-    //console.log("ID: "+id);
-    //console.log("GUID: "+guid);
-
     Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
 			//console.log(" Token OK ");
@@ -556,6 +553,52 @@ router.accept_notification = function(data, callback){
 			callback(false, {}, {}, {});
 		}
 	});
+}
+router.notification_accept2C = function(data, success, fail){
+	var id = data.id;
+    var guid = data.guid;
+
+
+    Tokenfunc.exist2Callback(guid, function(tokenData){
+    	Profilefunc.tokenToProfile2Callback(tokenData.generated_id, function(){
+    		Generalfunc.isValid(id, function(id){
+    			Notificationfunc.getOne2Callback({ _id: id }, function(notificationData){
+    				Networkfunc.accept({ _id: notificationData.network._id }, function(networkData){
+    					Notificationfunc.click({ _id: id }, function(notificationData){
+    						var ajeno = profile_ajeno(profileData._id, networkData.profiles);
+    						Online.findOne({
+								profiles: ajeno.profile._id
+							}).sort({created_at: -1}).exec(function(errOnline, onlineData){
+								Notification
+								.findOne({ _id: notificationData._id })
+								.select('-__v -updatedAt')
+								.populate('profile')
+								.populate('profile_emisor')
+								.populate('profile_mensaje')
+								.populate('network')
+								.exec(function(err,notificationData){
+									success(onlineData, networkData, notificationData);	
+								});
+							});
+    					}, function(){
+    						fail(5);
+    					});// Notification Accept
+    				}, function(){
+    					fail(4);
+    				});//Network Accept
+    			}, function(){
+    				fail(3);
+    			});//Notification get One 2 Callback
+    		}, function(){
+    			fail(2);
+    		});// Is Valid
+    	}, function(stat){
+    		fail(1);
+    	});// Profile token to profile 2 Callback
+    }, function(){
+		fail(0);
+    });// Token exist 2 callback
+    
 }
 router.deviceajeno = function(conversation, socket, callback){
 

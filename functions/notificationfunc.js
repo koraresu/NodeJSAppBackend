@@ -50,6 +50,15 @@ exports.getOne = function(search, callback){
 		}
 	});
 }
+exports.getOne2Callback = function(search, success, fail){
+	model.notification.findOne(search).populate('profile').populate('profile_emisor').populate('profile_mensaje').exec(function(errNotification, notificationData){
+		if(!errNotification && notificationData){
+			success(notificationData);
+		}else{
+			fail(false);
+		}
+	});
+}
 exports.add = function(d, callback){
 	if(d == null){
 		callback(false);
@@ -65,4 +74,23 @@ exports.add = function(d, callback){
 			}
 		});
 	}
+}
+exports.click = function(search, stat, succes, fail){
+	Notification.findOne(search).exec(function(err,notificationData){
+		notificationData.clicked = true;
+		notificationData.status  = stat;
+		notificationData.save(function(err, not){
+			if(!err && not){
+				Notification.findOne(search).exec(function(err,notificationData){
+					if(!err && notificationData){
+						success(notificationData);
+					}else{
+						fail();
+					}
+				});
+			}else{
+				fail();
+			}
+		});
+	});
 }

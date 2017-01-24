@@ -63,3 +63,12 @@ exports.exist = function(guid, callback){
 		
 	});
 }
+exports.exist2Callback = function(guid, success, fail){
+	Token.findOne({ generated_id: guid}, function(errToken, token){
+		if(!errToken && token){
+			success( token );
+		}else{
+			fail();
+		}
+	});
+}
