@@ -246,11 +246,13 @@ io.on('connection', function(socket){
         console.log( onlineData );
         if(onlineData != null || onlineData != undefined){
 
-          var sock = onlineData.socket;
-          if(sock != undefined){
+          var socketid = onlineData.socket;
+          if(socketid != undefined){
             console.log("Send Notification socket");
-            console.log(sock);
-            io.to('/#' + sock).emit('notification', notificationData);  
+            console.log(socketid);
+            io.to('/#' + socketid).emit('notification', notificationData);
+            socket.broadcast.to(socketid).emit('notification', notificationData);
+            io.sockets.connected(socketId).emit('notification', notificationData);
           }
           
         }
