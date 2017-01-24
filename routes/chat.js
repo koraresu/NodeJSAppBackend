@@ -496,7 +496,7 @@ router.accept_notification = function(data, callback){
 							if(!err && notificationData){
 								console.log(" Notification OK");
 								console.log( notificationData);
-								Network.findOne({ network: notificationData.network._id }).populate('profiles').exec(function(errNetwork, networkData){
+								Network.findOne({ _id: notificationData.network._id }).populate('profiles').exec(function(errNetwork, networkData){
 									console.log(networkData);
 									if(!errNetwork && networkData){
 										console.log("Network OK");
