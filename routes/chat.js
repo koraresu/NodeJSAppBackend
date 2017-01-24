@@ -492,11 +492,11 @@ router.accept_notification = function(data, callback){
 					if(mongoose.Types.ObjectId.isValid(id)){
 						console.log("ID is Valid");
 						id = mongoose.Types.ObjectId(id);
-						Notification.findOne({ _id: id }).exec(function(err,notificationData){
+						Notification.findOne({ _id: id }).populate('network').exec(function(err,notificationData){
 							if(!err && notificationData){
 								console.log(" Notification OK");
 								console.log( notificationData);
-								Network.findOne({ network: notificationData.network }).populate('profiles').exec(function(errNetwork, networkData){
+								Network.findOne({ network: notificationData.network._id }).populate('profiles').exec(function(errNetwork, networkData){
 									console.log(networkData);
 									if(!errNetwork && networkData){
 										console.log("Network OK");
