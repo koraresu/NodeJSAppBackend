@@ -580,23 +580,23 @@ router.notification_accept2C = function(data, success, fail){
 									success(onlineData, networkData, notificationData);	
 								});
 							});
-    					}, function(){
-    						fail(5);
+    					}, function(st){
+    						fail(5+"!"+st);
     					});// Notification Accept
     				}, function(st){
     					fail(4+"!"+st);
     				});//Network Accept
-    			}, function(){
-    				fail(3);
+    			}, function(st){
+    				fail(3+"!"+st);
     			});//Notification get One 2 Callback
-    		}, function(){
-    			fail(2);
+    		}, function(st){
+    			fail(2+"!"+st);
     		});// Is Valid
-    	}, function(stat){
-    		fail(1);
+    	}, function(st){
+    		fail(1+"!"+st);
     	});// Profile token to profile 2 Callback
-    }, function(){
-		fail(0);
+    }, function(st){
+		fail(0+"!"+st);
     });// Token exist 2 callback
     
 }

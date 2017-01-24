@@ -85,11 +85,11 @@ exports.click = function(search, stat, success, fail){
 					if(!err && notificationData){
 						success(notificationData);
 					}else{
-						fail();
+						fail(1);
 					}
 				});
 			}else{
-				fail();
+				fail(0);
 			}
 		});
 	});
