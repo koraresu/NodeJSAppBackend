@@ -480,22 +480,22 @@ router.accept_notification = function(data, callback){
 	var id = data.id;
     var guid = data.guid;
 
-    console.log("ID: "+id);
-    console.log("GUID: "+guid);
+    //console.log("ID: "+id);
+    //console.log("GUID: "+guid);
 
     Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
-			console.log(" Token OK ");
+			//console.log(" Token OK ");
 			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
 				if(status){
-					console.log("Profile Token OK");
+					//console.log("Profile Token OK");
 					if(mongoose.Types.ObjectId.isValid(id)){
-						console.log("ID is Valid");
+						//console.log("ID is Valid");
 						id = mongoose.Types.ObjectId(id);
 						Notification.findOne({ _id: id }).populate('network').exec(function(err,notificationData){
 							if(!err && notificationData){
-								console.log(" Notification OK");
-								console.log( notificationData);
+								//console.log(" Notification OK");
+								//console.log( notificationData);
 								Network.findOne({ _id: notificationData.network._id }).populate('profiles').exec(function(errNetwork, networkData){
 									console.log(networkData);
 									if(!errNetwork && networkData){
@@ -507,7 +507,7 @@ router.accept_notification = function(data, callback){
 											var ajeno = profile_ajeno(profileData._id, networkData.profiles);
 											console.log( ajeno );
 											Online.findOne({
-												profiles: ajeno._id
+												profiles: ajeno.profile._id
 											}).exec(function(errOnline, onlineData){
 												console.log(errOnline);
 												console.log(onlineData)
