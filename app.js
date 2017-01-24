@@ -252,7 +252,6 @@ io.on('connection', function(socket){
             console.log(socketid);
             io.to('/#' + socketid).emit('notification', notificationData);
             socket.broadcast.to(socketid).emit('notification', notificationData);
-            io.sockets.connected(socketid).emit('notification', notificationData);
           }
           
         }
