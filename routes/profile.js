@@ -259,7 +259,7 @@ router.post('/create', multipartMiddleware, function(req, res){
         },
         {
         	"name": "picture",
-        	"value": profilepic
+        	"value": ""
         },
         {
         	"name": "email",
