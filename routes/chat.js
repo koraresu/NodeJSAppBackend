@@ -583,8 +583,8 @@ router.notification_accept2C = function(data, success, fail){
     					}, function(){
     						fail(5);
     					});// Notification Accept
-    				}, function(){
-    					fail(4);
+    				}, function(st){
+    					fail(4+"!"+st);
     				});//Network Accept
     			}, function(){
     				fail(3);
