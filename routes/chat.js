@@ -508,7 +508,7 @@ router.accept_notification = function(data, callback){
 											console.log( ajeno );
 											Online.findOne({
 												profiles: ajeno.profile._id
-											},[],{ $orderby : { 'created_at' : -1 } }).exec(function(errOnline, onlineData){
+											}).sort({created_at: -1}).exec(function(errOnline, onlineData){
 												console.log(errOnline);
 												console.log(onlineData)
 												Notification
