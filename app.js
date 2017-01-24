@@ -247,6 +247,8 @@ io.on('connection', function(socket){
 
           var sock = onlineData.socket;
           if(sock != undefined){
+            console.log("Send Notification socket");
+            console.log(sock);
             io.to('/#' + sock).emit('notification', notificationData);  
           }
           
