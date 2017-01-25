@@ -568,20 +568,41 @@ router.notification_accept2C = function(data, success, fail){
     					Notificationfunc.click({ _id: id },true, function(notificationData){
     						console.log(networkData.profiles);
     						var ajeno = profile_ajeno(profileData._id, networkData.profiles);
-    						Online.findOne({
-								profiles: ajeno.profile._id
-							}).sort({created_at: -1}).exec(function(errOnline, onlineData){
-								Notification
-								.findOne({ _id: notificationData._id })
-								.select('-__v -updatedAt')
-								.populate('profile')
-								.populate('profile_emisor')
-								.populate('profile_mensaje')
-								.populate('network')
-								.exec(function(err,notificationData){
-									success(onlineData, networkData, notificationData);	
+    						
+
+    						var a = function(ajeno, notificationData, networkData,c){
+    							Online.findOne({
+									profiles: ajeno.profile._id
+								}).sort({created_at: -1}).exec(function(errOnline, onlineData){
+									Notification
+									.findOne({ _id: notificationData._id })
+									.select('-__v -updatedAt')
+									.populate('profile')
+									.populate('profile_emisor')
+									.populate('profile_mensaje')
+									.populate('network')
+									.exec(function(err,notificationData){
+										c(onlineData, networkData, notificationData);	
+									});
 								});
+    						};
+    						var notNew4 = new Notification({
+								tipo: 4,
+								profile: notificationData.profile_emisor._id,
+								profile_emisor: notificationData.profile._id,
+								network: networkData._id,
+								status: true,
+								clicked: true
 							});
+    						notNew4.save(function(errnewNot, newNotData){
+    							Notificationfunc.getOne2Callback({ _id: newNotData._id }, function(notificationData){
+    								a(ajeno, notificationData, networkData, function(onlineData, networkData, notificationData){
+	    								success(onlineData, networkData, notificationData);
+	    							});
+    							}, function(st){
+    								fail(6+"!"+st);
+    							});
+    						});
     					}, function(st){
     						fail(5+"!"+st);
     					});// Notification Click
