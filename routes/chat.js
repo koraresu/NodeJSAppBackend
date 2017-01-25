@@ -588,8 +588,8 @@ router.notification_accept2C = function(data, success, fail){
     						};
     						var notNew4 = new Notification({
 								tipo: 4,
-								profile: notificationData.profile_emisor._id,
-								profile_emisor: notificationData.profile._id,
+								profile: notificationData.profile_emisor,
+								profile_emisor: notificationData.profile,
 								network: networkData._id,
 								status: true,
 								clicked: true
