@@ -595,9 +595,9 @@ router.notification_accept2C = function(data, success, fail){
 								clicked: true
 							});
     						notNew4.save(function(errnewNot, newNotData){
-    							Notificationfunc.getOne2Callback({ _id: newNotData._id }, function(notificationData){
-    								a(ajeno, notificationData, networkData, function(onlineData, networkData, notificationData){
-	    								success(onlineData, networkData, notificationData);
+    							Notificationfunc.getOne2Callback({ _id: newNotData._id }, function(notNewData){
+    								a(ajeno, notNewData, networkData, function(onlineData, networkData, notNData){
+	    								success(onlineData, networkData, notNData, notificationData);
 	    							});
     							}, function(st){
     								fail(6+"!"+st);

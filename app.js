@@ -239,7 +239,7 @@ io.on('connection', function(socket){
   });
   socket.on('notification', function(data){
     console.log( data );
-    chatrouter.notification_accept2C(data, function(onlineData, networkData, notificationData){
+    chatrouter.notification_accept2C(data, function(onlineData, networkData, notificationData, OldNotification){
         console.log( notificationData);
         console.log( onlineData );
         if(onlineData != null || onlineData != undefined){
@@ -248,6 +248,7 @@ io.on('connection', function(socket){
           if(socketid != undefined){
             console.log("Send Notification socket");
             console.log(socketid);
+            socket.emit('notification', OldNotification);
             io.to('/#' + socketid).emit('notification', notificationData);
             socket.broadcast.to(socketid).emit('notification', notificationData);
           }
