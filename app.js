@@ -247,7 +247,11 @@ io.on('connection', function(socket){
           var socketid = onlineData.socket;
           if(socketid != undefined){
             console.log("Send Notification socket");
+            
             console.log(socketid);
+            console.log("Socket to Me:" + socket.id );
+            console.log(OldNotification);
+
             socket.emit('notification', OldNotification);
             io.to('/#' + socketid).emit('notification', notificationData);
             socket.broadcast.to(socketid).emit('notification', notificationData);
