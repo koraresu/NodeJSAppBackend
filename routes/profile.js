@@ -1712,35 +1712,38 @@ router.post('/verify', multipartMiddleware, function(req, res){
 				if(statusProfile){
 					var verified = false;
 					if(userData.type == 1){
-						userData.verified = true;
-						userData.save(function(err, user){
-							if(!err && user){
-								if(userData.verified){
-									verified = true;
-								}
-								Profilefunc.logs(profileData, 13, profileData, function(){
-									Generalfunc.response(200,{	
-										verified: verified
-									}, function(response){
-										res.json(response);
+						User.findOne({ _id: userData._id }).exec(function(err, user){
+							user.verified = true;
+							user.save(function(err, u){
+								if(!err && u){
+									if(user.verified){
+										verified = true;
+									}
+									Profilefunc.logs(profileData, 13, profileData, function(){
+										Generalfunc.response(200,{	
+											verified: verified
+										}, function(response){
+											res.json(response);
+										});
 									});
-								});
-							}else{
-								if(userData.verified){
-									verified = true;
-								}
+								}else{
+									if(user.verified){
+										verified = true;
+									}
 
 
 
-								Profilefunc.logs(profileData, 13, profileData, function(){
-									Generalfunc.response(200,{	
-										verified: verified
-									}, function(response){
-										res.json(response);
+									Profilefunc.logs(profileData, 13, profileData, function(){
+										Generalfunc.response(200,{	
+											verified: verified
+										}, function(response){
+											res.json(response);
+										});
 									});
-								});
-							}
+								}
+							});
 						});
+						
 					}else{
 						if(userData.verified){
 							verified = true;
