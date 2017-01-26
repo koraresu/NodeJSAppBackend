@@ -131,7 +131,11 @@ var apnProvider = new apn.Provider(options);
 										}
 									}, function(err, results){
 										console.log( err );
-										res.json(results);
+										if(results == null){
+											res.json( [] );
+										}else{
+											res.json(results);	
+										}
 									});
 								}else{
 									Generalfunc.response(101, {}, function(response){
