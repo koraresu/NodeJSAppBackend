@@ -229,25 +229,21 @@ var apnProvider = new apn.Provider(options);
 									var n = equal.number;
 									console.log("N:");
 									console.log( n );
-
-									var status = conversationData.prop_status;
-									console.log("Status:");
-									console.log( status );
-									status[n] = 0;
-									console.log("Before:");
-									console.log( conversationData.prop_status );
-									conversationData.prop_status = status;
-									console.log("After:");
-									console.log( conversationData.prop_status );
+									conversationData.prop_status[n] = 0;
 									conversationData.save(function(err, conversation){
-										console.log( err );
-
-										Conversation.findOne({ _id: conversation_id }).populate('profiles').exec(function(errConv, conversationData){
-											console.log( conversationData );
-											Generalfunc.response(200, conversationData, function(response){
+										if(!err && conversation){
+											Conversation.findOne({ _id: conversation_id }).exec(function(errConv, conv){
+												console.log( conv );
+												Generalfunc.response(200, conv, function(response){
+													res.json( response );
+												});
+											});
+										}else{
+											Generalfunc.response(101, {}, function(response){
 												res.json( response );
 											});
-										});
+										}
+										
 									});
 								});
 							}else{
