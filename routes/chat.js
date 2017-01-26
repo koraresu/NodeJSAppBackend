@@ -226,7 +226,7 @@ var apnProvider = new apn.Provider(options);
 									var n = equal.number;
 									console.log("N:");
 									console.log( n );
-									var a = { 0, 0 };
+									var a = [ 0, 0 ];
 									a[0] = conversationData.prop_status[0];
 									a[1] = conversationData.prop_status[1];
 									a[n] = 0;
