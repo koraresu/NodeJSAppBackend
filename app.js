@@ -263,7 +263,7 @@ io.on('connection', function(socket){
                 console.log( results );
               });
             }, function(st){
-              console.log( st );
+              console.log("Fail:" + st );
             });
 
           }

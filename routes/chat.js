@@ -678,7 +678,9 @@ router.deviceajeno = function(conversation, socket, callback){
 router.apple_push = function(type, id, socket, success, fail){
 
 	if(type == 1){
+		console.log("Type: " + type);
 		Conversation.findOne({ _id: mongoose.Types.ObjectId(id) }).populate('profiles').exec(function(errConversation, conversationData){
+			console.log(errConversation);
 			if(!errConversation && conversationData){
 				Online.findOne({ socket: socket.id }).populate('profiles').exec(function(errOnline, onlineData){
 					if(!errOnline && onlineData){
@@ -695,15 +697,17 @@ router.apple_push = function(type, id, socket, success, fail){
 			}				
 		});	
 	}else if(type == 0){
+		console.log("Type: " + type);
 		Notification.findOne({ _id: mongoose.Types.ObjectId(id) })
 		.populate('profile')
 		.populate('profile_emisor')
 		.populate('network')
 		.exec(function(err, notificationData){
+			console.log(err);
 			if(!err && notificationData){
 				Online.findOne({ socket: socket.id }).populate('profiles').exec(function(errOnline, onlineData){
 					if(!errOnline && onlineData){
-						success(notificationData.profile_emisor);
+						success( notificationData.profile_emisor );
 					}else{
 						fail(1);
 					}
