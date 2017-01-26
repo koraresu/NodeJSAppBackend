@@ -215,3 +215,18 @@ exports.isValid = function(id, success, fail){
 		fail();
 	}
 }
+exports.profile_equal = function(profileID, profiles){
+	var first  = profiles[0];
+	var second = profiles[1];
+
+	var element;
+	var number = -1;
+	if(first._id.toString() == profileID.toString()){
+		element = first;
+		number = 0;
+	}else{
+		element = second;
+		number = 1;
+	}
+	return { number: number, profile: element };
+}

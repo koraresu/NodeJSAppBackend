@@ -681,7 +681,7 @@ router.post('/get/friends', multipartMiddleware, function(req, res){
 										var first  = profiles[0];
 										var second = profiles[1];
 										
-										var p = {};
+										var p = { };
 										var d = "";
 										if(first._id.toString() == profileAnotherData._id.toString()){
 											p = second;
@@ -726,20 +726,8 @@ router.post('/get/friends', multipartMiddleware, function(req, res){
 							async.map( networkData , function(item, ca){
 
 										var profiles = item.profiles;
-										console.log(profiles);
-										var first  = profiles[0];
-										var second = profiles[1];
-										
-										var p = {};
-										var d = "";
-										
-										if(first._id.toString() == profileData._id.toString()){
-											p = second;
-											d = "s";
-										}else{
-											p = first;
-											d = "f";
-										}
+										var equal = Generalfunc.profile_equal(profileData._id, profiles);
+										var p = equal.profile;
 
 										ca( null, {
 											profile: p,

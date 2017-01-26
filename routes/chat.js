@@ -847,6 +847,7 @@ router.sendPushtoAll = function(profileId, name, message, payload, success){
 	});
 }
 router.sendPushOne = sendPushOne;
+router.profile_equal = profile_equal
 module.exports = router;
 function profile_ajeno(profileID, profiles){
 	var first  = profiles[0];
