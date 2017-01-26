@@ -219,16 +219,36 @@ var apnProvider = new apn.Provider(options);
 							if(mongoose.Types.ObjectId.isValid(conversation_id)){
 								conversation_id = mongoose.Types.ObjectId(conversation_id);
 
+								Conversation.findOne({ _id: conversation_id }).populate('profiles').exec(function(errConv, conversationData){
+									var equal = profile_equal(profileData._id, conversationData.profiles);
+									var n = equal.number;
 
+									var status = conversationData.prop_status;
+									status[n] = 0;
+									conversationData.prop_status = status;
+									conversationData.save(function(err, conversation){
+										Conversation.findOne({ _id: conversation_id }).populate('profiles').exec(function(errConv, conversationData){
+											Generalfunc.response(200, conversationData, function(response){
+												res.json( response );
+											});
+										});
+									});
+								});
 							}else{
-
+								Generalfunc.response(101, {}, function(response){
+									res.json( response );
+								});
 							}
 						}else{
-
+							Generalfunc.response(101, {}, function(response){
+								res.json( response );
+							});
 						}
 					});
 				}else{
-
+					Generalfunc.response(101, {}, function(response){
+						res.json( response );
+					});
 				}
 			});
 		});
@@ -820,6 +840,21 @@ function profile_ajeno(profileID, profiles){
 	}else{
 		element = first;
 		number = 0;
+	}
+	return { number: number, profile: element };
+}
+function profile_equal(profileID, profiles){
+	var first  = profiles[0];
+	var second = profiles[1];
+
+	var element;
+	var number = -1;
+	if(first._id.toString() == profileID.toString()){
+		element = first;
+		number = 0;
+	}else{
+		element = second;
+		number = 1;
 	}
 	return { number: number, profile: element };
 }
