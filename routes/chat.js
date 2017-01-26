@@ -91,6 +91,7 @@ var apnProvider = new apn.Provider(options);
 										console.log(item);
 										if(item.profiles.length > 1){
 											var equal = profile_equal(profileData._id, item.profiles);
+											var ajeno = equal;
 											var number = equal.number;
 											console.log("Profile Status:");
 											console.log( item.prop_status );
