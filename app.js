@@ -218,19 +218,18 @@ io.on('connection', function(socket){
 
         /******* Apple Push Notification *****/
         console.log("/******* Apple Push Notification *****/");
-        chatrouter.deviceajeno(messageData.conversation.toString(), socket.id, function(statusDevice, devices){
-          if(statusDevice){
-            var name_push = messageData.profile_id.first_name + " " + messageData.profile_id.last_name;
-            var message_push = name_push + ": " + data.message;
-            async.map(devices, function(i, c){
-              chatrouter.sendPush(i, message_push, name_push, messageData.conversation.toString() ,  function(result){
-                c(null, result );
-              });
-            }, function(err, results){
-              console.log( results );
-            });
-          }
+        
+        chatrouter.apple_push(messageData, socket, function(profile){
+          var name = profile.first_name + " " + profile.last_name;
+          var conversation = messageData.conversation.toString();
+          chatrouter.sendPushtoAll(profile._id, name, data.message, {'messageFrom': name, 'conversation': conversation }, function(results){            
+            console.log( results );
+          });
+        }, function(st){
+          console.log( st );
         });
+
+
       }
     });
   });
@@ -255,6 +254,7 @@ io.on('connection', function(socket){
             socket.emit('notification', OldNotification);
             io.to('/#' + socketid).emit('notification', notificationData);
             socket.broadcast.to(socketid).emit('notification', notificationData);
+
           }
           
         }

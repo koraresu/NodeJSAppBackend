@@ -675,6 +675,73 @@ router.deviceajeno = function(conversation, socket, callback){
 		});
 	});
 }
+function apple_push = function(conversation, socket, success, fail){
+	Conversation.findOne({ _id: mongoose.Types.ObjectId(conversation) }).populate('profiles').exec(function(errConversation, conversationData){
+		if(!errConversation && conversationData){
+			Online.findOne({ socket: socket.id }).populate('profiles').exec(function(errOnline, onlineData){
+				if(!errOnline && onlineData){
+					var profiles = conversationData.profiles;
+					var profile = onlineData.profiles;
+					var ajeno = profile_ajeno(profile._id, profiles);
+					success(ajeno);
+				}else{
+					fail(1);
+				}
+			});
+		}else{
+			fail(0);
+		}				
+	});
+}
+function sendPushOne(deviceToken, name, message, payload,  success, fail){
+	var mensaje = name + ": " + message;
+	if(payload == undefined){
+		payload = {};
+	}
+	if(success == undefined){
+		success = function(result){};
+	}
+	if(fail == undefined){
+		fail = function(result){};
+	}
+
+	var note = new apn.Notification();
+	note.expiry = Math.floor(Date.now() / 1000) + 3600; // Expires 1 hour from now.
+	note.badge = 1;
+	note.sound = "ping.aiff";
+	note.alert = mensaje;
+	note.payload = payload;
+	note.topic = "com.thehiveapp.thehive";
+	apnProvider.send(note, deviceToken).then( (result) => {
+		if(result.status == "200"){
+  			success(result);
+		}else{
+			fail(result);
+		}
+	});
+}
+router.sendPushtoAll = function(profileId, name, message, payload, success){
+	Device.find({ profile: profileId }).populate('profile').exec(function(err, deviceData){
+		async.map(deviceData, function(item, callback){
+			if(item.token == ""){
+				callback(null, null);
+			}else{
+				sendPushOne(item.token, name, message, payload, function(result){
+					callback(null, result);
+				}, function(result){
+					callback(null, result);
+				});
+			}
+		}, function(err, results){
+			if(err.length <= 0){
+				success(results);
+			}else{
+				success(results);
+			}
+		});
+	});
+}
+router.sendPushOne = sendPushOne;
 module.exports = router;
 function profile_ajeno(profileID, profiles){
 	var first  = profiles[0];
