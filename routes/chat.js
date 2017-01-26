@@ -714,6 +714,46 @@ router.apple_push = function(type, id, socket, success, fail){
 		});
 	}	
 }
+
+router.mensaje_create = function(data, nombre_emisor, nombre_mensaje){
+	switch(data.tipo){
+		case 0: //0 = se ha unido
+		message = "¡Tu contacto " + nombre_emisor + " se ha unido! ";
+		clase = "unio";
+		break;
+		case 1: //1 = recomendación
+		message = nombre_emisor + " te recomienda a " + nombre_mensaje;
+		clase = "recomendacion";
+		break;
+		case 2: //2 = share contacto
+		message = nombre_emisor + " quiere enviar tu contacto a "+nombre_mensaje;
+		clase = "share";
+		break;
+		case 3: //3 = Envio Solucitud
+		if(data.clicked == 1){
+			if(data.status == 1){
+				message = "Tu y " + nombre_emisor + " están conectados";
+				clase = "accept";
+			}else{
+				message = "No aceptaste la solicitud de " + nombre_emisor;
+				clase = "accept";
+			}
+		}else{
+			message = nombre_emisor + " te quiere contactar";
+			clase = "connect";
+		}
+		break;
+		case 4: //4 = Respondio Solicitud
+		message = nombre_emisor + " te añadió";
+		clase = "accept";
+		break;
+		default:
+		message = "";
+		clase = "";
+		break;
+	}
+	return { mensaje: message, class: clase };
+}
 function sendPushOne(deviceToken, name, message, payload,  success, fail){
 	var mensaje = name + ": " + message;
 	if(payload == undefined){

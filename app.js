@@ -257,7 +257,7 @@ io.on('connection', function(socket){
 
             console.log("/******* Apple Push Notification *****/");
         
-            chatrouter.apple_push(1, messageData, socket, function(profile){
+            chatrouter.apple_push(1, notificationData._id, socket, function(profile){
               var name = profile.first_name + " " + profile.last_name;
               chatrouter.sendPushtoAll(profile._id, name, chatrouter.mensaje_create(notificationData, notificationData.profile_emisor, notificationData.profile_mensaje), {'messageFrom': name }, function(results){
                 console.log( results );
