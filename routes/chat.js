@@ -675,7 +675,7 @@ router.deviceajeno = function(conversation, socket, callback){
 		});
 	});
 }
-function apple_push = function(conversation, socket, success, fail){
+router.apple_push = function(conversation, socket, success, fail){
 	Conversation.findOne({ _id: mongoose.Types.ObjectId(conversation) }).populate('profiles').exec(function(errConversation, conversationData){
 		if(!errConversation && conversationData){
 			Online.findOne({ socket: socket.id }).populate('profiles').exec(function(errOnline, onlineData){
