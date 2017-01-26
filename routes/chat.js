@@ -234,12 +234,14 @@ var apnProvider = new apn.Provider(options);
 									console.log("Status:");
 									console.log( status );
 									status[n] = 0;
-
+									console.log("Before:");
+									console.log( conversationData.prop_status );
 									conversationData.prop_status = status;
-									console.log( conversationData );
+									console.log("After:");
+									console.log( conversationData.prop_status );
 									conversationData.save(function(err, conversation){
 										console.log( err );
-										console.log( conversation );
+
 										Conversation.findOne({ _id: conversation_id }).populate('profiles').exec(function(errConv, conversationData){
 											console.log( conversationData );
 											Generalfunc.response(200, conversationData, function(response){
