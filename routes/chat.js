@@ -223,13 +223,16 @@ var apnProvider = new apn.Provider(options);
 									console.log("ConversationData:");
 
 									var equal = profile_equal(profileData._id, conversationData.profiles);
-									console.log("Equal:");
-									console.log( equal );
-
 									var n = equal.number;
 									console.log("N:");
 									console.log( n );
-									conversationData.prop_status[n] = 0;
+									var a = { 0, 0 };
+									a[0] = conversationData.prop_status[0];
+									a[1] = conversationData.prop_status[1];
+									a[n] = 0;
+
+									conversationData.prop_status = a;
+
 									conversationData.save(function(err, conversation){
 										if(!err && conversation){
 											Conversation.findOne({ _id: conversation_id }).exec(function(errConv, conv){
