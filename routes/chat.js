@@ -220,14 +220,22 @@ var apnProvider = new apn.Provider(options);
 								conversation_id = mongoose.Types.ObjectId(conversation_id);
 
 								Conversation.findOne({ _id: conversation_id }).populate('profiles').exec(function(errConv, conversationData){
+									console.log( conversationData );
 									var equal = profile_equal(profileData._id, conversationData.profiles);
+									console.log( equal );
 									var n = equal.number;
-
+									console.log( n );
 									var status = conversationData.prop_status;
+									console.log( status );
 									status[n] = 0;
+
 									conversationData.prop_status = status;
+									console.log( conversationData );
 									conversationData.save(function(err, conversation){
+										console.log( err );
+										console.log( conversation );
 										Conversation.findOne({ _id: conversation_id }).populate('profiles').exec(function(errConv, conversationData){
+											console.log( conversationData );
 											Generalfunc.response(200, conversationData, function(response){
 												res.json( response );
 											});
