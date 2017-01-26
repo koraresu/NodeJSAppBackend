@@ -831,6 +831,7 @@ router.sendPushtoAll = function(profileId, name, message, payload, success){
 			if(item.token == ""){
 				callback(null, null);
 			}else{
+				console.log( item.token );
 				sendPushOne(item.token, name, message, payload, function(result){
 					callback(null, result);
 				}, function(result){
