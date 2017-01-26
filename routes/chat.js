@@ -220,12 +220,18 @@ var apnProvider = new apn.Provider(options);
 								conversation_id = mongoose.Types.ObjectId(conversation_id);
 
 								Conversation.findOne({ _id: conversation_id }).populate('profiles').exec(function(errConv, conversationData){
-									console.log( conversationData );
+									console.log("ConversationData:");
+
 									var equal = profile_equal(profileData._id, conversationData.profiles);
+									console.log("Equal:");
 									console.log( equal );
+
 									var n = equal.number;
+									console.log("N:");
 									console.log( n );
+
 									var status = conversationData.prop_status;
+									console.log("Status:");
 									console.log( status );
 									status[n] = 0;
 
