@@ -3,6 +3,7 @@ var mongoose    = require('mongoose');
 var path = require('path');
 var fs = require('fs');
 var _jade = require('jade');
+var async = require('async');
 
 var model = require('../model');
 var Profile     = model.profile;
