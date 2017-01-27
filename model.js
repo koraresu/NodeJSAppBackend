@@ -321,7 +321,8 @@ OnlineSchema.post('update', function(doc, next){
 var ConversationSchema = new Schema({
   profiles:    [ { type: Schema.Types.ObjectId, ref: 'Profile' } ],
   prop_status: [{ type: Number }], // 2 = Active | 1 = Archive | 0 = Deleted
-  message: { type: Schema.Types.ObjectId, ref: 'Message' }
+  message: { type: Schema.Types.ObjectId, ref: 'Message' },
+  readed: Boolean
 },{
   timestamps: true
 });
@@ -602,12 +603,35 @@ NotificationSchema.post('update', function(doc, next){
   });
 });
 /*******************************************/
-var PushSchema = new Schema({
-  device: { type: Schema.Types.ObjectId, ref: 'Device' },
+var PushEventSchema = new Schema({
+  profile: { type: Schema.Types.ObjectId, ref: 'Profile' },
   read:   Boolean,
+  type:  Number,  // 1 = Notificacion | 0 = Mensaje
   notification: { type: Schema.Types.ObjectId, ref: 'Notification' },
   message: { type: Schema.Types.ObjectId, ref: 'Message' },
-  profile: { type: Schema.Types.ObjectId, ref: 'Profile' }
+  
+},{
+  timestamps: true
+});
+PushEventSchema.post('save', function(doc, next){
+  logMiddleware("pushevent","save", doc, function(err, logData){
+    next();
+  });
+});
+PushEventSchema.post('remove', function(doc, next){
+  logMiddleware("pushevent","remove", doc, function(err, logData){
+    next();
+  });
+});
+PushEventSchema.post('update', function(doc, next){
+  logMiddleware("pushevent","update", doc, function(err, logData){
+    next();
+  });
+});
+/*******************************************/
+var PushSchema = new Schema({
+  device: { type: Schema.Types.ObjectId, ref: 'Device' },
+  push: { type: Schema.Types.ObjectId, ref: 'Push' },
 },{
   timestamps: true
 });
@@ -722,7 +746,8 @@ exports.history      = history;
 exports.feedback     = db.model( 'Feedback' , FeedbackSchema );
 // Chat
 exports.device       = db.model( 'Device', deviceSchema );
-exports.push       = db.model( 'Push', PushSchema );
+exports.pushevent    = db.model( 'PushEvent', PushEventSchema );
+exports.push         = db.model( 'Push', PushSchema );
 exports.online       = db.model( 'Online', OnlineSchema );
 exports.conversation = db.model( 'Conversation' , ConversationSchema );
 exports.message      = db.model( 'Message' , MessageSchema );

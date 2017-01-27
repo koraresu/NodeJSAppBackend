@@ -222,9 +222,11 @@ io.on('connection', function(socket){
         chatrouter.apple_push(0, messageData, socket, function(profile){
           var name = profile.first_name + " " + profile.last_name;
           var conversation = messageData.conversation.toString();
-          chatrouter.sendPushtoAll(profile._id, name, data.message, {'messageFrom': name, 'conversation': conversation }, function(results){            
+          chatrouter.sendPushtoAll(0, profile._id, messageData, {'messageFrom': name, 'conversation': conversation }, function(results){            
             console.log( results );
-          });
+          }, function(){
+
+          })
         }, function(st){
           console.log( st );
         });
@@ -259,8 +261,10 @@ io.on('connection', function(socket){
         
             chatrouter.apple_push(1, notificationData._id, socket, function(profile){
               var name = profile.first_name + " " + profile.last_name;
-              chatrouter.sendPushtoAll(profile._id, name, chatrouter.mensaje_create(notificationData, notificationData.profile_emisor, notificationData.profile_mensaje), {'messageFrom': name }, function(results){
-                console.log( results );
+              chatrouter.sendPushtoAll(1,profile._id, notificationData, {'messageFrom': name, 'conversation': conversation }, function(err, results){
+            
+              }, function(){
+
               });
             }, function(st){
               console.log("Fail:" + st );

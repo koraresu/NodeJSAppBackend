@@ -6,28 +6,32 @@ var _jade = require('jade');
 var async = require('async');
 
 var model = require('../model');
-var Profile     = model.profile;
-var User        = model.user;
-var Token       = model.token;
-var Job         = model.job;
-var Company     = model.company;
-var Experience  = model.experience;
-var Network     = model.network;
-var History     = model.history;
-var Feedback    = model.feedback;
-var Review      = model.review;
-var Log         = model.log;
-var Skill       = model.skill;
-var Speciality  = model.speciality;
-var Sector      = model.sector;
+var Profile      = model.profile;
+var User         = model.user;
+var Token        = model.token;
+var Job          = model.job;
+var Company      = model.company;
+var Experience   = model.experience;
+var Network      = model.network;
+var History      = model.history;
+var Feedback     = model.feedback;
+var Review       = model.review;
+var Log          = model.log;
+var Skill        = model.skill;
+var Speciality   = model.speciality;
+var Sector       = model.sector;
 var Notification = model.notification;
 var Feedback     = model.feedback;
 var Conversation = model.conversation;
 var Message      = model.message;
 var Device       = model.device;
+var PushEvent    = model.pushevent;
+var Push         = model.push;
 var City         = model.city;
 var State        = model.state;
 var Country      = model.country;
+
+var Pushfunc = require('./pushfunc');
 
 var apn = require('apn');
 
@@ -252,27 +256,43 @@ exports.profile_equal = function(profileID, profiles){
 	}
 	return { number: number, profile: element };
 }
-exports.sendPushtoAll = function(profileId, name, message, payload, success){
-	Device.find({ profile: profileId }).populate('profile').exec(function(err, deviceData){
-		
-		async.map(deviceData, function(item, callback){
-			if(item.token == ""){
-				callback(null, null);
+exports.sendPushtoAll = function(type,profileId, message, payload, success, fail){
+	
+
+
+	Pushfunc.addOrGet(type, message._id, profileId, function(pushEvent){
+		Device.find({ profile: profileId }).populate('profile').exec(function(err, deviceData){
+
+			var mensaje = "";
+
+			if(type == 0){
+				mensaje = message.message;
 			}else{
-				console.log( item.token );
-				sendPushOne(item.token, name, message, payload, function(result){
-					callback(null, result);
-				}, function(result){
-					callback(null, result);
-				});
+				mensaje = mensaje_create(message);
 			}
-		}, function(err, results){
-			if(err.length <= 0){
-				success(results);
-			}else{
-				success(results);
-			}
+			var name = deviceData.profile.first_name + " " + deviceData.profile.last_name;
+			async.map(deviceData, function(item, callback){
+				if(item.token == ""){
+					callback(null, null);
+				}else{
+					console.log( item.token );
+					Pushfunc.createPush(pushEvent._id, item.token, function(){
+						sendPushOne(item.token, name, mensaje, payload, function(result){
+							callback(null, result);
+						}, function(result){
+							callback(null, result);
+						});
+					}, function(){
+						callback(null, null);
+					});
+					
+				}
+			}, function(err, results){
+				success(err, results);
+			});
 		});
+	}, function(err){
+		fail(err);
 	});
 }
 function sendPushOne(deviceToken, name, message, payload,  success, fail){
@@ -302,4 +322,44 @@ function sendPushOne(deviceToken, name, message, payload,  success, fail){
 		}
 	});
 }
+function mensaje_create(data, nombre_emisor, nombre_mensaje){
+	switch(data.tipo){
+		case 0: //0 = se ha unido
+		message = "¡Tu contacto " + nombre_emisor + " se ha unido! ";
+		clase   = "unio";
+		break;
+		case 1: //1 = recomendación
+		message = nombre_emisor + " te recomienda a " + nombre_mensaje;
+		clase   = "recomendacion";
+		break;
+		case 2: //2 = share contacto
+		message = nombre_emisor + " quiere enviar tu contacto a "+nombre_mensaje;
+		clase   = "share";
+		break;
+		case 3: //3 = Envio Solucitud
+		if(data.clicked == 1){
+			if(data.status == 1){
+				message = "Tu y " + nombre_emisor + " están conectados";
+				clase   = "accept";
+			}else{
+				message = "No aceptaste la solicitud de " + nombre_emisor;
+				clase   = "accept";
+			}
+		}else{
+			message = nombre_emisor + " te quiere contactar";
+			clase   = "connect";
+		}
+		break;
+		case 4: //4 = Respondio Solicitud
+		message = nombre_emisor + " te añadió";
+		clase   = "accept";
+		break;
+		default:
+		message = "";
+		clase   = "";
+		break;
+	}
+	return { mensaje: message, class: clase };
+}
+exports.mensaje_create = mensaje_create
 exports.sendPushOne = sendPushOne
