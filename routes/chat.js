@@ -90,8 +90,10 @@ var apnProvider = new apn.Provider(options);
 										console.log("Conversation:");
 										console.log(item);
 										if(item.profiles.length > 1){
+											
 											var equal = profile_equal(profileData._id, item.profiles);
-											var ajeno = equal;
+											var ajeno = profile_ajeno(profileData._id, item.profiles);
+
 											var number = equal.number;
 											console.log("Profile Status:");
 											console.log( item.prop_status );
