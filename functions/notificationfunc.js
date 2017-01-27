@@ -59,6 +59,50 @@ exports.getOne2Callback = function(search, success, fail){
 		}
 	});
 }
+exports.addOrGet = function(search, d, callback){
+	if(d == null){
+		callback(false);
+	}else{
+		Notification.findOne(search).exec(function(err, not){
+			if(!err && not){
+				if(err == null){
+					not.status = d.status;
+					not.clicked = d.clicked;
+					not.save(function(err, notificationData){
+						if(!err && notificationData){
+							callback(true, notificationData);
+						}else{
+							callback(false, notificationData);
+						}
+					});
+				}else{
+					var notification = new Notification(d);
+					notification.save(function(errNotification, notificationData){
+						console.log("Erro Notification:");
+						console.log(errNotification);
+						if(!errNotification && notificationData){
+							callback(true, notificationData);	
+						}else{
+							callback(false);
+						}
+					});
+				}
+			}else{
+				var notification = new Notification(d);
+				notification.save(function(errNotification, notificationData){
+					console.log("Erro Notification:");
+					console.log(errNotification);
+					if(!errNotification && notificationData){
+						callback(true, notificationData);	
+					}else{
+						callback(false);
+					}
+				});
+			}
+		});
+		
+	}
+}
 exports.add = function(d, callback){
 	if(d == null){
 		callback(false);

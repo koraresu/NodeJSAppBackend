@@ -626,15 +626,19 @@ router.notification_accept2C = function(data, success, fail){
 									});
 								});
     						};
-    						var notNew4 = new Notification({
+    						Notificationfunc.addOrGet({
+    							tipo: 4,
+								profile: notificationData.profile_emisor,
+								profile_emisor: notificationData.profile,
+								network: networkData._id,
+    						},{
 								tipo: 4,
 								profile: notificationData.profile_emisor,
 								profile_emisor: notificationData.profile,
 								network: networkData._id,
 								status: true,
 								clicked: true
-							});
-    						notNew4.save(function(errnewNot, newNotData){
+							}, function(status, newNotData){
     							Notificationfunc.getOne2Callback({ _id: newNotData._id }, function(notNewData){
     								a(ajeno, notNewData, networkData, function(onlineData, networkData, notNData){
 	    								success(onlineData, networkData, notNData, notificationData);
