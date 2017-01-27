@@ -274,7 +274,7 @@ exports.sendPushtoAll = function(profileId, name, message, payload, success){
 		});
 	});
 }
-exports.sendPushOne = function(deviceToken, name, message, payload,  success, fail){
+function sendPushOne(deviceToken, name, message, payload,  success, fail){
 	var mensaje = name + ": " + message;
 	if(payload == undefined){
 		payload = {};
@@ -301,3 +301,4 @@ exports.sendPushOne = function(deviceToken, name, message, payload,  success, fa
 		}
 	});
 }
+exports.sendPushOne = sendPushOne
