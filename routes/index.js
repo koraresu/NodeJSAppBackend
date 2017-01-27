@@ -34,23 +34,7 @@ var Profilefunc = require('../functions/profilefunc');
 var Generalfunc = require('../functions/generalfunc');
 var Notificationfunc = require('../functions/notificationfunc');
 
-var apn = require('apn');
-
-options = {
-   keyFile : "conf/key.pem",
-   certFile : "conf/cert.pem",
-   debug : true
-};
-var options = {
-  token: {
-    key: "conf/key.p8",
-    keyId: "822637C6D9",
-    teamId: "58GA47LFA6",
-  },
-  cert: "conf/cert.pem",
-  production: false,
-};
-var apnProvider = new apn.Provider(options);
+var apnProvider = Generalfunc.apnProvider();
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
@@ -240,6 +224,11 @@ router.get('/send/chat/mensaje/:device_id', function(req, res){
     "data": "ABC"
   }, "Probando!!", 0, null, function(){
     res.render('notifications',{ result: result });
+  });
+});
+router.get('/send/notification/:profile_id', function(req, res){
+  Generalfunc.sendPushtoAll(req.params.profile_id, "Prueba", "Probando", {}, function(result){
+    res.send(result);
   });
 });
 router.get('/check/', function(req, res){

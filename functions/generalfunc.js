@@ -27,6 +27,23 @@ var City         = model.city;
 var State        = model.state;
 var Country      = model.country;
 
+var apn = require('apn');
+
+options = {
+   keyFile : "conf/key.pem",
+   certFile : "conf/cert.pem",
+   debug : true
+};
+var options = {
+  token: {
+    key: "conf/key.p8",
+    keyId: "822637C6D9",
+    teamId: "58GA47LFA6",
+  },
+  cert: "conf/cert.pem",
+  production: false,
+};
+var apnProvider = new apn.Provider(options);
 
 
 var nodemailer = require('nodemailer');
@@ -84,6 +101,9 @@ var sendMail = function(toAddress, subject, content, next){
 	});
 }; 
 
+exports.apnProvider = function(){
+	return apnProvider;
+}
 
 exports.saveImage = function(file, new_path, callback){
 	var tmp_path         = file.path;
@@ -229,4 +249,53 @@ exports.profile_equal = function(profileID, profiles){
 		number = 1;
 	}
 	return { number: number, profile: element };
+}
+exports.sendPushtoAll = function(profileId, name, message, payload, success){
+	Device.find({ profile: profileId }).populate('profile').exec(function(err, deviceData){
+		async.map(deviceData, function(item, callback){
+			if(item.token == ""){
+				callback(null, null);
+			}else{
+				console.log( item.token );
+				sendPushOne(item.token, name, message, payload, function(result){
+					callback(null, result);
+				}, function(result){
+					callback(null, result);
+				});
+			}
+		}, function(err, results){
+			if(err.length <= 0){
+				success(results);
+			}else{
+				success(results);
+			}
+		});
+	});
+}
+exports.sendPushOne = function(deviceToken, name, message, payload,  success, fail){
+	var mensaje = name + ": " + message;
+	if(payload == undefined){
+		payload = {};
+	}
+	if(success == undefined){
+		success = function(result){};
+	}
+	if(fail == undefined){
+		fail = function(result){};
+	}
+
+	var note = new apn.Notification();
+	note.expiry = Math.floor(Date.now() / 1000) + 3600; // Expires 1 hour from now.
+	note.badge = 1;
+	note.sound = "ping.aiff";
+	note.alert = mensaje;
+	note.payload = payload;
+	note.topic = "com.thehiveapp.thehive";
+	apnProvider.send(note, deviceToken).then( (result) => {
+		if(result.status == "200"){
+  			success(result);
+		}else{
+			fail(result);
+		}
+	});
 }

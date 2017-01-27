@@ -101,7 +101,6 @@ var apnProvider = new apn.Provider(options);
 												if(item.prop_status[number] != undefined){
 													if(item.prop_status[number] == 1){
 														ajeno = ajeno.profile;
-														//var ajeno = Generalfunc.profile_ajeno(profileData._id, item.profiles);
 														var aj = {
 															name: ajeno.first_name + " " + ajeno.last_name,
 															profile_pic: ajeno.profile_pic
