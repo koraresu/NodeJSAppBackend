@@ -42,6 +42,7 @@ var apnProvider = new apn.Provider(options);
 		var Skillfunc        = require('../functions/skillfunc');
 		var Networkfunc      = require('../functions/networkfunc');
 		var Notificationfunc = require('../functions/notificationfunc');
+		var Pushfunc         = require('../functions/pushfunc');
 
 		var format         = require('../functions/format');
 
@@ -65,6 +66,7 @@ var apnProvider = new apn.Provider(options);
 		var Conversation = model.conversation;
 		var Online       = model.online;
 		var Device       = model.device;
+		var Push         = model.push;
 		var Message      = model.message;
 		var City         = model.city;
 		var State        = model.state;

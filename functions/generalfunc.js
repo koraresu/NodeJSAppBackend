@@ -254,6 +254,7 @@ exports.profile_equal = function(profileID, profiles){
 }
 exports.sendPushtoAll = function(profileId, name, message, payload, success){
 	Device.find({ profile: profileId }).populate('profile').exec(function(err, deviceData){
+		
 		async.map(deviceData, function(item, callback){
 			if(item.token == ""){
 				callback(null, null);

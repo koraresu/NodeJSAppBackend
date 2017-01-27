@@ -601,7 +601,32 @@ NotificationSchema.post('update', function(doc, next){
     next();
   });
 });
+/*******************************************/
+var PushSchema = new Schema({
+  device: { type: Schema.Types.ObjectId, ref: 'Device' },
+  read:   Boolean,
+  notification: { type: Schema.Types.ObjectId, ref: 'Notification' },
+  message: { type: Schema.Types.ObjectId, ref: 'Message' },
+  profile: { type: Schema.Types.ObjectId, ref: 'Profile' }
+},{
+  timestamps: true
+});
 
+PushSchema.post('save', function(doc, next){
+  logMiddleware("push","save", doc, function(err, logData){
+    next();
+  });
+});
+PushSchema.post('remove', function(doc, next){
+  logMiddleware("push","remove", doc, function(err, logData){
+    next();
+  });
+});
+PushSchema.post('update', function(doc, next){
+  logMiddleware("push","update", doc, function(err, logData){
+    next();
+  });
+});
 
 /*******************************************/
 var PaisSchema = new Schema({
@@ -697,6 +722,7 @@ exports.history      = history;
 exports.feedback     = db.model( 'Feedback' , FeedbackSchema );
 // Chat
 exports.device       = db.model( 'Device', deviceSchema );
+exports.push       = db.model( 'Push', PushSchema );
 exports.online       = db.model( 'Online', OnlineSchema );
 exports.conversation = db.model( 'Conversation' , ConversationSchema );
 exports.message      = db.model( 'Message' , MessageSchema );
