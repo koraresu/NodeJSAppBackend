@@ -731,7 +731,7 @@ router.post('/get/friends', multipartMiddleware, function(req, res){
 								var equal = Generalfunc.profile_ajeno(profileData._id, profiles);
 
 								console.log( equal._id );
-								formatoProfile(equal._id, function(p){
+								Profilefunc.formatoProfile(equal._id, function(p){
 
 									ca( null, {
 										profile: p,
