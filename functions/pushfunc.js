@@ -156,6 +156,10 @@ function getConvProfile(id, socket,success, fail){
 		}				
 	});	
 }
+exports.getNotProfile = getNotProfile;
+exports.getConvProfile = getConvProfile;
+exports.NotAddOrGet = NotAddOrGet;
+exports.CovAddOrGet = CovAddOrGet;
 exports.addOrGet    = addOrGet;
 exports.add         = add;
 exports.createPush  = createPush;

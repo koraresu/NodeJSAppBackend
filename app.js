@@ -29,7 +29,7 @@ var notification = require('./routes/notifications');
 var gps          = require('./routes/gps');
 
 var Generalfunc = require('./functions/generalfunc');
-var Generalfunc = require('./functions/pushfunc');
+var Pushfunc = require('./functions/pushfunc');
 
 /**
   Apple Push Notification
@@ -223,10 +223,10 @@ io.on('connection', function(socket){
         console.log("/******* Apple Push Notification *****/");
         
 
-        Generalfunc.pushfunc.getConvProfile(messageData._id, socket, function(profile){
+        Pushfunc.getConvProfile(messageData._id, socket, function(profile){
           var name = profile.first_name + " " + profile.last_name;
           var conversation = messageData.conversation.toString();
-          Generalfunc.pushfunc.CovAddOrGet(messageData._id, profile._id, function(PushEvent){
+          Pushfunc.CovAddOrGet(messageData._id, profile._id, function(PushEvent){
             console.log( PushEvent );
           }, function(){});
         }, function(){});
@@ -255,10 +255,10 @@ io.on('connection', function(socket){
 
             console.log("/******* Apple Push Notification *****/");
           
-            Generalfunc.pushfunc.getNotProfile(notificationData._id, socket, function(profile){
+            Pushfunc.getNotProfile(notificationData._id, socket, function(profile){
               var name = profile.first_name + " " + profile.last_name;
               
-              Generalfunc.pushfunc.NotAddOrGet(notificationData._id, profile._id, function(PushEvent){
+              Pushfunc.NotAddOrGet(notificationData._id, profile._id, function(PushEvent){
                 console.log( PushEvent );
               }, function(){});
             }, function(){
