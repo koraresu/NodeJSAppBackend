@@ -725,19 +725,19 @@ router.post('/get/friends', multipartMiddleware, function(req, res){
 						Network.find(d).populate('profiles').exec(function(errNetwork, networkData){
 							async.map( networkData , function(item, ca){
 
-										var profiles = item.profiles;
-										var equal = Generalfunc.profile_equal(profileData._id, profiles);
-										var p = equal.profile;
+								var profiles = item.profiles;
+								var equal = Generalfunc.profile_ajeno(profileData._id, profiles);
+								var p = equal.profile;
 
-										ca( null, {
-											profile: p,
-											accepted: item.accepted
-										} );
-									}, function(err, results){
-										Generalfunc.response(200, { profile: profileData, friends: results }, function(response){
-											res.json(response);
-										});
-									});
+								ca( null, {
+									profile: p,
+									accepted: item.accepted
+								} );
+							}, function(err, results){
+								Generalfunc.response(200, { profile: profileData, friends: results }, function(response){
+									res.json(response);
+								});
+							});
 						});
 					}
 				}else{

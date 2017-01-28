@@ -221,7 +221,6 @@ io.on('connection', function(socket){
 
         /******* Apple Push Notification *****/
         console.log("/******* Apple Push Notification *****/");
-        
 
         Pushfunc.getConvProfile(messageData._id, socket, function(profile){
           var name = profile.first_name + " " + profile.last_name;
