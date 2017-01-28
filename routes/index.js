@@ -210,27 +210,7 @@ router.get('/chat/1', function(req, res){
 router.get('/chat/3', function(req, res){
   res.render('chat3', {});
 });
-router.get('/send/notifications/:device_id', function(req, res){
-  Generalfunc.sendPush(req.params.device_id, {
-    "type": "notification",
-    "data": "ABC"
-  }, "Probando!!", 0, null, function(){
-    res.render('notifications',{ result: result });
-  });
-});
-router.get('/send/chat/mensaje/:device_id', function(req, res){
-  Generalfunc.sendPush(req.params.device_id, {
-    "type": "chat",
-    "data": "ABC"
-  }, "Probando!!", 0, null, function(){
-    res.render('notifications',{ result: result });
-  });
-});
-router.get('/send/notification/:profile_id', function(req, res){
-  Generalfunc.sendPushtoAll(req.params.profile_id, "Prueba", "Probando", {}, function(result){
-    res.send(result);
-  });
-});
+
 router.get('/check/', function(req, res){
   var html = "";
   Experience.find({}).exec(function(errExperience, experienceData){

@@ -27,6 +27,7 @@ var extra        = require('./routes/extra');
 var chat         = require('./routes/chat');
 var notification = require('./routes/notifications');
 var gps          = require('./routes/gps');
+var test         = require('./routes/test');
 
 var Generalfunc = require('./functions/generalfunc');
 var Pushfunc = require('./functions/pushfunc');
@@ -83,6 +84,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
+app.use('/test', test);
 app.use('/api/network', network);
 app.use('/api/profile', profile);
 app.use('/api/skills', skills);
