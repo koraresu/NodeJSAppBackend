@@ -87,7 +87,7 @@ function formatoProfile(profile_id,cb){
 
 							Network.find({ profiles: { $in:[ profileData._id ] } }).exec(function(errNetwork, networkData){
 
-								var p = formato(profileData);
+								var p = formato(profileData, userData);
 								var data = {
 									profile: p,
 									review: reviewData,
