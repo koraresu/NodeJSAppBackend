@@ -45,6 +45,9 @@ function add(d, success, fail){
 	});
 }
 function CovAddOrGet(id, profile, success, fail){
+	console.log( id );
+	console.log( profile );
+
 	addOrGet(0, id, profile, function(pushEventData){
 		success(pushEventData);
 	}, function(){
@@ -52,6 +55,9 @@ function CovAddOrGet(id, profile, success, fail){
 	});
 }
 function NotAddOrGet(id, profile, success, fail){
+	console.log( id );
+	console.log( profile );
+
 	addOrGet(1, id, profile, function(pushEventData){
 		success(pushEventData);
 	}, function(){
@@ -87,7 +93,8 @@ function addOrGet(type, id, profile, success, fail){
 		};
 	}
 
-	
+	console.log( data );
+	console.log( search );
 	PushEvent.findOne(search).exec(function(err, pushEventData){
 		if(!err && pushEventData){
 			if(pushEventData.length > 0){
