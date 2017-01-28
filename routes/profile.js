@@ -726,11 +726,11 @@ router.post('/get/friends', multipartMiddleware, function(req, res){
 							async.map( networkData , function(item, ca){
 
 								var profiles = item.profiles;
-								console.log( profiles );
 								var equal = Generalfunc.profile_ajeno(profileData._id, profiles);
-								console.log( equal );
 								var p = equal.profile;
+								console.log( equal.profile._id );
 								formatoProfile(equal.profile._id, function(p){
+
 									ca( null, {
 										profile: p,
 										accepted: item.accepted
