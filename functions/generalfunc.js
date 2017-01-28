@@ -361,6 +361,5 @@ function mensaje_create(data, nombre_emisor, nombre_mensaje){
 	}
 	return { mensaje: message, class: clase };
 }
-exports.pushfunc       = require('./pushfunc')
 exports.mensaje_create = mensaje_create
 exports.sendPushOne = sendPushOne

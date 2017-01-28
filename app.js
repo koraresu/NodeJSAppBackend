@@ -29,6 +29,7 @@ var notification = require('./routes/notifications');
 var gps          = require('./routes/gps');
 
 var Generalfunc = require('./functions/generalfunc');
+var Generalfunc = require('./functions/pushfunc');
 
 /**
   Apple Push Notification
