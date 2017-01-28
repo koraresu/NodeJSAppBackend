@@ -49,7 +49,7 @@ function addOrGet(type,id,profile, success, fail){
 		data = {
 			profile: profile,
 			read:   false,
-			type:  type
+			type:  type,
 			notification: id
 		};
 		search = {
@@ -61,7 +61,7 @@ function addOrGet(type,id,profile, success, fail){
 		data = {
 			profile: profile,
 			read:   false,
-			type:  type
+			type:  type,
 			message: id
 		};
 		search = {
