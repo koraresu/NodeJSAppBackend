@@ -734,7 +734,7 @@ router.post('/get/friends', multipartMiddleware, function(req, res){
 									accepted: item.accepted
 								} );
 							}, function(err, results){
-								Generalfunc.response(200, { profile: profileData, friends: results }, function(response){
+								Generalfunc.response(200, { friends: results }, function(response){
 									res.json(response);
 								});
 							});
