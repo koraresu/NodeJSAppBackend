@@ -730,11 +730,8 @@ router.post('/get/friends', multipartMiddleware, function(req, res){
 
 								var equal = Generalfunc.profile_ajeno(profileData._id, profiles);
 
-								console.log( equal );
-								
-								var p = equal.profile;
-								console.log( equal.profile._id );
-								formatoProfile(equal.profile._id, function(p){
+								console.log( equal._id );
+								formatoProfile(equal._id, function(p){
 
 									ca( null, {
 										profile: p,
