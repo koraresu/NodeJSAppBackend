@@ -727,11 +727,11 @@ router.post('/get/friends', multipartMiddleware, function(req, res){
 
 								var profiles = item.profiles;
 								var equal = Generalfunc.profile_ajeno(profileData._id, profiles);
-								Profilefunc.formatoProfile(equal._id, function(p){
-									ca( null, {
-										profile: p,
-										accepted: item.accepted
-									});
+								var p = Profilefunc.formato(equal);
+								
+								ca( null, {
+									profile: p,
+									accepted: item.accepted
 								});
 							}, function(err, results){
 								Generalfunc.response(200, { friends: results }, function(response){
