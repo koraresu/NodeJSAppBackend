@@ -28,6 +28,8 @@ var chat         = require('./routes/chat');
 var notification = require('./routes/notifications');
 var gps          = require('./routes/gps');
 
+var Generalfunc = require('./functions/generalfunc');
+
 /**
   Apple Push Notification
 **/
@@ -219,19 +221,14 @@ io.on('connection', function(socket){
         /******* Apple Push Notification *****/
         console.log("/******* Apple Push Notification *****/");
         
-        chatrouter.apple_push(0, messageData, socket, function(profile){
+
+        Generalfunc.pushfunc.getConvProfile(messageData._id, socket, function(profile){
           var name = profile.first_name + " " + profile.last_name;
           var conversation = messageData.conversation.toString();
-          chatrouter.sendPushtoAll(0, profile._id, messageData, {'messageFrom': name, 'conversation': conversation }, function(results){            
-            console.log( results );
-          }, function(){
-
-          })
-        }, function(st){
-          console.log( st );
-        });
-
-
+          Generalfunc.pushfunc.CovAddOrGet(messageData._id, profile._id, function(PushEvent){
+            console.log( PushEvent );
+          }, function(){});
+        }, function(){});
       }
     });
   });
@@ -249,27 +246,22 @@ io.on('connection', function(socket){
           if(socketid != undefined){
             console.log("Send Notification socket");
             
-            console.log(socketid);
             console.log("Socket to Me:" + socket.id );
-            console.log(OldNotification);
 
             socket.emit('notification', OldNotification);
             io.to('/#' + socketid).emit('notification', notificationData);
             socket.broadcast.to(socketid).emit('notification', notificationData);
 
             console.log("/******* Apple Push Notification *****/");
-        
-            chatrouter.apple_push(1, notificationData._id, socket, function(profile){
+          
+            Generalfunc.pushfunc.getNotProfile(notificationData._id, socket, function(profile){
               var name = profile.first_name + " " + profile.last_name;
-              chatrouter.sendPushtoAll(1,profile._id, notificationData, {'messageFrom': name, 'conversation': conversation }, function(err, results){
-            
-              }, function(){
-
-              });
-            }, function(st){
-              console.log("Fail:" + st );
+              
+              Generalfunc.pushfunc.NotAddOrGet(notificationData._id, profile._id, function(PushEvent){
+                console.log( PushEvent );
+              }, function(){});
+            }, function(){
             });
-
           }
         }
 

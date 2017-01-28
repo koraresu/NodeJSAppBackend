@@ -42,7 +42,21 @@ function add(d, success, fail){
 		}	
 	});
 }
-function addOrGet(type,id,profile, success, fail){
+function CovAddOrGet(id, profile, success, fail){
+	addOrGet(0, id, profile, function(pushEventData){
+		success(pushEventData);
+	}, function(){
+		fail();
+	});
+}
+function NotAddOrGet(id, profile, success, fail){
+	addOrGet(1, id, profile, function(pushEventData){
+		success(pushEventData);
+	}, function(){
+		fail();
+	});
+}
+function addOrGet(type, id, profile, success, fail){
 	var data = {};
 	var search = {};
 	if(type == 1){
@@ -100,6 +114,47 @@ function createPush(pushEvent, token, success, fail){
 			fail(err);
 		}
 	});
+}
+function getNotProfile(id, socket, success, fail){
+	Notification.findOne({ _id: mongoose.Types.ObjectId(id) })
+	.populate('profile')
+	.populate('profile_emisor')
+	.populate('network')
+	.exec(function(err, notificationData){
+		console.log(err);
+		if(!err && notificationData){
+			Online.findOne({ socket: socket.id }).populate('profiles').exec(function(errOnline, onlineData){
+				if(!errOnline && onlineData){
+					success( notificationData.profile_emisor );
+				}else{
+					fail(1);
+				}
+			});
+		}else{
+			fail(0);
+		}
+	});
+}
+function getConvProfile(id, socket,success, fail){
+	Conversation.findOne({ _id: mongoose.Types.ObjectId(id) })
+	.populate('profiles')
+	.exec(function(errConversation, conversationData){
+		console.log(errConversation);
+		if(!errConversation && conversationData){
+			Online.findOne({ socket: socket.id }).populate('profiles').exec(function(errOnline, onlineData){
+				if(!errOnline && onlineData){
+					var profiles = conversationData.profiles;
+					var profile = onlineData.profiles;
+					var ajeno = profile_ajeno(profile._id, profiles);
+					success(ajeno);
+				}else{
+					fail(1);
+				}
+			});
+		}else{
+			fail(0);
+		}				
+	});	
 }
 exports.addOrGet    = addOrGet;
 exports.add         = add;
