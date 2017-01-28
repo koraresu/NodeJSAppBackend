@@ -61,12 +61,5 @@ roter.get('/send/notification/:profile_id:/:notification_id', function(req, res)
     });
   });
 });
-
-router.get('/send/notification/:profile_id:/:message_id', function(req, res){
-  Generalfunc.sendPushtoAll(1, )
-  Generalfunc.sendPushtoAll(req.params.profile_id, "Prueba", "Probando", {}, function(result){
-    res.send(result);
-  });
-});
 module.exports = router;
 
