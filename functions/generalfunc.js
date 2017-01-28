@@ -257,9 +257,6 @@ exports.profile_equal = function(profileID, profiles){
 	return { number: number, profile: element };
 }
 exports.sendPushtoAll = function(type,profileId, message, payload, success, fail){
-	
-
-
 	Pushfunc.addOrGet(type, message._id, profileId, function(pushEvent){
 		Device.find({ profile: profileId }).populate('profile').exec(function(err, deviceData){
 
