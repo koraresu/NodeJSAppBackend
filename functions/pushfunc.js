@@ -143,14 +143,15 @@ function createPush(pushEvent, token, success, fail){
 				if(pushEvent.type == 1){
 					Notification.findOne({ _id: pushEvent.notification._id })
 					.populate('profile')
-					.populate('profile_emisor')
+					.populate('profile_emisor',['first_name','last_name','public_id','review_score','profile_pic','qrcode'])
 					.populate('profile_mensaje')
 					.exec(function(err, notificationData){
 						var nombre_emisor = notificationData.profile_emisor.first_name + " " + notificationData.profile_emisor.last_name;
 						var nombre_mensaje = notificationData.profile_mensaje.first_name + " " + notificationData.profile_mensaje.last_name;
 						message = Generalfunc.mensaje_create(notificationData, nombre_emisor, nombre_mensaje);
 						Generalfunc.sendPushOne(token.token, name, message, {
-
+							envio: notificationData.profile_emisor,
+							notification: notificationData
 						}, function(results){
 							success(results);
 						}, function(results){
@@ -162,7 +163,8 @@ function createPush(pushEvent, token, success, fail){
 					Message.findOne({ _id: pushEvent.message }).exec(function(err, messageData){
 						message = messageData.message;
 						Generalfunc.sendPushOne(token.token, name, message, {
-
+							envio: notificationData.profile_emisor,
+							message: messageData
 						}, function(results){
 							success(results);
 						}, function(results){
