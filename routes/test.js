@@ -55,12 +55,10 @@ router.get('/send/message/:profile_id/:message_id', function(req, res){
 router.get('/send/notification/:profile_id/:notification_id', function(req, res){
   var profile_id = req.params.profile_id;
   var notification_id = req.params.notification_id;
-  Notification.findOne({ _id: notification_id }).exec(function(err, notificationData){
-    Generalfunc.sendPushtoAll(1, profile_id, notificationData, {}, function(err, results){
-      res.json( results );
-    }, function(err){
-      res.json( err );
-    });
+  Pushfunc.send(1, profile_id, notification_id, function(results){
+    res.json(results);
+  }, function(st){
+    res.send("Error:" + st);
   });
 });
 module.exports = router;

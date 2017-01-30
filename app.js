@@ -225,11 +225,11 @@ io.on('connection', function(socket){
         console.log("/******* Apple Push Notification *****/");
 
         Pushfunc.getConvProfile(messageData._id, socket, function(profile){
-          var name = profile.first_name + " " + profile.last_name;
-          var conversation = messageData.conversation.toString();
-          Pushfunc.CovAddOrGet(messageData._id, profile._id, function(PushEvent){
-            console.log( PushEvent );
-          }, function(){});
+          Pushfunc.send(0,profile._id, messageData._id, function(results){
+                console.log( results );
+              }, function(results){
+                console.log( results );
+              });
         }, function(){});
       }
     });
@@ -255,13 +255,14 @@ io.on('connection', function(socket){
             socket.broadcast.to(socketid).emit('notification', notificationData);
 
             console.log("/******* Apple Push Notification *****/");
-          
+
             Pushfunc.getNotProfile(notificationData._id, socket, function(profile){
-              var name = profile.first_name + " " + profile.last_name;
               
-              Pushfunc.NotAddOrGet(notificationData._id, profile._id, function(PushEvent){
-                console.log( PushEvent );
-              }, function(){});
+              Pushfunc.send(1,profile._id, notificationData._id, function(results){
+                console.log( results );
+              }, function(results){
+                console.log( results );
+              });
             }, function(){
             });
           }
