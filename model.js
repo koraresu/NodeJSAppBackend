@@ -631,7 +631,7 @@ PushEventSchema.post('update', function(doc, next){
 /*******************************************/
 var PushSchema = new Schema({
   device: { type: Schema.Types.ObjectId, ref: 'Device' },
-  push: { type: Schema.Types.ObjectId, ref: 'Push' }
+  push: { type: Schema.Types.ObjectId, ref: 'PushEvent' }
 },{
   timestamps: true
 });
