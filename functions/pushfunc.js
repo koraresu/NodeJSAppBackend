@@ -143,11 +143,16 @@ function createPush(pushEvent, token, success, fail){
 						console.log( notificationData.profile_emisor );
 						console.log("Profile Mensaje:");
 						console.log( notificationData.profile_mensaje );
+						var nombre_emisor = "";
+						var nombre_mensaje = "";
 
-						var nombre_emisor = notificationData.profile_emisor.first_name + " " + notificationData.profile_emisor.last_name;
-						var nombre_mensaje = notificationData.profile_mensaje.first_name + " " + notificationData.profile_mensaje.last_name;
-						message = Generalfunc.mensaje_create(notificationData, nombre_emisor, nombre_mensaje);
-						
+						if(notificationData.profile_emisor != undefined){
+							nombre_emisor = notificationData.profile_emisor.first_name + " " + notificationData.profile_emisor.last_name;
+						}
+						if(notificationData.profile_mensaje != undefined){
+							nombre_mensaje = notificationData.profile_mensaje.first_name + " " + notificationData.profile_mensaje.last_name;	
+						}
+						message = Generalfunc.mensaje_create(notificationData, nombre_emisor, nombre_mensaje);					
 						Generalfunc.sendPushOne(token.token, name, message, {
 							type: pushEvent.type,
 							notification: notificationData
