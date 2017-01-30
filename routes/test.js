@@ -35,6 +35,7 @@ var Country      = model.country;
 var Profilefunc = require('../functions/profilefunc');
 var Generalfunc = require('../functions/generalfunc');
 var Notificationfunc = require('../functions/notificationfunc');
+var Pushfunc = require('../functions/pushfunc');
 
 var apnProvider = Generalfunc.apnProvider();
 /* GET home page. */
@@ -45,25 +46,32 @@ router.get('/send/message/:profile_id/:message_id', function(req, res){
   var profile_id = req.params.profile_id;
   var message_id = req.params.message_id;
 
-
-  if(mongoose.Types.ObjectId.isValid(profile_id)){
-    profile_id = mongoose.Types.ObjectId( profile_id );
-    if(mongoose.Types.ObjectId.isValid(message_id)){
-      message_id = mongoose.Types.ObjectId( message_id );
-
-      var push = new PushEvent({
-        profile: profile_id,
-        read: false,
-        type:  0,
-        message: message_id
+  var device = [];
+  Pushfunc.prepare(profile_id, message_id, function(profile_id,message_id){
+    Pushfunc.addOrGet(0, message_id, profile_id, function(pushEventData){
+      Device.find({ profile: profile_id }).exec(function(err, deviceData){
+        async.map(deviceData, function(item, callback){
+          var token = item.token;
+          if(device.indexOf(token) >= 0){
+            callback(null, null);
+          }else{
+            device[device.length] = token;
+            Pushfunc.createPush(pushEventData._id, token, function(pushData){
+              callback(null, pushData);
+            }, function(err){
+              callback(err, null);
+            });
+          } 
+        }, function(err, results){
+          res.json({ event: pushEventData, pushes: results, devices: device });
+        });
       });
-      push.save(function(err, pushData){
-        console.log(err);
-        res.json( pushData );
-      });
-    }
-  }
-  
+    }, function(err){
+      res.send("Err:" + err );
+    });
+  }, function(profile_id,message_id){
+    res.send("Profile ID: " + profile_id + "| Message ID:" + message_id );
+  });
 });
 router.get('/send/notification/:profile_id/:notification_id', function(req, res){
   var profile_id = req.params.profile_id;

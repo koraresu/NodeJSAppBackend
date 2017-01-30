@@ -34,6 +34,24 @@ var City         = model.city;
 var State        = model.state;
 var Country      = model.country;
 
+function prepare(profile_id, message_id, success, fail){
+	if(mongoose.Types.ObjectId.isValid(profile_id)){
+		profile_id = mongoose.Types.ObjectId( profile_id );
+	}else{
+		profile_id = null;
+	}
+	if(mongoose.Types.ObjectId.isValid(message_id)){
+		message_id = mongoose.Types.ObjectId( message_id );
+	}else{
+		message_id = null;
+	}
+
+	if(profile_id == null || message_id == null){
+		fail(profile_id, message_id);
+	}else{
+		success(profile_id, message_id);
+	}
+}
 function add(d, success, fail){
 	var pushevent = new PushEvent( d );
 	pushevent.save(function(err, pushEv){
@@ -42,26 +60,6 @@ function add(d, success, fail){
 		}else{
 			fail(err);
 		}	
-	});
-}
-function CovAddOrGet(id, profile, success, fail){
-	console.log( id );
-	console.log( profile );
-
-	addOrGet(0, id, profile, function(pushEventData){
-		success(pushEventData);
-	}, function(){
-		fail();
-	});
-}
-function NotAddOrGet(id, profile, success, fail){
-	console.log( id );
-	console.log( profile );
-
-	addOrGet(1, id, profile, function(pushEventData){
-		success(pushEventData);
-	}, function(){
-		fail();
 	});
 }
 function addOrGet(type, id, profile, success, fail){
@@ -124,6 +122,55 @@ function createPush(pushEvent, token, success, fail){
 		}
 	});
 }
+exports.prepare  = prepare;
+exports.add      = add;
+exports.addOrGet = addOrGet;
+exports.createPush = createPush;
+/*
+function add(d, success, fail){
+	var pushevent = new PushEvent( d );
+	pushevent.save(function(err, pushEv){
+		if(!err && pushEv){
+			success( pushEv );	
+		}else{
+			fail(err);
+		}	
+	});
+}
+function CovAddOrGet(id, profile, success, fail){
+	console.log( id );
+	console.log( profile );
+
+	addOrGet(0, id, profile, function(pushEventData){
+		success(pushEventData);
+	}, function(){
+		fail();
+	});
+}
+function NotAddOrGet(id, profile, success, fail){
+	console.log( id );
+	console.log( profile );
+
+	addOrGet(1, id, profile, function(pushEventData){
+		success(pushEventData);
+	}, function(){
+		fail();
+	});
+}
+
+function createPush(pushEvent, token, success, fail){
+	var p = new Push({
+		device: token,
+  		push: pushEvent
+	});
+	p.save(function(err, pushData){
+		if(!err && pushData){
+			success(pushData);
+		}else{
+			fail(err);
+		}
+	});
+}
 function getNotProfile(id, socket, success, fail){
 	Notification.findOne({ _id: mongoose.Types.ObjectId(id) })
 	.populate('profile')
@@ -172,3 +219,5 @@ exports.CovAddOrGet = CovAddOrGet;
 exports.addOrGet    = addOrGet;
 exports.add         = add;
 exports.createPush  = createPush;
+exports.prepare = prepare;
+*/
