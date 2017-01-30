@@ -126,17 +126,10 @@ function createPush(pushEvent, token, success, fail){
 		device: token,
   		push: pushEvent
 	};
-	console.log("D:");
-	console.log(d);
-
 	var p = new Push(d);
 	console.log("Instancia:");
 	console.log( p );
 	p.save(function(err, pushData){
-		
-		console.log("PushData:");
-		console.log(pushData);
-
 		if(!err && pushData){
 			Push.findOne({ _id: pushData._id }).exec(function(err, pushData){
 				var name = pushEvent.profile.first_name + " " + pushEvent.profile.last_name;
@@ -146,11 +139,15 @@ function createPush(pushEvent, token, success, fail){
 					.populate('profile_emisor')
 					.populate('profile_mensaje')
 					.exec(function(err, notificationData){
-						console.log("Notification Data:");
-						console.log( notificationData );
+						console.log("Profile Emisor:");
+						console.log( notificationData.profile_emisor );
+						console.log("Profile Mensaje:");
+						console.log( notificationData.profile_mensaje );
+
 						var nombre_emisor = notificationData.profile_emisor.first_name + " " + notificationData.profile_emisor.last_name;
 						var nombre_mensaje = notificationData.profile_mensaje.first_name + " " + notificationData.profile_mensaje.last_name;
 						message = Generalfunc.mensaje_create(notificationData, nombre_emisor, nombre_mensaje);
+						
 						Generalfunc.sendPushOne(token.token, name, message, {
 							type: pushEvent.type,
 							notification: notificationData
