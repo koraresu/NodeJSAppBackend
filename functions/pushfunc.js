@@ -110,10 +110,12 @@ function addOrGet(type, id, profile, success, fail){
 	});
 }
 function createPush(pushEvent, token, success, fail){
-	var p = new Push({
+	var d = {
 		device: token,
   		push: pushEvent
-	});
+	};
+	console.log( d );
+	var p = new Push(d);
 	console.log( p );
 	p.save(function(err, pushData){
 		if(!err && pushData){
