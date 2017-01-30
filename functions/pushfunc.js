@@ -34,6 +34,8 @@ var City         = model.city;
 var State        = model.state;
 var Country      = model.country;
 
+var Generalfunc = require('./generalfunc');
+
 function prepare(profile_id, message_id, success, fail){
 	if(mongoose.Types.ObjectId.isValid(profile_id)){
 		profile_id = mongoose.Types.ObjectId( profile_id );
@@ -131,7 +133,7 @@ function createPush(pushEvent, token, success, fail){
 						var nombre_mensaje = notificationData.profile_mensaje.first_name + " " + notificationData.profile_mensaje.last_name;
 						message = Generalfunc.mensaje_create(notificationData, nombre_emisor, nombre_mensaje);
 						Generalfunc.sendPushOne(token.token, name, message, {
-							
+
 						}, function(results){
 							success(results);
 						}, function(results){
