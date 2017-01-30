@@ -143,7 +143,7 @@ function createPush(pushEvent, token, success, fail){
 				if(pushEvent.type == 1){
 					Notification.findOne({ _id: pushEvent.notification._id })
 					.populate('profile')
-					.populate('profile_emisor',['first_name','last_name','public_id','review_score','profile_pic','qrcode'])
+					.populate('profile_emisor')
 					.populate('profile_mensaje')
 					.exec(function(err, notificationData){
 						var nombre_emisor = notificationData.profile_emisor.first_name + " " + notificationData.profile_emisor.last_name;
