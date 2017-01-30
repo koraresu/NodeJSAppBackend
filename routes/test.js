@@ -52,12 +52,15 @@ router.get('/send/message/:profile_id/:message_id', function(req, res){
     Pushfunc.addOrGet(0, message_id, profile_id, function(pushEventData){
       Device.find({ profile: profile_id }).exec(function(err, deviceData){
         async.map(deviceData, function(item, callback){
+          console.log("ITEM:");
+          console.log( item );
           var token = item.token;
 
           console.log("DEVICE:");
           console.log( device );
           console.log("TOken:");
           console.log(token);
+
           if(device.indexOf(token) >= 0){
             callback(null, null);
           }else{
