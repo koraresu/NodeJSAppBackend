@@ -62,16 +62,16 @@ router.get('/send/message/:profile_id/:message_id', function(req, res){
           console.log(token);
           console.log("Check:");
           console.log( (device.indexOf(token)) );
-          if(device.indexOf(token) >= 0){
-            callback(null, null);
-          }else{
+          if(device.indexOf(token) == -1){
             device[device.length] = token;
             Pushfunc.createPush(pushEventData._id, token, function(pushData){
               callback(null, pushData);
             }, function(err){
               callback(err, null);
             });
-          } 
+          }else{
+              callback(null, null);
+          }
         }, function(err, results){
           res.json({ event: pushEventData, pushes: results, devices: device });
         });
