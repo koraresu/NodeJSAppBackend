@@ -141,7 +141,7 @@ function createPush(pushEvent, token, success, fail){
 			Push.findOne({ _id: pushData._id }).exec(function(err, pushData){
 				var name = pushEvent.profile.first_name + " " + pushEvent.profile.last_name;
 				if(pushEvent.type == 1){
-					Notification.findOne({ _id: pushEvent.notification._id })
+					Notification.findOne({ _id: pushEvent.notification })
 					.populate('profile')
 					.populate('profile_emisor')
 					.populate('profile_mensaje')
