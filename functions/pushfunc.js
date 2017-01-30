@@ -107,7 +107,11 @@ function addOrGet(type, id, profile, success, fail){
 				});
 			}
 		}else{
-			fail();
+			add(data, function(pushEventData){
+				success(pushEventData);
+			}, function(err){
+				fail(err);
+			});
 		}
 	});
 }
