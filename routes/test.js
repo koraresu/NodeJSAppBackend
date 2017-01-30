@@ -44,9 +44,9 @@ router.get('/send/message/:profile_id/:message_id', function(req, res){
   var message_id = req.params.message_id;
   Message.findOne({ _id: message_id }).exec(function(err, messageData){
     Generalfunc.sendPushtoAll(0, profile_id, messageData, {}, function(err, results){
-      req.json( results );
+      res.json( results );
     }, function(err){
-      req.json( err );
+      res.json( err );
     });
   });
 });
@@ -55,7 +55,7 @@ router.get('/send/notification/:profile_id/:notification_id', function(req, res)
   var notification_id = req.params.notification_id;
   Notification.findOne({ _id: notification_id }).exec(function(err, notificationData){
     Generalfunc.sendPushtoAll(1, profile_id, notificationData, {}, function(err, results){
-      req.json( results );
+      res.json( results );
     }, function(err){
       res.json( err );
     });
