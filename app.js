@@ -225,12 +225,16 @@ io.on('connection', function(socket){
         console.log("/******* Apple Push Notification *****/");
 
         Pushfunc.getConvProfile(messageData._id, socket, function(profile){
+          console.log("GetConvProfile");
+          console.log(profile);
           Pushfunc.send(0,profile._id, messageData._id, function(results){
                 console.log( results );
               }, function(results){
                 console.log( results );
               });
-        }, function(){});
+        }, function(){
+
+        });
       }
     });
   });
@@ -257,7 +261,8 @@ io.on('connection', function(socket){
             console.log("/******* Apple Push Notification *****/");
 
             Pushfunc.getNotProfile(notificationData._id, socket, function(profile){
-              
+              console.log("GetConvProfile");
+              console.log(profile);
               Pushfunc.send(1,profile._id, notificationData._id, function(results){
                 console.log( results );
               }, function(results){
