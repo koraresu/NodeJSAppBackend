@@ -114,6 +114,7 @@ function createPush(pushEvent, token, success, fail){
 		device: token,
   		push: pushEvent
 	});
+	console.log( p );
 	p.save(function(err, pushData){
 		if(!err && pushData){
 			success(pushData);

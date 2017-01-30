@@ -75,7 +75,7 @@ router.get('/send/message/:profile_id/:message_id', function(req, res){
               callback(null, null);
           }
         }, function(err, results){
-          res.json({ event: pushEventData, pushes: results, devices: device });
+          res.json({ event: pushEventData, pushes: results, error: err, devices: device });
         });
       });
     }, function(err){
