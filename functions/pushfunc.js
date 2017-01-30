@@ -108,7 +108,9 @@ function addOrGet(type, id, profile, success, fail){
 			}
 		}else{
 			add(data, function(pushEventData){
-				success(pushEventData);
+				PushEvent.findOne({ _id: pushEventData._id }).populate('profile').exec(function(err, pushEventData){
+					success(pushEventData);
+				});
 			}, function(err){
 				fail(err);
 			});
