@@ -39,7 +39,7 @@ var apnProvider = Generalfunc.apnProvider();
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
-router.get('/send/message/:profile_id:/:message_id', function(req, res){
+router.get('/send/message/:profile_id/:message_id', function(req, res){
   var profile_id = req.params.profile_id;
   var message_id = req.params.message_id;
   Message.findOne({ _id: message_id }).exec(function(err, messageData){
@@ -50,7 +50,7 @@ router.get('/send/message/:profile_id:/:message_id', function(req, res){
     });
   });
 });
-router.get('/send/notification/:profile_id:/:notification_id', function(req, res){
+router.get('/send/notification/:profile_id/:notification_id', function(req, res){
   var profile_id = req.params.profile_id;
   var notification_id = req.params.notification_id;
   Notification.findOne({ _id: notification_id }).exec(function(err, notificationData){
