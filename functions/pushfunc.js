@@ -138,7 +138,7 @@ function createPush(pushEvent, token, success, fail){
 		console.log(pushData);
 
 		if(!err && pushData){
-			Push.findOne({ _id: pushData._id }).populate('message').exec(function(err, pushData){
+			Push.findOne({ _id: pushData._id }).exec(function(err, pushData){
 				var name = pushEvent.profile.first_name + " " + pushEvent.profile.last_name;
 				if(pushEvent.type == 1){
 					Notification.findOne({ _id: pushEvent.notification._id })
@@ -159,14 +159,17 @@ function createPush(pushEvent, token, success, fail){
 					});
 					
 				}else{
-					message = pushEvent.message.message;
-					Generalfunc.sendPushOne(token.token, name, message, {
+					Message.findOne({ _id: pushEvent.message }).exec(function(err, messageData){
+						message = messageData.message;
+						Generalfunc.sendPushOne(token.token, name, message, {
 
-					}, function(results){
-						success(results);
-					}, function(results){
-						success(results);
+						}, function(results){
+							success(results);
+						}, function(results){
+							success(results);
+						});
 					});
+					
 				}
 			});
 		}else{
