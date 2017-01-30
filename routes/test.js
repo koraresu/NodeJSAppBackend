@@ -53,6 +53,11 @@ router.get('/send/message/:profile_id/:message_id', function(req, res){
       Device.find({ profile: profile_id }).exec(function(err, deviceData){
         async.map(deviceData, function(item, callback){
           var token = item.token;
+
+          console.log("DEVICE:");
+          console.log( device );
+          console.log("TOken:");
+          console.log(token);
           if(device.indexOf(token) >= 0){
             callback(null, null);
           }else{
