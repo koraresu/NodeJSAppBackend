@@ -119,9 +119,36 @@ function createPush(pushEvent, token, success, fail){
 	console.log( p );
 	p.save(function(err, pushData){
 		if(!err && pushData){
-			Push.findOne({ _id: pushData._id }).exec(function(err, pushData){
-				Generalfunc.sendPushOne(token.token, )
-				success(pushData);
+			Push.findOne({ _id: pushData._id }).populate('message').exec(function(err, pushData){
+				var name = pushEvent.profile.first_name + " " + pushEvent.profile.last_name;
+				if(pushEvent.type == 1){
+					Notification.findOne({ _id: pushEvent.notification._id })
+					.populate('profile')
+					.populate('profile_emisor')
+					.populate('profile_mensaje')
+					.exec(function(err, notificationData){
+						var nombre_emisor = notificationData.profile_emisor.first_name + " " + notificationData.profile_emisor.last_name;
+						var nombre_mensaje = notificationData.profile_mensaje.first_name + " " + notificationData.profile_mensaje.last_name;
+						message = Generalfunc.mensaje_create(notificationData, nombre_emisor, nombre_mensaje);
+						Generalfunc.sendPushOne(token.token, name, message, {
+							
+						}, function(results){
+							success(results);
+						}, function(results){
+							success(results);
+						});
+					});
+					
+				}else{
+					message = pushEvent.message.message;
+					Generalfunc.sendPushOne(token.token, name, message, {
+
+					}, function(results){
+						success(results);
+					}, function(results){
+						success(results);
+					});
+				}
 			});
 		}else{
 			fail(err);
