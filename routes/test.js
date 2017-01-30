@@ -52,23 +52,11 @@ router.get('/send/message/:profile_id/:message_id', function(req, res){
     Pushfunc.addOrGet(0, message_id, profile_id, function(pushEventData){
       Device.find({ profile: profile_id }).exec(function(err, deviceData){
         async.map(deviceData, function(item, callback){
-          console.log("ITEM:");
-          console.log( item );
           var token = item.token;
-
-          console.log("token Type:");
-          console.log( typeof item.token );
-
-          console.log("DEVICE:");
-          console.log( device );
-          console.log("TOken:");
-          console.log(token);
-          console.log("Check:");
-          console.log( (device.indexOf(token)) );
           if(device.indexOf(token) == -1){
             console.log( "Entro" );
             device[device.length] = token;
-            Pushfunc.createPush(pushEventData, token, function(pushData){
+            Pushfunc.createPush(pushEventData, item, function(pushData){
               callback(null, pushData);
             }, function(err){
               callback(err, null);
