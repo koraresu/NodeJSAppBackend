@@ -146,6 +146,8 @@ function createPush(pushEvent, token, success, fail){
 					.populate('profile_emisor')
 					.populate('profile_mensaje')
 					.exec(function(err, notificationData){
+						console.log("Notification Data:");
+						console.log( notificationData );
 						var nombre_emisor = notificationData.profile_emisor.first_name + " " + notificationData.profile_emisor.last_name;
 						var nombre_mensaje = notificationData.profile_mensaje.first_name + " " + notificationData.profile_mensaje.last_name;
 						message = Generalfunc.mensaje_create(notificationData, nombre_emisor, nombre_mensaje);
