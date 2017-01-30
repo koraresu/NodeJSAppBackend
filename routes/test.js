@@ -60,7 +60,8 @@ router.get('/send/message/:profile_id/:message_id', function(req, res){
           console.log( device );
           console.log("TOken:");
           console.log(token);
-
+          console.log("Check:");
+          console.log( (device.indexOf(token) >= 0) );
           if(device.indexOf(token) >= 0){
             callback(null, null);
           }else{
