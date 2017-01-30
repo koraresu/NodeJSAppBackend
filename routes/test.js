@@ -27,7 +27,8 @@ var Feedback     = model.feedback;
 var Conversation = model.conversation;
 var Message      = model.message;
 var PushEvent    = model.pushevent;
-
+var Push         = model.push;
+var Device       = model.device;
 var City         = model.city;
 var State        = model.state;
 var Country      = model.country;
