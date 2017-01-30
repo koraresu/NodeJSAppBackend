@@ -56,6 +56,9 @@ router.get('/send/message/:profile_id/:message_id', function(req, res){
           console.log( item );
           var token = item.token;
 
+          console.log("token Type:");
+          console.log( typeof item.token );
+
           console.log("DEVICE:");
           console.log( device );
           console.log("TOken:");
