@@ -119,7 +119,9 @@ function createPush(pushEvent, token, success, fail){
 	console.log( p );
 	p.save(function(err, pushData){
 		if(!err && pushData){
-			success(pushData);
+			Push.findOne({ _id: pushData._id }).exec(function(err, pushData){
+				success(pushData);
+			});
 		}else{
 			fail(err);
 		}
