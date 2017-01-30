@@ -313,7 +313,7 @@ function sendPushOne(deviceToken, name, message, payload,  success, fail){
 	note.topic = "com.thehiveapp.thehive";
 	apnProvider.send(note, deviceToken).then( (result) => {
 		if(result.status == "200"){
-  			success(result);
+  			success({r: result, device:  deviceToken});
 		}else{
 			fail(result);
 		}
