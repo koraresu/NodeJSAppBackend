@@ -183,15 +183,15 @@ function send(type, profile_id, id, success, fail){
 	var message_id = id;
 
 	var device = [];
-	Pushfunc.prepare(profile_id, message_id, function(profile_id,message_id){
-		Pushfunc.addOrGet(type, message_id, profile_id, function(pushEventData){
+	prepare(profile_id, message_id, function(profile_id,message_id){
+		addOrGet(type, message_id, profile_id, function(pushEventData){
 			Device.find({ profile: profile_id }).exec(function(err, deviceData){
 				async.map(deviceData, function(item, callback){
 					var token = item.token;
 					if(device.indexOf(token) == -1){
 						console.log( "Entro" );
 						device[device.length] = token;
-						Pushfunc.createPush(pushEventData, item, function(pushData){
+						createPush(pushEventData, item, function(pushData){
 							callback(null, pushData);
 						}, function(err){
 							callback(err, null);
