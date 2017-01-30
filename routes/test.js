@@ -26,6 +26,8 @@ var Notification = model.notification;
 var Feedback     = model.feedback;
 var Conversation = model.conversation;
 var Message      = model.message;
+var PushEvent    = model.pushevent;
+
 var City         = model.city;
 var State        = model.state;
 var Country      = model.country;
@@ -42,13 +44,26 @@ router.get('/', function(req, res, next) {
 router.get('/send/message/:profile_id/:message_id', function(req, res){
   var profile_id = req.params.profile_id;
   var message_id = req.params.message_id;
-  Message.findOne({ _id: message_id }).exec(function(err, messageData){
-    Generalfunc.sendPushtoAll(0, profile_id, messageData, {}, function(err, results){
-      res.json( results );
-    }, function(err){
-      res.json( err );
-    });
-  });
+
+
+  if(mongoose.Types.ObjectId.isValid(profile_id)){
+    profile_id = mongoose.Types.ObjectId( profile_id );
+    if(mongoose.Types.ObjectId.isValid(message_id)){
+      message_id = mongoose.Types.ObjectId( message_id );
+
+      var push = new PushEvent({
+        profile: profile_id,
+        read: false,
+        type:  0,
+        message: message_id
+      });
+      push.save(function(err, pushData){
+        console.log(err);
+        res.json( pushData );
+      });
+    }
+  }
+  
 });
 router.get('/send/notification/:profile_id/:notification_id', function(req, res){
   var profile_id = req.params.profile_id;
