@@ -63,6 +63,7 @@ router.get('/send/message/:profile_id/:message_id', function(req, res){
           console.log("Check:");
           console.log( (device.indexOf(token)) );
           if(device.indexOf(token) == -1){
+            console.log( "Entro" );
             device[device.length] = token;
             Pushfunc.createPush(pushEventData._id, token, function(pushData){
               callback(null, pushData);
@@ -70,6 +71,7 @@ router.get('/send/message/:profile_id/:message_id', function(req, res){
               callback(err, null);
             });
           }else{
+              console.log( "No Entro" );
               callback(null, null);
           }
         }, function(err, results){
