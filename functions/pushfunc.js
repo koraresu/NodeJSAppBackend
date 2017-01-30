@@ -118,14 +118,23 @@ function addOrGet(type, id, profile, success, fail){
 	});
 }
 function createPush(pushEvent, token, success, fail){
+	console.log("PushEvent:");
+	console.log( pushEvent );
 	var d = {
 		device: token,
   		push: pushEvent
 	};
-	console.log( d );
+	console.log("D:");
+	console.log(d);
+
 	var p = new Push(d);
+	console.log("Instancia:");
 	console.log( p );
 	p.save(function(err, pushData){
+		
+		console.log("PushData:");
+		console.log(pushData);
+
 		if(!err && pushData){
 			Push.findOne({ _id: pushData._id }).populate('message').exec(function(err, pushData){
 				var name = pushEvent.profile.first_name + " " + pushEvent.profile.last_name;
