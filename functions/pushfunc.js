@@ -179,102 +179,40 @@ function createPush(pushEvent, token, success, fail){
 		}
 	});
 }
-exports.prepare  = prepare;
-exports.add      = add;
-exports.addOrGet = addOrGet;
+function send(type, profile_id, id, success, fail){
+	var message_id = id;
+
+	var device = [];
+	Pushfunc.prepare(profile_id, message_id, function(profile_id,message_id){
+		Pushfunc.addOrGet(type, message_id, profile_id, function(pushEventData){
+			Device.find({ profile: profile_id }).exec(function(err, deviceData){
+				async.map(deviceData, function(item, callback){
+					var token = item.token;
+					if(device.indexOf(token) == -1){
+						console.log( "Entro" );
+						device[device.length] = token;
+						Pushfunc.createPush(pushEventData, item, function(pushData){
+							callback(null, pushData);
+						}, function(err){
+							callback(err, null);
+						});
+					}else{
+						console.log( "No Entro" );
+						callback(null, null);
+					}
+				}, function(err, results){
+					success({ event: pushEventData, pushes: results, error: err, devices: device });
+				});
+			});
+		}, function(err){
+			fail(1);
+		});
+	}, function(profile_id,message_id){
+		fail(0);
+	});
+}
+exports.prepare    = prepare;
+exports.add        = add;
+exports.addOrGet   = addOrGet;
 exports.createPush = createPush;
-/*
-function add(d, success, fail){
-	var pushevent = new PushEvent( d );
-	pushevent.save(function(err, pushEv){
-		if(!err && pushEv){
-			success( pushEv );	
-		}else{
-			fail(err);
-		}	
-	});
-}
-function CovAddOrGet(id, profile, success, fail){
-	console.log( id );
-	console.log( profile );
-
-	addOrGet(0, id, profile, function(pushEventData){
-		success(pushEventData);
-	}, function(){
-		fail();
-	});
-}
-function NotAddOrGet(id, profile, success, fail){
-	console.log( id );
-	console.log( profile );
-
-	addOrGet(1, id, profile, function(pushEventData){
-		success(pushEventData);
-	}, function(){
-		fail();
-	});
-}
-
-function createPush(pushEvent, token, success, fail){
-	var p = new Push({
-		device: token,
-  		push: pushEvent
-	});
-	p.save(function(err, pushData){
-		if(!err && pushData){
-			success(pushData);
-		}else{
-			fail(err);
-		}
-	});
-}
-function getNotProfile(id, socket, success, fail){
-	Notification.findOne({ _id: mongoose.Types.ObjectId(id) })
-	.populate('profile')
-	.populate('profile_emisor')
-	.populate('network')
-	.exec(function(err, notificationData){
-		console.log(err);
-		if(!err && notificationData){
-			Online.findOne({ socket: socket.id }).populate('profiles').exec(function(errOnline, onlineData){
-				if(!errOnline && onlineData){
-					success( notificationData.profile_emisor );
-				}else{
-					fail(1);
-				}
-			});
-		}else{
-			fail(0);
-		}
-	});
-}
-function getConvProfile(id, socket,success, fail){
-	Conversation.findOne({ _id: mongoose.Types.ObjectId(id) })
-	.populate('profiles')
-	.exec(function(errConversation, conversationData){
-		console.log(errConversation);
-		if(!errConversation && conversationData){
-			Online.findOne({ socket: socket.id }).populate('profiles').exec(function(errOnline, onlineData){
-				if(!errOnline && onlineData){
-					var profiles = conversationData.profiles;
-					var profile = onlineData.profiles;
-					var ajeno = profile_ajeno(profile._id, profiles);
-					success(ajeno);
-				}else{
-					fail(1);
-				}
-			});
-		}else{
-			fail(0);
-		}				
-	});	
-}
-exports.getNotProfile = getNotProfile;
-exports.getConvProfile = getConvProfile;
-exports.NotAddOrGet = NotAddOrGet;
-exports.CovAddOrGet = CovAddOrGet;
-exports.addOrGet    = addOrGet;
-exports.add         = add;
-exports.createPush  = createPush;
-exports.prepare = prepare;
-*/
+exports.send       = send;

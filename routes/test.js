@@ -46,34 +46,10 @@ router.get('/', function(req, res, next) {
 router.get('/send/message/:profile_id/:message_id', function(req, res){
   var profile_id = req.params.profile_id;
   var message_id = req.params.message_id;
-
-  var device = [];
-  Pushfunc.prepare(profile_id, message_id, function(profile_id,message_id){
-    Pushfunc.addOrGet(0, message_id, profile_id, function(pushEventData){
-      Device.find({ profile: profile_id }).exec(function(err, deviceData){
-        async.map(deviceData, function(item, callback){
-          var token = item.token;
-          if(device.indexOf(token) == -1){
-            console.log( "Entro" );
-            device[device.length] = token;
-            Pushfunc.createPush(pushEventData, item, function(pushData){
-              callback(null, pushData);
-            }, function(err){
-              callback(err, null);
-            });
-          }else{
-              console.log( "No Entro" );
-              callback(null, null);
-          }
-        }, function(err, results){
-          res.json({ event: pushEventData, pushes: results, error: err, devices: device });
-        });
-      });
-    }, function(err){
-      res.send("Err:" + err );
-    });
-  }, function(profile_id,message_id){
-    res.send("Profile ID: " + profile_id + "| Message ID:" + message_id );
+  Pushfunc.send(0, profile_id, message_id, function(results){
+    res.json(results);
+  }, function(st){
+    res.send("Error:" + st);
   });
 });
 router.get('/send/notification/:profile_id/:notification_id', function(req, res){
