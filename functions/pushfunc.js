@@ -93,7 +93,7 @@ function addOrGet(type, id, profile, success, fail){
 
 	console.log( data );
 	console.log( search );
-	PushEvent.findOne(search).exec(function(err, pushEventData){
+	PushEvent.findOne(search).populate('profile').exec(function(err, pushEventData){
 		if(!err && pushEventData){
 			if(pushEventData.length > 0){
 				success( pushEventData );
@@ -120,6 +120,7 @@ function createPush(pushEvent, token, success, fail){
 	p.save(function(err, pushData){
 		if(!err && pushData){
 			Push.findOne({ _id: pushData._id }).exec(function(err, pushData){
+				Generalfunc.sendPushOne(token.token, )
 				success(pushData);
 			});
 		}else{
