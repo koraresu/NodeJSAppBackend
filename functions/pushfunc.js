@@ -150,7 +150,7 @@ function createPush(pushEvent, token, success, fail){
 						var nombre_mensaje = notificationData.profile_mensaje.first_name + " " + notificationData.profile_mensaje.last_name;
 						message = Generalfunc.mensaje_create(notificationData, nombre_emisor, nombre_mensaje);
 						Generalfunc.sendPushOne(token.token, name, message, {
-							type: type,
+							type: pushEvent.type,
 							notification: notificationData
 						}, function(results){
 							success(results);
@@ -163,7 +163,7 @@ function createPush(pushEvent, token, success, fail){
 					Message.findOne({ _id: pushEvent.message }).exec(function(err, messageData){
 						message = messageData.message;
 						Generalfunc.sendPushOne(token.token, name, message, {
-							type: type,
+							type: pushEvent.type,
 							message: messageData
 						}, function(results){
 							success(results);
