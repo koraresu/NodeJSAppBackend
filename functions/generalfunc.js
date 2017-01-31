@@ -34,12 +34,6 @@ var Country      = model.country;
 var Pushfunc = require('./pushfunc');
 
 var apn = require('apn');
-
-options = {
-   keyFile : "conf/key.pem",
-   certFile : "conf/cert.pem",
-   debug : true
-};
 var options = {
   token: {
     key: "conf/key.p8",
