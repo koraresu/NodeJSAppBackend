@@ -236,6 +236,8 @@ function getNotProfile(id, socket, success, fail){
 	});
 }
 function getConvProfile(id, socket,success, fail){
+	console.log("Conversation ID:");
+	console.log( id );
 	Conversation.findOne({ _id: mongoose.Types.ObjectId(id) })
 	.populate('profiles')
 	.exec(function(errConversation, conversationData){
@@ -243,7 +245,7 @@ function getConvProfile(id, socket,success, fail){
 		console.log( errConversation );
 		console.log("ConversationData:");
 		console.log( conversationData );
-		
+
 		if(!errConversation && conversationData){
 			Online.findOne({ socket: socket.id }).populate('profiles').exec(function(errOnline, onlineData){
 				if(!errOnline && onlineData){
