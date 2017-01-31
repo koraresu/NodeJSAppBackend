@@ -353,5 +353,71 @@ function mensaje_create(data, nombre_emisor, nombre_mensaje){
 	}
 	return { mensaje: message, class: clase };
 }
-exports.mensaje_create = mensaje_create
-exports.sendPushOne = sendPushOne
+function NotificationReaded(data, success, fail){
+	var notification_id = data.notification;
+
+	if(mongoose.Types.ObjectId.isValid( notification_id )){
+		notification_id = mongoose.Types.ObjectId( notification_id );
+		PushEvent.find({ type: 1, notification: notification_id }).exec(function(errPushEvent, pushEventData){
+			async.map(pushEventData, function(item, callback){
+				item.read = true;
+				item.save(function(err, pushevent){
+					if(!err && pushevent){
+						callback(null, item);	
+					}else{
+						callback(err, null);
+					}
+				});
+			}, function(err, results){
+				soket.emit('notification_set_readed', { results: results });
+			});
+		});
+	}
+}
+function MessageReaded(data, success, fail){
+	var conversation_id = data.conversation;
+
+	if(mongoose.Types.ObjectId.isValid( conversation_id )){
+		if(mongoose.Types.ObjectId.isValid( message_id )){
+			conversation_id = mongoose.Types.ObjectId( conversation_id );
+			message_id = mongoose.Types.ObjectId( message_id );
+			Conversation.findOne({ _id: conversation_id }).exec(function(errConversation, conversationData){
+				Message.find({ conversation: conversationData._id })
+				.populate('profile_id')
+				.exec(function(errMessage, messageData){
+					async.map(messageData, function(item, callback){
+						PushEvent.findOne({ type: 0, message: item._id }).exec(function(errPushEvent, pushEventData){
+
+
+
+							async.map(pushEventData, function(i, c){
+								i.read = true;
+								i.save(function(ep, p){
+									if(!ep && p){
+										c(null, p);
+									}else{
+										c(ep, null);
+									}
+								});
+							}, function(err, r){
+								callback( null, r );
+							});
+
+
+
+
+
+
+						});
+					}, function(err, results){
+						soket.emit('message_set_readed', { results: results });
+					});
+				});
+			});
+		}
+	}
+}
+exports.NotificationReaded = NotificationReaded;
+exports.MessageReaded      = MessageReaded;
+exports.mensaje_create     = mensaje_create
+exports.sendPushOne        = sendPushOne

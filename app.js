@@ -279,6 +279,20 @@ io.on('connection', function(socket){
       console.log("Status:" + status);
     });
   });
+  socket.on('message_readed', function(data){
+    Generalfunc.MessageReaded(data, function(){
+
+    }, function(){
+      
+    });
+  });
+  socket.on('notification_readed', function(data){
+    Generalfunc.NotificationReaded(data, function(){
+
+    }, function(){
+      
+    });
+  });
   socket.on('disconnect', function () {
     console.log("Disconnect");
     chatrouter.delete(socket.id.toString(), function(err, s){
