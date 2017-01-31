@@ -247,7 +247,7 @@ function getConvProfile(id, socket,success, fail){
 		.exec(function(errMessage, messageData){
 
 		if(!errMessage && messageData){
-			conversation.findOne({ _id: messageData.conversation._id }).populate('profiles').exec(function(errConversation, conversationData){
+			Conversation.findOne({ _id: messageData.conversation._id }).populate('profiles').exec(function(errConversation, conversationData){
 				if(!errConversation && conversationData){
 					Online.findOne({ socket: socket.id }).populate('profiles').exec(function(errOnline, onlineData){
 						if(!errOnline && onlineData){
