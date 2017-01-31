@@ -34,6 +34,7 @@ var Country      = model.country;
 var Pushfunc = require('./pushfunc');
 
 var apn = require('apn');
+
 var options = {
   token: {
     key: "conf/key.p8",

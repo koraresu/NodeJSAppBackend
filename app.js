@@ -227,7 +227,7 @@ io.on('connection', function(socket){
         Pushfunc.getConvProfile(messageData._id, socket, function(profile){
           console.log("GetConvProfile");
           console.log(profile);
-          Pushfunc.send(0,profile._id, messageData._id, function(results){
+          Pushfunc.send(0,profile._id, messageData, function(results){
                 console.log( results );
               }, function(results){
                 console.log( results );

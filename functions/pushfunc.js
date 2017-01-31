@@ -119,7 +119,7 @@ function addOrGet(type, id, profile, success, fail){
 		}
 	});
 }
-function createPush(pushEvent, token, success, fail){
+function createPush(pushEvent, token,dItem, success, fail){
 	console.log("PushEvent:");
 	console.log( pushEvent );
 	var d = {
@@ -132,8 +132,10 @@ function createPush(pushEvent, token, success, fail){
 	p.save(function(err, pushData){
 		if(!err && pushData){
 			Push.findOne({ _id: pushData._id }).exec(function(err, pushData){
-				var name = pushEvent.profile.first_name + " " + pushEvent.profile.last_name;
+				var name = "";
 				if(pushEvent.type == 1){
+					var notificationItem = dItem;
+					name = pushEvent.profile.first_name + " " + pushEvent.profile.last_name;
 					Notification.findOne({ _id: pushEvent.notification })
 					.populate('profile')
 					.populate('profile_emisor')
@@ -164,6 +166,13 @@ function createPush(pushEvent, token, success, fail){
 					});
 					
 				}else{
+					var messageItem = dItem;
+					name = "";
+					if(messageItem != undefined){
+						if(messageItem.profile_id != undefined){
+							name = messageItem.profile_id.first_name + " " + messageItem.profile_id.last_name;
+						}
+					}
 					Message.findOne({ _id: pushEvent.message }).exec(function(err, messageData){
 						message = messageData.message;
 						Generalfunc.sendPushOne(token.token, name, message, {
@@ -183,8 +192,8 @@ function createPush(pushEvent, token, success, fail){
 		}
 	});
 }
-function send(type, profile_id, id, success, fail){
-	var message_id = id;
+function send(type, profile_id, dItem, success, fail){
+	var message_id = dItem._id;
 
 	var device = [];
 	prepare(profile_id, message_id, function(profile_id,message_id){
@@ -195,7 +204,7 @@ function send(type, profile_id, id, success, fail){
 					if(device.indexOf(token) == -1){
 						console.log( "Entro" );
 						device[device.length] = token;
-						createPush(pushEventData, item, function(pushData){
+						createPush(pushEventData, item, dItem, function(pushData){
 							callback(null, pushData);
 						}, function(err){
 							callback(err, null);
