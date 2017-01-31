@@ -47,7 +47,7 @@ var options = {
     teamId: "58GA47LFA6",
   },
   cert: "conf/cert.pem",
-  production: false,
+  production: true,
 };
 var apnProvider = new apn.Provider(options);
 
