@@ -238,29 +238,31 @@ function getNotProfile(id, socket, success, fail){
 function getConvProfile(id, socket,success, fail){
 	console.log("Conversation ID:");
 	console.log( id );
-	Conversation.findOne({ _id: mongoose.Types.ObjectId(id) })
-	.populate('profiles')
-	.exec(function(errConversation, conversationData){
-		console.log("Error GetConv Profile:");
-		console.log( errConversation );
-		console.log("ConversationData:");
-		console.log( conversationData );
 
+	if(mongoose.Types.ObjectId.isValid(id)){
+		id = mongoose.Types.ObjectId(id);
+		Message.findOne({ _id: id})
+		.populate('profile_id')
+		.populate('conversation')
+		.exec(function(errConversation, messageData){
 		if(!errConversation && conversationData){
 			Online.findOne({ socket: socket.id }).populate('profiles').exec(function(errOnline, onlineData){
 				if(!errOnline && onlineData){
-					var profiles = conversationData.profiles;
+					var profiles = messageData.conversation.profiles;
 					var profile = onlineData.profiles;
 					var ajeno = profile_ajeno(profile._id, profiles);
 					success(ajeno);
 				}else{
-					fail(1);
+					fail(2);
 				}
 			});
 		}else{
-			fail(0);
+			fail(1);
 		}				
 	});	
+	}else{
+		fail(0);
+	}
 }
 exports.prepare    = prepare;
 exports.add        = add;
