@@ -378,9 +378,7 @@ function MessageReaded(data, success, fail){
 	var conversation_id = data.conversation;
 
 	if(mongoose.Types.ObjectId.isValid( conversation_id )){
-		if(mongoose.Types.ObjectId.isValid( message_id )){
 			conversation_id = mongoose.Types.ObjectId( conversation_id );
-			message_id = mongoose.Types.ObjectId( message_id );
 			Conversation.findOne({ _id: conversation_id }).exec(function(errConversation, conversationData){
 				Message.find({ conversation: conversationData._id })
 				.populate('profile_id')
@@ -414,7 +412,7 @@ function MessageReaded(data, success, fail){
 					});
 				});
 			});
-		}
+		
 	}
 }
 exports.NotificationReaded = NotificationReaded;
