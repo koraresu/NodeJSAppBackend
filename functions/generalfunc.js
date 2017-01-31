@@ -384,18 +384,21 @@ function MessageReaded(data, success, fail){
 				.populate('profile_id')
 				.exec(function(errMessage, messageData){
 					async.map(messageData, function(item, callback){
-						PushEvent.findOne({ type: 0, message: item._id }).exec(function(errPushEvent, pushEventData){
+						PushEvent.findOne({ message: item._id }).exec(function(errPushEvent, pushEventData){
+							if(!errPushEvent && pushEventData){
+								console.log( pushEventData );
 
-							console.log( pushEventData );
+								pushEventData.read = true;
+								pushEventData.save(function(errPushE, pushEData){
+									if(!errPushEvent && pushEData){
+										callback(null, pushEData);
+									}else{
+										callback(errPushEvent, null);
+									}
+								});	
+							}
 
-							pushEventData.read = true;
-							pushEventData.save(function(errPushEvent, pushEData){
-								if(!errPushEvent && pushEData){
-									callback(null, pushEData);
-								}else{
-									callback(errPushEvent, null);
-								}
-							});
+							
 
 
 
