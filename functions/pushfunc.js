@@ -239,6 +239,11 @@ function getConvProfile(id, socket,success, fail){
 	Conversation.findOne({ _id: mongoose.Types.ObjectId(id) })
 	.populate('profiles')
 	.exec(function(errConversation, conversationData){
+		console.log("Error GetConv Profile:");
+		console.log( errConversation );
+		console.log("ConversationData:");
+		console.log( conversationData );
+		
 		if(!errConversation && conversationData){
 			Online.findOne({ socket: socket.id }).populate('profiles').exec(function(errOnline, onlineData){
 				if(!errOnline && onlineData){
