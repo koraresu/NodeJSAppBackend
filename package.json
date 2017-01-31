@@ -23,6 +23,7 @@
     "jade": "~1.11.0",
     "kerberos": "~0.0",
     "mime-types": "^2.1.12",
+    "moment-timezone": "^0.5.11",
     "mongo-relation": "^0.5.4",
     "mongodb": "^2.0.55",
     "mongoose": "^4.4.6",
