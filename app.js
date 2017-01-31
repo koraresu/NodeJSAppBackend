@@ -232,8 +232,8 @@ io.on('connection', function(socket){
               }, function(results){
                 console.log( results );
               });
-        }, function(){
-
+        }, function(st){
+          console.log("Get Conv Profile:" + st);
         });
       }
     });
