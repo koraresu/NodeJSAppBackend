@@ -12,7 +12,7 @@ var faker = require('faker');
 faker.locale = "es_MX";
 var mongoose    = require('mongoose');
 var async = require('async');
-
+var Moment = require('moment-timezone');
 
 
 /*
@@ -174,7 +174,19 @@ var async = require('async');
 								}).populate('profile_id').sort({$natural:-1}).limit(limit).skip(offset).exec(function(err, messageData){
 									async.map(messageData, function(item, callback){
 										var d = (item.profile_id._id.toString() == profileData._id.toString());
-										callback( null, { data: item, t: d});
+										var udate = moment(item.updatedAt);
+										var cdate = moment(item.createdAt);
+										
+										var i = {
+											_id: item._id,
+   											updatedAt: udate.tz("America/Mexico_City").format(),
+											createdAt: cdate.tz("America/Mexico_City").format(),
+											conversation: item.conversation,
+											profile_id: item.profile_id,
+											message: item.message
+										};
+										
+										callback( null, { data: i, t: d});
 									}, function(err, results){
 										Conversation.findOne({
 											_id: id
