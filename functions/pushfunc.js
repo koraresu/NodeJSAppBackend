@@ -245,13 +245,20 @@ function getConvProfile(id, socket,success, fail){
 		.populate('profile_id')
 		.populate('conversation')
 		.exec(function(errMessage, messageData){
+
 		if(!errMessage && messageData){
-			Online.findOne({ socket: socket.id }).populate('profiles').exec(function(errOnline, onlineData){
-				if(!errOnline && onlineData){
-					var profiles = messageData.conversation.profiles;
-					var profile = onlineData.profiles;
-					var ajeno = Generalfunc.profile_ajeno(profile._id, profiles);
-					success(ajeno);
+			conversation.findOne({ _id: messageData.conversation._id }).populate('profiles').exec(function(errConversation, conversationData){
+				if(!errConversation && conversationData){
+					Online.findOne({ socket: socket.id }).populate('profiles').exec(function(errOnline, onlineData){
+						if(!errOnline && onlineData){
+							var profiles = conversationData.profiles;
+							var profile = onlineData.profiles;
+							var ajeno = Generalfunc.profile_ajeno(profile._id, profiles);
+							success(ajeno);
+						}else{
+							fail(3);
+						}
+					});
 				}else{
 					fail(2);
 				}
