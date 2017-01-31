@@ -386,6 +386,7 @@ function MessageReaded(data, success, fail){
 					async.map(messageData, function(item, callback){
 						PushEvent.findOne({ type: 0, message: item._id }).exec(function(errPushEvent, pushEventData){
 
+							console.log( pushEventData );
 
 							pushEventData.read = true;
 							pushEventData.save(function(errPushEvent, pushEData){
