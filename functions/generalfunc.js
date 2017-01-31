@@ -387,18 +387,13 @@ function MessageReaded(data, success, fail){
 						PushEvent.findOne({ type: 0, message: item._id }).exec(function(errPushEvent, pushEventData){
 
 
-
-							async.map(pushEventData, function(i, c){
-								i.read = true;
-								i.save(function(ep, p){
-									if(!ep && p){
-										c(null, p);
-									}else{
-										c(ep, null);
-									}
-								});
-							}, function(err, r){
-								callback( null, r );
+							pushEventData.read = true;
+							pushEventData.save(function(errPushEvent, pushEData){
+								if(!errPushEvent && pushEData){
+									callback(null, pushEData);
+								}else{
+									callback(errPushEvent, null);
+								}
 							});
 
 
