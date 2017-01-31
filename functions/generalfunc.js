@@ -396,6 +396,8 @@ function MessageReaded(data, success, fail){
 										callback(errPushEvent, null);
 									}
 								});	
+							}else{
+								callack("A", null);
 							}
 
 							
