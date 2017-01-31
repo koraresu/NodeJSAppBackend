@@ -244,8 +244,8 @@ function getConvProfile(id, socket,success, fail){
 		Message.findOne({ _id: id})
 		.populate('profile_id')
 		.populate('conversation')
-		.exec(function(errConversation, messageData){
-		if(!errConversation && conversationData){
+		.exec(function(errMessage, messageData){
+		if(!errMessage && messageData){
 			Online.findOne({ socket: socket.id }).populate('profiles').exec(function(errOnline, onlineData){
 				if(!errOnline && onlineData){
 					var profiles = messageData.conversation.profiles;
