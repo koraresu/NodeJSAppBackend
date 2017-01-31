@@ -250,7 +250,7 @@ function getConvProfile(id, socket,success, fail){
 				if(!errOnline && onlineData){
 					var profiles = messageData.conversation.profiles;
 					var profile = onlineData.profiles;
-					var ajeno = profile_ajeno(profile._id, profiles);
+					var ajeno = Generalfunc.profile_ajeno(profile._id, profiles);
 					success(ajeno);
 				}else{
 					fail(2);
