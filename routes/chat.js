@@ -12,7 +12,7 @@ var faker = require('faker');
 faker.locale = "es_MX";
 var mongoose    = require('mongoose');
 var async = require('async');
-var Moment = require('moment-timezone');
+var moment = require('moment-timezone');
 
 
 /*

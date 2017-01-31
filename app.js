@@ -11,6 +11,8 @@ var socket_io    = require('socket.io');
 var cookieSession = require('cookie-session')
 var async = require('async');
 
+var moment = require('moment-timezone');
+
 var flash = require('connect-flash');
 
 const pathDir = __dirname;
@@ -216,7 +218,17 @@ io.on('connection', function(socket){
       if(status){
         //io.sockets.in(messageData.conversation.toString()).emit('message',{data: messageData, t:true, accion: 'message' });
 
-        var d = messageData;
+        var udate = moment( messageData.updatedAt );
+        var cdate = moment( messageData.createdAt );
+
+        var d = {
+          _id: messageData._id,
+          updatedAt: udate.tz("America/Mexico_City").format(),
+          createdAt: cdate.tz("America/Mexico_City").format(),
+          conversation: messageData.conversation,
+          profile_id: messageData.profile_id,
+          message: messageData.message
+        };
         
         socket.emit('message',{data: d, t:true, accion: 'message' });
         socket.broadcast.to(messageData.conversation.toString()).emit('message',{data: d, t:false, accion: 'message' });
