@@ -923,26 +923,26 @@ router.post('/recomendar', multipartMiddleware, function(req, res){
 													profile_mensaje: profileRecomendData,
 													busqueda: historyData
 												};
-
+												console.log("Data:");
+												console.log( data );
 												Generalfunc.profiletosocket(profileAnotherData._id, function(err, sockets){
-												if(sockets.length > 0){
-													sockets.forEach(function(item, index){
-														console.log( item );
-														req.io.to('/#' + item).emit('recomendar', data); 
-														if((sockets.length-1) == index){
-															Generalfunc.response(200, data, function(response){
-																res.json(response);
-															});	
-														}
-														
-													});
-												}else{
-													Generalfunc.response(200, data, function(response){
-																res.json(response);
-															});	
-												}
-												
-											});
+													if(sockets.length > 0){
+														sockets.forEach(function(item, index){
+															console.log( item );
+															req.io.to('/#' + item).emit('recomendar', data); 
+															if((sockets.length-1) == index){
+																Generalfunc.response(200, data, function(response){
+																	res.json(response);
+																});	
+															}
+															
+														});
+													}else{
+														Generalfunc.response(200, data, function(response){
+																	res.json(response);
+																});	
+													}
+												});
 											});
 										}else{
 											var data = {
@@ -950,7 +950,8 @@ router.post('/recomendar', multipartMiddleware, function(req, res){
 												profile_emisor: profileData,
 												profile_mensaje: profileRecomendData,
 											};
-
+											console.log("Data:");
+											console.log( data );
 											Generalfunc.profiletosocket(profileAnotherData._id, function(err, sockets){
 												if(sockets.length > 0){
 													sockets.forEach(function(item, index){
@@ -971,7 +972,6 @@ router.post('/recomendar', multipartMiddleware, function(req, res){
 												
 											});
 										}
-										
 									});
 								});
 							}else{
