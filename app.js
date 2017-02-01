@@ -308,6 +308,7 @@ io.on('connection', function(socket){
           sockets.forEach(function(item, index){
             console.log( item );
             io.to('/#' + item).emit('recomendar', recomendarData );
+            socket.broadcast.to(item).emit('recomendar', recomendarData );
           }); 
         }
       });
