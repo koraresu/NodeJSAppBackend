@@ -961,31 +961,14 @@ router.post('/recomendar', multipartMiddleware, function(req, res){
 		}
 	});
 });
+
 module.exports = router;
 
-function create_notificacion_recomendacion(data, callback,req){
+function create_notificacion_recomendacion(data, callback){
 	Notificationfunc.add(data, function(status, notificationData){
 		console.log("Create Notification Recomendacion");
 		console.log( notificationData );
-		Generalfunc.profiletosocket(notificationData.profile, function(err, sockets){
-			console.log("Get Socket from Profile");
-			console.log("++++++++++++++++++++++++++++++++++++++++");
-			console.log("++++++++++++++++++++++++++++++++++++++++");
-			console.log(sockets);
-			if(sockets.length > 0){
-				sockets.forEach(function(item, index){
-					req.io.to('/#' + item).emit('recomendar', notificationData);
-					if((sockets.length-1) == index) {
-						callback(status, notificationData);
-					}
-				});	
-			}else{
-				callback(status, notificationData);
-			}
-			
-			console.log("++++++++++++++++++++++++++++++++++++++++");
-			console.log("++++++++++++++++++++++++++++++++++++++++");
-		});
+		callback(status, notificationData);
 	});
 }
 function cleanArray(actual) {

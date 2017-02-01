@@ -300,6 +300,94 @@ function accept(search, success, fail){
 		}
 	});
 }
+function recomendar(data, success, fail){
+	var guid          = data.guid;
+	var public_id     = data.public_id;
+	var p_recomend_id = data.recomendar_id;
+	var history_id    = data.history_id;
+
+	var d = {};// Notificación a persona recibe recomendación.
+	var e = {};// Notificación a persona recomiendan. 
+
+	if(mongoose.Types.ObjectId.isValid(history_id)){
+		history_id        = mongoose.Types.ObjectId(history_id);	
+	}
+	if(mongoose.Types.ObjectId.isValid(public_id)){
+		public_id = mongoose.Types.ObjectId(public_id);
+	}
+	if(mongoose.Types.ObjectId.isValid(p_recomend_id)){
+		p_recomend_id = mongoose.Types.ObjectId(p_recomend_id);
+	}
+	console.log("HistoryID:");
+	console.log(history_id);
+
+	Tokenfunc.exist(guid, function(errToken, token){
+		if(errToken){
+			Tokenfunc.toProfile(token.generated_id, function(status, userData, profileData, profileInfoData){
+				
+				Networkfunc.PublicId(public_id, function(statusPublic, profileAnotherData){
+					if(statusPublic){
+						Networkfunc.PublicId(p_recomend_id, function(statusRecomend, profileRecomendData){
+							if(statusRecomend){
+
+								d.tipo = 1;
+
+								d.profile         = profileAnotherData._id;
+								d.profile_emisor  = profileData._id;
+								d.profile_mensaje = profileRecomendData._id;
+
+								e.tipo            = 2;
+								e.profile         = profileRecomendData._id;
+								e.profile_emisor  = profileData._id;
+								e.profile_mensaje = profileAnotherData._id;
+
+								if(mongoose.Types.ObjectId.isValid(history_id)){
+									d.busqueda = history_id;
+									e.busqueda = history_id;
+								}
+
+
+								create_notificacion_recomendacion(e, function(statusAn, notificationAnData){
+									create_notificacion_recomendacion(d, function(status, notificationData){
+										if(mongoose.Types.ObjectId.isValid(history_id)){
+											History.findOne({ _id: history_id}).exec(function(err, historyData){
+												
+												var data = {
+													profile: profileAnotherData._id,
+													profile_emisor: profileData,
+													profile_mensaje: profileRecomendData,
+													busqueda: historyData
+												};
+
+												success(data);
+											});
+										}else{
+											var data = {
+												profile: profileAnotherData,
+												profile_emisor: profileData,
+												profile_mensaje: profileRecomendData,
+											};
+
+											success(data);
+										}
+										
+									});
+								});
+							}else{
+								fail();
+							}
+						});
+					}else{
+						fail();
+					}
+				});
+			} );
+		}else{
+			fail();
+		}
+	});
+}
+exports.recomendar = recomendar
 exports.accept              = accept
 exports.getOne2Callback     = getOne2Callback
 exports.type                = type

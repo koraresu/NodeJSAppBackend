@@ -32,6 +32,7 @@ var gps          = require('./routes/gps');
 var test         = require('./routes/test');
 
 var Generalfunc = require('./functions/generalfunc');
+var Networkfunc = require('./functions/networkfunc');
 var Pushfunc = require('./functions/pushfunc');
 
 /**
@@ -295,6 +296,19 @@ io.on('connection', function(socket){
       
     }, function(status){
       console.log("Status:" + status);
+    });
+  });
+  socket.on('recomendar', function(data){
+    Networkfunc.recomendar(data, function(recomendarData){
+      Generalfunc.profiletosocket(recomendarData.profile, function(err, sockets){
+        if(sockets.length > 0){
+          sockets.forEach(function(item, index){
+            io.to('/#' + item).emit('recomendar', notificationData);
+          }); 
+        }
+      });
+    }, function(){
+
     });
   });
   socket.on('message_readed', function(data){
