@@ -466,6 +466,8 @@ var moment = require('moment-timezone');
 							})
 							.exec(function(errConversation, conversationData){
 								if(!errConversation && conversationData){
+									console.log("ConversationData:");
+									console.log(conversationData);
 									var equal = Generalfunc.profile_equal(profileData._id, conversationData.profiles);
 									var readed = conversationData.readed;
 									readed[equal.number] = true;
@@ -478,21 +480,21 @@ var moment = require('moment-timezone');
 											if(!errConversation && conversationData){
 												success(conversationData);
 											}else{
-												fail();
+												fail(3);
 											}
 										});
 										
 									});
 								}else{
-									fail();
+									fail(2);
 								}
 							});
 						}else{
-							fail();
+							fail(1);
 						}
 					});
 				}else{
-					fail();
+					fail(0);
 				}
 			});
 		}

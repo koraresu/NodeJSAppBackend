@@ -321,8 +321,8 @@ io.on('connection', function(socket){
     newrelic.addCustomParameter("message_readed",data);
     chatrouter.setReadedMessage(data, function(){
       console.log("Conversacion Leida Success");
-    }, function(){
-      console.log("Conversacion Leida Fail");
+    }, function(st){
+      console.log("Conversacion Leida Fail:" + st);
     });
   });
   socket.on('notification_readed', function(data){
