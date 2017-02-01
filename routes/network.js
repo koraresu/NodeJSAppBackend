@@ -29,7 +29,6 @@ var Notification = model.notification;
 var Feedback     = model.feedback;
 var Conversation = model.conversation;
 var Message      = model.message;
-var Online       = model.online;
 var City         = model.city;
 var State        = model.state;
 var Country      = model.country;
@@ -917,65 +916,29 @@ router.post('/recomendar', multipartMiddleware, function(req, res){
 										if(mongoose.Types.ObjectId.isValid(history_id)){
 											History.findOne({ _id: history_id}).exec(function(err, historyData){
 												
+												var data = {
+													profile: profileAnotherData._id,
+													profile_emisor: profileData,
+													profile_mensaje: profileRecomendData,
+													busqueda: historyData
+												};
 
-												console.log("Data:");
-												console.log( data );
-												Generalfunc.profiletosocket(profileAnotherData._id, function(err, sockets){
-													if(sockets.length > 0){
-														sockets.forEach(function(item, index){
-															console.log( item );
-															req.io.to('/#' + item).emit('recomendar', data); 
-															if((sockets.length-1) == index){
-																var data = {
-																	profile: profileAnotherData._id,
-																	profile_emisor: profileData,
-																	profile_mensaje: profileRecomendData,
-																	busqueda: historyData,
-																	sockets: sockets
-																};
-																Generalfunc.response(200, data, function(response){
-																	res.json(response);
-																});	
-															}
-															
-														});
-													}else{
-														Generalfunc.response(200, data, function(response){
-																	res.json(response);
-																});	
-													}
+												Generalfunc.response(200, data, function(response){
+													res.json(response);
 												});
 											});
 										}else{
-											
-											console.log("Data:");
-											console.log( data );
-											Generalfunc.profiletosocket(profileAnotherData._id, function(err, sockets){
-												if(sockets.length > 0){
-													sockets.forEach(function(item, index){
-														console.log( item );
-														req.io.to('/#' + item).emit('recomendar', data); 
-														if((sockets.length-1) == index){
-															var data = {
-																profile: profileAnotherData,
-																profile_emisor: profileData,
-																profile_mensaje: profileRecomendData,
-																sockets: sockets
-															};
-															Generalfunc.response(200, data, function(response){
-																res.json(response);
-															});	
-														}
-														
-													});
-												}else{
-													Generalfunc.response(200, data, function(response){
-																res.json(response);
-															});	
-												}
-												
+											var data = {
+												profile: profileAnotherData,
+												profile_emisor: profileData,
+												profile_mensaje: profileRecomendData,
+											};
+
+											Generalfunc.response(200, data, function(response){
+												res.json(response);
 											});
 										}
+										
 									});
 								});
 							}else{
@@ -1001,11 +964,28 @@ router.post('/recomendar', multipartMiddleware, function(req, res){
 module.exports = router;
 
 function create_notificacion_recomendacion(data, callback){
-	if(data.busqueda == undefined){
-		Notificationfunc.add(data, callback);	
-	}else{
-		Notificationfunc.add(data,callback);	
-	}
+	Notificationfunc.add(data, function(status, notificationData){
+		console.log("Create Notification Recomendacion");
+		Generalfunc.profiletosocket(profileAnotherData._id, function(err, sockets){
+			console.log("Get Socket from Profile");
+			console.log("++++++++++++++++++++++++++++++++++++++++");
+			console.log("++++++++++++++++++++++++++++++++++++++++");
+			console.log(sockets);
+			if(sockets.length > 0){
+				sockets.forEach(function(item, index){
+					req.io.to('/#' + item).emit('recomendar', notificationData); 
+					if((sockets.length-1) == index) {
+						callback(status, notificationData);
+					}
+				});	
+			}else{
+				callback(status, notificationData);
+			}
+			
+			console.log("++++++++++++++++++++++++++++++++++++++++");
+			console.log("++++++++++++++++++++++++++++++++++++++++");
+		});
+	});
 }
 function cleanArray(actual) {
 	var newArray = new Array();
@@ -1019,7 +999,4 @@ function cleanArray(actual) {
 function isNormalInteger(str) {
 	var n = ~~Number(str);
 	return String(n) === str && n >= 0;
-}
-function NotificationSocketSend(profile_id, success){
-
 }
