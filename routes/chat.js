@@ -211,15 +211,21 @@ var moment = require('moment-timezone');
 									})
 								});
 							}else{
-
+								Generalfunc.response(101, {}, function(response){
+													res.json(response);
+												});
 							}
 							
 						}else{
-
+							Generalfunc.response(101, {}, function(response){
+													res.json(response);
+												});
 						}
 					});
 				}else{
-
+					Generalfunc.response(101, {}, function(response){
+													res.json(response);
+												});
 				}
 			});
 		});
@@ -526,11 +532,15 @@ var moment = require('moment-timezone');
 										Conversation.findOne({ _id: id }).exec(function(errConv, convData){
 											if(!errConv && convData){
 												var equal = Generalfunc.profile_equal(profileData._id, convData.profiles);
+												console.log("Message Equal:");
+												console.log( equal );
+												console.log( convData );
 												var readed = convData.readed;
 												readed[equal.number] = false;
 												convData.message = messageData._id;
 
 												convData.readed = readed;
+												console.log( convData );
 												convData.save(function(errCon, conData){
 													callback(true, messageData);
 												});	
