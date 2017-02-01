@@ -472,8 +472,11 @@ var moment = require('moment-timezone');
 									console.log( conversationData.readed );
 									var equal = Generalfunc.profile_equal(profileData._id, conversationData.profiles);
 									var readed = conversationData.readed;
-									readed[equal.number] = true;
-									conversationData.readed = readed;
+									var r = [false, false];
+									r[0] = readed[0];
+									r[1] = readed[1];
+									r[equal.number] = true;
+									conversationData.readed = r;
 									console.log("----------------------------------------");
 									console.log( conversationData.readed );
 
