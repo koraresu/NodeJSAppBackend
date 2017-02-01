@@ -925,7 +925,7 @@ router.post('/recomendar', multipartMiddleware, function(req, res){
 												};
 
 												Generalfunc.profiletosocket(profileAnotherData._id, function(err, sockets){
-													sockets.foreach(function(item, index){
+													sockets.forEach(function(item, index){
 														req.io.to('/#' + item).emit('recomendar', data); 
 														Generalfunc.response(200, data, function(response){
 															res.json(response);
@@ -941,7 +941,7 @@ router.post('/recomendar', multipartMiddleware, function(req, res){
 											};
 
 											Generalfunc.profiletosocket(profileAnotherData._id, function(err, sockets){
-												sockets.foreach(function(item, index){
+												sockets.forEach(function(item, index){
 													req.io.to('/#' + item).emit('recomendar', data); 
 													Generalfunc.response(200, data, function(response){
 														res.json(response);
