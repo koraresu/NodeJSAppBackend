@@ -69,6 +69,7 @@ app.set('view engine', 'jade');
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(cors());
+// Make io accessible to our router
 app.use(function(req,res,next){
     req.io = io;
     next();
