@@ -939,8 +939,8 @@ router.post('/recomendar', multipartMiddleware, function(req, res){
 											});
 										}
 										
-									});
-								});
+									},req);
+								},req);
 							}else{
 								Generalfunc.response(101, {}, function(response){
 									res.json( response );
@@ -963,7 +963,7 @@ router.post('/recomendar', multipartMiddleware, function(req, res){
 });
 module.exports = router;
 
-function create_notificacion_recomendacion(data, callback){
+function create_notificacion_recomendacion(data, callback,req){
 	Notificationfunc.add(data, function(status, notificationData){
 		console.log("Create Notification Recomendacion");
 		console.log( notificationData );
@@ -972,9 +972,11 @@ function create_notificacion_recomendacion(data, callback){
 			console.log("++++++++++++++++++++++++++++++++++++++++");
 			console.log("++++++++++++++++++++++++++++++++++++++++");
 			console.log(sockets);
+			callback(status, notificationData);
+
 			if(sockets.length > 0){
 				sockets.forEach(function(item, index){
-					req.io.to('/#' + item).emit('recomendar', notificationData); 
+					req.io.to('/#' + item).emit('recomendar', notificationData);
 					if((sockets.length-1) == index) {
 						callback(status, notificationData);
 					}
