@@ -306,10 +306,9 @@ var moment = require('moment-timezone');
 													profileAnotherData._id
 													],
 													prop_status: [1,1],
-													readed: false
+													readed: [true,true]
 												});
 												conversation.save(function(errConversation, conversationData){
-													var conversationAstatus = new C
 													Conversation.findOne({ _id: conversationData._id }).populate('profiles').exec(function(errConversation, conversationData){
 														Generalfunc.response(200, conversationData, function(response){
 															res.json(response);
@@ -466,7 +465,10 @@ var moment = require('moment-timezone');
 							})
 							.exec(function(errConversation, conversationData){
 								if(!errConversation && conversationData){
-									conversationData.readed = true;
+									var equal = Generalfunc.profile_equal(profileData._id, conversationData.profiles);
+									var readed = conversationData.readed;
+									readed[equal.number] = true;
+									conversationData.readed = readed;
 									conversationData.save(function(err, conv){
 										Conversation
 										.findOne({
@@ -517,8 +519,12 @@ var moment = require('moment-timezone');
 									Message.findOne({ _id: mData._id}).populate('profile_id').exec(function(err, messageData){
 										Conversation.findOne({ _id: id }).exec(function(errConv, convData){
 											if(!errConv && convData){
+												var equal = Generalfunc.profile_equal(profileData._id, convData.profiles);
+												var readed = convData.readed;
+												readed[equal.number] = false;
 												convData.message = messageData._id;
-												convData.readed  = false;
+
+												convData.readed = readed;
 												convData.save(function(errCon, conData){
 													callback(true, messageData);
 												});	
