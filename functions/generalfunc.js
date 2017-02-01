@@ -25,6 +25,7 @@ var Feedback     = model.feedback;
 var Conversation = model.conversation;
 var Message      = model.message;
 var Device       = model.device;
+var Online       = model.online;
 var PushEvent    = model.pushevent;
 var Push         = model.push;
 var City         = model.city;
