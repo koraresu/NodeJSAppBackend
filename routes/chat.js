@@ -451,6 +451,7 @@ var moment = require('moment-timezone');
 			});
 		}
 		router.setReadedMessage = function(data, success, fail){
+			console.log( data );
 			var guid = data.guid;
 
 			Tokenfunc.exist(guid, function(status, tokenData){
