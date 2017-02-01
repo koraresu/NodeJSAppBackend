@@ -306,7 +306,8 @@ var moment = require('moment-timezone');
 													profileAnotherData._id
 													],
 													prop_status: [1,1],
-													readed: [true,true]
+													readed: [true,true],
+													message: null
 												});
 												conversation.save(function(errConversation, conversationData){
 													Conversation.findOne({ _id: conversationData._id }).populate('profiles').exec(function(errConversation, conversationData){
