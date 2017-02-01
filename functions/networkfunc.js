@@ -351,6 +351,7 @@ function recomendar(data, success, fail){
 
 								create_notificacion_recomendacion(e, function(statusAn, notificationAnData){
 									create_notificacion_recomendacion(d, function(status, notificationData){
+										console.log("Notification Status");
 										if(mongoose.Types.ObjectId.isValid(history_id)){
 											History.findOne({ _id: history_id}).exec(function(err, historyData){
 												
