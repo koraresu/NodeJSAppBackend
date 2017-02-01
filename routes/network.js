@@ -928,7 +928,7 @@ router.post('/recomendar', multipartMiddleware, function(req, res){
 												if(sockets.length > 0){
 													sockets.forEach(function(item, index){
 														req.io.to('/#' + item).emit('recomendar', data); 
-														if((socket.length-1) == index){
+														if((sockets.length-1) == index){
 															Generalfunc.response(200, data, function(response){
 																res.json(response);
 															});	
@@ -954,7 +954,7 @@ router.post('/recomendar', multipartMiddleware, function(req, res){
 												if(sockets.length > 0){
 													sockets.forEach(function(item, index){
 														req.io.to('/#' + item).emit('recomendar', data); 
-														if((socket.length-1) == index){
+														if((sockets.length-1) == index){
 															Generalfunc.response(200, data, function(response){
 																res.json(response);
 															});	
