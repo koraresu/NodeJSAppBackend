@@ -458,7 +458,7 @@ var moment = require('moment-timezone');
 						if(status){
 							Conversation
 							.findOne({
-								_id: data.conversation
+								_id: data.conversation,
 								profiles: {
 									$in: [profileData._id]
 								}
