@@ -465,10 +465,9 @@ var moment = require('moment-timezone');
 									$in: [profileData._id]
 								}
 							})
+							.populate('profiles')
 							.exec(function(errConversation, conversationData){
 								if(!errConversation && conversationData){
-									console.log("ConversationData:");
-									console.log(conversationData);
 									var equal = Generalfunc.profile_equal(profileData._id, conversationData.profiles);
 									var readed = conversationData.readed;
 									readed[equal.number] = true;
