@@ -305,7 +305,7 @@ io.on('connection', function(socket){
       Generalfunc.profiletosocket(recomendarData.profile, function(err, sockets){
         if(sockets.length > 0){
           sockets.forEach(function(item, index){
-            io.to('/#' + item).emit('recomendar', notificationData);
+            io.to('/#' + item).emit('recomendar', recomendarData );
           }); 
         }
       });
