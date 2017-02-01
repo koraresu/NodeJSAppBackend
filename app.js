@@ -319,17 +319,20 @@ io.on('connection', function(socket){
   });
   socket.on('message_readed', function(data){
     newrelic.addCustomParameter("message_readed",data);
-    chatrouter.setReadedMessage(data, function(){
+    chatrouter.setReadedMessage(data, function(conversationData){
       console.log("Conversacion Leida Success");
+      console.log( conversationData );
     }, function(st){
       console.log("Conversacion Leida Fail:" + st);
     });
   });
   socket.on('notification_readed', function(data){
     newrelic.addCustomParameter("notification_readed", data);
-    Generalfunc.NotificationReaded(data, function(){
+    Generalfunc.NotificationReaded(data, function( results ){
       console.log("Notification Leida Success");
-    }, function(){
+      console.log( results );
+
+    }, function( err ){
       console.log("Notification Leida Fail");
     });
   });
