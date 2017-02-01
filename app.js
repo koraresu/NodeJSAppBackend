@@ -302,15 +302,14 @@ io.on('connection', function(socket){
   socket.on('recomendar', function(data){
     Networkfunc.recomendar(data, function(recomendarData, notificationAnData, notificationData){
       socket.emit('recomendar_response', recomendarData);
-      console.log( notificationAnData );
-      console.log( notificationData );
+      
       Generalfunc.profiletosocket(recomendarData.profile, function(err, sockets){
         console.log( sockets );
         if(sockets.length > 0){
           sockets.forEach(function(item, index){
             console.log( item );
-            io.to('/#' + item).emit('recomendar', recomendarData );
-            socket.broadcast.to(item).emit('recomendar', recomendarData );
+            io.to('/#' + item).emit('recomendar', notificationData );
+            socket.broadcast.to(item).emit('recomendar', notificationData );
           }); 
         }
       });
