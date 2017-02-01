@@ -32,30 +32,31 @@ var moment = require('moment-timezone');
 		var format         = require('../functions/format');
 
 		var model = require('../model');
-		var Profile     = model.profile;
-		var User        = model.user;
-		var Token       = model.token;
-		var Job         = model.job;
-		var Company     = model.company;
-		var Experience  = model.experience;
-		var Network     = model.network;
-		var History     = model.history;
-		var Feedback    = model.feedback;
-		var Review      = model.review;
-		var Log         = model.log;
-		var Skill       = model.skill;
-		var Speciality  = model.speciality;
-		var Sector      = model.sector;
-		var Notification = model.notification;
-		var Feedback     = model.feedback;
-		var Conversation = model.conversation;
-		var Online       = model.online;
-		var Device       = model.device;
-		var Push         = model.push;
-		var Message      = model.message;
-		var City         = model.city;
-		var State        = model.state;
-		var Country      = model.country;
+		var Profile            = model.profile;
+		var User               = model.user;
+		var Token              = model.token;
+		var Job                = model.job;
+		var Company            = model.company;
+		var Experience         = model.experience;
+		var Network            = model.network;
+		var History            = model.history;
+		var Feedback           = model.feedback;
+		var Review             = model.review;
+		var Log                = model.log;
+		var Skill              = model.skill;
+		var Speciality         = model.speciality;
+		var Sector             = model.sector;
+		var Notification       = model.notification;
+		var Feedback           = model.feedback;
+		var Conversation       = model.conversation;
+		var ConversationStatus = model.conversationstatus;
+		var Online             = model.online;
+		var Device             = model.device;
+		var Push               = model.push;
+		var Message            = model.message;
+		var City               = model.city;
+		var State              = model.state;
+		var Country            = model.country;
 
 		var apnProvider = Generalfunc.apnProvider();
 
@@ -85,6 +86,7 @@ var moment = require('moment-timezone');
 											var number = equal.number;
 											console.log("Profile Status:");
 											console.log( item.prop_status );
+
 											if(item.prop_status != undefined){
 												if(item.prop_status[number] != undefined){
 													if(item.prop_status[number] == 1){
@@ -303,9 +305,11 @@ var moment = require('moment-timezone');
 													profileData._id,
 													profileAnotherData._id
 													],
-													prop_status: [1,1]
+													prop_status: [1,1],
+													readed: false
 												});
 												conversation.save(function(errConversation, conversationData){
+													var conversationAstatus = new C
 													Conversation.findOne({ _id: conversationData._id }).populate('profiles').exec(function(errConversation, conversationData){
 														Generalfunc.response(200, conversationData, function(response){
 															res.json(response);
@@ -446,6 +450,49 @@ var moment = require('moment-timezone');
 				callback(err, socket);
 			});
 		}
+		router.setReadedMessage = function(data, success, fail){
+			var guid = data.guid;
+
+			Tokenfunc.exist(guid, function(status, tokenData){
+				if(status){
+					Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
+						if(status){
+							Conversation
+							.findOne({
+								_id: data.conversation
+								profiles: {
+									$in: [profileData._id]
+								}
+							})
+							.exec(function(errConversation, conversationData){
+								if(!errConversation && conversationData){
+									conversationData.readed = true;
+									conversationData.save(function(err, conv){
+										Conversation
+										.findOne({
+											_id: data.conversation
+										}).exec(function(errConversation, conversationData){
+											if(!errConversation && conversationData){
+												success(conversationData);
+											}else{
+												fail();
+											}
+										});
+										
+									});
+								}else{
+									fail();
+								}
+							});
+						}else{
+							fail();
+						}
+					});
+				}else{
+					fail();
+				}
+			});
+		}
 		router.message = function(data, callback){
 			console.log(data);
 
@@ -471,6 +518,7 @@ var moment = require('moment-timezone');
 										Conversation.findOne({ _id: id }).exec(function(errConv, convData){
 											if(!errConv && convData){
 												convData.message = messageData._id;
+												convData.readed  = false;
 												convData.save(function(errCon, conData){
 													callback(true, messageData);
 												});	

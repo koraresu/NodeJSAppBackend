@@ -321,13 +321,44 @@ OnlineSchema.post('update', function(doc, next){
 var ConversationSchema = new Schema({
   profiles:    [ { type: Schema.Types.ObjectId, ref: 'Profile' } ],
   prop_status: [{ type: Number }], // 2 = Active | 1 = Archive | 0 = Deleted
-  message: { type: Schema.Types.ObjectId, ref: 'Message' },
-  readed: Boolean
+  message: { type: Schema.Types.ObjectId, ref: 'Message' }
 },{
   timestamps: true
 });
 ConversationSchema.post('save', function(doc, next){
   logMiddleware("conversation","save", doc, function(err, logData){
+    next();
+  });
+});
+ConversationSchema.post('remove', function(doc, next){
+  logMiddleware("conversation","remove", doc, function(err, logData){
+    next();
+  });
+});
+ConversationSchema.post('update', function(doc, next){
+  logMiddleware("conversation","update", doc, function(err, logData){
+    next();
+  });
+});
+
+/*******************************************/
+var ConversationStatusSchema = new Schema({
+  profile: { type: Schema.Types.ObjectId, ref: 'Profile' },
+  status: Number,
+  readed: Boolean
+});
+ConversationStatusSchema.post('save', function(doc, next){
+  logMiddleware("conversationstatus","save", doc, function(err, logData){
+    next();
+  });
+});
+ConversationStatusSchema.post('remove', function(doc, next){
+  logMiddleware("conversationstatus","remove", doc, function(err, logData){
+    next();
+  });
+});
+ConversationStatusSchema.post('update', function(doc, next){
+  logMiddleware("conversationstatus","update", doc, function(err, logData){
     next();
   });
 });
@@ -723,35 +754,36 @@ CiudadSchema.post('update', function(doc, next){
 /*******************************************/
 
 // Company
-exports.company      = db.model( 'Company' , companySchema );
-exports.experience   = db.model( 'Experience' , experienceSchema );
-exports.job          = db.model( 'Job' , jobSchema );
-exports.location     = db.model( 'GPS', locationSchema);
-exports.company_claim     = db.model( 'CompanyClaim', CompanyClaimSchema);
-exports.skill        = db.model( 'Skill' , skillsSchema );
-exports.speciality   = db.model( 'Speciality' , specialitySchema );
-exports.sector       = db.model( 'Sector' , sectorSchema );
+exports.company            = db.model( 'Company' , companySchema );
+exports.experience         = db.model( 'Experience' , experienceSchema );
+exports.job                = db.model( 'Job' , jobSchema );
+exports.location           = db.model( 'GPS', locationSchema);
+exports.company_claim      = db.model( 'CompanyClaim', CompanyClaimSchema);
+exports.skill              = db.model( 'Skill' , skillsSchema );
+exports.speciality         = db.model( 'Speciality' , specialitySchema );
+exports.sector             = db.model( 'Sector' , sectorSchema );
 // Profile
-exports.profile      = db.model( 'Profile' , profileSchema );
-exports.network      = db.model( 'Network' , NetworkSchema );
-exports.review       = db.model( 'Review' , reviewSchema );
-exports.search       = db.model( 'Search' , SearchSchema );
-exports.token        = db.model( 'Token', tokenSchema );
-exports.user         = db.model( 'User' , userSchema );
-exports.forgot       = db.model( 'Forgot', ForgotSchema);
-exports.notification = db.model( 'Notification', NotificationSchema );
+exports.profile            = db.model( 'Profile' , profileSchema );
+exports.network            = db.model( 'Network' , NetworkSchema );
+exports.review             = db.model( 'Review' , reviewSchema );
+exports.search             = db.model( 'Search' , SearchSchema );
+exports.token              = db.model( 'Token', tokenSchema );
+exports.user               = db.model( 'User' , userSchema );
+exports.forgot             = db.model( 'Forgot', ForgotSchema);
+exports.notification       = db.model( 'Notification', NotificationSchema );
 // History
-var history          = db.model( 'History' , HistorySchema );
-exports.history      = history;
-exports.feedback     = db.model( 'Feedback' , FeedbackSchema );
+var history                = db.model( 'History' , HistorySchema );
+exports.history            = history;
+exports.feedback           = db.model( 'Feedback' , FeedbackSchema );
 // Chat
-exports.device       = db.model( 'Device', deviceSchema );
-exports.pushevent    = db.model( 'PushEvent', PushEventSchema );
-exports.push         = db.model( 'Push', PushSchema );
-exports.online       = db.model( 'Online', OnlineSchema );
-exports.conversation = db.model( 'Conversation' , ConversationSchema );
-exports.message      = db.model( 'Message' , MessageSchema );
-exports.log          = db.model( 'Log' , LogSchema );
+exports.device             = db.model( 'Device', deviceSchema );
+exports.pushevent          = db.model( 'PushEvent', PushEventSchema );
+exports.push               = db.model( 'Push', PushSchema );
+exports.online             = db.model( 'Online', OnlineSchema );
+exports.conversation       = db.model( 'Conversation' , ConversationSchema );
+exports.conversationstatus = db.model( 'ConversationStatus' , ConversationStatusSchema );
+exports.message            = db.model( 'Message' , MessageSchema );
+exports.log                = db.model( 'Log' , LogSchema );
 // Localization
-exports.city       = db.model('City', CiudadSchema);
-exports.state       = db.model('State', EstadoSchema);
+exports.city               = db.model('City', CiudadSchema);
+exports.state              = db.model('State', EstadoSchema);

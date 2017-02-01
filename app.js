@@ -318,7 +318,7 @@ io.on('connection', function(socket){
     });
   });
   socket.on('message_readed', function(data){
-    Generalfunc.MessageReaded(data, function(){
+    chatrouter.setReadedMessage(data, function(){
 
     }, function(){
       
