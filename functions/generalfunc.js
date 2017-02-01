@@ -32,7 +32,7 @@ var City         = model.city;
 var State        = model.state;
 var Country      = model.country;
 
-var Pushfunc = require('./tokenfunc');
+var Tokenfunc = require('./tokenfunc');
 var Pushfunc = require('./pushfunc');
 
 var apn = require('apn');
