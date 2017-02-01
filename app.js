@@ -33,6 +33,7 @@ var test         = require('./routes/test');
 
 var Generalfunc = require('./functions/generalfunc');
 var Networkfunc = require('./functions/networkfunc');
+var Tokenfunc = require('./functions/tokenfunc');
 var Pushfunc = require('./functions/pushfunc');
 
 /**
@@ -300,6 +301,7 @@ io.on('connection', function(socket){
   });
   socket.on('recomendar', function(data){
     Networkfunc.recomendar(data, function(recomendarData){
+      socket.emit('recomendar_response', recomendarData);
       Generalfunc.profiletosocket(recomendarData.profile, function(err, sockets){
         if(sockets.length > 0){
           sockets.forEach(function(item, index){
