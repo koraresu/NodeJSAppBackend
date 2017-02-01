@@ -69,6 +69,11 @@ app.set('view engine', 'jade');
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(cors());
+app.use(function(req,res,next){
+    req.io = io;
+    next();
+});
+
 app.options('*', cors());
 app.use(cookieSession({
   name: 'session',

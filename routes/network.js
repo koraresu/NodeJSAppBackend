@@ -922,6 +922,8 @@ router.post('/recomendar', multipartMiddleware, function(req, res){
 													profile_mensaje: profileRecomendData,
 													busqueda: historyData
 												};
+
+												req.io.sockets.emit('recomendar', "A"); 
 												Generalfunc.response(200, data, function(response){
 													res.json(response);
 												});
@@ -932,6 +934,8 @@ router.post('/recomendar', multipartMiddleware, function(req, res){
 												profile_emisor: profileData,
 												profile_mensaje: profileRecomendData,
 											};
+
+											req.io.sockets.emit('recomendar', "A"); 
 											Generalfunc.response(200, data, function(response){
 												res.json(response);
 											});
