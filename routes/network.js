@@ -922,9 +922,14 @@ router.post('/recomendar', multipartMiddleware, function(req, res){
 													profile_mensaje: profileRecomendData,
 													busqueda: historyData
 												};
-												req.io.to('/#' + socketid).emit('recomendar', data); 
-												Generalfunc.response(200, data, function(response){
-													res.json(response);
+
+												Generalfunc.profiletosocket(profileAnotherData._id, function(err, sockets){
+													sockets.foreach(function(item, index){
+														req.io.to('/#' + item).emit('recomendar', data); 
+														Generalfunc.response(200, data, function(response){
+															res.json(response);
+														});
+													});
 												});
 											});
 										}else{
@@ -934,9 +939,13 @@ router.post('/recomendar', multipartMiddleware, function(req, res){
 												profile_mensaje: profileRecomendData,
 											};
 
-											req.io.to('/#' + socketid).emit('recomendar', data); 
-											Generalfunc.response(200, data, function(response){
-												res.json(response);
+											Generalfunc.profiletosocket(profileAnotherData._id, function(err, sockets){
+												sockets.foreach(function(item, index){
+													req.io.to('/#' + item).emit('recomendar', data); 
+													Generalfunc.response(200, data, function(response){
+														res.json(response);
+													});
+												});
 											});
 										}
 										
@@ -983,4 +992,7 @@ function cleanArray(actual) {
 function isNormalInteger(str) {
 	var n = ~~Number(str);
 	return String(n) === str && n >= 0;
+}
+function NotificationSocketSend(profile_id, success){
+
 }

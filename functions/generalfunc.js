@@ -416,6 +416,24 @@ function MessageReaded(data, success, fail){
 		
 	}
 }
+exports.profiletosocket = function(profile_id, callback){
+	Online.find({ profiles: profile_id }).exec(function(errOnline, onlineData){
+		if(!errOnline && onlineData){
+			if(onlineData.length > 0){
+				async.map(onlineData, function(item, ca){
+					ca(null, item.socket);
+				}, function(err, results){
+					callback(null, results);
+				});	
+			}else{
+				callback(errOnline, []);	
+			}
+		}else{
+			callback(errOnline, []);
+		}
+	});
+
+}
 exports.NotificationReaded = NotificationReaded;
 exports.MessageReaded      = MessageReaded;
 exports.mensaje_create     = mensaje_create
