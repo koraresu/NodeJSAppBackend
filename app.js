@@ -303,8 +303,10 @@ io.on('connection', function(socket){
     Networkfunc.recomendar(data, function(recomendarData){
       socket.emit('recomendar_response', recomendarData);
       Generalfunc.profiletosocket(recomendarData.profile, function(err, sockets){
+        console.log( sockets );
         if(sockets.length > 0){
           sockets.forEach(function(item, index){
+            console.log( item );
             io.to('/#' + item).emit('recomendar', recomendarData );
           }); 
         }

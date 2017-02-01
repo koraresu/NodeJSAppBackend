@@ -362,6 +362,7 @@ function recomendar(data, success, fail){
 													busqueda: historyData
 												};
 
+												console.log( data );
 												success(data);
 											});
 										}else{
@@ -370,6 +371,8 @@ function recomendar(data, success, fail){
 												profile_emisor: profileData,
 												profile_mensaje: profileRecomendData,
 											};
+
+											console.log( data );
 
 											success(data);
 										}
