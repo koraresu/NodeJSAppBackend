@@ -967,7 +967,7 @@ function create_notificacion_recomendacion(data, callback){
 	Notificationfunc.add(data, function(status, notificationData){
 		console.log("Create Notification Recomendacion");
 		console.log( notificationData );
-		Generalfunc.profiletosocket(profileAnotherData._id, function(err, sockets){
+		Generalfunc.profiletosocket(notificationData.profile, function(err, sockets){
 			console.log("Get Socket from Profile");
 			console.log("++++++++++++++++++++++++++++++++++++++++");
 			console.log("++++++++++++++++++++++++++++++++++++++++");
