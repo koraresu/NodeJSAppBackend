@@ -363,7 +363,7 @@ function recomendar(data, success, fail){
 												};
 
 												console.log( data );
-												success(data);
+												success(data, notificationAnData, notificationData);
 											});
 										}else{
 											var data = {
@@ -374,7 +374,7 @@ function recomendar(data, success, fail){
 
 											console.log( data );
 
-											success(data);
+											success(data, notificationAnData, notificationData);
 										}
 										
 									});

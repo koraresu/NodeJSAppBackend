@@ -300,8 +300,10 @@ io.on('connection', function(socket){
     });
   });
   socket.on('recomendar', function(data){
-    Networkfunc.recomendar(data, function(recomendarData){
+    Networkfunc.recomendar(data, function(recomendarData, notificationAnData, notificationData){
       socket.emit('recomendar_response', recomendarData);
+      console.log( notificationAnData );
+      console.log( notificationData );
       Generalfunc.profiletosocket(recomendarData.profile, function(err, sockets){
         console.log( sockets );
         if(sockets.length > 0){
