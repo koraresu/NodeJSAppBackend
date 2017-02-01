@@ -972,8 +972,6 @@ function create_notificacion_recomendacion(data, callback,req){
 			console.log("++++++++++++++++++++++++++++++++++++++++");
 			console.log("++++++++++++++++++++++++++++++++++++++++");
 			console.log(sockets);
-			callback(status, notificationData);
-
 			if(sockets.length > 0){
 				sockets.forEach(function(item, index){
 					req.io.to('/#' + item).emit('recomendar', notificationData);
