@@ -28,7 +28,8 @@ var City         = model.city;
 var State        = model.state;
 var Country      = model.country;
 
-var Tokenfunc = require('./tokenfunc');
+var Tokenfunc        = require('./tokenfunc');
+var Notificationfunc = require('./notificationfunc');
 
 function addReview(profile_id_a, public_id, callback){}
 function addNetwork(profile_id_a, public_id, callback){}
