@@ -318,7 +318,7 @@ io.on('connection', function(socket){
     });
   });
   socket.on('message_readed', function(data){
-    newrelic.addCustomParameters({type: "socket", name: "message_readed", data: data });
+    newrelic.addCustomParameter("message_readed",data);
     chatrouter.setReadedMessage(data, function(){
       console.log("Conversacion Leida Success");
     }, function(){
@@ -326,7 +326,7 @@ io.on('connection', function(socket){
     });
   });
   socket.on('notification_readed', function(data){
-    newrelic.addCustomParameters({type: "socket", name: "notification_readed", data: data });
+    newrelic.addCustomParameter("notification_readed", data);
     Generalfunc.NotificationReaded(data, function(){
       console.log("Notification Leida Success");
     }, function(){
