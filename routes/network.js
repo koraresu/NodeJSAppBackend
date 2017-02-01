@@ -29,6 +29,7 @@ var Notification = model.notification;
 var Feedback     = model.feedback;
 var Conversation = model.conversation;
 var Message      = model.message;
+var Online       = model.online;
 var City         = model.city;
 var State        = model.state;
 var Country      = model.country;
