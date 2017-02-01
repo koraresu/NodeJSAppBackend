@@ -925,13 +925,23 @@ router.post('/recomendar', multipartMiddleware, function(req, res){
 												};
 
 												Generalfunc.profiletosocket(profileAnotherData._id, function(err, sockets){
+												if(sockets.length > 0){
 													sockets.forEach(function(item, index){
 														req.io.to('/#' + item).emit('recomendar', data); 
-														Generalfunc.response(200, data, function(response){
-															res.json(response);
-														});
+														if((socket.length-1) == index){
+															Generalfunc.response(200, data, function(response){
+																res.json(response);
+															});	
+														}
+														
 													});
-												});
+												}else{
+													Generalfunc.response(200, data, function(response){
+																res.json(response);
+															});	
+												}
+												
+											});
 											});
 										}else{
 											var data = {
@@ -941,12 +951,22 @@ router.post('/recomendar', multipartMiddleware, function(req, res){
 											};
 
 											Generalfunc.profiletosocket(profileAnotherData._id, function(err, sockets){
-												sockets.forEach(function(item, index){
-													req.io.to('/#' + item).emit('recomendar', data); 
-													Generalfunc.response(200, data, function(response){
-														res.json(response);
+												if(sockets.length > 0){
+													sockets.forEach(function(item, index){
+														req.io.to('/#' + item).emit('recomendar', data); 
+														if((socket.length-1) == index){
+															Generalfunc.response(200, data, function(response){
+																res.json(response);
+															});	
+														}
+														
 													});
-												});
+												}else{
+													Generalfunc.response(200, data, function(response){
+																res.json(response);
+															});	
+												}
+												
 											});
 										}
 										
