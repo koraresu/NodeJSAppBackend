@@ -326,9 +326,9 @@ function recomendar(data, success, fail){
 		if(errToken){
 			Tokenfunc.toProfile(token.generated_id, function(status, userData, profileData, profileInfoData){
 				
-				Networkfunc.PublicId(public_id, function(statusPublic, profileAnotherData){
+				PublicId(public_id, function(statusPublic, profileAnotherData){
 					if(statusPublic){
-						Networkfunc.PublicId(p_recomend_id, function(statusRecomend, profileRecomendData){
+						PublicId(p_recomend_id, function(statusRecomend, profileRecomendData){
 							if(statusRecomend){
 
 								d.tipo = 1;
