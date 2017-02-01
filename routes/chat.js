@@ -467,16 +467,22 @@ var moment = require('moment-timezone');
 							})
 							.populate('profiles')
 							.exec(function(errConversation, conversationData){
+								console.log("SetReadedMessage:+++++++++++++++++++++++");
 								if(!errConversation && conversationData){
+									console.log( conversationData.readed );
 									var equal = Generalfunc.profile_equal(profileData._id, conversationData.profiles);
 									var readed = conversationData.readed;
 									readed[equal.number] = true;
 									conversationData.readed = readed;
+									console.log("----------------------------------------");
+									console.log( conversationData.readed );
+
 									conversationData.save(function(err, conv){
 										Conversation
 										.findOne({
 											_id: data.conversation
 										}).exec(function(errConversation, conversationData){
+											console.log("+++++++++++++++++++++++++++++++++++++++");
 											if(!errConversation && conversationData){
 												success(conversationData);
 											}else{
