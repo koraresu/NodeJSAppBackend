@@ -917,12 +917,7 @@ router.post('/recomendar', multipartMiddleware, function(req, res){
 										if(mongoose.Types.ObjectId.isValid(history_id)){
 											History.findOne({ _id: history_id}).exec(function(err, historyData){
 												
-												var data = {
-													profile: profileAnotherData._id,
-													profile_emisor: profileData,
-													profile_mensaje: profileRecomendData,
-													busqueda: historyData
-												};
+
 												console.log("Data:");
 												console.log( data );
 												Generalfunc.profiletosocket(profileAnotherData._id, function(err, sockets){
@@ -931,6 +926,13 @@ router.post('/recomendar', multipartMiddleware, function(req, res){
 															console.log( item );
 															req.io.to('/#' + item).emit('recomendar', data); 
 															if((sockets.length-1) == index){
+																var data = {
+																	profile: profileAnotherData._id,
+																	profile_emisor: profileData,
+																	profile_mensaje: profileRecomendData,
+																	busqueda: historyData,
+																	sockets: sockets
+																};
 																Generalfunc.response(200, data, function(response){
 																	res.json(response);
 																});	
@@ -945,11 +947,7 @@ router.post('/recomendar', multipartMiddleware, function(req, res){
 												});
 											});
 										}else{
-											var data = {
-												profile: profileAnotherData,
-												profile_emisor: profileData,
-												profile_mensaje: profileRecomendData,
-											};
+											
 											console.log("Data:");
 											console.log( data );
 											Generalfunc.profiletosocket(profileAnotherData._id, function(err, sockets){
@@ -958,6 +956,12 @@ router.post('/recomendar', multipartMiddleware, function(req, res){
 														console.log( item );
 														req.io.to('/#' + item).emit('recomendar', data); 
 														if((sockets.length-1) == index){
+															var data = {
+																profile: profileAnotherData,
+																profile_emisor: profileData,
+																profile_mensaje: profileRecomendData,
+																sockets: sockets
+															};
 															Generalfunc.response(200, data, function(response){
 																res.json(response);
 															});	
