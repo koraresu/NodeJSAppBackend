@@ -388,20 +388,28 @@ function recomendar(data, success, fail){
 		}
 	});
 }
-exports.recomendar = recomendar
-exports.accept              = accept
-exports.getOne2Callback     = getOne2Callback
-exports.type                = type
-exports.isNeightbor         = isNeightbor
-exports.isFriend            = isFriend
-exports.typeFriend            = typeFriend
-exports.PublicId            = PublicId
-exports.getFriends          = getFriends
-exports.getListFriends      = getListFriends
-exports.checkconversation   = checkconversation
-exports.message             = message
-exports.addReview           = addReview
-exports.addNetwork          = addNetwork
+function create_notificacion_recomendacion(data, callback){
+	Notificationfunc.add(data, function(status, notificationData){
+		console.log("Create Notification Recomendacion");
+		console.log( notificationData );
+		callback(status, notificationData);
+	});
+}
+exports.create_notificacion_recomendacion = create_notificacion_recomendacion
+exports.recomendar                        = recomendar
+exports.accept                            = accept
+exports.getOne2Callback                   = getOne2Callback
+exports.type                              = type
+exports.isNeightbor                       = isNeightbor
+exports.isFriend                          = isFriend
+exports.typeFriend                        = typeFriend
+exports.PublicId                          = PublicId
+exports.getFriends                        = getFriends
+exports.getListFriends                    = getListFriends
+exports.checkconversation                 = checkconversation
+exports.message                           = message
+exports.addReview                         = addReview
+exports.addNetwork                        = addNetwork
 function trimUnderscores(string) {
     return string.split(' ').join('');
 }
