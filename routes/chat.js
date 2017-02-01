@@ -517,7 +517,7 @@ var moment = require('moment-timezone');
 								message.save(function(err, mData){
 
 									Message.findOne({ _id: mData._id}).populate('profile_id').exec(function(err, messageData){
-										Conversation.findOne({ _id: id }).exec(function(errConv, convData){
+										Conversation.findOne({ _id: id }).populate('profiles').exec(function(errConv, convData){
 											console.log("Error Conversation:");
 											console.log( errConv );
 											console.log("Conv Data:");
