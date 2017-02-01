@@ -194,12 +194,18 @@ var moment = require('moment-timezone');
 											_id: id
 										}).populate('profiles').exec(function(errConversation, conversationData){
 
-											var x = Generalfunc.profile_ajeno(profileData._id, conversationData.profiles);
-											var title = x.first_name + " " + x.last_name;
+											if(!errConversation && conversationData){
+												var x = Generalfunc.profile_ajeno(profileData._id, conversationData.profiles);
+												var title = x.first_name + " " + x.last_name;
 
-											Generalfunc.response(200, { title: title,conversation: conversationData, messages: results}, function(response){
-												res.json(response);
-											});
+												Generalfunc.response(200, { title: title,conversation: conversationData, messages: results}, function(response){
+													res.json(response);
+												});
+											}else{
+												Generalfunc.response(101, {}, function(response){
+													res.json(response);
+												});
+											}
 										});
 										
 									})
