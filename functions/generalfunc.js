@@ -417,6 +417,11 @@ function MessageReaded(data, success, fail){
 		
 	}
 }
+function SocketNoReaded(socket, success, fail){
+	Online.findOne({ socket.id }).exec(function(errOnline, onlineData){
+		NoReaded(onlineData.profiles, success, fail);
+	});
+}
 function NoReaded(profile_id, success, fail){
 	console.log("ProfileID No Readed:");
 	console.log( profile_id );

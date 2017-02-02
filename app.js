@@ -300,20 +300,24 @@ io.on('connection', function(socket){
   socket.on('message_readed', function(data){
     newrelic.addCustomParameter("message_readed",data);
     chatrouter.setReadedMessage(data, function(conversationData){
-      console.log("Conversacion Leida Success");
-      console.log( conversationData );
+      SocketNoReaded(socket.id, function(num){
+        socket.emit("set_alert_num", num);
+      }, function(){
+
+      });
+      
     }, function(st){
-      console.log("Conversacion Leida Fail:" + st);
     });
   });
   socket.on('notification_readed', function(data){
     newrelic.addCustomParameter("notification_readed", data);
     Generalfunc.NotificationReaded(data, function( results ){
-      console.log("Notification Leida Success");
-      console.log( results );
+      SocketNoReaded(socket.id, function(num){
+        socket.emit("set_alert_num", num);
+      }, function(){
 
+      });
     }, function( err ){
-      console.log("Notification Leida Fail");
     });
   });
   socket.on('disconnect', function () {
