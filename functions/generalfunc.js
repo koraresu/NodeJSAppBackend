@@ -292,7 +292,6 @@ exports.sendPushtoAll = function(type,profileId, message, payload, success, fail
 		fail(err);
 	});
 }
-function
 function sendPushOne(deviceToken, name, message, payload,  success, fail){
 	var mensaje = name + ": " + message;
 	if(payload == undefined){ payload = {}; }
