@@ -420,7 +420,9 @@ function MessageReaded(data, success, fail){
 function NoReaded(profile_id, success, fail){
 	console.log("ProfileID No Readed:");
 	console.log( profile_id );
-
+	if(profile_id._id != undefined){
+		profile_id = profile_id._id;
+	}
 	if(mongoose.Types.ObjectId.isValid(profile_id)){
 		profile_id = mongoose.Types.ObjectId(profile_id);	
 		PushEvent.find({ profile: profile_id }).exec(function(err, pushEventData){
