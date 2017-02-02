@@ -418,7 +418,7 @@ function MessageReaded(data, success, fail){
 	}
 }
 function SocketNoReaded(socket, success, fail){
-	Online.findOne({ socket.id }).exec(function(errOnline, onlineData){
+	Online.findOne({ socket: socket.id }).exec(function(errOnline, onlineData){
 		NoReaded(onlineData.profiles, success, fail);
 	});
 }
