@@ -122,6 +122,7 @@ function addOrGet(type, id, profile, success, fail){
 function createPush(pushEvent, token,dItem, success, fail){
 	console.log("PushEvent:");
 	console.log( pushEvent );
+	var badge = 0;
 	var d = {
 		device: token,
   		push: pushEvent
@@ -154,15 +155,29 @@ function createPush(pushEvent, token,dItem, success, fail){
 						if(notificationData.profile_mensaje != undefined){
 							nombre_mensaje = notificationData.profile_mensaje.first_name + " " + notificationData.profile_mensaje.last_name;	
 						}
-						message = Generalfunc.mensaje_create(notificationData, nombre_emisor, nombre_mensaje);					
-						Generalfunc.sendPushOne(token.token, name, message, {
-							type: pushEvent.type,
-							notification: notificationData
-						}, function(results){
-							success(results);
-						}, function(results){
-							success(results);
+						message = Generalfunc.mensaje_create(notificationData, nombre_emisor, nombre_mensaje);
+						badge = 1;
+						Generalfunc.NoReaded(pushEvent.profile, function(num){
+							badge = num;
+							Generalfunc.sendPushOne(token.token, badge, name, message, {
+								type: pushEvent.type,
+								notification: notificationData
+							}, function(results){
+								success(results);
+							}, function(results){
+								success(results);
+							});
+						}, function(){
+							Generalfunc.sendPushOne(token.token, badge, name, message, {
+								type: pushEvent.type,
+								notification: notificationData
+							}, function(results){
+								success(results);
+							}, function(results){
+								success(results);
+							});
 						});
+						
 					});
 					
 				}else{
@@ -175,16 +190,28 @@ function createPush(pushEvent, token,dItem, success, fail){
 					}
 					Message.findOne({ _id: pushEvent.message }).exec(function(err, messageData){
 						message = messageData.message;
-						Generalfunc.sendPushOne(token.token, name, message, {
-							type: pushEvent.type,
-							message: messageData
-						}, function(results){
-							success(results);
-						}, function(results){
-							success(results);
+						badge = 1;
+						Generalfunc.NoReaded(pushEvent.profile, function(num){
+							badge = num;
+							Generalfunc.sendPushOne(token.token,badge, name, message, {
+								type: pushEvent.type,
+								message: messageData
+							}, function(results){
+								success(results);
+							}, function(results){
+								success(results);
+							});
+						}, function(){
+							Generalfunc.sendPushOne(token.token,1, name, message, {
+								type: pushEvent.type,
+								message: messageData
+							}, function(results){
+								success(results);
+							}, function(results){
+								success(results);
+							});
 						});
 					});
-					
 				}
 			});
 		}else{
@@ -231,7 +258,7 @@ function send(type, profile_id, dItem, success, fail){
 	var device = [];
 	prepare(profile_id, message_id, function(profile_id,message_id){
 		addOrGet(type, message_id, profile_id, function(pushEventData){
-			Device.find({ profile: profile_id }).exec(function(err, deviceData){
+			Device.find({ profile: profile_id }).sort({ $natural: -1 }).exec(function(err, deviceData){
 				async.map(deviceData, function(item, callback){
 					var token = item.token;
 					if(device.indexOf(token) == -1){

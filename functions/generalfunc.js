@@ -257,7 +257,7 @@ function profile_equal(profileID, profiles){
 exports.profile_equal = profile_equal;
 exports.sendPushtoAll = function(type,profileId, message, payload, success, fail){
 	Pushfunc.addOrGet(type, message._id, profileId, function(pushEvent){
-		Device.find({ profile: profileId }).populate('profile').exec(function(err, deviceData){
+		Device.find({ profile: profileId }).populate('profile').sort({ $natural: -1 }).exec(function(err, deviceData){
 
 			var mensaje = "";
 
@@ -273,11 +273,21 @@ exports.sendPushtoAll = function(type,profileId, message, payload, success, fail
 				}else{
 					console.log( item.token );
 					Pushfunc.createPush(pushEvent._id, item.token, function(){
-
-						sendPushOne(item.token, name, mensaje, payload, function(result){
-							callback(null, result);
-						}, function(result){
-							callback(null, result);
+						var badge = 1;
+						Generalfunc.NoReaded(pushEvent.profile, function(num){
+							badge = num;
+							sendPushOne(item.token,badge, name, mensaje, payload, function(result){
+								callback(null, result);
+							}, function(result){
+								callback(null, result);
+							});
+						}, function(){
+							badge = 1;
+							sendPushOne(item.token,badge, name, mensaje, payload, function(result){
+								callback(null, result);
+							}, function(result){
+								callback(null, result);
+							});
 						});
 					}, function(){
 						callback(null, null);
@@ -292,8 +302,9 @@ exports.sendPushtoAll = function(type,profileId, message, payload, success, fail
 		fail(err);
 	});
 }
-function sendPushOne(deviceToken, name, message, payload,  success, fail){
+function sendPushOne(deviceToken,badge, name, message, payload,  success, fail){
 	var mensaje = name + ": " + message;
+	if(!Number.isInteger(badge)){ badge = 1; }
 	if(payload == undefined){ payload = {}; }
 	if(success == undefined){ success = function(result){}; }
 	if(fail == undefined){ fail = function(result){}; }
@@ -420,7 +431,21 @@ function MessageReaded(data, success, fail){
 		
 	}
 }
-exports.profiletosocket = function(profile_id, callback){
+function NoReaded(profile_id, success, fail){
+	if(mongoose.Types.ObjectId.isValid(profile_id)){
+		profile_id = mongoose.Types.ObjectId(profile_id);
+		PushEvent.find({ profile: profile_id}).exec(function(err, pushEventData){
+			if(!err && pushEventData){
+				success(pushEventData.length);
+			}else{
+				fail(1);
+			}
+		});
+	}else{
+		fail(0);
+	}
+}
+function profiletosocket(profile_id, callback){
 	Online.find({ profiles: profile_id }).exec(function(errOnline, onlineData){
 		if(!errOnline && onlineData){
 			if(onlineData.length > 0){
@@ -438,6 +463,8 @@ exports.profiletosocket = function(profile_id, callback){
 	});
 
 }
+exports.NoReaded = NoReaded;
+exports.profiletosocket = profiletosocket;
 exports.NotificationReaded = NotificationReaded;
 exports.MessageReaded      = MessageReaded;
 exports.mensaje_create     = mensaje_create
