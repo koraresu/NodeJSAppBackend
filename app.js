@@ -36,27 +36,7 @@ var Networkfunc = require('./functions/networkfunc');
 var Tokenfunc = require('./functions/tokenfunc');
 var Pushfunc = require('./functions/pushfunc');
 
-/**
-  Apple Push Notification
-**/
-var apn = require('apn');
 
-options = {
-   keyFile : "conf/key.pem",
-   certFile : "conf/cert.pem",
-   debug : true
-};
-var options = {
-  token: {
-    key: "conf/key.p8",
-    keyId: "822637C6D9",
-    teamId: "58GA47LFA6",
-  },
-  cert: "conf/cert.pem",
-  production: true,
-};
-
-var apnProvider = new apn.Provider(options);
 
 var app = express();
 
