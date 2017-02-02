@@ -53,6 +53,7 @@ var moment = require('moment-timezone');
 		var Online             = model.online;
 		var Device             = model.device;
 		var Push               = model.push;
+		var PushEvent          = model.pushevent;
 		var Message            = model.message;
 		var City               = model.city;
 		var State              = model.state;
@@ -481,17 +482,28 @@ var moment = require('moment-timezone');
 									console.log( conversationData.readed );
 
 									conversationData.save(function(err, conv){
-										Conversation
-										.findOne({
-											_id: data.conversation
-										}).exec(function(errConversation, conversationData){
-											console.log("+++++++++++++++++++++++++++++++++++++++");
-											if(!errConversation && conversationData){
-												success(conversationData);
-											}else{
-												fail(3);
-											}
-										});
+										var a = function(ca){
+											Conversation
+											.findOne({
+												_id: data.conversation
+											}).exec(ca);
+										}
+										Pushfunc.eventsetReaded({
+											type:0,
+											conversation: conversationData
+										}, function(pushevent){
+											a(function(errConversation, conversationData){
+												console.log("+++++++++++++++++++++++++++++++++++++++");
+												if(!errConversation && conversationData){
+													success(conversationData);
+												}else{
+													fail(4);
+												}
+											});
+										}, function(err){
+											fail(3);
+										})
+											
 										
 									});
 								}else{

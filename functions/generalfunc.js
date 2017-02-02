@@ -238,7 +238,7 @@ exports.isValid = function(id, success, fail){
 		fail();
 	}
 }
-exports.profile_equal = function(profileID, profiles){
+function profile_equal(profileID, profiles){
 	var first  = profiles[0];
 	var second = profiles[1];
 
@@ -253,6 +253,8 @@ exports.profile_equal = function(profileID, profiles){
 	}
 	return { number: number, profile: element };
 }
+
+exports.profile_equal = profile_equal;
 exports.sendPushtoAll = function(type,profileId, message, payload, success, fail){
 	Pushfunc.addOrGet(type, message._id, profileId, function(pushEvent){
 		Device.find({ profile: profileId }).populate('profile').exec(function(err, deviceData){
@@ -271,6 +273,7 @@ exports.sendPushtoAll = function(type,profileId, message, payload, success, fail
 				}else{
 					console.log( item.token );
 					Pushfunc.createPush(pushEvent._id, item.token, function(){
+
 						sendPushOne(item.token, name, mensaje, payload, function(result){
 							callback(null, result);
 						}, function(result){
@@ -289,18 +292,12 @@ exports.sendPushtoAll = function(type,profileId, message, payload, success, fail
 		fail(err);
 	});
 }
+function
 function sendPushOne(deviceToken, name, message, payload,  success, fail){
 	var mensaje = name + ": " + message;
-	if(payload == undefined){
-		payload = {};
-	}
-	if(success == undefined){
-		success = function(result){};
-	}
-	if(fail == undefined){
-		fail = function(result){};
-	}
-
+	if(payload == undefined){ payload = {}; }
+	if(success == undefined){ success = function(result){}; }
+	if(fail == undefined){ fail = function(result){}; }
 	var note = new apn.Notification();
 	note.expiry = Math.floor(Date.now() / 1000) + 3600; // Expires 1 hour from now.
 	note.badge = 1;

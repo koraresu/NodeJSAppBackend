@@ -192,6 +192,39 @@ function createPush(pushEvent, token,dItem, success, fail){
 		}
 	});
 }
+function eventsetReaded(data, success, fail){
+	if(data.type == 0){
+		var conversation      = data.conversation;
+		Message.find({
+			conversation: conversation._id
+		}).exec(function(err, messageData){
+			async.map(messageData, function(item, callback){
+				callback( null, item._id );
+			}, function(err, results){
+				PushEvent.find({
+					type: 0,
+					read: false,
+					message: {
+						$in: results
+					}
+				}).exec(function(err, pushEventData){
+					async.map(pushEventData, function(i, c){
+						PushEvent.findOne({ _id: i._id }).exec(function(errPushEventI, pushEventIData){
+							pushEventIData.read = true;
+							pushEventIData.save(function(eSave, saveData){
+								c(eSave, saveData);
+							});
+						});
+					}, function(errPush, pushResult){
+						success(pushResult);
+					})
+				});
+			});
+		});
+	}else{
+		success();
+	}
+}
 function send(type, profile_id, dItem, success, fail){
 	var message_id = dItem._id;
 
@@ -280,6 +313,7 @@ function getConvProfile(id, socket,success, fail){
 		fail(0);
 	}
 }
+exports.eventsetReaded = eventsetReaded;
 exports.prepare    = prepare;
 exports.add        = add;
 exports.addOrGet   = addOrGet;
