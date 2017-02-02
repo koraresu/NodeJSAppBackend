@@ -185,6 +185,13 @@ io.on('connection', function(socket){
     chatrouter.setOnline(msg, socket.id, function(status, socketData, profileData){
       var conversations = chatrouter.conversationsJoin(socket, function(status, roomsData){
         socket.emit('conversationsjoin',roomsData);
+
+        Generalfunc.SocketNoReaded(socket.id, function(num){
+          socket.emit("set_alert_num", num);
+        }, function(){
+
+        });
+
       });
     });
   });
