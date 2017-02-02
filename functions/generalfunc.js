@@ -310,7 +310,7 @@ function sendPushOne(deviceToken,badge, name, message, payload,  success, fail){
 	if(fail == undefined){ fail = function(result){}; }
 	var note = new apn.Notification();
 	note.expiry = Math.floor(Date.now() / 1000) + 3600; // Expires 1 hour from now.
-	note.badge = 1;
+	note.badge = badge;
 	note.sound = "ping.aiff";
 	note.alert = mensaje;
 	note.payload = payload;
