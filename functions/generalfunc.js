@@ -274,7 +274,7 @@ exports.sendPushtoAll = function(type,profileId, message, payload, success, fail
 					console.log( item.token );
 					Pushfunc.createPush(pushEvent._id, item.token, function(){
 						var badge = 1;
-						Generalfunc.NoReaded(pushEvent.profile, function(num){
+						NoReaded(pushEvent.profile, function(num){
 							badge = num;
 							sendPushOne(item.token,badge, name, mensaje, payload, function(result){
 								callback(null, result);
@@ -437,8 +437,14 @@ function MessageReaded(data, success, fail){
 function NoReaded(profile_id, success, fail){
 	if(mongoose.Types.ObjectId.isValid(profile_id)){
 		profile_id = mongoose.Types.ObjectId(profile_id);
-		PushEvent.find({ profile: profile_id}).exec(function(err, pushEventData){
+		console.log("ProfileID No Readed:");
+		console.log( profile_id );
+		PushEvent.find({ profile: profile_id }).exec(function(err, pushEventData){
 			if(!err && pushEventData){
+				console.log("PushEventData No Readed:");
+				console.log( pushEventData );
+				console.log("PushEventData No Readed Length:");
+				console.log(pushEventData.length);
 				success(pushEventData.length);
 			}else{
 				fail(1);
