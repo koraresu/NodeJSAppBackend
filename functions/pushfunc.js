@@ -128,8 +128,6 @@ function createPush(pushEvent, token,dItem, success, fail){
   		push: pushEvent
 	};
 	var p = new Push(d);
-	console.log("Instancia:");
-	console.log( p );
 	p.save(function(err, pushData){
 		if(!err && pushData){
 			Push.findOne({ _id: pushData._id }).exec(function(err, pushData){
