@@ -300,7 +300,7 @@ io.on('connection', function(socket){
   socket.on('message_readed', function(data){
     newrelic.addCustomParameter("message_readed",data);
     chatrouter.setReadedMessage(data, function(conversationData){
-      SocketNoReaded(socket.id, function(num){
+      Generalfunc.SocketNoReaded(socket.id, function(num){
         socket.emit("set_alert_num", num);
       }, function(){
 
@@ -312,7 +312,7 @@ io.on('connection', function(socket){
   socket.on('notification_readed', function(data){
     newrelic.addCustomParameter("notification_readed", data);
     Generalfunc.NotificationReaded(data, function( results ){
-      SocketNoReaded(socket.id, function(num){
+     Generalfunc.SocketNoReaded(socket.id, function(num){
         socket.emit("set_alert_num", num);
       }, function(){
 
