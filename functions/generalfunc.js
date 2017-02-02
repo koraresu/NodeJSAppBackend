@@ -303,6 +303,9 @@ exports.sendPushtoAll = function(type,profileId, message, payload, success, fail
 	});
 }
 function sendPushOne(deviceToken,badge, name, message, payload,  success, fail){
+	console.log("Badge:");
+	console.log( badge );
+
 	var mensaje = name + ": " + message;
 	if(!Number.isInteger(badge)){ badge = 1; }
 	if(payload == undefined){ payload = {}; }
