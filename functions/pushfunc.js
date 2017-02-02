@@ -120,8 +120,6 @@ function addOrGet(type, id, profile, success, fail){
 	});
 }
 function createPush(pushEvent, token,dItem, success, fail){
-	console.log("PushEvent:");
-	console.log( pushEvent );
 	var badge = 0;
 	var d = {
 		device: token,

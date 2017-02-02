@@ -44,7 +44,8 @@ var options = {
     teamId: "58GA47LFA6",
   },
   cert: "conf/cert.pem",
-  production: true,
+  production: false,
+  //production: true,
 };
 var apnProvider = new apn.Provider(options);
 
@@ -424,7 +425,7 @@ function NoReaded(profile_id, success, fail){
 		profile_id = profile_id._id;
 	}
 	if(mongoose.Types.ObjectId.isValid(profile_id)){
-		profile_id = mongoose.Types.ObjectId(profile_id);	
+		profile_id = mongoose.Types.ObjectId(profile_id);
 		PushEvent.find({ profile: profile_id, read: false }).exec(function(err, pushEventData){
 			if(!err && pushEventData){
 				console.log("PushEventData No Readed:");
