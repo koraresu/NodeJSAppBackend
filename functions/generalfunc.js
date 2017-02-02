@@ -464,8 +464,9 @@ function profiletosocket(profile_id, callback){
 	});
 
 }
-exports.NoReaded = NoReaded;
-exports.profiletosocket = profiletosocket;
+exports.SocketNoReaded     = SocketNoReaded;
+exports.NoReaded           = NoReaded;
+exports.profiletosocket    = profiletosocket;
 exports.NotificationReaded = NotificationReaded;
 exports.MessageReaded      = MessageReaded;
 exports.mensaje_create     = mensaje_create
