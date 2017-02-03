@@ -726,14 +726,19 @@ router.post('/get/friends', multipartMiddleware, function(req, res){
 							async.map( networkData , function(item, ca){
 								console.log( item );
 								var profiles = item.profiles;
-								var equal = Generalfunc.profile_ajeno(profileData._id, profiles);
-								var p = Profilefunc.formato(equal);
-								
-								ca( null, {
-									profile: p,
-									accepted: item.accepted
-								});
+								if(item.profiles.length > 1){
+									var equal = Generalfunc.profile_ajeno(profileData._id, profiles);
+									var p = Profilefunc.formato(equal);
+									
+									ca( null, {
+										profile: p,
+										accepted: item.accepted
+									});	
+								}else{
+									ca(null, null);
+								}
 							}, function(err, results){
+								results = cleanArray(results);
 								Generalfunc.response(200, { profile: profileData,friends: results }, function(response){
 									res.json(response);
 								});
