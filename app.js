@@ -317,14 +317,17 @@ io.on('connection', function(socket){
     });
   });
   socket.on('notification_readed', function(data){
-    newrelic.addCustomParameter("notification_readed", data);
+
     Generalfunc.NotificationReaded(data, function( results ){
      Generalfunc.SocketNoReaded(socket.id, function(num){
         socket.emit("set_alert_num", num);
-      }, function(){
-
+      }, function(err){
+        console.log("SocketNoReaded Error");
+        console.log(err);
       });
     }, function( err ){
+        console.log("NotificationReaded Error");
+        console.log(err);
     });
   });
   socket.on('disconnect', function () {
@@ -334,8 +337,6 @@ io.on('connection', function(socket){
     });
   });
 });
-
-
 module.exports = app;
 function findClientsSocket(roomId, namespace) {
     var res = []
