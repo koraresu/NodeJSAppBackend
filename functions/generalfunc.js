@@ -364,7 +364,6 @@ function NotificationReaded(data, success, fail){
 					}
 				});
 			}, function(err, results){
-				soket.emit('notification_set_readed', { results: results });
 				if(!err){
 					success(results);
 				}else{
@@ -410,7 +409,11 @@ function MessageReaded(data, success, fail){
 
 						});
 					}, function(err, results){
-						soket.emit('message_set_readed', { results: results });
+						if(!err){
+							success(results);
+						}else{
+							fail(err);
+						}
 					});
 				});
 			});
