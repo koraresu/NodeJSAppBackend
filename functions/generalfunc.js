@@ -428,6 +428,7 @@ function SocketNoReaded(socket, success, fail){
 		}else{
 			console.log("Online Error:");
 			console.log( errOnline );
+			fail(2);
 		}
 	});
 }
