@@ -236,13 +236,18 @@ io.on('connection', function(socket){
           console.log(profile);
           Pushfunc.send(0,profile._id, messageData, function(results){
             console.log( results );
-            Generalfunc.NoReaded(messageData.profile_id, function(num){
+            Generalfunc.NoReaded(profile._id, function(num){
               socket.emit('set_alert_num', num);
-            }, function(){
-
+            }, function(st){
+              console.log("Gneralfunc.NoReaded Error:" + st);
             });
           }, function(results){
             console.log( results );
+            Generalfunc.NoReaded(profile._id, function(num){
+              socket.emit('set_alert_num', num);
+            }, function(st){
+              console.log("Gneralfunc.NoReaded Error:" + st);
+            });
           });
         }, function(st){
           console.log("Get Conv Profile:" + st);
@@ -277,8 +282,18 @@ io.on('connection', function(socket){
               console.log(profile);
               Pushfunc.send(1,profile._id, notificationData._id, function(results){
                 console.log( results );
+                Generalfunc.NoReaded(profile._id, function(num){
+                  socket.emit('set_alert_num', num);
+                }, function(st){
+                  console.log("Gneralfunc.NoReaded Error:" + st);
+                });
               }, function(results){
                 console.log( results );
+                Generalfunc.NoReaded(profile._id, function(num){
+                  socket.emit('set_alert_num', num);
+                }, function(st){
+                  console.log("Gneralfunc.NoReaded Error:" + st);
+                });
               });
             }, function(){
             });
