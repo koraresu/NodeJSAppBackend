@@ -235,10 +235,15 @@ io.on('connection', function(socket){
           console.log("GetConvProfile");
           console.log(profile);
           Pushfunc.send(0,profile._id, messageData, function(results){
-                console.log( results );
-              }, function(results){
-                console.log( results );
-              });
+            console.log( results );
+            Generalfunc.NoReaded(messageData.profile_id, function(num){
+              socket.emit('set_alert_num', num);
+            }, function(){
+
+            });
+          }, function(results){
+            console.log( results );
+          });
         }, function(st){
           console.log("Get Conv Profile:" + st);
         });
