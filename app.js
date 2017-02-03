@@ -336,6 +336,14 @@ io.on('connection', function(socket){
     }, function(st){
     });
   });
+  socket.on('get_no_readed', function(){
+    Generalfunc.SocketNoReaded(socket.id, function(num){
+        socket.emit("set_alert_num", num);
+      }, function(err){
+        console.log("SocketNoReaded Error");
+        console.log(err);
+      });
+  });
   socket.on('notification_readed', function(data){
 
     Generalfunc.NotificationReaded(data, function( results ){
