@@ -724,7 +724,7 @@ router.post('/get/friends', multipartMiddleware, function(req, res){
 
 						Network.find(d).populate('profiles').exec(function(errNetwork, networkData){
 							async.map( networkData , function(item, ca){
-
+								console.log( item );
 								var profiles = item.profiles;
 								var equal = Generalfunc.profile_ajeno(profileData._id, profiles);
 								var p = Profilefunc.formato(equal);
