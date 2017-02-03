@@ -337,6 +337,7 @@ io.on('connection', function(socket){
     });
   });
   socket.on('get_no_readed', function(){
+    socket.emit("set_alert_num", 0);
     Generalfunc.SocketNoReaded(socket.id, function(num){
         socket.emit("set_alert_num", num);
       }, function(err){

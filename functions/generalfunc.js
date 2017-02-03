@@ -422,8 +422,12 @@ function MessageReaded(data, success, fail){
 }
 function SocketNoReaded(socket, success, fail){
 	Online.findOne({ socket: socket.id }).exec(function(errOnline, onlineData){
+		console.log("Online:" + socket.id );
 		if(!errOnline && onlineData){
 			NoReaded(onlineData.profiles, success, fail);	
+		}else{
+			console.log("Online Error:");
+			console.log( errOnline );
 		}
 	});
 }
