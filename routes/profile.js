@@ -738,7 +738,7 @@ router.post('/get/friends', multipartMiddleware, function(req, res){
 									ca(null, null);
 								}
 							}, function(err, results){
-								results = cleanArray(results);
+								results = Generalfunc.cleanArray(results);
 								Generalfunc.response(200, { profile: profileData,friends: results }, function(response){
 									res.json(response);
 								});
