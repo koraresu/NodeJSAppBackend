@@ -29,6 +29,7 @@ var City         = model.city;
 var State        = model.state;
 var Country      = model.country;
 
+var Generalfunc = require('./generalfunc');
 
 exports.get = function(search, callback){
 	model.notification.find(search).populate('profile').populate('profile_emisor').populate('profile_mensaje').populate('busqueda').exec(function(errNotification, notificationData){
@@ -112,6 +113,7 @@ exports.add = function(d, callback){
 			console.log("Erro Notification:");
 			console.log(errNotification);
 			if(!errNotification && notificationData){
+				Generalfunc.sendPushtoAll()
 				callback(true, notificationData);	
 			}else{
 				callback(false);
