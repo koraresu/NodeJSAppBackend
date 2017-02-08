@@ -264,8 +264,8 @@ exports.sendPushtoAll = function(type,profileId, message, payload, success, fail
 			if(type == 0){
 				mensaje = message.message;
 			}else{
-				var nombre_emisor  = ;
-				var nombre_mensaje = ;
+				//var nombre_emisor  = ;
+				//var nombre_mensaje = ;
 				mensaje = mensaje_create(message);
 			}
 			var name = deviceData.profile.first_name + " " + deviceData.profile.last_name;
