@@ -174,7 +174,7 @@ var moment = require('moment-timezone');
 								id = mongoose.Types.ObjectId(id);
 								Message.find({
 									conversation: id
-								}).populate('profile_id').sort({$natural:1}).limit(limit).skip(offset).exec(function(err, messageData){
+								}).populate('profile_id').sort({ createdAt: -1 }).limit(limit).skip(offset).exec(function(err, messageData){
 									async.map(messageData, function(item, callback){
 										var d = (item.profile_id._id.toString() == profileData._id.toString());
 										var udate = moment(item.updatedAt);
