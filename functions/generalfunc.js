@@ -44,7 +44,7 @@ var options = {
     teamId: "58GA47LFA6",
   },
   //production: false
-  production: false
+  production: true
 };
 var apnProvider = new apn.Provider(options);
 
