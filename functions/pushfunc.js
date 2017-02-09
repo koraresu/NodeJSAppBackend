@@ -191,7 +191,7 @@ function createPush(pushEvent, token,dItem, success, fail){
 							badge = num;
 							Generalfunc.sendPushOne(token.token,badge, name, message, {
 								type: pushEvent.type,
-								message: messageData
+								conversation: messageData.conversation
 							}, function(results){
 								success(results);
 							}, function(results){
@@ -200,7 +200,7 @@ function createPush(pushEvent, token,dItem, success, fail){
 						}, function(){
 							Generalfunc.sendPushOne(token.token,1, name, message, {
 								type: pushEvent.type,
-								message: messageData
+								conversation: messageData.conversation
 							}, function(results){
 								success(results);
 							}, function(results){
