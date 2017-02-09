@@ -1479,11 +1479,15 @@ router.post('/update-experience', multipartMiddleware, function(req, res){
 											experienceData.company = data.company;
 											experienceData.ocupation = data.ocupation;
 											experienceData.save(function(err, experienceData){
+
+												//Historyfunc.generate_history(2,);
 												Experiencefunc.profileGenerate(profileData, function(profileData){
 													Generalfunc.response(200, profileData, function(response){
 														res.json(response);
 													});
 												});
+
+
 											});
 											
 										}else{
