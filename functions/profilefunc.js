@@ -132,7 +132,7 @@ function formato(profileData, userData){
 		"profile_pic": profileData.profile_pic,
 		"status": profileData.status,
 		"qrcode": profileData.qrcode,
-		"review_score": Generalfunc.precise_round( profileData.review_score, 2 ),
+		"review_score": Generalfunc.precise_round( profileData.review_score, 1 ),
 		"phone": profileData.phone 
 	};
 }
