@@ -315,9 +315,12 @@ function sendPushOne(deviceToken,badge, name, message, payload,  success, fail){
 	note.alert = mensaje;
 	note.payload = payload;
 	note.topic = "com.thehiveapp.thehive";
+
 	apnProvider.send(note, deviceToken).then( (result) => {
 		if(result.status == "200"){
-  			success({r: result, device:  deviceToken});
+			apnProviderDev.send(note, deviceToken).then( (result) => {
+  				success({r: result, device:  deviceToken});
+  			});
 		}else{
 			fail(result);
 		}
