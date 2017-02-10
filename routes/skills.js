@@ -84,6 +84,7 @@ Nombre de Objectos de Documentos:
 						Skillfunc.add(profileData._id,name, function(status, skillD, profileData){
 							console.log("Skill Function");
 							console.log(status);
+							console.log( skillD );
 							var da = {};
 							var data = {};
 							var action = 6;
@@ -107,7 +108,9 @@ Nombre de Objectos de Documentos:
 								action: action,
 								data: data
 							};
+							console.log( da );
 							Historyfunc.insert(da, function(err, historyData){
+								console.log( historyData );
 								Profilefunc.formatoProfile(profileData._id,function( profileData ){
 									Generalfunc.response(200, profileData , function(response){
 										res.json(response);
