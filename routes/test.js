@@ -70,5 +70,12 @@ router.get('/send/message/:profile_id/:notification_id', function(req, res){
     res.send("Error:" + st);
   });
 });
+router.get('/push/:device_token', function(req, res){
+  Generalfunc.sendPushOne(token.token, 1, "Jose", "Test", {}, function(results){
+    res.send(results);
+  }, function(results){
+    res.send(results);
+  });
+})
 module.exports = router;
 
