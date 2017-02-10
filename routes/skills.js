@@ -86,7 +86,7 @@ Nombre de Objectos de Documentos:
 							console.log(status);
 							var da = {};
 							var data = {};
-							if(skillD.type == 0){
+							if(skillD.type == 1){
 								data = {
 									type: skillD.type,
 									results: skillD.skills
@@ -94,8 +94,8 @@ Nombre de Objectos de Documentos:
 							}else{
 								data = {
 									type: skillD.type,
-									name: skillData.name,
-									id: skillData._id
+									name: skillD.skill.name,
+									id: skillD.skill._id
 								};
 							
 							}
