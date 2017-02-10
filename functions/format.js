@@ -93,9 +93,7 @@ exports.news = function(news, profile, profile_de){
 				"id_n": news.id_numerico,
 				"id": news._id,
 				"type": news.action,
-				"title": news.data.title,
-				"content": news.data.content,
-				"gallery": news.data.gallery,
+				"skills": news.data.results,
 				"profile": profileNewsFormat(profile),
 				"date": news.createdAt
 			};
