@@ -238,9 +238,7 @@ exports.sendPush = function(device, payload, message, badge, sound, ca){
 				console.log( result.failed[0].error );
 			}
 		}
-		apnProviderDev.send(note, deviceToken).then( (result) => {
-    		ca(result);
-    	});
+    	ca(result);
 	});
 }
 exports.isValid = function(id, success, fail){
@@ -318,9 +316,7 @@ function sendPushOne(deviceToken,badge, name, message, payload,  success, fail){
 
 	apnProvider.send(note, deviceToken).then( (result) => {
 		if(result.status == "200"){
-			apnProviderDev.send(note, deviceToken).then( (result) => {
-  				success({r: result, device:  deviceToken});
-  			});
+  			success({r: result, device:  deviceToken});
 		}else{
 			fail(result);
 		}

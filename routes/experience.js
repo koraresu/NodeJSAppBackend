@@ -459,13 +459,23 @@ router.post('/company/getid', multipartMiddleware, function(req, res){
 			if(status){
 				Company.findOne({ _id: id }).exec(function(err, companyData){
 					Experience.find({ "company.id": id }).populate('profile_id').exec(function(err, experienceData){
-						var data = {
-							company: companyData,
-							trabajo: experienceData
-						};
-						Generalfunc.response(200,data, function(response){
-							res.json(response);
+						async.map(experienceData, function(item, ca){
+							if( item.profile_id == null){
+								ca(null, null);
+							}else{
+								ca(null, item);
+							}
+						}, function(err, results){
+							results = Generalfunc.cleanArray(results);
+							var data = {
+								company: companyData,
+								trabajo: results
+							};
+							Generalfunc.response(200,data, function(response){
+								res.json(response);
+							});
 						});
+						
 						
 					});
 				});
