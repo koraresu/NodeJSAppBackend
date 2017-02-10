@@ -45,10 +45,10 @@ var add = function(profile_id, name, callback){
 
 		if(skills.length > 1){
 			var skillsID = [];
-			async.each(skills, function(skill, callback){
+			async.each(skills, function(skill, ca){
 				skill = skill.trim();
 				if(skill == ""){
-					callback();
+					ca();
 				}else{
 					ExistsOrCreate({
 						name: skill
@@ -59,11 +59,11 @@ var add = function(profile_id, name, callback){
 						if(profileData.skills.length > 0){
 							var dont = true;
 							skillsID.push(skillData._id);
-							callback();
+							ca();
 						}else{
 							console.log("Profile Skills Vacio");
 							skillsID.push(skillData._id);
-							callback();
+							ca();
 						}
 						
 						console.log(profileData.skills.length);
@@ -82,12 +82,12 @@ var add = function(profile_id, name, callback){
 
 						if((different.length-1) == index){
 							profileData.save(function(err, pd){
-								callback(true, {}, profileData);
+								callback(true, { type: 1, skills: different}, profileData);
 							});
 						}
 					});
 				}else{
-					callback(true, {}, profileData);
+					callback(true, { type: 1, skills: different}, profileData);
 				}
 			});
 		}else{
@@ -99,7 +99,7 @@ var add = function(profile_id, name, callback){
 				profileData.skills.push(skillData._id);
 
 				profileData.save(function(err, pd){
-					callback(true, skillData, profileData);
+					callback(true, { type: 0, skill: skillData}, profileData);
 				});
 			});
 		}

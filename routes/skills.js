@@ -81,18 +81,30 @@ Nombre de Objectos de Documentos:
 					if(status){
 
 						name = Generalfunc.capitalize(name);
-						Skillfunc.add(profileData._id,name, function(status, skillData, profileData){
+						Skillfunc.add(profileData._id,name, function(status, skillD, profileData){
 							console.log("Skill Function");
 							console.log(status);
-
-							Historyfunc.insert({
-								profile_id: profileData._id,
-								action: 6,
-								data: {
+							var da = {};
+							var data = {};
+							if(skillD.type == 0){
+								data = {
+									type: skillD.type,
+									results: skillD.skills
+								};
+							}else{
+								data = {
+									type: skillD.type,
 									name: skillData.name,
 									id: skillData._id
-								}
-							}, function(err, historyData){
+								};
+							
+							}
+							var da = {
+								profile_id: profileData._id,
+								action: 6,
+								data: {}
+							};
+							Historyfunc.insert(da, function(err, historyData){
 								Profilefunc.formatoProfile(profileData._id,function( profileData ){
 									Generalfunc.response(200, profileData , function(response){
 										res.json(response);
