@@ -61,5 +61,14 @@ router.get('/send/notification/:profile_id/:notification_id', function(req, res)
     res.send("Error:" + st);
   });
 });
+router.get('/send/message/:profile_id/:notification_id', function(req, res){
+  var profile_id = req.params.profile_id;
+  var notification_id = req.params.notification_id;
+  Pushfunc.send(0, profile_id, notification_id, function(results){
+    res.json(results);
+  }, function(st){
+    res.send("Error:" + st);
+  });
+});
 module.exports = router;
 
