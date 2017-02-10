@@ -82,7 +82,14 @@ var add = function(profile_id, name, callback){
 
 						if((different.length-1) == index){
 							profileData.save(function(err, pd){
-								callback(true, { type: 1, skills: different}, profileData);
+								Skill.find({
+									_id:{
+										$in: different
+									}
+								}).exec(function(err, skills){
+									callback(true, { type: 1, skills: skills}, profileData);
+								});
+								
 							});
 						}
 					});
