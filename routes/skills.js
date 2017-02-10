@@ -86,11 +86,14 @@ Nombre de Objectos de Documentos:
 							console.log(status);
 							var da = {};
 							var data = {};
+							var action = 6;
 							if(skillD.type == 1){
 								data = {
 									type: skillD.type,
 									results: skillD.skills
 								};
+								action = 5;
+
 							}else{
 								data = {
 									type: skillD.type,
@@ -101,8 +104,8 @@ Nombre de Objectos de Documentos:
 							}
 							var da = {
 								profile_id: profileData._id,
-								action: 6,
-								data: {}
+								action: action,
+								data: data
 							};
 							Historyfunc.insert(da, function(err, historyData){
 								Profilefunc.formatoProfile(profileData._id,function( profileData ){
