@@ -46,8 +46,17 @@ var options = {
   //production: false
   production: true
 };
+var optionsDev = {
+  token: {
+    key: "conf/key.p8",
+    keyId: "822637C6D9",
+    teamId: "58GA47LFA6",
+  },
+  //production: false
+  production: false
+};
 var apnProvider = new apn.Provider(options);
-
+var apnProviderDev = new apn.Provider(optionsDev);
 
 var nodemailer = require('nodemailer');
 var smtpConfig = {
@@ -221,6 +230,7 @@ exports.sendPush = function(device, payload, message, badge, sound, ca){
 	note.alert = message;
 	note.payload = payload;
 	note.topic = "com.thehiveapp.thehive";
+
 	apnProvider.send(note, deviceToken).then( (result) => {
 		console.log( result );
 		if(result.failed[0] != undefined){
@@ -228,7 +238,9 @@ exports.sendPush = function(device, payload, message, badge, sound, ca){
 				console.log( result.failed[0].error );
 			}
 		}
-    	ca(result);
+		apnProviderDev.send(note, deviceToken).then( (result) => {
+    		ca(result);
+    	});
 	});
 }
 exports.isValid = function(id, success, fail){
