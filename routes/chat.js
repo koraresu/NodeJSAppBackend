@@ -77,58 +77,45 @@ var moment = require('moment-timezone');
 									console.log("Conversation Data:");
 									console.log( conversationData );
 									async.map(conversationData, function(item, ca){
-										console.log("Conversation:");
-										console.log(item);
 										if(item.profiles.length > 1){
-											
 											var equal = profile_equal(profileData._id, item.profiles);
 											var ajeno = profile_ajeno(profileData._id, item.profiles);
-
 											var number = equal.number;
-											console.log("Profile Status:");
-											console.log( item.prop_status );
 
 											if(item.prop_status != undefined){
-												if(item.prop_status[number] != undefined){
-													if(item.prop_status[number] == 1){
-														ajeno = ajeno.profile;
-														var aj = {
-															name: ajeno.first_name + " " + ajeno.last_name,
-															profile_pic: ajeno.profile_pic
-														};
+												if(item.prop_status[number] == 1){
+													ajeno = ajeno.profile;
+													var aj = {
+														name: ajeno.first_name + " " + ajeno.last_name,
+														profile_pic: ajeno.profile_pic
+													};
 
-														var m = "";
-														if(item.message != undefined){
-															m = item.message.message;	
-														}
-														
-														var d = {
-															_id: item._id,
-															last_message: m,
-															profile: aj,
-															status: item.prop_status[number],
-															date: item.updatedAt
-														};
-														ca(null, d);
-													}else{
-														ca("Inactive", null);
+													var last_message = "";
+													if(item.message != undefined){
+														last_message = item.message.message;	
 													}
+
+													var d = {
+														_id: item._id,
+														last_message: m,
+														profile: aj,
+														status: item.prop_status[number],
+														date: item.updatedAt
+													};
+													ca(null, d);
 												}else{
-													ca("Inactive", null);
+													ca(null, null);
 												}
 											}else{
-												ca("Inactive", null);
+												ca(null, null);
 											}
+
 										}else{
-											ca("solo un perfil", null);
+											ca(null, null);
 										}
 									}, function(err, results){
-										console.log( err );
-										if(results == null){
-											res.json( [] );
-										}else{
-											res.json(results);	
-										}
+										results = Generalfunc.cleanArray(results);
+										res.json(results);
 									});
 								}else{
 									Generalfunc.response(101, {}, function(response){
