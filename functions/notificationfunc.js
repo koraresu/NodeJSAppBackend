@@ -113,7 +113,7 @@ exports.add = function(d, callback){
 			console.log("Erro Notification:");
 			console.log(errNotification);
 			if(!errNotification && notificationData){
-				Generalfunc.sendPushtoAll()
+				//Generalfunc.sendPushtoAll();
 				callback(true, notificationData);	
 			}else{
 				callback(false);
