@@ -198,7 +198,7 @@ var moment = require('moment-timezone');
 											var x = Generalfunc.profile_ajeno(profileData._id, conversationData.profiles);
 											var title = x.first_name + " " + x.last_name;
 
-											Generalfunc.response(200, { title: title,conversation: conversationData, messages: results}, function(response){
+											Generalfunc.response(200, { title: title, avatar: x.profile_pic, conversation: conversationData, messages: results}, function(response){
 												res.json(response);
 											});
 										});
