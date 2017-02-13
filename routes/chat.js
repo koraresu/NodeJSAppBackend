@@ -97,7 +97,7 @@ var moment = require('moment-timezone');
 
 													var d = {
 														_id: item._id,
-														last_message: m,
+														last_message: last_message,
 														profile: aj,
 														status: item.prop_status[number],
 														date: item.updatedAt
