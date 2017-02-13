@@ -190,7 +190,8 @@ exports.sendEmail = function(file, data,email, asunto, callback){
   	
 }
 exports.capitalize = function(s){
-    return s.toLowerCase().replace( /\b./g, function(a){ return a.toUpperCase(); } );
+	s = s.toLowerCase();
+	return s.charAt(0).toUpperCase() + s.slice(1);
 };
 exports.precise_round = function(num, decimals) {
 	var t = Math.pow(10, decimals);
