@@ -1584,6 +1584,7 @@ router.post('/addskill', multipartMiddleware, function(req, res){
 		if(status){
 			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
 
+				name = Generalfunc.capitalize(name);
 				Skillfunc.ExistsOrCreate({
 					name: name
 				}, {
