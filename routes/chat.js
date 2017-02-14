@@ -61,6 +61,67 @@ var moment = require('moment-timezone');
 
 		var apnProvider = Generalfunc.apnProvider();
 
+		function conversation_format(profile_id, success, fail){
+			Conversation.find({
+				profiles:{
+					$in: [ profile_id ]
+				}
+			})
+			.populate('profiles')
+			.populate('message')
+			.sort({ updatedAt: -1 })
+			.exec(function(err, conversationData){
+				if(!err && conversationData){
+					console.log("Conversation Data:");
+					console.log( conversationData );
+					async.map(conversationData, function(item, ca){
+						if(item.profiles.length > 1){
+							var equal = profile_equal(profile_id, item.profiles);
+							var ajeno = profile_ajeno(profile_id, item.profiles);
+							var number = equal.number;
+
+							if(item.prop_status != undefined){
+								if(item.prop_status[number] == 1){
+									ajeno = ajeno.profile;
+									var aj = {
+										name: ajeno.first_name + " " + ajeno.last_name,
+										profile_pic: ajeno.profile_pic
+									};
+
+									var last_message = "";
+									if(item.message != undefined){
+										last_message = item.message.message;	
+									}
+
+									var d = {
+										_id: item._id,
+										last_message: last_message,
+										profile: aj,
+										status: item.prop_status[number],
+										date: item.updatedAt
+									};
+									ca(null, d);
+								}else{
+									ca(null, null);
+								}
+							}else{
+								ca(null, null);
+							}
+
+						}else{
+							ca(null, null);
+						}
+					}, function(err, results){
+						results = Generalfunc.cleanArray(results);
+						success(results);
+					});
+				}else{
+					Generalfunc.response(101, {}, function(response){
+						fail(response);
+					});
+				}
+			});
+		}
 		router.post('/conversations', multipartMiddleware, function(req, res){
 			var guid      = req.body.guid;
 
@@ -68,60 +129,11 @@ var moment = require('moment-timezone');
 				if(status){
 					Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
 						if(status){
-							Conversation.find({
-								profiles:{
-									$in: [ profileData._id ]
-								}
-							}).populate('profiles').populate('message').sort({ updatedAt: -1 }).exec(function(err, conversationData){
-								if(!err && conversationData){
-									console.log("Conversation Data:");
-									console.log( conversationData );
-									async.map(conversationData, function(item, ca){
-										if(item.profiles.length > 1){
-											var equal = profile_equal(profileData._id, item.profiles);
-											var ajeno = profile_ajeno(profileData._id, item.profiles);
-											var number = equal.number;
 
-											if(item.prop_status != undefined){
-												if(item.prop_status[number] == 1){
-													ajeno = ajeno.profile;
-													var aj = {
-														name: ajeno.first_name + " " + ajeno.last_name,
-														profile_pic: ajeno.profile_pic
-													};
-
-													var last_message = "";
-													if(item.message != undefined){
-														last_message = item.message.message;	
-													}
-
-													var d = {
-														_id: item._id,
-														last_message: last_message,
-														profile: aj,
-														status: item.prop_status[number],
-														date: item.updatedAt
-													};
-													ca(null, d);
-												}else{
-													ca(null, null);
-												}
-											}else{
-												ca(null, null);
-											}
-
-										}else{
-											ca(null, null);
-										}
-									}, function(err, results){
-										results = Generalfunc.cleanArray(results);
-										res.json(results);
-									});
-								}else{
-									Generalfunc.response(101, {}, function(response){
-										res.json(response);
-									});
-								}
+							conversation_format(profileData._id, function(results){
+								res.json(results);
+							}, function(response){
+								res.json(response);
 							});
 						}else{
 							Generalfunc.response(101, {}, function(response){
@@ -230,12 +242,12 @@ var moment = require('moment-timezone');
 									conversationData.prop_status = a;
 
 									conversationData.save(function(err, conversation){
+										
 										if(!err && conversation){
-											Conversation.findOne({ _id: conversation_id }).exec(function(errConv, conv){
-												console.log( conv );
-												Generalfunc.response(200, conv, function(response){
-													res.json( response );
-												});
+											conversation_format(profileData._id, function(results){
+												res.json(results);
+											}, function(response){
+												res.json(response);
 											});
 										}else{
 											Generalfunc.response(101, {}, function(response){
