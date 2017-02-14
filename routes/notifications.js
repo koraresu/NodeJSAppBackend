@@ -171,8 +171,56 @@ router.post('/accept', multipartMiddleware, function(req, res){
 		}
 	});
 });
-router.post('/', multipartMiddleware, function(req, res){
-
+router.post('/delete', multipartMiddleware, function(req, res){
+	var guid      = req.body.guid;
+	var id        = req.body.notification;
+	Tokenfunc.exist(guid, function(status, tokenData){
+		if(status){
+			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
+				if(status){
+					if(mongoose.Types.ObjectId.isValid(id)){
+						id = mongoose.Types.ObjectId(id);
+						Notification.findOne({ _id: id }).exec(function(err, notificationData){
+							if(!err && notificationData){
+								notificationData.deleted = true;
+								notificationData.save(function(err, not){
+									Notification
+									.find({ profile: profileData._id })
+									.select('-__v -updatedAt')
+									.populate('profile')
+									.populate('profile_emisor')
+									.populate('profile_mensaje')
+									.populate('network')
+									.sort('-_id')
+									.exec(function(err,notificationData){
+										Generalfunc.response(200, notificationData, function(response){
+											res.json(response);
+										});
+									});
+								});
+							}else{
+								Generalfunc.response(200, {}, function(response){
+									res.json(response);
+								});
+							}
+						});
+					}else{
+						Generalfunc.response(200, {}, function(response){
+							res.json(response);
+						});
+					}
+				}else{
+					Generalfunc.response(200, {}, function(response){
+						res.json(response);
+					});
+				}
+			});
+		}else{
+			Generalfunc.response(200, {}, function(response){
+				res.json(response);
+			});
+		}
+	});
 });
 
 

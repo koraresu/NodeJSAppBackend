@@ -594,7 +594,8 @@ var NotificationSchema = new Schema({
   busqueda: { type: Schema.Types.ObjectId, ref: 'History' },
   network: { type: Schema.Types.ObjectId, ref: 'Network' },
   clicked: false,
-  status: false
+  status: false,
+  deleted: false
 },{
   timestamps: true
 });
