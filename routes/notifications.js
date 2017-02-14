@@ -209,9 +209,23 @@ router.post('/delete', multipartMiddleware, function(req, res){
 									.populate('network')
 									.sort('-_id')
 									.exec(function(err,notificationData){
-										Generalfunc.response(200, notificationData, function(response){
-											res.json(response);
+										async.map(notificationData, function(item, ca){
+											if(item.deleted == undefined){
+												ca(null, item);
+											}else{
+												if(item.deleted == true){
+													ca(null, null);
+												}else{
+													ca(null, item);
+												}
+											}
+										}, function(err, not){
+											not = Generalfunc.cleanArray(not);
+											Generalfunc.response(200, not, function(response){
+												res.json(response);
+											});
 										});
+										
 									});
 								});
 							}else{
