@@ -111,15 +111,15 @@ exports.add = function(d, callback){
 		var x = {};
 		if(d.deleted == undefined){
 			x = { deleted: false };
-			d = x.concat(d);
+			d = Generalfunc.extend({}, x, d);
 		}
 		if(d.status == undefined){
 			x = { status: false };
-			d = x.concat(d);
+			d = Generalfunc.extend({}, x, d);
 		}
 		if(d.clicked == undefined){
 			x = { clicked: false };
-			d = x.concat(d);
+			d = Generalfunc.extend({}, x, d);
 		}
 
 		var notification = new Notification(d);
