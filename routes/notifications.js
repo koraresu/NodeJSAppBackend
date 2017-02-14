@@ -64,9 +64,9 @@ router.post('/get', multipartMiddleware, function(req, res){
 								ca(null, item);
 							}else{
 								if(item.deleted == true){
-									ca(null, item);
-								}else{
 									ca(null, null);
+								}else{
+									ca(null, item);
 								}
 							}
 						}, function(err, not){
