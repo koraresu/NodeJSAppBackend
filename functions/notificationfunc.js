@@ -108,15 +108,21 @@ exports.add = function(d, callback){
 	if(d == null){
 		callback(false);
 	}else{
-		var data = {};
+		var x = {};
 		if(d.deleted == undefined){
-			var x = {
-				deleted: false
-			};
-			data = x.concat(d);
+			x = { deleted: false };
+			d = x.concat(d);
+		}
+		if(d.status == undefined){
+			x = { status: false };
+			d = x.concat(d);
+		}
+		if(d.clicked == undefined){
+			x = { clicked: false };
+			d = x.concat(d);
 		}
 
-		var notification = new Notification(data);
+		var notification = new Notification(d);
 		notification.save(function(errNotification, notificationData){
 			console.log("Erro Notification:");
 			console.log(errNotification);
