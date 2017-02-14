@@ -60,14 +60,14 @@ router.post('/get', multipartMiddleware, function(req, res){
 					.sort('-_id')
 					.exec(function(err,notificationData){
 						async.map(notificationData, function(item, ca){
-							if(item.delete != undefined){
-								if(item.delete == true){
+							if(item.deleted == undefined){
+								ca(null, item);
+							}else{
+								if(item.deleted == true){
 									ca(null, item);
 								}else{
 									ca(null, null);
 								}
-							}else{
-								ca(null, null);
 							}
 						}, function(err, not){
 							not = Generalfunc.cleanArray(not);
