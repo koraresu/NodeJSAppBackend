@@ -7,6 +7,8 @@ var _                   = require('underscore');
 var multipart           = require('connect-multiparty');
 var multipartMiddleware = multipart();
 
+var async = require('async');
+
 var ObjectID       = require('mongodb').ObjectID;
 
 var Generalfunc      = require('../functions/generalfunc');
