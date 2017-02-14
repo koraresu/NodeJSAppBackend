@@ -108,7 +108,15 @@ exports.add = function(d, callback){
 	if(d == null){
 		callback(false);
 	}else{
-		var notification = new Notification(d);
+		var data = {};
+		if(d.deleted == undefined){
+			var x = {
+				deleted: false
+			};
+			data = x.concat(d);
+		}
+
+		var notification = new Notification(data);
 		notification.save(function(errNotification, notificationData){
 			console.log("Erro Notification:");
 			console.log(errNotification);
