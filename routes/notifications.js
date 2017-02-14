@@ -57,9 +57,23 @@ router.post('/get', multipartMiddleware, function(req, res){
 					.populate('network')
 					.sort('-_id')
 					.exec(function(err,notificationData){
-						Generalfunc.response(200, notificationData, function(response){
-							res.json(response);
+						async.map(notificationData, function(item, ca){
+							if(item.delete != undefined){
+								if(item.delete == true){
+									ca(null, item);
+								}else{
+									ca(null, null);
+								}
+							}else{
+								ca(null, null);
+							}
+						}, function(err, not){
+							not = Generalfunc.cleanArray(not);
+							Generalfunc.response(200, not, function(response){
+								res.json(response);
+							});
 						});
+						
 					});
 				}else{
 					res.send("No Profile");
