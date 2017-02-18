@@ -302,6 +302,28 @@ function accept(search, success, fail){
 		}
 	});
 }
+function ignore(search, success, fail){
+	Network.findOne(search).exec(function(errNetwork, networkData){
+		if(!errNetwork && networkData){
+			networkData.accepted = false;
+			networkData.save(function(err, network){
+				if(!err && network){
+					Network.findOne(search).populate('profiles').exec(function(errNetwork, networkData){
+						if(!errNetwork && networkData){
+							success(networkData);
+						}else{
+							fail(2);
+						}
+					});
+				}else{
+					fail(1);
+				}
+			});
+		}else{
+			fail(0);
+		}
+	});
+}
 function recomendar(data, success, fail){
 	var guid          = data.guid;
 	var public_id     = data.public_id;
@@ -400,9 +422,11 @@ function create_notificacion_recomendacion(data, callback){
 		callback(status, notificationData);
 	});
 }
+
 exports.create_notificacion_recomendacion = create_notificacion_recomendacion
 exports.recomendar                        = recomendar
 exports.accept                            = accept
+exports.ignore                            = ignore
 exports.getOne2Callback                   = getOne2Callback
 exports.type                              = type
 exports.isNeightbor                       = isNeightbor
