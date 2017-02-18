@@ -687,7 +687,7 @@ router.notification_accept2C = function(data, success, fail){
     			Notificationfunc.getOne2Callback({ _id: id }, function(notificationData){
     				var bool_Network = function(networkData){
     					console.log("ID:", id );
-    					Notificationfunc.click({ _id: id },true, function(notificationData){
+    					Notificationfunc.click({ _id: id },stat, function(notificationData){
     						console.log(networkData.profiles);
     						var ajeno = profile_ajeno(profileData._id, networkData.profiles);
     						
