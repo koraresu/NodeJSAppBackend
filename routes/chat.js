@@ -738,7 +738,6 @@ router.notification_accept2C = function(data, success, fail){
     						fail(4+"!"+st);
     					});//Network Accept	
     				}else{
-    					ignore
     					Networkfunc.ignore({ _id: notificationData.network }, bool_Network, function(st){
     						fail(4+"!"+st);
     					});//Network Ignore	
