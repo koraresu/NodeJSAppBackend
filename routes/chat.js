@@ -679,13 +679,13 @@ router.accept_notification = function(data, callback){
 router.notification_accept2C = function(data, success, fail){
 	var id = data.id;
     var guid = data.guid;
-
+    var stat = data.accept;
 
     Tokenfunc.exist2Callback(guid, function(tokenData){
     	Profilefunc.tokenToProfile2Callback(tokenData.generated_id, function(profileData){
     		Generalfunc.isValid(id, function(id){
     			Notificationfunc.getOne2Callback({ _id: id }, function(notificationData){
-    				Networkfunc.accept({ _id: notificationData.network }, function(networkData){
+    				var bool_Network = function(networkData){
     					console.log("ID:", id );
     					Notificationfunc.click({ _id: id },true, function(notificationData){
     						console.log(networkData.profiles);
@@ -732,9 +732,17 @@ router.notification_accept2C = function(data, success, fail){
     					}, function(st){
     						fail(5+"!"+st);
     					});// Notification Click
-    				}, function(st){
-    					fail(4+"!"+st);
-    				});//Network Accept
+    				};
+    				if(stat == true){
+    					Networkfunc.accept({ _id: notificationData.network }, bool_Network, function(st){
+    						fail(4+"!"+st);
+    					});//Network Accept	
+    				}else{
+    					ignore
+    					Networkfunc.ignore({ _id: notificationData.network }, bool_Network, function(st){
+    						fail(4+"!"+st);
+    					});//Network Ignore	
+    				}
     			}, function(st){
     				fail(3+"!"+st);
     			});//Notification get One 2 Callback
