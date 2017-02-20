@@ -66,13 +66,11 @@ var moment = require('moment-timezone');
 					console.log("Item:");
 					console.log( item.message.conversation );
 					console.log( conversation );
-					/*
 					if(item.message.conversation.toString() == conversation.toString()){
 						ca(null, item);
 					}else{
-					*/
 						ca(null, null);
-					//}
+					}
 				}, function(err, results){
 					results = Generalfunc.cleanArray( results );
 					success(results);
