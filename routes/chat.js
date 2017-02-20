@@ -132,7 +132,6 @@ var moment = require('moment-timezone');
 										};
 										ca(null, d);
 									});
-									x
 								}else{
 									ca(null, null);
 								}
