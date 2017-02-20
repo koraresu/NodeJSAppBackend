@@ -60,7 +60,21 @@ var moment = require('moment-timezone');
 		var Country            = model.country;
 
 		var apnProvider = Generalfunc.apnProvider();
-
+		function readed_conv(profile_id, conversation, success, fail){
+			PushEvent.find({ profile: profile_id, read: false }).populate('message').exec(function(pushErr, pushEventData){
+				async.map(pushEventData, function(item, ca){
+					if(item.message.conversation.toString() == conversation.toString()){
+						ca(null, item);
+					}else{
+						ca(null, null);
+					}
+				}, function(err, results){
+					results = Generalfunc.cleanArray( results );
+					success(results);
+				});
+				
+			});
+		}
 		function conversation_format(profile_id, success, fail){
 			Conversation.find({
 				profiles:{
@@ -92,15 +106,33 @@ var moment = require('moment-timezone');
 									if(item.message != undefined){
 										last_message = item.message.message;	
 									}
-
-									var d = {
-										_id: item._id,
-										last_message: last_message,
-										profile: aj,
-										status: item.prop_status[number],
-										date: item.updatedAt
-									};
-									ca(null, d);
+									readed_conv(profile_id, conversationData._id, function(num){
+										if(num > 0){
+											num = true;
+										}else{
+											num = false;
+										}
+										var d = {
+											_id: item._id,
+											last_message: last_message,
+											profile: aj,
+											status: item.prop_status[number],
+											readed: num,
+											date: item.updatedAt
+										};
+										ca(null, d);
+									}, function(){
+										var d = {
+											_id: item._id,
+											last_message: last_message,
+											profile: aj,
+											status: item.prop_status[number],
+											readed: false,
+											date: item.updatedAt
+										};
+										ca(null, d);
+									});
+									x
 								}else{
 									ca(null, null);
 								}

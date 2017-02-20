@@ -346,7 +346,8 @@ ConversationSchema.post('update', function(doc, next){
 var MessageSchema = new Schema({
   conversation: { type: Schema.Types.ObjectId, ref: 'Conversation' },
   profile_id: { type: Schema.Types.ObjectId, ref: 'Profile' },
-  message: { type: String }
+  message: { type: String },
+  status: { type: Boolean }
 },{
   timestamps: true
 });
