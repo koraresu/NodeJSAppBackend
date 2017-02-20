@@ -63,6 +63,8 @@ var moment = require('moment-timezone');
 		function readed_conv(profile_id, conversation, success, fail){
 			PushEvent.find({ profile: profile_id, read: false }).populate('message').exec(function(pushErr, pushEventData){
 				async.map(pushEventData, function(item, ca){
+					console.log("Item:");
+					console.log( item );
 					if(item.message.conversation.toString() == conversation.toString()){
 						ca(null, item);
 					}else{
