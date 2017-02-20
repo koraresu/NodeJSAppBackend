@@ -111,7 +111,7 @@ var moment = require('moment-timezone');
 									if(item.message != undefined){
 										last_message = item.message.message;	
 									}
-									readed_conv(profile_id, conversationData._id, function(num){
+									readed_conv(profile_id, item._id, function(num){
 										if(num > 0){
 											num = true;
 										}else{
