@@ -111,7 +111,7 @@ var moment = require('moment-timezone');
 									}
 									readed_conv(profile_id, item._id, function(num){
 										console.log("NUM::::" + num.length);
-										if(num > 0){
+										if(num.lenght > 0){
 											num = true;
 										}else{
 											num = false;
