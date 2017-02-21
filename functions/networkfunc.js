@@ -445,16 +445,16 @@ function new_friend(profileData, profileAnotherData, success, fail){
 					if(!errNetwork && networkData){
 						success(networkData);	
 					}else{
-						fail();
+						fail(2);
 					}
 					
 				});
 			}else{
-				fail();
+				fail(1);
 			}
 
 		}else{
-			fail();
+			fail(0);
 		}
 	});
 	
