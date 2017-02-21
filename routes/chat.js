@@ -770,11 +770,11 @@ router.notification_accept2C = function(data, success, fail){
 					};
 
 					if(notificationData.tipo == 1){
-						console.log("Crear Solicitud de Amistad");
-						Networkfunc.new_friend(notificationData.profile, notificationData.profile_emisor, function(networkData){
-							Network.findOne({ _id: networkData._id}).populate('profiles').exec(function(errNetwork, networkData){
-								notificationData.status = true;
-								notificationData.save(function(){
+						notificationData.status = stat;
+						notificationData.save(function(){
+							console.log("Crear Solicitud de Amistad");
+							Networkfunc.new_friend(notificationData.profile, notificationData.profile_emisor, function(networkData){
+								Network.findOne({ _id: networkData._id}).populate('profiles').exec(function(errNetwork, networkData){
 									Notificationfunc.add({
 										tipo: 3,
 										profile: notificationData.profile_emisor,
@@ -786,11 +786,11 @@ router.notification_accept2C = function(data, success, fail){
 										bool_Network(networkData);
 									});
 								});
-							});
 
-						}, function(st){
-							fail(4+"!"+st);
-    					});// Network New Friend
+							}, function(st){
+								fail(4+"!"+st);
+    						});// Network New Friend
+						});
 					}else if(notificationData.tipo == 3){
 						if(stat == true){
 							Networkfunc.accept({ _id: notificationData.network }, bool_Network, function(st){
