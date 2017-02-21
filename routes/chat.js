@@ -776,8 +776,8 @@ router.notification_accept2C = function(data, success, fail){
 
 								Notificationfunc.add({
 									tipo: 3,
-									profile: profileAnotherData._id,
-									profile_emisor: profileData._id,
+									profile: notificationData.profile_emisor,
+									profile_emisor: notificationData.profile,
 									network: networkData._id,
 									clicked: false,
 									status: false,
@@ -789,7 +789,7 @@ router.notification_accept2C = function(data, success, fail){
 									bool_Network(networkData);
 								});
 							});
-							
+
 						}, function(st){
 							fail(4+"!"+st);
     					});// Network New Friend
