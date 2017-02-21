@@ -424,7 +424,7 @@ function create_notificacion_recomendacion(data, callback){
 }
 function new_friend(profileData, profileAnotherData, success, fail){
 	var network = new Network({
-		accepted: accepted,
+		accepted: false,
 		profiles: [
 		profileData._id,
 		profileAnotherData._id
