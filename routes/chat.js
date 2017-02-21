@@ -782,10 +782,6 @@ router.notification_accept2C = function(data, success, fail){
 									clicked: false,
 									status: false,
 								}, function(status, notificationData){
-									var data = {
-										"accepted": networkData.accepted,
-										"public_id": profileAnotherData.public_id
-									};
 									bool_Network(networkData);
 								});
 							});
