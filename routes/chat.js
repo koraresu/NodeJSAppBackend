@@ -773,16 +773,18 @@ router.notification_accept2C = function(data, success, fail){
 						console.log("Crear Solicitud de Amistad");
 						Networkfunc.new_friend(notificationData.profile, notificationData.profile_emisor, function(networkData){
 							Network.findOne({ _id: networkData._id}).populate('profiles').exec(function(errNetwork, networkData){
-
-								Notificationfunc.add({
-									tipo: 3,
-									profile: notificationData.profile_emisor,
-									profile_emisor: notificationData.profile,
-									network: networkData._id,
-									clicked: false,
-									status: false,
-								}, function(status, notificationData){
-									bool_Network(networkData);
+								notificationData.status = true;
+								notificationData.save(function(){
+									Notificationfunc.add({
+										tipo: 3,
+										profile: notificationData.profile_emisor,
+										profile_emisor: notificationData.profile,
+										network: networkData._id,
+										clicked: false,
+										status: false,
+									}, function(status, notificationData){
+										bool_Network(networkData);
+									});
 								});
 							});
 
