@@ -432,9 +432,9 @@ function new_friend(profileData, profileAnotherData, success, fail){
 		console.log( errNetwork );
 		console.log( networkData );
 		if(!errNetwork && networkData){
-
-			if(networkData == null){
-				var network = new Network({
+			success(networkData);
+		}else{
+			var network = new Network({
 					accepted: false,
 					profiles: [
 					profileData._id,
@@ -445,16 +445,10 @@ function new_friend(profileData, profileAnotherData, success, fail){
 					if(!errNetwork && networkData){
 						success(networkData);	
 					}else{
-						fail(2);
+						fail(0);
 					}
 					
 				});
-			}else{
-				fail(1);
-			}
-
-		}else{
-			fail(0);
 		}
 	});
 	
