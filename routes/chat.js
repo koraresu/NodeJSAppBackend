@@ -768,15 +768,21 @@ router.notification_accept2C = function(data, success, fail){
     						fail(5+"!"+st);
     					});// Notification Click
     				};
-    				if(stat == true){
-    					Networkfunc.accept({ _id: notificationData.network }, bool_Network, function(st){
-    						fail(4+"!"+st);
-    					});//Network Accept	
-    				}else{
-    					Networkfunc.ignore({ _id: notificationData.network }, bool_Network, function(st){
-    						fail(4+"!"+st);
-    					});//Network Ignore	
+
+    				if(notificationData.tipo == 1){
+    					
+    				}else if(notificationData.tipo == 3){
+    					if(stat == true){
+	    					Networkfunc.accept({ _id: notificationData.network }, bool_Network, function(st){
+	    						fail(4+"!"+st);
+	    					});//Network Accept	
+	    				}else{
+	    					Networkfunc.ignore({ _id: notificationData.network }, bool_Network, function(st){
+	    						fail(4+"!"+st);
+	    					});//Network Ignore	
+	    				}
     				}
+    				
     			}, function(st){
     				fail(3+"!"+st);
     			});//Notification get One 2 Callback
