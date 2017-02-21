@@ -423,21 +423,21 @@ function create_notificacion_recomendacion(data, callback){
 	});
 }
 function new_friend(profileData, profileAnotherData, success, fail){
-	var network = new Network({
-		accepted: false,
-		profiles: [
-		profileData._id,
-		profileAnotherData._id
-		]
-	});
-	network.save(function(errNetwork, networkData){
-		if(!errNetwork && networkData){
-			success(networkData);	
-		}else{
-			fail();
+	Network.findOne({
+		profiles: {
+			$all: [ profileData._id, profileAnotherData._id]
 		}
-		
+	}).exec(function(errNetwork, networkData){
+		console.log("New Friend:");
+		console.log( errNetwork );
+		console.log( networkData );
+		if(!errNetwork && networkData){
+
+		}else{
+
+		}
 	});
+	
 }
 
 exports.new_friend                        = new_friend;
