@@ -172,14 +172,14 @@ var moment = require('moment-timezone');
 							});
 						}else{
 							Generalfunc.response(101, {}, function(response){
-											res.json(response);
-										});
+								res.json(response);
+							});
 						}
 					});
 				}else{
 					Generalfunc.response(101, {}, function(response){
-											res.json(response);
-										});
+						res.json(response);
+					});
 				}
 			});
 		});
@@ -216,7 +216,7 @@ var moment = require('moment-timezone');
 										
 										var i = {
 											_id: item._id,
-   											updatedAt: udate.tz("America/Mexico_City").format(),
+											updatedAt: udate.tz("America/Mexico_City").format(),
 											createdAt: cdate.tz("America/Mexico_City").format(),
 											conversation: item.conversation,
 											profile_id: item.profile_id,
@@ -537,7 +537,7 @@ var moment = require('moment-timezone');
 										}, function(err){
 											fail(3);
 										})
-											
+
 										
 									});
 								}else{
@@ -641,8 +641,8 @@ var moment = require('moment-timezone');
 }
 router.accept_notification = function(data, callback){
 	var id = data.id;
-    var guid = data.guid;
-    Tokenfunc.exist(guid, function(status, tokenData){
+	var guid = data.guid;
+	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
 			//console.log(" Token OK ");
 			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
@@ -713,22 +713,22 @@ router.accept_notification = function(data, callback){
 }
 router.notification_accept2C = function(data, success, fail){
 	var id = data.id;
-    var guid = data.guid;
-    var stat = data.accept;
+	var guid = data.guid;
+	var stat = data.accept;
 
-    Tokenfunc.exist2Callback(guid, function(tokenData){
-    	Profilefunc.tokenToProfile2Callback(tokenData.generated_id, function(profileData){
-    		Generalfunc.isValid(id, function(id){
-    			Notificationfunc.getOne2Callback({ _id: id }, function(notificationData){
-    				var bool_Network = function(networkData){
-    					console.log("ID:", id );
-    					Notificationfunc.click({ _id: id },stat, function(notificationData){
-    						console.log(networkData.profiles);
-    						var ajeno = profile_ajeno(profileData._id, networkData.profiles);
-    						
+	Tokenfunc.exist2Callback(guid, function(tokenData){
+		Profilefunc.tokenToProfile2Callback(tokenData.generated_id, function(profileData){
+			Generalfunc.isValid(id, function(id){
+				Notificationfunc.getOne2Callback({ _id: id }, function(notificationData){
+					var bool_Network = function(networkData){
+						console.log("ID:", id );
+						Notificationfunc.click({ _id: id },stat, function(notificationData){
+							console.log(networkData.profiles);
+							var ajeno = profile_ajeno(profileData._id, networkData.profiles);
 
-    						var a = function(ajeno, notificationData, networkData,c){
-    							Online.findOne({
+
+							var a = function(ajeno, notificationData, networkData,c){
+								Online.findOne({
 									profiles: ajeno.profile._id
 								}).sort({created_at: -1}).exec(function(errOnline, onlineData){
 									Notification
@@ -742,13 +742,13 @@ router.notification_accept2C = function(data, success, fail){
 										c(onlineData, networkData, notificationData);	
 									});
 								});
-    						};
-    						Notificationfunc.addOrGet({
-    							tipo: 4,
+							};
+							Notificationfunc.addOrGet({
+								tipo: 4,
 								profile: notificationData.profile_emisor,
 								profile_emisor: notificationData.profile,
 								network: networkData._id,
-    						},{
+							},{
 								tipo: 4,
 								profile: notificationData.profile_emisor,
 								profile_emisor: notificationData.profile,
@@ -756,46 +756,67 @@ router.notification_accept2C = function(data, success, fail){
 								status: true,
 								clicked: true
 							}, function(status, newNotData){
-    							Notificationfunc.getOne2Callback({ _id: newNotData._id }, function(notNewData){
-    								a(ajeno, notNewData, networkData, function(onlineData, networkData, notNData){
-	    								success(onlineData, networkData, notNData, notificationData);
-	    							});
-    							}, function(st){
-    								fail(6+"!"+st);
-    							});
-    						});
-    					}, function(st){
-    						fail(5+"!"+st);
+								Notificationfunc.getOne2Callback({ _id: newNotData._id }, function(notNewData){
+									a(ajeno, notNewData, networkData, function(onlineData, networkData, notNData){
+										success(onlineData, networkData, notNData, notificationData);
+									});
+								}, function(st){
+									fail(6+"!"+st);
+								});
+							});
+						}, function(st){
+							fail(5+"!"+st);
     					});// Notification Click
-    				};
+					};
 
-    				if(notificationData.tipo == 1){
-    					console.log("Crear Solicitud de Amistad");
-    				}else if(notificationData.tipo == 3){
-    					if(stat == true){
-	    					Networkfunc.accept({ _id: notificationData.network }, bool_Network, function(st){
-	    						fail(4+"!"+st);
+					if(notificationData.tipo == 1){
+						console.log("Crear Solicitud de Amistad");
+						Networkfunc.new_friend(notificationData.profile, notificationData.profile_emisor, function(networkData){
+							Network.findOne({ _id: networkData._id}).populate('profiles').exec(function(errNetwork, networkData){
+
+								Notificationfunc.add({
+									tipo: 3,
+									profile: profileAnotherData._id,
+									profile_emisor: profileData._id,
+									network: networkData._id,
+									clicked: false,
+									status: false,
+								}, function(status, notificationData){
+									var data = {
+										"accepted": networkData.accepted,
+										"public_id": profileAnotherData.public_id
+									};
+									bool_Network(networkData);
+								});
+							});
+							
+						}, function(st){
+							fail(4+"!"+st);
+    					});// Network New Friend
+					}else if(notificationData.tipo == 3){
+						if(stat == true){
+							Networkfunc.accept({ _id: notificationData.network }, bool_Network, function(st){
+								fail(4+"!"+st);
 	    					});//Network Accept	
-	    				}else{
-	    					Networkfunc.ignore({ _id: notificationData.network }, bool_Network, function(st){
-	    						fail(4+"!"+st);
+						}else{
+							Networkfunc.ignore({ _id: notificationData.network }, bool_Network, function(st){
+								fail(4+"!"+st);
 	    					});//Network Ignore	
-	    				}
-    				}
-    				
-    			}, function(st){
-    				fail(3+"!"+st);
+						}
+					}
+				}, function(st){
+					fail(3+"!"+st);
     			});//Notification get One 2 Callback
-    		}, function(st){
-    			fail(2+"!"+st);
+			}, function(st){
+				fail(2+"!"+st);
     		});// Is Valid
-    	}, function(st){
-    		fail(1+"!"+st);
+		}, function(st){
+			fail(1+"!"+st);
     	});// Profile token to profile 2 Callback
-    }, function(st){
+	}, function(st){
 		fail(0+"!"+st);
     });// Token exist 2 callback
-    
+
 }
 router.deviceajeno = function(conversation, socket, callback){
 

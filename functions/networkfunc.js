@@ -422,23 +422,41 @@ function create_notificacion_recomendacion(data, callback){
 		callback(status, notificationData);
 	});
 }
+function new_friend(profileData, profileAnotherData, success, fail){
+	var network = new Network({
+		accepted: accepted,
+		profiles: [
+		profileData._id,
+		profileAnotherData._id
+		]
+	});
+	network.save(function(errNetwork, networkData){
+		if(!errNetwork && networkData){
+			success(networkData);	
+		}else{
+			fail();
+		}
+		
+	});
+}
 
-exports.create_notificacion_recomendacion = create_notificacion_recomendacion
-exports.recomendar                        = recomendar
-exports.accept                            = accept
-exports.ignore                            = ignore
-exports.getOne2Callback                   = getOne2Callback
-exports.type                              = type
-exports.isNeightbor                       = isNeightbor
-exports.isFriend                          = isFriend
-exports.typeFriend                        = typeFriend
-exports.PublicId                          = PublicId
-exports.getFriends                        = getFriends
-exports.getListFriends                    = getListFriends
-exports.checkconversation                 = checkconversation
-exports.message                           = message
-exports.addReview                         = addReview
-exports.addNetwork                        = addNetwork
+exports.new_friend                        = new_friend;
+exports.create_notificacion_recomendacion = create_notificacion_recomendacion;
+exports.recomendar                        = recomendar;
+exports.accept                            = accept;
+exports.ignore                            = ignore;
+exports.getOne2Callback                   = getOne2Callback;
+exports.type                              = type;
+exports.isNeightbor                       = isNeightbor;
+exports.isFriend                          = isFriend;
+exports.typeFriend                        = typeFriend;
+exports.PublicId                          = PublicId;
+exports.getFriends                        = getFriends;
+exports.getListFriends                    = getListFriends;
+exports.checkconversation                 = checkconversation;
+exports.message                           = message;
+exports.addReview                         = addReview;
+exports.addNetwork                        = addNetwork;
 function trimUnderscores(string) {
     return string.split(' ').join('');
 }
