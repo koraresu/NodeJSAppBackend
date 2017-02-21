@@ -716,6 +716,10 @@ router.notification_accept2C = function(data, success, fail){
 	var guid = data.guid;
 	var stat = data.accept;
 
+	console.log( "Notification Accept:");
+	console.log( stat );
+	console.log( typeof stat );
+
 	Tokenfunc.exist2Callback(guid, function(tokenData){
 		Profilefunc.tokenToProfile2Callback(tokenData.generated_id, function(profileData){
 			Generalfunc.isValid(id, function(id){
@@ -743,27 +747,38 @@ router.notification_accept2C = function(data, success, fail){
 									});
 								});
 							};
-							Notificationfunc.addOrGet({
-								tipo: 4,
-								profile: notificationData.profile_emisor,
-								profile_emisor: notificationData.profile,
-								network: networkData._id,
-							},{
-								tipo: 4,
-								profile: notificationData.profile_emisor,
-								profile_emisor: notificationData.profile,
-								network: networkData._id,
-								status: true,
-								clicked: true
-							}, function(status, newNotData){
-								Notificationfunc.getOne2Callback({ _id: newNotData._id }, function(notNewData){
+
+							if(stat){
+								Notificationfunc.addOrGet({
+									tipo: 4,
+									profile: notificationData.profile_emisor,
+									profile_emisor: notificationData.profile,
+									network: networkData._id,
+								},{
+									tipo: 4,
+									profile: notificationData.profile_emisor,
+									profile_emisor: notificationData.profile,
+									network: networkData._id,
+									status: true,
+									clicked: true
+								}, function(status, newNotData){
+									Notificationfunc.getOne2Callback({ _id: newNotData._id }, function(notNewData){
+										a(ajeno, notNewData, networkData, function(onlineData, networkData, notNData){
+											success(onlineData, networkData, notNData, notificationData);
+										});
+									}, function(st){
+										fail(6+"!"+st);
+									});
+								});
+							}else{
+								Notificationfunc.getOne2Callback({ _id: notificationData._id }, function(notNewData){
 									a(ajeno, notNewData, networkData, function(onlineData, networkData, notNData){
 										success(onlineData, networkData, notNData, notificationData);
 									});
 								}, function(st){
 									fail(6+"!"+st);
 								});
-							});
+							}
 						}, function(st){
 							fail(5+"!"+st);
     					});// Notification Click
@@ -823,23 +838,16 @@ router.notification_accept2C = function(data, success, fail){
 							console.log("Crear Solicitud de Amistad");
 							Networkfunc.new_friend(notificationData.profile, notificationData.profile_emisor, function(networkData){
 								Network.findOne({ _id: networkData._id}).populate('profiles').exec(function(errNetwork, networkData){
-									Notificationfunc.add({
-										tipo: 3,
-										profile: notificationData.profile_emisor,
-										profile_emisor: notificationData.profile,
-										network: networkData._id,
-										clicked: false,
-										status: false,
-									}, function(status, notificationData){
-										bool_uno_Network(networkData);
-									});
+									bool_uno_Network(networkData);
 								});
-
 							}, function(st){
 								fail(4+"!"+st);
     						});// Network New Friend
 						
 					}else if(notificationData.tipo == 3){
+						console.log("Status:");
+						console.log( stat );
+
 						if(stat == true){
 							Networkfunc.accept({ _id: notificationData.network }, bool_Network, function(st){
 								fail(4+"!"+st);
