@@ -770,7 +770,7 @@ router.notification_accept2C = function(data, success, fail){
     				};
 
     				if(notificationData.tipo == 1){
-    					
+    					console.log("Crear Solicitud de Amistad");
     				}else if(notificationData.tipo == 3){
     					if(stat == true){
 	    					Networkfunc.accept({ _id: notificationData.network }, bool_Network, function(st){
