@@ -433,8 +433,28 @@ function new_friend(profileData, profileAnotherData, success, fail){
 		console.log( networkData );
 		if(!errNetwork && networkData){
 
-		}else{
+			if(networkData == null){
+				var network = new Network({
+					accepted: false,
+					profiles: [
+					profileData._id,
+					profileAnotherData._id
+					]
+				});
+				network.save(function(errNetwork, networkData){
+					if(!errNetwork && networkData){
+						success(networkData);	
+					}else{
+						fail();
+					}
+					
+				});
+			}else{
+				fail();
+			}
 
+		}else{
+			fail();
 		}
 	});
 	
