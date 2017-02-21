@@ -769,9 +769,57 @@ router.notification_accept2C = function(data, success, fail){
     					});// Notification Click
 					};
 
+					var bool_uno_Network = function(networkData){
+						console.log("ID:", id );
+						Notificationfunc.click({ _id: id },stat, function(notificationData){
+							console.log(networkData.profiles);
+							var ajeno = profile_ajeno(profileData._id, networkData.profiles);
+
+
+							var a = function(ajeno, notificationData, networkData,c){
+								Online.findOne({
+									profiles: ajeno.profile._id
+								}).sort({created_at: -1}).exec(function(errOnline, onlineData){
+									Notification
+									.findOne({ _id: notificationData._id })
+									.select('-__v -updatedAt')
+									.populate('profile')
+									.populate('profile_emisor')
+									.populate('profile_mensaje')
+									.populate('network')
+									.exec(function(err,notificationData){
+										c(onlineData, networkData, notificationData);	
+									});
+								});
+							};
+
+							Notificationfunc.addOrGet({
+								tipo: 3,
+								profile: notificationData.profile_emisor,
+								profile_emisor: notificationData.profile,
+								network: networkData._id,
+							},{
+								tipo: 3,
+								profile: notificationData.profile_emisor,
+								profile_emisor: notificationData.profile,
+								network: networkData._id,
+								status: false,
+								clicked: false
+							}, function(status, newNotData){
+								Notificationfunc.getOne2Callback({ _id: newNotData._id }, function(notNewData){
+									a(ajeno, notNewData, networkData, function(onlineData, networkData, notNData){
+										success(onlineData, networkData, notNData, notificationData);
+									});
+								}, function(st){
+									fail(6+"!"+st);
+								});
+							});
+						}, function(st){
+							fail(5+"!"+st);
+    					});// Notification Click
+					}
+
 					if(notificationData.tipo == 1){
-						notificationData.status = stat;
-						notificationData.save(function(){
 							console.log("Crear Solicitud de Amistad");
 							Networkfunc.new_friend(notificationData.profile, notificationData.profile_emisor, function(networkData){
 								Network.findOne({ _id: networkData._id}).populate('profiles').exec(function(errNetwork, networkData){
@@ -783,14 +831,14 @@ router.notification_accept2C = function(data, success, fail){
 										clicked: false,
 										status: false,
 									}, function(status, notificationData){
-										bool_Network(networkData);
+										bool_uno_Network(networkData);
 									});
 								});
 
 							}, function(st){
 								fail(4+"!"+st);
     						});// Network New Friend
-						});
+						
 					}else if(notificationData.tipo == 3){
 						if(stat == true){
 							Networkfunc.accept({ _id: notificationData.network }, bool_Network, function(st){
