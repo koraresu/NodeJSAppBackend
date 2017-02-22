@@ -1029,8 +1029,8 @@ function setActive(conversation, profileID, success){
 		var equal = profile_equal(profileID, convData.profiles);
 		console.log(" Number:" + equal.number );
 		prop[equal.number] = 1;
-		
-		convData.update({ _id: conversation }, { $set: { prop_status: prop } }, { multi: false }, function(err, conv){
+
+		convData.update({ $set: { prop_status: prop } }, { upsert: false }, function(err, conv){
 			Conversation.findOne({ _id: conversation }).populate('profiles').exec(function(errConv, convData){
 				console.log("Post:");
 				console.log( convData.prop_status );
