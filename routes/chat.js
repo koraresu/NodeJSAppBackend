@@ -275,21 +275,28 @@ var moment = require('moment-timezone');
 									a[n] = 0;
 
 									conversationData.prop_status = a;
-
-									conversationData.save(function(err, conversation){
-										
-										if(!err && conversation){
-											conversation_format(profileData._id, function(results){
-												res.json(results);
-											}, function(response){
-												res.json(response);
-											});
-										}else{
-											Generalfunc.response(101, {}, function(response){
-												res.json( response );
-											});
+									Message.update({
+										conversation: conversationData._id
+									}, {
+										$set: {
+											status: false
 										}
-										
+									},{
+										multi: true
+									}, function(){
+										conversationData.save(function(err, conversation){
+											if(!err && conversation){
+												conversation_format(profileData._id, function(results){
+													res.json(results);
+												}, function(response){
+													res.json(response);
+												});
+											}else{
+												Generalfunc.response(101, {}, function(response){
+													res.json( response );
+												});
+											}
+										});
 									});
 								});
 							}else{
