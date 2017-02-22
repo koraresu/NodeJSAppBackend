@@ -1023,11 +1023,13 @@ function setActive(conversation, profileID, success){
 	console.log("Conversation:");
 	console.log(conversation);
 	Conversation.findOne({ _id: conversation }).populate('profiles').exec(function(errConv, convData){
+		console.log("Pre:");
 		console.log( convData.prop_status );
 		var prop = convData.prop_status;
 		var equal = profile_equal(profileID, convData.profiles);
 		prop[equal.number] = 1;
 		convData.update({ _id: conversation }, { $set:{prop_status: prop } }, function(err, conv){
+			console.log("Post:");
 			console.log( conv.prop_status );
 			success(errConv, conv);
 		});
