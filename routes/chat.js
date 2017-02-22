@@ -207,7 +207,8 @@ var moment = require('moment-timezone');
 							if(mongoose.Types.ObjectId.isValid(id)){
 								id = mongoose.Types.ObjectId(id);
 								Message.find({
-									conversation: id
+									conversation: id,
+									status: true
 								}).populate('profile_id').sort({ createdAt: -1 }).limit(limit).skip(offset).exec(function(err, messageData){
 									async.map(messageData, function(item, callback){
 										var d = (item.profile_id._id.toString() == profileData._id.toString());
