@@ -1033,7 +1033,7 @@ function setActive(conversation, profileID, success){
 		console.log( convData.prop_status );
 		convData.save(function(err, conv){
 			console.log( conv.prop_status );
-			Conversation.findOne({ _id: conversation }).populate('profiles').exec(function(errConv, convData){
+			Conversation.findOne({ _id: conv._id }).populate('profiles').exec(function(errConv, convData){
 				console.log( convData.prop_status );
 				success(errConv, convData);
 			});
