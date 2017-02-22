@@ -1026,17 +1026,11 @@ function setActive(conversation, profileID, success){
 		console.log( convData.prop_status );
 		var prop = convData.prop_status;
 		var equal = profile_equal(profileID, convData.profiles);
-
 		prop[equal.number] = 1;
-
-		convData.prop_status = prop;
-		console.log( convData.prop_status );
-		convData.save(function(err, conv){
+		convData.findOneAndUpdate({ _id: conversation }, { prop_status: prop }, {upsert: false}, function(err, conv){
 			console.log( conv.prop_status );
-			Conversation.findOne({ _id: conv._id }).populate('profiles').exec(function(errConv, conData){
-				console.log( conData.prop_status );
-				success(errConv, conData);
-			});
+			console.log( conData.prop_status );
+			success(errConv, conData);
 		});
 	});
 }
