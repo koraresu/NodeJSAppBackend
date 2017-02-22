@@ -1020,23 +1020,29 @@ router.mensaje_create = function(data, nombre_emisor, nombre_mensaje){
 	return { mensaje: message, class: clase };
 }
 function setActive(conversation, profileID, success){
+	console.log("Conversation:");
+	console.log(conversation);
 	Conversation.findOne({ _id: conversation }).populate('profiles').exec(function(errConv, convData){
+		console.log( convData );
 		var prop_status = convData.prop_status;
 		var equal = profile_equal(profileID, convData.profiles);
 
 		prop_status[equal.number] = 1;
 
 		convData.prop_status = prop_status;
-
+		console.log( convData );
 		convData.save(function(err, conv){
+			console.log( conv );
 			Conversation.findOne({ _id: conversation }).populate('profiles').exec(function(errConv, convData){
+				console.log( convData );
 				success(errConv, convData);
 			});
 		});
 	});
 }
+router.setActive     = setActive;
 router.sendPushtoAll = Generalfunc.sendPushtoAll;
-router.sendPushOne = Generalfunc.sendPushOne;
+router.sendPushOne   = Generalfunc.sendPushOne;
 router.profile_equal = profile_equal
 module.exports = router;
 function profile_ajeno(profileID, profiles){
