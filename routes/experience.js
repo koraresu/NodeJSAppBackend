@@ -289,41 +289,67 @@ router.post('/company/insert', multipartMiddleware, function(req, res){
 
 	var name      = req.body.nombre;
 	var telefono  = req.body.telefono;
-	var direccion = req.body.direccion;
 	var web       = req.body.web;
-	var description = req.body.description;
+	var description = req.body.descripcion;
 
 	var calle   = req.body.calle;
 	var colonia = req.body.colonia;
 	var ciudad  = req.body.ciudad;
 	var estado  = req.body.estado;
-	var numero  = req.body.numero;
-	var postal  = req.body.postal;
+	var numero  = req.body.number;
+	var postal  = req.body.cp;
+
+
 
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
 			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
 				if(status){
 
-					var company = new Company({
-						name: name,
-						description: description,
-						website: web,
-						address: {
-							calle: calle,
-							colonia: colonia,
-							ciudad: ciudad,
-							estado: estado,
-							numero: numero,
-							postalc: postal
+					Company.findOne({ name: name }).exec(function(errCompany, companyData){
+						if(!errCompany && companyData){
+
+							companyData.name =  name;
+							companyData.description = description;
+							companyData.website = web;
+							
+							companyData.address.calle   = calle;
+							companyData.address.colonia = colonia;
+							companyData.address.ciudad = ciudad;
+							companyData.address.estado = estado;
+							companyData.address.numero = numero;
+							companyData.address.postalc = postal;
+
+							companyData.save(function(err, comp){
+								Company.findOne({ _id: comp._id }).exec(function(eCompany, cData){
+									Generalfunc.response(200, cData, function(response){
+										res.json( response );
+									});
+								});
+							});
+						}else{
+							var company = new Company({
+								name: name,
+								description: description,
+								website: web,
+								address: {
+									calle: calle,
+									colonia: colonia,
+									ciudad: ciudad,
+									estado: estado,
+									numero: numero,
+									postalc: postal
+								}
+							});
+
+							company.save(function(errC, cData){
+								Generalfunc.response(200, cData, function(response){
+									res.json( response );
+								});
+							});
 						}
 					});
-
-					company.save(function(errC, cData){
-						Generalfunc.response(200, cData, function(response){
-							res.json( response );
-						});
-					});
+					
 				}else{
 					Generalfunc.response(200, {}, function(response){
 						res.json( response );
