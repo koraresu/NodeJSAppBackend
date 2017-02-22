@@ -577,7 +577,8 @@ var moment = require('moment-timezone');
 								var d = {
 									conversation: id,
 									profile_id: profileData._id,
-									message: text
+									message: text,
+									status: true
 								};
 								var message = new Message(d);
 								message.save(function(err, mData){
