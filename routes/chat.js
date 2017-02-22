@@ -1024,12 +1024,12 @@ function setActive(conversation, profileID, success){
 	console.log(conversation);
 	Conversation.findOne({ _id: conversation }).populate('profiles').exec(function(errConv, convData){
 		console.log( convData.prop_status );
-		var prop_status = convData.prop_status;
+		var prop = convData.prop_status;
 		var equal = profile_equal(profileID, convData.profiles);
 
-		prop_status[equal.number] = 1;
+		prop[equal.number] = 1;
 
-		convData.prop_status = prop_status;
+		convData.prop_status = prop;
 		console.log( convData.prop_status );
 		convData.save(function(err, conv){
 			console.log( conv.prop_status );
