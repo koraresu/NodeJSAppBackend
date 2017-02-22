@@ -206,12 +206,8 @@ var moment = require('moment-timezone');
 						if(status){
 							if(mongoose.Types.ObjectId.isValid(id)){
 								id = mongoose.Types.ObjectId(id);
-								Conversation.findOne({ _id: id }).populate('profiles').exec(function(errConversation, conversationData){
-									
-									var equal = Generalfunc.profile_equal( profileData._id, conversationData.profiles );
 
-									conversationData.prop_status[equal.number] = 1;
-									conversationData.save(function(err, conversation){
+									setActive(id, profileData._id, function(){
 										Message.find({
 											conversation: id,
 											status: true
@@ -247,9 +243,6 @@ var moment = require('moment-timezone');
 											})
 										});
 									});
-								});
-								
-
 							}else{
 
 							}
@@ -1026,7 +1019,22 @@ router.mensaje_create = function(data, nombre_emisor, nombre_mensaje){
 	}
 	return { mensaje: message, class: clase };
 }
+function setActive(conversation, profileID, success){
+	Conversation.findOne({ _id: conversation }).populate('profiles').exec(function(errConv, convData){
+		var prop_status = convData.prop_status;
+		var equal = profile_equal(profileID, convData.profiles);
 
+		prop_status[equal.number] = 1;
+
+		convData.prop_status = prop_status;
+
+		convData.save(function(err, conv){
+			Conversation.findOne({ _id: conversation }).populate('profiles').exec(function(errConv, convData){
+				success(errConv, convData);
+			});
+		});
+	});
+}
 router.sendPushtoAll = Generalfunc.sendPushtoAll;
 router.sendPushOne = Generalfunc.sendPushOne;
 router.profile_equal = profile_equal
