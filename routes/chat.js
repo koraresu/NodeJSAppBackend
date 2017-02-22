@@ -206,40 +206,50 @@ var moment = require('moment-timezone');
 						if(status){
 							if(mongoose.Types.ObjectId.isValid(id)){
 								id = mongoose.Types.ObjectId(id);
-								Message.find({
-									conversation: id,
-									status: true
-								}).populate('profile_id').sort({ createdAt: -1 }).limit(limit).skip(offset).exec(function(err, messageData){
-									async.map(messageData, function(item, callback){
-										var d = (item.profile_id._id.toString() == profileData._id.toString());
-										var udate = moment(item.updatedAt);
-										var cdate = moment(item.createdAt);
-										
-										var i = {
-											_id: item._id,
-											updatedAt: udate.tz("America/Mexico_City").format(),
-											createdAt: cdate.tz("America/Mexico_City").format(),
-											conversation: item.conversation,
-											profile_id: item.profile_id,
-											message: item.message
-										};
-										
-										callback( null, { data: i, t: d});
-									}, function(err, results){
-										Conversation.findOne({
-											_id: id
-										}).populate('profiles').exec(function(errConversation, conversationData){
+								Conversation.findOne({ _id: id }).populate('profiles').exec(function(errConversation, conversationData){
+									
+									var equal = Generalfunc.profile_equal( profileData._id, conversationData.profiles );
 
-											var x = Generalfunc.profile_ajeno(profileData._id, conversationData.profiles);
-											var title = x.first_name + " " + x.last_name;
+									conversationData.prop_status[equal.number] = 1;
+									conversationData.save(function(err, conversation){
+										Message.find({
+											conversation: id,
+											status: true
+										}).populate('profile_id').sort({ createdAt: -1 }).limit(limit).skip(offset).exec(function(err, messageData){
+											async.map(messageData, function(item, callback){
+												var d = (item.profile_id._id.toString() == profileData._id.toString());
+												var udate = moment(item.updatedAt);
+												var cdate = moment(item.createdAt);
+												
+												var i = {
+													_id: item._id,
+													updatedAt: udate.tz("America/Mexico_City").format(),
+													createdAt: cdate.tz("America/Mexico_City").format(),
+													conversation: item.conversation,
+													profile_id: item.profile_id,
+													message: item.message
+												};
+												
+												callback( null, { data: i, t: d});
+											}, function(err, results){
+												Conversation.findOne({
+													_id: id
+												}).populate('profiles').exec(function(errConversation, conversationData){
 
-											Generalfunc.response(200, { title: title, avatar: x.profile_pic, conversation: conversationData, messages: results}, function(response){
-												res.json(response);
-											});
+													var x = Generalfunc.profile_ajeno(profileData._id, conversationData.profiles);
+													var title = x.first_name + " " + x.last_name;
+
+													Generalfunc.response(200, { title: title, avatar: x.profile_pic, conversation: conversationData, messages: results}, function(response){
+														res.json(response);
+													});
+												});
+												
+											})
 										});
-										
-									})
+									});
 								});
+								
+
 							}else{
 
 							}
