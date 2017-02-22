@@ -1029,9 +1029,11 @@ function setActive(conversation, profileID, success){
 		var equal = profile_equal(profileID, convData.profiles);
 		prop[equal.number] = 1;
 		convData.update({ _id: conversation }, { $set:{prop_status: prop } }, function(err, conv){
-			console.log("Post:");
-			console.log( conv.prop_status );
-			success(errConv, conv);
+			Conversation.findOne({ _id: conversation }).populate('profiles').exec(function(errConv, convData){
+				console.log("Post:");
+				console.log( convData.prop_status );
+				success(errConv, convData);
+			});
 		});
 	});
 }
