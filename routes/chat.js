@@ -1029,7 +1029,6 @@ function setActive(conversation, profileID, success){
 		prop[equal.number] = 1;
 		convData.update({ _id: conversation }, { $set:{prop_status: prop } }, function(err, conv){
 			console.log( conv.prop_status );
-			console.log( conData.prop_status );
 			success(errConv, conData);
 		});
 	});
