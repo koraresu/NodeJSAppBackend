@@ -822,7 +822,7 @@ router.post('/get/friend', multipartMiddleware, function(req, res){
 															}
 														break;
 													}
-													Generalfunc.review_check(profileData, profile.profile, function(review){
+													Generalfunc.review_check(profileData, profile.profile, function(review_allow, review_date){
 														var c = {
 															"profile": profile.profile,
 															"review": profile.review,
@@ -830,7 +830,10 @@ router.post('/get/friend', multipartMiddleware, function(req, res){
 															"network": profile.network,
 															"statusFriend": statusFriend,
 															"privado": privado,
-															"review": review
+															"review": {
+																allow: review_allow,
+																date: review_date
+															}
 														};
 														console.log(c);
 														//Generalfunc.response(200, profile, function(response){
@@ -887,7 +890,7 @@ router.post('/get/friend', multipartMiddleware, function(req, res){
 															}
 														break;
 													}
-													Generalfunc.review_check(profileData, profile.profile, function(review){
+													Generalfunc.review_check(profileData, profile.profile, function(review_allow, review_date){
 														var c = {
 															"profile": profile.profile,
 															"review": profile.review,
@@ -895,7 +898,10 @@ router.post('/get/friend', multipartMiddleware, function(req, res){
 															"network": profile.network,
 															"statusFriend": statusFriend,
 															"privado": privado,
-															"review": review
+															"review": {
+																allow: review_allow,
+																date: review_date
+															}
 														};
 														//Generalfunc.response(200, profile, function(response){
 														Generalfunc.response(200, c, function(response){
@@ -951,7 +957,7 @@ router.post('/get/friend', multipartMiddleware, function(req, res){
 															}
 														break;
 													}
-													Generalfunc.review_check(profileData, profile.profile, function(review){
+													Generalfunc.review_check(profileData, profile.profile, function(review_allow, review_date){
 														var c = {
 															"profile": profile.profile,
 															"review": profile.review,
@@ -959,7 +965,10 @@ router.post('/get/friend', multipartMiddleware, function(req, res){
 															"network": profile.network,
 															"statusFriend": statusFriend,
 															"privado": privado,
-															"review": review
+															"review": {
+																allow: review_allow,
+																date: review_date
+															}
 														};
 														//Generalfunc.response(200, profile, function(response){
 														Generalfunc.response(200, c, function(response){
@@ -1013,7 +1022,7 @@ router.post('/get/friend', multipartMiddleware, function(req, res){
 															}
 														break;
 													}
-													Generalfunc.review_check(profileData, profile.profile, function(review){
+													Generalfunc.review_check(profileData, profile.profile, function(review_allow, review_date){
 														var c = {
 															"profile": profile.profile,
 															"review": profile.review,
@@ -1021,7 +1030,10 @@ router.post('/get/friend', multipartMiddleware, function(req, res){
 															"network": profile.network,
 															"statusFriend": statusFriend,
 															"privado": privado,
-															"review": review
+															"review": {
+																allow: review_allow,
+																date: review_date
+															}
 														};
 														//Generalfunc.response(114, profile, function(response){
 														Generalfunc.response(114, c, function(response){
