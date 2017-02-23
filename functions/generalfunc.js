@@ -506,7 +506,7 @@ function review_check(me, friend, success){
 	}).populate('profiles').populate('profile_id').sort({updatedAt: -1}).exec(function(errReview, reviewData){
 		var now     = new Date();
 		var updated = new Date(reviewData.updatedAt);
-		var newdate = updated.setDate(updated.getDate()+5);
+		var newdate = updated.setDate(updated.getDate() + 5);
 		if(now >= newdate){
 			success(true, newdate, updated);
 		}else{

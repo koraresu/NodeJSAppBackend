@@ -832,8 +832,8 @@ router.post('/get/friend', multipartMiddleware, function(req, res){
 															"privado": privado,
 															"review": {
 																allow: review_allow,
-																date_plus: review_date_plus,
-																date: review_date
+																date_plus: review_date_plus.toString(),
+																date: review_date.toString()
 															}
 														};
 														console.log(c);
