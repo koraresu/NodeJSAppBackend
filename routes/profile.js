@@ -822,19 +822,21 @@ router.post('/get/friend', multipartMiddleware, function(req, res){
 															}
 														break;
 													}
-
-													var c = {
-														"profile": profile.profile,
-														"review": profile.review,
-														"trabajo": profile.trabajo,
-														"network": profile.network,
-														"statusFriend": statusFriend,
-														"privado": privado
-													};
-													console.log(c);
-													//Generalfunc.response(200, profile, function(response){
-													Generalfunc.response(200, c, function(response){
-														res.json(response);
+													Generalfunc.review_check(profileData, profile.profile, function(review){
+														var c = {
+															"profile": profile.profile,
+															"review": profile.review,
+															"trabajo": profile.trabajo,
+															"network": profile.network,
+															"statusFriend": statusFriend,
+															"privado": privado,
+															"review": review
+														};
+														console.log(c);
+														//Generalfunc.response(200, profile, function(response){
+														Generalfunc.response(200, c, function(response){
+															res.json(response);
+														});
 													});
 												});
 
@@ -885,18 +887,20 @@ router.post('/get/friend', multipartMiddleware, function(req, res){
 															}
 														break;
 													}
-													
-													var c = {
-														"profile": profile.profile,
-														"review": profile.review,
-														"trabajo": profile.trabajo,
-														"network": profile.network,
-														"statusFriend": statusFriend,
-														"privado": privado
-													};
-													//Generalfunc.response(200, profile, function(response){
-													Generalfunc.response(200, c, function(response){
-														res.json(response);
+													Generalfunc.review_check(profileData, profile.profile, function(review){
+														var c = {
+															"profile": profile.profile,
+															"review": profile.review,
+															"trabajo": profile.trabajo,
+															"network": profile.network,
+															"statusFriend": statusFriend,
+															"privado": privado,
+															"review": review
+														};
+														//Generalfunc.response(200, profile, function(response){
+														Generalfunc.response(200, c, function(response){
+															res.json(response);
+														});
 													});
 												});
 											});
@@ -947,18 +951,20 @@ router.post('/get/friend', multipartMiddleware, function(req, res){
 															}
 														break;
 													}
-
-													var c = {
-														"profile": profile.profile,
-														"review": profile.review,
-														"trabajo": profile.trabajo,
-														"network": profile.network,
-														"statusFriend": statusFriend,
-														"privado": privado
-													};
-													//Generalfunc.response(200, profile, function(response){
-													Generalfunc.response(200, c, function(response){
-														res.json(response);
+													Generalfunc.review_check(profileData, profile.profile, function(review){
+														var c = {
+															"profile": profile.profile,
+															"review": profile.review,
+															"trabajo": profile.trabajo,
+															"network": profile.network,
+															"statusFriend": statusFriend,
+															"privado": privado,
+															"review": review
+														};
+														//Generalfunc.response(200, profile, function(response){
+														Generalfunc.response(200, c, function(response){
+															res.json(response);
+														});
 													});
 												});
 											});	
@@ -1007,19 +1013,21 @@ router.post('/get/friend', multipartMiddleware, function(req, res){
 															}
 														break;
 													}
-													
-													var c = {
-														"profile": profile.profile,
-														"review": profile.review,
-														"trabajo": profile.trabajo,
-														"network": profile.network,
-														"statusFriend": statusFriend,
-														"privado": privado
-													};
-													//Generalfunc.response(114, profile, function(response){
-													Generalfunc.response(114, c, function(response){
-														res.json(response);
-													});	
+													Generalfunc.review_check(profileData, profile.profile, function(review){
+														var c = {
+															"profile": profile.profile,
+															"review": profile.review,
+															"trabajo": profile.trabajo,
+															"network": profile.network,
+															"statusFriend": statusFriend,
+															"privado": privado,
+															"review": review
+														};
+														//Generalfunc.response(114, profile, function(response){
+														Generalfunc.response(114, c, function(response){
+															res.json(response);
+														});	
+													});
 												});
 											});
 										}

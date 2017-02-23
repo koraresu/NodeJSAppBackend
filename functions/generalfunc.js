@@ -498,6 +498,22 @@ function extend(target) {
     });
     return target;
 }
+function review_check(me, friend, success){
+	Review.findOne({
+		profiles: {
+			$all: [ me._id, friend._id ]
+		}
+	}).populate('profiles').populate('profile_id').sort({updatedAt: -1}).exec(function(errReview, reviewData){
+		var now     = new Date();
+		var updated = new Date(reviewData.updatedAt);
+		var newdate = updated.setDate(updated.getDate()+5);
+		if(now >= newdate){
+			success(true);
+		}else{
+			success(false);
+		}
+	});
+}
 exports.extend             = extend;
 exports.SocketNoReaded     = SocketNoReaded;
 exports.NoReaded           = NoReaded;
