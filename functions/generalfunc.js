@@ -507,7 +507,7 @@ function review_check(me, friend, success){
 		var now     = new Date();
 		var updated = new Date(reviewData.updatedAt);
 		var newdate = new Date(reviewData.updatedAt);
-		newdate.setDate(updated.getDate() + 7);
+		newdate.setDate(updated.getDate() + 5);
 		if(now >= newdate){
 			success(true, newdate, updated);
 		}else{
