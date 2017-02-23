@@ -514,6 +514,7 @@ function review_check(me, friend, success){
 		}
 	});
 }
+exports.review_check       = review_check;
 exports.extend             = extend;
 exports.SocketNoReaded     = SocketNoReaded;
 exports.NoReaded           = NoReaded;
