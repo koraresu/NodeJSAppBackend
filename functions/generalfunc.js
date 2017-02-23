@@ -508,9 +508,9 @@ function review_check(me, friend, success){
 		var updated = new Date(reviewData.updatedAt);
 		var newdate = updated.setDate(updated.getDate()+5);
 		if(now >= newdate){
-			success(true, newdate);
+			success(true, newdate, updated);
 		}else{
-			success(false, newdate);
+			success(false, newdate,updated);
 		}
 	});
 }

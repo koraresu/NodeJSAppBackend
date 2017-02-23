@@ -822,7 +822,7 @@ router.post('/get/friend', multipartMiddleware, function(req, res){
 															}
 														break;
 													}
-													Generalfunc.review_check(profileData, profile.profile, function(review_allow, review_date){
+													Generalfunc.review_check(profileData, profile.profile, function(review_allow, review_date_plus, review_date){
 														var c = {
 															"profile": profile.profile,
 															"review": profile.review,
@@ -832,6 +832,7 @@ router.post('/get/friend', multipartMiddleware, function(req, res){
 															"privado": privado,
 															"review": {
 																allow: review_allow,
+																date_plus: review_date_plus,
 																date: review_date
 															}
 														};
