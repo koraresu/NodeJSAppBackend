@@ -504,14 +504,19 @@ function review_check(me, friend, success){
 			$all: [ me._id, friend._id ]
 		}
 	}).populate('profiles').populate('profile_id').sort({updatedAt: -1}).exec(function(errReview, reviewData){
-		var now     = new Date();
-		var updated = new Date(reviewData.updatedAt);
-		var newdate = new Date(reviewData.updatedAt);
-		newdate.setDate(updated.getDate() + 15);
-		if(now >= newdate){
-			success(true, newdate, updated);
+		if(!errReview && reviewData){
+			var now     = new Date();
+			var updated = new Date(reviewData.updatedAt);
+			var newdate = new Date(reviewData.updatedAt);
+			newdate.setDate(updated.getDate() + 15);
+			if(now >= newdate){
+				success(true, newdate, updated);
+			}else{
+				success(false, newdate,updated);
+			}	
 		}else{
-			success(false, newdate,updated);
+			var now     = new Date();
+			success(true, now, now);
 		}
 	});
 }
