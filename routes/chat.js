@@ -578,7 +578,7 @@ var moment = require('moment-timezone');
 							if(mongoose.Types.ObjectId.isValid(id)){
 								id = mongoose.Types.ObjectId(id);
 								if(type == 1){
-									text = data.image;
+									text = '<img src="data:image/png;base64,'+data.image+'" />';
 								}
 								var d = {
 									type: type,
