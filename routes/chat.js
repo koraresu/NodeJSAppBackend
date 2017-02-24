@@ -587,13 +587,14 @@ var moment = require('moment-timezone');
 									message: text,
 									status: true
 								};
+								console.log("GET MESSAGE:");
 								console.log( d );
 								var message = new Message(d);
 								message.save(function(err, mData){
 
 									Message.findOne({ _id: mData._id}).populate('profile_id').exec(function(err, messageData){
 										Conversation.findOne({ _id: id }).populate('profiles').exec(function(errConv, convData){
-											
+
 											if(!errConv && convData){
 												var equal = Generalfunc.profile_equal(profileData._id, convData.profiles);
 												var readed = convData.readed;
