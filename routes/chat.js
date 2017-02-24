@@ -587,6 +587,7 @@ var moment = require('moment-timezone');
 									message: text,
 									status: true
 								};
+								console.log( d );
 								var message = new Message(d);
 								message.save(function(err, mData){
 
