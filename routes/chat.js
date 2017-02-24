@@ -593,10 +593,7 @@ var moment = require('moment-timezone');
 
 									Message.findOne({ _id: mData._id}).populate('profile_id').exec(function(err, messageData){
 										Conversation.findOne({ _id: id }).populate('profiles').exec(function(errConv, convData){
-											console.log("Error Conversation:");
-											console.log( errConv );
-											console.log("Conv Data:");
-											console.log(convData);
+											
 											if(!errConv && convData){
 												var equal = Generalfunc.profile_equal(profileData._id, convData.profiles);
 												var readed = convData.readed;
