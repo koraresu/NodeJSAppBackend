@@ -229,28 +229,28 @@ io.on('connection', function(socket){
         socket.broadcast.to(messageData.conversation.toString()).emit('message',{data: d, t:false, accion: 'message' });
 
         /******* Apple Push Notification *****/
-        console.log("/******* Apple Push Notification *****/");
+        //console.log("/******* Apple Push Notification *****/");
 
         Pushfunc.getConvProfile(messageData._id, socket, function(profile){
-          console.log("GetConvProfile");
-          console.log(profile);
+          //console.log("GetConvProfile");
+          //console.log(profile);
           Pushfunc.send(0,profile._id, messageData, function(results){
-            console.log( results );
+            //console.log( results );
             Generalfunc.NoReaded(profile._id, function(num){
               socket.emit('set_alert_num', num);
             }, function(st){
-              console.log("Gneralfunc.NoReaded Error:" + st);
+              //console.log("Gneralfunc.NoReaded Error:" + st);
             });
           }, function(results){
-            console.log( results );
+            //console.log( results );
             Generalfunc.NoReaded(profile._id, function(num){
               socket.emit('set_alert_num', num);
             }, function(st){
-              console.log("Gneralfunc.NoReaded Error:" + st);
+              //console.log("Gneralfunc.NoReaded Error:" + st);
             });
           });
         }, function(st){
-          console.log("Get Conv Profile:" + st);
+          //console.log("Get Conv Profile:" + st);
         });
       }
     });
