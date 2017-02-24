@@ -570,14 +570,18 @@ var moment = require('moment-timezone');
 			var guid      = data.guid;
 			var id        = data.conversation
 			var text      = data.message;
-
+			var type      = data.type;
 			Tokenfunc.exist(guid, function(status, tokenData){
 				if(status){
 					Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
 						if(status){
 							if(mongoose.Types.ObjectId.isValid(id)){
 								id = mongoose.Types.ObjectId(id);
+								if(type == 1){
+									text = data.image;
+								}
 								var d = {
+									type: type,
 									conversation: id,
 									profile_id: profileData._id,
 									message: text,
