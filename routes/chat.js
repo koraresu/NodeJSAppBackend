@@ -585,11 +585,12 @@ var moment = require('moment-timezone');
 									var filepath = __dirname + '/../messages/' +name;
 									fs.writeFile(filepath, imageBuffer.data, function(err) {
 										text = '<img src="http://thehiveapp.mx:3000/messages/'+name+'" />';
+										
 										var d = {
 										type: type,
 										conversation: id,
 										profile_id: profileData._id,
-										message: ,
+										message: text,
 										status: true
 									};
 									console.log("GET MESSAGE:");
