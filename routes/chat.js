@@ -583,7 +583,7 @@ var moment = require('moment-timezone');
 									var path = __dirname + "/../public/messages/" + name + ".png";
 									decodeBase64Image(data.image, path);
 
-									text = '<img src="http://thehiveapp.mx:3000/messages/'+name+'.png" />';
+									text = '<a href="http://thehiveapp.mx:3000/messages/'+name+'.png" class="image"><img src="http://thehiveapp.mx:3000/messages/'+name+'.png" /></a>';
 								}
 								var d = {
 									type: type,
