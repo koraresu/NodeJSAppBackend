@@ -205,10 +205,6 @@ io.on('connection', function(socket){
     });
   });
   socket.on('message', function(data){
-    console.log("Mensaje:");
-    console.log("SocketID:" + socket.id);
-    console.log("SocketGUID:" + socket.guid);
-    console.log( data );
     chatrouter.message(data, function(status, messageData){
       if(status){
         //io.sockets.in(messageData.conversation.toString()).emit('message',{data: messageData, t:true, accion: 'message' });

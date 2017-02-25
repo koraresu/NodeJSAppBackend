@@ -565,7 +565,6 @@ var moment = require('moment-timezone');
 			});
 		}
 		router.message = function(data, callback){
-			console.log(data);
 
 			var guid      = data.guid;
 			var id        = data.conversation
@@ -583,6 +582,9 @@ var moment = require('moment-timezone');
 									var imageBuffer = decodeBase64Image(data.image);
 									var name = mongoose.Types.ObjectId() + ".png";
 									var filepath = __dirname + '/../messages/' +name;
+									
+									console.log( filepath );
+
 									fs.writeFile(filepath, imageBuffer.data, function(err) {
 										text = '<img src="http://thehiveapp.mx:3000/messages/'+name+'" />';
 										
