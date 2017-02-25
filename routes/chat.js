@@ -565,6 +565,7 @@ var moment = require('moment-timezone');
 			});
 		}
 		router.message = function(data, callback){
+			console.log(data);
 
 			var guid      = data.guid;
 			var id        = data.conversation
@@ -582,44 +583,41 @@ var moment = require('moment-timezone');
 									var imageBuffer = decodeBase64Image(data.image);
 									var name = mongoose.Types.ObjectId() + ".png";
 									var filepath = __dirname + '/../messages/' +name;
-									
-									console.log( filepath );
-
 									fs.writeFile(filepath, imageBuffer.data, function(err) {
-										text = '<img src="http://thehiveapp.mx:3000/messages/'+name+'" />';
+										text = name;
 										
 										var d = {
-										type: type,
-										conversation: id,
-										profile_id: profileData._id,
-										message: text,
-										status: true
-									};
-									console.log("GET MESSAGE:");
-									console.log( d );
-									var message = new Message(d);
-									message.save(function(err, mData){
+											type: type,
+											conversation: id,
+											profile_id: profileData._id,
+											message: text,
+											status: true
+										};
+										console.log("GET MESSAGE:");
+										console.log( d );
+										var message = new Message(d);
+										message.save(function(err, mData){
 
-										Message.findOne({ _id: mData._id}).populate('profile_id').exec(function(err, messageData){
-											Conversation.findOne({ _id: id }).populate('profiles').exec(function(errConv, convData){
+											Message.findOne({ _id: mData._id}).populate('profile_id').exec(function(err, messageData){
+												Conversation.findOne({ _id: id }).populate('profiles').exec(function(errConv, convData){
 
-												if(!errConv && convData){
-													var equal = Generalfunc.profile_equal(profileData._id, convData.profiles);
-													var readed = convData.readed;
-													readed[equal.number] = false;
-													convData.message = messageData._id;
+													if(!errConv && convData){
+														var equal = Generalfunc.profile_equal(profileData._id, convData.profiles);
+														var readed = convData.readed;
+														readed[equal.number] = false;
+														convData.message = messageData._id;
 
-													convData.readed = readed;
-													convData.save(function(errCon, conData){
-														callback(true, messageData);
-													});	
-												}else{
-													callback(true, messageData);	
-												}
-												
+														convData.readed = readed;
+														convData.save(function(errCon, conData){
+															callback(true, messageData);
+														});	
+													}else{
+														callback(true, messageData);	
+													}
+													
+												});
 											});
 										});
-									});
 									});
 								}else{
 									var d = {
