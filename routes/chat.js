@@ -578,40 +578,81 @@ var moment = require('moment-timezone');
 							if(mongoose.Types.ObjectId.isValid(id)){
 								id = mongoose.Types.ObjectId(id);
 								if(type == 1){
-									text = '<img src="data:image/png;base64,'+data.image+'" />';
-								}
-								var d = {
-									type: type,
-									conversation: id,
-									profile_id: profileData._id,
-									message: text,
-									status: true
-								};
-								console.log("GET MESSAGE:");
-								console.log( d );
-								var message = new Message(d);
-								message.save(function(err, mData){
+									
 
-									Message.findOne({ _id: mData._id}).populate('profile_id').exec(function(err, messageData){
-										Conversation.findOne({ _id: id }).populate('profiles').exec(function(errConv, convData){
+									var imageBuffer = decodeBase64Image(data.image);
+									var name = mongoose.Types.ObjectId() + ".png";
+									var filepath = __dirname + '/../messages/' +name;
+									fs.writeFile(filepath, imageBuffer.data, function(err) {
+										text = '<img src="http://thehiveapp.mx:3000/messages/'+name+'" />';
+										var d = {
+										type: type,
+										conversation: id,
+										profile_id: profileData._id,
+										message: ,
+										status: true
+									};
+									console.log("GET MESSAGE:");
+									console.log( d );
+									var message = new Message(d);
+									message.save(function(err, mData){
 
-											if(!errConv && convData){
-												var equal = Generalfunc.profile_equal(profileData._id, convData.profiles);
-												var readed = convData.readed;
-												readed[equal.number] = false;
-												convData.message = messageData._id;
+										Message.findOne({ _id: mData._id}).populate('profile_id').exec(function(err, messageData){
+											Conversation.findOne({ _id: id }).populate('profiles').exec(function(errConv, convData){
 
-												convData.readed = readed;
-												convData.save(function(errCon, conData){
-													callback(true, messageData);
-												});	
-											}else{
-												callback(true, messageData);	
-											}
-											
+												if(!errConv && convData){
+													var equal = Generalfunc.profile_equal(profileData._id, convData.profiles);
+													var readed = convData.readed;
+													readed[equal.number] = false;
+													convData.message = messageData._id;
+
+													convData.readed = readed;
+													convData.save(function(errCon, conData){
+														callback(true, messageData);
+													});	
+												}else{
+													callback(true, messageData);	
+												}
+												
+											});
 										});
 									});
-								});
+									});
+								}else{
+									var d = {
+										type: type,
+										conversation: id,
+										profile_id: profileData._id,
+										message: text,
+										status: true
+									};
+									console.log("GET MESSAGE:");
+									console.log( d );
+									var message = new Message(d);
+									message.save(function(err, mData){
+
+										Message.findOne({ _id: mData._id}).populate('profile_id').exec(function(err, messageData){
+											Conversation.findOne({ _id: id }).populate('profiles').exec(function(errConv, convData){
+
+												if(!errConv && convData){
+													var equal = Generalfunc.profile_equal(profileData._id, convData.profiles);
+													var readed = convData.readed;
+													readed[equal.number] = false;
+													convData.message = messageData._id;
+
+													convData.readed = readed;
+													convData.save(function(errCon, conData){
+														callback(true, messageData);
+													});	
+												}else{
+													callback(true, messageData);	
+												}
+												
+											});
+										});
+									});
+								}
+								
 							}else{
 								callback(false, null);
 							}
@@ -1076,4 +1117,17 @@ function profile_equal(profileID, profiles){
 		number = 1;
 	}
 	return { number: number, profile: element };
+}
+function decodeBase64Image(dataString) {
+  var matches = dataString.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/),
+    response = {};
+
+  if (matches.length !== 3) {
+    return new Error('Invalid input string');
+  }
+
+  response.type = matches[1];
+  response.data = new Buffer(matches[2], 'base64');
+
+  return response;
 }
