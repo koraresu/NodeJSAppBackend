@@ -235,7 +235,7 @@ router.post('/create', multipartMiddleware, function(req, res){
 	var typeUser = 0;
 	var facebookData = [];
 
-	if( Generalfunc.IsJsonString(facebook)){
+	if( Profilefunc.IsJsonString(facebook)){
 		typeUser = 1;
 		console.log(facebook);
 		facebook = JSON.parse(facebook);
