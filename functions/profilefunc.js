@@ -518,6 +518,7 @@ function IsJsonString(str) {
     }
     return true;
 }
+exports.IsJsonString = IsJsonString
 exports.logs = logs
 exports.permitedData = permitedData
 exports.generate_email_bienvenida     = generate_email_bienvenida
