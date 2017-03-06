@@ -235,7 +235,7 @@ router.post('/create', multipartMiddleware, function(req, res){
 	var typeUser = 0;
 	var facebookData = [];
 
-	if(facebook != undefined || facebook != null || facebook != ""){
+	if(facebook != undefined || facebook != null || facebook != "" || facebook != ''){
 		typeUser = 1;
 		console.log(facebook);
 		facebook = JSON.parse(facebook);
