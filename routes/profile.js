@@ -225,6 +225,7 @@ router.post('/forgot', multipartMiddleware, function(req, res){
 // Return (Formato 2)
 // 		Generated Token
 router.post('/create', multipartMiddleware, function(req, res){
+	console.log( req.body );
 	var nombre   = req.body.first_name;
 	var apellido = req.body.last_name;
 	var email    = req.body.email;
