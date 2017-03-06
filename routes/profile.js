@@ -237,17 +237,10 @@ router.post('/create', multipartMiddleware, function(req, res){
 	if(facebook != undefined || facebook != null || facebook != ""){
 		typeUser = 1;
 		console.log(facebook);
-		if(facebook == undefined){
-			facebook = JSON.parse(facebook);
+		facebook = JSON.parse(facebook);
 
-			facebookId = facebook.fId;
-			facebookTo = facebook.token;	
-		}else{
-			facebook = "";
-
-			facebookId = "";
-			facebookTo = "";
-		}
+		facebookId = facebook.fId;
+		facebookTo = facebook.token;
 
 		var result = facebook.result;
 
