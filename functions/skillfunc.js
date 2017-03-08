@@ -56,13 +56,12 @@ var add = function(profile_id, name, callback){
 						name: skill
 					}, function(status, skillData){
 
-
+						var skillsD = profileData.skills.map(function(o){
+							console.log("Comparando: ["+o+"|"+skill.id+"]");
+							return o;
+						});
 
 						if(profileData.skills.length > 0){
-							var skillsD = profileData.skills.map(function(o){
-								console.log("Comparando: ["+o+"|"+skill.id+"]");
-								return o;
-							});
 							skillsID.push(skillData._id);
 							ca();
 						}else{
