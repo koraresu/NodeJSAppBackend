@@ -133,9 +133,9 @@ var edit = function(profile_id, from, to, callback){
 			ExistsOrCreate({ name: to},{ name: to},function(errSkillTo, skillToData){
 				var skills = profileData.skills;
 
-				var skills = profileData.skills;
+				console.log( skills );
+				console.log( skillFromData._id );
 				var skillsD = skills.map(function(o){
-					console.log("Comparando: ["+ o.toString() + " | " + skillFromData._id.toString()+"]");
 					if(o.toString() == skillFromData._id.toString()){
 						return skillToData._id;
 					}else{
