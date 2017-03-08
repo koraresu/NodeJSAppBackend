@@ -608,39 +608,45 @@ router.post('/facebooktofriend', multipartMiddleware, function(req, res){
 			Tokenfunc.toProfile(token.generated_id, function(status, userData, profileData){
 				if(status){
 					var facebook = [];
-					var v = {
-						"facebookId": {
-							$in: split
-						}
-					};
-					Profile.find(v).exec(function(profileErr, facebookProfileData){
-						if(facebookProfileData.length > 0){
-							async.map(facebookProfileData, function(item, callback){
-								Networkfunc.isFriend(profileData._id, item._id, function(d){
-									console.log("ProfileData:");
-									console.log(profileData._id);
-									console.log("Facebook Profile Data");
-									console.log(item._id);
-									console.log("Friend:");
-									console.log(d);
-									var x = {
-										profile: item,
-										isFriend: d
-									};
-									callback(null, x);
+					if(split.length > 0){
+						var v = {
+							"facebookId": {
+								$in: split
+							}
+						};
+						Profile.find(v).exec(function(profileErr, facebookProfileData){
+							if(facebookProfileData.length > 0){
+								async.map(facebookProfileData, function(item, callback){
+									Networkfunc.isFriend(profileData._id, item._id, function(d){
+										console.log("ProfileData:");
+										console.log(profileData._id);
+										console.log("Facebook Profile Data");
+										console.log(item._id);
+										console.log("Friend:");
+										console.log(d);
+										var x = {
+											profile: item,
+											isFriend: d
+										};
+										callback(null, x);
+									});
+								}, function(err, results){
+									split = cleanArray(split);
+									Generalfunc.response(200, {profiles: results, uknown: split}, function(response){
+										res.json(response);
+									});
 								});
-							}, function(err, results){
-								split = cleanArray(split);
-								Generalfunc.response(200, {profiles: results, uknown: split}, function(response){
+							}else{
+								Generalfunc.response(200, {profiles: [], uknown: split}, function(response){
 									res.json(response);
 								});
-							});
-						}else{
-							Generalfunc.response(200, {profiles: [], uknown: split}, function(response){
-								res.json(response);
-							});
-						}
-					});
+							}
+						});
+					}else{
+						Generalfunc.response(200, {profiles: [], uknown: []}, function(response){
+							res.json(response);
+						});
+					}
 				}else{
 					Generalfunc.response(101, {}, function(response){
 						res.json(response);
