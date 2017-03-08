@@ -104,8 +104,15 @@ var add = function(profile_id, name, callback){
 			}, function(status, skillData){
 
 				var skillsD = profileData.skills.map(function(o){
-					console.log("Comparando: ["+o+"|"+skillData.id+"]");
-					return o;
+					
+					if(o.toString() === skillData.id.toString()){
+						console.log("Comparando: ["+o+"|"+skillData.id+"] - Es igual");
+						return o;
+					}else{
+						console.log("Comparando: ["+o+"|"+skillData.id+"] - No es igual");
+						return o;
+					}
+					
 				});
 
 				profileData.skills.push(skillData._id);
