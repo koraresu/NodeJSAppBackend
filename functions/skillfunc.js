@@ -102,10 +102,11 @@ var add = function(profile_id, name, callback){
 			}, {
 				name: name
 			}, function(status, skillData){
-
+				var e = false;
 				var skillsD = profileData.skills.map(function(o){
 					
 					if(o.toString() === skillData.id.toString()){
+						if(!e){ e = true; }
 						console.log("Comparando: ["+o+"|"+skillData.id+"] - Es igual");
 						return o;
 					}else{
@@ -114,12 +115,14 @@ var add = function(profile_id, name, callback){
 					}
 					
 				});
-
-				profileData.skills.push(skillData._id);
-
-				profileData.save(function(err, pd){
+				if(e){
 					callback(true, { type: 0, skill: skillData}, profileData);
-				});
+				}else{
+					profileData.skills.push(skillData._id);
+					profileData.save(function(err, pd){
+						callback(true, { type: 0, skill: skillData}, profileData);
+					});
+				}
 			});
 		}
 
