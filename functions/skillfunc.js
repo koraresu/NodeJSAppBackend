@@ -56,8 +56,13 @@ var add = function(profile_id, name, callback){
 						name: skill
 					}, function(status, skillData){
 
+
+
 						if(profileData.skills.length > 0){
-							var dont = true;
+							var skillsD = profileData.skills.map(function(o){
+								console.log("Comparando: ["+o+"|"+skill.id+"]");
+								return o;
+							});
 							skillsID.push(skillData._id);
 							ca();
 						}else{
@@ -156,7 +161,7 @@ var remove = function(profile_id, name, callback){
 			var skillsD = skills.filter(function(o){
 				return o.toString() != skillData._id.toString()
 			});
-			
+
 			profileData.skills = skillsD;
 			profileData.save(function(err, profileData){
 				callback(err, profileData);
