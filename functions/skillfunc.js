@@ -57,7 +57,7 @@ var add = function(profile_id, name, callback){
 					}, function(status, skillData){
 
 						var skillsD = profileData.skills.map(function(o){
-							console.log("Comparando: ["+o+"|"+skill.id+"]");
+							console.log("Comparando: ["+o.toString()+"|"+skillData.id.toString()+"]");
 							return o;
 						});
 
