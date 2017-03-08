@@ -480,6 +480,7 @@ router.post('/company/update', multipartMiddleware, function(req, res){ // Updat
 	var id          = req.body.id;
 	var description = req.body.description;
 
+
 	var calle       = req.body.calle;
 	var numero      = req.body.numero;
 	var colonia     = req.body.colonia;
@@ -488,9 +489,7 @@ router.post('/company/update', multipartMiddleware, function(req, res){ // Updat
 	var ciudad      = req.body.ciudad;
 	var tel         = req.body.tel;
 	var web         = req.body.web;
-	var desc        = req.body.desc;
 	var name        = req.body.name;
-	var id          = req.body.id;
 	
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
@@ -503,7 +502,37 @@ router.post('/company/update', multipartMiddleware, function(req, res){ // Updat
 							if(companyData.profile_id != undefined){
 								if(companyData.profile_id.toString() === profileData._id.toString()){
 									if(description.length <= 200){
+
 										companyData.description = description;
+
+										if(name != undefined || name != ""){
+											companyData.name    = name;
+										}
+										if(web != undefined || web != ""){
+											companyData.website = web;	
+										}
+										if(tel != undefined || tel != ""){
+											companyData.phone   = tel;	
+										}
+										if(calle != undefined || calle != ""){
+											companyData.address.calle   = calle;
+										}
+										if(colonia != undefined || colonia != ""){
+											companyData.address.colonia = colonia;
+										}
+										if(ciudad != undefined || ciudad != ""){
+											companyData.address.ciudad  = ciudad;
+										}
+										if(estado != undefined || estado != ""){
+											companyData.address.estado  = estado;
+										}
+										if(numero != undefined || numero != ""){
+											companyData.address.numero  = numero;
+										}
+										if(cp != undefined || cp != ""){
+											companyData.address.postalc = cp;
+										}
+
 										companyData.save(function(err, companyData){
 											Generalfunc.response(200, companyData, function(response){
 												res.json(response);
