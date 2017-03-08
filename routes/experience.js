@@ -498,61 +498,60 @@ router.post('/company/update', multipartMiddleware, function(req, res){ // Updat
 					if(mongoose.Types.ObjectId.isValid(id)){
 						id = mongoose.Types.ObjectId(id);
 						Company.findOne({ _id: id }).exec(function(err, companyData){
-							
+							var permiso = true;
 							if(companyData.profile_id != undefined){
-								if(companyData.profile_id.toString() === profileData._id.toString()){
-									if(description.length <= 200){
+								if(companyData.profile_id.toString() != profileData._id.toString()){
+									permiso = false;
+								}
+							}
+							if(permiso){
+								if(description.length <= 200){
+									companyData.description = description;
 
-										companyData.description = description;
+									if(name != undefined || name != ""){
+										companyData.name    = name;
+									}
+									if(web != undefined || web != ""){
+										companyData.website = web;	
+									}
+									if(tel != undefined || tel != ""){
+										companyData.phone   = tel;	
+									}
+									if(calle != undefined || calle != ""){
+										companyData.address.calle   = calle;
+									}
+									if(colonia != undefined || colonia != ""){
+										companyData.address.colonia = colonia;
+									}
+									if(ciudad != undefined || ciudad != ""){
+										companyData.address.ciudad  = ciudad;
+									}
+									if(estado != undefined || estado != ""){
+										companyData.address.estado  = estado;
+									}
+									if(numero != undefined || numero != ""){
+										companyData.address.numero  = numero;
+									}
+									if(cp != undefined || cp != ""){
+										companyData.address.postalc = cp;
+									}
 
-										if(name != undefined || name != ""){
-											companyData.name    = name;
-										}
-										if(web != undefined || web != ""){
-											companyData.website = web;	
-										}
-										if(tel != undefined || tel != ""){
-											companyData.phone   = tel;	
-										}
-										if(calle != undefined || calle != ""){
-											companyData.address.calle   = calle;
-										}
-										if(colonia != undefined || colonia != ""){
-											companyData.address.colonia = colonia;
-										}
-										if(ciudad != undefined || ciudad != ""){
-											companyData.address.ciudad  = ciudad;
-										}
-										if(estado != undefined || estado != ""){
-											companyData.address.estado  = estado;
-										}
-										if(numero != undefined || numero != ""){
-											companyData.address.numero  = numero;
-										}
-										if(cp != undefined || cp != ""){
-											companyData.address.postalc = cp;
-										}
-
-										companyData.save(function(err, companyData){
-											Generalfunc.response(200, companyData, function(response){
-												res.json(response);
-											});
-										});
-									}else{
-										Generalfunc.response(101, { message: "La descripcion es mayor." }, function(response){
+									companyData.save(function(err, companyData){
+										Generalfunc.response(200, companyData, function(response){
 											res.json(response);
 										});
-									}
-								}else{	
-									Generalfunc.response(101, { message: "Este perfil no tiene permisos." }, function(response){
+									});
+								}else{
+									Generalfunc.response(101, { message: "La descripcion es mayor." }, function(response){
 										res.json(response);
 									});
-								}
+								}	
 							}else{
 								Generalfunc.response(101, { message: "Este perfil no tiene permisos." }, function(response){
-										res.json(response);
-									});
+									res.json(response);
+								});
 							}
+							
 						});
 					}else{
 						Generalfunc.response(101, { message: "id is not valid." }, function(response){
