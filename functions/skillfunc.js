@@ -55,27 +55,22 @@ var add = function(profile_id, name, callback){
 					}, {
 						name: skill
 					}, function(status, skillData){
-						console.log(skillData);
+
 						if(profileData.skills.length > 0){
 							var dont = true;
 							skillsID.push(skillData._id);
 							ca();
 						}else{
-							console.log("Profile Skills Vacio");
 							skillsID.push(skillData._id);
 							ca();
 						}
 						
-						console.log(profileData.skills.length);
 					});
 				}
 			}, function(error,results){
-				console.log(skillsID);
-				console.log(profileData.skills);
 
 				var different = skillsID.filter(function(obj) { return profileData.skills.indexOf(obj) == -1; });
-				console.log("DIFFERENT:");
-				console.log(different);
+
 				if(different.length > 0){
 					different.forEach(function(item, index){
 						profileData.skills.push(item);
@@ -135,6 +130,7 @@ var edit = function(profile_id, from, to, callback){
 
 				console.log( skills );
 				console.log( skillFromData._id );
+
 				var skillsD = skills.map(function(o){
 					if(o.toString() == skillFromData._id.toString()){
 						return skillToData._id;
@@ -156,13 +152,11 @@ var remove = function(profile_id, name, callback){
 	Profile.findOne({ _id: profile_id }, function(errProfile, profileData){
 		Skill.findOne({name: name}).exec(function(errSkill, skillData){
 			var skills = profileData.skills;
-			console.log(skills);
-			console.log(skillData);
 
 			var skillsD = skills.filter(function(o){
 				return o.toString() != skillData._id.toString()
 			});
-			console.log(skillsD);
+			
 			profileData.skills = skillsD;
 			profileData.save(function(err, profileData){
 				callback(err, profileData);
