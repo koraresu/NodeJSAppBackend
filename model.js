@@ -230,8 +230,9 @@ var companySchema = new Schema({
   images: String,
   description: String,
   website: String,
-  industry: String,
+  phone: String,
   type: String,
+
   address: {
     calle: String,
     colonia: String,

@@ -480,6 +480,17 @@ router.post('/company/update', multipartMiddleware, function(req, res){ // Updat
 	var id          = req.body.id;
 	var description = req.body.description;
 
+	var calle       = req.body.calle;
+	var numero      = req.body.numero;
+	var colonia     = req.body.colonia;
+	var cp          = req.body.cp;
+	var estado      = req.body.estado;
+	var ciudad      = req.body.ciudad;
+	var tel         = req.body.tel;
+	var web         = req.body.web;
+	var desc        = req.body.desc;
+	var name        = req.body.name;
+	var id          = req.body.id;
 	
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
