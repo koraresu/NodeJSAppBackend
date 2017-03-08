@@ -104,10 +104,10 @@ var add = function(profile_id, name, callback){
 			}, function(status, skillData){
 
 				var skillsD = profileData.skills.map(function(o){
-					console.log("Comparando: ["+o+"|"+skill.id+"]");
+					console.log("Comparando: ["+o+"|"+skillData.id+"]");
 					return o;
 				});
-				
+
 				profileData.skills.push(skillData._id);
 
 				profileData.save(function(err, pd){
