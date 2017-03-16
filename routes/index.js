@@ -211,32 +211,7 @@ router.get('/chat/3', function(req, res){
   res.render('chat3', {});
 });
 
-router.get('/check/', function(req, res){
-  var html = "";
-  Experience.find({}).exec(function(errExperience, experienceData){
-    var html = "";
-    async.map(experienceData, function(item, callback){
-      var h = "";  
-      h += '<p style="border-bottom: 1px solid #000;">' + item.company.name + " - " + item.ocupation.name + " - " + item.sector.name ;
-      Profile.findOne({_id: item.profile_id}).exec(function(errProfile, profileData){
-        if(!errProfile && profileData){
-          h += '<p style="background-color:green;">' + profileData._id + " - " + profileData.first_name + " " + profileData.last_name + " - Existe</p>";
-        }else{
-          h += '<p style="background-color:gray;">' + item._id + " - NoExiste</p>";
-        }
-        h += "</p>";
 
-        callback(null, h);
-      });
-    },function(err, results){
-      html = results.join("");
-
-      res.send(html);
-    });
-    
-  });
-
-});
 
 router.get('/check/history', function(req, res){
   var html = "";

@@ -1232,17 +1232,17 @@ router.post('/update', multipartMiddleware, function(req, res){
 	var nombre    = req.body.first_name;
 	var apellido  = req.body.last_name;
 	var statusReq = req.body.status;
-	var job        = req.body.job;
-	var speciality = req.body.speciality;	
+	var job        = Generalfunc.formatName( req.body.job );
+	var speciality = Generalfunc.formatName( req.body.speciality );
 	var birthday   = req.body.birthday;
 	var phone      = req.body.phone;
 
 	var type       = req.body.type;
 	var company    = req.body.company;
-	var job        = req.body.job;
-	var speciality = req.body.speciality;
-	var sector     = req.body.sector;
-	var ocupation  = req.body.ocupation;
+	var job        = Generalfunc.formatName( req.body.job );
+	var speciality = Generalfunc.formatName( req.body.speciality );
+	var sector     = Generalfunc.formatName( req.body.sector );
+	var ocupation  = Generalfunc.formatName( req.body.ocupation );
 
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
