@@ -602,15 +602,15 @@ router.post('/emailtofriend', multipartMiddleware, function(req, res){
 router.post('/facebooktofriend', multipartMiddleware, function(req, res){
 	var guid       = req.body.guid;
 	var facebookids     = req.body.facebookid;
-	var split = facebookids.split(',');
+	
 	Tokenfunc.exist(guid, function(errToken, token){
 		if(errToken){
 			Tokenfunc.toProfile(token.generated_id, function(status, userData, profileData){
 				if(status){
 					var facebook = [];
-					console.log( "Split" );
-					console.log( split );
-					if(split.length > 0){
+
+					if(facebookids.indexOf(',') > -1 || facebookids.length > 0){
+						var split = facebookids.split(',');
 						var v = {
 							"facebookId": {
 								$in: split
@@ -647,7 +647,7 @@ router.post('/facebooktofriend', multipartMiddleware, function(req, res){
 					}else{
 						Generalfunc.response(200, {profiles: [], uknown: []}, function(response){
 							res.json(response);
-						});
+						});	
 					}
 				}else{
 					Generalfunc.response(101, {}, function(response){
