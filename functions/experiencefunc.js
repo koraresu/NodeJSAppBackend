@@ -225,6 +225,9 @@ exports.sectorGet = function(name, callback){
 function formatName(text){
 	return text;
 }
+function formatCaseInsensitive(val){
+	return val;
+}
 exports.formatName               = formatName
 exports.formatCaseInsensitive    = formatCaseInsensitive
 exports.get                      = get
