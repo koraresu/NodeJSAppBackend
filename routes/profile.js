@@ -381,6 +381,7 @@ router.post('/login-facebook', multipartMiddleware, function(req, res){
 	var name       = req.body.name;
 
 	User.findOne({ email: email}, function(errUser, userData){
+		console.log( userData );
 		if(!errUser && userData){
 
 			var verified = true;
@@ -439,67 +440,42 @@ router.post('/login-facebook', multipartMiddleware, function(req, res){
 				});
 			});
 		}else{
-			Profilefunc.userProfileInsertIfDontExists({
-				email: email
-			},{
-				email: email,
-				verified: true,
-				type: 1
-			},{
-				first_name: first_name,
-				last_name: last_name,
-				nacimiento: null,
-				ocupation: {},
-				speciality: {},
-				public_id: mongoose.Types.ObjectId(),
-				experiences: [],
-				facebookId: facebookID,
-				facebookToken: tokenFB,
-				facebookData: [
-				{
-					"name": "first_name",
-					"value": first_name
-				},
-				{
-					"name": "last_name",
-					"value": last_name
-				},
-				{
-					"name": "name",
-					"value":name
-				},
-				{
-					"name": "picture",
-					"value": profilepic
-				},
-				{
-					"name": "email",
-					"value": email
-				},
-				{
-					"name": "gender",
-					"value": gender
-				}
-				],
-			}, function(exist, tokenData, profileData){
+			var facebookData = [
+			{
+				"name": "first_name",
+				"value": first_name
+			},
+			{
+				"name": "last_name",
+				"value": last_name
+			},
+			{
+				"name": "name",
+				"value":name
+			},
+			{
+				"name": "picture",
+				"value": profilepic
+			},
+			{
+				"name": "email",
+				"value": email
+			},
+			{
+				"name": "gender",
+				"value": gender
+			}
+			];
 
-				verified = false;
-
-				Experiencefunc.get(profileData._id, function(statusExperience, experiences){
-					var exp = statusExperience;	
-					profileData.save(function(errProfile, profileData){
-						Profilefunc.logs(profileData, 19, profileData, function(){
-							Generalfunc.response(201,{
-								token: tokenData.generated_id,
-								verified: verified,
-								experiences: exp,
-							}, function(response){
-								res.json(response);
-							});
-						});
-					});
-				});
+			Generalfunc.response(200,{
+				fb_id: facebookID,
+				fb_token: tokenFB,
+				fb_info: facebookData,
+				action: 0
+			}, function(response){
+				res.json(response);
 			});
+
 		}
 	});
 });
