@@ -64,9 +64,16 @@ router.post('/write/comentario', multipartMiddleware, function(req, res){
 					content: contenido
 				});
 				feedback.save(function(errFeedback, feedbackData){
-					Generalfunc.response(200, format.feedback(feedbackData), function(response){
-						res.json(response);
+
+					Generalfunc.sendEmail("email_generico.jade", {
+						title: titulo,
+						content: contenido
+					}, "rael.axovia@gmail.com", "Comentario",function(status, html){
+						Generalfunc.response(200, format.feedback(feedbackData), function(response){
+							res.json(response);
+						});
 					});
+
 				});
 
 			});
