@@ -690,9 +690,7 @@ PaisSchema.post('update', function(doc, next){
 /*******************************************/
 var EstadoSchema = new Schema({
     "id" : { type: String },
-    "key" : { type: String },
-    "name" : { type: String },
-    "shortname" : { type: String }
+    "name" : { type: String }
 });
 EstadoSchema.post('save', function(doc, next){
   logMiddleware("estado","save", doc, function(err, logData){
@@ -713,10 +711,8 @@ EstadoSchema.post('update', function(doc, next){
 /*******************************************/
 var CiudadSchema = new Schema({
     "id" : { type: String },
-    "key" : { type: String },
     "state_id" : { type: Schema.Types.ObjectId, ref: 'State' },
     "name" : { type: String },
-    "shortname" : { type: String }
 });
 CiudadSchema.post('save', function(doc, next){
   logMiddleware("ciudad","save", doc, function(err, logData){

@@ -1,0 +1,9818 @@
+[
+	{
+		"entidad": "Aguascalientes",
+		"cabecera": "Aguascalientes"
+	},
+	{
+		"entidad": "Aguascalientes",
+		"cabecera": "Asientos"
+	},
+	{
+		"entidad": "Aguascalientes",
+		"cabecera": "Calvillo"
+	},
+	{
+		"entidad": "Aguascalientes",
+		"cabecera": "Cosío"
+	},
+	{
+		"entidad": "Aguascalientes",
+		"cabecera": "Jesús María"
+	},
+	{
+		"entidad": "Aguascalientes",
+		"cabecera": "Pabellón de Arteaga"
+	},
+	{
+		"entidad": "Aguascalientes",
+		"cabecera": "Rincón de Romos"
+	},
+	{
+		"entidad": "Aguascalientes",
+		"cabecera": "San José de Gracia"
+	},
+	{
+		"entidad": "Aguascalientes",
+		"cabecera": "Tepezalá"
+	},
+	{
+		"entidad": "Aguascalientes",
+		"cabecera": "Palo Alto"
+	},
+	{
+		"entidad": "Aguascalientes",
+		"cabecera": "San Francisco de los Romo"
+	},
+	{
+		"entidad": "Baja California",
+		"cabecera": "Ensenada"
+	},
+	{
+		"entidad": "Baja California",
+		"cabecera": "Mexicali"
+	},
+	{
+		"entidad": "Baja California",
+		"cabecera": "Tecate"
+	},
+	{
+		"entidad": "Baja California",
+		"cabecera": "Tijuana"
+	},
+	{
+		"entidad": "Baja California",
+		"cabecera": "Playas de Rosarito"
+	},
+	{
+		"entidad": "Baja California Sur",
+		"cabecera": "Ciudad Constitución"
+	},
+	{
+		"entidad": "Baja California Sur",
+		"cabecera": "Santa Rosalía"
+	},
+	{
+		"entidad": "Baja California Sur",
+		"cabecera": "La Paz"
+	},
+	{
+		"entidad": "Baja California Sur",
+		"cabecera": "San José del Cabo"
+	},
+	{
+		"entidad": "Baja California Sur",
+		"cabecera": "Loreto"
+	},
+	{
+		"entidad": "Campeche",
+		"cabecera": "Calkiní"
+	},
+	{
+		"entidad": "Campeche",
+		"cabecera": "San Francisco de Campeche"
+	},
+	{
+		"entidad": "Campeche",
+		"cabecera": "Ciudad del Carmen"
+	},
+	{
+		"entidad": "Campeche",
+		"cabecera": "Champotón"
+	},
+	{
+		"entidad": "Campeche",
+		"cabecera": "Hecelchakán"
+	},
+	{
+		"entidad": "Campeche",
+		"cabecera": "Hopelchén"
+	},
+	{
+		"entidad": "Campeche",
+		"cabecera": "Palizada"
+	},
+	{
+		"entidad": "Campeche",
+		"cabecera": "Tenabo"
+	},
+	{
+		"entidad": "Campeche",
+		"cabecera": "Escárcega"
+	},
+	{
+		"entidad": "Campeche",
+		"cabecera": "Xpujil"
+	},
+	{
+		"entidad": "Campeche",
+		"cabecera": "Candelaria"
+	},
+	{
+		"entidad": "Coahuila de Zaragoza",
+		"cabecera": "Abasolo"
+	},
+	{
+		"entidad": "Coahuila de Zaragoza",
+		"cabecera": "Ciudad Acuña"
+	},
+	{
+		"entidad": "Coahuila de Zaragoza",
+		"cabecera": "Allende"
+	},
+	{
+		"entidad": "Coahuila de Zaragoza",
+		"cabecera": "Arteaga"
+	},
+	{
+		"entidad": "Coahuila de Zaragoza",
+		"cabecera": "Candela"
+	},
+	{
+		"entidad": "Coahuila de Zaragoza",
+		"cabecera": "Castaños"
+	},
+	{
+		"entidad": "Coahuila de Zaragoza",
+		"cabecera": "Cuatro Ciénegas de Carranza"
+	},
+	{
+		"entidad": "Coahuila de Zaragoza",
+		"cabecera": "Escobedo"
+	},
+	{
+		"entidad": "Coahuila de Zaragoza",
+		"cabecera": "Francisco I. Madero (Chávez)"
+	},
+	{
+		"entidad": "Coahuila de Zaragoza",
+		"cabecera": "Frontera"
+	},
+	{
+		"entidad": "Coahuila de Zaragoza",
+		"cabecera": "General Cepeda"
+	},
+	{
+		"entidad": "Coahuila de Zaragoza",
+		"cabecera": "Guerrero"
+	},
+	{
+		"entidad": "Coahuila de Zaragoza",
+		"cabecera": "Hidalgo"
+	},
+	{
+		"entidad": "Coahuila de Zaragoza",
+		"cabecera": "Jiménez"
+	},
+	{
+		"entidad": "Coahuila de Zaragoza",
+		"cabecera": "Juárez"
+	},
+	{
+		"entidad": "Coahuila de Zaragoza",
+		"cabecera": "Lamadrid"
+	},
+	{
+		"entidad": "Coahuila de Zaragoza",
+		"cabecera": "Matamoros"
+	},
+	{
+		"entidad": "Coahuila de Zaragoza",
+		"cabecera": "Monclova"
+	},
+	{
+		"entidad": "Coahuila de Zaragoza",
+		"cabecera": "Morelos"
+	},
+	{
+		"entidad": "Coahuila de Zaragoza",
+		"cabecera": "Ciudad Melchor Múzquiz"
+	},
+	{
+		"entidad": "Coahuila de Zaragoza",
+		"cabecera": "Nadadores"
+	},
+	{
+		"entidad": "Coahuila de Zaragoza",
+		"cabecera": "Nava"
+	},
+	{
+		"entidad": "Coahuila de Zaragoza",
+		"cabecera": "Ocampo"
+	},
+	{
+		"entidad": "Coahuila de Zaragoza",
+		"cabecera": "Parras de la Fuente"
+	},
+	{
+		"entidad": "Coahuila de Zaragoza",
+		"cabecera": "Piedras Negras"
+	},
+	{
+		"entidad": "Coahuila de Zaragoza",
+		"cabecera": "Progreso"
+	},
+	{
+		"entidad": "Coahuila de Zaragoza",
+		"cabecera": "Ramos Arizpe"
+	},
+	{
+		"entidad": "Coahuila de Zaragoza",
+		"cabecera": "Sabinas"
+	},
+	{
+		"entidad": "Coahuila de Zaragoza",
+		"cabecera": "Sacramento"
+	},
+	{
+		"entidad": "Coahuila de Zaragoza",
+		"cabecera": "Saltillo"
+	},
+	{
+		"entidad": "Coahuila de Zaragoza",
+		"cabecera": "San Buenaventura"
+	},
+	{
+		"entidad": "Coahuila de Zaragoza",
+		"cabecera": "Nueva Rosita"
+	},
+	{
+		"entidad": "Coahuila de Zaragoza",
+		"cabecera": "San Pedro"
+	},
+	{
+		"entidad": "Coahuila de Zaragoza",
+		"cabecera": "Sierra Mojada"
+	},
+	{
+		"entidad": "Coahuila de Zaragoza",
+		"cabecera": "Torreón"
+	},
+	{
+		"entidad": "Coahuila de Zaragoza",
+		"cabecera": "Viesca"
+	},
+	{
+		"entidad": "Coahuila de Zaragoza",
+		"cabecera": "Villa Unión"
+	},
+	{
+		"entidad": "Coahuila de Zaragoza",
+		"cabecera": "Zaragoza"
+	},
+	{
+		"entidad": "Colima",
+		"cabecera": "Ciudad de Armería"
+	},
+	{
+		"entidad": "Colima",
+		"cabecera": "Colima"
+	},
+	{
+		"entidad": "Colima",
+		"cabecera": "Comala"
+	},
+	{
+		"entidad": "Colima",
+		"cabecera": "Coquimatlán"
+	},
+	{
+		"entidad": "Colima",
+		"cabecera": "Cuauhtémoc"
+	},
+	{
+		"entidad": "Colima",
+		"cabecera": "Ixtlahuacán"
+	},
+	{
+		"entidad": "Colima",
+		"cabecera": "Manzanillo"
+	},
+	{
+		"entidad": "Colima",
+		"cabecera": "Minatitlán"
+	},
+	{
+		"entidad": "Colima",
+		"cabecera": "Tecomán"
+	},
+	{
+		"entidad": "Colima",
+		"cabecera": "Ciudad de Villa de Álvarez"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Acacoyagua"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Acala"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Acapetahua"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Altamirano"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Amatán"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Amatenango de la Frontera"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Amatenango del Valle"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Jaltenango de la Paz (Angel Albino Corzo)"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Arriaga"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Bejucal de Ocampo"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Bella Vista"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Berriozábal"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Bochil"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "El Bosque"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Cacahoatán"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Catazajá"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Cintalapa de Figueroa"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Coapilla"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Comitán de Domínguez"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "La Concordia"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Copainalá"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Chalchihuitán"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Chamula"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Chanal"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Chapultenango"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Chenalhó"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Chiapa de Corzo"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Chiapilla"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Chicoasén"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Chicomuselo"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Chilón"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Escuintla"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Rivera el Viejo Carmen"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Frontera Comalapa"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Frontera Hidalgo"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "La Grandeza"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Huehuetán"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Huixtán"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Huitiupán"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Huixtla"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "La Independencia"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Ixhuatán"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Ixtacomitán"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Ixtapa"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Ixtapangajoya"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Jiquipilas"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Jitotol"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Juárez"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Larráinzar"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "La Libertad"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Mapastepec"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Las Margaritas"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Mazapa de Madero"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Mazatán"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Metapa de Domínguez"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Mitontic"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Motozintla de Mendoza"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Nicolás Ruíz"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Ocosingo"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Ocotepec"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Ocozocoautla de Espinosa"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Ostuacán"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Osumacinta"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Oxchuc"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Palenque"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Pantelhó"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Pantepec"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Pichucalco"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Pijijiapan"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "El Porvenir de Velasco Suárez"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Villa Comaltitlán"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Pueblo Nuevo Solistahuacán"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Rayón"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Reforma"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Las Rosas"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Sabanilla"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Salto de Agua"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "San Cristóbal de las Casas"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "San Fernando"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Siltepec"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Simojovel de Allende"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Sitalá"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Socoltenango"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Solosuchiapa"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Soyaló"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Suchiapa"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Ciudad Hidalgo"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Sunuapa"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Tapachula de Córdova y Ordóñez"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Tapalapa"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Tapilula"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Tecpatán"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Tenejapa"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Teopisca"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Tila"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Tonalá"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Totolapa"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "La Trinitaria"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Tumbalá"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Tuxtla Gutiérrez"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Tuxtla Chico"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Tuzantán"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Tzimol"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Unión Juárez"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Venustiano Carranza"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Villa Corzo"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Villaflores"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Yajalón"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "San Lucas"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Zinacantán"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "San Juan Cancuc"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Aldama"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Benemérito de las Américas"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Maravilla Tenejapa"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Zamora Pico de Oro"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Montecristo de Guerrero"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "San Andrés Duraznal"
+	},
+	{
+		"entidad": "Chiapas",
+		"cabecera": "Santiago el Pinar"
+	},
+	{
+		"entidad": "Chihuahua",
+		"cabecera": "Miguel Ahumada"
+	},
+	{
+		"entidad": "Chihuahua",
+		"cabecera": "Juan Aldama"
+	},
+	{
+		"entidad": "Chihuahua",
+		"cabecera": "Valle de Ignacio Allende"
+	},
+	{
+		"entidad": "Chihuahua",
+		"cabecera": "Santa Eulalia"
+	},
+	{
+		"entidad": "Chihuahua",
+		"cabecera": "Ascensión"
+	},
+	{
+		"entidad": "Chihuahua",
+		"cabecera": "Bachíniva"
+	},
+	{
+		"entidad": "Chihuahua",
+		"cabecera": "Mariano Balleza"
+	},
+	{
+		"entidad": "Chihuahua",
+		"cabecera": "Batopilas"
+	},
+	{
+		"entidad": "Chihuahua",
+		"cabecera": "Bocoyna"
+	},
+	{
+		"entidad": "Chihuahua",
+		"cabecera": "San Buenaventura"
+	},
+	{
+		"entidad": "Chihuahua",
+		"cabecera": "Santa Rosalía de Camargo"
+	},
+	{
+		"entidad": "Chihuahua",
+		"cabecera": "Carichí"
+	},
+	{
+		"entidad": "Chihuahua",
+		"cabecera": "Casas Grandes"
+	},
+	{
+		"entidad": "Chihuahua",
+		"cabecera": "José Esteban Coronado"
+	},
+	{
+		"entidad": "Chihuahua",
+		"cabecera": "Santiago de Coyame"
+	},
+	{
+		"entidad": "Chihuahua",
+		"cabecera": "La Cruz"
+	},
+	{
+		"entidad": "Chihuahua",
+		"cabecera": "Cuauhtémoc"
+	},
+	{
+		"entidad": "Chihuahua",
+		"cabecera": "Cusihuiriachi"
+	},
+	{
+		"entidad": "Chihuahua",
+		"cabecera": "Chihuahua"
+	},
+	{
+		"entidad": "Chihuahua",
+		"cabecera": "Chínipas de Almada"
+	},
+	{
+		"entidad": "Chihuahua",
+		"cabecera": "Delicias"
+	},
+	{
+		"entidad": "Chihuahua",
+		"cabecera": "San Lorenzo"
+	},
+	{
+		"entidad": "Chihuahua",
+		"cabecera": "Hermenegildo Galeana"
+	},
+	{
+		"entidad": "Chihuahua",
+		"cabecera": "Santa Isabel"
+	},
+	{
+		"entidad": "Chihuahua",
+		"cabecera": "Valentín Gómez Farías"
+	},
+	{
+		"entidad": "Chihuahua",
+		"cabecera": "San Nicolás de Carretas"
+	},
+	{
+		"entidad": "Chihuahua",
+		"cabecera": "Guachochi"
+	},
+	{
+		"entidad": "Chihuahua",
+		"cabecera": "Guadalupe"
+	},
+	{
+		"entidad": "Chihuahua",
+		"cabecera": "Guadalupe y Calvo"
+	},
+	{
+		"entidad": "Chihuahua",
+		"cabecera": "Témoris"
+	},
+	{
+		"entidad": "Chihuahua",
+		"cabecera": "Vicente Guerrero"
+	},
+	{
+		"entidad": "Chihuahua",
+		"cabecera": "Hidalgo del Parral"
+	},
+	{
+		"entidad": "Chihuahua",
+		"cabecera": "Huejotitán"
+	},
+	{
+		"entidad": "Chihuahua",
+		"cabecera": "Ignacio Zaragoza"
+	},
+	{
+		"entidad": "Chihuahua",
+		"cabecera": "Janos"
+	},
+	{
+		"entidad": "Chihuahua",
+		"cabecera": "José Mariano Jiménez"
+	},
+	{
+		"entidad": "Chihuahua",
+		"cabecera": "Juárez"
+	},
+	{
+		"entidad": "Chihuahua",
+		"cabecera": "Julimes"
+	},
+	{
+		"entidad": "Chihuahua",
+		"cabecera": "Octaviano López"
+	},
+	{
+		"entidad": "Chihuahua",
+		"cabecera": "Madera"
+	},
+	{
+		"entidad": "Chihuahua",
+		"cabecera": "Maguarichi"
+	},
+	{
+		"entidad": "Chihuahua",
+		"cabecera": "Manuel Benavides"
+	},
+	{
+		"entidad": "Chihuahua",
+		"cabecera": "Matachí"
+	},
+	{
+		"entidad": "Chihuahua",
+		"cabecera": "Mariano Matamoros"
+	},
+	{
+		"entidad": "Chihuahua",
+		"cabecera": "Pedro Meoqui"
+	},
+	{
+		"entidad": "Chihuahua",
+		"cabecera": "Morelos"
+	},
+	{
+		"entidad": "Chihuahua",
+		"cabecera": "Moris"
+	},
+	{
+		"entidad": "Chihuahua",
+		"cabecera": "Namiquipa"
+	},
+	{
+		"entidad": "Chihuahua",
+		"cabecera": "Nonoava"
+	},
+	{
+		"entidad": "Chihuahua",
+		"cabecera": "Nuevo Casas Grandes"
+	},
+	{
+		"entidad": "Chihuahua",
+		"cabecera": "Melchor Ocampo"
+	},
+	{
+		"entidad": "Chihuahua",
+		"cabecera": "Manuel Ojinaga"
+	},
+	{
+		"entidad": "Chihuahua",
+		"cabecera": "Praxedis G. Guerrero"
+	},
+	{
+		"entidad": "Chihuahua",
+		"cabecera": "San Andrés"
+	},
+	{
+		"entidad": "Chihuahua",
+		"cabecera": "Santa Cruz de Rosales"
+	},
+	{
+		"entidad": "Chihuahua",
+		"cabecera": "Valle del Rosario"
+	},
+	{
+		"entidad": "Chihuahua",
+		"cabecera": "San Francisco de Borja"
+	},
+	{
+		"entidad": "Chihuahua",
+		"cabecera": "San Francisco de Conchos"
+	},
+	{
+		"entidad": "Chihuahua",
+		"cabecera": "San Francisco del Oro"
+	},
+	{
+		"entidad": "Chihuahua",
+		"cabecera": "Santa Bárbara"
+	},
+	{
+		"entidad": "Chihuahua",
+		"cabecera": "San Francisco Javier de Satevó"
+	},
+	{
+		"entidad": "Chihuahua",
+		"cabecera": "Saucillo"
+	},
+	{
+		"entidad": "Chihuahua",
+		"cabecera": "Temósachic"
+	},
+	{
+		"entidad": "Chihuahua",
+		"cabecera": "El Tule"
+	},
+	{
+		"entidad": "Chihuahua",
+		"cabecera": "Urique"
+	},
+	{
+		"entidad": "Chihuahua",
+		"cabecera": "Uruachi"
+	},
+	{
+		"entidad": "Chihuahua",
+		"cabecera": "Valle de Zaragoza"
+	},
+	{
+		"entidad": "Ciudad de México","CVE_CAB": "----"
+	},
+	{
+		"entidad": "Ciudad de México","CVE_CAB": "----"
+	},
+	{
+		"entidad": "Ciudad de México","CVE_CAB": "----"
+	},
+	{
+		"entidad": "Ciudad de México","CVE_CAB": "----"
+	},
+	{
+		"entidad": "Ciudad de México","CVE_CAB": "----"
+	},
+	{
+		"entidad": "Ciudad de México","CVE_CAB": "----"
+	},
+	{
+		"entidad": "Ciudad de México","CVE_CAB": "----"
+	},
+	{
+		"entidad": "Ciudad de México","CVE_CAB": "----"
+	},
+	{
+		"entidad": "Ciudad de México","CVE_CAB": "----"
+	},
+	{
+		"entidad": "Ciudad de México","CVE_CAB": "----"
+	},
+	{
+		"entidad": "Ciudad de México","CVE_CAB": "----"
+	},
+	{
+		"entidad": "Ciudad de México","CVE_CAB": "----"
+	},
+	{
+		"entidad": "Ciudad de México","CVE_CAB": "----"
+	},
+	{
+		"entidad": "Ciudad de México","CVE_CAB": "----"
+	},
+	{
+		"entidad": "Ciudad de México","CVE_CAB": "----"
+	},
+	{
+		"entidad": "Ciudad de México","CVE_CAB": "----"
+	},
+	{
+		"entidad": "Durango",
+		"cabecera": "Canatlán"
+	},
+	{
+		"entidad": "Durango",
+		"cabecera": "Canelas"
+	},
+	{
+		"entidad": "Durango",
+		"cabecera": "Coneto de Comonfort"
+	},
+	{
+		"entidad": "Durango",
+		"cabecera": "Cuencamé de Ceniceros"
+	},
+	{
+		"entidad": "Durango",
+		"cabecera": "Victoria de Durango"
+	},
+	{
+		"entidad": "Durango",
+		"cabecera": "General Simón Bolívar"
+	},
+	{
+		"entidad": "Durango",
+		"cabecera": "Gómez Palacio"
+	},
+	{
+		"entidad": "Durango",
+		"cabecera": "Guadalupe Victoria"
+	},
+	{
+		"entidad": "Durango",
+		"cabecera": "Guanaceví"
+	},
+	{
+		"entidad": "Durango",
+		"cabecera": "Villa Hidalgo"
+	},
+	{
+		"entidad": "Durango",
+		"cabecera": "Indé"
+	},
+	{
+		"entidad": "Durango",
+		"cabecera": "Lerdo"
+	},
+	{
+		"entidad": "Durango",
+		"cabecera": "Mapimí"
+	},
+	{
+		"entidad": "Durango",
+		"cabecera": "San Francisco del Mezquital"
+	},
+	{
+		"entidad": "Durango",
+		"cabecera": "Nazas"
+	},
+	{
+		"entidad": "Durango",
+		"cabecera": "Nombre de Dios"
+	},
+	{
+		"entidad": "Durango",
+		"cabecera": "Villa Ocampo"
+	},
+	{
+		"entidad": "Durango",
+		"cabecera": "Santa María del Oro"
+	},
+	{
+		"entidad": "Durango",
+		"cabecera": "Otáez"
+	},
+	{
+		"entidad": "Durango",
+		"cabecera": "Francisco I. Madero"
+	},
+	{
+		"entidad": "Durango",
+		"cabecera": "Peñón Blanco"
+	},
+	{
+		"entidad": "Durango",
+		"cabecera": "Villa Unión"
+	},
+	{
+		"entidad": "Durango",
+		"cabecera": "El Salto"
+	},
+	{
+		"entidad": "Durango",
+		"cabecera": "Rodeo"
+	},
+	{
+		"entidad": "Durango",
+		"cabecera": "San Bernardo"
+	},
+	{
+		"entidad": "Durango",
+		"cabecera": "Tayoltita"
+	},
+	{
+		"entidad": "Durango",
+		"cabecera": "San Juan de Guadalupe"
+	},
+	{
+		"entidad": "Durango",
+		"cabecera": "San Juan del Río del Centauro del Norte"
+	},
+	{
+		"entidad": "Durango",
+		"cabecera": "San Luis del Cordero"
+	},
+	{
+		"entidad": "Durango",
+		"cabecera": "San Pedro del Gallo"
+	},
+	{
+		"entidad": "Durango",
+		"cabecera": "Santa Clara"
+	},
+	{
+		"entidad": "Durango",
+		"cabecera": "Santiago Papasquiaro"
+	},
+	{
+		"entidad": "Durango",
+		"cabecera": "Súchil"
+	},
+	{
+		"entidad": "Durango",
+		"cabecera": "Tamazula de Victoria"
+	},
+	{
+		"entidad": "Durango",
+		"cabecera": "Santa Catarina de Tepehuanes"
+	},
+	{
+		"entidad": "Durango",
+		"cabecera": "Tlahualilo de Zaragoza"
+	},
+	{
+		"entidad": "Durango",
+		"cabecera": "Topia"
+	},
+	{
+		"entidad": "Durango",
+		"cabecera": "Vicente Guerrero"
+	},
+	{
+		"entidad": "Durango",
+		"cabecera": "Nuevo Ideal"
+	},
+	{
+		"entidad": "Guanajuato",
+		"cabecera": "Abasolo"
+	},
+	{
+		"entidad": "Guanajuato",
+		"cabecera": "Acámbaro"
+	},
+	{
+		"entidad": "Guanajuato",
+		"cabecera": "San Miguel de Allende"
+	},
+	{
+		"entidad": "Guanajuato",
+		"cabecera": "Apaseo el Alto"
+	},
+	{
+		"entidad": "Guanajuato",
+		"cabecera": "Apaseo el Grande"
+	},
+	{
+		"entidad": "Guanajuato",
+		"cabecera": "Atarjea"
+	},
+	{
+		"entidad": "Guanajuato",
+		"cabecera": "Celaya"
+	},
+	{
+		"entidad": "Guanajuato",
+		"cabecera": "Ciudad Manuel Doblado"
+	},
+	{
+		"entidad": "Guanajuato",
+		"cabecera": "Comonfort"
+	},
+	{
+		"entidad": "Guanajuato",
+		"cabecera": "Coroneo"
+	},
+	{
+		"entidad": "Guanajuato",
+		"cabecera": "Cortazar"
+	},
+	{
+		"entidad": "Guanajuato",
+		"cabecera": "Cuerámaro"
+	},
+	{
+		"entidad": "Guanajuato",
+		"cabecera": "Doctor Mora"
+	},
+	{
+		"entidad": "Guanajuato",
+		"cabecera": "Dolores Hidalgo Cuna de la Independencia Nacional"
+	},
+	{
+		"entidad": "Guanajuato",
+		"cabecera": "Guanajuato"
+	},
+	{
+		"entidad": "Guanajuato",
+		"cabecera": "Huanímaro"
+	},
+	{
+		"entidad": "Guanajuato",
+		"cabecera": "Irapuato"
+	},
+	{
+		"entidad": "Guanajuato",
+		"cabecera": "Jaral del Progreso"
+	},
+	{
+		"entidad": "Guanajuato",
+		"cabecera": "Jerécuaro"
+	},
+	{
+		"entidad": "Guanajuato",
+		"cabecera": "León de los Aldama"
+	},
+	{
+		"entidad": "Guanajuato",
+		"cabecera": "Moroleón"
+	},
+	{
+		"entidad": "Guanajuato",
+		"cabecera": "Ocampo"
+	},
+	{
+		"entidad": "Guanajuato",
+		"cabecera": "Pénjamo"
+	},
+	{
+		"entidad": "Guanajuato",
+		"cabecera": "Pueblo Nuevo"
+	},
+	{
+		"entidad": "Guanajuato",
+		"cabecera": "Purísima de Bustos"
+	},
+	{
+		"entidad": "Guanajuato",
+		"cabecera": "Romita"
+	},
+	{
+		"entidad": "Guanajuato",
+		"cabecera": "Salamanca"
+	},
+	{
+		"entidad": "Guanajuato",
+		"cabecera": "Salvatierra"
+	},
+	{
+		"entidad": "Guanajuato",
+		"cabecera": "San Diego de la Unión"
+	},
+	{
+		"entidad": "Guanajuato",
+		"cabecera": "San Felipe"
+	},
+	{
+		"entidad": "Guanajuato",
+		"cabecera": "San Francisco del Rincón"
+	},
+	{
+		"entidad": "Guanajuato",
+		"cabecera": "San José Iturbide"
+	},
+	{
+		"entidad": "Guanajuato",
+		"cabecera": "San Luis de la Paz"
+	},
+	{
+		"entidad": "Guanajuato",
+		"cabecera": "Santa Catarina"
+	},
+	{
+		"entidad": "Guanajuato",
+		"cabecera": "Juventino Rosas"
+	},
+	{
+		"entidad": "Guanajuato",
+		"cabecera": "Santiago Maravatío"
+	},
+	{
+		"entidad": "Guanajuato",
+		"cabecera": "Silao de la Victoria"
+	},
+	{
+		"entidad": "Guanajuato",
+		"cabecera": "Tarandacuao"
+	},
+	{
+		"entidad": "Guanajuato",
+		"cabecera": "Tarimoro"
+	},
+	{
+		"entidad": "Guanajuato",
+		"cabecera": "Tierra Blanca"
+	},
+	{
+		"entidad": "Guanajuato",
+		"cabecera": "Uriangato"
+	},
+	{
+		"entidad": "Guanajuato",
+		"cabecera": "Valle de Santiago"
+	},
+	{
+		"entidad": "Guanajuato",
+		"cabecera": "Victoria"
+	},
+	{
+		"entidad": "Guanajuato",
+		"cabecera": "Villagrán"
+	},
+	{
+		"entidad": "Guanajuato",
+		"cabecera": "Xichú"
+	},
+	{
+		"entidad": "Guanajuato",
+		"cabecera": "Yuriria"
+	},
+	{
+		"entidad": "Guerrero",
+		"cabecera": "Acapulco de Juárez"
+	},
+	{
+		"entidad": "Guerrero",
+		"cabecera": "Ahuacuotzingo"
+	},
+	{
+		"entidad": "Guerrero",
+		"cabecera": "Ajuchitlán del Progreso"
+	},
+	{
+		"entidad": "Guerrero",
+		"cabecera": "Alcozauca de Guerrero"
+	},
+	{
+		"entidad": "Guerrero",
+		"cabecera": "Alpoyeca"
+	},
+	{
+		"entidad": "Guerrero",
+		"cabecera": "Ciudad Apaxtla de Castrejón"
+	},
+	{
+		"entidad": "Guerrero",
+		"cabecera": "Arcelia"
+	},
+	{
+		"entidad": "Guerrero",
+		"cabecera": "Atenango del Río"
+	},
+	{
+		"entidad": "Guerrero",
+		"cabecera": "Atlamajalcingo del Monte"
+	},
+	{
+		"entidad": "Guerrero",
+		"cabecera": "Atlixtac"
+	},
+	{
+		"entidad": "Guerrero",
+		"cabecera": "Atoyac de Álvarez"
+	},
+	{
+		"entidad": "Guerrero",
+		"cabecera": "Ayutla de los Libres"
+	},
+	{
+		"entidad": "Guerrero",
+		"cabecera": "Azoyú"
+	},
+	{
+		"entidad": "Guerrero",
+		"cabecera": "San Jerónimo de Juárez"
+	},
+	{
+		"entidad": "Guerrero",
+		"cabecera": "Buenavista de Cuéllar"
+	},
+	{
+		"entidad": "Guerrero",
+		"cabecera": "Coahuayutla de Guerrero"
+	},
+	{
+		"entidad": "Guerrero",
+		"cabecera": "Cocula"
+	},
+	{
+		"entidad": "Guerrero",
+		"cabecera": "Copala"
+	},
+	{
+		"entidad": "Guerrero",
+		"cabecera": "Copalillo"
+	},
+	{
+		"entidad": "Guerrero",
+		"cabecera": "Copanatoyac"
+	},
+	{
+		"entidad": "Guerrero",
+		"cabecera": "Coyuca de Benítez"
+	},
+	{
+		"entidad": "Guerrero",
+		"cabecera": "Coyuca de Catalán"
+	},
+	{
+		"entidad": "Guerrero",
+		"cabecera": "Cuajinicuilapa"
+	},
+	{
+		"entidad": "Guerrero",
+		"cabecera": "Cualác"
+	},
+	{
+		"entidad": "Guerrero",
+		"cabecera": "Cuautepec"
+	},
+	{
+		"entidad": "Guerrero",
+		"cabecera": "Cuetzala del Progreso"
+	},
+	{
+		"entidad": "Guerrero",
+		"cabecera": "Cutzamala de Pinzón"
+	},
+	{
+		"entidad": "Guerrero",
+		"cabecera": "Chilapa de Álvarez"
+	},
+	{
+		"entidad": "Guerrero",
+		"cabecera": "Chilpancingo de los Bravo"
+	},
+	{
+		"entidad": "Guerrero",
+		"cabecera": "Cruz Grande"
+	},
+	{
+		"entidad": "Guerrero",
+		"cabecera": "Acapetlahuaya"
+	},
+	{
+		"entidad": "Guerrero",
+		"cabecera": "Tlacotepec"
+	},
+	{
+		"entidad": "Guerrero",
+		"cabecera": "Huamuxtitlán"
+	},
+	{
+		"entidad": "Guerrero",
+		"cabecera": "Ciudad de Huitzuco"
+	},
+	{
+		"entidad": "Guerrero",
+		"cabecera": "Iguala de la Independencia"
+	},
+	{
+		"entidad": "Guerrero",
+		"cabecera": "Igualapa"
+	},
+	{
+		"entidad": "Guerrero",
+		"cabecera": "Ixcateopan de Cuauhtémoc"
+	},
+	{
+		"entidad": "Guerrero",
+		"cabecera": "Zihuatanejo"
+	},
+	{
+		"entidad": "Guerrero",
+		"cabecera": "Tierra Colorada"
+	},
+	{
+		"entidad": "Guerrero",
+		"cabecera": "Chichihualco"
+	},
+	{
+		"entidad": "Guerrero",
+		"cabecera": "Malinaltepec"
+	},
+	{
+		"entidad": "Guerrero",
+		"cabecera": "Apango"
+	},
+	{
+		"entidad": "Guerrero",
+		"cabecera": "Metlatónoc"
+	},
+	{
+		"entidad": "Guerrero",
+		"cabecera": "Mochitlán"
+	},
+	{
+		"entidad": "Guerrero",
+		"cabecera": "Olinalá"
+	},
+	{
+		"entidad": "Guerrero",
+		"cabecera": "Ometepec"
+	},
+	{
+		"entidad": "Guerrero",
+		"cabecera": "Ixcapuzalco"
+	},
+	{
+		"entidad": "Guerrero",
+		"cabecera": "Petatlán"
+	},
+	{
+		"entidad": "Guerrero",
+		"cabecera": "Pilcaya"
+	},
+	{
+		"entidad": "Guerrero",
+		"cabecera": "Ciudad Altamirano"
+	},
+	{
+		"entidad": "Guerrero",
+		"cabecera": "Quechultenango"
+	},
+	{
+		"entidad": "Guerrero",
+		"cabecera": "San Luis Acatlán"
+	},
+	{
+		"entidad": "Guerrero",
+		"cabecera": "San Marcos"
+	},
+	{
+		"entidad": "Guerrero",
+		"cabecera": "San Miguel Totolapan"
+	},
+	{
+		"entidad": "Guerrero",
+		"cabecera": "Taxco de Alarcón"
+	},
+	{
+		"entidad": "Guerrero",
+		"cabecera": "Tecoanapa"
+	},
+	{
+		"entidad": "Guerrero",
+		"cabecera": "Técpan de Galeana"
+	},
+	{
+		"entidad": "Guerrero",
+		"cabecera": "Teloloapan"
+	},
+	{
+		"entidad": "Guerrero",
+		"cabecera": "Tepecoacuilco de Trujano"
+	},
+	{
+		"entidad": "Guerrero",
+		"cabecera": "Tetipac"
+	},
+	{
+		"entidad": "Guerrero",
+		"cabecera": "Tixtla de Guerrero"
+	},
+	{
+		"entidad": "Guerrero",
+		"cabecera": "Tlacoachistlahuaca"
+	},
+	{
+		"entidad": "Guerrero",
+		"cabecera": "Tlacoapa"
+	},
+	{
+		"entidad": "Guerrero",
+		"cabecera": "Tlalchapa"
+	},
+	{
+		"entidad": "Guerrero",
+		"cabecera": "Tlalixtaquilla"
+	},
+	{
+		"entidad": "Guerrero",
+		"cabecera": "Tlapa de Comonfort"
+	},
+	{
+		"entidad": "Guerrero",
+		"cabecera": "Tlapehuala"
+	},
+	{
+		"entidad": "Guerrero",
+		"cabecera": "La Unión"
+	},
+	{
+		"entidad": "Guerrero",
+		"cabecera": "Xalpatláhuac"
+	},
+	{
+		"entidad": "Guerrero",
+		"cabecera": "Xochihuehuetlán"
+	},
+	{
+		"entidad": "Guerrero",
+		"cabecera": "Xochistlahuaca"
+	},
+	{
+		"entidad": "Guerrero",
+		"cabecera": "Zapotitlán Tablas"
+	},
+	{
+		"entidad": "Guerrero",
+		"cabecera": "Zirándaro de los Chávez"
+	},
+	{
+		"entidad": "Guerrero",
+		"cabecera": "Zitlala"
+	},
+	{
+		"entidad": "Guerrero",
+		"cabecera": "Zumpango del Río"
+	},
+	{
+		"entidad": "Guerrero",
+		"cabecera": "Acatepec"
+	},
+	{
+		"entidad": "Guerrero",
+		"cabecera": "Marquelia"
+	},
+	{
+		"entidad": "Guerrero",
+		"cabecera": "Cochoapa el Grande"
+	},
+	{
+		"entidad": "Guerrero",
+		"cabecera": "Hueycantenango"
+	},
+	{
+		"entidad": "Guerrero",
+		"cabecera": "Juchitán"
+	},
+	{
+		"entidad": "Guerrero",
+		"cabecera": "Iliatenco"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "Acatlán"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "Acaxochitlán"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "Actopan"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "Agua Blanca de Iturbide"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "Ajacuba"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "Alfajayucan"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "Almoloya"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "Apan"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "El Arenal"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "Atitalaquia"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "Atlapexco"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "Atotonilco el Grande"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "Atotonilco de Tula"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "Calnali"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "Cardonal"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "Cuautepec"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "Chapantongo"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "Chapulhuacán"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "Chilcuautla"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "Eloxochitlán"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "Emiliano Zapata"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "Epazoyucan"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "Tepatepec"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "Huasca de Ocampo"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "Huautla"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "Huazalingo"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "Huehuetla"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "Huejutla de Reyes"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "Huichapan"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "Ixmiquilpan"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "Jacala"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "Jaltocán"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "Juárez Hidalgo"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "Lolotla"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "Metepec"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "Mezquititlán"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "Metztitlán"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "Mineral del Chico"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "Mineral del Monte"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "La Misión"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "Mixquiahuala de Juárez"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "Molango de Escamilla"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "Nicolás Flores"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "Nopala de Villagrán"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "Omitlán de Juárez"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "San Felipe Orizatlán"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "Pacula"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "Pachuca de Soto"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "Pisaflores"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "Progreso de Obregón"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "Pachuquilla"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "San Agustín Tlaxiaca"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "San Bartolo Tutotepec"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "San Salvador"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "Santiago de Anaya"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "Santiago Tulantepec"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "Singuilucan"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "Tasquillo"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "Tecozautla"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "Tenango de Doria"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "Tepeapulco"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "Tepehuacán de Guerrero"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "Tepeji del Río de Ocampo"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "Tepetitlán"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "Tetepango"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "Tezontepec"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "Tezontepec de Aldama"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "Tianguistengo"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "Tizayuca"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "Tlahuelilpan"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "Tlahuiltepa"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "Tlanalapa"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "Tlanchinol"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "Tlaxcoapan"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "Tolcayuca"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "Tula de Allende"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "Tulancingo"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "Xochiatipan"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "Xochicoatlán"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "Yahualica"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "Zacualtipán"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "Zapotlán de Juárez"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "Zempoala"
+	},
+	{
+		"entidad": "Hidalgo",
+		"cabecera": "Zimapán"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Acatic"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Acatlán de Juárez"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Ahualulco de Mercado"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Amacueca"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Amatitán"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Ameca"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "San Juanito de Escobedo"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Arandas"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "El Arenal"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Atemajac de Brizuela"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Atengo"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Atenguillo"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Atotonilco el Alto"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Atoyac"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Autlán de Navarro"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Ayotlán"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Ayutla"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "La Barca"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Bolaños"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "El Tuito"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "La Resolana"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Cihuatlán"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Ciudad Guzmán"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Cocula"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Colotlán"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Concepción de Buenos Aires"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Cuautitlán de García Barragán"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Cuautla"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Cuquío"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Chapala"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Chimaltitán"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Chiquilistlán"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Degollado"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Ejutla"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Encarnación de Díaz"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Etzatlán"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "El Grullo"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Guachinango"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Guadalajara"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Hostotipaquillo"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Huejúcar"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Huejuquilla el Alto"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "La Huerta"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Ixtlahuacán de los Membrillos"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Ixtlahuacán del Río"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Jalostotitlán"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Jamay"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Jesús María"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Jilotlán de los Dolores"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Jocotepec"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Juanacatlán"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Juchitlán"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Lagos de Moreno"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "El Limón"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Magdalena"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Santa María del Oro"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "La Manzanilla de la Paz"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Mascota"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Mazamitla"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Mexticacán"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Mezquitic"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Mixtlán"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Ocotlán"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Ojuelos de Jalisco"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Pihuamo"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Poncitlán"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Puerto Vallarta"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Villa Purificación"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Quitupan"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "El Salto"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "San Cristóbal de la Barranca"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "San Diego de Alejandría"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "San Juan de los Lagos"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "San Julián"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "San Marcos"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "San Martín de Bolaños"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "San Martín Hidalgo"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "San Miguel el Alto"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "San Sebastián del Sur"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "San Sebastián del Oeste"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Santa María de los Ángeles"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Sayula"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Tala"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Talpa de Allende"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Tamazula de Gordiano"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Tapalpa"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Tecalitlán"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Tecolotlán"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Techaluta de Montenegro"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Tenamaxtlán"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Teocaltiche"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Teocuitatlán de Corona"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Tepatitlán de Morelos"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Tequila"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Teuchitlán"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Tizapán el Alto"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Tlajomulco de Zúñiga"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Tlaquepaque"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Tolimán"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Tomatlán"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Tonalá"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Tonaya"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Tonila"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Totatiche"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Tototlán"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Tuxcacuesco"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Tuxcueca"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Tuxpan"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Unión de San Antonio"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Unión de Tula"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Valle de Guadalupe"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Valle de Juárez"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "San Gabriel"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Villa Corona"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Villa Guerrero"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Villa Hidalgo"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Cañadas de Obregón"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Yahualica de González Gallo"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Zacoalco de Torres"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Zapopan"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Zapotiltic"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Zapotitlán de Vadillo"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Zapotlán del Rey"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "Zapotlanejo"
+	},
+	{
+		"entidad": "Jalisco",
+		"cabecera": "San Ignacio Cerro Gordo"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Villa de Acambay de Ruíz Castañeda"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Acolman de Nezahualcóyotl"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Aculco de Espinoza"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Almoloya de Alquisiras"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Villa de Almoloya de Juárez"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Almoloya del Río"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Amanalco de Becerra"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Amatepec"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Amecameca de Juárez"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Apaxco de Ocampo"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "San Salvador Atenco"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Santa Cruz Atizapán"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Ciudad López Mateos"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Atlacomulco de Fabela"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Atlautla de Victoria"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Axapusco"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Ayapango de Gabriel Ramos M."
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Calimaya de Díaz González"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Capulhuac de Mirafuentes"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "San Francisco Coacalco"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Coatepec Harinas"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Cocotitlán"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Coyotepec"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Cuautitlán"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Chalco de Díaz Covarrubias"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Chapa de Mota"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Chapultepec"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Chiautla"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Chicoloapan de Juárez"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Chiconcuac de Juárez"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Chimalhuacán"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Villa Donato Guerra"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Ecatepec de Morelos"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Ecatzingo de Hidalgo"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Huehuetoca"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Hueypoxtla"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Huixquilucan de Degollado"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Tlazala de Fabela"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Ixtapaluca"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Ixtapan de la Sal"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Ixtapan del Oro"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Ixtlahuaca de Rayón"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Xalatlaco"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Jaltenco"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Jilotepec de Molina Enríquez"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Santa Ana Jilotzingo"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Jiquipilco"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Ciudad de Jocotitlán"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Joquicingo de León Guzmán"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Juchitepec de Mariano Rivapalacio"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Lerma de Villada"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Malinalco"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Melchor Ocampo"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Metepec"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "San Mateo Mexicaltzingo"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "San Bartolo Morelos"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Naucalpan de Juárez"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Ciudad Nezahualcóyotl"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Santa Ana Nextlalpan"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Ciudad Nicolás Romero"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Nopaltepec"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Ocoyoacac"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Ocuilan de Arteaga"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "El Oro de Hidalgo"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Otumba de Gómez Farías"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Otzoloapan"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Villa Cuauhtémoc"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Ozumba de Alzate"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Papalotla"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Los Reyes Acaquilpan"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Polotitlán de la Ilustración"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Santa María Rayón"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "San Antonio la Isla"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "San Felipe del Progreso"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "San Martín de las Pirámides"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "San Mateo Atenco"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "San Simón de Guerrero"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Santo Tomás de los Plátanos"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "San Francisco Soyaniquilpan"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Sultepec de Pedro Ascencio de Alquisiras"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Tecámac de Felipe Villanueva"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Tejupilco de Hidalgo"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Temamatla"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Temascalapa"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Temascalcingo de José María Velasco"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Temascaltepec de González"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Temoaya"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Tenancingo de Degollado"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Tenango del Aire"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Tenango de Arista"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Teoloyucan"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Teotihuacán de Arista"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Tepetlaoxtoc de Hidalgo"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Tepetlixpa"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Tepotzotlán"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Tequixquiac"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Texcaltitlán"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "San Mateo Texcalyacac"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Texcoco de Mora"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Tezoyuca"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Santiago Tianguistenco de Galeana"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "San Andrés Timilpan"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Tlalmanalco de Velázquez"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Tlalnepantla"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Tlatlaya"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Toluca de Lerdo"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Tonatico"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Tultepec"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Tultitlán de Mariano Escobedo"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Valle de Bravo"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "San José Villa de Allende"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Villa del Carbón"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Villa Guerrero"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Villa Victoria"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Xonacatlán"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Zacazonapan"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Zacualpan"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "San Miguel Zinacantepec"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Zumpahuacán"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Zumpango de Ocampo"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Cuautitlán Izcalli"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Xico"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Villa Luvianos"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "San José del Rincón Centro"
+	},
+	{
+		"entidad": "México",
+		"cabecera": "Santa María Tonanitla"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Acuitzio del Canje"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Aguililla"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Álvaro Obregón"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Angamacutiro de la Unión"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Mineral de Angangueo"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Apatzingán de la Constitución"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Aporo"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Aquila"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Ario de Rosales"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Arteaga"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Briseñas de Matamoros"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Buenavista Tomatlán"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Carácuaro de Morelos"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Coahuayana de Hidalgo"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Coalcomán de Vázquez Pallares"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Coeneo de la Libertad"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Contepec"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Copándaro de Galeana"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Cotija de la Paz"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Cuitzeo del Porvenir"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Charapan"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Charo"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Chavinda"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Cherán"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Chilchota"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Villa Victoria"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Chucándiro"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Churintzio"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Churumuco de Morelos"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Ecuandureo"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Epitacio Huerta"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Erongarícuaro"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Lombardía"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Ciudad Hidalgo"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "La Huacana"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Huandacareo"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Huaniqueo de Morales"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Huetamo de Núñez"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Huiramba"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Indaparapeo"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Irimbo"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Ixtlán de los Hervores"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Jacona de Plancarte"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Villa Jiménez"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Jiquilpan de Juárez"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Benito Juárez"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Jungapeo de Juárez"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Lagunillas"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Villa Madero"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Maravatío de Ocampo"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "San José de Gracia"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Ciudad Lázaro Cárdenas"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Morelia"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Villa Morelos"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Nueva Italia de Ruiz"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Nahuatzen"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Nocupétaro de Morelos"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Nuevo San Juan Parangaricutiro"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Nuevo Urecho"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Numarán"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Ocampo"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Pajacuarán"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Panindícuaro"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Parácuaro"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Paracho de Verduzco"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Pátzcuaro"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Penjamillo de Degollado"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Peribán de Ramos"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "La Piedad de Cabadas"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Purépero de Echáiz"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Puruándiro"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Queréndaro"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Quiroga"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Cojumatlán de Régules"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Los Reyes de Salgado"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Sahuayo de Morelos"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "San Lucas"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Santa Ana Maya"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Santa Clara del Cobre"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Senguio"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Susupuato de Guerrero"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Tacámbaro de Codallos"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Tancítaro"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Santiago Tangamandapio"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Tangancícuaro de Arista"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Tanhuato de Guerrero"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Taretan"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Tarímbaro"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Tepalcatepec"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Tingambato"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Tingüindín"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Tiquicheo"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Tlalpujahua de Rayón"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Tlazazalca"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Tocumbo"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Tumbiscatío de Ruiz"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Turicato"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Tuxpan"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Tuzantla"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Tzintzuntzan"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Tzitzio"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Uruapan"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "San Pedro Cahro"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Villamar"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Vista Hermosa de Negrete"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Yurécuaro"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Zacapu"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Zamora de Hidalgo"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Zináparo"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Zinapécuaro de Figueroa"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Ziracuaretiro"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Heróica Zitácuaro"
+	},
+	{
+		"entidad": "Michoacán de Ocampo",
+		"cabecera": "Pastor Ortiz"
+	},
+	{
+		"entidad": "Morelos",
+		"cabecera": "Amacuzac"
+	},
+	{
+		"entidad": "Morelos",
+		"cabecera": "Atlatlahucan"
+	},
+	{
+		"entidad": "Morelos",
+		"cabecera": "Axochiapan"
+	},
+	{
+		"entidad": "Morelos",
+		"cabecera": "Ciudad Ayala"
+	},
+	{
+		"entidad": "Morelos",
+		"cabecera": "Coatlán del Río"
+	},
+	{
+		"entidad": "Morelos",
+		"cabecera": "Cuautla"
+	},
+	{
+		"entidad": "Morelos",
+		"cabecera": "Cuernavaca"
+	},
+	{
+		"entidad": "Morelos",
+		"cabecera": "Emiliano Zapata"
+	},
+	{
+		"entidad": "Morelos",
+		"cabecera": "Huitzilac"
+	},
+	{
+		"entidad": "Morelos",
+		"cabecera": "Jantetelco"
+	},
+	{
+		"entidad": "Morelos",
+		"cabecera": "Jiutepec"
+	},
+	{
+		"entidad": "Morelos",
+		"cabecera": "Jojutla"
+	},
+	{
+		"entidad": "Morelos",
+		"cabecera": "Jonacatepec de Leandro Valle"
+	},
+	{
+		"entidad": "Morelos",
+		"cabecera": "Mazatepec"
+	},
+	{
+		"entidad": "Morelos",
+		"cabecera": "Miacatlán"
+	},
+	{
+		"entidad": "Morelos",
+		"cabecera": "Ocuituco"
+	},
+	{
+		"entidad": "Morelos",
+		"cabecera": "Puente de Ixtla"
+	},
+	{
+		"entidad": "Morelos",
+		"cabecera": "Temixco"
+	},
+	{
+		"entidad": "Morelos",
+		"cabecera": "Tepalcingo"
+	},
+	{
+		"entidad": "Morelos",
+		"cabecera": "Tepoztlán"
+	},
+	{
+		"entidad": "Morelos",
+		"cabecera": "Tetecala"
+	},
+	{
+		"entidad": "Morelos",
+		"cabecera": "Tetela del Volcán"
+	},
+	{
+		"entidad": "Morelos",
+		"cabecera": "Tlalnepantla"
+	},
+	{
+		"entidad": "Morelos",
+		"cabecera": "Tlaltizapán"
+	},
+	{
+		"entidad": "Morelos",
+		"cabecera": "Tlaquiltenango"
+	},
+	{
+		"entidad": "Morelos",
+		"cabecera": "Tlayacapan"
+	},
+	{
+		"entidad": "Morelos",
+		"cabecera": "Totolapan"
+	},
+	{
+		"entidad": "Morelos",
+		"cabecera": "Xochitepec"
+	},
+	{
+		"entidad": "Morelos",
+		"cabecera": "Yautepec de Zaragoza"
+	},
+	{
+		"entidad": "Morelos",
+		"cabecera": "Yecapixtla"
+	},
+	{
+		"entidad": "Morelos",
+		"cabecera": "Zacatepec de Hidalgo"
+	},
+	{
+		"entidad": "Morelos",
+		"cabecera": "Zacualpan de Amilpas"
+	},
+	{
+		"entidad": "Morelos",
+		"cabecera": "Temoac"
+	},
+	{
+		"entidad": "Nayarit",
+		"cabecera": "Acaponeta"
+	},
+	{
+		"entidad": "Nayarit",
+		"cabecera": "Ahuacatlán"
+	},
+	{
+		"entidad": "Nayarit",
+		"cabecera": "Amatlán de Cañas"
+	},
+	{
+		"entidad": "Nayarit",
+		"cabecera": "Compostela"
+	},
+	{
+		"entidad": "Nayarit",
+		"cabecera": "Huajicori"
+	},
+	{
+		"entidad": "Nayarit",
+		"cabecera": "Ixtlán del Río"
+	},
+	{
+		"entidad": "Nayarit",
+		"cabecera": "Jala"
+	},
+	{
+		"entidad": "Nayarit",
+		"cabecera": "Xalisco"
+	},
+	{
+		"entidad": "Nayarit",
+		"cabecera": "Jesús María"
+	},
+	{
+		"entidad": "Nayarit",
+		"cabecera": "Rosamorada"
+	},
+	{
+		"entidad": "Nayarit",
+		"cabecera": "Ruíz"
+	},
+	{
+		"entidad": "Nayarit",
+		"cabecera": "San Blas"
+	},
+	{
+		"entidad": "Nayarit",
+		"cabecera": "San Pedro Lagunillas"
+	},
+	{
+		"entidad": "Nayarit",
+		"cabecera": "Santa María del Oro"
+	},
+	{
+		"entidad": "Nayarit",
+		"cabecera": "Santiago Ixcuintla"
+	},
+	{
+		"entidad": "Nayarit",
+		"cabecera": "Tecuala"
+	},
+	{
+		"entidad": "Nayarit",
+		"cabecera": "Tepic"
+	},
+	{
+		"entidad": "Nayarit",
+		"cabecera": "Tuxpan"
+	},
+	{
+		"entidad": "Nayarit",
+		"cabecera": "La Yesca"
+	},
+	{
+		"entidad": "Nayarit",
+		"cabecera": "Valle de Banderas"
+	},
+	{
+		"entidad": "Nuevo León",
+		"cabecera": "Abasolo"
+	},
+	{
+		"entidad": "Nuevo León",
+		"cabecera": "Agualeguas"
+	},
+	{
+		"entidad": "Nuevo León",
+		"cabecera": "Los Aldamas"
+	},
+	{
+		"entidad": "Nuevo León",
+		"cabecera": "Ciudad de Allende"
+	},
+	{
+		"entidad": "Nuevo León",
+		"cabecera": "Anáhuac"
+	},
+	{
+		"entidad": "Nuevo León",
+		"cabecera": "Ciudad Apodaca"
+	},
+	{
+		"entidad": "Nuevo León",
+		"cabecera": "Aramberri"
+	},
+	{
+		"entidad": "Nuevo León",
+		"cabecera": "Bustamante"
+	},
+	{
+		"entidad": "Nuevo León",
+		"cabecera": "Cadereyta Jiménez"
+	},
+	{
+		"entidad": "Nuevo León",
+		"cabecera": "Carmen"
+	},
+	{
+		"entidad": "Nuevo León",
+		"cabecera": "Ciudad Cerralvo"
+	},
+	{
+		"entidad": "Nuevo León",
+		"cabecera": "Ciénega de Flores"
+	},
+	{
+		"entidad": "Nuevo León",
+		"cabecera": "China"
+	},
+	{
+		"entidad": "Nuevo León",
+		"cabecera": "Doctor Arroyo"
+	},
+	{
+		"entidad": "Nuevo León",
+		"cabecera": "Doctor Coss"
+	},
+	{
+		"entidad": "Nuevo León",
+		"cabecera": "Doctor González"
+	},
+	{
+		"entidad": "Nuevo León",
+		"cabecera": "Galeana"
+	},
+	{
+		"entidad": "Nuevo León",
+		"cabecera": "García"
+	},
+	{
+		"entidad": "Nuevo León",
+		"cabecera": "San Pedro Garza García"
+	},
+	{
+		"entidad": "Nuevo León",
+		"cabecera": "General Bravo"
+	},
+	{
+		"entidad": "Nuevo León",
+		"cabecera": "Ciudad General Escobedo"
+	},
+	{
+		"entidad": "Nuevo León",
+		"cabecera": "Ciudad General Terán"
+	},
+	{
+		"entidad": "Nuevo León",
+		"cabecera": "General Treviño"
+	},
+	{
+		"entidad": "Nuevo León",
+		"cabecera": "General Zaragoza"
+	},
+	{
+		"entidad": "Nuevo León",
+		"cabecera": "General Zuazua"
+	},
+	{
+		"entidad": "Nuevo León",
+		"cabecera": "Guadalupe"
+	},
+	{
+		"entidad": "Nuevo León",
+		"cabecera": "Los Herreras"
+	},
+	{
+		"entidad": "Nuevo León",
+		"cabecera": "Higueras"
+	},
+	{
+		"entidad": "Nuevo León",
+		"cabecera": "Hualahuises"
+	},
+	{
+		"entidad": "Nuevo León",
+		"cabecera": "Iturbide"
+	},
+	{
+		"entidad": "Nuevo León",
+		"cabecera": "Ciudad Benito Juárez"
+	},
+	{
+		"entidad": "Nuevo León",
+		"cabecera": "Lampazos de Naranjo"
+	},
+	{
+		"entidad": "Nuevo León",
+		"cabecera": "Linares"
+	},
+	{
+		"entidad": "Nuevo León",
+		"cabecera": "Marín"
+	},
+	{
+		"entidad": "Nuevo León",
+		"cabecera": "Melchor Ocampo"
+	},
+	{
+		"entidad": "Nuevo León",
+		"cabecera": "Mier y Noriega"
+	},
+	{
+		"entidad": "Nuevo León",
+		"cabecera": "Mina"
+	},
+	{
+		"entidad": "Nuevo León",
+		"cabecera": "Montemorelos"
+	},
+	{
+		"entidad": "Nuevo León",
+		"cabecera": "Monterrey"
+	},
+	{
+		"entidad": "Nuevo León",
+		"cabecera": "Parás"
+	},
+	{
+		"entidad": "Nuevo León",
+		"cabecera": "Pesquería"
+	},
+	{
+		"entidad": "Nuevo León",
+		"cabecera": "Los Ramones"
+	},
+	{
+		"entidad": "Nuevo León",
+		"cabecera": "Rayones"
+	},
+	{
+		"entidad": "Nuevo León",
+		"cabecera": "Ciudad Sabinas Hidalgo"
+	},
+	{
+		"entidad": "Nuevo León",
+		"cabecera": "Salinas Victoria"
+	},
+	{
+		"entidad": "Nuevo León",
+		"cabecera": "San Nicolás de los Garza"
+	},
+	{
+		"entidad": "Nuevo León",
+		"cabecera": "Hidalgo"
+	},
+	{
+		"entidad": "Nuevo León",
+		"cabecera": "Ciudad Santa Catarina"
+	},
+	{
+		"entidad": "Nuevo León",
+		"cabecera": "Santiago"
+	},
+	{
+		"entidad": "Nuevo León",
+		"cabecera": "Vallecillo"
+	},
+	{
+		"entidad": "Nuevo León",
+		"cabecera": "Ciudad de Villaldama"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Abejones"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Acatlán de Pérez Figueroa"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Asunción Cacalotepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Asunción Cuyotepeji"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Asunción Ixtaltepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Asunción Nochixtlán"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Asunción Ocotlán"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Asunción Tlacolulita"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Ayotzintepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "El Barrio de la Soledad"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Calihualá"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Candelaria Loxicha"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Ciénega de Zimatlán"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Ciudad Ixtepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Coatecas Altas"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Coicoyán de las Flores"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "La Compañía"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Concepción Buenavista"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Concepción Pápalo"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Constancia del Rosario"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Cosolapa"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Cosoltepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Cuilápam de Guerrero"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Cuyamecalco Villa de Zaragoza"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Chahuites"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Chalcatongo de Hidalgo"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Chiquihuitlán de Benito Juárez"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Heroica Ciudad de Ejutla de Crespo"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Eloxochitlán de Flores Magón"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "El Espinal"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Tamazulápam del Espíritu Santo"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Fresnillo de Trujano"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Guadalupe Etla"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Guadalupe de Ramírez"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Guelatao de Juárez"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Guevea de Humboldt"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Mesones Hidalgo"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Villa Hidalgo"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Heroica Ciudad de Huajuapan de León"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Huautepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Huautla de Jiménez"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Ixtlán de Juárez"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Heroica Ciudad de Juchitán de Zaragoza"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Loma Bonita"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Magdalena Apasco"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Magdalena Jaltepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa Magdalena Jicotlán"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Magdalena Mixtepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Magdalena Ocotlán"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Magdalena Peñasco"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Magdalena Teitipac"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Magdalena Tequisistlán"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Magdalena Tlacotepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Magdalena Zahuatlán"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Mariscala de Juárez"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Mártires de Tacubaya"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Matías Romero Avendaño"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Mazatlán Villa de Flores"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Miahuatlán de Porfirio Díaz"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Mixistlán de la Reforma"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Monjas"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Natividad"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Nazareno Etla"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Nejapa de Madero"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Ixpantepec Nieves"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santiago Niltepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Oaxaca de Juárez"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Ocotlán de Morelos"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "La Pe"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Pinotepa de Don Luis"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Pluma Hidalgo"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San José del Progreso"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Putla Villa de Guerrero"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa Catarina Quioquitani"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Reforma de Pineda"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "La Reforma"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Reyes Etla"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Rojas de Cuauhtémoc"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Salina Cruz"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Agustín Amatengo"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Agustín Atenango"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Agustín Chayuco"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Agustín de las Juntas"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Agustín Etla"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Agustín Loxicha"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Agustín Tlacotepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Agustín Yatareni"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Andrés Cabecera Nueva"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Andrés Dinicuiti"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Andrés Huaxpaltepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Andrés Huayápam"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Andrés Ixtlahuaca"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Andrés Lagunas"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Andrés Nuxiño"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Andrés Paxtlán"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Andrés Sinaxtla"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Andrés Solaga"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Andrés Teotilálpam"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Andrés Tepetlapa"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Andrés Yaá"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Andrés Zabache"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Andrés Zautla"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Antonino Castillo Velasco"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Antonino el Alto"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Antonino Monte Verde"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Antonio Acutla"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Antonio de la Cal"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Antonio Huitepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Antonio Nanahuatípam"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Antonio Sinicahua"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Antonio Tepetlapa"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Baltazar Chichicápam"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Baltazar Loxicha"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Baltazar Yatzachi el Bajo"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Bartolo Coyotepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Bartolomé Ayautla"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Bartolomé Loxicha"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Bartolomé Quialana"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Bartolomé Yucuañe"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Bartolomé Zoogocho"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Bartolo Soyaltepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Bartolo Yautepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Bernardo Mixtepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Blas Atempa"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Carlos Yautepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Cristóbal Amatlán"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Cristóbal Amoltepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Cristóbal Lachirioag"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Cristóbal Suchixtlahuaca"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Dionisio del Mar"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Dionisio Ocotepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Dionisio Ocotlán"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Esteban Atatlahuca"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Felipe Jalapa de Díaz"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Felipe Tejalápam"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Felipe Usila"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Francisco Cahuacuá"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Francisco Cajonos"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Francisco Chapulapa"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Francisco Chindúa"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Francisco del Mar"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Francisco Huehuetlán"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Francisco Ixhuatán"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Francisco Jaltepetongo"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Francisco Lachigoló"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Francisco Logueche"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Francisco Nuxaño"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Francisco Ozolotepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Francisco Sola"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Francisco Telixtlahuaca"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Francisco Teopan"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Francisco Tlapancingo"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Gabriel Mixtepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Ildefonso Amatlán"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Ildefonso Sola"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Ildefonso Villa Alta"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Jacinto Amilpas"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Jacinto Tlacotepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Jerónimo Coatlán"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Jerónimo Silacayoapilla"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Jerónimo Sosola"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Jerónimo Taviche"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Jerónimo Tecóatl"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Jorge Nuchita"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San José Ayuquila"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San José Chiltepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San José del Peñasco"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San José Estancia Grande"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San José Independencia"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San José Lachiguiri"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San José Tenango"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Juan Achiutla"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Juan Atepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Ánimas Trujano"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Juan Bautista Atatlahuca"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Juan Bautista Coixtlahuaca"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Juan Bautista Cuicatlán"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Juan Bautista Guelache"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Juan Bautista Jayacatlán"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Juan Bautista Lo de Soto"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Juan Bautista Suchitepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Juan Bautista Tlacoatzintepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Juan Bautista Tlachichilco"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Juan Bautista Tuxtepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Juan Cacahuatepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Juan Cieneguilla"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Juan Coatzóspam"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Juan Colorado"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Juan Comaltepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Juan Cotzocón"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Juan Chicomezúchil"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Juan Chilateca"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Juan del Estado"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Juan del Río"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Juan Diuxi"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Juan Evangelista Analco"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Juan Guelavía"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Juan Guichicovi"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Juan Ihualtepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Juan Juquila Mixes"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Juan Juquila Vijanos"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Juan Lachao"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Juan Lachigalla"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Juan Lajarcia"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Juan Lalana"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Juan de los Cués"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Juan Mazatlán"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Juan Mixtepec Distrito 08"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Juan Mixtepec Distrito 26"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Juan Ñumí"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Juan Ozolotepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Juan Petlapa"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Juan Quiahije"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Juan Quiotepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Juan Sayultepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Juan Tabaá"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Juan Tamazola"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Juan Teita"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Juan Teitipac"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Juan Tepeuxila"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Juan Teposcolula"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Juan Yaeé"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Juan Yatzona"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Juan Yucuita"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Lorenzo"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Lorenzo Albarradas"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Lorenzo Cacaotepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Lorenzo Cuaunecuiltitla"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Lorenzo Texmelúcan"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Lorenzo Victoria"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Lucas Camotlán"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Lucas Ojitlán"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Lucas Quiaviní"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Lucas Zoquiápam"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Luis Amatlán"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Marcial Ozolotepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Marcos Arteaga"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Martín de los Cansecos"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Martín Huamelúlpam"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Martín Itunyoso"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Martín Lachilá"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Martín Peras"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Martín Tilcajete"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Martín Toxpalan"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Martín Zacatepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Mateo Cajonos"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Capulálpam de Méndez"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Mateo del Mar"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Mateo Yoloxochitlán"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Mateo Etlatongo"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Mateo Nejápam"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Mateo Peñasco"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Mateo Piñas"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Mateo Río Hondo"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Mateo Sindihui"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Mateo Tlapiltepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Melchor Betaza"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Miguel Achiutla"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Miguel Ahuehuetitlán"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Miguel Aloápam"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Miguel Amatitlán"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Miguel Amatlán"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Miguel Coatlán"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Miguel Chicahua"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Miguel Chimalapa"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Miguel del Puerto"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Miguel del Río"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Miguel Ejutla"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Miguel el Grande"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Miguel Huautla"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Miguel Mixtepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Miguel Panixtlahuaca"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Miguel Peras"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Miguel Piedras"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Miguel Quetzaltepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Miguel Santa Flor"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Villa Sola de Vega"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Temascal"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Miguel Suchixtepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Villa Talea de Castro"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Miguel Tecomatlán"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Miguel Tenango"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Miguel Tequixtepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Miguel Tilquiápam"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Miguel Tlacamama"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Miguel Tlacotepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Miguel Tulancingo"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Miguel Yotao"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Nicolás"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Nicolás Hidalgo"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Pablo Coatlán"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Pablo Cuatro Venados"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Pablo Etla"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Pablo Huitzo"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Pablo Huixtepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Pablo Macuiltianguis"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Pablo Tijaltepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Pablo Villa de Mitla"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Pablo Yaganiza"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Pedro Amuzgos"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Pedro Apóstol"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Pedro Atoyac"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Pedro Cajonos"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Pedro Coxcaltepec Cántaros"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Pedro Comitancillo"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Pedro el Alto"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Pedro Huamelula"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Pedro Huilotepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Pedro Ixcatlán"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Pedro Ixtlahuaca"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Pedro Jaltepetongo"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Pedro Jicayán"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Pedro Jocotipac"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Pedro Juchatengo"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Pedro Mártir"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Pedro Mártir Quiechapa"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Pedro Mártir Yucuxaco"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Pedro Mixtepec Distrito 22"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Pedro Mixtepec Distrito 26"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Pedro Molinos"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Pedro Nopala"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Pedro Ocopetatillo"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Pedro Ocotepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Pedro Pochutla"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Pedro Quiatoni"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Pedro Sochiápam"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Pedro Tapanatepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Pedro Taviche"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Pedro Teozacoalco"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Pedro Teutila"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Pedro Tidaá"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Pedro Topiltepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Pedro Totolápam"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Villa de Tututepec de Melchor Ocampo"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Pedro Yaneri"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Pedro Yólox"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Pedro y San Pablo Ayutla"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Villa de Etla"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Pedro y San Pablo Teposcolula"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Pedro y San Pablo Tequixtepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Pedro Yucunama"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Raymundo Jalpan"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Sebastián Abasolo"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Sebastián Coatlán"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Sebastián Ixcapa"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Sebastián Nicananduta"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Sebastián Río Hondo"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Sebastián Tecomaxtlahuaca"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Sebastián Teitipac"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Sebastián Tutla"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Simón Almolongas"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Simón Zahuatlán"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa Ana"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa Ana Ateixtlahuaca"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa Ana Cuauhtémoc"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa Ana del Valle"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa Ana Tavela"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa Ana Tlapacoyan"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa Ana Yareni"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa Ana Zegache"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa Catalina Quierí"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa Catarina Cuixtla"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa Catarina Ixtepeji"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa Catarina Juquila"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa Catarina Lachatao"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa Catarina Loxicha"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa Catarina Mechoacán"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa Catarina Minas"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa Catarina Quiané"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa Catarina Tayata"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa Catarina Ticuá"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa Catarina Yosonotú"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa Catarina Zapoquila"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa Cruz Acatepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa Cruz Amilpas"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa Cruz de Bravo"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa Cruz Itundujia"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa Cruz Mixtepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa Cruz Nundaco"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa Cruz Papalutla"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa Cruz Tacache de Mina"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa Cruz Tacahua"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa Cruz Tayata"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa Cruz Xitla"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa Cruz Xoxocotlán"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa Cruz Zenzontepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa Gertrudis"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa Inés del Monte"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa Inés Yatzeche"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa Lucía del Camino"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa Lucía Miahuatlán"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa Lucía Monteverde"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa Lucía Ocotlán"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa María Alotepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa María Apazco"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa María la Asunción"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Heroica Ciudad de Tlaxiaco"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Ayoquezco de Aldama"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa María Atzompa"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa María Camotlán"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa María Colotepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa María Cortijo"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa María Coyotepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa María Chachoápam"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Villa de Chilapa de Díaz"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa María Chilchotla"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa María Chimalapa"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa María del Rosario"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa María del Tule"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa María Ecatepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa María Guelacé"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa María Guienagati"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa María Huatulco"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa María Huazolotitlán"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa María Ipalapa"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa María Ixcatlán"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa María Jacatepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa María Jalapa del Marqués"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa María Jaltianguis"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa María Lachixío"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa María Mixtequilla"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa María Nativitas"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa María Nduayaco"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa María Ozolotepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa María Pápalo"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa María Peñoles"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa María Petapa"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa María Quiegolani"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa María Sola"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa María Tataltepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa María Tecomavaca"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa María Temaxcalapa"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa María Temaxcaltepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa María Teopoxco"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa María Tepantlali"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa María Texcatitlán"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa María Tlahuitoltepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa María Tlalixtac"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa María Tonameca"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa María Totolapilla"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa María Xadani"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa María Yalina"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa María Yavesía"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa María Yolotepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa María Yosoyúa"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa María Yucuhiti"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa María Zacatepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa María Zaniza"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa María Zoquitlán"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santiago Amoltepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santiago Apoala"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santiago Apóstol"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santiago Astata"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santiago Atitlán"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santiago Ayuquililla"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santiago Cacaloxtepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santiago Camotlán"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santiago Comaltepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santiago Chazumba"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santiago Choápam"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santiago del Río"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santiago Huajolotitlán"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santiago Huauclilla"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santiago Ihuitlán Plumas"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santiago Ixcuintepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santiago Ixtayutla"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santiago Jamiltepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Monte Negro"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santiago Juxtlahuaca"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santiago Lachiguiri"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santiago Lalopa"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santiago Laollaga"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santiago Laxopa"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santiago Llano Grande"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santiago Matatlán"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santiago Miltepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santiago Minas"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santiago Nacaltepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santiago Nejapilla"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santiago Nundiche"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santiago Nuyoó"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santiago Pinotepa Nacional"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santiago Suchilquitongo"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santiago Tamazola"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santiago Tapextla"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Villa Tejúpam de la Unión"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santiago Tenango"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santiago Tepetlapa"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santiago Tetepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santiago Texcalcingo"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santiago Textitlán"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santiago Tilantongo"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santiago Tillo"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santiago Tlazoyaltepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santiago Xanica"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santiago Xiacuí"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santiago Yaitepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santiago Yaveo"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santiago Yolomécatl"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santiago Yosondúa"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santiago Yucuyachi"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santiago Zacatepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santiago Zoochila"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Nuevo Zoquiápam"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santo Domingo Ingenio"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santo Domingo Albarradas"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santo Domingo Armenta"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santo Domingo Chihuitán"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santo Domingo de Morelos"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santo Domingo Ixcatlán"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santo Domingo Nuxaá"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santo Domingo Ozolotepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santo Domingo Petapa"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santo Domingo Roayaga"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santo Domingo Tehuantepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santo Domingo Teojomulco"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santo Domingo Tepuxtepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santo Domingo Tlatayápam"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santo Domingo Tomaltepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santo Domingo Tonalá"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santo Domingo Tonaltepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santo Domingo Xagacía"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santo Domingo Yanhuitlán"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santo Domingo Yodohino"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santo Domingo Zanatepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santos Reyes Nopala"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santos Reyes Pápalo"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santos Reyes Tepejillo"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santos Reyes Yucuná"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santo Tomás Jalieza"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santo Tomás Mazaltepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santo Tomás Ocotepec"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santo Tomás Tamazulapan"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Vicente Coatlán"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Vicente Lachixío"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Vicente Nuñú"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Silacayoápam"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Sitio de Xitlapehua"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Soledad Etla"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Villa de Tamazulápam del Progreso"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Tanetze de Zaragoza"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Taniche"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Tataltepec de Valdés"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Teococuilco de Marcos Pérez"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Teotitlán de Flores Magón"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Teotitlán del Valle"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Teotongo"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Tepelmeme Villa de Morelos"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Heroica Villa Tezoatlán de Segura y Luna, Cuna de la Independencia de Oaxaca"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Jerónimo Tlacochahuaya"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Tlacolula de Matamoros"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Tlacotepec Plumas"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Tlalixtac de Cabrera"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Totontepec Villa de Morelos"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Trinidad Zaachila"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "La Trinidad Vista Hermosa"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Unión Hidalgo"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Valerio Trujano"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Juan Bautista Valle Nacional"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Villa Díaz Ordaz"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Yaxe"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Magdalena Yodocono de Porfirio Díaz"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Yogana"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Yutanduchi de Guerrero"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Villa de Zaachila"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "San Mateo Yucutindoo"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Zapotitlán Lagunas"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Zapotitlán Palmas"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Santa Inés de Zaragoza"
+	},
+	{
+		"entidad": "Oaxaca",
+		"cabecera": "Zimatlán de Álvarez"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Acajete"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "San José Acateno"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Acatlán de Osorio"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Acatzingo de Hidalgo"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Acteopan"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Ahuacatlán"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Ahuatlán"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Ahuazotepec"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Ahuehuetitla"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Ciudad de Ajalpan"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Acaxtlahuacán de Albino Zertuche"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Aljojuca"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Altepexi"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Amixtlán"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Amozoc de Mota"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Aquixtla"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Atempan"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "San Martín Atexcal"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Atlixco"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Atoyatempan"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Atzala"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Santiago Atzitzihuacán"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Atzitzintla"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Axutla"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Ayotoxco de Guerrero"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "San Andrés Calpan"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Caltepec"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Camocuautla"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Caxhuacan"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Coatepec"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Coatzingo"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Santa María Cohetzala"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Cohuecan"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Santa María Coronango"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Coxcatlán"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Santa María Coyomeapan"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "San Vicente Coyotepec"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Cuapiaxtla de Madero"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "San Esteban Cuautempan"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Cuautinchán"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "San Juan Cuautlancingo"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "San Pedro Cuayuca"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Ciudad de Cuetzalan"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Cuyoaco"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Ciudad Serdán"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Chapulco"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Ciudad de Chiautla de Tapia"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "San Lorenzo Chiautzingo"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Chiconcuautla"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Chichiquila"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Chietla"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Chigmecatitlán"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Ciudad de Chignahuapan"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Chignautla"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Chila"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Chila de la Sal"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Honey"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Rafael J. García"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Chinantla"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Domingo Arenas"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Eloxochitlán"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "San Juan Epatlán"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Esperanza"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Metlaltoyuca"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "San Pablo de las Tunas"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Guadalupe"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Guadalupe Victoria"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Bienvenido"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Huaquechula"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Huatlatlauca"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Huauchinango"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Huehuetla"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Huehuetlán el Chico"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Huejotzingo"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Hueyapan"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Hueytamalco"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Hueytlalpan"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Huitzilan"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Santa Clara Huitziltepec"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Atlequizayan"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Ixcamilpa"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "San Juan Ixcaquixtla"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Ixtacamaxtitlán"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Ixtepec"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Izúcar de Matamoros"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Jalpan"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Jolalpan"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Jonotla"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Jopala"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Cuanalá"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Nuevo Necaxa"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Atenayuca"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Saltillo"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Ciudad de Libres"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "La Magdalena Tlatlauquitepec"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Mazapiltepec de Juárez"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "San Francisco Mixtla"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Molcaxac"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Morelos Cañada"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Naupan"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Nauzontla"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "San Buenaventura Nealtican"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Nicolás Bravo"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Nopalucan de la Granja"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Ocotepec"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Santa Clara Ocoyucan"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Olintla"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Oriental"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Ciudad de Pahuatlán de Valle"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Palmar de Bravo"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Pantepec"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Petlalcingo"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Piaxtla"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Heroica Puebla de Zaragoza"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Quecholac"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Quimixtlán"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Ciudad de Rafael Lara Grajales"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Los Reyes de Juárez"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "San Andrés Cholula"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "San Antonio Cañada"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Tochimiltzingo"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "San Felipe Teotlalcingo"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "San Felipe Tepatlán"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "San Gabriel Chilac"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "San Gregorio Atzompa"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "San Jerónimo Tecuanipan"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "San Jerónimo Xayacatlán"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "San José Chiapa"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "San José Miahuatlán"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "San Juan Atenco"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "San Juan Atzompa"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "San Martín Texmelucan de Labastida"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "San Martín Totoltepec"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "San Matías Tlalancaleca"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "San Miguel Ixitlán"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "San Miguel Xoxtla"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "San Nicolás Buenos Aires"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "San Nicolás de los Ranchos"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "San Pablo Anicano"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Cholula de Rivadavia"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "San Pedro Yeloixtlahuaca"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "San Salvador el Seco"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "San Salvador el Verde"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "San Salvador Huixcolotla"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Tlacotepec de Porfirio Díaz"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Santa Catarina Tlaltempan"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Santa Inés Ahuatempan"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Santa Isabel Cholula"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Santiago Miahuatlán"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Santo Domingo Huehuetlán"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Santo Tomás Hueyotlipan"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Soltepec"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Tecali de Herrera"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Tecamachalco"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Tecomatlán"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Tehuacán"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Tehuitzingo"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Tenampulco"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Teopantlán"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Teotlalco"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Tepanco de López"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Tepango de Rodríguez"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Tepatlaxco de Hidalgo"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Tepeaca"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "San Felipe Tepemaxalco"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Tepeojuma"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Tepetzintla"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Tepexco"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Tepexi de Rodríguez"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Tepeyahualco"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Tepeyahualco de Cuauhtémoc"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Ciudad de Tetela de Ocampo"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Teteles de Avila Castillo"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Teziutlán"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Tianguismanalco"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Tilapa"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Tlacotepec de Benito Juárez"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Tlacuilotepec"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Tlachichuca"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Santa Rita Tlahuapan"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Tlaltenango"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Tlanepantla"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Tlaola"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Tlapacoya"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Tlapanalá"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Ciudad de Tlatlauquitepec"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Tlaxco"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Tochimilco"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Tochtepec"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Totoltepec de Guerrero"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Tulcingo de Valle"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Tuzamapan de Galeana"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Tzicatlacoyan"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Venustiano Carranza"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Santa María del Monte"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Xayacatlán de Bravo"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Xicotepec de Juárez"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Xicotlán"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "San Juan Xiutetelco"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Cinco de Mayo"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Xochiltepec"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Xochitlán de Vicente Suárez"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Xochitlán"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Yaonáhuac"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Yehualtepec"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Zacapala"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Zacapoaxtla"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Zacatlán"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Zapotitlán Salinas"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Zapotitlán de Méndez"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Zaragoza"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Santiago Zautla"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Zihuateutla"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "San Sebastián Zinacatepec"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Zongozotla"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Zoquiapan"
+	},
+	{
+		"entidad": "Puebla",
+		"cabecera": "Zoquitlán"
+	},
+	{
+		"entidad": "Querétaro",
+		"cabecera": "Amealco de Bonfil"
+	},
+	{
+		"entidad": "Querétaro",
+		"cabecera": "Pinal de Amoles"
+	},
+	{
+		"entidad": "Querétaro",
+		"cabecera": "Arroyo Seco"
+	},
+	{
+		"entidad": "Querétaro",
+		"cabecera": "Cadereyta de Montes"
+	},
+	{
+		"entidad": "Querétaro",
+		"cabecera": "Colón"
+	},
+	{
+		"entidad": "Querétaro",
+		"cabecera": "El Pueblito"
+	},
+	{
+		"entidad": "Querétaro",
+		"cabecera": "Ezequiel Montes"
+	},
+	{
+		"entidad": "Querétaro",
+		"cabecera": "Huimilpan"
+	},
+	{
+		"entidad": "Querétaro",
+		"cabecera": "Jalpan de Serra"
+	},
+	{
+		"entidad": "Querétaro",
+		"cabecera": "Landa de Matamoros"
+	},
+	{
+		"entidad": "Querétaro",
+		"cabecera": "La Cañada"
+	},
+	{
+		"entidad": "Querétaro",
+		"cabecera": "Pedro Escobedo"
+	},
+	{
+		"entidad": "Querétaro",
+		"cabecera": "Peñamiller"
+	},
+	{
+		"entidad": "Querétaro",
+		"cabecera": "Santiago de Querétaro"
+	},
+	{
+		"entidad": "Querétaro",
+		"cabecera": "San Joaquín"
+	},
+	{
+		"entidad": "Querétaro",
+		"cabecera": "San Juan del Río"
+	},
+	{
+		"entidad": "Querétaro",
+		"cabecera": "Tequisquiapan"
+	},
+	{
+		"entidad": "Querétaro",
+		"cabecera": "Tolimán"
+	},
+	{
+		"entidad": "Quintana Roo",
+		"cabecera": "Cozumel"
+	},
+	{
+		"entidad": "Quintana Roo",
+		"cabecera": "Felipe Carrillo Puerto"
+	},
+	{
+		"entidad": "Quintana Roo",
+		"cabecera": "Isla Mujeres"
+	},
+	{
+		"entidad": "Quintana Roo",
+		"cabecera": "Chetumal"
+	},
+	{
+		"entidad": "Quintana Roo",
+		"cabecera": "Cancún"
+	},
+	{
+		"entidad": "Quintana Roo",
+		"cabecera": "José María Morelos"
+	},
+	{
+		"entidad": "Quintana Roo",
+		"cabecera": "Kantunilkín"
+	},
+	{
+		"entidad": "Quintana Roo",
+		"cabecera": "Playa del Carmen"
+	},
+	{
+		"entidad": "Quintana Roo",
+		"cabecera": "Tulum"
+	},
+	{
+		"entidad": "Quintana Roo",
+		"cabecera": "Bacalar"
+	},
+	{
+		"entidad": "Quintana Roo",
+		"cabecera": "Puerto Morelos"
+	},
+	{
+		"entidad": "San Luis Potosí",
+		"cabecera": "Ahualulco del Sonido 13"
+	},
+	{
+		"entidad": "San Luis Potosí",
+		"cabecera": "Alaquines"
+	},
+	{
+		"entidad": "San Luis Potosí",
+		"cabecera": "Aquismón"
+	},
+	{
+		"entidad": "San Luis Potosí",
+		"cabecera": "Armadillo de los Infante"
+	},
+	{
+		"entidad": "San Luis Potosí",
+		"cabecera": "Cárdenas"
+	},
+	{
+		"entidad": "San Luis Potosí",
+		"cabecera": "Real de Catorce"
+	},
+	{
+		"entidad": "San Luis Potosí",
+		"cabecera": "Cedral"
+	},
+	{
+		"entidad": "San Luis Potosí",
+		"cabecera": "Cerritos"
+	},
+	{
+		"entidad": "San Luis Potosí",
+		"cabecera": "Cerro de San Pedro"
+	},
+	{
+		"entidad": "San Luis Potosí",
+		"cabecera": "Ciudad del Maíz"
+	},
+	{
+		"entidad": "San Luis Potosí",
+		"cabecera": "Ciudad Fernández"
+	},
+	{
+		"entidad": "San Luis Potosí",
+		"cabecera": "Tancanhuitz"
+	},
+	{
+		"entidad": "San Luis Potosí",
+		"cabecera": "Ciudad Valles"
+	},
+	{
+		"entidad": "San Luis Potosí",
+		"cabecera": "Coxcatlán"
+	},
+	{
+		"entidad": "San Luis Potosí",
+		"cabecera": "Charcas"
+	},
+	{
+		"entidad": "San Luis Potosí",
+		"cabecera": "Ebano"
+	},
+	{
+		"entidad": "San Luis Potosí",
+		"cabecera": "Guadalcázar"
+	},
+	{
+		"entidad": "San Luis Potosí",
+		"cabecera": "Huehuetlán"
+	},
+	{
+		"entidad": "San Luis Potosí",
+		"cabecera": "Lagunillas"
+	},
+	{
+		"entidad": "San Luis Potosí",
+		"cabecera": "Matehuala"
+	},
+	{
+		"entidad": "San Luis Potosí",
+		"cabecera": "Mexquitic de Carmona"
+	},
+	{
+		"entidad": "San Luis Potosí",
+		"cabecera": "Moctezuma"
+	},
+	{
+		"entidad": "San Luis Potosí",
+		"cabecera": "Rayón"
+	},
+	{
+		"entidad": "San Luis Potosí",
+		"cabecera": "Rioverde"
+	},
+	{
+		"entidad": "San Luis Potosí",
+		"cabecera": "Salinas de Hidalgo"
+	},
+	{
+		"entidad": "San Luis Potosí",
+		"cabecera": "San Antonio"
+	},
+	{
+		"entidad": "San Luis Potosí",
+		"cabecera": "San Ciro de Acosta"
+	},
+	{
+		"entidad": "San Luis Potosí",
+		"cabecera": "San Luis Potosí"
+	},
+	{
+		"entidad": "San Luis Potosí",
+		"cabecera": "San Martín Chalchicuautla"
+	},
+	{
+		"entidad": "San Luis Potosí",
+		"cabecera": "San Nicolás Tolentino"
+	},
+	{
+		"entidad": "San Luis Potosí",
+		"cabecera": "Santa Catarina"
+	},
+	{
+		"entidad": "San Luis Potosí",
+		"cabecera": "Santa María del Río"
+	},
+	{
+		"entidad": "San Luis Potosí",
+		"cabecera": "Santo Domingo"
+	},
+	{
+		"entidad": "San Luis Potosí",
+		"cabecera": "San Vicente Tancuayalab"
+	},
+	{
+		"entidad": "San Luis Potosí",
+		"cabecera": "Soledad de Graciano Sánchez"
+	},
+	{
+		"entidad": "San Luis Potosí",
+		"cabecera": "Tamasopo"
+	},
+	{
+		"entidad": "San Luis Potosí",
+		"cabecera": "Tamazunchale"
+	},
+	{
+		"entidad": "San Luis Potosí",
+		"cabecera": "Tampacán"
+	},
+	{
+		"entidad": "San Luis Potosí",
+		"cabecera": "Tampamolón Corona"
+	},
+	{
+		"entidad": "San Luis Potosí",
+		"cabecera": "Tamuín"
+	},
+	{
+		"entidad": "San Luis Potosí",
+		"cabecera": "Tanlajás"
+	},
+	{
+		"entidad": "San Luis Potosí",
+		"cabecera": "Tanquián de Escobedo"
+	},
+	{
+		"entidad": "San Luis Potosí",
+		"cabecera": "Tierra Nueva"
+	},
+	{
+		"entidad": "San Luis Potosí",
+		"cabecera": "Vanegas"
+	},
+	{
+		"entidad": "San Luis Potosí",
+		"cabecera": "Venado"
+	},
+	{
+		"entidad": "San Luis Potosí",
+		"cabecera": "Villa de Arriaga"
+	},
+	{
+		"entidad": "San Luis Potosí",
+		"cabecera": "Villa de Guadalupe"
+	},
+	{
+		"entidad": "San Luis Potosí",
+		"cabecera": "Villa de la Paz"
+	},
+	{
+		"entidad": "San Luis Potosí",
+		"cabecera": "Villa de Ramos"
+	},
+	{
+		"entidad": "San Luis Potosí",
+		"cabecera": "Villa de Reyes"
+	},
+	{
+		"entidad": "San Luis Potosí",
+		"cabecera": "Villa Hidalgo"
+	},
+	{
+		"entidad": "San Luis Potosí",
+		"cabecera": "Villa Juárez"
+	},
+	{
+		"entidad": "San Luis Potosí",
+		"cabecera": "Axtla de Terrazas"
+	},
+	{
+		"entidad": "San Luis Potosí",
+		"cabecera": "Xilitla"
+	},
+	{
+		"entidad": "San Luis Potosí",
+		"cabecera": "Villa de Zaragoza"
+	},
+	{
+		"entidad": "San Luis Potosí",
+		"cabecera": "Villa de Arista"
+	},
+	{
+		"entidad": "San Luis Potosí",
+		"cabecera": "Matlapa"
+	},
+	{
+		"entidad": "San Luis Potosí",
+		"cabecera": "El Naranjo"
+	},
+	{
+		"entidad": "Sinaloa",
+		"cabecera": "Los Mochis"
+	},
+	{
+		"entidad": "Sinaloa",
+		"cabecera": "Angostura"
+	},
+	{
+		"entidad": "Sinaloa",
+		"cabecera": "Badiraguato"
+	},
+	{
+		"entidad": "Sinaloa",
+		"cabecera": "Concordia"
+	},
+	{
+		"entidad": "Sinaloa",
+		"cabecera": "Cosalá"
+	},
+	{
+		"entidad": "Sinaloa",
+		"cabecera": "Culiacán Rosales"
+	},
+	{
+		"entidad": "Sinaloa",
+		"cabecera": "Choix"
+	},
+	{
+		"entidad": "Sinaloa",
+		"cabecera": "La Cruz"
+	},
+	{
+		"entidad": "Sinaloa",
+		"cabecera": "Escuinapa de Hidalgo"
+	},
+	{
+		"entidad": "Sinaloa",
+		"cabecera": "El Fuerte"
+	},
+	{
+		"entidad": "Sinaloa",
+		"cabecera": "Guasave"
+	},
+	{
+		"entidad": "Sinaloa",
+		"cabecera": "Mazatlán"
+	},
+	{
+		"entidad": "Sinaloa",
+		"cabecera": "Mocorito"
+	},
+	{
+		"entidad": "Sinaloa",
+		"cabecera": "El Rosario"
+	},
+	{
+		"entidad": "Sinaloa",
+		"cabecera": "Guamúchil"
+	},
+	{
+		"entidad": "Sinaloa",
+		"cabecera": "San Ignacio"
+	},
+	{
+		"entidad": "Sinaloa",
+		"cabecera": "Sinaloa de Leyva"
+	},
+	{
+		"entidad": "Sinaloa",
+		"cabecera": "Navolato"
+	},
+	{
+		"entidad": "Sonora",
+		"cabecera": "Aconchi"
+	},
+	{
+		"entidad": "Sonora",
+		"cabecera": "Agua Prieta"
+	},
+	{
+		"entidad": "Sonora",
+		"cabecera": "Alamos"
+	},
+	{
+		"entidad": "Sonora",
+		"cabecera": "Altar"
+	},
+	{
+		"entidad": "Sonora",
+		"cabecera": "Arivechi"
+	},
+	{
+		"entidad": "Sonora",
+		"cabecera": "Arizpe"
+	},
+	{
+		"entidad": "Sonora",
+		"cabecera": "Atil"
+	},
+	{
+		"entidad": "Sonora",
+		"cabecera": "Bacadéhuachi"
+	},
+	{
+		"entidad": "Sonora",
+		"cabecera": "Bacanora"
+	},
+	{
+		"entidad": "Sonora",
+		"cabecera": "Bacerac"
+	},
+	{
+		"entidad": "Sonora",
+		"cabecera": "Bacoachi"
+	},
+	{
+		"entidad": "Sonora",
+		"cabecera": "Bácum"
+	},
+	{
+		"entidad": "Sonora",
+		"cabecera": "Banámichi"
+	},
+	{
+		"entidad": "Sonora",
+		"cabecera": "Baviácora"
+	},
+	{
+		"entidad": "Sonora",
+		"cabecera": "Bavispe"
+	},
+	{
+		"entidad": "Sonora",
+		"cabecera": "Benjamín Hill"
+	},
+	{
+		"entidad": "Sonora",
+		"cabecera": "Heroica Caborca"
+	},
+	{
+		"entidad": "Sonora",
+		"cabecera": "Ciudad Obregón"
+	},
+	{
+		"entidad": "Sonora",
+		"cabecera": "Heroica Ciudad de Cananea"
+	},
+	{
+		"entidad": "Sonora",
+		"cabecera": "Carbó"
+	},
+	{
+		"entidad": "Sonora",
+		"cabecera": "La Colorada"
+	},
+	{
+		"entidad": "Sonora",
+		"cabecera": "Cucurpe"
+	},
+	{
+		"entidad": "Sonora",
+		"cabecera": "Cumpas"
+	},
+	{
+		"entidad": "Sonora",
+		"cabecera": "Divisaderos"
+	},
+	{
+		"entidad": "Sonora",
+		"cabecera": "Empalme"
+	},
+	{
+		"entidad": "Sonora",
+		"cabecera": "Etchojoa"
+	},
+	{
+		"entidad": "Sonora",
+		"cabecera": "Fronteras"
+	},
+	{
+		"entidad": "Sonora",
+		"cabecera": "Granados"
+	},
+	{
+		"entidad": "Sonora",
+		"cabecera": "Heroica Guaymas"
+	},
+	{
+		"entidad": "Sonora",
+		"cabecera": "Hermosillo"
+	},
+	{
+		"entidad": "Sonora",
+		"cabecera": "Huachinera"
+	},
+	{
+		"entidad": "Sonora",
+		"cabecera": "Huásabas"
+	},
+	{
+		"entidad": "Sonora",
+		"cabecera": "Huatabampo"
+	},
+	{
+		"entidad": "Sonora",
+		"cabecera": "Huépac"
+	},
+	{
+		"entidad": "Sonora",
+		"cabecera": "Imuris"
+	},
+	{
+		"entidad": "Sonora",
+		"cabecera": "Magdalena de Kino"
+	},
+	{
+		"entidad": "Sonora",
+		"cabecera": "Mazatán"
+	},
+	{
+		"entidad": "Sonora",
+		"cabecera": "Moctezuma"
+	},
+	{
+		"entidad": "Sonora",
+		"cabecera": "Naco"
+	},
+	{
+		"entidad": "Sonora",
+		"cabecera": "Nácori Chico"
+	},
+	{
+		"entidad": "Sonora",
+		"cabecera": "Nacozari de García"
+	},
+	{
+		"entidad": "Sonora",
+		"cabecera": "Navojoa"
+	},
+	{
+		"entidad": "Sonora",
+		"cabecera": "Heroica Nogales"
+	},
+	{
+		"entidad": "Sonora",
+		"cabecera": "Onavas"
+	},
+	{
+		"entidad": "Sonora",
+		"cabecera": "Opodepe"
+	},
+	{
+		"entidad": "Sonora",
+		"cabecera": "Oquitoa"
+	},
+	{
+		"entidad": "Sonora",
+		"cabecera": "Pitiquito"
+	},
+	{
+		"entidad": "Sonora",
+		"cabecera": "Puerto Peñasco"
+	},
+	{
+		"entidad": "Sonora",
+		"cabecera": "Quiriego"
+	},
+	{
+		"entidad": "Sonora",
+		"cabecera": "Rayón"
+	},
+	{
+		"entidad": "Sonora",
+		"cabecera": "Rosario"
+	},
+	{
+		"entidad": "Sonora",
+		"cabecera": "Sahuaripa"
+	},
+	{
+		"entidad": "Sonora",
+		"cabecera": "San Felipe de Jesús"
+	},
+	{
+		"entidad": "Sonora",
+		"cabecera": "San Javier"
+	},
+	{
+		"entidad": "Sonora",
+		"cabecera": "San Luis Río Colorado"
+	},
+	{
+		"entidad": "Sonora",
+		"cabecera": "San Miguel de Horcasitas"
+	},
+	{
+		"entidad": "Sonora",
+		"cabecera": "San Pedro de la Cueva"
+	},
+	{
+		"entidad": "Sonora",
+		"cabecera": "Santa Ana"
+	},
+	{
+		"entidad": "Sonora",
+		"cabecera": "Santa Cruz"
+	},
+	{
+		"entidad": "Sonora",
+		"cabecera": "Sáric"
+	},
+	{
+		"entidad": "Sonora",
+		"cabecera": "Soyopa"
+	},
+	{
+		"entidad": "Sonora",
+		"cabecera": "Suaqui Grande"
+	},
+	{
+		"entidad": "Sonora",
+		"cabecera": "Tepache"
+	},
+	{
+		"entidad": "Sonora",
+		"cabecera": "Trincheras"
+	},
+	{
+		"entidad": "Sonora",
+		"cabecera": "Tubutama"
+	},
+	{
+		"entidad": "Sonora",
+		"cabecera": "Heroica Ciudad de Ures"
+	},
+	{
+		"entidad": "Sonora",
+		"cabecera": "Villa Hidalgo"
+	},
+	{
+		"entidad": "Sonora",
+		"cabecera": "Villa Pesqueira (Mátape)"
+	},
+	{
+		"entidad": "Sonora",
+		"cabecera": "Yécora"
+	},
+	{
+		"entidad": "Sonora",
+		"cabecera": "Sonoita"
+	},
+	{
+		"entidad": "Sonora",
+		"cabecera": "Villa Juárez"
+	},
+	{
+		"entidad": "Sonora",
+		"cabecera": "San Ignacio Río Muerto"
+	},
+	{
+		"entidad": "Tabasco",
+		"cabecera": "Balancán"
+	},
+	{
+		"entidad": "Tabasco",
+		"cabecera": "Cárdenas"
+	},
+	{
+		"entidad": "Tabasco",
+		"cabecera": "Frontera"
+	},
+	{
+		"entidad": "Tabasco",
+		"cabecera": "Villahermosa"
+	},
+	{
+		"entidad": "Tabasco",
+		"cabecera": "Comalcalco"
+	},
+	{
+		"entidad": "Tabasco",
+		"cabecera": "Cunduacán"
+	},
+	{
+		"entidad": "Tabasco",
+		"cabecera": "Emiliano Zapata"
+	},
+	{
+		"entidad": "Tabasco",
+		"cabecera": "Huimanguillo"
+	},
+	{
+		"entidad": "Tabasco",
+		"cabecera": "Jalapa"
+	},
+	{
+		"entidad": "Tabasco",
+		"cabecera": "Jalpa de Méndez"
+	},
+	{
+		"entidad": "Tabasco",
+		"cabecera": "Jonuta"
+	},
+	{
+		"entidad": "Tabasco",
+		"cabecera": "Macuspana"
+	},
+	{
+		"entidad": "Tabasco",
+		"cabecera": "Nacajuca"
+	},
+	{
+		"entidad": "Tabasco",
+		"cabecera": "Paraíso"
+	},
+	{
+		"entidad": "Tabasco",
+		"cabecera": "Tacotalpa"
+	},
+	{
+		"entidad": "Tabasco",
+		"cabecera": "Teapa"
+	},
+	{
+		"entidad": "Tabasco",
+		"cabecera": "Tenosique de Pino Suárez"
+	},
+	{
+		"entidad": "Tamaulipas",
+		"cabecera": "Abasolo"
+	},
+	{
+		"entidad": "Tamaulipas",
+		"cabecera": "Aldama"
+	},
+	{
+		"entidad": "Tamaulipas",
+		"cabecera": "Altamira"
+	},
+	{
+		"entidad": "Tamaulipas",
+		"cabecera": "Antiguo Morelos"
+	},
+	{
+		"entidad": "Tamaulipas",
+		"cabecera": "Burgos"
+	},
+	{
+		"entidad": "Tamaulipas",
+		"cabecera": "Bustamante"
+	},
+	{
+		"entidad": "Tamaulipas",
+		"cabecera": "Ciudad Camargo"
+	},
+	{
+		"entidad": "Tamaulipas",
+		"cabecera": "Casas"
+	},
+	{
+		"entidad": "Tamaulipas",
+		"cabecera": "Ciudad Madero"
+	},
+	{
+		"entidad": "Tamaulipas",
+		"cabecera": "Cruillas"
+	},
+	{
+		"entidad": "Tamaulipas",
+		"cabecera": "Gómez Farías"
+	},
+	{
+		"entidad": "Tamaulipas",
+		"cabecera": "González"
+	},
+	{
+		"entidad": "Tamaulipas",
+		"cabecera": "Güémez"
+	},
+	{
+		"entidad": "Tamaulipas",
+		"cabecera": "Nueva Ciudad Guerrero"
+	},
+	{
+		"entidad": "Tamaulipas",
+		"cabecera": "Ciudad Gustavo Díaz Ordaz"
+	},
+	{
+		"entidad": "Tamaulipas",
+		"cabecera": "Hidalgo"
+	},
+	{
+		"entidad": "Tamaulipas",
+		"cabecera": "Jaumave"
+	},
+	{
+		"entidad": "Tamaulipas",
+		"cabecera": "Santander Jiménez"
+	},
+	{
+		"entidad": "Tamaulipas",
+		"cabecera": "Llera de Canales"
+	},
+	{
+		"entidad": "Tamaulipas",
+		"cabecera": "Villa Mainero"
+	},
+	{
+		"entidad": "Tamaulipas",
+		"cabecera": "Ciudad Mante"
+	},
+	{
+		"entidad": "Tamaulipas",
+		"cabecera": "Heroica Matamoros"
+	},
+	{
+		"entidad": "Tamaulipas",
+		"cabecera": "Méndez"
+	},
+	{
+		"entidad": "Tamaulipas",
+		"cabecera": "Mier"
+	},
+	{
+		"entidad": "Tamaulipas",
+		"cabecera": "Ciudad Miguel Alemán"
+	},
+	{
+		"entidad": "Tamaulipas",
+		"cabecera": "Miquihuana"
+	},
+	{
+		"entidad": "Tamaulipas",
+		"cabecera": "Nuevo Laredo"
+	},
+	{
+		"entidad": "Tamaulipas",
+		"cabecera": "Nuevo Morelos"
+	},
+	{
+		"entidad": "Tamaulipas",
+		"cabecera": "Ocampo"
+	},
+	{
+		"entidad": "Tamaulipas",
+		"cabecera": "Nueva Villa de Padilla"
+	},
+	{
+		"entidad": "Tamaulipas",
+		"cabecera": "Palmillas"
+	},
+	{
+		"entidad": "Tamaulipas",
+		"cabecera": "Reynosa"
+	},
+	{
+		"entidad": "Tamaulipas",
+		"cabecera": "Ciudad Río Bravo"
+	},
+	{
+		"entidad": "Tamaulipas",
+		"cabecera": "San Carlos"
+	},
+	{
+		"entidad": "Tamaulipas",
+		"cabecera": "San Fernando"
+	},
+	{
+		"entidad": "Tamaulipas",
+		"cabecera": "San Nicolás"
+	},
+	{
+		"entidad": "Tamaulipas",
+		"cabecera": "Soto la Marina"
+	},
+	{
+		"entidad": "Tamaulipas",
+		"cabecera": "Tampico"
+	},
+	{
+		"entidad": "Tamaulipas",
+		"cabecera": "Ciudad Tula"
+	},
+	{
+		"entidad": "Tamaulipas",
+		"cabecera": "Valle Hermoso"
+	},
+	{
+		"entidad": "Tamaulipas",
+		"cabecera": "Ciudad Victoria"
+	},
+	{
+		"entidad": "Tamaulipas",
+		"cabecera": "Villagrán"
+	},
+	{
+		"entidad": "Tamaulipas",
+		"cabecera": "Xicoténcatl"
+	},
+	{
+		"entidad": "Tlaxcala",
+		"cabecera": "Amaxac de Guerrero"
+	},
+	{
+		"entidad": "Tlaxcala",
+		"cabecera": "Apetatitlán"
+	},
+	{
+		"entidad": "Tlaxcala",
+		"cabecera": "Atlangatepec"
+	},
+	{
+		"entidad": "Tlaxcala",
+		"cabecera": "Atlzayanca"
+	},
+	{
+		"entidad": "Tlaxcala",
+		"cabecera": "Ciudad de Apizaco"
+	},
+	{
+		"entidad": "Tlaxcala",
+		"cabecera": "Heroica Ciudad de Calpulalpan"
+	},
+	{
+		"entidad": "Tlaxcala",
+		"cabecera": "Villa de El Carmen Tequexquitla"
+	},
+	{
+		"entidad": "Tlaxcala",
+		"cabecera": "Cuapiaxtla"
+	},
+	{
+		"entidad": "Tlaxcala",
+		"cabecera": "Cuaxomulco"
+	},
+	{
+		"entidad": "Tlaxcala",
+		"cabecera": "Santa Ana Chiautempan"
+	},
+	{
+		"entidad": "Tlaxcala",
+		"cabecera": "Muñoz"
+	},
+	{
+		"entidad": "Tlaxcala",
+		"cabecera": "Españita"
+	},
+	{
+		"entidad": "Tlaxcala",
+		"cabecera": "Huamantla"
+	},
+	{
+		"entidad": "Tlaxcala",
+		"cabecera": "Hueyotlipan"
+	},
+	{
+		"entidad": "Tlaxcala",
+		"cabecera": "Villa Mariano Matamoros"
+	},
+	{
+		"entidad": "Tlaxcala",
+		"cabecera": "Ixtenco"
+	},
+	{
+		"entidad": "Tlaxcala",
+		"cabecera": "Mazatecochco"
+	},
+	{
+		"entidad": "Tlaxcala",
+		"cabecera": "Contla"
+	},
+	{
+		"entidad": "Tlaxcala",
+		"cabecera": "Tepetitla"
+	},
+	{
+		"entidad": "Tlaxcala",
+		"cabecera": "Sanctórum"
+	},
+	{
+		"entidad": "Tlaxcala",
+		"cabecera": "Ciudad de Nanacamilpa"
+	},
+	{
+		"entidad": "Tlaxcala",
+		"cabecera": "Acuamanala"
+	},
+	{
+		"entidad": "Tlaxcala",
+		"cabecera": "Natívitas"
+	},
+	{
+		"entidad": "Tlaxcala",
+		"cabecera": "Panotla"
+	},
+	{
+		"entidad": "Tlaxcala",
+		"cabecera": "Villa Vicente Guerrero"
+	},
+	{
+		"entidad": "Tlaxcala",
+		"cabecera": "Santa Cruz Tlaxcala"
+	},
+	{
+		"entidad": "Tlaxcala",
+		"cabecera": "Tenancingo"
+	},
+	{
+		"entidad": "Tlaxcala",
+		"cabecera": "Teolocholco"
+	},
+	{
+		"entidad": "Tlaxcala",
+		"cabecera": "Tepeyanco"
+	},
+	{
+		"entidad": "Tlaxcala",
+		"cabecera": "Terrenate"
+	},
+	{
+		"entidad": "Tlaxcala",
+		"cabecera": "Tetla"
+	},
+	{
+		"entidad": "Tlaxcala",
+		"cabecera": "Tetlatlahuca"
+	},
+	{
+		"entidad": "Tlaxcala",
+		"cabecera": "Tlaxcala de Xicohténcatl"
+	},
+	{
+		"entidad": "Tlaxcala",
+		"cabecera": "Tlaxco"
+	},
+	{
+		"entidad": "Tlaxcala",
+		"cabecera": "Tocatlán"
+	},
+	{
+		"entidad": "Tlaxcala",
+		"cabecera": "San Juan Totolac"
+	},
+	{
+		"entidad": "Tlaxcala",
+		"cabecera": "Zitlaltépec"
+	},
+	{
+		"entidad": "Tlaxcala",
+		"cabecera": "Tzompantepec"
+	},
+	{
+		"entidad": "Tlaxcala",
+		"cabecera": "Xaloztoc"
+	},
+	{
+		"entidad": "Tlaxcala",
+		"cabecera": "Xaltocan"
+	},
+	{
+		"entidad": "Tlaxcala",
+		"cabecera": "Papalotla"
+	},
+	{
+		"entidad": "Tlaxcala",
+		"cabecera": "Xicohtzinco"
+	},
+	{
+		"entidad": "Tlaxcala",
+		"cabecera": "San Dionisio Yauhquemehcan"
+	},
+	{
+		"entidad": "Tlaxcala",
+		"cabecera": "Zacatelco"
+	},
+	{
+		"entidad": "Tlaxcala",
+		"cabecera": "Benito Juárez"
+	},
+	{
+		"entidad": "Tlaxcala",
+		"cabecera": "Emiliano Zapata"
+	},
+	{
+		"entidad": "Tlaxcala",
+		"cabecera": "Lázaro Cárdenas"
+	},
+	{
+		"entidad": "Tlaxcala",
+		"cabecera": "La Magdalena Tlaltelulco"
+	},
+	{
+		"entidad": "Tlaxcala",
+		"cabecera": "San Damián Texóloc"
+	},
+	{
+		"entidad": "Tlaxcala",
+		"cabecera": "San Francisco Tetlanohcan"
+	},
+	{
+		"entidad": "Tlaxcala",
+		"cabecera": "San Jerónimo Zacualpan"
+	},
+	{
+		"entidad": "Tlaxcala",
+		"cabecera": "San José Teacalco"
+	},
+	{
+		"entidad": "Tlaxcala",
+		"cabecera": "San Juan Huactzinco"
+	},
+	{
+		"entidad": "Tlaxcala",
+		"cabecera": "San Lorenzo Axocomanitla"
+	},
+	{
+		"entidad": "Tlaxcala",
+		"cabecera": "San Lucas Tecopilco"
+	},
+	{
+		"entidad": "Tlaxcala",
+		"cabecera": "Santa Ana Nopalucan"
+	},
+	{
+		"entidad": "Tlaxcala",
+		"cabecera": "Santa Apolonia Teacalco"
+	},
+	{
+		"entidad": "Tlaxcala",
+		"cabecera": "Santa Catarina Ayometla"
+	},
+	{
+		"entidad": "Tlaxcala",
+		"cabecera": "Santa Cruz Quilehtla"
+	},
+	{
+		"entidad": "Tlaxcala",
+		"cabecera": "Santa Isabel Xiloxoxtla"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Acajete"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Acatlán"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Acayucan"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Actopan"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Acula"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Acultzingo"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Camarón de Tejeda"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Alpatláhuac"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Alto Lucero"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Altotonga"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Alvarado"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Amatitlán"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Naranjos"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Amatlán de los Reyes"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Ángel R. Cabada"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "José Cardel"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Apazapan"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Aquila"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Astacinga"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Atlahuilco"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Atoyac"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Atzacan"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Atzalan"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Tlaltetela"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Ayahualulco"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Banderilla"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Benito Juárez"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Boca del Río"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Calcahualco"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Ciudad Mendoza"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Tamarindo"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Catemaco"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Cazones de Herrera"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Cerro Azul"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Citlaltépec"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Coacoatzintla"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Progreso de Zaragoza"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Coatepec"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Coatzacoalcos"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Coatzintla"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Coetzala"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Colipa"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Comapa"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Córdoba"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Cosamaloapan"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Cosautlán de Carvajal"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Coscomatepec de Bravo"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Cosoleacaque"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Cotaxtla"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Coxquihui"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Coyutla"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Cuichapa"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Cuitláhuac"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Chacaltianguis"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Chalma"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Chiconamel"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Chiconquiaco"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Chicontepec de Tejeda"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Chinameca"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Chinampa de Gorostiza"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Las Choapas"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Chocamán"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Chontla"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Chumatlán"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Dos Ríos"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Espinal"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Filomeno Mata"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Fortín de las Flores"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Gutiérrez Zamora"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Hidalgotitlán"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Huatusco de Chicuellar"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Huayacocotla"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Hueyapan de Ocampo"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Huiloapan de Cuauhtémoc"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Ignacio de la Llave"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Ilamatlán"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Isla"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Ixcatepec"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Ixhuacán de los Reyes"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Ixhuatlán del Café"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Ixhuatlancillo"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Ixhuatlán del Sureste"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Ixhuatlán de Madero"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Ixmatlahuacan"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Ixtaczoquitlán"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Jalacingo"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Xalapa-Enríquez"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Jalcomulco"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Jáltipan de Morelos"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Jamapa"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Jesús Carranza"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Xico"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Jilotepec"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Juan Rodríguez Clara"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Juchique de Ferrer"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Landero y Coss"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Lerdo de Tejada"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Magdalena"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Maltrata"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Manlio Fabio Altamirano"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Mariano Escobedo"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Martínez de la Torre"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Mecatlán"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Mecayapan"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Medellín"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Miahuatlán"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Las Minas"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Minatitlán"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Misantla"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Mixtla de Altamirano"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Moloacán"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Naolinco de Victoria"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Naranjal"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Nautla"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Nogales"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Oluta"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Omealca"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Orizaba"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Otatitlán"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Oteapan"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Ozuluama de Mascareñas"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Pajapan"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Pánuco"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Papantla de Olarte"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Paso del Macho"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Paso de Ovejas"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "La Perla"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Perote"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Platón Sánchez"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Playa Vicente"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Poza Rica de Hidalgo"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Las Vigas de Ramírez"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Cd. Cuauhtémoc"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Puente Nacional"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Rafael Delgado"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Rafael Lucio"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Los Reyes"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Río Blanco"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Saltabarranca"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "San Andrés Tenejapan"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "San Andrés Tuxtla"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "San Juan Evangelista"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Santiago Tuxtla"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Sayula de Alemán"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Soconusco"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Sochiapa"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Soledad Atzompa"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Soledad de Doblado"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Soteapan"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Tamalín"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Tamiahua"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Tampico Alto"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Tancoco"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Tantima"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Tantoyuca"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Tatatila"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Castillo de Teayo"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Tecolutla"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Tehuipango"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Álamo"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Tempoal de Sánchez"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Tenampa"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Tenochtitlán"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Teocelo"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Tepatlaxco"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Tepetlán"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Tepetzintla"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Tequila"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Villa Azueta"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Texcatepec"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Texhuacán"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Texistepec"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Tezonapa"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Tierra Blanca"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Tihuatlán"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Tlacojalpan"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Tlacolulan"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Tlacotalpan"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Tlacotepec de Mejía"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Tlachichilco"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Tlalixcoyan"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Tlalnelhuayocan"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Tlapacoyan"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Tlaquilpa"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Tlilapan"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Tomatlán"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Tonayán"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Totutla"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Túxpam de Rodríguez Cano"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Tuxtilla"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Ursulo Galván"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Vega de Alatorre"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Veracruz"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Villa Aldama"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Xoxocotla"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Yanga"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Yecuatla"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Zacualpan"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Zaragoza"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Colonia Manuel González"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Zongolica"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Zontecomatlán de López y Fuentes"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Zozocolco de Hidalgo"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Agua Dulce"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "El Higo"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Nanchital de Lázaro Cárdenas del Río"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Tres Valles"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Carlos A. Carrillo"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Tatahuicapan"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Poblado 10"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "San Rafael"
+	},
+	{
+		"entidad": "Veracruz de Ignacio de la Llave",
+		"cabecera": "Xochiapa"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Abalá"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Acanceh"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Akil"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Baca"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Bokobá"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Buctzotz"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Cacalchén"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Calotmul"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Cansahcab"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Cantamayec"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Celestún"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Cenotillo"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Conkal"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Cuncunul"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Cuzamá"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Chacsinkín"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Chankom"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Chapab"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Chemax"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Chicxulub Pueblo"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Chichimilá"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Chikindzonot"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Chocholá"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Chumayel"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Dzán"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Dzemul"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Dzidzantún"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Dzilam de Bravo"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Dzilam González"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Dzitás"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Dzoncauich"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Espita"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Halachó"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Hocabá"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Hoctún"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Homún"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Huhí"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Hunucmá"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Ixil"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Izamal"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Kanasín"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Kantunil"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Kaua"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Kinchil"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Kopomá"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Mama"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Maní"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Maxcanú"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Mayapán"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Mérida"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Mocochá"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Motul de Carrillo Puerto"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Muna"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Muxupip"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Opichén"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Oxkutzcab"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Panabá"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Peto"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Progreso"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Quintana Roo"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Río Lagartos"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Sacalum"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Samahil"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Sanahcat"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "San Felipe"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Santa Elena"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Seyé"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Sinanché"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Sotuta"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Sucilá"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Sudzal"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Suma"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Tahdziú"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Tahmek"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Teabo"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Tecoh"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Tekal de Venegas"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Tekantó"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Tekax de Álvaro Obregón"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Tekit"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Tekom"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Telchac"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Telchac Puerto"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Temax"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Temozón"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Tepakán"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Tetiz"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Teya"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Ticul"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Timucuy"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Tinum"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Tixcacalcupul"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Tixkokob"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Tixmehuac"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Tixpéhual"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Tizimín"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Tunkás"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Tzucacab"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Uayma"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Ucú"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Umán"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Valladolid"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Xocchel"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Yaxcabá"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Yaxkukul"
+	},
+	{
+		"entidad": "Yucatán",
+		"cabecera": "Yobaín"
+	},
+	{
+		"entidad": "Zacatecas",
+		"cabecera": "Apozol"
+	},
+	{
+		"entidad": "Zacatecas",
+		"cabecera": "Apulco"
+	},
+	{
+		"entidad": "Zacatecas",
+		"cabecera": "Atolinga"
+	},
+	{
+		"entidad": "Zacatecas",
+		"cabecera": "Florencia"
+	},
+	{
+		"entidad": "Zacatecas",
+		"cabecera": "Víctor Rosales"
+	},
+	{
+		"entidad": "Zacatecas",
+		"cabecera": "Cañitas de Felipe Pescador"
+	},
+	{
+		"entidad": "Zacatecas",
+		"cabecera": "Concepción del Oro"
+	},
+	{
+		"entidad": "Zacatecas",
+		"cabecera": "San Pedro Piedra Gorda"
+	},
+	{
+		"entidad": "Zacatecas",
+		"cabecera": "Chalchihuites"
+	},
+	{
+		"entidad": "Zacatecas",
+		"cabecera": "Fresnillo"
+	},
+	{
+		"entidad": "Zacatecas",
+		"cabecera": "La Estanzuela"
+	},
+	{
+		"entidad": "Zacatecas",
+		"cabecera": "Genaro Codina"
+	},
+	{
+		"entidad": "Zacatecas",
+		"cabecera": "General Enrique Estrada"
+	},
+	{
+		"entidad": "Zacatecas",
+		"cabecera": "Nieves"
+	},
+	{
+		"entidad": "Zacatecas",
+		"cabecera": "El Plateado de Joaquín Amaro"
+	},
+	{
+		"entidad": "Zacatecas",
+		"cabecera": "General Pánfilo Natera"
+	},
+	{
+		"entidad": "Zacatecas",
+		"cabecera": "Guadalupe"
+	},
+	{
+		"entidad": "Zacatecas",
+		"cabecera": "Huanusco"
+	},
+	{
+		"entidad": "Zacatecas",
+		"cabecera": "Jalpa"
+	},
+	{
+		"entidad": "Zacatecas",
+		"cabecera": "Jerez de García Salinas"
+	},
+	{
+		"entidad": "Zacatecas",
+		"cabecera": "Jiménez del Teul"
+	},
+	{
+		"entidad": "Zacatecas",
+		"cabecera": "Juan Aldama"
+	},
+	{
+		"entidad": "Zacatecas",
+		"cabecera": "Juchipila"
+	},
+	{
+		"entidad": "Zacatecas",
+		"cabecera": "Loreto"
+	},
+	{
+		"entidad": "Zacatecas",
+		"cabecera": "Luis Moya"
+	},
+	{
+		"entidad": "Zacatecas",
+		"cabecera": "Mazapil"
+	},
+	{
+		"entidad": "Zacatecas",
+		"cabecera": "Melchor Ocampo"
+	},
+	{
+		"entidad": "Zacatecas",
+		"cabecera": "Mezquital del Oro"
+	},
+	{
+		"entidad": "Zacatecas",
+		"cabecera": "Miguel Auza"
+	},
+	{
+		"entidad": "Zacatecas",
+		"cabecera": "Momax"
+	},
+	{
+		"entidad": "Zacatecas",
+		"cabecera": "Monte Escobedo"
+	},
+	{
+		"entidad": "Zacatecas",
+		"cabecera": "Morelos"
+	},
+	{
+		"entidad": "Zacatecas",
+		"cabecera": "Moyahua de Estrada"
+	},
+	{
+		"entidad": "Zacatecas",
+		"cabecera": "Nochistlán de Mejía"
+	},
+	{
+		"entidad": "Zacatecas",
+		"cabecera": "Noria de Ángeles"
+	},
+	{
+		"entidad": "Zacatecas",
+		"cabecera": "Ojocaliente"
+	},
+	{
+		"entidad": "Zacatecas",
+		"cabecera": "Pánuco"
+	},
+	{
+		"entidad": "Zacatecas",
+		"cabecera": "Pinos"
+	},
+	{
+		"entidad": "Zacatecas",
+		"cabecera": "Río Grande"
+	},
+	{
+		"entidad": "Zacatecas",
+		"cabecera": "Sain Alto"
+	},
+	{
+		"entidad": "Zacatecas",
+		"cabecera": "El Salvador"
+	},
+	{
+		"entidad": "Zacatecas",
+		"cabecera": "Sombrerete"
+	},
+	{
+		"entidad": "Zacatecas",
+		"cabecera": "Susticacán"
+	},
+	{
+		"entidad": "Zacatecas",
+		"cabecera": "Tabasco"
+	},
+	{
+		"entidad": "Zacatecas",
+		"cabecera": "Tepechitlán"
+	},
+	{
+		"entidad": "Zacatecas",
+		"cabecera": "Tepetongo"
+	},
+	{
+		"entidad": "Zacatecas",
+		"cabecera": "Teúl de González Ortega"
+	},
+	{
+		"entidad": "Zacatecas",
+		"cabecera": "Tlaltenango de Sánchez Román"
+	},
+	{
+		"entidad": "Zacatecas",
+		"cabecera": "Valparaíso"
+	},
+	{
+		"entidad": "Zacatecas",
+		"cabecera": "Vetagrande"
+	},
+	{
+		"entidad": "Zacatecas",
+		"cabecera": "Villa de Cos"
+	},
+	{
+		"entidad": "Zacatecas",
+		"cabecera": "Villa García"
+	},
+	{
+		"entidad": "Zacatecas",
+		"cabecera": "Villa González Ortega"
+	},
+	{
+		"entidad": "Zacatecas",
+		"cabecera": "Villa Hidalgo"
+	},
+	{
+		"entidad": "Zacatecas",
+		"cabecera": "Villanueva"
+	},
+	{
+		"entidad": "Zacatecas",
+		"cabecera": "Zacatecas"
+	},
+	{
+		"entidad": "Zacatecas",
+		"cabecera": "Trancoso"
+	},
+	{
+		"entidad": "Zacatecas",
+		"cabecera": "Santa María de la Paz"
+	}
+]
