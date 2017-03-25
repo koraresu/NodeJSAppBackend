@@ -251,6 +251,8 @@ io.on('connection', function(socket){
       }
     });
   });
+  socket.on('send_invitation', function(data){
+  });
   socket.on('conversations', function(data){
     socket.emit('conversations', socket.rooms);
   });

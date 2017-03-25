@@ -33,7 +33,19 @@ var Notificationfunc = require('./notificationfunc');
 
 function addReview(profile_id_a, public_id, callback){}
 function addNetwork(profile_id_a, public_id, callback){}
-
+function connectCheck(find, success, fail){
+	Network.findOne(find).exec(function(err, networkData){
+		Notification.find({
+			network: networkData
+		}).exec(function(errorNotification, notificationData){
+			if(!err && networkData){
+				success(networkData);
+			}else{
+				fail(err);
+			}
+		});
+	});
+}
 function message(profileData, conv, text, callback){
 	Conversation.findOne({ _id: conv }).exec(function(errConversation, conversationData){
 		if(!errConversation && conversationData){
