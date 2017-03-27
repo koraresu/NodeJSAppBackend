@@ -126,6 +126,9 @@ exports.saveImage = function(file, new_path, callback){
 		});
 	});
 }
+exports.insensitive = function(text){
+	return text;
+}
 exports.response = function(type,item, callback){
 	switch(type){
 		case 200:
@@ -191,7 +194,7 @@ exports.sendEmail = function(file, data,email, asunto, callback){
 }
 exports.capitalize = function(s){
 	s = s.toLowerCase();
-	s = s.trim();
+	s = s.replace(/^\s*|\s*$/g, '');
 	return s.charAt(0).toUpperCase() + s.slice(1);
 };
 exports.precise_round = function(num, decimals) {
@@ -520,6 +523,9 @@ function review_check(me, friend, success){
 			success(true, now, now);
 		}
 	});
+}
+function censurar(text){
+	return text;
 }
 exports.review_check       = review_check;
 exports.extend             = extend;

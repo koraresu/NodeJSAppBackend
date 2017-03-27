@@ -122,7 +122,8 @@ router.post('/general/network', multipartMiddleware, function(req, res){
 	var guid       = req.body.guid;
 
 
-	text = omitir(text);
+	text = omitir( text );
+	text = Generalfunc.insensitive( text );
 
 	var reg  = new RegExp(text, "i");
 
@@ -140,7 +141,10 @@ router.post('/general/network', multipartMiddleware, function(req, res){
 					if(status){
 						var find = {
 							_id: {
-								"$nin": [actualData._id,mongoose.Types.ObjectId("57b237e57a28f01f332e3447")]
+								"$nin": [
+									actualData._id,
+									mongoose.Types.ObjectId("57b237e57a28f01f332e3447")
+								]
 							}
 						};
 						Profile.find(find).populate('experiences').populate('skills').populate('user_id','-password').exec(function(errProfile, profileData){
@@ -357,7 +361,7 @@ function omitir(text){
 		text = text.replace('buscó', '');
 		text = text.replace('necesito', '');
 		text = text.replace('necesitó', '');
-
+ 		
 		text = text.trim();
 		return text;
 	}
