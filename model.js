@@ -236,7 +236,7 @@ var companySchema = new Schema({
   address: {
     calle: String,
     colonia: String,
-    ciudad: String,
+    ciudad: { type: Schema.Types.ObjectId, ref: 'City' },
     estado: String,
     numero: String,
     postalc: String,
