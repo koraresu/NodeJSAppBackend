@@ -315,7 +315,11 @@ router.post('/company/insert', multipartMiddleware, function(req, res){
 	var numero  = req.body.number;
 	var postal  = req.body.cp;
 
+	if(name == undefined){
+		name = "";
+	}
 
+	name = Generalfunc.capitalize( name );
 
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
@@ -507,7 +511,14 @@ router.post('/company/update', multipartMiddleware, function(req, res){ // Updat
 	var web         = req.body.web;
 	var name        = req.body.name;
 
-	console.log( req.body );
+	
+
+	if(name == undefined){
+		name = "";
+	}
+
+	name = Generalfunc.capitalize( name );
+
 	
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
