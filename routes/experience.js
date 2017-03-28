@@ -618,6 +618,7 @@ router.post('/company/getid', multipartMiddleware, function(req, res){
 							}
 						}, function(err, results){
 							results = Generalfunc.cleanArray(results);
+							companyData.name = Generalfunc.capitalize( companyData.name );
 							var data = {
 								company: companyData,
 								trabajo: results
