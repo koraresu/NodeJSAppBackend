@@ -688,31 +688,10 @@ PaisSchema.post('update', function(doc, next){
 });
 
 /*******************************************/
-var EstadoSchema = new Schema({
-    "id" : { type: String },
-    "name" : { type: String }
-});
-EstadoSchema.post('save', function(doc, next){
-  logMiddleware("estado","save", doc, function(err, logData){
-    next();
-  });
-});
-EstadoSchema.post('remove', function(doc, next){
-  logMiddleware("estado","remove", doc, function(err, logData){
-    next();
-  });
-});
-EstadoSchema.post('update', function(doc, next){
-  logMiddleware("estado","update", doc, function(err, logData){
-    next();
-  });
-});
-
-/*******************************************/
 var CiudadSchema = new Schema({
-    "id" : { type: String },
-    "state_id" : { type: Schema.Types.ObjectId, ref: 'State' },
-    "name" : { type: String },
+    "id":    { type: String },
+    "state": { type: String },
+    "name":  { type: String }
 });
 CiudadSchema.post('save', function(doc, next){
   logMiddleware("ciudad","save", doc, function(err, logData){
@@ -764,5 +743,4 @@ exports.conversation = db.model( 'Conversation' , ConversationSchema );
 exports.message      = db.model( 'Message' , MessageSchema );
 exports.log          = db.model( 'Log' , LogSchema );
 // Localization
-exports.city       = db.model('City', CiudadSchema);
-exports.state       = db.model('State', EstadoSchema);
+exports.city         = db.model('City', CiudadSchema);

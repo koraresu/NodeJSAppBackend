@@ -284,6 +284,22 @@ router.post('/sector/create', multipartMiddleware, function(req, res){
 });
 */
 
+router.post('/state', multipartMiddleware, function(req, res){
+	City.find().distinct('state', function(error, states){
+		Generalfunc.response(200, states, function(response){
+			res.json( response );
+		});
+	});
+});
+router.post('/city', multipartMiddleware, function(req, res){
+	var state = req.body.state;
+
+	City.find({ state: state }).exec(function(error, states){
+		Generalfunc.response(200, states, function(response){
+			res.json( response );
+		});
+	});
+});
 router.post('/company/insert', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 

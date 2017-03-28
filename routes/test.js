@@ -113,12 +113,10 @@ router.get('/state', function(req, res){
   async.map(json, function(item, callback){
 
     GetInsState(item.entidad, function(errState, state){
-      GetInsCity(item.cabecera, state._id, function(errCity, city){
-        callback(null, null);
-      });
+      callback(null, null);
     });
   }, function(err, results){
-    City.find().sort({ name: 1 }).exec(function(err, city){
+    State.find().sort({ name: 1 }).exec(function(err, city){
       res.json( city );
     });
     
@@ -129,48 +127,57 @@ module.exports = router;
 
 function readJsonFileSync(filepath, encoding){
 
-    if (typeof (encoding) == 'undefined'){
-        encoding = 'utf8';
-    }
-    var file = fs.readFileSync(filepath, encoding);
-    return JSON.parse(file);
+  if (typeof (encoding) == 'undefined'){
+    encoding = 'utf8';
+  }
+  var file = fs.readFileSync(filepath, encoding);
+  return JSON.parse(file);
 }
 function getConfig(file){
 
-    var filepath = __dirname + '/../' + file;
-    return readJsonFileSync(filepath);
+  var filepath = __dirname + '/../' + file;
+  return readJsonFileSync(filepath);
 }
 function GetInsState(state, callback){
-  State.find({
-      name: state
-    }).exec(function(err, st){
-      if(!err && st){
-        callback(null, st);
-      }else{
-        var st = new State({
-          name: state
-        });
-        st.save(function(err, st){
-          callback(null,st);
-        });
-      }
-    });
+  State.findOne({
+    name: state
+  }).exec(function(err, st){
+
+    
+    if(!err && st){
+      console.log( "Error:" );
+      console.log( err );
+      console.log( "St:" );
+      console.log( st );
+    }else{
+      console.log( "Error:" );
+      console.log( err );
+    }
+    console.log("+-----------------------------------------+");
+    callback(null,st);
+    /*
+    if(!err && st){
+      callback(null, state);
+    }else{
+      var st = new State({
+        name: state
+      });
+      st.save(function(err, st){
+        
+      });
+    }
+    */
+  });
 }
 function GetInsCity(city, state, callback){
-  City.find({
-      name: city,
-      state_id: state
-    }).exec(function(err, st){
-      if(!err && st){
-        callback(null, st);
-      }else{
-        var st = new City({
-          name: city,
-          state_id: state
-        });
-        st.save(function(err, st){
-          callback(null,st);
-        });
-      }
-    });
+  City.findOne({
+    name: city,
+    state_id: state
+  }).exec(function(err, st){
+
+    console.log( err );
+    console.log( st );
+
+    callback(null,st);
+  });
 }
