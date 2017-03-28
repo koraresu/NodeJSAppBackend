@@ -596,7 +596,8 @@ router.post('/company/getid', multipartMiddleware, function(req, res){
 		id = mongoose.Types.ObjectId(id);
 		Tokenfunc.exist(guid, function(status, token){
 			if(status){
-				Company.findOne({ _id: id }).exec(function(err, companyData){
+				//Company.findOne({ _id: id }).exec(function(err, companyData){
+				Company.findOne({ _id: id }).populate('address.ciudad').exec(function(err, companyData){
 					Experience.find({ "company.id": id }).populate('profile_id').exec(function(err, experienceData){
 						async.map(experienceData, function(item, ca){
 							if( item.profile_id == null){
