@@ -528,8 +528,11 @@ router.post('/get', multipartMiddleware, function(req, res){
 
 					Profilefunc.formatoProfile(profileData._id,function( profile ){
 						Profilefunc.logs(profileData, 25, profileData, function(){
-							Generalfunc.response(200, profile, function(response){
-								res.json(response);
+							City.findOne({ _id: profileData.location.city }).exec(function(errCity, cityData){
+								profileData.location =  cityData;
+								Generalfunc.response(200, profile, function(response){
+									res.json(response);
+								});
 							});
 						});
 					});
@@ -1204,15 +1207,16 @@ router.post('/update', multipartMiddleware, function(req, res){
 });
 */
 router.post('/update', multipartMiddleware, function(req, res){
-	var guid      = req.body.guid;
+	var guid       = req.body.guid;
 
-	var nombre    = req.body.first_name;
-	var apellido  = req.body.last_name;
-	var statusReq = req.body.status;
+	var nombre     = req.body.first_name;
+	var apellido   = req.body.last_name;
+	var statusReq  = req.body.status;
 	var job        = Generalfunc.formatName( req.body.job );
 	var speciality = Generalfunc.formatName( req.body.speciality );
 	var birthday   = req.body.birthday;
 	var phone      = req.body.phone;
+	var city       = req.body.city;
 
 	var type       = req.body.type;
 	var company    = req.body.company;
@@ -1267,6 +1271,8 @@ router.post('/update', multipartMiddleware, function(req, res){
 									profileData.birthday = birthday;
 								}
 							}
+
+							profileData.location.city = city;
 
 							profileData.save(function(err, profileData){
 								res.json(profileData);

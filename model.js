@@ -91,8 +91,7 @@ var profileSchema = new Schema({
   review_score: 0,
   block: { type: Boolean },
   location:{
-    city: { type: Schema.Types.ObjectId, ref: 'City' },
-    state: { type: Schema.Types.ObjectId, ref: 'State'}
+    city: { type: Schema.Types.ObjectId, ref: 'City' }
   }
 },{
   timestamps: true
