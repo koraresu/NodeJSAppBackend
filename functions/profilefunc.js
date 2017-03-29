@@ -74,7 +74,12 @@ function formatoProfile(profile_id,cb){
 			profile_id = mongoose.Types.ObjectId(profile_id);
 		}
 
-		Profile.findOne({ _id: profile_id }).populate('experiences').populate('skills').populate('user_id','-password').exec(function(errProfile, profileData){
+		Profile.findOne({ _id: profile_id })
+		.populate('experiences')
+		.populate('skills')
+		.populate('user_id','-password')
+		.populate('location.city')
+		.exec(function(errProfile, profileData){
 			var userData = profileData.user_id;
 				
 				
@@ -133,7 +138,8 @@ function formato(profileData, userData){
 		"status": profileData.status,
 		"qrcode": profileData.qrcode,
 		"review_score": Generalfunc.precise_round( profileData.review_score, 1 ),
-		"phone": profileData.phone 
+		"phone": profileData.phone,
+		"location": profileData.location
 	};
 }
 exports.formato = formato 
