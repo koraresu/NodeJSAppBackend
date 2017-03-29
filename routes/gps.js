@@ -140,3 +140,30 @@ exports.set = function(guid, gps, socket, callback){
 		}
 	});
 }
+exports.invite = function(guid, public_id, item, result, mensajes){
+	Tokenfunc.exist(guid, function(status, tokenData){
+      if(status){
+        Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
+          if(status){
+
+            if(mongoose.Types.ObjectId.isValid( public_id )){
+              public_id = mongoose.Types.ObjectId( public_id );
+              Profile.findOne({ public_id: public_id }).exec(function(errProfile, profileData){
+                GPS.find({
+                  profile: profileData
+                }).exec(function(errGPS, gpsData){
+                  async.map( gpsData, item, result);
+                });
+              });
+            }else{
+            	mensajes.no_usuario();
+            }
+          }else{
+          	mensajes.no_perfil();
+          }
+        });
+      }else{
+      	mensaje.no_token();
+      }
+    });
+}

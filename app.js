@@ -180,36 +180,24 @@ gps.on('connection', function(socket){
     var public_id = data.public_id;
 
 
-    Tokenfunc.exist(guid, function(status, tokenData){
-      if(status){
-        Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
-          if(status){
+    gpsrouter.invite(guid, public_id, function(item, callback){
 
-            if(mongoose.Types.ObjectId.isValid( public_id )){
-              public_id = mongoose.Types.ObjectId( public_id );
-              Profile.findOne({ public_id: public_id }).exec(function(errProfile, profileData){
-                GPS.find({
-                  profile: profileData
-                }).exec(function(errGPS, gpsData){
-
-                  async.map( gpsData, function(item, callback){
-                    socket.broadcast.to(item).emit('gps_invite',{ public_id: profileInfoData.public_id });
-                    callback(null, { profile: profileInfoData, friend: profileData });
-                  }, function(err, results){
-                    socket.emit('gps_invited',results);
-                  });
-
-                });
-              });
-            }else{
-              socket.emit('gps_invited',{ error: "Usuario no encontrado."});
-            }
-          }else{
-            socket.emit('gps_invited',{ error: "Perfil Invalido"});
-          }
-        });
-      }else{
+      socket.broadcast.to(item).emit('gps_invite',{ public_id: profileInfoData.public_id });
+      callback(null, { profile: profileInfoData, friend: profileData });
+    
+    }, function(err, results){
+    
+      socket.emit('gps_invited',results);
+    
+    },{
+      no_token: function(){
         socket.emit('gps_invited',{ error: "Token Invalido"});
+      },
+      no_perfil: function(){
+        socket.emit('gps_invited',{ error: "Perfil Invalido"});
+      },
+      no_usuario: function(){
+        socket.emit('gps_invited',{ error: "Usuario no encontrado."});
       }
     });
 
