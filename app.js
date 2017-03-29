@@ -53,15 +53,15 @@ app.use(logger('dev'));
 app.use(cors());
 // Make io accessible to our router
 app.use(function(req,res,next){
-    req.io = io;
-    next();
+  req.io = io;
+  next();
 });
 
 app.options('*', cors());
 app.use(cookieSession({
   name: 'session',
   keys: ['key1', 'key2'],
- 
+
   // Cookie Options 
   maxAge: 24 * 60 * 60 * 1000 // 24 hours 
 }))
@@ -129,7 +129,7 @@ gps.on('connection', function(socket){
     console.log("Connected");
   });
   socket.on('connecting', function(data){
-    
+
   });
   socket.on('disconnect', function () {
     gpsrouter.delete(socket.id.toString(), function(err, s){
@@ -191,7 +191,7 @@ gps.on('connection', function(socket){
                 GPS.find({
                   profile: profileData
                 }).exec(function(errGPS, gpsData){
-                  
+
                   async.map( gpsData, function(item, callback){
                     socket.broadcast.to(item).emit('gps_invite',{ public_id: profileInfoData.public_id });
                     callback(null, { profile: profileInfoData, friend: profileData });
@@ -201,12 +201,15 @@ gps.on('connection', function(socket){
 
                 });
               });
+            }else{
+              socket.emit('gps_invited',{ error: "Usuario no encontrado."});
+            }
           }else{
-
+            socket.emit('gps_invited',{ error: "Perfil Invalido"});
           }
         });
       }else{
-
+        socket.emit('gps_invited',{ error: "Token Invalido"});
       }
     });
 
@@ -297,46 +300,46 @@ io.on('connection', function(socket){
   socket.on('notification', function(data){
     console.log( data );
     chatrouter.notification_accept2C(data, function(onlineData, networkData, notificationData, OldNotification){
-        console.log( notificationData);
-        console.log( onlineData );
-        if(onlineData != null || onlineData != undefined){
+      console.log( notificationData);
+      console.log( onlineData );
+      if(onlineData != null || onlineData != undefined){
 
-          var socketid = onlineData.socket;
-          if(socketid != undefined){
-            console.log("Send Notification socket");
-            
-            console.log("Socket to Me:" + socket.id );
+        var socketid = onlineData.socket;
+        if(socketid != undefined){
+          console.log("Send Notification socket");
 
-            socket.emit('notification', OldNotification);
-            io.to('/#' + socketid).emit('notification', notificationData);
-            socket.broadcast.to(socketid).emit('notification', notificationData);
+          console.log("Socket to Me:" + socket.id );
 
-            console.log("/******* Apple Push Notification *****/");
+          socket.emit('notification', OldNotification);
+          io.to('/#' + socketid).emit('notification', notificationData);
+          socket.broadcast.to(socketid).emit('notification', notificationData);
 
-            Pushfunc.getNotProfile(notificationData._id, socket, function(profile){
-              console.log("GetConvProfile");
-              console.log(profile);
-              Pushfunc.send(1,profile._id, notificationData._id, function(results){
-                console.log( results );
-                Generalfunc.NoReaded(profile._id, function(num){
-                  socket.emit('set_alert_num', num);
-                }, function(st){
-                  console.log("Gneralfunc.NoReaded Error:" + st);
-                });
-              }, function(results){
-                console.log( results );
-                Generalfunc.NoReaded(profile._id, function(num){
-                  socket.emit('set_alert_num', num);
-                }, function(st){
-                  console.log("Gneralfunc.NoReaded Error:" + st);
-                });
+          console.log("/******* Apple Push Notification *****/");
+
+          Pushfunc.getNotProfile(notificationData._id, socket, function(profile){
+            console.log("GetConvProfile");
+            console.log(profile);
+            Pushfunc.send(1,profile._id, notificationData._id, function(results){
+              console.log( results );
+              Generalfunc.NoReaded(profile._id, function(num){
+                socket.emit('set_alert_num', num);
+              }, function(st){
+                console.log("Gneralfunc.NoReaded Error:" + st);
               });
-            }, function(){
+            }, function(results){
+              console.log( results );
+              Generalfunc.NoReaded(profile._id, function(num){
+                socket.emit('set_alert_num', num);
+              }, function(st){
+                console.log("Gneralfunc.NoReaded Error:" + st);
+              });
             });
-          }
+          }, function(){
+          });
         }
+      }
 
-        
+
       
     }, function(status){
       console.log("Status:" + status);
@@ -375,26 +378,26 @@ io.on('connection', function(socket){
   socket.on('get_no_readed', function(){
 
     Generalfunc.SocketNoReaded(socket.id, function(num){
-        socket.emit("set_alert_num", num);
-      }, function(err){
-        console.log("SocketNoReaded Error");
-        console.log(err);
-        socket.emit("set_alert_num", 0);
-      });
+      socket.emit("set_alert_num", num);
+    }, function(err){
+      console.log("SocketNoReaded Error");
+      console.log(err);
+      socket.emit("set_alert_num", 0);
+    });
   });
   socket.on('notification_readed', function(data){
 
     Generalfunc.NotificationReaded(data, function( results ){
      Generalfunc.SocketNoReaded(socket.id, function(num){
-        socket.emit("set_alert_num", num);
-      }, function(err){
-        console.log("SocketNoReaded Error");
-        console.log(err);
-      });
-    }, function( err ){
-        console.log("NotificationReaded Error");
-        console.log(err);
+      socket.emit("set_alert_num", num);
+    }, function(err){
+      console.log("SocketNoReaded Error");
+      console.log(err);
     });
+   }, function( err ){
+    console.log("NotificationReaded Error");
+    console.log(err);
+  });
   });
   socket.on('disconnect', function () {
     console.log("Disconnect");
@@ -405,24 +408,24 @@ io.on('connection', function(socket){
 });
 module.exports = app;
 function findClientsSocket(roomId, namespace) {
-    var res = []
+  var res = []
     // the default namespace is "/"
     , ns = io.of(namespace ||"/");
 
     if (ns) {
-        for (var id in ns.connected) {
-            if(roomId) {
-                var index = ns.connected[id].rooms.indexOf(roomId);
-                if(index !== -1) {
-                    res.push(ns.connected[id]);
-                }
-            } else {
-                res.push(ns.connected[id]);
-            }
+      for (var id in ns.connected) {
+        if(roomId) {
+          var index = ns.connected[id].rooms.indexOf(roomId);
+          if(index !== -1) {
+            res.push(ns.connected[id]);
+          }
+        } else {
+          res.push(ns.connected[id]);
         }
+      }
     }
     return res;
-}
-function findSocketInRoom(){
+  }
+  function findSocketInRoom(){
 
-}
+  }
