@@ -139,7 +139,7 @@ function formato(profileData, userData){
 		"qrcode": profileData.qrcode,
 		"review_score": Generalfunc.precise_round( profileData.review_score, 1 ),
 		"phone": profileData.phone,
-		"location": profileData.location
+		"location": profileData.location.city
 	};
 }
 exports.formato = formato 
