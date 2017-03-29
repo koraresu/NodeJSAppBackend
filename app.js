@@ -168,8 +168,13 @@ gps.on('connection', function(socket){
         });
       }
     }
-
-    
+  });
+  socket.on('send_invitation', function(data){
+    console.log( "DATA:" );
+    console.log( data );
+    console.log( "GUID: " + data.guid );
+    console.log( "SECTION: " + data.section );
+    console.log( "PUBLIC_ID: " + data.public_id );
   });
 });
 var chatrouter = require('./routes/chat');
@@ -250,8 +255,6 @@ io.on('connection', function(socket){
         });
       }
     });
-  });
-  socket.on('send_invitation', function(data){
   });
   socket.on('conversations', function(data){
     socket.emit('conversations', socket.rooms);
