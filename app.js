@@ -175,6 +175,41 @@ gps.on('connection', function(socket){
     console.log( "GUID: " + data.guid );
     console.log( "SECTION: " + data.section );
     console.log( "PUBLIC_ID: " + data.public_id );
+    
+    var guid      = data.guid;
+    var public_id = data.public_id;
+
+
+    Tokenfunc.exist(guid, function(status, tokenData){
+      if(status){
+        Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
+          if(status){
+
+            if(mongoose.Types.ObjectId.isValid( public_id )){
+              public_id = mongoose.Types.ObjectId( public_id );
+              Profile.findOne({ public_id: public_id }).exec(function(errProfile, profileData){
+                GPS.find({
+                  profile: profileData
+                }).exec(function(errGPS, gpsData){
+                  
+                  async.map( gpsData, function(item, callback){
+                    socket.broadcast.to(item).emit('gps_invite',{ public_id: profileInfoData.public_id });
+                    callback(null, { profile: profileInfoData, friend: profileData });
+                  }, function(err, results){
+                    socket.emit('gps_invited',results);
+                  });
+
+                });
+              });
+          }else{
+
+          }
+        });
+      }else{
+
+      }
+    });
+
   });
 });
 var chatrouter = require('./routes/chat');
