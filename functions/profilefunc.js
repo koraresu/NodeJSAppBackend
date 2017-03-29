@@ -113,6 +113,7 @@ function formatoProfile(profile_id,cb){
 function formato(profileData, userData){
 	var email = "";
 	var verified = "";
+	var location = {};
 	if(userData != undefined || userData != null){
 		if(userData.email != undefined){
 			email = userData.email;
@@ -120,6 +121,12 @@ function formato(profileData, userData){
 		if(userData.verified != undefined){
 			verified = userData.verified;
 		}	
+	}
+
+	if(profileData.location != undefined){
+		if(profileData.location.city != undefined){
+			location = profileData.location.city;
+		}
 	}
 	return {
 		"_id": profileData._id,
@@ -139,7 +146,7 @@ function formato(profileData, userData){
 		"qrcode": profileData.qrcode,
 		"review_score": Generalfunc.precise_round( profileData.review_score, 1 ),
 		"phone": profileData.phone,
-		"location": profileData.location.city
+		"location": location
 	};
 }
 exports.formato = formato 
