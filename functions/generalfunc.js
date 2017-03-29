@@ -527,6 +527,11 @@ function review_check(me, friend, success){
 function censurar(text){
 	return text;
 }
+exports.formatName = function(text){
+	if(text == undefined){ text = ""; }
+	text = text.replace(/^\s*|\s*$/g, '');
+	return text;
+}
 exports.review_check       = review_check;
 exports.extend             = extend;
 exports.SocketNoReaded     = SocketNoReaded;
