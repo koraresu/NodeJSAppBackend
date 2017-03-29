@@ -41,7 +41,9 @@ var Generalfunc  = require('../functions/generalfunc');
 
 exports.find = function(socket, callback){
 	console.log(socket);
-	var maxDistance = 200;
+	var meters      = 120;
+	var km          = meters/1000;
+	var maxDistance = km / 111;
 	/*
 	var maxDistance = 5;
 	maxDistance /= 6371;
