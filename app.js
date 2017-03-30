@@ -176,9 +176,14 @@ gps.on('connection', function(socket){
     gpsrouter.invite(guid, public_id, function(data, gpsData){
       var s = gpsData.socket;
       console.log( "Socket Broadcast:" + s );
-      io.to('/#' + s).emit('gps_invite',data);
+      console.log( data );
+      io.sockets.socket( s ).emit('gps_invite',data);
     }, function(data){
+      console.log("++++");
+      console.log("Emit Result");
+      console.log( data );
       socket.emit('gps_invited',data);
+      console.log("++++");
     },{
       no_token: function(){
         socket.emit('gps_invited',{ error: "Token Invalido"});
