@@ -209,7 +209,10 @@ exports.connect = function(profileData, profileAnotherData, status, callback){
 						"profile": profileData, 
 						"friend": profileAnotherData
 					};
-					callback(data);
+					Location.find({
+						profile: 
+					})
+					callback(data, );
 				});
 			});
 		});
