@@ -54,9 +54,6 @@ exports.find = function(socket, callback){
 	Location.findOne({
 		socket: socket
 	}).exec(function(err, locationSocket){
-		console.log(err);
-		console.log("Location Socket Before");
-		console.log(locationSocket);
 		if(!err && locationSocket){
 
 			Location.find({
