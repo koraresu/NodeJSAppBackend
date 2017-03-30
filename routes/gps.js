@@ -164,7 +164,6 @@ exports.invite = function(guid, public_id, itemFunc, resultFunc, mensajes){
               });
             }else{
             	mensajes.no_usuario();
-				socket.emit('gps_invited',{ error: "Usuario no encontrado."});
             }
           }else{
           	mensajes.no_perfil();
