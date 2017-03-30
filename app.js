@@ -180,15 +180,10 @@ gps.on('connection', function(socket){
     var public_id = data.public_id;
 
 
-    gpsrouter.invite(guid, public_id, function(item, callback){
-
-      socket.broadcast.to(item).emit('gps_invite',{ public_id: profileInfoData.public_id });
-      callback(null, { profile: profileInfoData, friend: profileData });
-    
-    }, function(err, results){
-    
-      socket.emit('gps_invited',results);
-    
+    gpsrouter.invite(guid, public_id, function(data){
+      socket.broadcast.to(item).emit('gps_invite',data);
+    }, function(data){
+      socket.emit('gps_invited',data);
     },{
       no_token: function(){
         socket.emit('gps_invited',{ error: "Token Invalido"});

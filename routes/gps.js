@@ -147,16 +147,25 @@ exports.invite = function(guid, public_id, item, result, mensajes){
           if(status){
 
             if(mongoose.Types.ObjectId.isValid( public_id )){
-				public_id = mongoose.Types.ObjectId( public_id );
-				Profile.findOne({ public_id: public_id }).exec(function(errProfile, profileData){
-				Location.find({
+              public_id = mongoose.Types.ObjectId( public_id );
+              Profile.findOne({ public_id: public_id }).exec(function(errProfile, profileData){
+                GPS.find({
                   profile: profileData
                 }).exec(function(errGPS, gpsData){
-                  async.map( gpsData, item, result);
+
+                  async.map( gpsData, function(item,callback){
+                  	var d = { profile: profileInfoData, friend: profileData }
+                  	item(d);
+                  	callback(null, d);
+                  }, function(data){
+                  	result(data);
+                  });
+
                 });
               });
             }else{
             	mensajes.no_usuario();
+              socket.emit('gps_invited',{ error: "Usuario no encontrado."});
             }
           }else{
           	mensajes.no_perfil();
