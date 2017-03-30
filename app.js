@@ -125,9 +125,7 @@ var clientGPS = [];
 var gpsrouter = require('./routes/gps');
 gps.on('connection', function(socket){
   clientGPS.push(socket);
-  socket.on('connect', function () { 
-    console.log("Connected");
-  });
+  socket.on('connect', function () {  });
   socket.on('connecting', function(data){
 
   });
@@ -142,12 +140,10 @@ gps.on('connection', function(socket){
   });
 
   socket.on('setlocation', function(data){
-    console.log("CLIENT GPS:"+clientGPS.length);
     if(data == undefined || data == null){
       socket.emit('getlocation',{ message: "GET DATA UNDEFINED OR NULL"});
     }else{
       if(data.guid == undefined || data.guid == null){
-        console.log("No GUID");
         socket.emit('getlocation',{ message: "GUID UNDEFINED OR NULL"});
       }else{
         gpsrouter.set(data.guid, data.gps,socket.id,  function(status, locationData){
@@ -158,9 +154,6 @@ gps.on('connection', function(socket){
 
             clientsGPSWY.forEach(function(item, index){
               gpsrouter.find(item.id, function(err, locationData){
-                console.log("Emit to Other");
-                console.log(socket.id);
-
                 item.emit('getlocation', { data: locationData, type: "other" });
               });
             });
