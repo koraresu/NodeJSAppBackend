@@ -140,7 +140,7 @@ exports.set = function(guid, gps, socket, callback){
 		}
 	});
 }
-exports.invite = function(guid, public_id, item, result, mensajes){
+exports.invite = function(guid, public_id, itemFunc, resultFunc, mensajes){
 	Tokenfunc.exist(guid, function(status, tokenData){
       if(status){
         Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
@@ -155,10 +155,10 @@ exports.invite = function(guid, public_id, item, result, mensajes){
 
                   async.map( gpsData, function(item,callback){
                   	var d = { profile: profileInfoData, friend: profileData }
-                  	item(d);
+                  	itemFunc(d);
                   	callback(null, d);
-                  }, function(data){
-                  	result(data);
+                  }, function(err, results){
+                  	resultFunc(results);
                   });
 
                 });
