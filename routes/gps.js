@@ -210,9 +210,10 @@ exports.connect = function(profileData, profileAnotherData, status, callback){
 						"friend": profileAnotherData
 					};
 					Location.find({
-						profile: 
-					})
-					callback(data, );
+						profile: profileData._id
+					}).exec(function(errLoc, locData){
+						callback(data, locData);
+					});
 				});
 			});
 		});

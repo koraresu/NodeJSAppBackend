@@ -200,20 +200,31 @@ gps.on('connection', function(socket){
     });
   });
   socket.on('accept_invite', function(data){
-    gpsrouter.connect(data.profile, data.friend, true, function(data){
+    gpsrouter.connect(data.profile, data.friend, true, function(data, locationData){
       console.log("Accept invite");
       
       console.log("Profile", data.profile.first_name + " " + data.profile.last_name);
       console.log("Friend", data.friend.first_name + " " + data.friend.last_name);
+
+      var s = locationData.socket;
+      socket.to( s ).emit('gps_result',{
+        message: "Tu amigo " + name + " ha aceptado la invitación."
+      });
     });
   });
   socket.on('cancel_invite', function(data){
-    gpsrouter.connect(data.profile, data.friend, true, function(data){
+    gpsrouter.connect(data.profile, data.friend, true, function(data, locationData){
       console.log("Cancel invite");
 
       console.log("Profile", data.profile.first_name + " " + data.profile.last_name);
       console.log("Friend", data.friend.first_name + " " + data.friend.last_name);
 
+      var name = data.friend.first_name + " " + data.friend.last_name;
+
+      var s = locationData.socket;
+      socket.to( s ).emit('gps_result',{
+        message: "Tu amigo " + name + " ha cancelado la invitación."
+      });
     });
   });
 });
