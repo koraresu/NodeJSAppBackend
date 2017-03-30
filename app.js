@@ -206,6 +206,8 @@ gps.on('connection', function(socket){
       console.log("Profile", data.profile.first_name + " " + data.profile.last_name);
       console.log("Friend", data.friend.first_name + " " + data.friend.last_name);
 
+      var name = data.friend.first_name + " " + data.friend.last_name;
+      
       var s = locationData.socket;
       socket.to( s ).emit('gps_result',{
         message: "Tu amigo " + name + " ha aceptado la invitación."
