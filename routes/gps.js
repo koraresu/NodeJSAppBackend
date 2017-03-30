@@ -147,9 +147,9 @@ exports.invite = function(guid, public_id, item, result, mensajes){
           if(status){
 
             if(mongoose.Types.ObjectId.isValid( public_id )){
-              public_id = mongoose.Types.ObjectId( public_id );
-              Profile.findOne({ public_id: public_id }).exec(function(errProfile, profileData){
-                GPS.find({
+				public_id = mongoose.Types.ObjectId( public_id );
+				Profile.findOne({ public_id: public_id }).exec(function(errProfile, profileData){
+				Location.find({
                   profile: profileData
                 }).exec(function(errGPS, gpsData){
                   async.map( gpsData, item, result);
