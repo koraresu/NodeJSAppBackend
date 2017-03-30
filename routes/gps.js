@@ -160,12 +160,11 @@ exports.invite = function(guid, public_id, itemFunc, resultFunc, mensajes){
                   }, function(err, results){
                   	resultFunc(results);
                   });
-
                 });
               });
             }else{
             	mensajes.no_usuario();
-              socket.emit('gps_invited',{ error: "Usuario no encontrado."});
+				socket.emit('gps_invited',{ error: "Usuario no encontrado."});
             }
           }else{
           	mensajes.no_perfil();
