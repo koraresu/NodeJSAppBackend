@@ -207,8 +207,9 @@ gps.on('connection', function(socket){
       console.log("Friend", data.friend.first_name + " " + data.friend.last_name);
 
       var name = data.friend.first_name + " " + data.friend.last_name;
-      
+
       var s = locationData.socket;
+      console.log("GPS RESULT ACC: " s );
       socket.to( s ).emit('gps_result',{
         message: "Tu amigo " + name + " ha aceptado la invitación."
       });
@@ -224,6 +225,7 @@ gps.on('connection', function(socket){
       var name = data.friend.first_name + " " + data.friend.last_name;
 
       var s = locationData.socket;
+      console.log("GPS RESULT CAN: " s );
       socket.to( s ).emit('gps_result',{
         message: "Tu amigo " + name + " ha cancelado la invitación."
       });
