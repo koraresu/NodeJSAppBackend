@@ -174,8 +174,9 @@ gps.on('connection', function(socket){
 
 
     gpsrouter.invite(guid, public_id, function(data, gpsData){
-      console.log( "Socket Broadcast:" + gpsData.socket );
-      socket.broadcast.to(gpsData.socket).emit('gps_invite',data);
+      var s = gpsData.socket;
+      console.log( "Socket Broadcast:" + gs );
+      io.to('/#' + s).emit('gps_invite',data);
     }, function(data){
       socket.emit('gps_invited',data);
     },{
