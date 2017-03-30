@@ -177,7 +177,11 @@ gps.on('connection', function(socket){
       var s = gpsData.socket;
       console.log( "Socket Broadcast:" + s );
       console.log( data );
-      io.sockets.socket( s ).emit('gps_invite',data);
+
+      if (io.sockets.connected[ s ]) {
+        io.sockets.connected[ s ].emit('gps_invite',data);
+      }
+
     }, function(data){
       console.log("++++");
       console.log("Emit Result");
