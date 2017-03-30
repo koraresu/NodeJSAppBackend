@@ -33,10 +33,11 @@ var State        = model.state;
 var Country      = model.country;
 var Location     = model.location;
 
-var Tokenfunc    = require('../functions/tokenfunc');
-var Profilefunc  = require('../functions/profilefunc');
-var Networkfunc  = require('../functions/networkfunc');
-var Generalfunc  = require('../functions/generalfunc');
+var Tokenfunc         = require('../functions/tokenfunc');
+var Profilefunc       = require('../functions/profilefunc');
+var Networkfunc       = require('../functions/networkfunc');
+var Notificationfunc  = require('../functions/notificationfunc');
+var Generalfunc       = require('../functions/generalfunc');
 
 
 exports.find = function(socket, callback){
@@ -181,7 +182,7 @@ exports.connect = function(profileData, profileAnotherData, status, callback){
 		}
 	};
 	Network.findOne(find, function(errNetwork, network){
-		
+
 		if(!errNetwork && network){
 			network.accepted = true;
 		}else{
