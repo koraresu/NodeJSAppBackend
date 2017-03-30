@@ -143,18 +143,18 @@ exports.set = function(guid, gps, socket, callback){
 exports.invite = function(guid, public_id, itemFunc, resultFunc, mensajes){
 	Tokenfunc.exist(guid, function(status, tokenData){
       if(status){
-        Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
+        Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileMeData, profileInfoData){
           if(status){
 
             if(mongoose.Types.ObjectId.isValid( public_id )){
               public_id = mongoose.Types.ObjectId( public_id );
-              Profile.findOne({ public_id: public_id }).exec(function(errProfile, profileData){
+              Profile.findOne({ public_id: public_id }).exec(function(errProfileFriend, profileFriendData){
                 Location.find({
-                  profile: profileData
+                  profile: profileFriendData._id
                 }).exec(function(errGPS, gpsData){
 
                   async.map( gpsData, function(item,callback){
-                  	var d = { profile: profileInfoData, friend: profileData }
+                  	var d = { profile: profileMeData, friend: profileFriendData };
                   	itemFunc(d, item);
                   	callback(null, d);
                   }, function(err, results){

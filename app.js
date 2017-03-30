@@ -175,6 +175,7 @@ gps.on('connection', function(socket){
 
     gpsrouter.invite(guid, public_id, function(data, gpsData){
       var s = gpsData.socket;
+      
       console.log( "Socket Broadcast:" + s );
       console.log( data );
 
