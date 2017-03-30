@@ -180,7 +180,6 @@ gps.on('connection', function(socket){
       console.log( data );
 
       socket.to( s ).emit('gps_invite',data);
-      //io.to( s ).emit('gps_invite',data);
 
     }, function(data){
       console.log("++++");
@@ -199,7 +198,22 @@ gps.on('connection', function(socket){
         socket.emit('gps_invited',{ error: "Usuario no encontrado."});
       }
     });
+  });
+  socket.on('accept_invite', function(data){
+    gpsrouter.connect(data.profile, data.friend, true, function(){
+      console.log("Accept invite");
+      
+      console.log("Profile", data.profile.first_name + " " + data.profile.last_name);
+      console.log("Friend", data.friend.first_name + " " + data.friend.last_name);
+    });
+  });
+  socket.on('cancel_invite', function(data){
+    gpsrouter.connect(data.profile, data.friend, true, function(){
+      console.log("Cancel invite");
 
+      console.log("Profile", data.profile.first_name + " " + data.profile.last_name);
+      console.log("Friend", data.friend.first_name + " " + data.friend.last_name);
+    });
   });
 });
 var chatrouter = require('./routes/chat');

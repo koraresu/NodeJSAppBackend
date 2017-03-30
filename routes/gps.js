@@ -57,39 +57,39 @@ exports.find = function(socket, callback){
 		if(!err && locationSocket){
 
 			Location.find({
- 				coordinates: {
- 					$near: locationSocket.coordinates,
- 					$maxDistance: maxDistance 
- 				},
- 				socket: {
- 					$ne: socket
- 				}
- 			}).limit(limit).populate('profile').exec(function(err, locationData){
- 				async.map(locationData, function(item, cb){
- 					Networkfunc.isFriend(locationSocket.profile, item.profile._id, function(status){
- 						if(status){
- 							cb(null, null);
- 						}else{
- 							cb(null, item);
- 						}
- 					});
- 				}, function(err, results){
- 					results = Generalfunc.cleanArray(results);
- 					callback(err, results);
- 				});
- 			});
+				coordinates: {
+					$near: locationSocket.coordinates,
+					$maxDistance: maxDistance 
+				},
+				socket: {
+					$ne: socket
+				}
+			}).limit(limit).populate('profile').exec(function(err, locationData){
+				async.map(locationData, function(item, cb){
+					Networkfunc.isFriend(locationSocket.profile, item.profile._id, function(status){
+						if(status){
+							cb(null, null);
+						}else{
+							cb(null, item);
+						}
+					});
+				}, function(err, results){
+					results = Generalfunc.cleanArray(results);
+					callback(err, results);
+				});
+			});
 
 		}else{
 			callback(err, null);
 		}
 		
 	});
-}
+};
 exports.delete = function(socket, callback){
 	Location.remove({ socket: socket }).exec(function(err){
 		callback(err, socket);
 	});
-}
+};
 exports.set = function(guid, gps, socket, callback){
 	
 	Tokenfunc.exist(guid, function(status, tokenData){
@@ -136,38 +136,81 @@ exports.set = function(guid, gps, socket, callback){
 			callback(true,null);
 		}
 	});
-}
+};
 exports.invite = function(guid, public_id, itemFunc, resultFunc, mensajes){
 	Tokenfunc.exist(guid, function(status, tokenData){
-      if(status){
-        Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileMeData, profileInfoData){
-          if(status){
+		if(status){
+			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileMeData, profileInfoData){
+				if(status){
 
-            if(mongoose.Types.ObjectId.isValid( public_id )){
-              public_id = mongoose.Types.ObjectId( public_id );
-              Profile.findOne({ public_id: public_id }).exec(function(errProfileFriend, profileFriendData){
-                Location.find({
-                  profile: profileFriendData._id
-                }).exec(function(errGPS, gpsData){
+					if(mongoose.Types.ObjectId.isValid( public_id )){
+						public_id = mongoose.Types.ObjectId( public_id );
+						Profile.findOne({ public_id: public_id }).exec(function(errProfileFriend, profileFriendData){
+							Location.find({
+								profile: profileFriendData._id
+							}).exec(function(errGPS, gpsData){
 
-                  async.map( gpsData, function(item,callback){
-                  	var d = { profile: profileMeData, friend: profileFriendData };
-                  	itemFunc(d, item);
-                  	callback(null, d);
-                  }, function(err, results){
-                  	resultFunc(results);
-                  });
-                });
-              });
-            }else{
-            	mensajes.no_usuario();
-            }
-          }else{
-          	mensajes.no_perfil();
-          }
-        });
-      }else{
-      	mensaje.no_token();
-      }
-    });
-}
+								async.map( gpsData, function(item,callback){
+									var d = { profile: profileMeData, friend: profileFriendData };
+									itemFunc(d, item);
+									callback(null, d);
+								}, function(err, results){
+									resultFunc(results);
+								});
+							});
+						});
+					}else{
+						mensajes.no_usuario();
+					}
+				}else{
+					mensajes.no_perfil();
+				}
+			});
+		}else{
+			mensaje.no_token();
+		}
+	});
+};
+exports.connect = function(profileData, profileAnotherData, status, callback){
+	var find = {
+		"profiles": {
+			"$all": [
+			profileData._id,
+			profileAnotherData._id
+			]
+		}
+	};
+	Network.findOne(find, function(errNetwork, networkData){
+		if(!errNetwork && networkData){
+			network.accepted = true;
+		}else{
+			var network = new Network({
+				accepted: true,
+				profiles: [
+				profileData._id,
+				profileAnotherData._id
+				]
+			});
+		}
+		network.save(function(err, networkData){
+			Network.findOne({ _id: networkData._id}).populate('profiles').exec(function(errNetwork, networkData){
+				Notificationfunc.add({
+					tipo: 3,
+					profile: profileAnotherData._id,
+					profile_emisor: profileData._id,
+					network: networkData._id,
+					clicked: false,
+					status: false,
+				}, function(status, notificationData){
+					var data = {
+						"network": networkData,
+						"profile": profileData, 
+						"friend": profileAnotherData
+					};
+					callback(data);
+				});
+			});
+		});
+		
+	});
+};
