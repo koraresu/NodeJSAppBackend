@@ -175,13 +175,12 @@ gps.on('connection', function(socket){
 
     gpsrouter.invite(guid, public_id, function(data, gpsData){
       var s = gpsData.socket;
-      
+
       console.log( "Socket Broadcast:" + s );
       console.log( data );
 
-      if (io.sockets.connected[ s ]) {
-        io.sockets.connected[ s ].emit('gps_invite',data);
-      }
+      socket.to( s ).emit('gps_invite',data);
+      io.to( s ).emit('gps_invite',data);
 
     }, function(data){
       console.log("++++");
