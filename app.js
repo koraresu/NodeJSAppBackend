@@ -180,8 +180,8 @@ gps.on('connection', function(socket){
       console.log( data );
 
       socket.to( s ).emit('gps_invite',data);
-      io.to( s ).emit('gps_invite',data);
-      
+      //io.to( s ).emit('gps_invite',data);
+
     }, function(data){
       console.log("++++");
       console.log("Emit Result");
