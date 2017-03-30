@@ -180,8 +180,8 @@ gps.on('connection', function(socket){
     var public_id = data.public_id;
 
 
-    gpsrouter.invite(guid, public_id, function(data){
-      socket.broadcast.to(item).emit('gps_invite',data);
+    gpsrouter.invite(guid, public_id, function(data, gpsData){
+      socket.broadcast.to(gpsData.socket).emit('gps_invite',data);
     }, function(data){
       socket.emit('gps_invited',data);
     },{

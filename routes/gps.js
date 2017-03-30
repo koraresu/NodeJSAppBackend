@@ -155,7 +155,7 @@ exports.invite = function(guid, public_id, itemFunc, resultFunc, mensajes){
 
                   async.map( gpsData, function(item,callback){
                   	var d = { profile: profileInfoData, friend: profileData }
-                  	itemFunc(d);
+                  	itemFunc(d, gpsData);
                   	callback(null, d);
                   }, function(err, results){
                   	resultFunc(results);
