@@ -180,7 +180,8 @@ exports.connect = function(profileData, profileAnotherData, status, callback){
 			]
 		}
 	};
-	Network.findOne(find, function(errNetwork, networkData){
+	Network.findOne(find, function(errNetwork, network){
+		
 		if(!errNetwork && networkData){
 			network.accepted = true;
 		}else{
