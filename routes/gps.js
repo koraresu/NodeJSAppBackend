@@ -213,7 +213,9 @@ exports.connect = function(profileData, profileAnotherData, status, callback){
 					Location.find({
 						profile: profileData._id
 					}).exec(function(errLoc, locData){
+						console.log("Location:----------------------------------------+");
 						console.log( locData );
+						console.log("+------------------------------------------------+");
 						callback(data, locData);
 					});
 				});
