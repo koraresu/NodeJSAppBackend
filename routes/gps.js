@@ -210,7 +210,7 @@ exports.connect = function(profileData, profileAnotherData, status, callback){
 						"friend": profileAnotherData
 					};
 					console.log( profileData );
-					Location.find({
+					Location.findOne({
 						profile: profileData._id
 					}).exec(function(errLoc, locData){
 						console.log("Location:----------------------------------------+");
