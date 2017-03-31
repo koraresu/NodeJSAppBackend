@@ -209,9 +209,11 @@ exports.connect = function(profileData, profileAnotherData, status, callback){
 						"profile": profileData, 
 						"friend": profileAnotherData
 					};
+					console.log( profileData );
 					Location.find({
 						profile: profileData._id
 					}).exec(function(errLoc, locData){
+						console.log( locData );
 						callback(data, locData);
 					});
 				});
