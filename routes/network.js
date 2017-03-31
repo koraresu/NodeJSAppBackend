@@ -179,8 +179,8 @@ router.post('/connect/all', multipartMiddleware, function(req, res){
 	                  							profile: profileAnotherData._id,
 												profile_emisor: profileData._id,
 												network: networkData._id,
-												clicked: true,
-	                  							status: true
+												clicked: false,
+	                  							status: false
                 							}, function(status, notificationData){
                 								Network.findOne({ _id: networkData._id }).populate('profiles').exec(function(err, networkData){
 													var data = {
@@ -191,14 +191,6 @@ router.post('/connect/all', multipartMiddleware, function(req, res){
 													callback(null, data);
 												});
                 							});
-											var notification = new Notification({
-												tipo: 3,
-												
-											});
-											notification.save(function(errNotification, notificationData){
-												
-												
-											});
 										});
 									}
 								});
