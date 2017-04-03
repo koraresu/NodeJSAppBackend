@@ -173,8 +173,16 @@ function send(id, success){
 			Pushfunc.addOrGet(1, notification_id, profile_id, function(pushEventData){
 				Device.find({ profile: profile_id }).sort({ $natural: -1 }).exec(function(err, deviceData){
 					Online.find({ profiles: profile_id }).sort({ $natural: -1 }).exec(function(errOnline, onlineData){
-						async.map(onlineData, function(item, callback){}, function(err, result){
+						async.map(onlineData, function(item, callback){
+							console.log("Socket ID:");
+							console.log(item.socket);
+							console.log("Notification:");
+							console.log( notificationData );
+
 							io.sockets.to(item.socket).emit('notification', notificationData);
+							callback(null, notificationData);
+						}, function(err, result){
+							console.log(result);
 						});
 					});
 				});
