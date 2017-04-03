@@ -92,24 +92,38 @@ router.post('/connect', multipartMiddleware, function(req, res){
 								});
 								network.save(function(err, networkData){
 									Network.findOne({ _id: networkData._id}).populate('profiles').exec(function(errNetwork, networkData){
-											
-
-										Notificationfunc.add({
-                  							tipo: 3,
-                  							profile: profileAnotherData._id,
+										
+										Notificationfunc.addOrGet({
+											tipo: 3,
+											profile: profileAnotherData._id,
+											profile_emisor: profileData._id,
+											network: networkData._id
+										},
+										{
+											tipo: 3,
+											profile: profileAnotherData._id,
 											profile_emisor: profileData._id,
 											network: networkData._id,
 											clicked: false,
-                  							status: false,
-                						}, function(status, notificationData){
-                							var data = {
-												"accepted": networkData.accepted,
-												"public_id": profileAnotherData.public_id
-											};
-											Generalfunc.response(200, data,  function(response){
-												res.json(response);
-											});	
-                						});
+											status: false,
+										}, function(status, notificationData){
+
+											notificationData.clicked = false;
+											notificationData.status  = false;
+											
+											notificationData.save(function(err, notification){
+												Notification.find({ _id: notification._id}).exec(function(errNot, notData){
+													var data = {
+														"accepted": networkData.accepted,
+														"public_id": profileAnotherData.public_id
+													};
+
+													Generalfunc.response(200, data,  function(response){
+														res.json(response);
+													});	
+												});
+											});
+										});
 									});
 								});
 							}

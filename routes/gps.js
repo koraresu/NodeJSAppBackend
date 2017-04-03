@@ -187,7 +187,7 @@ exports.connect = function(profileData, profileAnotherData, status, callback){
 			network.accepted = true;
 		}else{
 			var network = new Network({
-				accepted: true,
+				accepted: status,
 				profiles: [
 				profileData._id,
 				profileAnotherData._id
@@ -201,8 +201,8 @@ exports.connect = function(profileData, profileAnotherData, status, callback){
 					profile: profileAnotherData._id,
 					profile_emisor: profileData._id,
 					network: networkData._id,
-					clicked: false,
-					status: false,
+					clicked: true,
+					status: status,
 				}, function(status, notificationData){
 					var data = {
 						"network": networkData,
