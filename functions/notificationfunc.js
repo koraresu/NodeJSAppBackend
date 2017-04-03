@@ -111,7 +111,7 @@ exports.addOrGet = function(search, d, callback){
 		
 	}
 }
-exports.add = function(d, callback){
+exports.add = function(d, callback, req){
 	if(d == null){
 		callback(false);
 	}else{
@@ -136,7 +136,7 @@ exports.add = function(d, callback){
 			if(!errNotification && notificationData){
 				send(notificationData._id, function(){
 					callback(true, notificationData);	
-				});
+				},req);
 			}else{
 				callback(false);
 			}
@@ -166,7 +166,7 @@ exports.click = function(search, stat, success, fail){
 		});
 	});
 }
-function send(id, success){
+function send(id, success,req){
 	console.log("+ SEND SOCKET:----------------------------------+");
 	Notification.findOne({ _id: id }).populate('profile').populate('profile_emisor').populate('profile_mensaje').populate('network').exec(function(errNotification, notificationData){
 		Pushfunc.prepare(notificationData.profile._id, notificationData._id, function(profile_id, notification_id){
@@ -176,8 +176,11 @@ function send(id, success){
 						async.map(onlineData, function(item, callback){
 							console.log("Socket ID:");
 							console.log(item.socket);
-
-							io.sockets.to(item.socket.toString()).emit('notification', notificationData);
+							if(req != undefined){
+								if(req.app != undefined){
+									req.app.io.to(item.socket.toString()).emit('notification', notificationData);		
+								}
+							}
 
 							callback(null, notificationData);
 						}, function(err, result){
