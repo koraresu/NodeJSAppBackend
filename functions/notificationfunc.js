@@ -3,6 +3,7 @@ var mongoose    = require('mongoose');
 var path        = require('path');
 var fs          = require('fs');
 var _           = require('underscore');
+var async       = require('async');
 
 var socket_io    = require('socket.io');
 var io           = socket_io();
