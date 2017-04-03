@@ -129,7 +129,7 @@ exports.add = function(d, callback){
 		notification.save(function(errNotification, notificationData){
 			console.log("Erro Notification:");
 			console.log(errNotification);
-			send(notData._id, function(){
+			send(notificationData._id, function(){
 				if(!errNotification && notificationData){
 					//Generalfunc.sendPushtoAll();
 					callback(true, notificationData);	
