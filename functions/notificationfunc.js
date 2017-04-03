@@ -1,29 +1,29 @@
 
 var mongoose    = require('mongoose');
-var path = require('path');
-var fs = require('fs');
-var _ = require('underscore');
+var path        = require('path');
+var fs          = require('fs');
+var _           = require('underscore');
 
 var socket_io    = require('socket.io');
 var io           = socket_io();
 
-var format = require('../functions/format');
+var format       = require('../functions/format');
 
-var model = require('../model');
-var Profile     = model.profile;
-var User        = model.user;
-var Token       = model.token;
-var Job         = model.job;
-var Company     = model.company;
-var Experience  = model.experience;
-var Network     = model.network;
-var History     = model.history;
-var Feedback    = model.feedback;
-var Review      = model.review;
-var Log         = model.log;
-var Skill       = model.skill;
-var Speciality  = model.speciality;
-var Sector      = model.sector;
+var model        = require('../model');
+var Profile      = model.profile;
+var User         = model.user;
+var Token        = model.token;
+var Job          = model.job;
+var Company      = model.company;
+var Experience   = model.experience;
+var Network      = model.network;
+var History      = model.history;
+var Feedback     = model.feedback;
+var Review       = model.review;
+var Log          = model.log;
+var Skill        = model.skill;
+var Speciality   = model.speciality;
+var Sector       = model.sector;
 var Notification = model.notification;
 var Feedback     = model.feedback;
 var Conversation = model.conversation;
@@ -33,7 +33,7 @@ var State        = model.state;
 var Country      = model.country;
 
 var Generalfunc = require('./generalfunc');
-var Pushfunc = require('./pushfunc');
+var Pushfunc    = require('./pushfunc');
 
 exports.get = function(search, callback){
 	model.notification.find(search).populate('profile').populate('profile_emisor').populate('profile_mensaje').populate('busqueda').exec(function(errNotification, notificationData){
