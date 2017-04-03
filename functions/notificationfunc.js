@@ -4,6 +4,9 @@ var path = require('path');
 var fs = require('fs');
 var _ = require('underscore');
 
+var socket_io    = require('socket.io');
+var io           = socket_io();
+
 var format = require('../functions/format');
 
 var model = require('../model');
@@ -126,12 +129,14 @@ exports.add = function(d, callback){
 		notification.save(function(errNotification, notificationData){
 			console.log("Erro Notification:");
 			console.log(errNotification);
-			if(!errNotification && notificationData){
-				//Generalfunc.sendPushtoAll();
-				callback(true, notificationData);	
-			}else{
-				callback(false);
-			}
+			Notificationfunc.send(notData._id, function(){
+				if(!errNotification && notificationData){
+					//Generalfunc.sendPushtoAll();
+					callback(true, notificationData);	
+				}else{
+					callback(false);
+				}
+			});
 		});
 	}
 }
@@ -158,3 +163,25 @@ exports.click = function(search, stat, success, fail){
 		});
 	});
 }
+function send(id, success){
+	Notification.findOne({ _id: id }).populate('profile').populate('profile_emisor').populate('profile_mensaje').populate('network').exec(function(errNotification, notificationData){
+		Pushfunc.prepare(notificationData.profile._id, notificationData._id, function(profile_id, notification_id){
+			Pushfunc.addOrGet(1, notification_id, profile_id, function(pushEventData){
+				Device.find({ profile: profile_id }).sort({ $natural: -1 }).exec(function(err, deviceData){
+					Onlines.find({ profiles: profile_id }).sort({ $natural: -1 }).exec(function(errOnline, onlineData){
+						async.map(onlineData, function(item, callback){}, function(err, result){
+							io.sockets.to(item.socket).emit('notification', notificationData);
+						});
+					});
+				});
+			}, function(err){
+				console.log( err );
+			});
+		}, function(profile_id, message_id){
+			console.log( profile_id );
+			console.log( message_id );
+		});
+	});
+	success();
+}
+exports.send = send;
