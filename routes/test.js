@@ -123,6 +123,20 @@ router.get('/state', function(req, res){
   });
 });
 
+router.get('/notification', function(req, res){
+  Notificationfunc.add({
+    tipo: 5,
+    profile: mongoose.Types.ObjectId("58d96d69bfe3ff3c5203f8c3"),
+    profile_emisor: mongoose.Types.ObjectId("58d96caebfe3ff3c5203f8ac"),
+    network: mongoose.Types.ObjectId("58e281261c4fad1f22ea0e2d"),
+    clicked: false,
+    status: false,
+    deleted: false
+  }, function(){
+    res.send("Enviado");
+  },req);
+});
+
 module.exports = router;
 
 function readJsonFileSync(filepath, encoding){

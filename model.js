@@ -589,7 +589,7 @@ userSchema.post('update', function(doc, next){
 
 /*******************************************/
 var NotificationSchema = new Schema({
-  tipo: Number, // 0 = se ha unido | 1 = recomendación | 2 = te recomiendan | 3 = Envio Solucitud | 4 = Respondio Solicitud
+  tipo: Number, // 0 = se ha unido | 1 = recomendación | 2 = te recomiendan | 3 = Envio Solucitud | 4 = Respondio Solicitud | 5 = Test
   profile: { type: Schema.Types.ObjectId, ref: 'Profile' },
   profile_emisor: { type: Schema.Types.ObjectId, ref: 'Profile' },
   profile_mensaje: { type: Schema.Types.ObjectId, ref: 'Profile' },

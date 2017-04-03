@@ -61,7 +61,7 @@ var moment = require('moment-timezone');
 
 		var apnProvider = Generalfunc.apnProvider();
 		function readed_conv(profile_id, conversation, success, fail){
-			PushEvent.find({ profile: profile_id, read: false }).populate('message').exec(function(pushErr, pushEventData){
+			PushEvent.find({ profile: profile_id, read: false, type: 0 }).populate('message').exec(function(pushErr, pushEventData){
 				async.map(pushEventData, function(item, ca){
 					console.log("Item:");
 					console.log( item.message.conversation );

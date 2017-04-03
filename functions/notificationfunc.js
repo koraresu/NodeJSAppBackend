@@ -1,28 +1,34 @@
 
 var mongoose    = require('mongoose');
-var path = require('path');
-var fs = require('fs');
-var _ = require('underscore');
+var path        = require('path');
+var fs          = require('fs');
+var _           = require('underscore');
+var async       = require('async');
 
-var format = require('../functions/format');
+var socket_io    = require('socket.io');
+var io           = socket_io();
 
-var model = require('../model');
-var Profile     = model.profile;
-var User        = model.user;
-var Token       = model.token;
-var Job         = model.job;
-var Company     = model.company;
-var Experience  = model.experience;
-var Network     = model.network;
-var History     = model.history;
-var Feedback    = model.feedback;
-var Review      = model.review;
-var Log         = model.log;
-var Skill       = model.skill;
-var Speciality  = model.speciality;
-var Sector      = model.sector;
+var format       = require('../functions/format');
+
+var model        = require('../model');
+var Profile      = model.profile;
+var User         = model.user;
+var Token        = model.token;
+var Job          = model.job;
+var Company      = model.company;
+var Experience   = model.experience;
+var Network      = model.network;
+var History      = model.history;
+var Feedback     = model.feedback;
+var Review       = model.review;
+var Log          = model.log;
+var Skill        = model.skill;
+var Speciality   = model.speciality;
+var Sector       = model.sector;
 var Notification = model.notification;
 var Feedback     = model.feedback;
+var Device       = model.device;
+var Online       = model.online;
 var Conversation = model.conversation;
 var Message      = model.message;
 var City         = model.city;
@@ -30,6 +36,7 @@ var State        = model.state;
 var Country      = model.country;
 
 var Generalfunc = require('./generalfunc');
+var Pushfunc    = require('./pushfunc');
 
 exports.get = function(search, callback){
 	model.notification.find(search).populate('profile').populate('profile_emisor').populate('profile_mensaje').populate('busqueda').exec(function(errNotification, notificationData){
@@ -104,7 +111,7 @@ exports.addOrGet = function(search, d, callback){
 		
 	}
 }
-exports.add = function(d, callback){
+exports.add = function(d, callback, req){
 	if(d == null){
 		callback(false);
 	}else{
@@ -127,8 +134,9 @@ exports.add = function(d, callback){
 			console.log("Erro Notification:");
 			console.log(errNotification);
 			if(!errNotification && notificationData){
-				//Generalfunc.sendPushtoAll();
-				callback(true, notificationData);	
+				send(notificationData._id, function(){
+					callback(true, notificationData);	
+				},req);
 			}else{
 				callback(false);
 			}
@@ -158,3 +166,51 @@ exports.click = function(search, stat, success, fail){
 		});
 	});
 }
+function send(id, success,req){
+	console.log("+ SEND SOCKET:----------------------------------+");
+	Notification.findOne({ _id: id }).populate('profile').populate('profile_emisor').populate('profile_mensaje').populate('network').exec(function(errNotification, notificationData){
+		Pushfunc.prepare(notificationData.profile._id, notificationData._id, function(profile_id, notification_id){
+			Pushfunc.addOrGet(1, notification_id, profile_id, function(pushEventData){
+				Device.find({ profile: profile_id }).sort({ $natural: -1 }).exec(function(err, deviceData){
+					Online.find({ profiles: profile_id }).sort({ $natural: -1 }).exec(function(errOnline, onlineData){
+						async.map(onlineData, function(item, callback){
+							console.log("Socket ID:");
+							console.log(item.socket);
+							if(req != undefined){
+								if(req.app != undefined){
+									if(req.app.io != undefined){
+										if(req.app.io.to != undefined){
+											req.app.io.to(item.socket.toString()).emit('notification', notificationData);
+										}else{
+											console.log("Request App IO To Undefined");
+										}
+									}else{
+										console.log("Request App IO Undefined");
+									}
+								}else{
+									console.log("Request App Undefined");
+								}
+							}else{
+								console.log("Request Undefined");
+							}
+							callback(null, notificationData);
+						}, function(err, result){
+							console.log(result);
+							console.log("+ END SEND SOCKET:------------------------------+");
+							success();
+						});
+					});
+				});
+			}, function(err){
+				console.log( err );
+				success();
+			});
+		}, function(profile_id, message_id){
+			console.log( profile_id );
+			console.log( message_id );
+			success();
+		});
+	});
+	
+}
+exports.send = send;

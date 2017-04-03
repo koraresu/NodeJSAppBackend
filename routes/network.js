@@ -92,38 +92,24 @@ router.post('/connect', multipartMiddleware, function(req, res){
 								});
 								network.save(function(err, networkData){
 									Network.findOne({ _id: networkData._id}).populate('profiles').exec(function(errNetwork, networkData){
-										
-										Notificationfunc.addOrGet({
-											tipo: 3,
-											profile: profileAnotherData._id,
-											profile_emisor: profileData._id,
-											network: networkData._id
-										},
-										{
-											tipo: 3,
-											profile: profileAnotherData._id,
+											
+
+										Notificationfunc.add({
+                  							tipo: 3,
+                  							profile: profileAnotherData._id,
 											profile_emisor: profileData._id,
 											network: networkData._id,
 											clicked: false,
-											status: false,
-										}, function(status, notificationData){
-
-											notificationData.clicked = false;
-											notificationData.status  = false;
-											
-											notificationData.save(function(err, notification){
-												Notification.find({ _id: notification._id}).exec(function(errNot, notData){
-													var data = {
-														"accepted": networkData.accepted,
-														"public_id": profileAnotherData.public_id
-													};
-
-													Generalfunc.response(200, data,  function(response){
-														res.json(response);
-													});	
-												});
-											});
-										});
+                  							status: false,
+                						}, function(status, notificationData){
+                							var data = {
+												"accepted": networkData.accepted,
+												"public_id": profileAnotherData.public_id
+											};
+											Generalfunc.response(200, data,  function(response){
+												res.json(response);
+											});	
+                						}, req);
 									});
 								});
 							}
@@ -193,8 +179,8 @@ router.post('/connect/all', multipartMiddleware, function(req, res){
 	                  							profile: profileAnotherData._id,
 												profile_emisor: profileData._id,
 												network: networkData._id,
-												clicked: false,
-	                  							status: false
+												clicked: true,
+	                  							status: true
                 							}, function(status, notificationData){
                 								Network.findOne({ _id: networkData._id }).populate('profiles').exec(function(err, networkData){
 													var data = {
@@ -205,6 +191,14 @@ router.post('/connect/all', multipartMiddleware, function(req, res){
 													callback(null, data);
 												});
                 							});
+											var notification = new Notification({
+												tipo: 3,
+												
+											});
+											notification.save(function(errNotification, notificationData){
+												
+												
+											});
 										});
 									}
 								});
@@ -332,7 +326,7 @@ router.post('/accept', multipartMiddleware, function(req, res){
 										});
 
 										
-									});
+									}, req);
 								});
 							}else{
 								Generalfunc.response(101, {}, function(response){
