@@ -129,14 +129,13 @@ exports.add = function(d, callback){
 		notification.save(function(errNotification, notificationData){
 			console.log("Erro Notification:");
 			console.log(errNotification);
-			send(notificationData._id, function(){
-				if(!errNotification && notificationData){
-					//Generalfunc.sendPushtoAll();
+			if(!errNotification && notificationData){
+				Notificationfunc.send(notData._id, function(){
 					callback(true, notificationData);	
-				}else{
-					callback(false);
-				}
-			});
+				});
+			}else{
+				callback(false);
+			}
 		});
 	}
 }
