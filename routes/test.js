@@ -134,7 +134,7 @@ router.get('/notification', function(req, res){
     deleted: false
   }, function(){
     res.send("Enviado");
-  });
+  },req);
 });
 
 module.exports = router;
