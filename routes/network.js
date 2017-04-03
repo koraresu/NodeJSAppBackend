@@ -109,7 +109,7 @@ router.post('/connect', multipartMiddleware, function(req, res){
 											Generalfunc.response(200, data,  function(response){
 												res.json(response);
 											});	
-                						});
+                						}, req);
 									});
 								});
 							}
