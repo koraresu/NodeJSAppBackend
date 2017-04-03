@@ -26,6 +26,7 @@ var Speciality   = model.speciality;
 var Sector       = model.sector;
 var Notification = model.notification;
 var Feedback     = model.feedback;
+var Device       = model.device;
 var Conversation = model.conversation;
 var Message      = model.message;
 var City         = model.city;
