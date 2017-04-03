@@ -177,7 +177,6 @@ function send(id, success){
 							console.log("Socket ID:");
 							console.log(item.socket);
 
-							io.sockets.connected[item.socket].emit('notification', notificationData);
 							io.sockets.socket(item.socket.toString()).emit('notification', notificationData);
 
 							callback(null, notificationData);
