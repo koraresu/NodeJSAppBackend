@@ -176,11 +176,9 @@ function send(id, success){
 						async.map(onlineData, function(item, callback){
 							console.log("Socket ID:");
 							console.log(item.socket);
-							console.log("Notification:");
-							console.log( notificationData );
 
-							io.sockets.to(item.socket).emit('notification', notificationData);
-							io.sockets.to(item.socket.toString()).emit('notification', notificationData);
+							io.sockets.connected[item.socket].emit('notification', notificationData);
+							io.sockets.socket(item.socket.toString()).emit('notification', notificationData);
 
 							callback(null, notificationData);
 						}, function(err, result){
