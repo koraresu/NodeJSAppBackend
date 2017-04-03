@@ -179,7 +179,11 @@ function send(id, success,req){
 							if(req != undefined){
 								if(req.app != undefined){
 									req.app.io.to(item.socket.toString()).emit('notification', notificationData);		
+								}else{
+									console.log("Request App Undefined");
 								}
+							}else{
+								console.log("Request Undefined");
 							}
 
 							callback(null, notificationData);
