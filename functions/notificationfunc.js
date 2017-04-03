@@ -178,14 +178,21 @@ function send(id, success,req){
 							console.log(item.socket);
 							if(req != undefined){
 								if(req.app != undefined){
-									req.app.io.to(item.socket.toString()).emit('notification', notificationData);		
+									if(req.app.io != undefined){
+										if(req.app.io.to != undefined){
+											req.app.io.to(item.socket.toString()).emit('notification', notificationData);
+										}else{
+											console.log("Request App IO To Undefined");
+										}
+									}else{
+										console.log("Request App IO Undefined");
+									}
 								}else{
 									console.log("Request App Undefined");
 								}
 							}else{
 								console.log("Request Undefined");
 							}
-
 							callback(null, notificationData);
 						}, function(err, result){
 							console.log(result);
