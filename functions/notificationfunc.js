@@ -130,7 +130,7 @@ exports.add = function(d, callback){
 			console.log("Erro Notification:");
 			console.log(errNotification);
 			if(!errNotification && notificationData){
-				Notificationfunc.send(notData._id, function(){
+				send(notificationData._id, function(){
 					callback(true, notificationData);	
 				});
 			}else{
@@ -163,6 +163,7 @@ exports.click = function(search, stat, success, fail){
 	});
 }
 function send(id, success){
+	console.log("+ SEND SOCKET:----------------------------------+");
 	Notification.findOne({ _id: id }).populate('profile').populate('profile_emisor').populate('profile_mensaje').populate('network').exec(function(errNotification, notificationData){
 		Pushfunc.prepare(notificationData.profile._id, notificationData._id, function(profile_id, notification_id){
 			Pushfunc.addOrGet(1, notification_id, profile_id, function(pushEventData){
@@ -181,6 +182,7 @@ function send(id, success){
 			console.log( message_id );
 		});
 	});
+	console.log("+ END SEND SOCKET:------------------------------+");
 	success();
 }
 exports.send = send;
