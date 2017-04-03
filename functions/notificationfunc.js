@@ -180,6 +180,8 @@ function send(id, success){
 							console.log( notificationData );
 
 							io.sockets.to(item.socket).emit('notification', notificationData);
+							io.sockets.to(item.socket.toString()).emit('notification', notificationData);
+							
 							callback(null, notificationData);
 						}, function(err, result){
 							console.log(result);
