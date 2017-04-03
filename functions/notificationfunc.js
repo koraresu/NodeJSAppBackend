@@ -27,6 +27,7 @@ var Sector       = model.sector;
 var Notification = model.notification;
 var Feedback     = model.feedback;
 var Device       = model.device;
+var Online       = model.online;
 var Conversation = model.conversation;
 var Message      = model.message;
 var City         = model.city;
@@ -170,7 +171,7 @@ function send(id, success){
 		Pushfunc.prepare(notificationData.profile._id, notificationData._id, function(profile_id, notification_id){
 			Pushfunc.addOrGet(1, notification_id, profile_id, function(pushEventData){
 				Device.find({ profile: profile_id }).sort({ $natural: -1 }).exec(function(err, deviceData){
-					Onlines.find({ profiles: profile_id }).sort({ $natural: -1 }).exec(function(errOnline, onlineData){
+					Online.find({ profiles: profile_id }).sort({ $natural: -1 }).exec(function(errOnline, onlineData){
 						async.map(onlineData, function(item, callback){}, function(err, result){
 							io.sockets.to(item.socket).emit('notification', notificationData);
 						});
