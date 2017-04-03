@@ -181,22 +181,25 @@ function send(id, success){
 
 							io.sockets.to(item.socket).emit('notification', notificationData);
 							io.sockets.to(item.socket.toString()).emit('notification', notificationData);
-							
+
 							callback(null, notificationData);
 						}, function(err, result){
 							console.log(result);
+							console.log("+ END SEND SOCKET:------------------------------+");
+							success();
 						});
 					});
 				});
 			}, function(err){
 				console.log( err );
+				success();
 			});
 		}, function(profile_id, message_id){
 			console.log( profile_id );
 			console.log( message_id );
+			success();
 		});
 	});
-	console.log("+ END SEND SOCKET:------------------------------+");
-	success();
+	
 }
 exports.send = send;
