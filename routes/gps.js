@@ -204,20 +204,43 @@ exports.connect = function(profileData, profileAnotherData, status, callback){
 					clicked: true,
 					status: status,
 				}, function(status, notificationData){
-					var data = {
-						"network": networkData,
-						"profile": profileData, 
-						"friend": profileAnotherData
-					};
-					console.log( profileData );
-					Location.findOne({
-						profile: profileData._id
-					}).exec(function(errLoc, locData){
-						console.log("Location:----------------------------------------+");
-						console.log( locData );
-						console.log("+------------------------------------------------+");
-						callback(data, locData);
-					});
+
+					if(status){
+						Notificationfunc.add({
+							tipo:4,
+							profile: profileData._id,
+							profile_emisor: profileAnotherData._id,
+							network: networkData._id,
+							clicked: true,
+							status: status,
+
+						}, function(statusResult, notificationResultData){
+							var data = {
+								"network": networkData,
+								"profile": profileData, 
+								"friend": profileAnotherData
+							};
+							console.log( profileData );
+							Location.findOne({
+								profile: profileData._id
+							}).exec(function(errLoc, locData){
+								callback(data, locData);
+							});
+						});
+					}else{
+						var data = {
+							"network": networkData,
+							"profile": profileData, 
+							"friend": profileAnotherData
+						};
+						console.log( profileData );
+						Location.findOne({
+							profile: profileData._id
+						}).exec(function(errLoc, locData){
+							callback(data, locData);
+						});
+					}
+					
 				});
 			});
 		});

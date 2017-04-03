@@ -216,7 +216,7 @@ gps.on('connection', function(socket){
     });
   });
   socket.on('cancel_invite', function(data){
-    gpsrouter.connect(data.profile, data.friend, true, function(data, locationData){
+    gpsrouter.connect(data.profile, data.friend, false, function(data, locationData){
       console.log("Cancel invite");
 
       console.log("Profile", data.profile.first_name + " " + data.profile.last_name);
