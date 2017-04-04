@@ -427,12 +427,12 @@ function recomendar(data, success, fail){
 		}
 	});
 }
-function create_notificacion_recomendacion(data, callback){
+function create_notificacion_recomendacion(data, callback, io){
 	Notificationfunc.add(data, function(status, notificationData){
 		console.log("Create Notification Recomendacion");
 		console.log( notificationData );
 		callback(status, notificationData);
-	});
+	}, io);
 }
 function new_friend(profileData, profileAnotherData, success, fail){
 	Network.findOne({

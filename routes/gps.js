@@ -172,7 +172,7 @@ exports.invite = function(guid, public_id, itemFunc, resultFunc, mensajes){
 		}
 	});
 };
-exports.connect = function(profileData, profileAnotherData, status, callback){
+exports.connect = function(profileData, profileAnotherData, status, callback, io){
 	var find = {
 		"profiles": {
 			"$all": [
@@ -187,7 +187,7 @@ exports.connect = function(profileData, profileAnotherData, status, callback){
 			network.accepted = true;
 		}else{
 			var network = new Network({
-				accepted: status,
+				accepted: true,
 				profiles: [
 				profileData._id,
 				profileAnotherData._id
@@ -201,47 +201,24 @@ exports.connect = function(profileData, profileAnotherData, status, callback){
 					profile: profileAnotherData._id,
 					profile_emisor: profileData._id,
 					network: networkData._id,
-					clicked: true,
-					status: status,
+					clicked: false,
+					status: false,
 				}, function(status, notificationData){
-
-					if(status){
-						Notificationfunc.add({
-							tipo:4,
-							profile: profileData._id,
-							profile_emisor: profileAnotherData._id,
-							network: networkData._id,
-							clicked: true,
-							status: status,
-
-						}, function(statusResult, notificationResultData){
-							var data = {
-								"network": networkData,
-								"profile": profileData, 
-								"friend": profileAnotherData
-							};
-							console.log( profileData );
-							Location.findOne({
-								profile: profileData._id
-							}).exec(function(errLoc, locData){
-								callback(data, locData);
-							});
-						});
-					}else{
-						var data = {
-							"network": networkData,
-							"profile": profileData, 
-							"friend": profileAnotherData
-						};
-						console.log( profileData );
-						Location.findOne({
-							profile: profileData._id
-						}).exec(function(errLoc, locData){
-							callback(data, locData);
-						});
-					}
-					
-				});
+					var data = {
+						"network": networkData,
+						"profile": profileData, 
+						"friend": profileAnotherData
+					};
+					console.log( profileData );
+					Location.findOne({
+						profile: profileData._id
+					}).exec(function(errLoc, locData){
+						console.log("Location:----------------------------------------+");
+						console.log( locData );
+						console.log("+------------------------------------------------+");
+						callback(data, locData);
+					});
+				}, io);
 			});
 		});
 		

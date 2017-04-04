@@ -111,7 +111,7 @@ exports.addOrGet = function(search, d, callback){
 		
 	}
 }
-exports.add = function(d, callback, req){
+exports.add = function(d, callback, io){
 	if(d == null){
 		callback(false);
 	}else{
@@ -136,7 +136,7 @@ exports.add = function(d, callback, req){
 			if(!errNotification && notificationData){
 				send(notificationData._id, function(){
 					callback(true, notificationData);	
-				},req);
+				},io);
 			}else{
 				callback(false);
 			}
@@ -166,7 +166,7 @@ exports.click = function(search, stat, success, fail){
 		});
 	});
 }
-function send(id, success,req){
+function send(id, success,io){
 	console.log("+ SEND SOCKET:----------------------------------+");
 	Notification.findOne({ _id: id }).populate('profile').populate('profile_emisor').populate('profile_mensaje').populate('network').exec(function(errNotification, notificationData){
 		Pushfunc.prepare(notificationData.profile._id, notificationData._id, function(profile_id, notification_id){
@@ -176,23 +176,19 @@ function send(id, success,req){
 						async.map(onlineData, function(item, callback){
 							console.log("Socket ID:");
 							console.log(item.socket);
-							if(req != undefined){
-								if(req.app != undefined){
-									if(req.app.io != undefined){
-										if(req.app.io.to != undefined){
-											req.app.io.to(item.socket.toString()).emit('notification', notificationData);
+							
+								
+									if(io != undefined){
+										if(io.to != undefined){
+											io.to(item.socket.toString()).emit('notification', notificationData);
 										}else{
-											console.log("Request App IO To Undefined");
+											console.log("App IO To Undefined");
 										}
 									}else{
-										console.log("Request App IO Undefined");
+										console.log("App IO Undefined");
 									}
-								}else{
-									console.log("Request App Undefined");
-								}
-							}else{
-								console.log("Request Undefined");
-							}
+								
+							
 							callback(null, notificationData);
 						}, function(err, result){
 							console.log(result);
