@@ -109,7 +109,7 @@ router.post('/connect', multipartMiddleware, function(req, res){
 											Generalfunc.response(200, data,  function(response){
 												res.json(response);
 											});	
-                						}, req);
+                						}, req.app.io);
 									});
 								});
 							}
@@ -326,7 +326,7 @@ router.post('/accept', multipartMiddleware, function(req, res){
 										});
 
 										
-									}, req);
+									}, req.app.io);
 								});
 							}else{
 								Generalfunc.response(101, {}, function(response){
@@ -947,8 +947,8 @@ router.post('/recomendar', multipartMiddleware, function(req, res){
 											});
 										}
 										
-									},req);
-								},req);
+									}, req.app.io);
+								}, req.app.io);
 							}else{
 								Generalfunc.response(101, {}, function(response){
 									res.json( response );
@@ -972,12 +972,12 @@ router.post('/recomendar', multipartMiddleware, function(req, res){
 
 module.exports = router;
 
-function create_notificacion_recomendacion(data, callback){
+function create_notificacion_recomendacion(data, callback, io){
 	Notificationfunc.add(data, function(status, notificationData){
 		console.log("Create Notification Recomendacion");
 		console.log( notificationData );
 		callback(status, notificationData);
-	});
+	}, io);
 }
 function cleanArray(actual) {
 	var newArray = new Array();

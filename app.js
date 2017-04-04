@@ -213,7 +213,7 @@ gps.on('connection', function(socket){
       socket.to( s ).emit('gps_result',{
         message: "Tu amigo " + name + " ha aceptado la invitación."
       });
-    });
+    }, io);
   });
   socket.on('cancel_invite', function(data){
     gpsrouter.connect(data.profile, data.friend, true, function(data, locationData){
@@ -229,7 +229,7 @@ gps.on('connection', function(socket){
       socket.to( s ).emit('gps_result',{
         message: "Tu amigo " + name + " ha cancelado la invitación."
       });
-    });
+    }, io);
   });
 });
 var chatrouter = require('./routes/chat');

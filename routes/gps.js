@@ -172,7 +172,7 @@ exports.invite = function(guid, public_id, itemFunc, resultFunc, mensajes){
 		}
 	});
 };
-exports.connect = function(profileData, profileAnotherData, status, callback){
+exports.connect = function(profileData, profileAnotherData, status, callback, io){
 	var find = {
 		"profiles": {
 			"$all": [
@@ -218,7 +218,7 @@ exports.connect = function(profileData, profileAnotherData, status, callback){
 						console.log("+------------------------------------------------+");
 						callback(data, locData);
 					});
-				});
+				}, io);
 			});
 		});
 		

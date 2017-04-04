@@ -142,7 +142,7 @@ router.post('/accept', multipartMiddleware, function(req, res){
 																	Generalfunc.response(200, {notification: notification, network: network }, function(response){
 																		res.json(response);
 																	});
-																},req);
+																}, req.app.io);
 															}
 														});
 														
