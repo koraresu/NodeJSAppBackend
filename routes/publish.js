@@ -503,22 +503,22 @@ router.post('/delete/news', multipartMiddleware, function(req, res){
 									});
 								}else{
 									Generalfunc.response(101, {},function(response){
-				res.json(response);
-			})
+										res.json(response);
+									})
 								}
 								
 							});
 						}else{
 							Generalfunc.response(101, {},function(response){
-				res.json(response);
-			})
+								res.json(response);
+							})
 						}
 					});
 				}
 				
 			});
 		}else{
-Generalfunc.response(101, {},function(response){
+			Generalfunc.response(101, {},function(response){
 				res.json(response);
 			})
 		}
@@ -800,9 +800,23 @@ router.post('/write/review', multipartMiddleware, function(req, res){
 															publicProfileData.save(function(err, profile){
 																Profile.find({ _id: publicProfileData._id }).exec(function(err, profileData){
 																	Review.findOne({ _id: reviewData._id }).populate('profiles').populate('profile_id').exec(function(err, reviewData){
-																		Generalfunc.response(200, reviewData, function(response){
-																			res.json(response);
+																		
+																		Notificationfunc.add({
+																			tipo: 5,
+																			profile: publicProfileData._id,
+																			profile_emisor: profileData._id,
+																			
+																			review: reviewData._id,
+
+																			clicked: false,
+																			status: false,
+																		}, function(status, notificationData){
+																			Generalfunc.response(200, reviewData, function(response){
+																				res.json(response);
+																			});
 																		});
+
+																		
 																	});
 																});
 															})
@@ -815,43 +829,50 @@ router.post('/write/review', multipartMiddleware, function(req, res){
 
 											});
 									}else{
-										//Review.find({ _id: reviewData._id }).populate('profiles').populate('profile_id').exec(function(errReview, reviewData){
-											var suma  = 0;
-											var count = 0;
+										var suma  = 0;
+										var count = 0;
 
-											Review.find({ profile_id: publicProfileData._id }).exec(function(err, review){
+										Review.find({ profile_id: publicProfileData._id }).exec(function(err, review){
 
-												async.map(review, function(item, callback){
-													if(isNumber(item.rate)){
-														suma+= item.rate;
-														count++;
-													}
-													callback(null, item);
-												}, function(err, results){
-													var prom = suma/count;
-													
-													//console.log("PROFILE ID:"+publicProfileData._id);
-													publicProfileData.review_score = prom;
-													publicProfileData.save(function(err, profile){
-														Profile.find({ _id: publicProfileData._id }).exec(function(err, profileData){
-															Review.findOne({ _id: reviewData._id }).populate('profiles').populate('profile_id').exec(function(err, reviewData){
+											async.map(review, function(item, callback){
+												if(isNumber(item.rate)){
+													suma+= item.rate;
+													count++;
+												}
+												callback(null, item);
+											}, function(err, results){
+												var prom = suma/count;
+
+												
+												publicProfileData.review_score = prom;
+												publicProfileData.save(function(err, profile){
+													Profile.find({ _id: publicProfileData._id }).exec(function(err, profileData){
+														Review.findOne({ _id: reviewData._id }).populate('profiles').populate('profile_id').exec(function(err, reviewData){
+
+
+															Notificationfunc.add({
+																tipo: 5,
+																profile: publicProfileData._id,
+																profile_emisor: profileData._id,
+
+																review: reviewData._id,
+
+																clicked: false,
+																status: false,
+															}, function(status, notificationData){
 																Generalfunc.response(200, reviewData, function(response){
 																	res.json(response);
 																});
 															});
 														});
 													});
-												});												
-
+												});
 											});
+										});
 									}
 								});
-								
 							});
 						});
-						
-
-						
 					}else{
 						Generalfunc.response(101, {"message": "publicNotFound"}, function(response){
 							res.json(response);
