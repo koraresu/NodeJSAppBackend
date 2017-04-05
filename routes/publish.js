@@ -800,9 +800,10 @@ router.post('/write/review', multipartMiddleware, function(req, res){
 															//console.log("PROFILE ID:"+publicProfileData._id);
 															publicProfileData.review_score = prom;
 															publicProfileData.save(function(err, profile){
-																Profile.find({ _id: publicProfileData._id }).exec(function(err, profileData){
+																Profile.find({ _id: publicProfileData._id }).exec(function(err, NprofileData){
 																	Review.findOne({ _id: reviewData._id }).populate('profiles').populate('profile_id').exec(function(err, reviewData){
 																		
+																		console.log()
 																		Notificationfunc.add({
 																			tipo: 5,
 																			profile: publicProfileData._id,
