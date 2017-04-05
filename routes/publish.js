@@ -18,6 +18,7 @@
 	var Historyfunc    = require('../functions/historyfunc');
 	var Experiencefunc = require('../functions/experiencefunc');
 	var Networkfunc    = require('../functions/networkfunc');
+	var Notificationfunc    = require('../functions/notificationfunc');
 	var format         = require('../functions/format.js');
 
 	var model = require('../model');
