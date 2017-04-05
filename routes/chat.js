@@ -881,7 +881,7 @@ router.notification_accept2C = function(data, success, fail){
 
 					if(notificationData.tipo == 1){
 							console.log("Crear Solicitud de Amistad");
-							Networkfunc.new_friend(notificationData.profile, notificationData.profile_emisor, function(networkData){
+							Networkfunc.new_friend(notificationData.profile_emisor, notificationData.profile_mensaje, function(networkData){
 								Network.findOne({ _id: networkData._id}).populate('profiles').exec(function(errNetwork, networkData){
 									bool_uno_Network(networkData);
 								});
