@@ -589,12 +589,16 @@ userSchema.post('update', function(doc, next){
 
 /*******************************************/
 var NotificationSchema = new Schema({
-  tipo: Number, // 0 = se ha unido | 1 = recomendación | 2 = te recomiendan | 3 = Envio Solucitud | 4 = Respondio Solicitud | 5 = Test
+  tipo: Number, // -1 = Test | 0 = se ha unido | 1 = recomendación | 2 = te recomiendan | 3 = Envio Solucitud | 4 = Respondio Solicitud | 5 = Review
+  
   profile: { type: Schema.Types.ObjectId, ref: 'Profile' },
   profile_emisor: { type: Schema.Types.ObjectId, ref: 'Profile' },
   profile_mensaje: { type: Schema.Types.ObjectId, ref: 'Profile' },
+
   busqueda: { type: Schema.Types.ObjectId, ref: 'History' },
   network: { type: Schema.Types.ObjectId, ref: 'Network' },
+  review: { type: Schema.Types.ObjectId, ref: 'Review' },
+  
   clicked: false,
   status: false,
   deleted: false
