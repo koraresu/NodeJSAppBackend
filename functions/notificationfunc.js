@@ -180,6 +180,7 @@ function send(id, success,io){
 								
 									if(io != undefined){
 										if(io.to != undefined){
+											console.log( item.socket.toString() );
 											io.to(item.socket.toString()).emit('notification', notificationData);
 										}else{
 											console.log("App IO To Undefined");
