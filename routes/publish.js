@@ -783,7 +783,6 @@ router.post('/write/review', multipartMiddleware, function(req, res){
 											action: "3",
 											data: {}
 										}, function(errHistory, historyData){
-											//Review.find({ _id: reviewData._id }).populate('profiles').populate('profile_id').exec(function(errReview, reviewData){
 												var suma  = 0;
 												var count = 0;
 
@@ -848,20 +847,21 @@ router.post('/write/review', multipartMiddleware, function(req, res){
 												
 												publicProfileData.review_score = prom;
 												publicProfileData.save(function(err, profile){
-													Profile.find({ _id: publicProfileData._id }).exec(function(err, profileData){
+													Profile.find({ _id: publicProfileData._id }).exec(function(err, NprofileData){
 														Review.findOne({ _id: reviewData._id }).populate('profiles').populate('profile_id').exec(function(err, reviewData){
 
 
+
 															Notificationfunc.add({
-																tipo: 5,
-																profile: publicProfileData._id,
-																profile_emisor: profileData._id,
+																			tipo: 5,
+																			profile: publicProfileData._id,
+																			profile_emisor: profileData._id,
+																			
+																			review: reviewData._id,
 
-																review: reviewData._id,
-
-																clicked: false,
-																status: false,
-															}, function(status, notificationData){
+																			clicked: false,
+																			status: false,
+																		}, function(status, notificationData){
 
 																Generalfunc.response(200, reviewData, function(response){
 																	res.json(response);
