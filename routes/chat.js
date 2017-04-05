@@ -828,29 +828,54 @@ router.notification_accept2C = function(data, success, fail){
 								});
 							};
 
-							Notificationfunc.addOrGet({
-								tipo: 3,
-								profile: notificationData.profile_emisor,
-								profile_emisor: notificationData.profile,
-								network: networkData._id,
-							},{
-								tipo: 3,
-								profile: notificationData.profile_emisor,
-								profile_emisor: notificationData.profile,
-								network: networkData._id,
-								status: false,
-								clicked: false
-							}, function(status, newNotData){
+							var search = {};
+							var insert = {};
+							if(notificationData.tipo == 1){
+								search = {
+									tipo: 3,
+									profile: notificationData.profile_mensaje,
+									profile_emisor: notificationData.profile,
+									network: networkData._id,
+									status: false,
+									clicked: false
+								};
+								insert = {
+									tipo: 3,
+									profile: notificationData.profile_emisor,
+									profile_emisor: notificationData.profile,
+									network: networkData._id,
+									status: false,
+									clicked: false
+								};
+							}else{
+								search = {
+									tipo: 3,
+									profile: notificationData.profile_emisor,
+									profile_emisor: notificationData.profile,
+									network: networkData._id,
+									status: false,
+									clicked: false
+								};
+								insert = {
+									tipo: 3,
+									profile: notificationData.profile_emisor,
+									profile_emisor: notificationData.profile,
+									network: networkData._id,
+									status: false,
+									clicked: false
+								};
+							}
+							Notificationfunc.addOrGet(search, insert, function(status, newNotData){
 								Notificationfunc.getOne2Callback({ _id: newNotData._id }, function(notNewData){
 									a(ajeno, notNewData, networkData, function(onlineData, networkData, notNData){
 										success(onlineData, networkData, notNData, notificationData);
 									});
 								}, function(st){
-									fail(6+"!"+st);
+									fail(6);
 								});
 							});
 						}, function(st){
-							fail(5+"!"+st);
+							fail(5);
     					});// Notification Click
 					}
 
@@ -879,16 +904,16 @@ router.notification_accept2C = function(data, success, fail){
 						}
 					}
 				}, function(st){
-					fail(3+"!"+st);
+					fail(3);
     			});//Notification get One 2 Callback
 			}, function(st){
-				fail(2+"!"+st);
+				fail(2);
     		});// Is Valid
 		}, function(st){
-			fail(1+"!"+st);
+			fail(1);
     	});// Profile token to profile 2 Callback
 	}, function(st){
-		fail(0+"!"+st);
+		fail(0);
     });// Token exist 2 callback
 
 }
