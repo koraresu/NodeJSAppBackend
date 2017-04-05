@@ -750,6 +750,7 @@ router.post('/write/review', multipartMiddleware, function(req, res){
 					//console.log(publicProfileData);
 
 					if(statusPublic){
+
 						var review = new Review({
 							title: title,
 							content: content,
@@ -812,9 +813,11 @@ router.post('/write/review', multipartMiddleware, function(req, res){
 																			clicked: false,
 																			status: false,
 																		}, function(status, notificationData){
+
 																			Generalfunc.response(200, reviewData, function(response){
 																				res.json(response);
 																			});
+
 																		}, req.app.io);
 
 																		
@@ -823,9 +826,6 @@ router.post('/write/review', multipartMiddleware, function(req, res){
 															})
 														}
 													});
-
-													
-
 												});
 
 											});
@@ -861,10 +861,12 @@ router.post('/write/review', multipartMiddleware, function(req, res){
 																clicked: false,
 																status: false,
 															}, function(status, notificationData){
+
 																Generalfunc.response(200, reviewData, function(response){
 																	res.json(response);
 																});
-															});
+																
+															}, req.app.io);
 														});
 													});
 												});
