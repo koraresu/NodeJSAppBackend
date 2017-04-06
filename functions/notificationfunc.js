@@ -166,6 +166,24 @@ exports.click = function(search, stat, success, fail){
 		});
 	});
 }
+function push(notificationData){
+		
+          //console.log("GetConvProfile");
+          //console.log(profile);
+          if(notificationData != undefined){
+          	if(notificationData.profile != undefined){
+          		if(notificationData.profile._id != undefined){
+
+          			Pushfunc.send(1,notificationData.profile._id, notificationData, function(results){
+          			}, function(results){
+          			});
+
+          		}
+          	}
+          }
+          
+
+}
 function send(id, success,io){
 	console.log("+ SEND SOCKET:----------------------------------+");
 	Notification.findOne({ _id: id }).populate('profile').populate('profile_emisor').populate('profile_mensaje').populate('network').exec(function(errNotification, notificationData){
@@ -182,6 +200,7 @@ function send(id, success,io){
 										if(io.to != undefined){
 											console.log( io );
 											io.to(item.socket.toString()).emit('notification', notificationData);
+											push(notificationData);
 										}else{
 											console.log("App IO To Undefined");
 										}
@@ -211,3 +230,4 @@ function send(id, success,io){
 	
 }
 exports.send = send;
+exports.push = push;
