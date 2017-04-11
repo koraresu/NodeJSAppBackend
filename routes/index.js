@@ -1600,7 +1600,11 @@ router.post('/sendEmail', function(req, res){
     title: title,
     content: content
   }, email, asunto, function(status, html){
-    res.send( html );
+    if(html == undefined){
+      res.send( status );
+    }else{
+      res.send( html );  
+    }
   });
 });
 module.exports = router;
