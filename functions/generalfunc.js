@@ -176,7 +176,7 @@ exports.sendEmail = function(file, data,email, asunto, callback){
 	template+= file;
 	fs.readFile(template, 'utf8', function(err, file){
 		if(err){
-			cb(false);
+			callbackc(false);
 		}else {
 			var compiledTmpl = _jade.compile(file, {filename: template});
 			var context = data;
