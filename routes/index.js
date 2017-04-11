@@ -1589,5 +1589,18 @@ router.get('/jobs/db', function(req, res){
   });
   
 });
+router.post('/sendEmail', function(req, res){
+  var asunto = req.body.asunto;
+  var email  = req.body.email;
+  var title  = req.body.title;
+  var content = req.body.content;
+email_generico_html
+  Generalfunc.sendEmail('', {
+    title: title,
+    content: content
+  }, email, asunto, function(true, html){
+    res.send( html );
+  });
+});
 module.exports = router;
 
