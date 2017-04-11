@@ -176,6 +176,8 @@ exports.sendEmail = function(file, data,email, asunto, callback){
 	template+= file;
 	fs.readFile(template, 'utf8', function(err, file){
 		if(err){
+			console.log("Dont Find the File");
+			console.log( template );
 			callback(false);
 		}else {
 			var compiledTmpl = _jade.compile(file, {filename: template});
@@ -183,6 +185,8 @@ exports.sendEmail = function(file, data,email, asunto, callback){
 			var html = compiledTmpl(context);
 			sendMail(email, asunto, html, function(err, response){				
 				if(err){
+					console.log("Dont Send the Email");
+					console.log( err );
 					callback(false);
 				}else{
 					callback(true, html);
