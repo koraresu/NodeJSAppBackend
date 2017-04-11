@@ -6,6 +6,9 @@ var _jade = require('jade');
 var fs = require('fs');
 var async = require('async');
 
+var multipart = require('connect-multiparty');
+var multipartMiddleware = multipart();
+
 var model = require('../model');
 var Profile     = model.profile;
 var User        = model.user;
@@ -1589,7 +1592,7 @@ router.get('/jobs/db', function(req, res){
   });
   
 });
-router.post('/sendEmail', function(req, res){
+router.post('/sendEmail',multipartMiddleware,  function(req, res){
   var asunto = req.body.asunto;
   var email  = req.body.email;
   var title  = req.body.title;
