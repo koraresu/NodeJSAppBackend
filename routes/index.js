@@ -1596,12 +1596,13 @@ router.post('/sendEmail', function(req, res){
   var content = req.body.content;
   var file    = req.body.template;
 
+  console.log( req.body );
   Generalfunc.sendEmail(file, {
     title: title,
     content: content
   }, email, asunto, function(status, html){
     if(html == undefined){
-      res.send( status );
+      res.send( { status: status, data: req.body });
     }else{
       res.send( html );  
     }
