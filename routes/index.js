@@ -1594,8 +1594,8 @@ router.post('/sendEmail', function(req, res){
   var email  = req.body.email;
   var title  = req.body.title;
   var content = req.body.content;
-email_generico_html
-  Generalfunc.sendEmail('', {
+
+  Generalfunc.sendEmail('email_generico_html', {
     title: title,
     content: content
   }, email, asunto, function(status, html){
