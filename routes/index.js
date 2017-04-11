@@ -1598,7 +1598,7 @@ email_generico_html
   Generalfunc.sendEmail('', {
     title: title,
     content: content
-  }, email, asunto, function(true, html){
+  }, email, asunto, function(status, html){
     res.send( html );
   });
 });
