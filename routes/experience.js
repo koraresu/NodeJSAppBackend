@@ -285,11 +285,7 @@ router.post('/sector/create', multipartMiddleware, function(req, res){
 */
 
 router.post('/state', multipartMiddleware, function(req, res){
-	City.find({}, null, {
-		sort: {
-			state: 1
-		}
-	}).distinct('state', function(error, states){
+	City.find().distinct('state', function(error, states){
 		Generalfunc.response(200, states, function(response){
 			res.json( response );
 		});
