@@ -31,6 +31,7 @@ var Push         = model.push;
 var City         = model.city;
 var State        = model.state;
 var Country      = model.country;
+var Email        = model.email;
 
 var Tokenfunc = require('./tokenfunc');
 var Pushfunc = require('./pushfunc');
@@ -103,13 +104,7 @@ var sendMail = function(toAddress, subject, content, next){
 	//console.log(mailOptions);
 
 	transporter.sendMail(mailOptions, function(error, info){
-		//console.log("Email: [Error]");
-		//console.log(error);
-  	
-		//console.log("Email: [Info]");
-		//console.log(info);
-
-		return next();
+		return next(error, info);
 	});
 }; 
 
@@ -184,13 +179,21 @@ exports.sendEmail = function(file, data,email, asunto, callback){
 			var context = data;
 			var html = compiledTmpl(context);
 			sendMail(email, asunto, html, function(err, response){				
-				if(err){
-					console.log("Dont Send the Email");
-					console.log( err );
-					callback(false);
-				}else{
-					callback(true, html);
-				}
+				
+				$db_email = new Email({
+					"email": email,
+					"subject": asunto,
+					"content": html,
+					"error": err,
+					"result": response
+				});
+				$db_email.save(function(err, email){
+					if(err){
+						callback(false);
+					}else{
+						callback(true, html);
+					}
+				});
 			});
     	}	
   	});

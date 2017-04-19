@@ -711,8 +711,16 @@ CiudadSchema.post('update', function(doc, next){
     next();
   });
 });
-
-
+/*******************************************/
+var EmailSchema = new Schema({
+    "email": String,
+    "subject": String,
+    "content": String,
+    "result": { type: Schema.Types.Mixed },
+    "error": { type: Schema.Types.Mixed }
+},{
+  timestamps: true
+});
 /*******************************************/
 
 // Company
@@ -747,3 +755,6 @@ exports.message      = db.model( 'Message' , MessageSchema );
 exports.log          = db.model( 'Log' , LogSchema );
 // Localization
 exports.city         = db.model('City', CiudadSchema);
+
+//Email
+exports.email        = db.model('Email', EmailSchema);
