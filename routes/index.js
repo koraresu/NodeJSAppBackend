@@ -55,7 +55,10 @@ router.get('/bienvenida/:id', function(req, res){
       }
     });
   }
-})
+});
+router.get('/app', function(req, res){
+  res.redirect('https://itunes.apple.com/mx/app/the-hive/id1164208927?ls=1&mt=8');
+});
 router.get('/email/forgot/:id', function(req, res){
   res.render('emailforgot', {
     nombre: "Jose ",

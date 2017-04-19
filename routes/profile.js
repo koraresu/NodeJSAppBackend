@@ -184,6 +184,9 @@ router.post('/logout', multipartMiddleware, function(req, res){
 //      status
 router.post('/forgot', multipartMiddleware, function(req, res){
 	var email    = req.body.email;
+
+	email = email.trim();
+	
 	User.findOne({
 		email: email
 	}).exec(function(err, userData){
