@@ -300,7 +300,7 @@ router.post('/city', multipartMiddleware, function(req, res){
 		sort: {
 			name: 1
 		}
-	}).exec(function(error, states){
+	}).select('_id name').exec(function(error, states){
 		Generalfunc.response(200, states, function(response){
 			res.json( response );
 		});
@@ -523,7 +523,7 @@ router.post('/company/update', multipartMiddleware, function(req, res){ // Updat
 		name = "";
 	}
 
-	name = Generalfunc.capitalize( name );
+	//name = Generalfunc.capitalize( name );
 
 	
 	Tokenfunc.exist(guid, function(status, tokenData){
