@@ -7,8 +7,6 @@ var Schema     = mongoose.Schema,
     //db_lnk          = 'mongodb://localhost:27017/hive',
     db              = mongoose.createConnection(db_lnk);
 
-var deepPopulate = require('mongoose-deep-populate')(mongoose);
-
 
 var LogSchema = new Schema({
   table: String,
@@ -725,9 +723,6 @@ var EmailSchema = new Schema({
   timestamps: true
 });
 /*******************************************/
-experienceSchema.methods = {};
-experienceSchema.plugin(deepPopulate);
-
 
 // Company
 exports.company      = db.model( 'Company' , companySchema );

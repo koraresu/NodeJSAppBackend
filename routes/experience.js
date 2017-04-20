@@ -42,248 +42,6 @@ var Historyfunc = require('../functions/historyfunc');
 var format = require('../functions/format');
 
 
-/*
-router.post('/create', multipartMiddleware, function(req, res){
-	var guid       = req.body.guid;
-	var type       = req.body.type; // 0 = independiente | 1 = company
-	var company    = req.body.company;
-	var sector     = req.body.sector;
-	var ocupation  = req.body.ocupation;
-	Tokenfunc.exist(guid, function(errToken, token){
-		if(errToken){
-			Tokenfunc.toProfile(token.generated_id, function(status, userData, profileData, profileInfoData){
-				if(type == 0){
-					
-
-					//Tokenfunc.toProfile(token.generated_id, function(status, userData, profileData, profileInfoData){//Revisar
-						Experiencefunc.jobExistsOrCreate({
-							name: job,
-						},{
-							name: job,
-						},function(status, jobData){
-							Experiencefunc.specialityExistsOrCreate({
-								name: speciality
-							},{
-								name: speciality
-							}, function(status, specialityData){
-								var data = {
-									profile_id: profileData._id,
-									type: type,
-									job: {
-										id: jobData._id,
-										name: jobData.name
-									},
-									speciality: {
-										id: specialityData._id,
-										name: specialityData.name
-									}
-								};
-								Experiencefunc.insertOrExists(profileData,type, data, function(statusExperience, experienceData){
-									Generalfunc.response(200,experienceData,function(response){
-										res.json(response);
-									});
-								});
-							});
-						});
-					//});
-				}else{
-					func.companyExistsOrCreate({
-						name: company
-					},{
-						name: company
-					},function(status, companyData){
-						func.jobExistsOrCreate({
-							name: ocupation,
-							type: 0
-						},{
-							name: ocupation,
-							type: 0
-						}, function(status, ocupationData){
-							Experiencefunc.jobExistsOrCreate({
-								name: job,
-								type: 1
-							},{
-								name: job,
-								type: 1
-							},function(status, jobData){
-								Experiencefunc.specialityExistsOrCreate({
-									name: speciality
-								},{
-									name: speciality
-								}, function(status, specialityData){
-
-									Experiencefunc.sectorExistsOrCreate({
-										name: sector
-									},{
-										name: sector
-									}, function(status, sectorData){
-										var data = {
-											profile_id: profileData._id,
-											type: type,
-											ocupation: {
-												id:   ocupationData._id,
-												name: ocupationData.name
-											},
-											job: {
-												id: jobData._id,
-												name: jobData.name
-											},
-											speciality: {
-												id: specialityData._id,
-												name: specialityData.name
-											},
-											company: {
-												id: companyData._id,
-												name: companyData.name
-											},
-											sector: {
-												id: sectorData._id,
-												name: sectorData.name
-											}
-										};
-
-
-
-										func.experienceExistsOrCreate(data,data, function(statusExperience, experienceData){
-											func.response(200,experienceData,function(response){
-												res.json(response);
-											});
-										});
-									});
-								});
-							});
-						});
-
-						
-					});
-				}
-			});
-		}else{
-			func.response(101,{}, function(response){
-				res.json(response);
-			});
-		}
-	});
-});
-router.post('/get', multipartMiddleware, function(req, res){
-	var guid      = req.body.guid;
-	Tokenfunc.exist(guid, function(status, token){
-		if(status){
-			Tokenfunc.toProfile(guid, function(status, userData, profileData, profileInfoData){
-				if(status == 200){
-					Experiencefunc.get(profileData._id, function(err, experiences){
-						console.log(experiences);
-						func.response(status, experiences, function(response){
-							res.json( response );
-						});
-					});	
-				}else{
-					func.response(status, {}, function(response){
-						res.json( response );
-					});
-				}
-				
-			});
-		}else{
-			func.response(101, {}, function(response){
-				res.json(response);
-			});
-		}
-	});
-});
-router.post('/job/create', multipartMiddleware, function(req, res){
-	var guid      = req.body.guid;
-	var name      = req.body.name;
-	var type      = req.body.type;
-
-	Tokenfunc.exist(guid, function(status, token){
-		if(status){	
-			Experiencefunc.jobExistsOrCreate ({
-				name: name,
-				type: type
-			},{
-				name: name,
-				type: type
-			}, function(status, jobData){
-
-				Generalfunc.response(200, jobData, function(response){
-					res.json(response);
-				});
-			});
-		}else{
-			Generalfunc.response(101, {}, function(response){
-				res.json(response);
-			});
-		}
-	});
-});
-router.post('/speciality/create', multipartMiddleware, function(req, res){
-	var guid      = req.body.guid;
-	var name      = req.body.name;
-
-	Tokenfunc.exist(guid, function(status, token){
-		if(status){	
-			func.specialityExistsOrCreate ({
-				name: name,
-			},{
-				name: name,
-			}, function(status, jobData){
-				func.response(200, jobData, function(response){
-					res.json(response);
-				});
-			});
-		}else{
-			func.response(101, {}, function(response){
-				res.json(response);
-			});
-		}
-	});
-});
-router.post('/company/create', multipartMiddleware, function(req, res){
-	var guid      = req.body.guid;
-	var name      = req.body.name;
-	Tokenfunc.exist(guid, function(status, token){
-		if(status){
-			Experiencefunc.companyExistsOrCreate({
-				name: name
-			},{
-				name: name
-			}, function(status, companyData){
-				Generalfunc.response(200, companyData, function(response){
-					res.json(response);
-				})
-			});
-		}else{
-			Generalfunc.response(101, {}, function(response){
-				res.json(response);
-			});
-		}
-	});
-});
-router.post('/sector/create', multipartMiddleware, function(req, res){
-	var guid      = req.body.guid;
-	var name      = req.body.name;
-
-	Tokenfunc.exist(guid, function(status, token){
-		if(status){	
-			Experiencefunc.sectorExistsOrCreate ({
-				name: name,
-			},{
-				name: name,
-			}, function(status, sectorData){
-				Generalfunc.response(200, sectorData, function(response){
-					res.json(response);
-				});
-			});
-		}else{
-			Generalfunc.response(101, {}, function(response){
-				res.json(response);
-			});
-		}
-	});
-});
-*/
-
 router.post('/state', multipartMiddleware, function(req, res){
 	City.find().distinct('state', function(error, states){
 		Generalfunc.response(200, states, function(response){
@@ -571,6 +329,8 @@ router.post('/company/update', multipartMiddleware, function(req, res){ // Updat
 										companyData.address.postalc = cp;
 									}
 									companyData.save(function(err, companyData){
+										console.log( companyData );
+										console.log( err );
 										Experience.update({
 											"company.id": companyData._id
 										}, {
@@ -580,9 +340,13 @@ router.post('/company/update', multipartMiddleware, function(req, res){ // Updat
 										},{
 											multi: true
 										},function(err, experienceData){
+											console.log( experienceData);
+											console.log( err );
 											Experience.find({
 												"company.id": companyData._id
 											}).exec(function(err, experienceData){
+												console.log( experienceData );
+												console.log( err );
 												Generalfunc.response(200, companyData, function(response){
 													res.json(response);
 												});
