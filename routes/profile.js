@@ -521,7 +521,39 @@ router.post('/check-facebook', multipartMiddleware, function(req, res){
 //		Profile
 //		Profile Info
 //		Experiences
+router.post('/get-deep', multipartMiddleware, function(req, res){
+	var guid      = req.body.guid;
+	Tokenfunc.exist(guid, function(status, tokenData){
+		if(status){
+			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
+				if(status){
 
+					Profilefunc.formatoProfileDeep(profileData._id,function( profile ){
+						Profilefunc.logs(profileData, 25, profileData, function(){
+							City.findOne({ _id: profileData.location.city }).exec(function(errCity, cityData){
+								profileData.location =  cityData;
+								Generalfunc.response(200, profile, function(response){
+									res.json(response);
+								});
+							});
+						});
+					});
+					
+					
+				}else{
+					Generalfunc.response(113,{},function(response){
+						res.json(response);
+					});
+				}
+			});
+		}else{
+			Generalfunc.response(101, {}, function(response){
+				res.json(response);
+			});
+
+		}
+	});
+});
 router.post('/get', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 	Tokenfunc.exist(guid, function(status, tokenData){

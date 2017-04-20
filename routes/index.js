@@ -5,6 +5,7 @@ var router = express.Router();
 var _jade = require('jade');
 var fs = require('fs');
 var async = require('async');
+var deep_populate = require('mongoose-deep-populate')(mongoose);
 
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
@@ -1594,6 +1595,13 @@ router.get('/jobs/db', function(req, res){
     res.render('jobs', { jobarea: results });
   });
   
+});
+router.get('/company', function(req, res){
+  Profile.find({
+    //_id: mongoose.ObjectId('58bf3b909be55a2a35b39158')
+  }).deepPopulate('experiences').exec(function(err, profile){
+    res.json(profile);
+  });
 });
 router.post('/sendEmail',multipartMiddleware,  function(req, res){
   var asunto = req.body.asunto;

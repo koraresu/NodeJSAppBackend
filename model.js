@@ -3,10 +3,11 @@ var mongoose   = require('mongoose');
 mongoose.Promise = global.Promise;
 
 var Schema     = mongoose.Schema,
-    //db_lnk          = 'mongodb://admin:123@localhost:27017/hive',
-    db_lnk          = 'mongodb://localhost:27017/hive',
+    db_lnk          = 'mongodb://matus:pbv3GM4iYUDeMUWxQD54wsLwhInar4ssEDN7o0a1EUXrQ@192.168.33.10:27017/hive',
+    //db_lnk          = 'mongodb://localhost:27017/hive',
     db              = mongoose.createConnection(db_lnk);
 
+var deepPopulate = require('mongoose-deep-populate')(mongoose);
 
 
 var LogSchema = new Schema({
@@ -246,8 +247,9 @@ var companySchema = new Schema({
 });
 companySchema.post('save', function(doc, next){
   logMiddleware("company","save", doc, function(err, logData){
-    next();
-  });
+      next();
+    });
+  
 });
 companySchema.post('remove', function(doc, next){
   logMiddleware("company","remove", doc, function(err, logData){
@@ -255,6 +257,7 @@ companySchema.post('remove', function(doc, next){
   });
 });
 companySchema.post('update', function(doc, next){
+  console.log("Document:", doc );
   logMiddleware("company","update", doc, function(err, logData){
     next();
   });
@@ -722,6 +725,9 @@ var EmailSchema = new Schema({
   timestamps: true
 });
 /*******************************************/
+experienceSchema.methods = {};
+experienceSchema.plugin(deepPopulate);
+
 
 // Company
 exports.company      = db.model( 'Company' , companySchema );

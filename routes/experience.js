@@ -570,11 +570,30 @@ router.post('/company/update', multipartMiddleware, function(req, res){ // Updat
 									if(cp != undefined || cp != ""){
 										companyData.address.postalc = cp;
 									}
-
 									companyData.save(function(err, companyData){
+										Experience.update({
+											"company.id": companyData._id
+										}, {
+											$set: {
+												"company.name": companyData.name
+											}
+										},{
+											multi: true
+										},function(err, experienceData){
+											Experience.find({
+												"company.id": companyData._id
+											}).exec(function(err, experienceData){
+												Generalfunc.response(200, companyData, function(response){
+													res.json(response);
+												});
+											});
+										})
+										/*
 										Generalfunc.response(200, companyData, function(response){
 											res.json(response);
 										});
+										*/
+
 									});
 								}else{
 									Generalfunc.response(101, { message: "La descripcion es mayor." }, function(response){
