@@ -3,8 +3,8 @@ var mongoose   = require('mongoose');
 mongoose.Promise = global.Promise;
 
 var Schema     = mongoose.Schema,
-    db_lnk          = 'mongodb://matus:pbv3GM4iYUDeMUWxQD54wsLwhInar4ssEDN7o0a1EUXrQ@192.168.33.10:27017/hive',
-    //db_lnk          = 'mongodb://localhost:27017/hive',
+    //db_lnk          = 'mongodb://matus:pbv3GM4iYUDeMUWxQD54wsLwhInar4ssEDN7o0a1EUXrQ@192.168.33.10:27017/hive',
+    db_lnk          = 'mongodb://localhost:27017/hive',
     db              = mongoose.createConnection(db_lnk);
 
 
