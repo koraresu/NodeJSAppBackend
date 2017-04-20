@@ -28,7 +28,6 @@
     "mongodb": "^2.0.55",
     "mongoose": "^4.4.6",
     "mongoose-auto-increment": "^5.0.1",
-    "mongoose-deep-populate": "^3.0.0",
     "morgan": "~1.6.1",
     "multer": "^1.1.0",
     "newrelic": "^1.29.0",
