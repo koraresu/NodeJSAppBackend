@@ -239,7 +239,8 @@ var companySchema = new Schema({
     numero: String,
     postalc: String,
   },
-  profile_id: { type: Schema.Types.ObjectId, ref: 'Profile' }
+  claim:     { type: Schema.Types.ObjectId, ref: 'Profile' },
+  createdBy: { type: Schema.Types.ObjectId, ref: 'Profile' }
 },{
   timestamps: true
 });
