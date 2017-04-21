@@ -408,10 +408,25 @@ router.post('/company/getid', multipartMiddleware, function(req, res){
 						}, function(err, results){
 							results = Generalfunc.cleanArray(results);
 							//companyData.name = Generalfunc.capitalize( companyData.name );
+							var edit_permision = false;
+							if(companyData.claim != undefined){
+								if(companyData.claim.toString() == profileData._id.toString()){
+									edit_permision = true;
+								}
+							}else{
+								if(companyData.createdBy != undefined){
+									if(companyData.createdBy.toString() == profileData._id.toString()){
+										edit_permision = true;
+									}
+								}
+							}
 							var data = {
 								company: companyData,
+								edit: edit_permision,
 								trabajo: results
 							};
+
+
 							Generalfunc.response(200,data, function(response){
 								res.json(response);
 							});
