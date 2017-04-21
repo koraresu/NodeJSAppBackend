@@ -53,7 +53,6 @@
 // 		Comentario
 router.post('/write/comentario', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
-	var titulo    = req.body.title;
 	var contenido = req.body.content;
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
@@ -61,7 +60,6 @@ router.post('/write/comentario', multipartMiddleware, function(req, res){
 
 				var feedback = new Feedback({
 					profile_id: profileData._id,
-					title: titulo,
 					content: contenido
 				});
 				feedback.save(function(errFeedback, feedbackData){
@@ -77,7 +75,7 @@ router.post('/write/comentario', multipartMiddleware, function(req, res){
 					}
 					var email_content = '<div style="background-color: #f2f2f2;color: #232121;font-weight: 300;font-size: 15px;padding: 10px;margin-top:10px;"> <div style="width:110px;margin:0 auto;"> <div style="display: block; font-size: 16px; color: #232121; font-weight: 300; ">'+from_name+'</div> <div style="display: block; font-size: 14px; color: #f7a700; font-weight: 300;">'+speciality+'</div> </div> '+contenido+'</div>';
 					Generalfunc.sendEmail("email_generico_html.jade", {
-						title: titulo,
+						title: "Comentario de:",
 						content: email_content
 					//}, "esteban@thehiveapp.mx", "Comentario TheHive",function(status, html){
 					}, "rael.axovia@gmail.com", "Comentario TheHive",function(status, html){
