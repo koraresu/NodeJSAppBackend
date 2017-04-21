@@ -15,6 +15,7 @@ var Token        = model.token;
 var Job          = model.job;
 var Company      = model.company;
 var CompanyClaim = model.company_claim;
+var CompanyCreator = model.comp_creator;
 var Experience   = model.experience;
 var Network      = model.network;
 var History      = model.history;
@@ -127,7 +128,7 @@ router.post('/company/insert', multipartMiddleware, function(req, res){
 							});
 							company.save(function(errC, cData){
 								var creator = new companyCreator({
-									company: cData._id;
+									company: cData._id,
 									profile: profileData._id
 								});
 								creator.save(function(err, companyCreatorData){
@@ -402,42 +403,43 @@ router.post('/company/getid', multipartMiddleware, function(req, res){
 		Tokenfunc.exist(guid, function(status, token){
 			if(status){
 				//Company.findOne({ _id: id }).exec(function(err, companyData){
-				Company.findOne({ _id: id }).populate('address.ciudad').exec(function(err, companyData){
-					Experience.find({ "company.id": id }).populate('profile_id').exec(function(err, experienceData){
-						async.map(experienceData, function(item, ca){
-							if( item.profile_id == null){
-								ca(null, null);
-							}else{
-								ca(null, item);
-							}
-						}, function(err, results){
-							results = Generalfunc.cleanArray(results);
-							//companyData.name = Generalfunc.capitalize( companyData.name );
-							var edit_permision = false;
-							if(companyData.claim != undefined){
-								if(companyData.claim.toString() == profileData._id.toString()){
-									edit_permision = true;
-								}
-							}else{
-								if(companyData.createdBy != undefined){
-									if(companyData.createdBy.toString() == profileData._id.toString()){
-										edit_permision = true;
+				Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
+					Company.findOne({ _id: id }).populate('address.ciudad').exec(function(err, companyData){
+						CompanyCreator.findOne({
+							company: companyData._id			
+						}).exec(function(errCompCreator, compCreatorData){
+							Experience.find({ "company.id": id }).populate('profile_id').exec(function(err, experienceData){
+								async.map(experienceData, function(item, ca){
+									if( item.profile_id == null){
+										ca(null, null);
+									}else{
+										ca(null, item);
 									}
-								}
-							}
-							var data = {
-								company: companyData,
-								edit: edit_permision,
-								trabajo: results
-							};
+								}, function(err, results){
+									results = Generalfunc.cleanArray(results);
+									//companyData.name = Generalfunc.capitalize( companyData.name );
+									var edit_permision = false;
+
+									if( profileData._id.toString() == companyData.profile_id.toString() ){
+										edit_permision = true;
+									}else{
+										if( compCreatorData.profile.toString() == profileData._id.toString() ){
+											edit_permision = true;
+										}
+									}
+									var data = {
+										company: companyData,
+										edit: edit_permision,
+										trabajo: results
+									};
 
 
-							Generalfunc.response(200,data, function(response){
-								res.json(response);
+									Generalfunc.response(200,data, function(response){
+										res.json(response);
+									});
+								});
 							});
 						});
-						
-						
 					});
 				});
 			}else{

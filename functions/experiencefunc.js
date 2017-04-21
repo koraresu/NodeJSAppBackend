@@ -171,7 +171,7 @@ function companyExistsOrCreate(search, insert, profileData, callback){
 			var company = new Company(insert);
 			company.save(function(err, company){
 				var creator = new companyCreator({
-					company: company._id;
+					company: company._id,
 					profile: profileData._id
 				});
 				creator.save(function(err, companyCreatorData){
