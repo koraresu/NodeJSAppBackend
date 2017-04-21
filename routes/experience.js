@@ -125,10 +125,15 @@ router.post('/company/insert', multipartMiddleware, function(req, res){
 									postalc: postal
 								}
 							});
-
 							company.save(function(errC, cData){
-								Generalfunc.response(200, cData, function(response){
-									res.json( response );
+								var creator = new companyCreator({
+									company: cData._id;
+									profile: profileData._id
+								});
+								creator.save(function(err, companyCreatorData){
+									Generalfunc.response(200, cData, function(response){
+										res.json( response );
+									});
 								});
 							});
 						}

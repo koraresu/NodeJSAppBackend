@@ -1475,7 +1475,8 @@ router.post('/update-experience', multipartMiddleware, function(req, res){
 					name: company
 				}, {
 					name: company
-				}, function(statusCompany, companyData){
+				}, profileData, function(statusCompany, companyData){
+					
 					Experiencefunc.jobExistsOrCreate({
 						name: ocupation
 					},{

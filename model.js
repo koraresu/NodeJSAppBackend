@@ -3,8 +3,8 @@ var mongoose   = require('mongoose');
 mongoose.Promise = global.Promise;
 
 var Schema     = mongoose.Schema,
-    //db_lnk          = 'mongodb://matus:pbv3GM4iYUDeMUWxQD54wsLwhInar4ssEDN7o0a1EUXrQ@192.168.33.10:27017/hive',
-    db_lnk          = 'mongodb://localhost:27017/hive',
+    db_lnk          = 'mongodb://matus:pbv3GM4iYUDeMUWxQD54wsLwhInar4ssEDN7o0a1EUXrQ@192.168.33.10:27017/hive',
+    //db_lnk          = 'mongodb://localhost:27017/hive',
     db              = mongoose.createConnection(db_lnk);
 
 
@@ -221,7 +221,13 @@ NetworkSchema.post('update', function(doc, next){
     next();
   });
 });
-
+/*******************************************/
+var companyCreatorSchema = new Schema({
+  company:{ type: Schema.Types.ObjectId, ref: 'Company' },
+  profile: { type: Schema.Types.ObjectId, ref: 'Profile' }
+},{
+  timestamps: true
+});
 /*******************************************/
 var companySchema = new Schema({
   name:  String,
@@ -239,8 +245,7 @@ var companySchema = new Schema({
     numero: String,
     postalc: String,
   },
-  claim:     { type: Schema.Types.ObjectId, ref: 'Profile' },
-  createdBy: { type: Schema.Types.ObjectId, ref: 'Profile' }
+  profile_id: { type: Schema.Types.ObjectId, ref: 'Profile' },
 },{
   timestamps: true
 });
@@ -248,7 +253,6 @@ companySchema.post('save', function(doc, next){
   logMiddleware("company","save", doc, function(err, logData){
       next();
     });
-  
 });
 companySchema.post('remove', function(doc, next){
   logMiddleware("company","remove", doc, function(err, logData){
@@ -261,7 +265,6 @@ companySchema.post('update', function(doc, next){
     next();
   });
 });
-
 /*******************************************/
 var experienceSchema = new Schema({
   type: Number,  // 0 = Independiente | 1 = Empresa
@@ -727,6 +730,7 @@ var EmailSchema = new Schema({
 
 // Company
 exports.company      = db.model( 'Company' , companySchema );
+exports.comp_creator = db.model('CompanyCreator', companyCreatorSchema);
 exports.experience   = db.model( 'Experience' , experienceSchema );
 exports.job          = db.model( 'Job' , jobSchema );
 exports.location     = db.model( 'GPS', locationSchema);

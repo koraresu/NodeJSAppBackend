@@ -67,7 +67,7 @@ function checkExperience(profileData, type, data, callback){
 			name: data.company
 		}, {
 			name: data.company
-		}, function(statusCompany, companyData){
+		}, profileData, function(statusCompany, companyData){
 			sectorExistsOrCreate({ name: data.sector }, { name: data.sector }, function(statusSector, sectorData){
 				jobExistsOrCreate({ name: data.ocupation, type: 1}, { name: data.ocupation, type: 1}, function(statusJob, jobData){
 					var search = {
@@ -163,15 +163,21 @@ function specialityExistsOrCreate(search, insert, callback){
 		}
 	});
 }
-function companyExistsOrCreate(search, insert, callback){
+function companyExistsOrCreate(search, insert, profileData, callback){
 	Company.findOne(search, function(err, company){
 		if(!err && company){
 			callback(true,company);
 		}else{
 			var company = new Company(insert);
-			company.save();
-
-			callback(false, company);
+			company.save(function(err, company){
+				var creator = new companyCreator({
+					company: company._id;
+					profile: profileData._id
+				});
+				creator.save(function(err, companyCreatorData){
+					callback(false, company);
+				});
+			});
 		}
 	});
 }

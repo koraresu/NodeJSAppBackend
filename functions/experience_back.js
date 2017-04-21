@@ -26,7 +26,7 @@ router.post('/create', multipartMiddleware, function(req, res){
 						name: company
 					},{
 						name: company
-					},function(status, companyData){
+					},profileData, function(status, companyData){
 						func.jobExistsOrCreate({
 							name: ocupation,
 							type: 0
