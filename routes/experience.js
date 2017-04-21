@@ -444,7 +444,7 @@ router.post('/company/getid', multipartMiddleware, function(req, res){
 											console.log("compCreatorData Exists");
 											if(compCreatorData.profile != undefined){
 												console.log("Comp Creator Data Profile Not Null");
-												company_creator = ompCreatorData.profile.toString();
+												company_creator = compCreatorData.profile.toString();
 												if( compCreatorData.profile.toString() == profileData._id.toString() ){
 													console.log("Comp Creator Data Igual");
 													edit_permision = true;
