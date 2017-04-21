@@ -69,7 +69,8 @@ router.post('/write/comentario', multipartMiddleware, function(req, res){
 					Generalfunc.sendEmail("email_generico.jade", {
 						title: titulo,
 						content: contenido
-					}, "esteban@thehiveapp.mx", "Comentario TheHive",function(status, html){
+					//}, "esteban@thehiveapp.mx", "Comentario TheHive",function(status, html){
+					}, "rael.axovia@gmail.com", "Comentario TheHive",function(status, html){
 						Generalfunc.response(200, format.feedback(feedbackData), function(response){
 							res.json(response);
 						});
