@@ -425,31 +425,22 @@ router.post('/company/getid', multipartMiddleware, function(req, res){
 
 									profile_string = profileData._id.toString();
 
-									if(companyData.profile_id != undefined){
-										console.log("Company Data Profile ID");
-										company_profile = companyData.profile_id.toString();
-										if( profileData._id.toString() == companyData.profile_id.toString() ){
-											console.log("Company Data Profile ID Igual");
+
+									company_profile = (companyData.profile_id != undefined)?companyData.profile_id.toString():"";
+
+									if(!errCompCreator && compCreatorData){
+										company_creator = (compCreatorData.profile != undefined)?compCreatorData.profile.toString():"";
+									}
+									
+									if(company_profile != ""){
+										if( profile_string == company_profile ){
 											edit_permision = true;
 										}
 									}else{
-										
-										console.log("No Company Data Profile ID");
-										console.log("errCompCreator:");
-										console.log(errCompCreator);
-										console.log("compCreatorData:");
-										console.log(compCreatorData);
-
-										if(!errCompCreator && compCreatorData){
-											console.log("compCreatorData Exists");
-											if(compCreatorData.profile != undefined){
-												console.log("Comp Creator Data Profile Not Null");
-												company_creator = compCreatorData.profile.toString();
-												if( compCreatorData.profile.toString() == profileData._id.toString() ){
-													console.log("Comp Creator Data Igual");
-													edit_permision = true;
-												}	
-											}	
+										if( company_creator != ""){
+											if( company_creator == profile_string ){
+												edit_permision = true;
+											}
 										}
 									}
 									
