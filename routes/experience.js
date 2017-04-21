@@ -400,7 +400,7 @@ router.post('/company/getid', multipartMiddleware, function(req, res){
 	var id        = req.body.id;
 	if(mongoose.Types.ObjectId.isValid(id)){
 		id = mongoose.Types.ObjectId(id);
-		Tokenfunc.exist(guid, function(status, token){
+		Tokenfunc.exist(guid, function(status, tokenData){
 			if(status){
 				//Company.findOne({ _id: id }).exec(function(err, companyData){
 				Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
@@ -419,14 +419,32 @@ router.post('/company/getid', multipartMiddleware, function(req, res){
 									results = Generalfunc.cleanArray(results);
 									//companyData.name = Generalfunc.capitalize( companyData.name );
 									var edit_permision = false;
-
-									if( profileData._id.toString() == companyData.profile_id.toString() ){
-										edit_permision = true;
-									}else{
-										if( compCreatorData.profile.toString() == profileData._id.toString() ){
+									if(companyData.profile_id != undefined){
+										console.log("Company Data Profile ID");
+										if( profileData._id.toString() == companyData.profile_id.toString() ){
+											console.log("Company Data Profile ID Igual");
 											edit_permision = true;
 										}
+									}else{
+										
+										console.log("No Company Data Profile ID");
+										console.log("errCompCreator:");
+										console.log(errCompCreator);
+										console.log("compCreatorData:");
+										console.log(compCreatorData);
+
+										if(!errCompCreator && compCreatorData){
+											console.log("compCreatorData Exists");
+											if(compCreatorData.profile != undefined){
+												console.log("Comp Creator Data Profile Not Null");
+												if( compCreatorData.profile.toString() == profileData._id.toString() ){
+													console.log("Comp Creator Data Igual");
+													edit_permision = true;
+												}	
+											}	
+										}
 									}
+									
 									var data = {
 										company: companyData,
 										edit: edit_permision,
