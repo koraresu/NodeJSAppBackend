@@ -431,7 +431,7 @@ router.post('/company/getid', multipartMiddleware, function(req, res){
 									if(!errCompCreator && compCreatorData){
 										company_creator = (compCreatorData.profile != undefined)?compCreatorData.profile.toString():"";
 									}
-									
+
 									if(company_profile != ""){
 										if( profile_string == company_profile ){
 											edit_permision = true;
@@ -446,12 +446,15 @@ router.post('/company/getid', multipartMiddleware, function(req, res){
 									
 									var data = {
 										company: companyData,
+										edit: edit_permision,
+										/*
 										edit: {
 											allow:   edit_permision,
 											claim:   company_profile,
 											creator: company_creator,
 											profile: profile_string
 										},
+										*/
 										trabajo: results
 									};
 
