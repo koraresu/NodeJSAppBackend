@@ -65,10 +65,20 @@ router.post('/write/comentario', multipartMiddleware, function(req, res){
 					content: contenido
 				});
 				feedback.save(function(errFeedback, feedbackData){
-
-					Generalfunc.sendEmail("email_generico.jade", {
+					var from_name = "";
+					if((profileData.first_name != undefined) || (profileData.last_name)){
+						from_name = profileData.first_name + " " + profileData.last_name;
+					}
+					var speciality = "";
+					if(profileData.speciality != undefined){
+						if(profileData.speciality.name != undefined){
+							speciality = profileData.speciality.name;
+						}	
+					}
+					var email_content = '<div style="background-color: #f2f2f2;color: #232121;font-weight: 300;font-size: 15px;padding: 10px;margin-top:10px;"> <div style="width:110px;margin:0 auto;"> <div style="display: block; font-size: 16px; color: #232121; font-weight: 300; ">'+from_name+'</div> <div style="display: block; font-size: 14px; color: #f7a700; font-weight: 300;">'+speciality+'</div> </div> '+contenido+'</div>';
+					Generalfunc.sendEmail("email_generico_html.jade", {
 						title: titulo,
-						content: contenido
+						content: email_content
 					//}, "esteban@thehiveapp.mx", "Comentario TheHive",function(status, html){
 					}, "rael.axovia@gmail.com", "Comentario TheHive",function(status, html){
 						Generalfunc.response(200, format.feedback(feedbackData), function(response){
