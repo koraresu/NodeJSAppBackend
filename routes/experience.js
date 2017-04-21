@@ -419,8 +419,15 @@ router.post('/company/getid', multipartMiddleware, function(req, res){
 									results = Generalfunc.cleanArray(results);
 									//companyData.name = Generalfunc.capitalize( companyData.name );
 									var edit_permision = false;
+									var company_profile = "";
+									var company_creator = "";
+									var profile_string  = "";
+
+									profile_string = profileData._id.toString();
+
 									if(companyData.profile_id != undefined){
 										console.log("Company Data Profile ID");
+										company_profile = companyData.profile_id.toString();
 										if( profileData._id.toString() == companyData.profile_id.toString() ){
 											console.log("Company Data Profile ID Igual");
 											edit_permision = true;
@@ -437,6 +444,7 @@ router.post('/company/getid', multipartMiddleware, function(req, res){
 											console.log("compCreatorData Exists");
 											if(compCreatorData.profile != undefined){
 												console.log("Comp Creator Data Profile Not Null");
+												company_creator = ompCreatorData.profile.toString();
 												if( compCreatorData.profile.toString() == profileData._id.toString() ){
 													console.log("Comp Creator Data Igual");
 													edit_permision = true;
@@ -447,7 +455,12 @@ router.post('/company/getid', multipartMiddleware, function(req, res){
 									
 									var data = {
 										company: companyData,
-										edit: edit_permision,
+										edit: {
+											allow:   edit_permision,
+											claim:   company_profile,
+											creator: company_creator,
+											profile: profile_string
+										},
 										trabajo: results
 									};
 
