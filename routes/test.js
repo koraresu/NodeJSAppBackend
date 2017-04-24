@@ -147,7 +147,7 @@ router.get('/sendpush/:notification_id', function(req, res){
 
     Notificationfunc.sendNotification(notification_id, function( data ){
       console.log( data );
-      res.josn( data );
+      res.json( data );
     });
 
      
