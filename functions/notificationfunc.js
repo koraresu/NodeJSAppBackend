@@ -229,16 +229,47 @@ function send(id, success,io){
 	});
 	
 }
-function sendNotification(id, success){
+function sendNotification(id, sucess){
 
 	if(mongoose.Types.ObjectId.isValid(id)){
 		id = mongoose.Types.ObjectId( id );
-
 		Notification.findOne({
 			_id: id
 		}).populate('profile').populate('profile_emisor').populate('network').populate('profile_mensaje').exec(function(errNot, notData){
-			console.log( notData );
-			success( notData );
+			var send = function(notData, device_token,cb){
+				var profile_emisor = "";
+				var profile_mensaje = "";
+				var mensaje = "";
+				if(notData.profile_emisor != undefined){
+					if(notData.profile_emisor.first_name != undefined){
+						profile_emisor = notData.profile_emisor.first_name + " " + notData.profile_emisor.last_name;  
+					}
+				}
+				if(notData.profile_mensaje != undefined){
+					if(notData.profile_mensaje.first_name != undefined){
+						profile_mensaje = notData.profile_mensaje.first_name + " " + notData.profile_mensaje.last_name;
+					}
+				}
+				mensaje = Generalfunc.mensaje_create(notData, profile_emisor, profile_mensaje);
+				Generalfunc.sendPushOne(device_token, 1, "Prueba", mensaje.mensaje, notData, function(data){
+					cb( data );
+				}, function(data){
+					cb( data );
+				});
+			};
+			
+			Device.find({
+				profile: notData.profile
+			}).exec(function(errDev, devData){
+				async.map(devData, function(item, cb){
+					send(notData, item.token, function(data){
+						cb(null, data);
+					});	
+				}, function(err, results){
+					sucess( results );
+				});
+				
+			});
 		});
 	}
 }
