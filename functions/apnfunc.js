@@ -74,7 +74,7 @@ function sendMessNotification(id, sucess){
 			
 			console.log( messData );
 			console.log("++++++++++++++++");
-			
+			success( messData );
 		});
 	}
 }
