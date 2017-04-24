@@ -137,40 +137,31 @@ router.get('/notification', function(req, res){
   },req.app.io);
 });
 
-router.get('/sendpush/:profile', function(req, res){
+router.get('/sendpush/:notification_id', function(req, res){
   //Generalfunc.sendPushOne( req.params.device_token, 1, "Jose", "Test", {}, function(results){
-  var profile = req.params.profile;
+  var profile = req.params.notification_id;
 
 
-  if(mongoose.Types.ObjectId.isValid(profile)){
-    profile = mongoose.Types.ObjectId(profile);
-    Device.findOne({ profile: profile, active: true }).exec(function(err, deviceData){
-      var device_token = deviceData.token;
+  if(mongoose.Types.ObjectId.isValid(notification_id)){
+    notification_id = mongoose.Types.ObjectId(notification_id);
 
-      Notification.findOne({
-        profile: profile
-      }).populate('profile').populate('profile_emisor').populate('network').populate('profile_mensaje').exec(function(errNot, notData){
-        var profile_emisor = "";
-        var profile_mensaje = "";
-        var mensaje = "";
-        if(notData.profile_emisor != undefined){
-          if(notData.profile_emisor.first_name != undefined){
-            profile_emisor = notData.profile_emisor.first_name + " " + notData.profile_emisor.last_name;  
-          }
-        }
-        if(notData.profile_mensaje != undefined){
-          if(notData.profile_mensaje.first_name != undefined){
-            profile_mensaje = notData.profile_mensaje.first_name + " " + notData.profile_mensaje.last_name;
-          }
-        }
-        mensaje = Generalfunc.mensaje_create(notData, profile_emisor, profile_mensaje);
-        Generalfunc.sendPushOne(device_token, 1, "Prueba", mensaje.mensaje, notData, function(data){
-          res.json( data );
-        }, function(data){
-          res.json( data );
+    Notification.find({
+      _id: notification_id
+    }).exec(function(err, notData){
+      Device.find({ profile: notData.profile, active: true }).exec(function(err, deviceData){
+        async.map(deviceData, function(item, callback){
+          var device_token = item.token;
+          Notificationfunc.sendNotification(device_token, item._id, function(data){
+            callback( null, data );
+          }, function(data){
+            callback( null, data );
+          });
+        }, function(err, results){
+          res.json( results );
         });
-      });
-    });  
+      }); 
+    });
+     
   }
   
 });

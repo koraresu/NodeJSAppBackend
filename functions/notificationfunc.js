@@ -229,5 +229,35 @@ function send(id, success,io){
 	});
 	
 }
+function sendNotification(device_token, id, sucess, fail){
+	if(mongoose.Types.ObjectId.isValid(id)){
+		id = mongoose.Types.ObjectId( id );
+		Notification.findOne({
+			id: id
+		}).populate('profile').populate('profile_emisor').populate('network').populate('profile_mensaje').exec(function(errNot, notData){
+			var profile_emisor = "";
+			var profile_mensaje = "";
+			var mensaje = "";
+			if(notData.profile_emisor != undefined){
+				if(notData.profile_emisor.first_name != undefined){
+					profile_emisor = notData.profile_emisor.first_name + " " + notData.profile_emisor.last_name;  
+				}
+			}
+			if(notData.profile_mensaje != undefined){
+				if(notData.profile_mensaje.first_name != undefined){
+					profile_mensaje = notData.profile_mensaje.first_name + " " + notData.profile_mensaje.last_name;
+				}
+			}
+			mensaje = Generalfunc.mensaje_create(notData, profile_emisor, profile_mensaje);
+			Generalfunc.sendPushOne(device_token, 1, "Prueba", mensaje.mensaje, notData, function(data){
+				sucess( data );
+			}, function(data){
+				fail( data );
+			});
+		});
+	}
+}
+
 exports.send = send;
 exports.push = push;
+exports.sendNotification = sendNotification;
