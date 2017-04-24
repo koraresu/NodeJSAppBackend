@@ -229,7 +229,7 @@ function send(id, success,io){
 	});
 	
 }
-function sendNotification(id, sucess, fail){
+function sendNotification(id, sucess){
 
 	if(mongoose.Types.ObjectId.isValid(id)){
 		id = mongoose.Types.ObjectId( id );
@@ -265,7 +265,7 @@ function sendNotification(id, sucess, fail){
 						cb(null, data);
 					});	
 				}, function(err, results){
-					res.json( results );
+					sucess( results );
 				});
 				
 			});

@@ -145,28 +145,11 @@ router.get('/sendpush/:notification_id', function(req, res){
   if(mongoose.Types.ObjectId.isValid(notification_id)){
     notification_id = mongoose.Types.ObjectId(notification_id);
 
-    Notification.findOne({
-      _id: notification_id
-    }).exec(function(err, notData){
-      Device.find({
-        profile: notData.profile,
-        active: true
-      }).exec(function(err, deviceData){
-        async.map(deviceData, function(item, callback){
-          var device_token = item.token;
-          console.log ( notData );
-          Notificationfunc.sendNotification(device_token, notification_id, function( data ){
-            console.log( data );
-            callback( null, data );
-          }, function(data){
-            console.log( data );
-            callback( null, data );
-          });
-        }, function(err, results){
-          res.json( results );
-        });
-      }); 
+    Notificationfunc.sendNotification(notification_id, function( data ){
+      console.log( data );
+      res.josn( data );
     });
+
      
   }
   
