@@ -64,8 +64,8 @@ function sendNotification(id, sucess){
 		Notification.findOne({
 			_id: id
 		}).populate('profile').populate('profile_emisor').populate('network').populate('profile_mensaje').exec(function(errNot, notData){
-			APNfunc.get_devices(notData.profile, function(item, cb){
-				var mensaje = APNfunc.text_create("notification",notData);
+			get_devices(notData.profile, function(item, cb){
+				var mensaje = text_create("notification",notData);
 				Generalfunc.sendPushOne(device_token, 1, "", mensaje.mensaje, notData, function(data){
 					cb(null, data );
 				}, function(data){
