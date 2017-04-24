@@ -36,29 +36,52 @@ function get_devices(profile_id, itemFn, resultFn ){
 		async.map(devData, itemFn, resultFn);
 	});
 }
-function text_create(collection, notData ){
-	var prof = profile_notification(notData);
+function text_create(collection, data ){
+	var prof = profile_notification(collection, data);
 	if( collection == "notification"){
-		return Generalfunc.mensaje_create(notData, prof.profile_emisor, prof.profile_mensaje);	
+		return Generalfunc.mensaje_create(data, prof.profile_emisor, prof.profile_mensaje);	
 	}else{
-		return "";
+		return prof + data.message;
 	}
 }
-function profile_notification(notData){
-	var profile_emisor  = "";
-	var profile_mensaje = "";
-	if(notData.profile_emisor != undefined){
-		if(notData.profile_emisor.first_name != undefined){
-			profile_emisor = notData.profile_emisor.first_name + " " + notData.profile_emisor.last_name;  
+function profile_notification(collection, notData){
+	if( collection == "notification"){
+		var profile_emisor  = "";
+		var profile_mensaje = "";
+		if(notData.profile_emisor != undefined){
+			if(notData.profile_emisor.first_name != undefined){
+				profile_emisor = notData.profile_emisor.first_name + " " + notData.profile_emisor.last_name;  
+			}
 		}
-	}
-	if(notData.profile_mensaje != undefined){
-		if(notData.profile_mensaje.first_name != undefined){
-			profile_mensaje = notData.profile_mensaje.first_name + " " + notData.profile_mensaje.last_name;
+		if(notData.profile_mensaje != undefined){
+			if(notData.profile_mensaje.first_name != undefined){
+				profile_mensaje = notData.profile_mensaje.first_name + " " + notData.profile_mensaje.last_name;
+			}
 		}
-	}
 
-	return {profile_emisor: profile_emisor, profile_mensaje: profile_mensaje };
+		return {profile_emisor: profile_emisor, profile_mensaje: profile_mensaje };
+	}else{
+		return "PruebaMensaje: ";
+	}
+}
+function sendMessNotification(id, sucess){
+	if(mongoose.Types.ObjectId.isValid(id)){
+		id = mongoose.Types.ObjectId( id );
+		Message.findOne({
+			_id: id
+		}).populate('profile_id').populate('coversation').exec(function(errMess, messData){
+			get_devices(messData.profile, function(item, cb){
+				var mensaje = text_create("message",messData);
+				Generalfunc.sendPushOne(item.token, 1, "", mensaje.mensaje, messData, function(data){
+					cb(null, data );
+				}, function(data){
+					cb(null, data );
+				});
+			}, function(err, results){
+				sucess( results );
+			});
+		});
+	}
 }
 function sendNotification(id, sucess){
 	if(mongoose.Types.ObjectId.isValid(id)){
@@ -80,6 +103,7 @@ function sendNotification(id, sucess){
 		});
 	}
 }
+exports.sendMessNotification = sendMessNotification;
 exports.sendNotification     = sendNotification;
 exports.get_devices          = get_devices;
 exports.text_create          = text_create;

@@ -154,14 +154,13 @@ router.get('/sendpush/notification/:notification_id', function(req, res){
   
 });
 router.get('/sendpush/message/:message_id', function(req, res){
-  //Generalfunc.sendPushOne( req.params.device_token, 1, "Jose", "Test", {}, function(results){
-  var notification_id = req.params.notification_id;
+  var message_id = req.params.message_id;
 
 
-  if(mongoose.Types.ObjectId.isValid(notification_id)){
-    notification_id = mongoose.Types.ObjectId(notification_id);
+  if(mongoose.Types.ObjectId.isValid(message_id)){
+    message_id = mongoose.Types.ObjectId(message_id);
 
-    APNfunc.sendNotification(notification_id, function( data ){
+    APNfunc.sendMessNotification(message_id, function( data ){
       console.log( data );
       res.json( data );
     });
