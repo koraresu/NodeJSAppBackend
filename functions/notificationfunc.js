@@ -233,4 +233,3 @@ function send(id, success,io){
 
 exports.send = send;
 exports.push = push;
-exports.sendNotification = sendNotification;
