@@ -233,9 +233,11 @@ function sendNotification(id, success){
 
 	if(mongoose.Types.ObjectId.isValid(id)){
 		id = mongoose.Types.ObjectId( id );
+
 		Notification.findOne({
 			id: id
 		}).populate('profile').populate('profile_emisor').populate('network').populate('profile_mensaje').exec(function(errNot, notData){
+			console.log( notData );
 			success( notData );
 		});
 	}
