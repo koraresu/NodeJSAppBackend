@@ -41,7 +41,7 @@ function text_create(collection, data ){
 	if( collection == "notification"){
 		return Generalfunc.mensaje_create(data, prof.profile_emisor, prof.profile_mensaje);	
 	}else{
-		return prof + data.message;
+		return { mensaje: prof + data.message };
 	}
 }
 function profile_notification(collection, notData){
@@ -72,9 +72,34 @@ function sendMessNotification(id, success){
 			_id: id
 		}).populate('profile_id').populate('conversation').exec(function(errMess, messData){
 			
-			console.log( messData );
-			console.log("++++++++++++++++");
-			success( messData );
+			var profile_id = messData.profile_id._id;
+			var profiles = messData.conversation.profiles;
+
+			var index = profiles.indexOf( profile_id.toString());
+
+			if( index > -1 ){
+				console.log("Existe");
+				delete profiles[index];
+				profiles = Generalfunc.cleanArray(profiles);
+			}
+			async.map(profiles, function(item, callback){
+				Profile.findOne({ _id: item.toString() }).exec(function(errprof, profData){
+					get_devices(profData._id, function(item, cb){
+						var mensaje = text_create("message",messData);
+						var name = "";
+						name = profData.first_name + " " + profData.last_name;
+						Generalfunc.sendPushOne(item.token, 1, name, mensaje.mensaje, messData, function(data){
+							cb(null, data );
+						}, function(data){
+							cb(null, data );
+						});
+					}, function(err, results){
+						callback(null, results);
+					});
+				});
+			}, function(err, results){
+				success(results);
+			});
 		});
 	}
 }
@@ -94,7 +119,6 @@ function sendNotification(id, sucess){
 			}, function(err, results){
 				sucess( results );
 			});
-
 		});
 	}
 }

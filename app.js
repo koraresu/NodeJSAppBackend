@@ -35,6 +35,7 @@ var Generalfunc = require('./functions/generalfunc');
 var Networkfunc = require('./functions/networkfunc');
 var Tokenfunc = require('./functions/tokenfunc');
 var Pushfunc = require('./functions/pushfunc');
+var APNfunc = require('./functions/apnfunc');
 
 
 
@@ -229,6 +230,7 @@ gps.on('connection', function(socket){
       socket.to( s ).emit('gps_result',{
         message: "Tu amigo " + name + " ha cancelado la invitación."
       });
+
     }, io);
   });
 });
@@ -287,26 +289,8 @@ io.on('connection', function(socket){
         /******* Apple Push Notification *****/
         //console.log("/******* Apple Push Notification *****/");
 
-        Pushfunc.getConvProfile(messageData._id, socket, function(profile){
-          //console.log("GetConvProfile");
-          //console.log(profile);
-          Pushfunc.send(0,profile._id, messageData, function(results){
-            //console.log( results );
-            Generalfunc.NoReaded(profile._id, function(num){
-              socket.emit('set_alert_num', num);
-            }, function(st){
-              //console.log("Gneralfunc.NoReaded Error:" + st);
-            });
-          }, function(results){
-            //console.log( results );
-            Generalfunc.NoReaded(profile._id, function(num){
-              socket.emit('set_alert_num', num);
-            }, function(st){
-              //console.log("Gneralfunc.NoReaded Error:" + st);
-            });
-          });
-        }, function(st){
-          //console.log("Get Conv Profile:" + st);
+        APNfunc.sendMessNotification(messageData._id, function(){
+
         });
       }
     });
@@ -333,6 +317,14 @@ io.on('connection', function(socket){
 
           console.log("/******* Apple Push Notification *****/");
 
+          APNfunc.sendNotification(notificationData._id, function(){
+             Generalfunc.NoReaded(profile._id, function(num){
+                socket.emit('set_alert_num', num);
+              }, function(st){
+                console.log("Gneralfunc.NoReaded Error:" + st);
+              });
+          });
+          /*
           Pushfunc.getNotProfile(notificationData._id, socket, function(profile){
             console.log("GetConvProfile");
             console.log(profile);
@@ -353,6 +345,7 @@ io.on('connection', function(socket){
             });
           }, function(){
           });
+          */
         }
       }
 
