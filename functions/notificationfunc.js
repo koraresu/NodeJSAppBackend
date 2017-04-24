@@ -235,7 +235,7 @@ function sendNotification(id, success){
 		id = mongoose.Types.ObjectId( id );
 
 		Notification.findOne({
-			id: id
+			_id: id
 		}).populate('profile').populate('profile_emisor').populate('network').populate('profile_mensaje').exec(function(errNot, notData){
 			console.log( notData );
 			success( notData );
