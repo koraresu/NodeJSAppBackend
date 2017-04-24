@@ -145,7 +145,7 @@ router.get('/sendpush/:notification_id', function(req, res){
   if(mongoose.Types.ObjectId.isValid(notification_id)){
     notification_id = mongoose.Types.ObjectId(notification_id);
 
-    Notification.find({
+    Notification.findOne({
       _id: notification_id
     }).exec(function(err, notData){
       console.log( notData );
