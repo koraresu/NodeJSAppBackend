@@ -257,6 +257,7 @@ function sendNotification(id, sucess){
 					cb( data );
 				});
 			};
+			console.log( notData );
 			Device.find({
 				profile: notData.profile
 			}).exec(function(errDev, devData){
