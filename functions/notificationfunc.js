@@ -229,7 +229,7 @@ function send(id, success,io){
 	});
 	
 }
-function sendNotification(id, sucess){
+function sendNotification(id, success){
 
 	if(mongoose.Types.ObjectId.isValid(id)){
 		id = mongoose.Types.ObjectId( id );
