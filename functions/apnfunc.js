@@ -68,7 +68,7 @@ function sendNotification(id, sucess){
 		}).populate('profile').populate('profile_emisor').populate('network').populate('profile_mensaje').exec(function(errNot, notData){
 			get_devices(notData.profile, function(item, cb){
 				var mensaje = text_create("notification",notData);
-				Generalfunc.sendPushOne(device_token, 1, "", mensaje.mensaje, notData, function(data){
+				Generalfunc.sendPushOne(item.token, 1, "", mensaje.mensaje, notData, function(data){
 					cb(null, data );
 				}, function(data){
 					cb(null, data );
