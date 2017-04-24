@@ -1,3 +1,5 @@
+var mongoose    = require('mongoose');
+
 function get_devices(profile_id, itemFn, resultFn ){
 	Device.find({
 		profile: profile_id
