@@ -139,7 +139,7 @@ router.get('/notification', function(req, res){
 
 router.get('/sendpush/:notification_id', function(req, res){
   //Generalfunc.sendPushOne( req.params.device_token, 1, "Jose", "Test", {}, function(results){
-  var profile = req.params.notification_id;
+  var notification_id = req.params.notification_id;
 
 
   if(mongoose.Types.ObjectId.isValid(notification_id)){
