@@ -164,7 +164,7 @@ router.get('/sendpush/:profile', function(req, res){
           }
         }
         mensaje = Generalfunc.mensaje_create(notData, profile_emisor, profile_mensaje);
-        Generalfunc.sendPushOne(device_token, 1, "Prueba", mensaje, notData, function(data){
+        Generalfunc.sendPushOne(device_token, 1, "Prueba", mensaje.mensaje, notData, function(data){
           res.json( data );
         }, function(data){
           res.json( data );
