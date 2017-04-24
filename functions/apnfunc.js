@@ -65,12 +65,17 @@ function profile_notification(collection, notData){
 	}
 }
 function sendMessNotification(id, sucess){
+	console.log( id );
 	if(mongoose.Types.ObjectId.isValid(id)){
 		id = mongoose.Types.ObjectId( id );
 		Message.findOne({
 			_id: id
 		}).populate('profile_id').populate('coversation').exec(function(errMess, messData){
+			
+			console.log( messData );
+			console.log("++++++++++++++++");
 			get_devices(messData.profile, function(item, cb){
+				console.log( item );
 				var mensaje = text_create("message",messData);
 				Generalfunc.sendPushOne(item.token, 1, "", mensaje.mensaje, messData, function(data){
 					cb(null, data );
