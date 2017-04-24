@@ -64,7 +64,7 @@ function profile_notification(collection, notData){
 		return "PruebaMensaje: ";
 	}
 }
-function sendMessNotification(id, sucess){
+function sendMessNotification(id, success){
 	console.log( id );
 	if(mongoose.Types.ObjectId.isValid(id)){
 		id = mongoose.Types.ObjectId( id );
