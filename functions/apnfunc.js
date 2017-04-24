@@ -70,21 +70,11 @@ function sendMessNotification(id, sucess){
 		id = mongoose.Types.ObjectId( id );
 		Message.findOne({
 			_id: id
-		}).populate('profile_id').populate('coversation').exec(function(errMess, messData){
+		}).populate('profile_id').populate('conversation').exec(function(errMess, messData){
 			
 			console.log( messData );
 			console.log("++++++++++++++++");
-			get_devices(messData.profile, function(item, cb){
-				console.log( item );
-				var mensaje = text_create("message",messData);
-				Generalfunc.sendPushOne(item.token, 1, "", mensaje.mensaje, messData, function(data){
-					cb(null, data );
-				}, function(data){
-					cb(null, data );
-				});
-			}, function(err, results){
-				sucess( results );
-			});
+			
 		});
 	}
 }
