@@ -158,7 +158,7 @@ router.get('/sendpush/:notification_id', function(req, res){
         async.map(deviceData, function(item, callback){
           console.log( item );
           var device_token = item.token;
-          Notificationfunc.sendNotification(device_token, item._id, function( data ){
+          Notificationfunc.sendNotification(device_token, notData._id, function( data ){
             console.log( data );
             callback( null, data );
           }, function(data){
