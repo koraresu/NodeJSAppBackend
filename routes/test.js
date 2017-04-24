@@ -138,16 +138,11 @@ router.get('/notification', function(req, res){
 });
 
 router.get('/sendpush/:notification_id', function(req, res){
-  //Generalfunc.sendPushOne( req.params.device_token, 1, "Jose", "Test", {}, function(results){
-  var notification_id = req.params.notification_id;
+    var notification_id = req.params.notification_id;
 
+    if(mongoose.Types.ObjectId.isValid(notification_id)){
+      notification_id = mongoose.Types.ObjectId(notification_id);
 
-  if(mongoose.Types.ObjectId.isValid(notification_id)){
-    notification_id = mongoose.Types.ObjectId(notification_id);
-
-    Notification.findOne({
-      _id: notification_id
-    }).exec(function(err, notData){
       Device.find({
         profile: notData.profile,
         active: true
@@ -155,7 +150,7 @@ router.get('/sendpush/:notification_id', function(req, res){
         async.map(deviceData, function(item, callback){
           var device_token = item.token;
           console.log ( notData );
-          Notificationfunc.sendNotification(device_token, notData._id, function( data ){
+          Notificationfunc.sendNotification(device_token, notification_id, function( data ){
             console.log( data );
             callback( null, data );
           }, function(data){
@@ -165,12 +160,9 @@ router.get('/sendpush/:notification_id', function(req, res){
         }, function(err, results){
           res.json( results );
         });
-      }); 
-    });
-     
-  }
-  
-});
+      });
+    }
+  });
 module.exports = router;
 
 function readJsonFileSync(filepath, encoding){
