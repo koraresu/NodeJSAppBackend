@@ -1,5 +1,7 @@
 var mongoose    = require('mongoose');
 
+var async       = require('async');
+
 var model        = require('../model');
 var Profile      = model.profile;
 var User         = model.user;
