@@ -148,7 +148,12 @@ router.get('/sendpush/:notification_id', function(req, res){
     Notification.find({
       _id: notification_id
     }).exec(function(err, notData){
-      Device.find({ profile: notData.profile, active: true }).exec(function(err, deviceData){
+      console.log( notData );
+      Device.find({
+        profile: notData.profile,
+        active: true
+      }).exec(function(err, deviceData){
+        console.log( "DeviceData:" );
         console.log( deviceData );
         async.map(deviceData, function(item, callback){
           console.log( item );
