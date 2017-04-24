@@ -150,9 +150,20 @@ router.get('/sendpush/:profile', function(req, res){
       Notification.findOne({
         profile: profile
       }).populate('profile').populate('profile_emisor').populate('network').populate('profile_mensaje').exec(function(errNot, notData){
-        var profile_emisor = notData.profile_emisor.first_name + " " + notData.profile_emisor.last_name;
-        var profile_mensaje = notData.profile_mensaje.first_name + " " + notData.profile_mensaje.last_name;
-        var mensaje = Generalfunc.mensaje_create(notData, profile_emisor, profile_mensaje);
+        var profile_emisor = "";
+        var profile_mensaje = "";
+        var mensaje = "";
+        if(notData.profile_emisor != undefined){
+          if(notData.profile_emisor.first_name != undefined){
+            profile_emisor = notData.profile_emisor.first_name + " " + notData.profile_emisor.last_name;  
+          }
+        }
+        if(notData.profile_mensaje != undefined){
+          if(notData.profile_mensaje.first_name != undefined){
+            profile_mensaje = notData.profile_mensaje.first_name + " " + notData.profile_mensaje.last_name;
+          }
+        }
+        mensaje = Generalfunc.mensaje_create(notData, profile_emisor, profile_mensaje);
         Generalfunc.sendPushOne(device_token, 1, "Prueba", mensaje, notData, function(data){
           res.json( data );
         }, function(data){
