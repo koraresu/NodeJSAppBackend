@@ -71,14 +71,13 @@ function sendMessNotification(id, success){
 		Message.findOne({
 			_id: id
 		}).populate('profile_id').populate('conversation').exec(function(errMess, messData){
-			
+			console.log( messData );
 			var profile_id = messData.profile_id._id;
 			var profiles = messData.conversation.profiles;
 
 			var index = profiles.indexOf( profile_id.toString());
 
 			if( index > -1 ){
-				console.log("Existe");
 				delete profiles[index];
 				profiles = Generalfunc.cleanArray(profiles);
 			}
