@@ -313,7 +313,10 @@ exports.sendPushtoAll = function(type,profileId, message, payload, success, fail
 	});
 }
 function sendPushOne(deviceToken,badge, name, message, payload,  success, fail){
-	var mensaje = name + ": " + message;
+	if(name != ""){
+		name = name + ": ";
+	}
+	var mensaje = name + message;
 	if(!Number.isInteger(badge)){ badge = 1; }
 	if(payload == undefined){ payload = {}; }
 	if(success == undefined){ success = function(result){}; }
