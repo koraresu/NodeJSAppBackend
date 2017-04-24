@@ -37,6 +37,7 @@ var Profilefunc = require('../functions/profilefunc');
 var Generalfunc = require('../functions/generalfunc');
 var Notificationfunc = require('../functions/notificationfunc');
 var Pushfunc = require('../functions/pushfunc');
+var APNfunc = require('../functions/apnfunc');
 
 var apnProvider = Generalfunc.apnProvider();
 /* GET home page. */
@@ -145,7 +146,7 @@ router.get('/sendpush/:notification_id', function(req, res){
   if(mongoose.Types.ObjectId.isValid(notification_id)){
     notification_id = mongoose.Types.ObjectId(notification_id);
 
-    Notificationfunc.sendNotification(notification_id, function( data ){
+    APNfunc.sendNotification(notification_id, function( data ){
       console.log( data );
       res.json( data );
     });

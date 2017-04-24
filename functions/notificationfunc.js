@@ -231,27 +231,6 @@ function send(id, success,io){
 	
 }
 
-function sendNotification(id, sucess){
-	if(mongoose.Types.ObjectId.isValid(id)){
-		id = mongoose.Types.ObjectId( id );
-		Notification.findOne({
-			_id: id
-		}).populate('profile').populate('profile_emisor').populate('network').populate('profile_mensaje').exec(function(errNot, notData){
-			APNfunc.get_devices(notData.profile, function(item, cb){
-				var mensaje = APNfunc.text_create(notData);
-				Generalfunc.sendPushOne(device_token, 1, "", mensaje.mensaje, notData, function(data){
-					cb(null, data );
-				}, function(data){
-					cb(null, data );
-				});
-			}, function(err, results){
-				sucess( results );
-			});
-
-		});
-	}
-}
-
 exports.send = send;
 exports.push = push;
 exports.sendNotification = sendNotification;

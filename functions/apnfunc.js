@@ -5,9 +5,13 @@ function get_devices(profile_id, itemFn, resultFn ){
 		async.map(devData, itemFn, resultFn);
 	});
 }
-function text_create( notData ){
+function text_create(collection, notData ){
 	var prof = profile_notification(notData);
-	return Generalfunc.mensaje_create(notData, prof.profile_emisor, prof.profile_mensaje);
+	if( collection == "notification"){
+		return Generalfunc.mensaje_create(notData, prof.profile_emisor, prof.profile_mensaje);	
+	}else{
+		return "";
+	}
 }
 function profile_notification(notData){
 	var profile_emisor  = "";
@@ -25,6 +29,27 @@ function profile_notification(notData){
 
 	return {profile_emisor: profile_emisor, profile_mensaje: profile_mensaje };
 }
+function sendNotification(id, sucess){
+	if(mongoose.Types.ObjectId.isValid(id)){
+		id = mongoose.Types.ObjectId( id );
+		Notification.findOne({
+			_id: id
+		}).populate('profile').populate('profile_emisor').populate('network').populate('profile_mensaje').exec(function(errNot, notData){
+			APNfunc.get_devices(notData.profile, function(item, cb){
+				var mensaje = APNfunc.text_create("notification",notData);
+				Generalfunc.sendPushOne(device_token, 1, "", mensaje.mensaje, notData, function(data){
+					cb(null, data );
+				}, function(data){
+					cb(null, data );
+				});
+			}, function(err, results){
+				sucess( results );
+			});
+
+		});
+	}
+}
+exports.sendNotification     = sendNotification;
 exports.get_devices          = get_devices;
 exports.text_create          = text_create;
 exports.profile_notification = profile_notification;
