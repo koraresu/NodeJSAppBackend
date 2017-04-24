@@ -137,6 +137,32 @@ router.get('/notification', function(req, res){
   },req.app.io);
 });
 
+router.get('/sendpush/:profile', function(req, res){
+  //Generalfunc.sendPushOne( req.params.device_token, 1, "Jose", "Test", {}, function(results){
+  var profile = req.params.profile;
+
+
+  if(mongoose.Types.ObjectId.isValid(profile)){
+    profile = mongoose.Types.ObjectId(profile);
+    Device.findOne({ profile: profile, active: true }).exec(function(err, deviceData){
+      var device_token = deviceData.token;
+
+      Notification.findOne({
+        profile: profile
+      }).populate('profile').populate('profile_emisor').populate('network').populate('profile_mensaje').exec(function(errNot, notData){
+        var profile_emisor = notData.profile_emisor.first_name + " " + notData.profile_emisor.last_name;
+        var profile_mensaje = notData.profile_mensaje.first_name + " " + notData.profile_mensaje.last_name;
+        var mensaje = Generalfunc.mensaje_create(notData, profile_emisor, profile_mensaje);
+        Generalfunc.sendPushOne(device_token, 1, "Prueba", mensaje, notData, function(data){
+          res.json( data );
+        }, function(data){
+          res.json( data );
+        });
+      });
+    });  
+  }
+  
+});
 module.exports = router;
 
 function readJsonFileSync(filepath, encoding){
