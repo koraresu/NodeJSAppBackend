@@ -31,7 +31,6 @@ var Push         = model.push;
 var Message      = model.message;
 var PushEvent    = model.pushevent;
 var City         = model.city;
-var State        = model.state;
 var Country      = model.country;
 
 var Generalfunc = require('./generalfunc');

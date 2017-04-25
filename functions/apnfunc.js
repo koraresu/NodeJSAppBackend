@@ -23,9 +23,11 @@ var Device       = model.device;
 var Online       = model.online;
 var Conversation = model.conversation;
 var Message      = model.message;
-var City         = model.city;
-var State        = model.state;
 var Country      = model.country;
+var City         = model.city;
+/* PUSH */
+var Push         = model.push;
+var PushEvent    = model.pushevent;
 
 var Generalfunc = require('./generalfunc');
 
