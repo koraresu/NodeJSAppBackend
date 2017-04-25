@@ -41,7 +41,7 @@ function text_create(collection, data ){
 	if( collection == "notification"){
 		return Generalfunc.mensaje_create(data, prof.profile_emisor, prof.profile_mensaje);	
 	}else{
-		return { mensaje: prof +"|"+ data.message };
+		return { mensaje: data.message };
 	}
 }
 function profile_notification(collection, notData){
