@@ -313,6 +313,7 @@ exports.sendPushtoAll = function(type,profileId, message, payload, success, fail
 	});
 }
 function sendPushOne(deviceToken,badge, name, message, payload,  success, fail){
+	deviceToken = deviceToken.trim();
 	if(name != ""){
 		name = name + ": ";
 	}
@@ -328,14 +329,17 @@ function sendPushOne(deviceToken,badge, name, message, payload,  success, fail){
 	note.alert = mensaje;
 	note.payload = payload;
 	note.topic = "com.thehiveapp.thehive";
-
-	apnProvider.send(note, deviceToken).then( (result) => {
-		if(result.status == "200"){
-  			success({r: result, device:  deviceToken});
-		}else{
-			fail(result);
-		}
-	});
+	if(deviceToken != ""){
+		apnProvider.send(note, deviceToken).then( (result) => {
+			if(result.status == "200"){
+	  			success({r: result, device:  deviceToken});
+			}else{
+				fail(result);
+			}
+		});
+	}else{
+		fail( { status: "500", response: { reason: "Empty Device Token" } });
+	}
 }
 function mensaje_create(data, nombre_emisor, nombre_mensaje){
 	switch(data.tipo){
