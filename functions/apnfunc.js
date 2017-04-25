@@ -72,6 +72,7 @@ function sendMessNotification(id, success){
 			_id: id
 		}).populate('profile_id').populate('conversation').exec(function(errMess, messData){
 			console.log( messData );
+
 			var profile_id = messData.profile_id._id;
 			var profiles = messData.conversation.profiles;
 
@@ -83,17 +84,19 @@ function sendMessNotification(id, success){
 			}
 			async.map(profiles, function(item, callback){
 				Profile.findOne({ _id: item.toString() }).exec(function(errprof, profData){
-					get_devices(profData._id, function(item, cb){
-						var mensaje = text_create("message",messData);
-						var name = "";
-						name = profData.first_name + " " + profData.last_name;
-						Generalfunc.sendPushOne(item.token, 1, name, mensaje.mensaje, messData, function(data){
-							cb(null, data );
-						}, function(data){
-							cb(null, data );
+					Pushfunc.addOrGet(0, messData._id, profData._id, function(pushEvent){
+						get_devices(profData._id, function(item, cb){
+							var mensaje = text_create("message",messData);
+							var name = "";
+							name = profData.first_name + " " + profData.last_name;
+							Generalfunc.sendPushOne(item.token, 1, name, mensaje.mensaje, messData, function(data){
+								cb(null, data );
+							}, function(data){
+								cb(null, data );
+							});
+						}, function(err, results){
+							callback(null, results);
 						});
-					}, function(err, results){
-						callback(null, results);
 					});
 				});
 			}, function(err, results){
@@ -105,22 +108,92 @@ function sendMessNotification(id, success){
 function sendNotification(id, sucess){
 	if(mongoose.Types.ObjectId.isValid(id)){
 		id = mongoose.Types.ObjectId( id );
+
 		Notification.findOne({
 			_id: id
 		}).populate('profile').populate('profile_emisor').populate('network').populate('profile_mensaje').exec(function(errNot, notData){
-			get_devices(notData.profile, function(item, cb){
-				var mensaje = text_create("notification",notData);
-				Generalfunc.sendPushOne(item.token, 1, "", mensaje.mensaje, notData, function(data){
-					cb(null, data );
-				}, function(data){
-					cb(null, data );
+			Pushfunc.addOrGet(1, notData._id, notData.profile, function(pushEvent){
+				get_devices(notData.profile, function(item, cb){
+					var mensaje = text_create("notification",notData);
+					Generalfunc.sendPushOne(item.token, 1, "", mensaje.mensaje, notData, function(data){
+						cb(null, data );
+					}, function(data){
+						cb(null, data );
+					});
+				}, function(err, results){
+					sucess( results );
 				});
-			}, function(err, results){
-				sucess( results );
 			});
 		});
 	}
 }
+function add(d, success, fail){
+	var pushevent = new PushEvent( d );
+	pushevent.save(function(err, pushEv){
+		if(!err && pushEv){
+			success( pushEv );	
+		}else{
+			fail(err);
+		}	
+	});
+}
+function addOrGet(type, id, profile, success, fail){
+	var data = {};
+	var search = {};
+	if(type == 1){
+		data = {
+			profile: profile,
+			read:   false,
+			type:  type,
+			notification: id
+		};
+		search = {
+			profile: profile,
+			type: type,
+			notification: id
+		};
+	}else{
+		data = {
+			profile: profile,
+			read:   false,
+			type:  type,
+			message: id
+		};
+		search = {
+			profile: profile,
+			type: type,
+			message: id
+		};
+	}
+
+	console.log( data );
+	console.log( search );
+	PushEvent.findOne(search).populate('profile').exec(function(err, pushEventData){
+		if(!err && pushEventData){
+			if(pushEventData.length > 0){
+				success( pushEventData );
+			}else{
+				add(data, function(pushEventData){
+					PushEvent.findOne({ _id: pushEventData._id }).populate('profile').exec(function(err, pushEventData){
+						success(pushEventData);
+					});
+				}, function(err){
+					fail(err);
+				});
+			}
+		}else{
+			add(data, function(pushEventData){
+				PushEvent.findOne({ _id: pushEventData._id }).populate('profile').exec(function(err, pushEventData){
+					success(pushEventData);
+				});
+			}, function(err){
+				fail(err);
+			});
+		}
+	});
+};
+exports.add                  = add;
+exports.addOrGet             = addOrGet;
 exports.sendMessNotification = sendMessNotification;
 exports.sendNotification     = sendNotification;
 exports.get_devices          = get_devices;
