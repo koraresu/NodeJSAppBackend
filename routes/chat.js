@@ -579,6 +579,8 @@ router.message = function(data, callback){
 							
 							var name = mongoose.Types.ObjectId();
 							var path = __dirname + "/../public/messages/" + name + ".png";
+							console.log( data.image );
+							console.log( path );
 							decodeBase64Image(data.image, path);
 
 							text = '<a href="http://thehiveapp.mx:3000/messages/'+name+'.png" class="image"><img src="http://thehiveapp.mx:3000/messages/'+name+'.png" /></a>';
