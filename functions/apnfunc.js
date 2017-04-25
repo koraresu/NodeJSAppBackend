@@ -84,7 +84,7 @@ function sendMessNotification(id, success){
 			}
 			async.map(profiles, function(item, callback){
 				Profile.findOne({ _id: item.toString() }).exec(function(errprof, profData){
-					Pushfunc.addOrGet(0, messData._id, profData._id, function(pushEvent){
+					addOrGet(0, messData._id, profData._id, function(pushEvent){
 						get_devices(profData._id, function(item, cb){
 							var mensaje = text_create("message",messData);
 							var name = "";
@@ -112,7 +112,7 @@ function sendNotification(id, sucess){
 		Notification.findOne({
 			_id: id
 		}).populate('profile').populate('profile_emisor').populate('network').populate('profile_mensaje').exec(function(errNot, notData){
-			Pushfunc.addOrGet(1, notData._id, notData.profile, function(pushEvent){
+			addOrGet(1, notData._id, notData.profile, function(pushEvent){
 				get_devices(notData.profile, function(item, cb){
 					var mensaje = text_create("notification",notData);
 					Generalfunc.sendPushOne(item.token, 1, "", mensaje.mensaje, notData, function(data){
