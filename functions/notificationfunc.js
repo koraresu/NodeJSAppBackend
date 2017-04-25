@@ -35,9 +35,9 @@ var City         = model.city;
 var State        = model.state;
 var Country      = model.country;
 
-var Generalfunc = require('./generalfunc');
-var Pushfunc    = require('./pushfunc');
-var APNfunc    = require('./apnfunc');
+var Generalfunc  = require('./generalfunc');
+var Pushfunc     = require('./pushfunc');
+var APNfunc      = require('./apnfunc');
 
 exports.get = function(search, callback){
 	model.notification.find(search).populate('profile').populate('profile_emisor').populate('profile_mensaje').populate('busqueda').exec(function(errNotification, notificationData){
@@ -48,7 +48,7 @@ exports.get = function(search, callback){
 			callback(false);
 		}
 	});
-}
+};
 exports.getOne = function(search, callback){
 	model.notification.findOne(search).populate('profile').populate('profile_emisor').populate('profile_mensaje').exec(function(errNotification, notificationData){
 		if(!errNotification && notificationData){
@@ -58,7 +58,7 @@ exports.getOne = function(search, callback){
 			callback(false);
 		}
 	});
-}
+};
 exports.getOne2Callback = function(search, success, fail){
 	model.notification.findOne(search).populate('profile').populate('profile_emisor').populate('profile_mensaje').exec(function(errNotification, notificationData){
 		if(!errNotification && notificationData){
@@ -67,7 +67,7 @@ exports.getOne2Callback = function(search, success, fail){
 			fail(0);
 		}
 	});
-}
+};
 exports.addOrGet = function(search, d, callback){
 	if(d == null){
 		callback(false);
@@ -79,7 +79,9 @@ exports.addOrGet = function(search, d, callback){
 					not.clicked = d.clicked;
 					not.save(function(err, notificationData){
 						if(!err && notificationData){
-							callback(true, notificationData);
+							APNfunc.sendNotification(notificationData._id, function(){
+								callback(true, notificationData);
+							});
 						}else{
 							callback(false, notificationData);
 						}
@@ -90,7 +92,9 @@ exports.addOrGet = function(search, d, callback){
 						console.log("Erro Notification:");
 						console.log(errNotification);
 						if(!errNotification && notificationData){
-							callback(true, notificationData);	
+							APNfunc.sendNotification(notificationData._id, function(){
+								callback(true, notificationData);
+							});
 						}else{
 							callback(false);
 						}
@@ -102,7 +106,9 @@ exports.addOrGet = function(search, d, callback){
 					console.log("Erro Notification:");
 					console.log(errNotification);
 					if(!errNotification && notificationData){
-						callback(true, notificationData);	
+						APNfunc.sendNotification(notificationData._id, function(){
+							callback(true, notificationData);	
+						});
 					}else{
 						callback(false);
 					}
@@ -111,7 +117,7 @@ exports.addOrGet = function(search, d, callback){
 		});
 		
 	}
-}
+};
 exports.add = function(d, callback, io){
 	if(d == null){
 		callback(false);
@@ -132,18 +138,21 @@ exports.add = function(d, callback, io){
 
 		var notification = new Notification(d);
 		notification.save(function(errNotification, notificationData){
+
 			console.log("Erro Notification:");
 			console.log(errNotification);
 			if(!errNotification && notificationData){
-				send(notificationData._id, function(){
-					callback(true, notificationData);	
-				},io);
+				APNfunc.sendNotification(notificationData._id, function(){
+					send(notificationData._id, function(){
+						callback(true, notificationData);	
+					},io);
+				});
 			}else{
 				callback(false);
 			}
 		});
 	}
-}
+};
 exports.click = function(search, stat, success, fail){
 	Notification.findOne(search).exec(function(err,notificationData){
 		notificationData.clicked = true;
@@ -166,11 +175,8 @@ exports.click = function(search, stat, success, fail){
 			}
 		});
 	});
-}
+};
 function push(notificationData){
-		
-          //console.log("GetConvProfile");
-          //console.log(profile);
           if(notificationData != undefined){
           	if(notificationData.profile != undefined){
           		if(notificationData.profile._id != undefined){
@@ -182,9 +188,7 @@ function push(notificationData){
           		}
           	}
           }
-          
-
-}
+};
 function send(id, success,io){
 	console.log("+ SEND SOCKET:----------------------------------+");
 	Notification.findOne({ _id: id }).populate('profile').populate('profile_emisor').populate('profile_mensaje').populate('network').exec(function(errNotification, notificationData){
@@ -227,9 +231,8 @@ function send(id, success,io){
 			console.log( message_id );
 			success();
 		});
-	});
-	
-}
+	});	
+};
 
 exports.send = send;
 exports.push = push;
