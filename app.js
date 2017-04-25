@@ -283,14 +283,27 @@ io.on('connection', function(socket){
           message: messageData.message
         };
         
-        socket.emit('message',{data: d, t:true, accion: 'message' });
-        socket.broadcast.to(messageData.conversation.toString()).emit('message',{data: d, t:false, accion: 'message' });
+        var conversation_id = messageData.conversation.toString();
+
+        socket.emit('message',{
+          data: d,
+          t:true,
+          accion: 'message'
+        });
+        socket.broadcast.to( conversation_id ).emit('message',{
+          data: d,
+          t:false,
+          accion: 'message'
+        });
 
         /******* Apple Push Notification *****/
         //console.log("/******* Apple Push Notification *****/");
-
         APNfunc.sendMessNotification(messageData._id, function(){
-
+          Generalfunc.NoReaded(profile._id, function(num){
+            socket.emit('set_alert_num', num);
+          }, function(st){
+            console.log("Gneralfunc.NoReaded Error:" + st);
+          });
         });
       }
     });

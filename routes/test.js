@@ -165,7 +165,6 @@ router.get('/sendpush/message/:message_id', function(req, res){
       res.json( data );
     });
   }
-  
 });
 module.exports = router;
 
