@@ -88,14 +88,20 @@ function sendMessNotification(id, success){
 				Profile.findOne({ _id: item.toString() }).exec(function(errprof, profData){
 					addOrGet(0, messData._id, profData._id, function(pushEvent){
 						get_devices(profData._id, function(item, cb){
-							var mensaje = text_create("message",messData);
-							var name = "";
-							name = profData.first_name + " " + profData.last_name;
-							Generalfunc.sendPushOne(item.token, 1, name, mensaje.mensaje, messData, function(data){
-								cb(null, data );
-							}, function(data){
-								cb(null, data );
-							});
+							var t = item.token;
+							t = t.trim();
+							if(t != ""){
+								var mensaje = text_create("message",messData);
+								var name = "";
+								name = profData.first_name + " " + profData.last_name;
+								Generalfunc.sendPushOne(t, 1, name, mensaje.mensaje, messData, function(data){
+									cb(null, data );
+								}, function(data){
+									cb(null, data );
+								});
+							}else{
+								cb(null, null);
+							}
 						}, function(err, results){
 							callback(null, results);
 						});
