@@ -75,6 +75,7 @@ function sendMessNotification(id, success){
 		}).populate('profile_id').populate('conversation').exec(function(errMess, messData){
 			console.log( messData );
 
+			var mensaje = text_create("message",messData);
 			var profile_id = messData.profile_id._id;
 			var profiles = messData.conversation.profiles;
 
@@ -84,26 +85,25 @@ function sendMessNotification(id, success){
 				delete profiles[index];
 				profiles = Generalfunc.cleanArray(profiles);
 			}
+
 			async.map(profiles, function(item, callback){
 				Profile.findOne({ _id: item.toString() }).exec(function(errprof, profData){
+					var name = profData.first_name + " " + profData.last_name;
 					addOrGet(0, messData._id, profData._id, function(pushEvent){
 						get_devices(profData._id, function(item, cb){
 							var t = item.token;
 							t = t.trim();
 							if(t != ""){
-								var mensaje = text_create("message",messData);
-								var name = "";
-								name = profData.first_name + " " + profData.last_name;
-								Generalfunc.sendPushOne(t, 1, name, mensaje.mensaje, messData, function(data){
-									cb(null, data );
-								}, function(data){
-									cb(null, data );
-								});
+								cb(null, t );
 							}else{
 								cb(null, null);
 							}
 						}, function(err, results){
-							callback(null, results);
+							results = Generalfunc.cleanArray( results );
+
+							sendMultiple(function(data){
+								callback(null, data );
+							},results, name+": "+mensaje.mensaje, messData);
 						});
 					});
 				});
@@ -119,17 +119,22 @@ function sendNotification(id, sucess){
 
 		Notification.findOne({
 			_id: id
-		}).populate('profile').populate('profile_emisor').populate('network').populate('profile_mensaje').exec(function(errNot, notData){
+		})
+		.populate('profile')
+		.populate('profile_emisor')
+		.populate('network')
+		.populate('profile_mensaje')
+		.exec(function(errNot, notData){
+			var mensaje = text_create("notification",notData);
 			addOrGet(1, notData._id, notData.profile, function(pushEvent){
 				get_devices(notData.profile, function(item, cb){
-					var mensaje = text_create("notification",notData);
-					Generalfunc.sendPushOne(item.token, 1, "", mensaje.mensaje, notData, function(data){
-						cb(null, data );
-					}, function(data){
-						cb(null, data );
-					});
+					cb(null, item.token);
 				}, function(err, results){
-					sucess( results );
+
+					sendMultiple(function(data){
+						sucess( data );
+					},results, mensaje.mensaje, notData);
+
 				});
 			});
 		});
@@ -200,6 +205,36 @@ function addOrGet(type, id, profile, success, fail){
 		}
 	});
 };
+function sendOne(devices, message, payload, badge, sound){
+	if(typeof devices == "string"){
+		sendMultiple(devices, message, payload, badge, sound);
+	}
+};
+function sendMultiple(ca, devices, message, payload, badge, sound){
+	if(badge == undefined || badge == null){ badge = 1; };
+	if(sound == undefined || sound == null || sound == ""){ sound = "ping.aiff"; };
+	if(payload == undefined){ payload = {}; };
+
+	var note        = new apn.Notification();
+	var deviceToken = devices;
+	note.expiry     = Math.floor(Date.now() / 1000) + 3600; // Expires 1 hour from now.
+	note.badge      = badge;
+	note.sound      = sound;
+	note.alert      = message;
+	note.payload    = payload;
+	note.topic      = "com.thehiveapp.thehive";
+
+	Generalfunc.apnProvider.send(note, deviceToken).then( (result) => {
+		console.log( result );
+		if(result.failed[0] != undefined){
+			if(result.failed[0].error != undefined){
+				console.log( result.failed[0].error );
+			}
+		}
+    	ca(result);
+	});
+};
+exports.sendMultiple         = sendMultiple;
 exports.add                  = add;
 exports.addOrGet             = addOrGet;
 exports.sendMessNotification = sendMessNotification;
