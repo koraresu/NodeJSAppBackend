@@ -98,6 +98,7 @@ function sendMessNotification(id, success){
 
 			async.map(profiles, function(item, callback){
 				Profile.findOne({ _id: item.toString() }).exec(function(errprof, profData){
+					console.log( profData );
 					var name = profData.first_name + " " + profData.last_name;
 					addOrGet(0, messData._id, profData._id, function(pushEvent){
 						get_devices(profData._id, function(item, cb){
