@@ -147,12 +147,6 @@ function sendNotification(id, sucess){
 
 				}, function(err, results){
 					results = Generalfunc.cleanArray( results );
-					PushEvent.find({
-						profile:,
-						read: false
-					}).exec(function(){
-
-					});
 					sendMultiple(function(data){
 						sucess( data );
 					},results, mensaje.mensaje, notData);
