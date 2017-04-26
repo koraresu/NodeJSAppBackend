@@ -236,7 +236,7 @@ function sendMultiple(ca, devices, message, payload, badge, sound){
 	note.payload    = payload;
 	note.topic      = "com.thehiveapp.thehive";
 
-	Generalfunc.apnProvider.send(note, deviceToken).then( (result) => {
+	Generalfunc.apnProvider().send(note, deviceToken).then( (result) => {
 		console.log( result );
 		if(result.failed[0] != undefined){
 			if(result.failed[0].error != undefined){
