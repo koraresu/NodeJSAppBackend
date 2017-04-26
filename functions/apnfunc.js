@@ -72,7 +72,10 @@ function sendMessNotification(id, success){
 		id = mongoose.Types.ObjectId( id );
 		Message.findOne({
 			_id: id
-		}).populate('profile_id').populate('conversation').exec(function(errMess, messData){
+		})
+		.populate('profile_id')
+		.populate('conversation')
+		.exec(function(errMess, messData){
 			console.log( messData );
 
 			var mensaje = text_create("message",messData);
@@ -91,13 +94,11 @@ function sendMessNotification(id, success){
 					var name = profData.first_name + " " + profData.last_name;
 					addOrGet(0, messData._id, profData._id, function(pushEvent){
 						get_devices(profData._id, function(item, cb){
-							var t = item.token;
-							t = t.trim();
-							if(t != ""){
-								cb(null, t );
-							}else{
-								cb(null, null);
-							}
+							
+							tokenItem(item.token, function(token){
+								cb(null, token);
+							});
+
 						}, function(err, results){
 							results = Generalfunc.cleanArray( results );
 
@@ -128,9 +129,13 @@ function sendNotification(id, sucess){
 			var mensaje = text_create("notification",notData);
 			addOrGet(1, notData._id, notData.profile, function(pushEvent){
 				get_devices(notData.profile, function(item, cb){
-					cb(null, item.token);
-				}, function(err, results){
 
+					tokenItem(item.token, function(token){
+						cb(null, token);
+					});
+
+				}, function(err, results){
+					results = Generalfunc.cleanArray( results );
 					sendMultiple(function(data){
 						sucess( data );
 					},results, mensaje.mensaje, notData);
@@ -231,9 +236,18 @@ function sendMultiple(ca, devices, message, payload, badge, sound){
 				console.log( result.failed[0].error );
 			}
 		}
-    	ca(result);
+		ca(result);
 	});
 };
+function tokenItem(token, cb){
+	token = token.trim();
+	if(token == undefined || token == "" || token == null){
+		cb(null);
+	}else{
+		cb(token);
+	}
+}
+exports.tokenItem            = tokenItem;
 exports.sendMultiple         = sendMultiple;
 exports.add                  = add;
 exports.addOrGet             = addOrGet;
