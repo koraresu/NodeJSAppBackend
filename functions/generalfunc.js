@@ -47,17 +47,7 @@ var options = {
   //production: false
   production: true
 };
-var optionsDev = {
-  token: {
-    key: "conf/key.p8",
-    keyId: "822637C6D9",
-    teamId: "58GA47LFA6",
-  },
-  //production: false
-  production: false
-};
 var apnProvider = new apn.Provider(options);
-var apnProviderDev = new apn.Provider(optionsDev);
 
 var nodemailer = require('nodemailer');
 var smtpConfig = {
@@ -107,7 +97,9 @@ var sendMail = function(toAddress, subject, content, next){
 		return next(error, info);
 	});
 }; 
-
+exports.apn = function(){
+	return apn;
+}
 exports.apnProvider = function(){
 	return apnProvider;
 }

@@ -32,6 +32,7 @@ var PushEvent    = model.pushevent;
 var Generalfunc = require('./generalfunc');
 var Interfaz = require('./interfazpushfunc');
 
+
 function get_interfaz(){
 	return Interfaz;
 }
@@ -224,7 +225,7 @@ function sendMultiple(ca, devices, message, payload, badge, sound){
 	if(sound == undefined || sound == null || sound == ""){ sound = "ping.aiff"; };
 	if(payload == undefined){ payload = {}; };
 
-	var note        = new apn.Notification();
+	var note        = new Generalfunc.apn().Notification();
 	var deviceToken = devices;
 	note.expiry     = Math.floor(Date.now() / 1000) + 3600; // Expires 1 hour from now.
 	note.badge      = badge;
