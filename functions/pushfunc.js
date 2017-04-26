@@ -36,87 +36,13 @@ var Country      = model.country;
 var Generalfunc = require('./generalfunc');
 
 function prepare(profile_id, message_id, success, fail){
-	if(mongoose.Types.ObjectId.isValid(profile_id)){
-		profile_id = mongoose.Types.ObjectId( profile_id );
-	}else{
-		profile_id = null;
-	}
-	if(mongoose.Types.ObjectId.isValid(message_id)){
-		message_id = mongoose.Types.ObjectId( message_id );
-	}else{
-		message_id = null;
-	}
-
-	if(profile_id == null || message_id == null){
-		fail(profile_id, message_id);
-	}else{
-		success(profile_id, message_id);
-	}
+	APNfunc.prepare(profile_id, message_id, success, fail);
 }
 function add(d, success, fail){
-	var pushevent = new PushEvent( d );
-	pushevent.save(function(err, pushEv){
-		if(!err && pushEv){
-			success( pushEv );	
-		}else{
-			fail(err);
-		}	
-	});
+	APNfunc.add(d, success, fail);
 }
 function addOrGet(type, id, profile, success, fail){
-	var data = {};
-	var search = {};
-	if(type == 1){
-		data = {
-			profile: profile,
-			read:   false,
-			type:  type,
-			notification: id
-		};
-		search = {
-			profile: profile,
-			type: type,
-			notification: id
-		};
-	}else{
-		data = {
-			profile: profile,
-			read:   false,
-			type:  type,
-			message: id
-		};
-		search = {
-			profile: profile,
-			type: type,
-			message: id
-		};
-	}
-
-	console.log( data );
-	console.log( search );
-	PushEvent.findOne(search).populate('profile').exec(function(err, pushEventData){
-		if(!err && pushEventData){
-			if(pushEventData.length > 0){
-				success( pushEventData );
-			}else{
-				add(data, function(pushEventData){
-					PushEvent.findOne({ _id: pushEventData._id }).populate('profile').exec(function(err, pushEventData){
-						success(pushEventData);
-					});
-				}, function(err){
-					fail(err);
-				});
-			}
-		}else{
-			add(data, function(pushEventData){
-				PushEvent.findOne({ _id: pushEventData._id }).populate('profile').exec(function(err, pushEventData){
-					success(pushEventData);
-				});
-			}, function(err){
-				fail(err);
-			});
-		}
-	});
+	APNfunc.addOrGet(type, id, profile, success, fail);
 }
 function createPush(pushEvent, token,dItem, success, fail){
 	var badge = 0;
@@ -253,24 +179,18 @@ function send(type, profile_id, dItem, success, fail){
 	var device = [];
 	prepare(profile_id, message_id, function(profile_id,message_id){
 		addOrGet(type, message_id, profile_id, function(pushEventData){
-			Device.find({ profile: profile_id }).sort({ $natural: -1 }).exec(function(err, deviceData){
-				async.map(deviceData, function(item, callback){
-					var token = item.token;
-					if(device.indexOf(token) == -1){
-						console.log( "Entro" );
-						device[device.length] = token;
-						createPush(pushEventData, item, dItem, function(pushData){
-							callback(null, pushData);
-						}, function(err){
-							callback(err, null);
-						});
-					}else{
-						console.log( "No Entro" );
-						callback(null, null);
-					}
-				}, function(err, results){
-					success({ event: pushEventData, pushes: results, error: err, devices: device });
+
+			get_devices(profile_id, function(item, cb){
+							
+				APNfunc.tokenItem(item.token, function(token){
+					cb(null, token);
 				});
+
+			}, function(err, results){
+				results = Generalfunc.cleanArray( results );
+				sendMultiple(function(data){
+					success(null, data );
+				},results, mensaje.mensaje, dItem);
 			});
 		}, function(err){
 			fail(1);

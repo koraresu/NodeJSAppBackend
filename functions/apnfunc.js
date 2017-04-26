@@ -30,7 +30,11 @@ var Push         = model.push;
 var PushEvent    = model.pushevent;
 
 var Generalfunc = require('./generalfunc');
+var Interfaz = require('./interfazpushfunc');
 
+function get_interfaz(){
+	return Interfaz;
+}
 function get_devices(profile_id, itemFn, resultFn ){
 	Device.find({
 		profile: profile_id
@@ -247,6 +251,7 @@ function tokenItem(token, cb){
 		cb(token);
 	}
 }
+exports.get_interfaz         = get_interfaz;
 exports.tokenItem            = tokenItem;
 exports.sendMultiple         = sendMultiple;
 exports.add                  = add;

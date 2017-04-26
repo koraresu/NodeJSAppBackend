@@ -39,7 +39,7 @@ var Generalfunc  = require('./generalfunc');
 var Pushfunc     = require('./pushfunc');
 var APNfunc      = require('./apnfunc');
 
-exports.get = function(search, callback){
+exports.get             = function(search, callback){
 	model.notification.find(search).populate('profile').populate('profile_emisor').populate('profile_mensaje').populate('busqueda').exec(function(errNotification, notificationData){
 
 		if(!errNotification && notificationData){
@@ -49,7 +49,7 @@ exports.get = function(search, callback){
 		}
 	});
 };
-exports.getOne = function(search, callback){
+exports.getOne          = function(search, callback){
 	model.notification.findOne(search).populate('profile').populate('profile_emisor').populate('profile_mensaje').exec(function(errNotification, notificationData){
 		if(!errNotification && notificationData){
 			_.
@@ -68,7 +68,7 @@ exports.getOne2Callback = function(search, success, fail){
 		}
 	});
 };
-exports.addOrGet = function(search, d, callback){
+exports.addOrGet        = function(search, d, callback){
 	if(d == null){
 		callback(false);
 	}else{
@@ -118,7 +118,7 @@ exports.addOrGet = function(search, d, callback){
 		
 	}
 };
-exports.add = function(d, callback, io){
+exports.add             = function(d, callback, io){
 	if(d == null){
 		callback(false);
 	}else{
@@ -153,7 +153,7 @@ exports.add = function(d, callback, io){
 		});
 	}
 };
-exports.click = function(search, stat, success, fail){
+exports.click           = function(search, stat, success, fail){
 	Notification.findOne(search).exec(function(err,notificationData){
 		notificationData.clicked = true;
 		notificationData.status  = stat;
@@ -181,10 +181,9 @@ function push(notificationData){
           	if(notificationData.profile != undefined){
           		if(notificationData.profile._id != undefined){
 
-          			Pushfunc.send(1,notificationData.profile._id, notificationData, function(results){
-          			}, function(results){
+          			APNfunc.sendNotification(notificationData._id, function(results){
+          				console.log( results );
           			});
-
           		}
           	}
           }
@@ -192,8 +191,8 @@ function push(notificationData){
 function send(id, success,io){
 	console.log("+ SEND SOCKET:----------------------------------+");
 	Notification.findOne({ _id: id }).populate('profile').populate('profile_emisor').populate('profile_mensaje').populate('network').exec(function(errNotification, notificationData){
-		Pushfunc.prepare(notificationData.profile._id, notificationData._id, function(profile_id, notification_id){
-			Pushfunc.addOrGet(1, notification_id, profile_id, function(pushEventData){
+		APNfunc.get_interfaz.prepare(notificationData.profile._id, notificationData._id, function(profile_id, notification_id){
+			APNfunc.addOrGet(1, notification_id, profile_id, function(pushEventData){
 				Device.find({ profile: profile_id }).sort({ $natural: -1 }).exec(function(err, deviceData){
 					Online.find({ profiles: profile_id }).sort({ $natural: -1 }).exec(function(errOnline, onlineData){
 						async.map(onlineData, function(item, callback){

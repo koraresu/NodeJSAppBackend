@@ -1,5 +1,3 @@
-var newrelic = require('newrelic');
-
 var express      = require('express');
 var path         = require('path');
 var favicon      = require('serve-favicon');
@@ -297,7 +295,6 @@ io.on('connection', function(socket){
         });
 
         /******* Apple Push Notification *****/
-        //console.log("/******* Apple Push Notification *****/");
         APNfunc.sendMessNotification(messageData._id, function(){
           Generalfunc.NoReaded(profile._id, function(num){
             socket.emit('set_alert_num', num);
@@ -337,28 +334,6 @@ io.on('connection', function(socket){
                 console.log("Gneralfunc.NoReaded Error:" + st);
               });
           });
-          /*
-          Pushfunc.getNotProfile(notificationData._id, socket, function(profile){
-            console.log("GetConvProfile");
-            console.log(profile);
-            Pushfunc.send(1,profile._id, notificationData._id, function(results){
-              console.log( results );
-              Generalfunc.NoReaded(profile._id, function(num){
-                socket.emit('set_alert_num', num);
-              }, function(st){
-                console.log("Gneralfunc.NoReaded Error:" + st);
-              });
-            }, function(results){
-              console.log( results );
-              Generalfunc.NoReaded(profile._id, function(num){
-                socket.emit('set_alert_num', num);
-              }, function(st){
-                console.log("Gneralfunc.NoReaded Error:" + st);
-              });
-            });
-          }, function(){
-          });
-          */
         }
       }
 
@@ -387,7 +362,6 @@ io.on('connection', function(socket){
     });
   });
   socket.on('message_readed', function(data){
-    newrelic.addCustomParameter("message_readed",data);
     chatrouter.setReadedMessage(data, function(conversationData){
       Generalfunc.SocketNoReaded(socket.id, function(num){
         socket.emit("set_alert_num", num);
