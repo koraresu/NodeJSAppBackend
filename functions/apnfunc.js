@@ -147,6 +147,12 @@ function sendNotification(id, sucess){
 
 				}, function(err, results){
 					results = Generalfunc.cleanArray( results );
+					PushEvent.find({
+						profile:,
+						read: false
+					}).exec(function(){
+
+					});
 					sendMultiple(function(data){
 						sucess( data );
 					},results, mensaje.mensaje, notData);
@@ -258,6 +264,10 @@ function tokenItem(token, cb){
 		cb(token);
 	}
 }
+function set_alert_num(num, io){
+	io.emit('set_alert_num', num);
+}
+exports.set_alert_num        = set_alert_num;
 exports.get_interfaz         = get_interfaz;
 exports.tokenItem            = tokenItem;
 exports.sendMultiple         = sendMultiple;

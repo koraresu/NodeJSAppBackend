@@ -247,7 +247,7 @@ io.on('connection', function(socket){
         socket.emit('conversationsjoin',roomsData);
 
         Generalfunc.SocketNoReaded(socket.id, function(num){
-          socket.emit("set_alert_num", num);
+          APNfunc.set_alert_num(num, socket);
         }, function(){
 
         });
@@ -297,7 +297,7 @@ io.on('connection', function(socket){
         /******* Apple Push Notification *****/
         APNfunc.sendMessNotification(messageData._id, function(){
           Generalfunc.NoReaded(profile._id, function(num){
-            socket.emit('set_alert_num', num);
+            APNfunc.set_alert_num(num, socket);
           }, function(st){
             console.log("Gneralfunc.NoReaded Error:" + st);
           });
@@ -329,7 +329,7 @@ io.on('connection', function(socket){
 
           APNfunc.sendNotification(notificationData._id, function(){
              Generalfunc.NoReaded(profile._id, function(num){
-                socket.emit('set_alert_num', num);
+                APNfunc.set_alert_num(num, socket);
               }, function(st){
                 console.log("Gneralfunc.NoReaded Error:" + st);
               });
@@ -364,7 +364,7 @@ io.on('connection', function(socket){
   socket.on('message_readed', function(data){
     chatrouter.setReadedMessage(data, function(conversationData){
       Generalfunc.SocketNoReaded(socket.id, function(num){
-        socket.emit("set_alert_num", num);
+        APNfunc.set_alert_num(num, socket);
       }, function(){
 
       });
@@ -375,18 +375,19 @@ io.on('connection', function(socket){
   socket.on('get_no_readed', function(){
 
     Generalfunc.SocketNoReaded(socket.id, function(num){
-      socket.emit("set_alert_num", num);
+      APNfunc.set_alert_num(num, socket);
     }, function(err){
       console.log("SocketNoReaded Error");
       console.log(err);
-      socket.emit("set_alert_num", 0);
+      APNfunc.set_alert_num(0, socket);
+
     });
   });
   socket.on('notification_readed', function(data){
 
     Generalfunc.NotificationReaded(data, function( results ){
      Generalfunc.SocketNoReaded(socket.id, function(num){
-      socket.emit("set_alert_num", num);
+      APNfunc.set_alert_num(num, socket);
     }, function(err){
       console.log("SocketNoReaded Error");
       console.log(err);
