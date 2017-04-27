@@ -83,7 +83,7 @@ function sendBadge(profile_id, num,  success){
 				get_devices(profData._id, function(item, cb){
 
 					tokenItem(item.token, function(token){
-						cb(null, token);
+						cb(null, token );
 					});
 
 				}, function(err, results){
@@ -91,7 +91,7 @@ function sendBadge(profile_id, num,  success){
 
 					sendMultiple(function(data){
 						success( data );
-					},results, "", {}, num);
+					}, results, "", {}, num);
 				});
 			
 		});
@@ -247,9 +247,9 @@ function addOrGet(type, id, profile, success, fail){
 		}
 	});
 };
-function sendOne(devices, message, payload, badge, sound){
+function sendOne(ca,devices, message, payload, badge, sound){
 	if(typeof devices == "string"){
-		sendMultiple(devices, message, payload, badge, sound);
+		sendMultiple(ca,devices, message, payload, badge, sound);
 	}
 };
 function sendMultiple(ca, devices, message, payload, badge, sound){
