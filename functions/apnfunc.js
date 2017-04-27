@@ -39,6 +39,8 @@ function get_interfaz(){
 	return Interfaz;
 }
 function get_devices(profile_id, itemFn, resultFn ){
+	itemFn = (itemFn == undefined)?function(item, callback){ callback(null, item.token);}:itemFn;
+	resultFn = (resultFn == undefined)?function(err, results){ }:resultFn;
 	Device.find({
 		profile: profile_id
 	}).exec(function(errDev, devData){
