@@ -90,13 +90,13 @@ function sendBadge(profile_id, num,  success){
 					results = Generalfunc.cleanArray( results );
 
 					sendMultiple(function(data){
-						callback(null, data );
-					},results, "", {}, );
+						success( data );
+					},results, "", {}, num);
 				});
 			
 		});
 	}else{
-
+		success(null);
 	}
 }
 function sendMessNotification(id, success){
