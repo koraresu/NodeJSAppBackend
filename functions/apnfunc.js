@@ -293,6 +293,7 @@ exports.tokenItem            = tokenItem;
 exports.sendMultiple         = sendMultiple;
 exports.add                  = add;
 exports.addOrGet             = addOrGet;
+exports.sendBadge            = sendBadge;
 exports.sendMessNotification = sendMessNotification;
 exports.sendNotification     = sendNotification;
 exports.get_devices          = get_devices;
