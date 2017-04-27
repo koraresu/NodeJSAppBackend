@@ -72,6 +72,7 @@ router.get('/send/message/:profile_id/:notification_id', function(req, res){
   });
 });
 router.get('/push/:device_token', function(req, res){
+  
   Generalfunc.sendPushOne( req.params.device_token, 1, "Jose", "Test", {}, function(results){
     res.send(results);
   }, function(results){
