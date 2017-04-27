@@ -129,23 +129,23 @@ function sendMessNotification(id, success){
 				Profile.findOne({
 					_id: item.toString()
 				}).exec(function(errprof, profData){
-					console.log("ProfData SendMess");
-					console.log( profData );
+
 					var name = "";
 					if(messData.profile_id != undefined){
 						name = messData.profile_id.first_name + " " + messData.profile_id.last_name;	
 					}
 					addOrGet(0, messData._id, profData._id, function(pushEvent){
 						get_devices(profData._id, function(item, cb){
-							
 							tokenItem(item.token, function(token){
 								cb(null, token);
 							});
-
 						}, function(err, results){
 							results = Generalfunc.cleanArray( results );
 
 							Generalfunc.NoReaded(profData._id, function(num){
+								
+								console.log("APN NoReaded", num);
+
 								sendMultiple(function(data){
 									callback(null, data );
 								},results, name+": "+mensaje.mensaje, messData);

@@ -489,18 +489,14 @@ function NoReaded(profile_id, success, fail){
 	if(mongoose.Types.ObjectId.isValid(profile_id)){
 		console.log("ProfileID No Readed:");
 		console.log( profile_id );
-		
+
 		profile_id = mongoose.Types.ObjectId(profile_id);
 		PushEvent.find({
 			profile: profile_id,
 			read: false
-		}).exec(function(err, pushEventData){
+		}).count(function(err, num){
 			if(!err && pushEventData){
-				console.log("PushEventData No Readed:");
-				console.log( pushEventData );
-				console.log("PushEventData No Readed Length:");
-				console.log(pushEventData.length);
-				success(pushEventData.length);
+				success(num);
 			}else{
 				fail(1);
 			}
