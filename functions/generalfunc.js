@@ -495,7 +495,7 @@ function NoReaded(profile_id, success, fail){
 			profile: profile_id,
 			read: false
 		}).count(function(err, num){
-			if(!err && pushEventData){
+			if(!err && num){
 				success(num);
 			}else{
 				fail(1);
