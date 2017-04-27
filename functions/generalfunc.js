@@ -478,14 +478,23 @@ function SocketNoReaded(socket, success, fail){
 	});
 }
 function NoReaded(profile_id, success, fail){
-	console.log("ProfileID No Readed:");
-	console.log( profile_id );
+	
 	if(profile_id._id != undefined){
 		profile_id = profile_id._id;
 	}
+	
+	console.log("ProfileID No Readed:");
+	console.log( profile_id );
+
 	if(mongoose.Types.ObjectId.isValid(profile_id)){
+		console.log("ProfileID No Readed:");
+		console.log( profile_id );
+		
 		profile_id = mongoose.Types.ObjectId(profile_id);
-		PushEvent.find({ profile: profile_id, read: false }).exec(function(err, pushEventData){
+		PushEvent.find({
+			profile: profile_id,
+			read: false
+		}).exec(function(err, pushEventData){
 			if(!err && pushEventData){
 				console.log("PushEventData No Readed:");
 				console.log( pushEventData );
