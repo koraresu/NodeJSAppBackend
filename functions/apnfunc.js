@@ -142,7 +142,7 @@ function sendMessNotification(id, success){
 						}, function(err, results){
 							results = Generalfunc.cleanArray( results );
 
-							Generalfunc.NoReaded(notData.profile, function(num){
+							Generalfunc.NoReaded(profData._id, function(num){
 								sendMultiple(function(data){
 									callback(null, data );
 								},results, name+": "+mensaje.mensaje, messData);
