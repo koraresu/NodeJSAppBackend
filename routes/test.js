@@ -153,10 +153,12 @@ router.get('/sendpush/notification/:notification_id', function(req, res){
   }
   
 });
-router.get('/sendbadge/:num', function(req, res){
+router.get('/sendbadge/:num/:profile_id', function(req, res){
   var num = req.params.num;
-  APNfunc.set_alert_num(num);
-  res.send("Enviando");
+  var profile_id = req.params.profile_id;
+  APNfunc.sendBadge(profile_id, num, function(){
+    res.send("Enviando");  
+  });
 });
 router.get('/sendpush/message/:message_id', function(req, res){
   var message_id = req.params.message_id;

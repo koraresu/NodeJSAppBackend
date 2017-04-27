@@ -73,6 +73,32 @@ function profile_notification(collection, notData){
 		return "PruebaMensaje: ";
 	}
 }
+function sendBadge(profile_id, num,  success){
+	if(mongoose.Types.ObjectId.isValid(profile_id)){
+		profile_id = mongoose.Types.ObjectId( profile_id );
+		Profile.findOne({
+			_id: profile_id
+		}).exec(function(errprof, profData){
+			console.log( profData );
+				get_devices(profData._id, function(item, cb){
+
+					tokenItem(item.token, function(token){
+						cb(null, token);
+					});
+
+				}, function(err, results){
+					results = Generalfunc.cleanArray( results );
+
+					sendMultiple(function(data){
+						callback(null, data );
+					},results, "", {}, );
+				});
+			
+		});
+	}else{
+
+	}
+}
 function sendMessNotification(id, success){
 	console.log( id );
 	if(mongoose.Types.ObjectId.isValid(id)){
