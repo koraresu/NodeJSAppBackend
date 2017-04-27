@@ -157,8 +157,7 @@ router.get('/sendpush/notification/:notification_id', function(req, res){
 router.get('/sendbadge/:num/:profile_id', function(req, res){
   var num = req.params.num;
   var profile_id = req.params.profile_id;
-
-  num = num * 1;
+  
   APNfunc.sendBadge(profile_id, num, function(){
     res.send("Enviando");  
   });

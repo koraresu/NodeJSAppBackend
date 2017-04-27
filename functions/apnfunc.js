@@ -74,6 +74,7 @@ function profile_notification(collection, notData){
 	}
 }
 function sendBadge(profile_id, num,  success){
+	if(typeof num == "string"){ num = num * 1; };
 	if(mongoose.Types.ObjectId.isValid(profile_id)){
 		profile_id = mongoose.Types.ObjectId( profile_id );
 		Profile.findOne({
@@ -286,6 +287,15 @@ function tokenItem(token, cb){
 }
 function set_alert_num(num, io){
 	io.emit('set_alert_num', num);
+	var guid = io.guid;
+
+	Tokenfunc.exist(guid, function(status, tokenData){
+		if(status){
+			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
+				sendBadge(profileData._id, num);
+			});
+		}
+	});
 }
 exports.set_alert_num        = set_alert_num;
 exports.get_interfaz         = get_interfaz;
