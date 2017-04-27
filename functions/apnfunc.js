@@ -174,9 +174,16 @@ function sendNotification(id, sucess){
 
 				}, function(err, results){
 					results = Generalfunc.cleanArray( results );
-					sendMultiple(function(data){
-						sucess( data );
-					},results, mensaje.mensaje, notData);
+					Generalfunc.NoReaded(notData.profile, function(num){
+						sendMultiple(function(data){
+							sucess( data );
+						},results, mensaje.mensaje, notData, num);
+					}, function(){
+						sendMultiple(function(data){
+							sucess( data );
+						},results, mensaje.mensaje, notData);
+					});
+					
 
 				});
 			});

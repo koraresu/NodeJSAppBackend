@@ -96,15 +96,14 @@ var sendMail = function(toAddress, subject, content, next){
 	transporter.sendMail(mailOptions, function(error, info){
 		return next(error, info);
 	});
-}; 
-exports.apn = function(){
+};
+function apn(){
 	return apn;
 }
-exports.apnProvider = function(){
+function apnProvider(){
 	return apnProvider;
 }
-
-exports.saveImage = function(file, new_path, callback){
+function saveImage(file, new_path, callback){
 	var tmp_path         = file.path;
 	var extension = path.extname(tmp_path);
 	fs.rename(tmp_path, new_path, function(err){
@@ -113,10 +112,10 @@ exports.saveImage = function(file, new_path, callback){
 		});
 	});
 }
-exports.insensitive = function(text){
+function insensitive(text){
 	return text;
 }
-exports.response = function(type,item, callback){
+function response(type,item, callback){
 	switch(type){
 		case 200:
 			callback({ status: 'success', code: type, message: "Success", data: item});
@@ -147,7 +146,7 @@ exports.response = function(type,item, callback){
 		break;
 	}
 }
-exports.cleanArray = function(actual) {
+function cleanArray(actual) {
 	var newArray = new Array();
 	for (var i = 0; i < actual.length; i++) {
 		if (actual[i]) {
@@ -156,7 +155,7 @@ exports.cleanArray = function(actual) {
 	}
 	return newArray;
 }
-exports.sendEmail = function(file, data,email, asunto, callback){
+function sendEmail(file, data,email, asunto, callback){
 	
 	
 	var template = process.cwd() + '/views/';
@@ -189,19 +188,18 @@ exports.sendEmail = function(file, data,email, asunto, callback){
 			});
     	}	
   	});
-  	
 }
-exports.capitalize = function(s){
+function capitalize(s){
 	s = s.toLowerCase();
 	s = s.replace(/^\s*|\s*$/g, '');
 	return s.charAt(0).toUpperCase() + s.slice(1);
 };
-exports.precise_round = function(num, decimals) {
+function precise_round(num, decimals) {
 	var t = Math.pow(10, decimals);
 	var result = (Math.round((num * t) + (decimals>0?1:0)*(Math.sign(num) * (10 / Math.pow(100, decimals)))) / t).toFixed(decimals);
 	return result/1;
 }
-exports.profile_ajeno = function(profileID,profiles){
+function profile_ajeno(profileID,profiles){
 
 	//console.log("ProfileID:");
 	//console.log( profileID );
@@ -222,7 +220,7 @@ exports.profile_ajeno = function(profileID,profiles){
 		return first;
 	}
 }
-exports.push = function(){
+function push(){
 	var note = new apn.Notification();
 	var deviceToken = device;
 	note.expiry = Math.floor(Date.now() / 1000) + 3600; // Expires 1 hour from now.
@@ -242,7 +240,7 @@ exports.push = function(){
     	ca(result);
 	});
 }
-exports.sendPush = function(device, payload, message, badge, sound, ca){
+function sendPush(device, payload, message, badge, sound, ca){
 	if(sound == undefined || sound == null){
 		sound = "ping.aiff";
 	}
@@ -265,7 +263,7 @@ exports.sendPush = function(device, payload, message, badge, sound, ca){
     	ca(result);
 	});
 }
-exports.isValid = function(id, success, fail){
+function isValid(id, success, fail){
 	if(mongoose.Types.ObjectId.isValid(id)){
 		success(mongoose.Types.ObjectId(id));
 	}else{
@@ -287,9 +285,7 @@ function profile_equal(profileID, profiles){
 	}
 	return { number: number, profile: element };
 }
-
-exports.profile_equal = profile_equal;
-exports.sendPushtoAll = function(type,profileId, message, payload, success, fail){
+function sendPushtoAll(type,profileId, message, payload, success, fail){
 	Pushfunc.addOrGet(type, message._id, profileId, function(pushEvent){
 		Device.find({ profile: profileId }).populate('profile').sort({ $natural: -1 }).exec(function(err, deviceData){
 
@@ -517,7 +513,6 @@ function profiletosocket(profile_id, callback){
 			callback(errOnline, []);
 		}
 	});
-
 }
 function extend(target) {
     var sources = [].slice.call(arguments, 1);
@@ -553,11 +548,27 @@ function review_check(me, friend, success){
 function censurar(text){
 	return text;
 }
-exports.formatName = function(text){
+function formatName(text){
 	if(text == undefined){ text = ""; }
 	text = text.replace(/^\s*|\s*$/g, '');
 	return text;
 }
+exports.apn                = apn;
+exports.apnProvider        = apnProvider;
+exports.saveImage          = saveImage;
+exports.insensitive        = insensitive;
+exports.response           = response;
+exports.cleanArray         = cleanArray;
+exports.sendEmail          = sendEmail;
+exports.capitalize         = capitalize;
+exports.precise_round      = precise_round;
+exports.profile_ajeno      = profile_ajeno;
+exports.push               = push;
+exports.sendPush           = sendPush;
+exports.isValid            = isValid;
+exports.formatName         = formatName;
+exports.sendPushtoAll      = sendPushtoAll;
+exports.profile_equal      = profile_equal;
 exports.review_check       = review_check;
 exports.extend             = extend;
 exports.SocketNoReaded     = SocketNoReaded;
