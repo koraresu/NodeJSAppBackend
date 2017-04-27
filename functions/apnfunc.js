@@ -32,8 +32,8 @@ var Push         = model.push;
 var PushEvent    = model.pushevent;
 
 var Generalfunc = require('./generalfunc');
-var Interfaz = require('./interfazpushfunc');
-
+var Interfaz    = require('./interfazpushfunc');
+var Tokenfunc   = require('./tokenfunc');
 
 function get_interfaz(){
 	return Interfaz;
