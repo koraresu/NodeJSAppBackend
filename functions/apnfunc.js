@@ -148,7 +148,7 @@ function sendMessNotification(id, success){
 
 								sendMultiple(function(data){
 									callback(null, data );
-								},results, name+": "+mensaje.mensaje, messData);
+								},results, name+": "+mensaje.mensaje, messData, num);
 							}, function(){
 								sendMultiple(function(data){
 									callback(null, data );
@@ -189,7 +189,7 @@ function sendNotification(id, sucess){
 					Generalfunc.NoReaded(notData.profile, function(num){
 						sendMultiple(function(data){
 							sucess( data );
-						},results, mensaje.mensaje, notData);
+						},results, mensaje.mensaje, notData, num);
 					}, function(){
 						sendMultiple(function(data){
 							sucess( data );
