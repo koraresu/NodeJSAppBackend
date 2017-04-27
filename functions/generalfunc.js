@@ -62,6 +62,16 @@ var smtpConfig = {
 		pass: 'axovia es lo mejor'
 	}
 };
+/*
+var smtpConfig = {
+  host: "mailtrap.io",
+  port: 2525,
+  auth: {
+    user: "fea6a54f8a714a",
+    pass: "e977cec06a0b1d"
+  }
+};
+*/
 var transporter    = nodemailer.createTransport(smtpConfig,{
 	debug: true
 });
@@ -86,14 +96,15 @@ var sendMail = function(toAddress, subject, content, next){
 	transporter.sendMail(mailOptions, function(error, info){
 		return next(error, info);
 	});
-};
-function apn(){
+}; 
+exports.apn = function(){
 	return apn;
 }
-function apnProvider(){
+exports.apnProvider = function(){
 	return apnProvider;
 }
-function saveImage(file, new_path, callback){
+
+exports.saveImage = function(file, new_path, callback){
 	var tmp_path         = file.path;
 	var extension = path.extname(tmp_path);
 	fs.rename(tmp_path, new_path, function(err){
@@ -102,10 +113,10 @@ function saveImage(file, new_path, callback){
 		});
 	});
 }
-function insensitive(text){
+exports.insensitive = function(text){
 	return text;
 }
-function response(type,item, callback){
+exports.response = function(type,item, callback){
 	switch(type){
 		case 200:
 			callback({ status: 'success', code: type, message: "Success", data: item});
@@ -136,7 +147,7 @@ function response(type,item, callback){
 		break;
 	}
 }
-function cleanArray(actual) {
+exports.cleanArray = function(actual) {
 	var newArray = new Array();
 	for (var i = 0; i < actual.length; i++) {
 		if (actual[i]) {
@@ -145,7 +156,7 @@ function cleanArray(actual) {
 	}
 	return newArray;
 }
-function sendEmail(file, data,email, asunto, callback){
+exports.sendEmail = function(file, data,email, asunto, callback){
 	
 	
 	var template = process.cwd() + '/views/';
@@ -178,18 +189,19 @@ function sendEmail(file, data,email, asunto, callback){
 			});
     	}	
   	});
+  	
 }
-function capitalize(s){
+exports.capitalize = function(s){
 	s = s.toLowerCase();
 	s = s.replace(/^\s*|\s*$/g, '');
 	return s.charAt(0).toUpperCase() + s.slice(1);
 };
-function precise_round(num, decimals) {
+exports.precise_round = function(num, decimals) {
 	var t = Math.pow(10, decimals);
 	var result = (Math.round((num * t) + (decimals>0?1:0)*(Math.sign(num) * (10 / Math.pow(100, decimals)))) / t).toFixed(decimals);
 	return result/1;
 }
-function profile_ajeno(profileID,profiles){
+exports.profile_ajeno = function(profileID,profiles){
 
 	//console.log("ProfileID:");
 	//console.log( profileID );
@@ -210,7 +222,7 @@ function profile_ajeno(profileID,profiles){
 		return first;
 	}
 }
-function push(){
+exports.push = function(){
 	var note = new apn.Notification();
 	var deviceToken = device;
 	note.expiry = Math.floor(Date.now() / 1000) + 3600; // Expires 1 hour from now.
@@ -230,7 +242,7 @@ function push(){
     	ca(result);
 	});
 }
-function sendPush(device, payload, message, badge, sound, ca){
+exports.sendPush = function(device, payload, message, badge, sound, ca){
 	if(sound == undefined || sound == null){
 		sound = "ping.aiff";
 	}
@@ -253,7 +265,7 @@ function sendPush(device, payload, message, badge, sound, ca){
     	ca(result);
 	});
 }
-function isValid(id, success, fail){
+exports.isValid = function(id, success, fail){
 	if(mongoose.Types.ObjectId.isValid(id)){
 		success(mongoose.Types.ObjectId(id));
 	}else{
@@ -275,7 +287,9 @@ function profile_equal(profileID, profiles){
 	}
 	return { number: number, profile: element };
 }
-function sendPushtoAll(type,profileId, message, payload, success, fail){
+
+exports.profile_equal = profile_equal;
+exports.sendPushtoAll = function(type,profileId, message, payload, success, fail){
 	Pushfunc.addOrGet(type, message._id, profileId, function(pushEvent){
 		Device.find({ profile: profileId }).populate('profile').sort({ $natural: -1 }).exec(function(err, deviceData){
 
@@ -503,6 +517,7 @@ function profiletosocket(profile_id, callback){
 			callback(errOnline, []);
 		}
 	});
+
 }
 function extend(target) {
     var sources = [].slice.call(arguments, 1);
@@ -538,27 +553,11 @@ function review_check(me, friend, success){
 function censurar(text){
 	return text;
 }
-function formatName(text){
+exports.formatName = function(text){
 	if(text == undefined){ text = ""; }
 	text = text.replace(/^\s*|\s*$/g, '');
 	return text;
 }
-exports.apn                = apn;
-exports.apnProvider        = apnProvider;
-exports.saveImage          = saveImage;
-exports.insensitive        = insensitive;
-exports.response           = response;
-exports.cleanArray         = cleanArray;
-exports.sendEmail          = sendEmail;
-exports.capitalize         = capitalize;
-exports.precise_round      = precise_round;
-exports.profile_ajeno      = profile_ajeno;
-exports.push               = push;
-exports.sendPush           = sendPush;
-exports.isValid            = isValid;
-exports.formatName         = formatName;
-exports.sendPushtoAll      = sendPushtoAll;
-exports.profile_equal      = profile_equal;
 exports.review_check       = review_check;
 exports.extend             = extend;
 exports.SocketNoReaded     = SocketNoReaded;
