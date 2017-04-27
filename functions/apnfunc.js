@@ -140,9 +140,15 @@ function sendMessNotification(id, success){
 						}, function(err, results){
 							results = Generalfunc.cleanArray( results );
 
-							sendMultiple(function(data){
-								callback(null, data );
-							},results, name+": "+mensaje.mensaje, messData);
+							Generalfunc.NoReaded(notData.profile, function(num){
+								sendMultiple(function(data){
+									callback(null, data );
+								},results, name+": "+mensaje.mensaje, messData);
+							}, function(){
+								sendMultiple(function(data){
+									callback(null, data );
+								},results, name+": "+mensaje.mensaje, messData);
+							});
 						});
 					});
 				});
@@ -174,10 +180,16 @@ function sendNotification(id, sucess){
 
 				}, function(err, results){
 					results = Generalfunc.cleanArray( results );
-					sendMultiple(function(data){
-						sucess( data );
-					},results, mensaje.mensaje, notData);
 
+					Generalfunc.NoReaded(notData.profile, function(num){
+						sendMultiple(function(data){
+							sucess( data );
+						},results, mensaje.mensaje, notData);
+					}, function(){
+						sendMultiple(function(data){
+							sucess( data );
+						},results, mensaje.mensaje, notData);
+					});
 				});
 			});
 		});
