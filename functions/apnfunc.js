@@ -126,7 +126,10 @@ function sendMessNotification(id, success){
 			}
 
 			async.map(profiles, function(item, callback){
-				Profile.findOne({ _id: item.toString() }).exec(function(errprof, profData){
+				Profile.findOne({
+					_id: item.toString()
+				}).exec(function(errprof, profData){
+					console.log("ProfData SendMess");
 					console.log( profData );
 					var name = "";
 					if(messData.profile_id != undefined){
