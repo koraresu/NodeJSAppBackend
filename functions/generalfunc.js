@@ -62,16 +62,6 @@ var smtpConfig = {
 		pass: 'axovia es lo mejor'
 	}
 };
-/*
-var smtpConfig = {
-  host: "mailtrap.io",
-  port: 2525,
-  auth: {
-    user: "fea6a54f8a714a",
-    pass: "e977cec06a0b1d"
-  }
-};
-*/
 var transporter    = nodemailer.createTransport(smtpConfig,{
 	debug: true
 });
