@@ -362,6 +362,8 @@ io.on('connection', function(socket){
     });
   });
   socket.on('message_readed', function(data){
+    console.log("message_readed");
+    console.log( data );
     chatrouter.setReadedMessage(data, function(conversationData){
       Generalfunc.SocketNoReaded(socket.id, function(num){
         APNfunc.set_alert_num(num, socket);
