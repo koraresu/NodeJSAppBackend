@@ -35,6 +35,7 @@ var Email        = model.email;
 
 var Tokenfunc = require('./tokenfunc');
 var Pushfunc = require('./pushfunc');
+var APNfunc = require('./apnfunc');
 
 var apn = require('apn');
 
