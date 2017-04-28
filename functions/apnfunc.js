@@ -47,6 +47,15 @@ function get_devices(profile_id, itemFn, resultFn ){
 		async.map(devData, itemFn, resultFn);
 	});
 }
+function get_socket(profile_id, itemFn, resultFn){
+	itemFn = (itemFn == undefined)?function(item, callback){ callback(null, item.token);}:itemFn;
+	resultFn = (resultFn == undefined)?function(err, results){ }:resultFn;
+	Online.find({
+		profiles: profile_id
+	}).exec(function(errDev, devData){
+		async.map(devData, itemFn, resultFn);
+	});
+}
 function text_create(collection, data ){
 	var prof = profile_notification(collection, data);
 	if( collection == "notification"){
@@ -73,6 +82,34 @@ function profile_notification(collection, notData){
 		return {profile_emisor: profile_emisor, profile_mensaje: profile_mensaje };
 	}else{
 		return "PruebaMensaje: ";
+	}
+}
+function sendMultipleSocket(io, success, sockets, d){
+	async.map(sockets, function(item, callback){
+		io.to(item).emit('set_alert_num',d);
+	}, function(err, results){
+		success( results );
+	});
+}
+function sendNum(profile, num, success,io){
+	if(typeof num == "string"){ num = num * 1; };
+	if(mongoose.Types.ObjectId.isValid(profile_id)){
+		profile_id = mongoose.Types.ObjectId( profile_id );
+		Profile.findOne({
+			_id: profile_id
+		}).exec(function(errprof, profData){
+			console.log( profData );
+				get_socket(profData._id, function(item, cb){
+					cb(null, item.socket);
+				}, function(err, results){
+					results = Generalfunc.cleanArray( results );
+					sendMultipleSocket(io, function(){
+						success(results);
+					},results, num);
+				});
+		});
+	}else{
+		success(null);
 	}
 }
 function sendBadge(profile_id, num,  success){
@@ -303,7 +340,6 @@ function tokenItem(token, cb){
 	}
 }
 function set_alert_num(num, io){
-	io.emit('set_alert_num', num);
 	var guid = io.guid;
 
 	Tokenfunc.exist(guid, function(status, tokenData){
