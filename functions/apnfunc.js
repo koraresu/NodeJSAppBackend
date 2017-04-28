@@ -37,7 +37,16 @@ var Tokenfunc   = require('./tokenfunc');
 
 function get_interfaz(){
 	return Interfaz;
-}
+};
+function get_sockets(profile_id, itemFn, resultFn ){
+	itemFn = (itemFn == undefined)?function(item, callback){ callback(null, item.token);}:itemFn;
+	resultFn = (resultFn == undefined)?function(err, results){ }:resultFn;
+	Online.find({
+		profiles: profile_id
+	}).exec(function(errDev, onlineData){
+		async.map(onlineData, itemFn, resultFn);
+	});
+};
 function get_devices(profile_id, itemFn, resultFn ){
 	itemFn = (itemFn == undefined)?function(item, callback){ callback(null, item.token);}:itemFn;
 	resultFn = (resultFn == undefined)?function(err, results){ }:resultFn;
@@ -46,7 +55,7 @@ function get_devices(profile_id, itemFn, resultFn ){
 	}).exec(function(errDev, devData){
 		async.map(devData, itemFn, resultFn);
 	});
-}
+};
 function text_create(collection, data ){
 	var prof = profile_notification(collection, data);
 	if( collection == "notification"){
@@ -54,7 +63,7 @@ function text_create(collection, data ){
 	}else{
 		return { mensaje: data.message };
 	}
-}
+};
 function profile_notification(collection, notData){
 	if( collection == "notification"){
 		var profile_emisor  = "";
@@ -101,7 +110,7 @@ function sendBadge(profile_id, num,  success){
 	}else{
 		success(null);
 	}
-}
+};
 function sendMessNotification(id, success){
 	console.log( id );
 	if(mongoose.Types.ObjectId.isValid(id)){
@@ -162,7 +171,7 @@ function sendMessNotification(id, success){
 			});
 		});
 	}
-}
+};
 function sendNotification(id, sucess){
 	if(mongoose.Types.ObjectId.isValid(id)){
 		id = mongoose.Types.ObjectId( id );
@@ -199,7 +208,7 @@ function sendNotification(id, sucess){
 			});
 		});
 	}
-}
+};
 function add(d, success, fail){
 	var pushevent = new PushEvent( d );
 	pushevent.save(function(err, pushEv){
@@ -209,7 +218,7 @@ function add(d, success, fail){
 			fail(err);
 		}	
 	});
-}
+};
 function addOrGet(type, id, profile, success, fail){
 	var data = {};
 	var search = {};
@@ -301,11 +310,11 @@ function tokenItem(token, cb){
 	}else{
 		cb(token);
 	}
-}
+};
 function set_alert_num(num, io){
 	var guid = io.guid;
 	io.emit('set_alert_num', num);
-	
+
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
 			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
@@ -313,7 +322,7 @@ function set_alert_num(num, io){
 			});
 		}
 	});
-}
+};
 exports.set_alert_num        = set_alert_num;
 exports.get_interfaz         = get_interfaz;
 exports.tokenItem            = tokenItem;
@@ -324,5 +333,6 @@ exports.sendBadge            = sendBadge;
 exports.sendMessNotification = sendMessNotification;
 exports.sendNotification     = sendNotification;
 exports.get_devices          = get_devices;
+exports.get_sockets          = get_sockets;
 exports.text_create          = text_create;
 exports.profile_notification = profile_notification;
