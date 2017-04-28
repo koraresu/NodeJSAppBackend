@@ -159,9 +159,7 @@ router.get('/sendbadge/:num/:profile_id', function(req, res){
   var profile_id = req.params.profile_id;
   
   APNfunc.sendBadge(profile_id, num, function(){
-    APNfunc.sendNum(profile_id, num, function(){
-      res.send("Enviando");  
-    },req.io);
+    res.send("Enviando");  
   });
 });
 router.get('/sendpush/message/:message_id', function(req, res){
