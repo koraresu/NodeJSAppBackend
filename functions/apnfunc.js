@@ -86,6 +86,7 @@ function profile_notification(collection, notData){
 }
 function sendNum(profile_id, num, io, success){
 	if(typeof num == "string"){ num = num * 1; };
+	if(success == undefined){ success = function(){};};
 	console.log("Send Num:---------------------------+");
 	console.log(num);
 	console.log( io );
@@ -341,7 +342,7 @@ function set_alert_num(num, io){
 		if(status){
 			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
 				sendBadge(profileData._id, num);
-				sendNum(profileData._id, num);
+				sendNum(profileData._id, num, io);
 			});
 		}
 	});
