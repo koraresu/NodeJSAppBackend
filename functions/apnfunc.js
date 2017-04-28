@@ -38,6 +38,17 @@ var Tokenfunc   = require('./tokenfunc');
 function get_interfaz(){
 	return Interfaz;
 };
+function socket_to_profile(socket, success){
+	var guid = socket.guid;
+
+	Tokenfunc.exist(guid, function(status, tokenData){
+		if(status){
+			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
+				success(profileData);
+			});
+		}
+	}
+}
 function get_sockets(profile_id, itemFn, resultFn ){
 	itemFn = (itemFn == undefined)?function(item, callback){ callback(null, item.token);}:itemFn;
 	resultFn = (resultFn == undefined)?function(err, results){ }:resultFn;
@@ -349,6 +360,7 @@ function set_alert_num(num, io){
 };
 exports.set_alert_num        = set_alert_num;
 exports.get_interfaz         = get_interfaz;
+exports.socket_to_profile    = socket_to_profile;
 exports.tokenItem            = tokenItem;
 exports.sendMultiple         = sendMultiple;
 exports.add                  = add;

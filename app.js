@@ -375,14 +375,12 @@ io.on('connection', function(socket){
     });
   });
   socket.on('get_no_readed', function(){
-
     Generalfunc.SocketNoReaded(socket.id, function(num){
       APNfunc.set_alert_num(num, socket);
     }, function(err){
       console.log("SocketNoReaded Error");
       console.log(err);
       APNfunc.set_alert_num(0, socket);
-
     });
   });
   socket.on('notification_readed', function(data){

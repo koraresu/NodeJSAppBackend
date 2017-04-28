@@ -465,16 +465,16 @@ function MessageReaded(data, success, fail){
 	}
 }
 function SocketNoReaded(socket, success, fail){
-
-	Online.findOne({ socket: socket }).exec(function(errOnline, onlineData){
-		console.log("Online:" + socket );
-		if(!errOnline && onlineData){
-			NoReaded(onlineData.profiles, success, fail);	
-		}else{
-			console.log("Online Error:");
-			console.log( errOnline );
-			fail(2);
-		}
+	APNfunc.socket_to_profile(socket, function(profileData){
+		get_sockets(profileData._id, function(item, callback){
+				callback(null, item.socket);
+		}, function(err, results){
+			NoReaded(profileData._id, function(num){
+				success(num);
+			}, function(){
+				fail(2);
+			});
+		});
 	});
 }
 function NoReaded(profile_id, success, fail){
