@@ -84,6 +84,28 @@ function profile_notification(collection, notData){
 		return "PruebaMensaje: ";
 	}
 }
+function sendNum(profile_id, num, io, success){
+	if(typeof num == "string"){ num = num * 1; };
+	console.log("Send Num:---------------------------+");
+	console.log(num);
+	console.log( io );
+	if(mongoose.Types.ObjectId.isValid(profile_id)){
+		profile_id = mongoose.Types.ObjectId( profile_id );
+		Profile.findOne({
+			_id: profile_id
+		}).exec(function(errprof, profData){
+			get_sockets(profData._id, function(item, cb){
+				console.log( item.socket);
+				io.to(item.socket).emit('set_alert_num', num);
+				cb(null, item.socket);
+			}, function(err, results){
+				success( results );
+			});
+		});
+	}else{
+		success(null);
+	}
+}
 function sendBadge(profile_id, num,  success){
 	if(typeof num == "string"){ num = num * 1; };
 	if(mongoose.Types.ObjectId.isValid(profile_id)){
@@ -319,6 +341,7 @@ function set_alert_num(num, io){
 		if(status){
 			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
 				sendBadge(profileData._id, num);
+				sendNum(profileData._id, num);
 			});
 		}
 	});
@@ -330,6 +353,7 @@ exports.sendMultiple         = sendMultiple;
 exports.add                  = add;
 exports.addOrGet             = addOrGet;
 exports.sendBadge            = sendBadge;
+exports.sendNum              = sendNum;
 exports.sendMessNotification = sendMessNotification;
 exports.sendNotification     = sendNotification;
 exports.get_devices          = get_devices;
