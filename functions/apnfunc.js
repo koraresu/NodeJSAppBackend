@@ -84,9 +84,9 @@ function profile_notification(collection, notData){
 		return "PruebaMensaje: ";
 	}
 }
-function sendMultipleSocket(io, success, sockets, d){
+function sendMultipleSocket(io, success, sockets, d, emit_name){
 	async.map(sockets, function(item, callback){
-		io.to(item).emit('set_alert_num',d);
+		io.to(item).emit(emit_name,d);
 	}, function(err, results){
 		success( results );
 	});
@@ -105,7 +105,7 @@ function sendNum(profile, num, success,io){
 					results = Generalfunc.cleanArray( results );
 					sendMultipleSocket(io, function(){
 						success(results);
-					},results, num);
+					},results, num, 'set_alert_num');
 				});
 		});
 	}else{
@@ -346,6 +346,7 @@ function set_alert_num(num, io){
 		if(status){
 			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
 				sendBadge(profileData._id, num);
+				sendNum(profileData._id, num, function(){},io);
 			});
 		}
 	});
