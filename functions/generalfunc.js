@@ -475,6 +475,8 @@ function SocketNoReaded(socket, success, fail){
 				fail(2);
 			});
 		});
+	}, function(){
+		fail(3);
 	});
 }
 function NoReaded(profile_id, success, fail){

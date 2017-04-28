@@ -38,7 +38,7 @@ var Tokenfunc   = require('./tokenfunc');
 function get_interfaz(){
 	return Interfaz;
 };
-function socket_to_profile(socket, success){
+function socket_to_profile(socket, success, fail){
 	var guid = socket.guid;
 
 	Tokenfunc.exist(guid, function(status, tokenData){
@@ -46,8 +46,10 @@ function socket_to_profile(socket, success){
 			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
 				success(profileData);
 			});
-		}
-	}
+		}else{
+			fail();
+		}	
+	});
 }
 function get_sockets(profile_id, itemFn, resultFn ){
 	itemFn = (itemFn == undefined)?function(item, callback){ callback(null, item.token);}:itemFn;
@@ -97,7 +99,7 @@ function profile_notification(collection, notData){
 }
 function sendNum(profile_id, num, io, success){
 	if(typeof num == "string"){ num = num * 1; };
-	if(success == undefined){ success = function(){};};
+	if(success == undefined){ success = function(){}; };
 	console.log("Send Num:---------------------------+");
 	console.log(num);
 	console.log( io );
@@ -126,19 +128,19 @@ function sendBadge(profile_id, num,  success){
 			_id: profile_id
 		}).exec(function(errprof, profData){
 			console.log( profData );
-				get_devices(profData._id, function(item, cb){
+			get_devices(profData._id, function(item, cb){
 
-					tokenItem(item.token, function(token){
-						cb(null, token );
-					});
-
-				}, function(err, results){
-					results = Generalfunc.cleanArray( results );
-
-					sendMultiple(function(data){
-						success( data );
-					}, results, "", {}, num);
+				tokenItem(item.token, function(token){
+					cb(null, token );
 				});
+
+			}, function(err, results){
+				results = Generalfunc.cleanArray( results );
+
+				sendMultiple(function(data){
+					success( data );
+				}, results, "", {}, num);
+			});
 			
 		});
 	}else{
