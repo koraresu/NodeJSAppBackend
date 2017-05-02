@@ -158,7 +158,7 @@ router.get('/sendbadge/num/:profile_id', function(req, res){
   var num = req.params.num;
   var profile_id = req.params.profile_id;
   if(mongoose.Types.ObjectId.isValid(profile_id)){
-    Generalfunc.NoReaded(profile_id, function(){
+    Generalfunc.NoReaded(profile_id, function(num){
       APNfunc.sendBadge(profile_id, num, function(){
         APNfunc.sendNum(profile_id, num, req.io, function(){
           res.send("Enviando");
