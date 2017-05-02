@@ -300,7 +300,6 @@ io.on('connection', function(socket){
           console.log("NoReaded" + profile._id);
           Generalfunc.NoReaded(profile._id, function(num){
             console.log("NoReadedNum:" + num);
-
           }, function(st){
             console.log("Gneralfunc.NoReaded Error:" + st);
           });
