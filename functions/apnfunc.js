@@ -109,7 +109,7 @@ function sendNum(profile_id, num, io, success){
 			_id: profile_id
 		}).exec(function(errprof, profData){
 			get_sockets(profData._id, function(item, cb){
-				
+
 				io.to(item.socket).emit('set_alert_num', num);
 				cb(null, item.socket);
 			}, function(err, results){
@@ -330,10 +330,9 @@ function sendMultiple(ca, devices, message, payload, badge, sound){
 	note.topic      = "com.thehiveapp.thehive";
 
 	Generalfunc.apnProvider().send(note, deviceToken).then( (result) => {
-		console.log( result );
 		if(result.failed[0] != undefined){
 			if(result.failed[0].error != undefined){
-				console.log( result.failed[0].error );
+				console.log("APN Error:" + result.failed[0].error );
 			}
 		}
 		ca(result);
