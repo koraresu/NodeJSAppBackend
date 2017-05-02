@@ -241,6 +241,22 @@ function sendNotification(id, sucess){
 		});
 	}
 };
+function conversation2profile(id, success, fail){
+	if(mongoose.Types.ObjectId.isValid(profile_id)){
+		conversation_id = mongoose.Types.ObjectId(profile_id);
+		Conversation.findOne({
+			_id: conversation_id
+		}).exec(function(err, conversationData){
+			if(!err && conversationData){
+				success( conversationData.profiles );	
+			}else{
+				fail();
+			}
+		});
+	}else{
+		fail();
+	}
+};
 function add(d, success, fail){
 	var pushevent = new PushEvent( d );
 	pushevent.save(function(err, pushEv){
@@ -331,7 +347,7 @@ function sendMultiple(ca, devices, message, payload, badge, sound){
 				console.log("APN Error:" + result.failed[0].error );
 			}
 		}
-		ca(result);
+		ca(result, devices);
 	});
 };
 function tokenItem(token, cb){

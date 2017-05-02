@@ -297,7 +297,23 @@ io.on('connection', function(socket){
         /******* Apple Push Notification *****/
         console.log("sendMessNotification");
         APNfunc.sendMessNotification(messageData._id, function(){
-          APNfunc.set_alert(socket);
+          APNfunc.conversation2profile(conversation_id, function(profiles){
+            async.map(profiles, function(i, cb){
+              Generalfunc.NoReaded(profile_id, function(num){
+                APNfunc.sendBadge(profile_id, num, function(){
+                  APNfunc.sendNum(profile_id, num, req.io, function(){
+                    //
+                  });
+                });
+              }, function(){
+                //
+              });
+            }, function(err, results){
+              //
+            });
+          }, function(){
+            //
+          });
         });
       }
     });
