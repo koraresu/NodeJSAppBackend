@@ -127,7 +127,7 @@ function sendBadge(profile_id, num,  success){
 		Profile.findOne({
 			_id: profile_id
 		}).exec(function(errprof, profData){
-			console.log( profData );
+			
 			get_devices(profData._id, function(item, cb){
 
 				tokenItem(item.token, function(token){
