@@ -89,8 +89,6 @@ function conversation_format(profile_id, success, fail){
 	.sort({ updatedAt: -1 })
 	.exec(function(err, conversationData){
 		if(!err && conversationData){
-			console.log("Conversation Data:");
-			console.log( conversationData );
 			async.map(conversationData, function(item, ca){
 				if(item.profiles.length > 1){
 					var equal = profile_equal(profile_id, item.profiles);
@@ -110,7 +108,6 @@ function conversation_format(profile_id, success, fail){
 								last_message = item.message.message;	
 							}
 							readed_conv(profile_id, item._id, function(num){
-								console.log("NUM::::" + num.length);
 								if(num.length > 0){
 									num = true;
 								}else{
