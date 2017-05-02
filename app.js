@@ -297,7 +297,7 @@ io.on('connection', function(socket){
         /******* Apple Push Notification *****/
         console.log("sendMessNotification");
         APNfunc.sendMessNotification(messageData._id, function(profile, num){
-          APNfunc.set_alert(socket, num);
+          APNfunc.set_alert_num(num, socket);
         });
       }
     });
