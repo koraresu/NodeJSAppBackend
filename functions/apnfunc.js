@@ -148,7 +148,7 @@ function sendBadge(profile_id, num,  success){
 	}
 };
 function sendMessNotification(id, success){
-	console.log( id );
+	
 	if(mongoose.Types.ObjectId.isValid(id)){
 		id = mongoose.Types.ObjectId( id );
 		Message.findOne({
@@ -157,7 +157,7 @@ function sendMessNotification(id, success){
 		.populate('profile_id')
 		.populate('conversation')
 		.exec(function(errMess, messData){
-			console.log( messData );
+			
 
 			var mensaje = text_create("message",messData);
 			var profile_id = messData.profile_id._id;
@@ -188,9 +188,6 @@ function sendMessNotification(id, success){
 							results = Generalfunc.cleanArray( results );
 
 							Generalfunc.NoReaded(profData._id, function(num){
-								
-								console.log("APN NoReaded", num);
-
 								sendMultiple(function(data){
 									callback(null, data );
 								},results, name+": "+mensaje.mensaje, messData, num);

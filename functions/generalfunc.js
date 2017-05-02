@@ -488,14 +488,8 @@ function NoReaded(profile_id, success, fail){
 	if(profile_id._id != undefined){
 		profile_id = profile_id._id;
 	}
-	
-	console.log("ProfileID No Readed:");
-	console.log( profile_id );
 
 	if(mongoose.Types.ObjectId.isValid(profile_id)){
-		console.log("ProfileID No Readed:");
-		console.log( profile_id );
-
 		profile_id = mongoose.Types.ObjectId(profile_id);
 		PushEvent.find({
 			profile: profile_id,
@@ -508,7 +502,6 @@ function NoReaded(profile_id, success, fail){
 			}
 		});
 	}else{
-		console.log("Invalid Profile ID");
 		fail(0);
 	}
 }

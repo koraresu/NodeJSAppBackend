@@ -297,11 +297,8 @@ io.on('connection', function(socket){
         /******* Apple Push Notification *****/
         APNfunc.sendMessNotification(messageData._id, function(){
           Generalfunc.NoReaded(profile._id, function(num){
-            APNfunc.set_alert_num(num, socket);
+            console.log("NoReadedNum:" + num);
 
-            APNfunc.sendBadge(profile._id, num, function(){});
-            APNfunc.sendNum(profile._id, num, socket, function(){});
-            
           }, function(st){
             console.log("Gneralfunc.NoReaded Error:" + st);
           });
