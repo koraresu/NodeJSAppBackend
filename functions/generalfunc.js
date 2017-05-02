@@ -466,9 +466,11 @@ function MessageReaded(data, success, fail){
 	}
 }
 function SocketNoReaded(socket, success, fail){
+	
 	console.log( "SOCKET:" );
 	console.log(socket.id);
 	console.log(socket.guid);
+
 	APNfunc.socket_to_profile(socket, function(profileData){
 		get_sockets(profileData._id, function(item, callback){
 				callback(null, item.socket);

@@ -349,7 +349,6 @@ function tokenItem(token, cb){
 };
 function set_alert_num(num, io){
 	var guid = io.guid;
-	io.emit('set_alert_num', num);
 
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
@@ -360,6 +359,19 @@ function set_alert_num(num, io){
 		}
 	});
 };
+function set_alert(io){
+	var guid = io.guid;
+
+	Tokenfunc.exist(guid, function(status, tokenData){
+		if(status){
+			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
+				sendBadge(profileData._id, 10);
+				sendNum(profileData._id, 10, io);
+			});
+		}
+	});
+};
+exports.set_alert            = set_alert;
 exports.set_alert_num        = set_alert_num;
 exports.get_interfaz         = get_interfaz;
 exports.socket_to_profile    = socket_to_profile;

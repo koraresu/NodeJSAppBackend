@@ -408,8 +408,6 @@ router.conversationsJoin = function(socket, callback){
 	});
 };
 router.setOnline = function(guid,socket, callback){
-	console.log(" SET ONLINE ");
-	console.log("GUID:" + guid );
 
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
@@ -419,8 +417,7 @@ router.setOnline = function(guid,socket, callback){
 						profiles: profileData._id,
 						socket: socket.toString()
 					};
-					console.log("D:");
-					console.log(d);
+
 					var online = new Online(d);
 					online.save(function(err, onlineData){
 						callback(true, socket, profileData );
@@ -435,9 +432,7 @@ router.setOnline = function(guid,socket, callback){
 	});
 };
 router.setDevice = function(guid, deviceID, callback){
-	console.log(" SET DEVICE ");
-	console.log("GUID:" + guid );
-	console.log("TOKEN:" + deviceID );
+
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
 			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
@@ -459,8 +454,7 @@ router.setDevice = function(guid, deviceID, callback){
 									token:   deviceID,
 									active: true
 								}
-								console.log("D:");
-								console.log(d);
+
 								var deviceEl = new Device(d);
 								deviceEl.save(function(err, deviceData){
 									Device.find({ profile: profileData._id }).exec(function(errDevice, deviceData){
