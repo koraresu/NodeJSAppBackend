@@ -229,32 +229,16 @@ function sendNotification(id, sucess){
 
 					Generalfunc.NoReaded(notData.profile, function(num){
 						sendMultiple(function(data){
-							sucess( data );
+							sucess( notData.profile, num );
 						},results, mensaje.mensaje, notData, num);
 					}, function(){
 						sendMultiple(function(data){
-							sucess( data );
+							sucess( notData.profile, 0 );
 						},results, mensaje.mensaje, notData);
 					});
 				});
 			});
 		});
-	}
-};
-function conversation2profile(id, success, fail){
-	if(mongoose.Types.ObjectId.isValid(profile_id)){
-		conversation_id = mongoose.Types.ObjectId(profile_id);
-		Conversation.findOne({
-			_id: conversation_id
-		}).exec(function(err, conversationData){
-			if(!err && conversationData){
-				success( conversationData.profiles );	
-			}else{
-				fail();
-			}
-		});
-	}else{
-		fail();
 	}
 };
 function add(d, success, fail){
