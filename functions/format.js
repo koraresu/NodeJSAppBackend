@@ -24,6 +24,7 @@ var State        = model.state;
 var Country      = model.country;
 
 exports.chat_message = function(message){
+	
 	return {
 		"_id": message._id,
 		"date": message.createdAt,

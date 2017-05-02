@@ -560,6 +560,7 @@ exports.formatName = function(text){
 	text = text.replace(/^\s*|\s*$/g, '');
 	return text;
 }
+exports.censurar           = censurar;
 exports.review_check       = review_check;
 exports.extend             = extend;
 exports.SocketNoReaded     = SocketNoReaded;
