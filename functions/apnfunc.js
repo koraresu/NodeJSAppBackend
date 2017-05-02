@@ -102,14 +102,14 @@ function sendNum(profile_id, num, io, success){
 	if(success == undefined){ success = function(){}; };
 	console.log("Send Num:---------------------------+");
 	console.log(num);
-	
+
 	if(mongoose.Types.ObjectId.isValid(profile_id)){
 		profile_id = mongoose.Types.ObjectId( profile_id );
 		Profile.findOne({
 			_id: profile_id
 		}).exec(function(errprof, profData){
 			get_sockets(profData._id, function(item, cb){
-				console.log( item.socket);
+				
 				io.to(item.socket).emit('set_alert_num', num);
 				cb(null, item.socket);
 			}, function(err, results){
