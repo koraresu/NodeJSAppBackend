@@ -206,6 +206,8 @@ function sendMessNotification(id, success){
 				success(results);
 			});
 		});
+	}else{
+		success(null);
 	}
 };
 function sendNotification(id, sucess){
