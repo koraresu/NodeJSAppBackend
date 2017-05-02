@@ -299,11 +299,9 @@ io.on('connection', function(socket){
         APNfunc.sendMessNotification(messageData._id, function(){
           APNfunc.conversation2profile(conversation_id, function(profiles){
             async.map(profiles, function(i, cb){
-              Generalfunc.NoReaded(profile_id, function(num){
+              Generalfunc.NoReaded(i, function(num){
                 APNfunc.sendBadge(profile_id, num, function(){
-                  APNfunc.sendNum(profile_id, num, socket, function(){
-                    //
-                  });
+                  APNfunc.sendNum(profile_id, num, socket, function(){  });
                 });
               }, function(){
                 //
