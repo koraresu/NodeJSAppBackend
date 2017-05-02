@@ -102,7 +102,7 @@ function sendNum(profile_id, num, io, success){
 	if(success == undefined){ success = function(){}; };
 	console.log("Send Num:---------------------------+");
 	console.log(num);
-	console.log( io );
+	
 	if(mongoose.Types.ObjectId.isValid(profile_id)){
 		profile_id = mongoose.Types.ObjectId( profile_id );
 		Profile.findOne({
