@@ -343,11 +343,20 @@ function tokenItem(token, cb){
 	}
 };
 function set_alert_num(num, io){
+	console.log( "Set Alert Num");
 	var guid = io.guid;
-
+	console.log( guid );
 	Tokenfunc.exist(guid, function(status, tokenData){
+		console.log( status );
+		console.log( tokenData );
 		if(status){
 			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
+				console.log( profileData._id );
+				console.log( num );
+				APNfunc.sendBadge(profileData._id, num, function(){
+					APNfunc.sendNum(profileData._id, num, io, function(){
+					});
+				});
 				sendBadge(profileData._id, num);
 				sendNum(profileData._id, num, io);
 			});
