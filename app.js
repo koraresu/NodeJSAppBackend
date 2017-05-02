@@ -375,8 +375,7 @@ io.on('connection', function(socket){
     Generalfunc.SocketNoReaded(socket.id, function(num){
       APNfunc.set_alert_num(num, socket);
     }, function(err){
-      console.log("SocketNoReaded Error");
-      console.log(err);
+      console.log("SocketNoReaded GetNoReaded:" + err);
       APNfunc.set_alert_num(0, socket);
     });
   });
@@ -386,8 +385,7 @@ io.on('connection', function(socket){
      Generalfunc.SocketNoReaded(socket.id, function(num){
       APNfunc.set_alert_num(num, socket);
     }, function(err){
-      console.log("SocketNoReaded Error");
-      console.log(err);
+      console.log("SocketNoReaded NotificationReaded:" + err);
     });
    }, function( err ){
     console.log("NotificationReaded Error");
