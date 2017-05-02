@@ -301,7 +301,7 @@ io.on('connection', function(socket){
             async.map(profiles, function(i, cb){
               Generalfunc.NoReaded(profile_id, function(num){
                 APNfunc.sendBadge(profile_id, num, function(){
-                  APNfunc.sendNum(profile_id, num, req.io, function(){
+                  APNfunc.sendNum(profile_id, num, socket, function(){
                     //
                   });
                 });
