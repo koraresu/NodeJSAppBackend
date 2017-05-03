@@ -199,9 +199,10 @@ var get = function(profile, callback){
 exports.experienceJobGet = function(name, callback){
 	var text = name;
 	var reg  = new RegExp(text, "i");
-
+	var array = [];
 	Job.find({ name: reg }).exec('name',function(err, jobData){
-		callback(err, jobData);
+		var njob = Generalfunc.sortbyaccent(jobData);
+		callback(err, njob);
 	});
 }
 exports.experienceSpecialityGet = function(name, callback){
@@ -209,17 +210,17 @@ exports.experienceSpecialityGet = function(name, callback){
 	var reg  = new RegExp(text, "i");
 
 	Speciality.find({ name: reg  }).exec('name',function(err, jobData){
-		jobData.sort();
-		callback(err, jobData);
+		var njob = Generalfunc.sortbyaccent(jobData);
+		callback(err, njob);
 	});	
 }
 exports.companyGet = function(name, callback){
 	var text = name;
 	var reg  = new RegExp(text, "i");
 
-	Company.find({ name: reg  }).sort({ name: "asc" }).exec(function(err, jobData){
-		jobData.sort();
-		callback(err, jobData);
+	Company.find({ name: reg  }).exec(function(err, jobData){
+		var njob = Generalfunc.sortbyaccent(jobData);
+		callback(err, njob);
 	});
 }
 

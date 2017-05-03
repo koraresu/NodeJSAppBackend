@@ -560,6 +560,36 @@ exports.formatName = function(text){
 	text = text.replace(/^\s*|\s*$/g, '');
 	return text;
 }
+function noaccent(str){
+	if(str == undefined){
+		str = "";
+	}else{
+		str = str.replace(/á/,"a");
+		str = str.replace(/Á/,"a");
+		str = str.replace(/é/,"e");
+		str = str.replace(/É/,"e");
+		str = str.replace(/í/,"i"); 
+		str = str.replace(/Í/,"i"); 
+		str = str.replace(/ó/,"o"); 
+		str = str.replace(/Ó/,"o"); 
+		str = str.replace(/ú/,"u"); 
+		str = str.replace(/Ú/,"u");
+	}
+	return str;
+};
+function sortbyaccent(array){
+	array.sort(function(a,b){
+		var a_name = noaccent(a.name);
+		var b_name = noaccent(b.name);
+		var comparison = 0;
+		if (a_name > b_name) {
+			comparison = 1;
+		} else if (a_name < b_name) {
+			comparison = -1;
+		}
+		return comparison;
+	});
+};
 exports.censurar           = censurar;
 exports.review_check       = review_check;
 exports.extend             = extend;
@@ -568,5 +598,7 @@ exports.NoReaded           = NoReaded;
 exports.profiletosocket    = profiletosocket;
 exports.NotificationReaded = NotificationReaded;
 exports.MessageReaded      = MessageReaded;
-exports.mensaje_create     = mensaje_create
-exports.sendPushOne        = sendPushOne
+exports.mensaje_create     = mensaje_create;
+exports.sendPushOne        = sendPushOne;
+exports.noaccent           = noaccent;
+exports.sortbyaccent       = sortbyaccent;
