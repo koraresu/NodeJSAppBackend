@@ -30,7 +30,7 @@ var Country        = model.country;
 
 function checkExperience(profileData, type, data, callback){
 	if(type == 0){
-		} else {
+		console.log(data);
 
 		jobExistsOrCreate({
 			name: data.ocupation,
@@ -47,7 +47,7 @@ function checkExperience(profileData, type, data, callback){
 						},
 						profile_id: profileData._id
 					};
-			} else {
+			console.log(search);
 			Experience.findOne(search).exec(function(errExperience, experienceData){
 				if(!errExperience && experienceData){
 
@@ -62,7 +62,7 @@ function checkExperience(profileData, type, data, callback){
 			});
 		});
 	}else{
-		} else {
+		console.log(data);
 
 		companyExistsOrCreate({
 			name: data.company
@@ -226,18 +226,6 @@ exports.companyGet = function(name, callback){
 
 	Company.find({ name: reg  }).sort({ name: "asc" }).exec(function(err, jobData){
 		callback(err, jobData);
-	});
-}
-exports.sectorGet = function(name, callback){
-	var text = name;
-	var reg  = new RegExp(text, "i");
-
-	Sector.find({ name: reg  }).distinct('name',function(err, jobData){
-		var njobData = jobData.sort( function(a,b){
-			var x = a.name;
-			return x.localeCompare(b.name);
-		});
-		callback(err, njobData);
 	});
 }
 

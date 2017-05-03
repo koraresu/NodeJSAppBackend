@@ -53,6 +53,7 @@ function getTrabajo(profile_id, callback){
 			historyData.forEach(function(historyItem, historyIndex){
 				Profile.findOne({ _id: historyItem.de_id}).exec(function(errProfile, profileData){
 					data.push(profileData);
+					console.log(historyIndex);
 					if(historyIndex+1 == historyData.length){
 						callback(errProfile, data);
 					}
@@ -192,9 +193,9 @@ exports.PublicId = function(public_id, callback){
 	});
 }
 function generate_qrcode(profileData, callback){
-	} else {
+	console.log("Dentro de Generate QrCode");
 
-	} else {
+	console.log(profileData);
 	profileData.qrcode = "";
 
 	if(typeof profileData.public_id == "undefined"){
@@ -204,23 +205,23 @@ function generate_qrcode(profileData, callback){
 	var qrcode = profileData.public_id;
 	profileData.qrcode = qrcode+'.png';
 	
-	} else {
+	console.log("Antes de Save");
 	
-	} else {
+	console.log(profileData);
 	
 	profileData.save(function(err, profile){
-		} else {
+		console.log(err);
 		Profile.findOne({ _id: profileData._id}).exec(function(){
-			} else {
+			console.log("Despues de Save");
 		
-			} else {
+			console.log(profileData);
 
 			var qr_svg = qr.image('the-hive:query?'+qrcode, { type: 'png', margin: 0 });
 			qr_svg.pipe(require('fs').createWriteStream('./public/qrcode/'+qrcode+'.png'));
 
 			var svg_string = qr.imageSync('the-hive:query?'+qrcode, { type: 'png' });
 			
-			} else {
+			console.log(profileData);
 
 			callback(profileData);
 		});
@@ -443,10 +444,10 @@ function userProfileInsertIfDontExists(searchUser, userInsert, profileInsert, ca
 
 	User.findOne(searchUser, function(errUser, user){
 		if(!errUser && user){
-			} else {
+			console.log("Existe el usuario");
 			callback(true,null,null);
 		}else{
-			} else {
+			console.log("Creando Usuario");
 			var user = new User(userInsert);
 			user.save(function(errUser, userData){
 				var token = new Token({

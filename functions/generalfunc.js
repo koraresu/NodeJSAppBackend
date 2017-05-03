@@ -78,7 +78,7 @@ var transporter    = nodemailer.createTransport(smtpConfig,{
 });
 var sendMail = function(toAddress, subject, content, next){
 	//console.log("SmtpConfig:")
-	//} else {
+	//console.log(smtpConfig);
 	var mailOptions = {
 		from: "hola@thehiveapp.mx",
 		to: toAddress,
@@ -91,8 +91,8 @@ var sendMail = function(toAddress, subject, content, next){
         	}
 		}
 	};
-	//} else {
-	//} else {
+	//console.log("Mail Options:");
+	//console.log(mailOptions);
 
 	transporter.sendMail(mailOptions, function(error, info){
 		return next(error, info);
@@ -164,8 +164,8 @@ exports.sendEmail = function(file, data,email, asunto, callback){
 	template+= file;
 	fs.readFile(template, 'utf8', function(err, file){
 		if(err){
-			} else {
-			} else {
+			console.log("Dont Find the File");
+			console.log( template );
 			callback(false);
 		}else {
 			var compiledTmpl = _jade.compile(file, {filename: template});
@@ -204,17 +204,17 @@ exports.precise_round = function(num, decimals) {
 }
 exports.profile_ajeno = function(profileID,profiles){
 
-	//} else {
-	//} else {
+	//console.log("ProfileID:");
+	//console.log( profileID );
 
 	var first  = profiles[0];
 	var second = profiles[1];
 
-	//} else {
-	//} else {
+	//console.log("First:");
+	//console.log( first );
 
-	//} else {
-	//} else {
+	//console.log("Second:");
+	//console.log( second );
 
 
 	if(first._id.toString() == profileID.toString()){
@@ -234,10 +234,10 @@ exports.push = function(){
 	note.topic = "com.thehiveapp.thehive";
 
 	apnProvider.send(note, deviceToken).then( (result) => {
-		} else {
+		console.log( result );
 		if(result.failed[0] != undefined){
 			if(result.failed[0].error != undefined){
-				} else {
+				console.log( result.failed[0].error );
 			}
 		}
     	ca(result);
@@ -257,10 +257,10 @@ exports.sendPush = function(device, payload, message, badge, sound, ca){
 	note.topic = "com.thehiveapp.thehive";
 
 	apnProvider.send(note, deviceToken).then( (result) => {
-		} else {
+		console.log( result );
 		if(result.failed[0] != undefined){
 			if(result.failed[0].error != undefined){
-				} else {
+				console.log( result.failed[0].error );
 			}
 		}
     	ca(result);
@@ -308,7 +308,7 @@ exports.sendPushtoAll = function(type,profileId, message, payload, success, fail
 				if(item.token == ""){
 					callback(null, null);
 				}else{
-					} else {
+					console.log( item.token );
 					Pushfunc.createPush(pushEvent._id, item.token, function(){
 						var badge = 1;
 						callback(null, item);
@@ -431,7 +431,7 @@ function MessageReaded(data, success, fail){
 					async.map(messageData, function(item, callback){
 						PushEvent.findOne({ message: item._id }).exec(function(errPushEvent, pushEventData){
 							if(!errPushEvent && pushEventData){
-								} else {
+								console.log( pushEventData );
 
 								pushEventData.read = true;
 								pushEventData.save(function(errPushE, pushEData){

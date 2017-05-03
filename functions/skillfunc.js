@@ -57,7 +57,7 @@ var add = function(profile_id, name, callback){
 					}, function(status, skillData){
 
 						var skillsD = profileData.skills.map(function(o){
-							} else {
+							console.log("Comparando: ["+o.toString()+"|"+skillData.id.toString()+"]");
 							return o;
 						});
 
@@ -107,10 +107,10 @@ var add = function(profile_id, name, callback){
 					
 					if(o.toString() === skillData.id.toString()){
 						if(!e){ e = true; }
-						} else {
+						console.log("Comparando: ["+o+"|"+skillData.id+"] - Es igual");
 						return o;
 					}else{
-						} else {
+						console.log("Comparando: ["+o+"|"+skillData.id+"] - No es igual");
 						return o;
 					}
 					
@@ -148,8 +148,8 @@ var edit = function(profile_id, from, to, callback){
 			ExistsOrCreate({ name: to},{ name: to},function(errSkillTo, skillToData){
 				var skills = profileData.skills;
 
-				} else {
-				} else {
+				console.log( skills );
+				console.log( skillFromData._id );
 
 				var skillsD = skills.map(function(o){
 					if(o.toString() == skillFromData._id.toString()){

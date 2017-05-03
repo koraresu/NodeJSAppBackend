@@ -89,8 +89,8 @@ exports.addOrGet        = function(search, d, callback){
 				}else{
 					var notification = new Notification(d);
 					notification.save(function(errNotification, notificationData){
-						} else {
-						} else {
+						console.log("Erro Notification:");
+						console.log(errNotification);
 						if(!errNotification && notificationData){
 							APNfunc.sendNotification(notificationData._id, function(){
 								callback(true, notificationData);
@@ -103,8 +103,8 @@ exports.addOrGet        = function(search, d, callback){
 			}else{
 				var notification = new Notification(d);
 				notification.save(function(errNotification, notificationData){
-					} else {
-					} else {
+					console.log("Erro Notification:");
+					console.log(errNotification);
 					if(!errNotification && notificationData){
 						APNfunc.sendNotification(notificationData._id, function(){
 							callback(true, notificationData);	
@@ -139,8 +139,8 @@ exports.add             = function(d, callback, io){
 		var notification = new Notification(d);
 		notification.save(function(errNotification, notificationData){
 
-			} else {
-			} else {
+			console.log("Erro Notification:");
+			console.log(errNotification);
 			if(!errNotification && notificationData){
 				APNfunc.sendNotification(notificationData._id, function(){
 					send(notificationData._id, function(){
@@ -158,12 +158,12 @@ exports.click           = function(search, stat, success, fail){
 		notificationData.clicked = true;
 		notificationData.status  = stat;
 		notificationData.save(function(err, not){
-			} else {
-			} else {
+			console.log(err);
+			console.log(not);
 			if(!err && not){
 				Notification.findOne(search).exec(function(err,notificationData){
-					} else {
-					} else {
+					console.log(err);
+					console.log(notificationData);
 					if(!err && notificationData){
 						success(notificationData);
 					}else{
@@ -182,52 +182,52 @@ function push(notificationData){
           		if(notificationData.profile._id != undefined){
 
           			APNfunc.sendNotification(notificationData._id, function(results){
-          				} else {
+          				console.log( results );
           			});
           		}
           	}
           }
 };
 function send(id, success,io){
-	} else {
+	console.log("+ SEND SOCKET:----------------------------------+");
 	Notification.findOne({ _id: id }).populate('profile').populate('profile_emisor').populate('profile_mensaje').populate('network').exec(function(errNotification, notificationData){
 		APNfunc.get_interfaz().prepare(notificationData.profile._id, notificationData._id, function(profile_id, notification_id){
 			APNfunc.addOrGet(1, notification_id, profile_id, function(pushEventData){
 				Device.find({ profile: profile_id }).sort({ $natural: -1 }).exec(function(err, deviceData){
 					Online.find({ profiles: profile_id }).sort({ $natural: -1 }).exec(function(errOnline, onlineData){
 						async.map(onlineData, function(item, callback){
-							} else {
-							} else {
+							console.log("Socket ID:");
+							console.log(item.socket);
 							
 								
 									if(io != undefined){
 										if(io.to != undefined){
-											} else {
+											console.log( io );
 											io.to(item.socket.toString()).emit('notification', notificationData);
 											push(notificationData);
 										}else{
-											} else {
+											console.log("App IO To Undefined");
 										}
 									}else{
-										} else {
+										console.log("App IO Undefined");
 									}
 								
 							
 							callback(null, notificationData);
 						}, function(err, result){
-							} else {
-							} else {
+							console.log(result);
+							console.log("+ END SEND SOCKET:------------------------------+");
 							success();
 						});
 					});
 				});
 			}, function(err){
-				} else {
+				console.log( err );
 				success();
 			});
 		}, function(profile_id, message_id){
-			} else {
-			} else {
+			console.log( profile_id );
+			console.log( message_id );
 			success();
 		});
 	});	

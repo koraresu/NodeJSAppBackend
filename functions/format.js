@@ -205,7 +205,7 @@ function MyProfileQueryFormat(query, callback){
 				data.push(d);
 
 				if(perfil.length == index+1){
-					} else {
+					console.log(data);
 					callback(data);
 				}
 			});

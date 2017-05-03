@@ -100,8 +100,8 @@ function profile_notification(collection, notData){
 function sendNum(profile_id, num, io, success){
 	if(typeof num == "string"){ num = num * 1; };
 	if(success == undefined){ success = function(){}; };
-	} else {
-	} else {
+	console.log("Send Num:---------------------------+");
+	console.log(num);
 
 	if(mongoose.Types.ObjectId.isValid(profile_id)){
 		profile_id = mongoose.Types.ObjectId( profile_id );
@@ -280,8 +280,8 @@ function addOrGet(type, id, profile, success, fail){
 		};
 	}
 
-	} else {
-	} else {
+	console.log( data );
+	console.log( search );
 	PushEvent.findOne(search).populate('profile').exec(function(err, pushEventData){
 		if(!err && pushEventData){
 			if(pushEventData.length > 0){
@@ -328,7 +328,7 @@ function sendMultiple(ca, devices, message, payload, badge, sound){
 	Generalfunc.apnProvider().send(note, deviceToken).then( (result) => {
 		if(result.failed[0] != undefined){
 			if(result.failed[0].error != undefined){
-				} else {
+				console.log("APN Error:" + result.failed[0].error );
 			}
 		}
 		ca(result);
@@ -343,16 +343,16 @@ function tokenItem(token, cb){
 	}
 };
 function set_alert_num(num, io){
-	} else {
+	console.log( "Set Alert Num");
 	var guid = io.guid;
-	} else {
+	console.log( guid );
 	Tokenfunc.exist(guid, function(status, tokenData){
-		} else {
-		} else {
+		console.log( status );
+		console.log( tokenData );
 		if(status){
 			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
-				} else {
-				} else {
+				console.log( profileData._id );
+				console.log( num );
 				sendBadge(profileData._id, num, function(){
 					sendNum(profileData._id, num, io, function(){
 					});
