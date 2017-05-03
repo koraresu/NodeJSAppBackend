@@ -53,7 +53,6 @@ function getTrabajo(profile_id, callback){
 			historyData.forEach(function(historyItem, historyIndex){
 				Profile.findOne({ _id: historyItem.de_id}).exec(function(errProfile, profileData){
 					data.push(profileData);
-					} else {
 					if(historyIndex+1 == historyData.length){
 						callback(errProfile, data);
 					}
