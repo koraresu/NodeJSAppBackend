@@ -228,6 +228,22 @@ var companyCreatorSchema = new Schema({
 },{
   timestamps: true
 });
+
+companyCreatorSchema.post('save', function(doc, next){
+  logMiddleware("company_creator","save", doc, function(err, logData){
+    next();
+  });
+});
+companyCreatorSchema.post('remove', function(doc, next){
+  logMiddleware("company_creator","remove", doc, function(err, logData){
+    next();
+  });
+});
+companyCreatorSchema.post('update', function(doc, next){
+  logMiddleware("company_creator","update", doc, function(err, logData){
+    next();
+  });
+});
 /*******************************************/
 var companySchema = new Schema({
   name:  String,
@@ -728,6 +744,31 @@ var EmailSchema = new Schema({
 });
 /*******************************************/
 
+var GlosarySchema = new Schema({
+  "text": String,
+  "replace": String,
+  "extra": { type: Schema.Types.Mixed }
+}, {
+  timestamps: true
+});
+
+GlosarySchema.post('save', function(doc, next){
+  logMiddleware("glosary","save", doc, function(err, logData){
+    next();
+  });
+});
+GlosarySchema.post('remove', function(doc, next){
+  logMiddleware("glosary","remove", doc, function(err, logData){
+    next();
+  });
+});
+GlosarySchema.post('update', function(doc, next){
+  logMiddleware("glosary","update", doc, function(err, logData){
+    next();
+  });
+});
+/*******************************************/
+
 // Company
 exports.company      = db.model( 'Company' , companySchema );
 exports.comp_creator = db.model('CompanyCreator', companyCreatorSchema);
@@ -764,3 +805,4 @@ exports.city         = db.model('City', CiudadSchema);
 
 //Email
 exports.email        = db.model('Email', EmailSchema);
+exports.glosary      = db.model('Glosary', GlosarySchema);

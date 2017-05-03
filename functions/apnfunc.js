@@ -147,7 +147,7 @@ function sendBadge(profile_id, num,  success){
 		success(null);
 	}
 };
-function sendMessNotification(id, success){
+function sendMessNotification(id, success, io){
 	if(mongoose.Types.ObjectId.isValid(id)){
 		id = mongoose.Types.ObjectId( id );
 		Message.findOne({
@@ -186,11 +186,11 @@ function sendMessNotification(id, success){
 
 							Generalfunc.NoReaded(profData._id, function(num){
 								sendMultiple(function(data){
-									callback(null, data );
+									callback(null, profData );
 								},results, name+": "+mensaje.mensaje, messData, num);
 							}, function(){
 								sendMultiple(function(data){
-									callback(null, data );
+									callback(null, profData );
 								},results, name+": "+mensaje.mensaje, messData);
 							});
 						});
@@ -331,7 +331,7 @@ function sendMultiple(ca, devices, message, payload, badge, sound){
 				console.log("APN Error:" + result.failed[0].error );
 			}
 		}
-		ca(result, devices);
+		ca(result);
 	});
 };
 function tokenItem(token, cb){

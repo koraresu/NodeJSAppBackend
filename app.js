@@ -298,7 +298,7 @@ io.on('connection', function(socket){
         console.log("sendMessNotification");
         APNfunc.sendMessNotification(messageData._id, function(profile, num){
           APNfunc.set_alert_num(num, socket);
-        });
+        }, socket);
       }
     });
   });
@@ -325,11 +325,7 @@ io.on('connection', function(socket){
           console.log("/******* Apple Push Notification *****/");
 
           APNfunc.sendNotification(notificationData._id, function(){
-             Generalfunc.NoReaded(profile._id, function(num){
-                APNfunc.set_alert_num(num, socket);
-              }, function(st){
-                console.log("Gneralfunc.NoReaded Error:" + st);
-              });
+
           });
         }
       }
