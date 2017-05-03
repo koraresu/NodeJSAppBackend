@@ -55,14 +55,15 @@ router.post('/city', multipartMiddleware, function(req, res){
 
 	City.find({
 		state: state
-	}, null, {
-		sort: {
-			name: 1
-		}
 	}).select('_id name').exec(function(error, states){
-		Generalfunc.response(200, states, function(response){
+		var nstates = states.sort( function(a,b){
+			var x = a.name;
+			return x.localeCompare(b.name);
+		});
+		Generalfunc.response(200, nstates, function(response){
 			res.json( response );
 		});
+
 	});
 });
 router.post('/company/insert', multipartMiddleware, function(req, res){
