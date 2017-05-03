@@ -191,7 +191,7 @@ function push(notificationData){
 function send(id, success,io){
 	console.log("+ SEND SOCKET:----------------------------------+");
 	Notification.findOne({ _id: id }).populate('profile').populate('profile_emisor').populate('profile_mensaje').populate('network').exec(function(errNotification, notificationData){
-		APNfunc.get_interfaz.prepare(notificationData.profile._id, notificationData._id, function(profile_id, notification_id){
+		APNfunc.get_interfaz().prepare(notificationData.profile._id, notificationData._id, function(profile_id, notification_id){
 			APNfunc.addOrGet(1, notification_id, profile_id, function(pushEventData){
 				Device.find({ profile: profile_id }).sort({ $natural: -1 }).exec(function(err, deviceData){
 					Online.find({ profiles: profile_id }).sort({ $natural: -1 }).exec(function(errOnline, onlineData){
