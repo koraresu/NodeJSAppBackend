@@ -541,9 +541,9 @@ router.post('/get/news/show', multipartMiddleware, function(req, res){
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
 			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
-
+				console.log("History:");
+				console.log( news_id );
 				History.findOne({ _id: news_id }).populate('profile_id').populate('de_id').exec(function(errHistory,historyData){
-					console.log("History:");
 					console.log( historyData );
 					var d = format.news(historyData, historyData.profile_id, historyData.de_id);
 					Generalfunc.response(200, d, function(response){
