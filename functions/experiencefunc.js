@@ -201,8 +201,15 @@ exports.experienceJobGet = function(name, callback){
 	var reg  = new RegExp(text, "i");
 
 	Job.find({ name: reg }).distinct('name',function(err, jobData){
-		
-		callback(err, jobData);
+		var njobData = jobData.sort( function(a,b){
+			if(a.name != undefined){
+				var x = a.name;	
+				return x.localeCompare(b.name);
+			}else{
+				return false;
+			}
+		});
+		callback(err, njobData);
 	});
 }
 exports.experienceSpecialityGet = function(name, callback){
