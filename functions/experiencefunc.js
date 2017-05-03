@@ -203,7 +203,7 @@ exports.experienceJobGet = function(name, callback){
 	var array = [];
 	Job.find({ name: reg }).exec('name',function(err, jobData){
 		var njob = Generalfunc.sortbyaccent(jobData);
-		callback(err, njob);
+		callback(err, jobData);
 	});
 }
 exports.experienceSpecialityGet = function(name, callback){
