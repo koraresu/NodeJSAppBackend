@@ -201,16 +201,17 @@ exports.experienceJobGet = function(name, callback){
 	var text = name;
 	var reg  = new RegExp(text, "i");
 	var array = [];
-	Job.find({ name: reg }).exec('name',function(err, jobData){
+	console.log( text );
+	Job.find({ name: reg }).exec(function(err, jobData){
 		var njob = Generalfunc.sortbyaccent(jobData);
-		callback(err, jobData);
+		callback(err, njob);
 	});
 }
 exports.experienceSpecialityGet = function(name, callback){
 	var text = name;
 	var reg  = new RegExp(text, "i");
 
-	Speciality.find({ name: reg  }).exec('name',function(err, jobData){
+	Speciality.find({ name: reg  }).exec(function(err, jobData){
 		var njob = Generalfunc.sortbyaccent(jobData);
 		callback(err, njob);
 	});	
