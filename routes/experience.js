@@ -157,10 +157,16 @@ router.post('/company/insert', multipartMiddleware, function(req, res){
 router.post('/job/get', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 	var name      = req.body.name;
+	console.log("Job/Get");
+
 	Tokenfunc.exist(guid, function(status, token){
+		console.log("Token");
 		if(status){
+			console.log("Token exists");
 			Experiencefunc.experienceJobGet(name, function(err, jobData){
+				console.log("ExperienceJob");
 				Generalfunc.response(200,jobData, function(response){
+					console.log("Response");
 					res.json(response);
 				})
 			});
