@@ -203,8 +203,13 @@ exports.experienceJobGet = function(name, callback){
 	var array = [];
 	console.log( text );
 	Job.find({ name: reg }).exec(function(err, jobData){
-		var njob = Generalfunc.sortbyaccent(jobData);
-		callback(err, jobData);
+		var dist = Generalfunc.distinct(jobData, function(x){
+			return x.name;
+		});
+		var njob = Generalfunc.sortbyaccent( dist, function(x){
+			return x.name;
+		} );
+		callback(err, njob);
 	});
 }
 exports.experienceSpecialityGet = function(name, callback){
@@ -212,8 +217,13 @@ exports.experienceSpecialityGet = function(name, callback){
 	var reg  = new RegExp(text, "i");
 
 	Speciality.find({ name: reg  }).exec(function(err, jobData){
-		var njob = Generalfunc.sortbyaccent(jobData);
-		callback(err, jobData);
+		var dist = Generalfunc.distinct(jobData, function(x){
+			return x.name;
+		});
+		var njob = Generalfunc.sortbyaccent( dist, function(x){
+			return x.name;
+		} );
+		callback(err, njob);
 	});	
 }
 exports.companyGet = function(name, callback){
@@ -221,8 +231,13 @@ exports.companyGet = function(name, callback){
 	var reg  = new RegExp(text, "i");
 
 	Company.find({ name: reg  }).exec(function(err, jobData){
-		var njob = Generalfunc.sortbyaccent(jobData);
-		callback(err, jobData);
+		var dist = Generalfunc.distinct(jobData, function(x){
+			return x.name;
+		});
+		var njob = Generalfunc.sortbyaccent( dist, function(x){
+			return x.name;
+		} );
+		callback(err, njob);
 	});
 }
 

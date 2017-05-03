@@ -577,10 +577,24 @@ function noaccent(str){
 	}
 	return str;
 };
-function sortbyaccent(array){
-	array.sort(function(a,b){
-		var a_name = noaccent(a.name);
-		var b_name = noaccent(b.name);
+function distinct(arr, fn){
+  var unique = {};
+  var distinct = [];
+  arr.forEach(function (x) {
+    var key = fn(x);
+    var all = x;
+    if (!unique[key]) {
+      distinct.push(all);
+      unique[key] = true;
+    }
+  });
+  return distinct;
+};
+function sortbyaccent(array, fn){
+	return array.sort(function(a,b){
+
+		var a_name = noaccent( fn(a) );
+		var b_name = noaccent( fn(b) );
 		var comparison = 0;
 		if (a_name > b_name) {
 			comparison = 1;
@@ -590,6 +604,7 @@ function sortbyaccent(array){
 		return comparison;
 	});
 };
+exports.distinct           = distinct;
 exports.censurar           = censurar;
 exports.review_check       = review_check;
 exports.extend             = extend;
