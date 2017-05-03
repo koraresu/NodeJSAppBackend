@@ -204,7 +204,7 @@ exports.experienceJobGet = function(name, callback){
 	console.log( text );
 	Job.find({ name: reg }).exec(function(err, jobData){
 		var njob = Generalfunc.sortbyaccent(jobData);
-		callback(err, njob);
+		callback(err, jobData);
 	});
 }
 exports.experienceSpecialityGet = function(name, callback){
@@ -213,7 +213,7 @@ exports.experienceSpecialityGet = function(name, callback){
 
 	Speciality.find({ name: reg  }).exec(function(err, jobData){
 		var njob = Generalfunc.sortbyaccent(jobData);
-		callback(err, njob);
+		callback(err, jobData);
 	});	
 }
 exports.companyGet = function(name, callback){
@@ -222,7 +222,7 @@ exports.companyGet = function(name, callback){
 
 	Company.find({ name: reg  }).exec(function(err, jobData){
 		var njob = Generalfunc.sortbyaccent(jobData);
-		callback(err, njob);
+		callback(err, jobData);
 	});
 }
 
