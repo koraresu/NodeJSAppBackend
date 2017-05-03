@@ -63,10 +63,10 @@ function createPush(pushEvent, token,dItem, success, fail){
 					.populate('profile_emisor')
 					.populate('profile_mensaje')
 					.exec(function(err, notificationData){
-						console.log("Profile Emisor:");
-						console.log( notificationData.profile_emisor );
-						console.log("Profile Mensaje:");
-						console.log( notificationData.profile_mensaje );
+						
+						
+						
+						
 						var nombre_emisor = "";
 						var nombre_mensaje = "";
 
@@ -205,7 +205,7 @@ function getNotProfile(id, socket, success, fail){
 	.populate('profile_emisor')
 	.populate('network')
 	.exec(function(err, notificationData){
-		console.log(err);
+		
 		if(!err && notificationData){
 			Online.findOne({ socket: socket.id }).populate('profiles').exec(function(errOnline, onlineData){
 				if(!errOnline && onlineData){
@@ -220,8 +220,8 @@ function getNotProfile(id, socket, success, fail){
 	});
 }
 function getConvProfile(id, socket,success, fail){
-	console.log("Conversation ID:");
-	console.log( id );
+	
+	
 
 	if(mongoose.Types.ObjectId.isValid(id)){
 		id = mongoose.Types.ObjectId(id);

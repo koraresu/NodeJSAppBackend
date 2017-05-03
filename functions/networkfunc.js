@@ -112,14 +112,14 @@ function checkconversation(profile_a, profile_b, callback){
 	});
 }
 function PublicId(public_id, callback){
-	console.log("PUBLIC_ID:");
-	console.log(public_id);
+	
+	
 	Profile.findOne({ public_id: public_id}).exec(function(errProfile, profileData){
-		console.log("ERROR PROFILE:");
-		console.log(errProfile);
+		
+		
 		if(!errProfile && profileData){
 			
-			console.log(profileData);
+			
 
 			callback(true, profileData);
 		}else{
@@ -145,8 +145,8 @@ function getListFriends(profile_id,callback){
 					return o.toString() != profile_id.toString() 
 				});
 				a = a[0];
-				console.log("A");
-				console.log(a);
+				
+				
 				
 			});
 		}else{
@@ -231,7 +231,7 @@ function isFriend(profile_id, another_id, callback){
 		},
 		"accepted": true
 	};
-	console.log(d);
+	
 	Network.findOne(d).exec(function(errNetwork, networkData){
 		if(!errNetwork && networkData){
 			if(networkData != null){
@@ -250,7 +250,7 @@ function typeFriend(profile_id, another_id, callback){
 			"$all": [profile_id, another_id]
 		}
 	};
-	console.log(d);
+	
 	Network.findOne(d).exec(function(errNetwork, networkData){
 		if(!errNetwork && networkData){
 			if(networkData.accepted == true){
@@ -266,7 +266,7 @@ function typeFriend(profile_id, another_id, callback){
 }
 function type(profileID, anotherID, callback){
 	getFriends(anotherID._id, function(errNetwork, friends, friendsId){
-		console.log(friendsId);
+		
 		var its = friendsId.filter(function(o){
 			var a = o.toString();
 			var b = profileID._id.toString();
@@ -354,8 +354,8 @@ function recomendar(data, success, fail){
 	if(mongoose.Types.ObjectId.isValid(p_recomend_id)){
 		p_recomend_id = mongoose.Types.ObjectId(p_recomend_id);
 	}
-	console.log("HistoryID:");
-	console.log(history_id);
+	
+	
 
 	Tokenfunc.exist(guid, function(errToken, token){
 		if(errToken){
@@ -385,7 +385,7 @@ function recomendar(data, success, fail){
 
 								create_notificacion_recomendacion(e, function(statusAn, notificationAnData){
 									create_notificacion_recomendacion(d, function(status, notificationData){
-										console.log("Notification Status");
+										
 										if(mongoose.Types.ObjectId.isValid(history_id)){
 											History.findOne({ _id: history_id}).exec(function(err, historyData){
 												
@@ -396,7 +396,7 @@ function recomendar(data, success, fail){
 													busqueda: historyData
 												};
 
-												console.log( data );
+												
 												success(data, notificationAnData, notificationData);
 											});
 										}else{
@@ -406,7 +406,7 @@ function recomendar(data, success, fail){
 												profile_mensaje: profileRecomendData,
 											};
 
-											console.log( data );
+											
 
 											success(data, notificationAnData, notificationData);
 										}
@@ -429,8 +429,8 @@ function recomendar(data, success, fail){
 }
 function create_notificacion_recomendacion(data, callback, io){
 	Notificationfunc.add(data, function(status, notificationData){
-		console.log("Create Notification Recomendacion");
-		console.log( notificationData );
+		
+		
 		callback(status, notificationData);
 	}, io);
 }
@@ -440,9 +440,9 @@ function new_friend(profileData, profileAnotherData, success, fail){
 			$all: [ profileData._id, profileAnotherData._id]
 		}
 	}).exec(function(errNetwork, networkData){
-		console.log("New Friend:");
-		console.log( errNetwork );
-		console.log( networkData );
+		
+		
+		
 		if(!errNetwork && networkData){
 			success(networkData);
 		}else{

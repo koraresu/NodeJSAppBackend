@@ -109,7 +109,7 @@ router.post('/qrcode', multipartMiddleware, function(req, res){
 
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
-			console.log("Token");
+			
 			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
 				Profilefunc.generate_qrcode(profileData, function(profileData){
 					res.json({
@@ -154,7 +154,7 @@ router.post('/generate/history',multipartMiddleware, function(req, res){
 						"title": faker.lorem.words(5),
 						"profile": profile_id
 					}, function(err, history){
-						console.log(history);
+						
 						
 						Historyfunc.generate_history("2", profileData, {
 							"puesto" : faker.lorem.words( 2 ),
@@ -224,9 +224,9 @@ router.post('/generate', multipartMiddleware, function(req,res){
 			var max = 10;
 			var min = 1;
 			var rand = Math.floor(Math.random() * (max - min + 1)) + min;
-			console.log(nombre+" "+apellido);
+			
 			for(var x = 0;x<=rand;x++){
-				console.log(x);
+				
 
 				Profile.findOne({ _id: {"$ne": profileData._id } }).skip(x).exec(function(statusRandF, profileRandF){
 					if(!statusRandF && profileRandF){
@@ -243,7 +243,7 @@ router.post('/generate', multipartMiddleware, function(req,res){
 									profileRandF._id
 								]
 							});
-							console.log(network);
+							
 
 							network.save(function(err, networkData){
 															

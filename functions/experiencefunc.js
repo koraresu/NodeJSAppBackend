@@ -30,7 +30,7 @@ var Country        = model.country;
 
 function checkExperience(profileData, type, data, callback){
 	if(type == 0){
-		console.log(data);
+		
 
 		jobExistsOrCreate({
 			name: data.ocupation,
@@ -47,7 +47,7 @@ function checkExperience(profileData, type, data, callback){
 						},
 						profile_id: profileData._id
 					};
-			console.log(search);
+			
 			Experience.findOne(search).exec(function(errExperience, experienceData){
 				if(!errExperience && experienceData){
 
@@ -62,7 +62,7 @@ function checkExperience(profileData, type, data, callback){
 			});
 		});
 	}else{
-		console.log(data);
+		
 
 		companyExistsOrCreate({
 			name: data.company
@@ -201,6 +201,7 @@ exports.experienceJobGet = function(name, callback){
 	var reg  = new RegExp(text, "i");
 
 	Job.find({ name: reg }).distinct('name',function(err, jobData){
+		
 		callback(err, jobData);
 	});
 }

@@ -148,7 +148,7 @@ router.get('/sendpush/notification/:notification_id', function(req, res){
     notification_id = mongoose.Types.ObjectId(notification_id);
 
     APNfunc.sendNotification(notification_id, function( data ){
-      console.log( data );
+      
       res.json( data );
     });
   }
@@ -191,7 +191,7 @@ router.get('/sendpush/message/:message_id', function(req, res){
     message_id = mongoose.Types.ObjectId(message_id);
 
     APNfunc.sendMessNotification(message_id, function( data ){
-      console.log( data );
+      
       res.json( data );
     });
   }
@@ -218,15 +218,15 @@ function GetInsState(state, callback){
 
     
     if(!err && st){
-      console.log( "Error:" );
-      console.log( err );
-      console.log( "St:" );
-      console.log( st );
+      
+      
+      
+      
     }else{
-      console.log( "Error:" );
-      console.log( err );
+      
+      
     }
-    console.log("+-----------------------------------------+");
+    
     callback(null,st);
     /*
     if(!err && st){
@@ -248,8 +248,8 @@ function GetInsCity(city, state, callback){
     state_id: state
   }).exec(function(err, st){
 
-    console.log( err );
-    console.log( st );
+    
+    
 
     callback(null,st);
   });

@@ -72,7 +72,7 @@ router.post('/connect', multipartMiddleware, function(req, res){
 								"$all": [profileData._id,profileAnotherData._id],
 							}
 						};
-						console.log(find);
+						
 						Network.findOne(find, function(errNetwork, networkData){
 							if(!errNetwork && networkData){
 								Generalfunc.response(200, networkData, function(response){
@@ -149,7 +149,7 @@ router.post('/connect/all', multipartMiddleware, function(req, res){
 						public_id = mongoose.Types.ObjectId(element);
 						Networkfunc.PublicId(public_id, function(statusPublic, profileAnotherData){
 							if(statusPublic){
-								console.log(profileAnotherData);
+								
 								var find = {
 									"profiles": {
 										"$all": [profileData._id,profileAnotherData._id],
@@ -211,14 +211,14 @@ router.post('/connect/all', multipartMiddleware, function(req, res){
 					}
 				}, function(err, results){
 					Generalfunc.response(200, results, function(response){
-						console.log("B");
+						
 						res.json(response);
 					});
 				});
 			});
 		}else{
 			Generalfunc.response(101, {}, function(response){
-				console.log("C");
+				
 				res.json(response);
 			});
 		}
@@ -440,7 +440,7 @@ router.post('/unfriend', multipartMiddleware, function(req, res){
 	Tokenfunc.exist(guid, function(errToken, token){
 		if(errToken){
 			Tokenfunc.toProfile(token.generated_id, function(status, userData, profileData, profileInfoData){
-				console.log("Token");
+				
 				Networkfunc.PublicId(public_id, function(statusPublic, profileAnotherData){
 					if(statusPublic){
 						var find = {
@@ -548,7 +548,7 @@ router.post('/emailtofriend', multipartMiddleware, function(req, res){
 
 	var split = emails.split(',');
 	
-	console.log(split);
+	
 	Tokenfunc.exist(guid, function(errToken, token){
 		if(errToken){
 			Tokenfunc.toProfile(token.generated_id, function(status, userData, profileData){
@@ -568,12 +568,12 @@ router.post('/emailtofriend', multipartMiddleware, function(req, res){
 											profile: emailProfileData,
 											isFriend: d
 										};
-										console.log(x);
+										
 										callback(null, x);
 									});
 								});
 							}, function(err, results){
-								console.log(split);
+								
 								split = cleanArray(split);
 								
 								Generalfunc.response(200, { profiles: results, uknown: split }, function(response){
@@ -620,12 +620,12 @@ router.post('/facebooktofriend', multipartMiddleware, function(req, res){
 							if(facebookProfileData.length > 0){
 								async.map(facebookProfileData, function(item, callback){
 									Networkfunc.isFriend(profileData._id, item._id, function(d){
-										console.log("ProfileData:");
-										console.log(profileData._id);
-										console.log("Facebook Profile Data");
-										console.log(item._id);
-										console.log("Friend:");
-										console.log(d);
+										
+										
+										
+										
+										
+										
 										var x = {
 											profile: item,
 											isFriend: d
@@ -667,11 +667,11 @@ router.post('/phonetofriend', multipartMiddleware, function(req, res){
 	var guid       = req.body.guid;
 	var phones     = req.body.phones;
 
-	console.log(phones);
+	
 
 	var split = phones.split(',');
 
-	console.log(split);
+	
 
 	Tokenfunc.exist(guid, function(errToken, token){
 		if(errToken){
@@ -689,7 +689,7 @@ router.post('/phonetofriend', multipartMiddleware, function(req, res){
 							var x = split.indexOf(item.phone);
 							delete split[x];
 
-							console.log(item);
+							
 
 							Networkfunc.isFriend(profileData._id, item._id, function(d){
 								var x = {
@@ -697,12 +697,12 @@ router.post('/phonetofriend', multipartMiddleware, function(req, res){
 									isFriend: d
 								};
 
-								console.log(x);
+								
 
 								callback(null, x);
 							});
 						}, function(err, results){
-							console.log(results);
+							
 							split = cleanArray(split);
 							Generalfunc.response(200, {profiles: results, uknown: split}, function(response){
 								res.json(response);
@@ -842,7 +842,7 @@ router.post('/review/get', multipartMiddleware, function(req, res){
 	}
 	
 
-	console.log(pagination);
+	
 
 	Tokenfunc.exist(guid, function(errToken, token){
 		if(errToken){
@@ -851,8 +851,8 @@ router.post('/review/get', multipartMiddleware, function(req, res){
 				r = r.limit(perPage);
 				r = r.skip( pagination );
 
-				console.log("perPage:"+perPage);
-				console.log("Page:"+perPage*page);
+				
+				
 				r.exec(function(errReview, reviewData){
 					Generalfunc.response(200, reviewData, function(response){
 						res.json(response);
@@ -890,8 +890,8 @@ router.post('/recomendar', multipartMiddleware, function(req, res){
 	if(mongoose.Types.ObjectId.isValid(p_recomend_id)){
 		p_recomend_id = mongoose.Types.ObjectId(p_recomend_id);
 	}
-	console.log("HistoryID:");
-	console.log(history_id);
+	
+	
 
 	Tokenfunc.exist(guid, function(errToken, token){
 		if(errToken){
@@ -974,8 +974,8 @@ module.exports = router;
 
 function create_notificacion_recomendacion(data, callback, io){
 	Notificationfunc.add(data, function(status, notificationData){
-		console.log("Create Notification Recomendacion");
-		console.log( notificationData );
+		
+		
 		callback(status, notificationData);
 	}, io);
 }

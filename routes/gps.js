@@ -41,7 +41,7 @@ var Generalfunc       = require('../functions/generalfunc');
 
 
 exports.find = function(socket, callback){
-	console.log(socket);
+	
 	var meters      = 500;
 	var km          = meters/1000;
 	var maxDistance = km / 111;
@@ -209,13 +209,13 @@ exports.connect = function(profileData, profileAnotherData, status, callback, io
 						"profile": profileData, 
 						"friend": profileAnotherData
 					};
-					console.log( profileData );
+					
 					Location.findOne({
 						profile: profileData._id
 					}).exec(function(errLoc, locData){
-						console.log("Location:----------------------------------------+");
-						console.log( locData );
-						console.log("+------------------------------------------------+");
+						
+						
+						
 						callback(data, locData);
 					});
 				}, io);

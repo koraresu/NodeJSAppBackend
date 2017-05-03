@@ -82,8 +82,8 @@ router.post('/login', multipartMiddleware, function(req, res){
 		
 		if(!errUser && userData){
 			Profilefunc.compare_password(password, userData.password, function(err, statusPassword){
-				console.log("Password:");
-				console.log(statusPassword);
+				
+				
 				if(statusPassword){
 
 					Profilefunc.userProfile(userData, function(statProfile, tokenData, userData, profileData){
@@ -203,7 +203,7 @@ router.post('/forgot', multipartMiddleware, function(req, res){
 						nombre: profileData.first_name+" "+profileData.last_name,
 						generated_id: forgotData.generated_id,
 					}, userData.email, "Restablece tu contraseña",function(status, html){
-						console.log(status);
+						
 						if(status){
 							res.json( forgotData );
 						}else{
@@ -228,7 +228,7 @@ router.post('/forgot', multipartMiddleware, function(req, res){
 // Return (Formato 2)
 // 		Generated Token
 router.post('/create', multipartMiddleware, function(req, res){
-	console.log( req.body );
+	
 	var nombre   = req.body.first_name;
 	var apellido = req.body.last_name;
 	var email    = req.body.email;
@@ -240,7 +240,7 @@ router.post('/create', multipartMiddleware, function(req, res){
 
 	if( Profilefunc.IsJsonString(facebook)){
 		typeUser = 1;
-		console.log(facebook);
+		
 		facebook = JSON.parse(facebook);
 
 		facebookId = facebook.fId;
@@ -275,16 +275,16 @@ router.post('/create', multipartMiddleware, function(req, res){
         }
         ];
 
-        console.log("facebookID:" + facebookId );
-        console.log("Token:" + facebookTo );
-        console.log( facebookData );
+        
+        
+        
 	}
-	console.log(email);
+	
 
 	var pass = Profilefunc.generate_password(password);
-	console.log(pass);
 	
-	console.log(pass);
+	
+	
 	Profilefunc.userProfileInsertIfDontExists({
 		email: email
 	},{
@@ -328,7 +328,7 @@ router.post('/create', multipartMiddleware, function(req, res){
 					public_id: profileData.public_id,
 					nombre: profileData.first_name,
 				}, userData.email, "Verificación de Correo",function(status, html){
-					console.log(status);
+					
 					if(status){
 						Generalfunc.response(200,{
 							token: tokenData.generated_id,
@@ -384,7 +384,7 @@ router.post('/login-facebook', multipartMiddleware, function(req, res){
 	var name       = req.body.name;
 
 	User.findOne({ email: email}, function(errUser, userData){
-		console.log( userData );
+		
 		if(!errUser && userData){
 
 			var verified = true;
@@ -707,7 +707,7 @@ router.post('/get/friends', multipartMiddleware, function(req, res){
 											d = "f";
 										}
 
-										console.log( first._id + " == " + profileAnotherData._id + " | " + p._id + " | " + d );
+										
 
 										ca( null, {
 											profile: p,
@@ -740,7 +740,7 @@ router.post('/get/friends', multipartMiddleware, function(req, res){
 
 						Network.find(d).populate('profiles').exec(function(errNetwork, networkData){
 							async.map( networkData , function(item, ca){
-								console.log( item );
+								
 								var profiles = item.profiles;
 								if(item.profiles.length > 1){
 									var equal = Generalfunc.profile_ajeno(profileData._id, profiles);
@@ -852,7 +852,7 @@ router.post('/get/friend', multipartMiddleware, function(req, res){
 																date: review_date.toString()
 															}
 														};
-														console.log(c);
+														
 														//Generalfunc.response(200, profile, function(response){
 														Generalfunc.response(200, c, function(response){
 															res.json(response);
@@ -1301,7 +1301,7 @@ router.post('/update', multipartMiddleware, function(req, res){
 							if(birthday != undefined){
 								birthday = explDate(birthday);
 								birthday = new Date(birthday);
-								console.log(birthday);
+								
 								if(validDate(birthday)){
 									profileData.birthday = birthday;
 								}
@@ -1359,7 +1359,7 @@ router.post('/experience', multipartMiddleware, function(req, res){
 				};
 
 				Experiencefunc.insertOrExists(profileData, data, function(statusExperience, experienceData){
-					console.log(experienceData);
+					
 					Profile.findOne({ _id: profileData._id}, function(errProfile, profileData){
 						Experience.find({ profile_id: profileData._id}, function(errExperience, experienceData){
 							Generalfunc.response(200, { profile: format.littleProfile(profileData), experiences: experienceData}, function(response){
@@ -1455,9 +1455,9 @@ router.post('/update-experience', multipartMiddleware, function(req, res){
 	var ocupation  = req.body.ocupation;
 
 
-	console.log(ocupation);
-	console.log(company);
-	console.log(sector);
+	
+	
+	
 
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
@@ -1510,12 +1510,12 @@ router.post('/update-experience', multipartMiddleware, function(req, res){
 							var find = {};
 							if(id != undefined){
 								if(mongoose.Types.ObjectId.isValid(id)){
-									console.log(id);
+									
 									id = mongoose.Types.ObjectId(id);
-									console.log(id);
+									
 									find = { _id: id };
 									Experience.findOne(find).exec(function(err, experienceData){
-										console.log(experienceData);
+										
 										if(!err && experienceData){
 											experienceData.company = data.company;
 											experienceData.ocupation = data.ocupation;
@@ -1633,7 +1633,7 @@ router.post('/addskill', multipartMiddleware, function(req, res){
 				}, function(status, skillData){
 					
 					Profilefunc.findSkill(profileData._id,skillData,function(status, skill){
-						console.log(status);
+						
 						if(status){
 							format.profileformat(profileData, function(profileData){
 								Generalfunc.response(200, profileData, function(response){
@@ -1646,7 +1646,7 @@ router.post('/addskill', multipartMiddleware, function(req, res){
 								return o == skillData._id
 							});
 
-							console.log(filter.length);
+							
 
 							if(filter.length > 0){
 								format.profileformat(profileData, function(profileData){
@@ -1655,7 +1655,7 @@ router.post('/addskill', multipartMiddleware, function(req, res){
 									});
 								});
 							}else{
-								console.log(skillData);
+								
 								profileData.skills.push(skillData._id);
 								profileData.save(function(errProfile, profile){
 									Profilefunc.logs(profileData, 15, skillData, function(){
@@ -1831,13 +1831,13 @@ router.post('/setprofilepic', multipartMiddleware, function(req, res){
 
 				Profilefunc.updateProfilePic(profileData._id, profilepic, function(err, profileData){
 					Profilefunc.logs(profileData, 4, profileData, function(){
-						console.log(profileData);
+						
 						var profile = format.littleProfile(profileData);
 
-						console.log(profile);
+						
 						var data = {};
 						data = profile;
-						console.log(data);
+						
 						Generalfunc.response(200, data, function(response){
 							res.json(response);
 						});
@@ -1863,7 +1863,7 @@ router.post('/setprofilepic', multipartMiddleware, function(req, res){
 router.post('/token/exists', multipartMiddleware, function(req, res){
 	var guid = req.body.guid;
 
-	console.log(guid);
+	
 
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){

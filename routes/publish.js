@@ -142,8 +142,8 @@ router.post('/write/news', multipartMiddleware, function(req, res){
 	var gallery   = req.files.gallery;
 	var data = [];
 
-	//console.log(req.body);
-	//console.log(req.files);
+	//
+	//
 
 
 	Tokenfunc.exist(guid, function(status, tokenData){
@@ -185,7 +185,7 @@ router.post('/write/news', multipartMiddleware, function(req, res){
 							}
 						}
 						], function(err, results){
-							//console.log(results);
+							//
 							var data = {};
 							if(typeof results[0] != "undefined"){
 								data = results[0];
@@ -218,8 +218,8 @@ router.post('/write/news/loi', multipartMiddleware, function(req, res){
 	var contenido = req.body.content;
 	var data = [];
 
-	//console.log(req.body);
-	//console.log(req.files);
+	//
+	//
 	
 
 	Tokenfunc.exist(guid, function(status, tokenData){
@@ -285,7 +285,7 @@ router.post('/write/news/image', multipartMiddleware, function(req, res){
 										data.push({ "url" : p });
 										historyData.data.gallery = data;
 
-										//console.log(historyData);
+										//
 										
 										historyData.save(function(err, history){
 											History.findOne({ _id: history._id }).exec(function(errHistory, historyData){
@@ -565,8 +565,8 @@ router.post('/update/news', multipartMiddleware, function(req, res){
 	var gallery   = req.files.gallery;
 	var data = [];
 
-	//console.log(req.body);
-	//console.log(req.files);
+	//
+	//
 	
 	if(mongoose.Types.ObjectId.isValid(id)){
 		id = mongoose.Types.ObjectId(id);
@@ -612,7 +612,7 @@ router.post('/update/news', multipartMiddleware, function(req, res){
 							}
 						}
 						], function(err, results){
-							//console.log(results);
+							//
 							var data = {};
 							if(typeof results[0] != "undefined"){
 								data = results[0];
@@ -654,17 +654,17 @@ router.post('/get/review', multipartMiddleware, function(req, res){
 	var page      = req.body.page;
 	var pages     = 1;
 
-	//console.log(page);
-	//console.log(max);
+	//
+	//
 
 	if(isNumber(max)){
-		//console.log("Max is Number");
+		//
 		max = max*1;
 	}else{
 		max = 20;
 	}
 	if(isNumber(page)){
-		//console.log("Page is Number");
+		//
 		pages = page*1;
 		pages = (pages*max);
 	}else{
@@ -696,7 +696,7 @@ router.post('/get/review', multipartMiddleware, function(req, res){
 							var r = Review.find(d);
 							r = r.sort( [ ['createdAt', 'descending'] ] );
 							r = r.limit(max);
-							//console.log("Pages:"+pages);
+							//
 							r = r.skip(pages);
 							r = r.populate('profile_id');
 							r.populate('profiles').exec(function(errReview, reviewData){
@@ -718,7 +718,7 @@ router.post('/get/review', multipartMiddleware, function(req, res){
 					});
 					r = r.sort( [ ['createdAt', 'descending'] ] );
 					r = r.limit(max);
-					//console.log("Pages:"+pages);
+					//
 					r = r.skip(pages);
 					r = r.populate('profile_id');
 					r.populate('profiles').exec(function(errReview, reviewData){
@@ -753,9 +753,9 @@ router.post('/write/review', multipartMiddleware, function(req, res){
 			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
 				Profilefunc.publicId(public_id, function(statusPublic, publicProfileData){
 
-					//console.log("PUBLIC_ID:"+public_id);
-					//console.log("PublicData:");
-					//console.log(publicProfileData);
+					//
+					//
+					//
 
 					if(statusPublic){
 
@@ -804,7 +804,7 @@ router.post('/write/review', multipartMiddleware, function(req, res){
 														if((review.length-1) == index){
 															var prom = suma/count;
 
-															//console.log("PROFILE ID:"+publicProfileData._id);
+															//
 															publicProfileData.review_score = prom;
 															publicProfileData.save(function(err, profile){
 																Profile.find({ _id: publicProfileData._id }).exec(function(err, NprofileData){

@@ -7,7 +7,7 @@ Skill.findOne({ name: name}, function(err, skillData){
 						id: skillData._id
 					};
 					var insertar = true;
-					console.log(profileData);
+					
 					if(profileData.skills.length == 0){
 						if(insertar){
 							profileData.skills.push(data);
@@ -23,7 +23,7 @@ Skill.findOne({ name: name}, function(err, skillData){
 							}
 							if(index == (profileData.skills.length-1)){
 								if(insertar){
-									console.log(profileData);
+									
 									profileData.skills.push(data);
 								}
 								profileData.save(function(err, profileData){
@@ -34,7 +34,7 @@ Skill.findOne({ name: name}, function(err, skillData){
 					}
 					
 				}else{
-					console.log("no Profile");
+					
 					callback(false);
 				}
 			});
@@ -49,7 +49,7 @@ Skill.findOne({ name: name}, function(err, skillData){
 						id: skillData._id
 					};
 					var insertar = true;
-					console.log(profileData.skills);
+					
 					profileData.skills.forEach(function(item, index){
 
 						if(item.name == name){

@@ -85,7 +85,7 @@ router.get('/verification/:id',function(req, res){
 
     Profile.findOne({ public_id: id }).populate('user_id').exec( function(errProfile, profileData){
       if(!errProfile && profileData){
-          console.log(profileData.user_id);
+          
 
           if(profileData.user_id == null){
             res.render('verified', { email: "", status: false, message: "El usuario que estas buscando no existe"});
@@ -129,8 +129,8 @@ router.get('/city', function(req, res){
         if(!errState && stateData){
           cityItem.state_id = mongoose.Types.ObjectId(stateData._id);
           cityItem.save(function(err, city){
-            console.log(cityIndex);
-            console.log(cityData.length);
+            
+            
 
             if(cityIndex+1 == cityData.length){
               res.send("Ya esta!!");
@@ -148,7 +148,7 @@ router.get('/forgot/:generated', function(req, res){
 
   var password_again = req.flash('password_again');
 
-  console.log(password_again);
+  
   Forgot.findOne({ generated_id: generated_id }).populate('user').exec(function(err, forgotData){
     if(!err && forgotData){
       if(forgotData.used == false){
@@ -164,14 +164,14 @@ router.get('/forgot/:generated', function(req, res){
   });    
 });
 router.post('/forgot/thanks', function(req, res){
-  console.log(req.body);
+  
 
   var generated      = req.body.generated;
   var password       = req.body.password;
   var password_again = req.body.password_again;
   
   if(password == password_again){
-    console.log("Password Iguales");
+    
 
     Forgot.findOne({ generated_id: generated }).populate('user').exec(function(err, forgotData){
       forgotData.used = true;
@@ -196,7 +196,7 @@ router.post('/forgot/thanks', function(req, res){
       });
     });  
   }else{
-    console.log("Password Diferentes");
+    
 
     req.flash('password_again', 'Tu contraseña y validacion de contraseña no son iguales.');
     res.redirect('/forgot/'+generated);
@@ -1564,9 +1564,9 @@ router.get('/jobs/db', function(req, res){
       "name": "Estilista Canino"
     }]}
   ];
-  console.log("Tamaño:" + x.length );
+  
   async.map(x, function(item, ca){
-    console.log(item);
+    
 
     var s = new Sector({
       name: item.name
@@ -1610,7 +1610,7 @@ router.post('/sendEmail',multipartMiddleware,  function(req, res){
   var content = req.body.content;
   var file    = req.body.template;
 
-  console.log( req.body );
+  
   Generalfunc.sendEmail(file, {
     title: title,
     content: content

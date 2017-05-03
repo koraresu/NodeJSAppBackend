@@ -93,7 +93,7 @@ router.post('/accept', multipartMiddleware, function(req, res){
 
 	accept = (accept === "true");
 	
-	console.log(accept);
+	
 
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
@@ -112,7 +112,7 @@ router.post('/accept', multipartMiddleware, function(req, res){
 							switch(notificationData.tipo){
 								case 3:
 									Network.findOne({ _id: notificationData.network }).exec(function(errNetwork, networkData){
-										console.log(typeof(accept));
+										
 										if(typeof(accept) === "boolean"){
 											if(notificationData.clicked == false){
 												notificationData.clicked = true;

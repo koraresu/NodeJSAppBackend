@@ -150,7 +150,7 @@ router.post('/general/network', multipartMiddleware, function(req, res){
 						Profile.find(find).populate('experiences').populate('skills').populate('user_id','-password').exec(function(errProfile, profileData){
 
 							async.map(profileData, function(profileItem, callback){
-								console.log( profileItem );
+								
 								var array = new Array();
 								array.push(profileItem.first_name);
 								array.push(profileItem.last_name);
@@ -299,7 +299,7 @@ router.post('/save', multipartMiddleware, function(req, res){
 				if(status){
 
 					Search.findOne({ text: text }).sort({"createdAt":-1}).exec(function(errS, sData){
-						console.log(sData);
+						
 
 
 						if(!errS && sData){

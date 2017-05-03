@@ -178,7 +178,7 @@ router.post('/speciality/get', multipartMiddleware, function(req, res){
 	Tokenfunc.exist(guid, function(status, token){
 		if(status){
 			Experiencefunc.experienceSpecialityGet(name, function(err, specialityData){
-				console.log(specialityData);
+				
 				Generalfunc.response(200,specialityData, function(response){
 					res.json(response);
 				})
@@ -197,7 +197,7 @@ router.post('/sector/get', multipartMiddleware, function(req, res){
 	Tokenfunc.exist(guid, function(status, token){
 		if(status){
 			Experiencefunc.sectorGet(name, function(err, jobData){
-				console.log(jobData);
+				
 				Generalfunc.response(200,jobData, function(response){
 					res.json(response);
 				})
@@ -215,7 +215,7 @@ router.post('/company/get', multipartMiddleware, function(req, res){
 	Tokenfunc.exist(guid, function(status, token){
 		if(status){
 			Experiencefunc.companyGet(name, function(err, companyData){
-				console.log(companyData);
+				
 				Generalfunc.response(200,companyData, function(response){
 					res.json(response);
 				})
@@ -336,8 +336,8 @@ router.post('/company/update', multipartMiddleware, function(req, res){ // Updat
 										companyData.address.postalc = cp;
 									}
 									companyData.save(function(err, companyData){
-										console.log( companyData );
-										console.log( err );
+										
+										
 										Experience.update({
 											"company.id": companyData._id
 										}, {
@@ -347,13 +347,13 @@ router.post('/company/update', multipartMiddleware, function(req, res){ // Updat
 										},{
 											multi: true
 										},function(err, experienceData){
-											console.log( experienceData);
-											console.log( err );
+											
+											
 											Experience.find({
 												"company.id": companyData._id
 											}).exec(function(err, experienceData){
-												console.log( experienceData );
-												console.log( err );
+												
+												
 												Generalfunc.response(200, companyData, function(response){
 													res.json(response);
 												});

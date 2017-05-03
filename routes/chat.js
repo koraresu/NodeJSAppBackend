@@ -63,9 +63,9 @@ var apnProvider = Generalfunc.apnProvider();
 function readed_conv(profile_id, conversation, success, fail){
 	PushEvent.find({ profile: profile_id, read: false, type: 0 }).populate('message').exec(function(pushErr, pushEventData){
 		async.map(pushEventData, function(item, ca){
-			console.log("Item:");
-			console.log( item.message.conversation );
-			console.log( conversation );
+			
+			
+			
 			if(item.message.conversation.toString() == conversation.toString()){
 				ca(null, item);
 			}else{
@@ -264,12 +264,12 @@ router.post('/delete/conversation', multipartMiddleware, function(req, res){
 						conversation_id = mongoose.Types.ObjectId(conversation_id);
 
 						Conversation.findOne({ _id: conversation_id }).populate('profiles').exec(function(errConv, conversationData){
-							console.log("ConversationData:");
+							
 
 							var equal = profile_equal(profileData._id, conversationData.profiles);
 							var n = equal.number;
-							console.log("N:");
-							console.log( n );
+							
+							
 							var a = [ 0, 0 ];
 							a[0] = conversationData.prop_status[0];
 							a[1] = conversationData.prop_status[1];
@@ -486,7 +486,7 @@ router.unsetOnline = function(socket, callback){
 	});
 };
 router.setReadedMessage = function(data, success, fail){
-	console.log( data );
+	
 	var guid = data.guid;
 
 	Tokenfunc.exist(guid, function(status, tokenData){
@@ -502,9 +502,9 @@ router.setReadedMessage = function(data, success, fail){
 					})
 					.populate('profiles')
 					.exec(function(errConversation, conversationData){
-						console.log("SetReadedMessage:+++++++++++++++++++++++");
+						
 						if(!errConversation && conversationData){
-							console.log( conversationData.readed );
+							
 							var equal = Generalfunc.profile_equal(profileData._id, conversationData.profiles);
 							var readed = conversationData.readed;
 							var r = [false, false];
@@ -512,8 +512,8 @@ router.setReadedMessage = function(data, success, fail){
 							r[1] = readed[1];
 							r[equal.number] = true;
 							conversationData.readed = r;
-							console.log("----------------------------------------");
-							console.log( conversationData.readed );
+							
+							
 
 							conversationData.save(function(err, conv){
 								var a = function(ca){
@@ -527,7 +527,7 @@ router.setReadedMessage = function(data, success, fail){
 									conversation: conversationData
 								}, function(pushevent){
 									a(function(errConversation, conversationData){
-										console.log("+++++++++++++++++++++++++++++++++++++++");
+										
 										if(!errConversation && conversationData){
 											success(conversationData);
 										}else{
@@ -554,7 +554,7 @@ router.setReadedMessage = function(data, success, fail){
 	});
 };
 router.message = function(data, callback){
-	console.log(data);
+	
 
 	var guid      = data.guid;
 	var id        = data.conversation
@@ -570,8 +570,8 @@ router.message = function(data, callback){
 							
 							var name = mongoose.Types.ObjectId();
 							var path = __dirname + "/../public/messages/" + name + ".png";
-							console.log( data.image );
-							console.log( path );
+							
+							
 							decodeBase64Image(data.image, path);
 
 							text = '<a href="http://thehiveapp.mx:3000/messages/'+name+'.png" class="image"><img src="http://thehiveapp.mx:3000/messages/'+name+'.png" /></a>';
@@ -583,8 +583,8 @@ router.message = function(data, callback){
 							message: text,
 							status: true
 						};
-						console.log("GET MESSAGE:");
-						console.log( d );
+						
+						
 						var message = new Message(d);
 						message.save(function(err, mData){
 
@@ -642,7 +642,7 @@ router.sendPush = function(deviceToken, message, name, conversation, callback){
 	apnProvider.send(note, deviceToken).then( (result) => {
 		if(result.failed[0] != undefined){
 			if(result.failed[0].error != undefined){
-				console.log( result.failed[0].error );
+				
 			}
 		}
 		callback(result);
@@ -653,35 +653,35 @@ router.accept_notification = function(data, callback){
 	var guid = data.guid;
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
-			//console.log(" Token OK ");
+			//
 			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
 				if(status){
-					//console.log("Profile Token OK");
+					//
 					if(mongoose.Types.ObjectId.isValid(id)){
-						//console.log("ID is Valid");
+						//
 						id = mongoose.Types.ObjectId(id);
 						Notification.findOne({ _id: id }).populate('network').exec(function(err,notificationData){
 							if(!err && notificationData){
-								//console.log(" Notification OK");
-								//console.log( notificationData);
+								//
+								//
 								Network.findOne({ _id: notificationData.network._id }).populate('profiles').exec(function(errNetwork, networkData){
-									console.log(networkData);
+									
 									if(!errNetwork && networkData){
-										console.log("Network OK");
+										
 										networkData.accept = true;
 										networkData.save(function(){
 											notificationData.clicked = true;
 											notificationData.status  = true;
 											notificationData.save(function(err, n){
 												Notification.findOne({ _id: id }).populate('network').exec(function(err,notificationData){
-													console.log("Ajeno:");
-													console.log(networkData.profiles);
+													
+													
 													var ajeno = profile_ajeno(profileData._id, networkData.profiles);
-													console.log( ajeno );
+													
 													Online.findOne({
 														profiles: ajeno.profile._id
 													}).sort({created_at: -1}).exec(function(errOnline, onlineData){
-														console.log(errOnline);
+														
 														console.log(onlineData)
 														Notification
 														.findOne({ _id: notificationData._id })
@@ -698,24 +698,24 @@ router.accept_notification = function(data, callback){
 											});
 										});
 									}else{
-										console.log("Network Not OK");
-										console.log(errNetwork);
+										
+										
 										callback(false, {}, {}, {});
 									}
 								});
 							}
 						});
 					}else{
-						console.log("ID inValid");
+						
 						callback(false, {}, {}, {});
 					}
 				}else{
-					console.log("Profile Token Not OK");
+					
 					callback(false, {}, {}, {});
 				}
 			});
 		}else{
-			console.log(" Token Not OK");
+			
 			callback(false, {}, {}, {});
 		}
 	});
@@ -725,18 +725,18 @@ router.notification_accept2C = function(data, success, fail){
 	var guid = data.guid;
 	var stat = data.accept;
 
-	console.log( "Notification Accept:");
-	console.log( stat );
-	console.log( typeof stat );
+	
+	
+	
 
 	Tokenfunc.exist2Callback(guid, function(tokenData){
 		Profilefunc.tokenToProfile2Callback(tokenData.generated_id, function(profileData){
 			Generalfunc.isValid(id, function(id){
 				Notificationfunc.getOne2Callback({ _id: id }, function(notificationData){
 					var bool_Network = function(networkData){
-						console.log("ID:", id );
+						
 						Notificationfunc.click({ _id: id },stat, function(notificationData){
-							console.log(networkData.profiles);
+							
 							var ajeno = profile_ajeno(profileData._id, networkData.profiles);
 
 
@@ -794,9 +794,9 @@ router.notification_accept2C = function(data, success, fail){
 					};
 
 					var bool_uno_Network = function(networkData){
-						console.log("ID:", id );
+						
 						Notificationfunc.click({ _id: id },stat, function(notificationData){
-							console.log(networkData.profiles);
+							
 							var ajeno = profile_ajeno(profileData._id, networkData.profiles);
 
 
@@ -869,8 +869,8 @@ router.notification_accept2C = function(data, success, fail){
 					}
 
 					if(notificationData.tipo == 1){
-							console.log("Crear Solicitud de Amistad");
-							console.log(notificationData);
+							
+							
 							
 							Networkfunc.new_friend(notificationData.profile_emisor, notificationData.profile_mensaje, function(networkData){
 								Network.findOne({ _id: networkData._id}).populate('profiles').exec(function(errNetwork, networkData){
@@ -881,8 +881,8 @@ router.notification_accept2C = function(data, success, fail){
     						});// Network New Friend
 						
 					}else if(notificationData.tipo == 3){
-						console.log("Status:");
-						console.log( stat );
+						
+						
 
 						if(stat == true){
 							Networkfunc.accept({ _id: notificationData.network }, bool_Network, function(st){
@@ -917,7 +917,7 @@ router.deviceajeno = function(conversation, socket, callback){
 				var second = profiles[1];
 				var t      = (onlineData.profiles.toString() == first.toString()) ? second : first ;
 				
-				console.log("Tercero:" + t );
+				
 
 				Device.find({
 					profile: t
@@ -940,9 +940,9 @@ router.deviceajeno = function(conversation, socket, callback){
 };
 router.apple_push = function(type, id, socket, success, fail){
 	if(type == 1){
-		console.log("Type: " + type);
+		
 		Conversation.findOne({ _id: mongoose.Types.ObjectId(id) }).populate('profiles').exec(function(errConversation, conversationData){
-			console.log(errConversation);
+			
 			if(!errConversation && conversationData){
 				Online.findOne({ socket: socket.id }).populate('profiles').exec(function(errOnline, onlineData){
 					if(!errOnline && onlineData){
@@ -959,13 +959,13 @@ router.apple_push = function(type, id, socket, success, fail){
 			}				
 		});	
 	}else if(type == 0){
-		console.log("Type: " + type);
+		
 		Notification.findOne({ _id: mongoose.Types.ObjectId(id) })
 		.populate('profile')
 		.populate('profile_emisor')
 		.populate('network')
 		.exec(function(err, notificationData){
-			console.log(err);
+			
 			if(!err && notificationData){
 				Online.findOne({ socket: socket.id }).populate('profiles').exec(function(errOnline, onlineData){
 					if(!errOnline && onlineData){
@@ -1021,20 +1021,20 @@ router.mensaje_create = function(data, nombre_emisor, nombre_mensaje){
 	return { mensaje: message, class: clase };
 };
 function setActive(conversation, profileID, success){
-	console.log("Conversation:");
-	console.log(conversation);
+	
+	
 	Conversation.findOne({ _id: conversation }).populate('profiles').exec(function(errConv, convData){
-		console.log("Pre:");
-		console.log( convData.prop_status );
+		
+		
 		var prop = convData.prop_status;
 		var equal = profile_equal(profileID, convData.profiles);
-		console.log(" Number:" + equal.number );
+		
 		prop[equal.number] = 1;
 
 		convData.update({ $set: { prop_status: prop } }, { upsert: false }, function(err, conv){
 			Conversation.findOne({ _id: conversation }).populate('profiles').exec(function(errConv, convData){
-				console.log("Post:");
-				console.log( convData.prop_status );
+				
+				
 				success(errConv, convData);
 			});
 		});
