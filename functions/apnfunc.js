@@ -353,8 +353,8 @@ function set_alert_num(num, io){
 			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
 				console.log( profileData._id );
 				console.log( num );
-				APNfunc.sendBadge(profileData._id, num, function(){
-					APNfunc.sendNum(profileData._id, num, io, function(){
+				sendBadge(profileData._id, num, function(){
+					sendNum(profileData._id, num, io, function(){
 					});
 				});
 				sendBadge(profileData._id, num);
