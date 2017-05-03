@@ -200,8 +200,7 @@ exports.experienceJobGet = function(name, callback){
 	var text = name;
 	var reg  = new RegExp(text, "i");
 
-	Job.find({ name: reg }).distinct('name',function(err, jobData){
-		jobData.sort();
+	Job.find({ name: reg }).exec('name',function(err, jobData){
 		callback(err, jobData);
 	});
 }
@@ -209,7 +208,7 @@ exports.experienceSpecialityGet = function(name, callback){
 	var text = name;
 	var reg  = new RegExp(text, "i");
 
-	Speciality.find({ name: reg  }).distinct('name',function(err, jobData){
+	Speciality.find({ name: reg  }).exec('name',function(err, jobData){
 		jobData.sort();
 		callback(err, jobData);
 	});	

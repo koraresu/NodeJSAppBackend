@@ -1306,8 +1306,12 @@ router.post('/update', multipartMiddleware, function(req, res){
 									profileData.birthday = birthday;
 								}
 							}
-
-							profileData.location.city = city;
+							
+							if(mongoose.Types.ObjectId.isValid(city)){
+								city = mongoose.Types.ObjectId(city);
+								profileData.location.city = city;	
+							}
+							
 
 							profileData.save(function(err, profileData){
 								res.json(profileData);
