@@ -27,6 +27,7 @@ var City           = model.city;
 var State          = model.state;
 var Country        = model.country;
 
+var Generalfunc = require('./generalfunc');
 
 function checkExperience(profileData, type, data, callback){
 	if(type == 0){
