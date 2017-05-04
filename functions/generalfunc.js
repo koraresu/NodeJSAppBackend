@@ -604,6 +604,9 @@ function sortbyaccent(array, fn){
 		return comparison;
 	});
 };
+function sortanddistinct(array){
+	
+}
 exports.distinct           = distinct;
 exports.censurar           = censurar;
 exports.review_check       = review_check;
