@@ -662,7 +662,10 @@ router.post('/get/review', multipartMiddleware, function(req, res){
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
 			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
+				console.log("Token");
+
 				if(public_id != undefined){
+					console.lo("PublicId Check");
 					Profilefunc.publicId(public_id, function(statusPublic, publicProfileData){
 						if(statusPublic){
 							var data = {
