@@ -532,6 +532,7 @@ function extend(target) {
 }
 function review_check(me, friend, success){
 	Review.findOne({
+		profile_id: friend._id,
 		profiles: {
 			$all: [ me._id, friend._id ]
 		}
