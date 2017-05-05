@@ -665,7 +665,7 @@ router.post('/get/review', multipartMiddleware, function(req, res){
 				console.log("Token");
 
 				if(public_id != undefined){
-					console.lo("PublicId Check");
+					console.log("PublicId Check");
 					Profilefunc.publicId(public_id, function(statusPublic, publicProfileData){
 						if(statusPublic){
 							var data = {
