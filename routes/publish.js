@@ -680,10 +680,13 @@ router.post('/get/review', multipartMiddleware, function(req, res){
 										Networkfunc.isFriend(profileData._id, publicProfileData._id, function(status){
 											
 											async.map(reviewData, function(item,cb){
-												cb(null,Profilefunc.compactformat( item ));
+												var i = {
+													
+												};
+												cb(null, item );
 											}, function(err, results){
 												var a = {
-													"profile": publicProfileData,
+													"profile": Profilefunc.compactformat( publicProfileData ),
 													"isFriend": status,
 													"review": results,
 													"review_allow": {
