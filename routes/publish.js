@@ -666,13 +666,7 @@ router.post('/get/review', multipartMiddleware, function(req, res){
 					Profilefunc.publicId(public_id, function(statusPublic, publicProfileData){
 						if(statusPublic){
 							var data = {
-								"profile_id": publicProfileData._id,
-								"profiles": {
-									"$all": [
-										publicProfileData._id,
-										profileData._id
-									]
-								}
+								"profile_id": publicProfileData._id
 							};
 							var r = Review.find( data );
 							r = r.sort( [ ['createdAt', 'descending'] ] );
@@ -723,11 +717,6 @@ router.post('/get/review', multipartMiddleware, function(req, res){
 				}else{
 					var data = {
 						"profile_id": profileData._id,
-						"profiles": {
-							"$in": [
-								profileData._id
-							]
-						}
 					};
 					var r = Review.find(data);
 					r = r.sort( [ ['createdAt', 'descending'] ] );
