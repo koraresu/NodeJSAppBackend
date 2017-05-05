@@ -13,6 +13,7 @@ $(document).on('ready', function(){
 		submitHandler: function(form,e){
 			console.log("Form", form);
 			console.log("Event", e );
+			$(form).submit();
     	},
 		rules: {
 			password: {

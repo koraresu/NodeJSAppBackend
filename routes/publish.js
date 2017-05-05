@@ -704,6 +704,7 @@ router.post('/get/review', multipartMiddleware, function(req, res){
 								r.exec(function(errReview, reviewData){
 									Generalfunc.review_check(profileData, publicProfileData, function(review_allow, review_date_plus, review_date){
 										var a = {
+											"profile": publicProfileData,
 											"review": reviewData,
 											"review_allow": {
 												allow: review_allow,
