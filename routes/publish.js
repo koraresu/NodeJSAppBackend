@@ -684,7 +684,7 @@ router.post('/get/review', multipartMiddleware, function(req, res){
 													_id: item._id,
 													updatedAt: item.updatedAt,
 													createdAt: item.createdAt,
-													title: item.title
+													title: item.title,
 													content: item.content,
 													rate: item.rate,
 													profile: Profilefunc.compactformat( item.profiles[0] )
