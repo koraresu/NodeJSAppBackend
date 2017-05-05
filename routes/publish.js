@@ -674,12 +674,15 @@ router.post('/get/review', multipartMiddleware, function(req, res){
 							//
 							r = r.skip(pages);
 							//r = r.populate('profile_id');
+							console.log("PublicId");
 							r.populate('profiles').exec(function(errReview, reviewData){
 								r.exec(function(errReview, reviewData){
 									Generalfunc.review_check(profileData, publicProfileData, function(review_allow, review_date_plus, review_date){
 										Networkfunc.isFriend(profileData._id, publicProfileData._id, function(status){
+											console.log("Network");
 											if(reviewData.length > 0){
 												async.map(reviewData, function(item,cb){
+													console.log("Review[]");
 													var i = {
 														_id: item._id,
 														updatedAt: item.updatedAt,
@@ -693,6 +696,7 @@ router.post('/get/review', multipartMiddleware, function(req, res){
 													};
 													cb(null, i );
 												}, function(err, results){
+													console.log("Results");
 													var a = {
 														"profile": Profilefunc.compactformat( publicProfileData ),
 														"isFriend": status,
@@ -703,11 +707,13 @@ router.post('/get/review', multipartMiddleware, function(req, res){
 															date: review_date.toString()
 														}
 													};
+													console.log( a );
 													Generalfunc.response(200, a, function(response){
 														res.json(response);
 													});
 												});
 											}else{
+												console.log("No Reviews");
 												var a = {
 													"profile": Profilefunc.compactformat( publicProfileData ),
 													"isFriend": status,
@@ -718,6 +724,8 @@ router.post('/get/review', multipartMiddleware, function(req, res){
 														date: review_date.toString()
 													}
 												};
+
+												console.log( a );
 												Generalfunc.response(200, a, function(response){
 													res.json(response);
 												});
@@ -888,7 +896,7 @@ router.post('/write/review', multipartMiddleware, function(req, res){
 																tipo: 5,
 																profile: publicProfileData._id,
 																profile_emisor: profileData._id,
-																
+
 																review: reviewData._id,
 
 																clicked: false,
