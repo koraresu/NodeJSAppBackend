@@ -655,25 +655,9 @@ router.post('/get/review', multipartMiddleware, function(req, res){
 	var page      = req.body.page;
 	var pages     = 1;
 
-	//
-	//
+	max = (isNumber(max))?max*1:20;
+	pages = (isNumber(page))?((page*1)*max):0;
 
-	if(isNumber(max)){
-		//
-		max = max*1;
-	}else{
-		max = 20;
-	}
-	if(isNumber(page)){
-		//
-		pages = page*1;
-		pages = (pages*max);
-	}else{
-		pages = 0;
-	}
-
-	
-	
 	
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
@@ -681,20 +665,10 @@ router.post('/get/review', multipartMiddleware, function(req, res){
 				if(public_id != undefined){
 					Profilefunc.publicId(public_id, function(statusPublic, publicProfileData){
 						if(statusPublic){
-							var data = publicProfileData._id;
-
-							var d = {
-								profile_id: data
-
+							var data = {
+								profile_id: publicProfileData._id
 							};
-							/*
-							var d = {
-								profiles: {
-									"$in": [data]
-								}
-							};
-							*/
-							var r = Review.find(d);
+							var r = Review.find( data );
 							r = r.sort( [ ['createdAt', 'descending'] ] );
 							r = r.limit(max);
 							//
@@ -724,13 +698,10 @@ router.post('/get/review', multipartMiddleware, function(req, res){
 						}
 					});
 				}else{
-					var data = profileData._id;
-
-					var r = Review.find({
-						profiles: {
-							"$in": [data]
-						}
-					});
+					var data = {
+								profile_id: profileData._id
+							};
+					var r = Review.find(data);
 					r = r.sort( [ ['createdAt', 'descending'] ] );
 					r = r.limit(max);
 					//
@@ -738,7 +709,13 @@ router.post('/get/review', multipartMiddleware, function(req, res){
 					r = r.populate('profile_id');
 					r.populate('profiles').exec(function(errReview, reviewData){
 						r.exec(function(errReview, reviewData){
-							Generalfunc.response(200, reviewData, function(response){
+							var a = {
+								"review": reviewData,
+								"review_allow": {
+									allow: false
+								}
+							};
+							Generalfunc.response(200, a, function(response){
 								res.json(response);
 							});
 						});
