@@ -703,17 +703,20 @@ router.post('/get/review', multipartMiddleware, function(req, res){
 							r.populate('profiles').exec(function(errReview, reviewData){
 								r.exec(function(errReview, reviewData){
 									Generalfunc.review_check(profileData, publicProfileData, function(review_allow, review_date_plus, review_date){
-										var a = {
-											"profile": publicProfileData,
-											"review": reviewData,
-											"review_allow": {
-												allow: review_allow,
-												date_plus: review_date_plus.toString(),
-												date: review_date.toString()
-											}
-										};
-										Generalfunc.response(200, a, function(response){
-											res.json(response);
+										Networkfunc.isFriend(profileData._id, publicProfileData._id, function(status){
+											var a = {
+												"profile": publicProfileData,
+												"isFriend": status,
+												"review": reviewData,
+												"review_allow": {
+													allow: review_allow,
+													date_plus: review_date_plus.toString(),
+													date: review_date.toString()
+												}
+											};
+											Generalfunc.response(200, a, function(response){
+												res.json(response);
+											});
 										});
 									});
 								});
