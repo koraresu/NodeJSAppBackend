@@ -164,8 +164,8 @@ router.get('/sendbadge/num/:profile_id', function(req, res){
           res.send("Enviando");
         });
       });
-    }, function(){
-      res.send("Error");
+    }, function(err){
+      res.send(err);
     });
   }else{
     res.send("Error - Invalid");
