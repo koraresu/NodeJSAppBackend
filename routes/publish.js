@@ -687,7 +687,9 @@ router.post('/get/review', multipartMiddleware, function(req, res){
 													title: item.title,
 													content: item.content,
 													rate: item.rate,
-													profile: Profilefunc.compactformat( item.profiles[0] )
+													profiles: [
+														Profilefunc.compactformat( item.profiles[0] )
+													]
 												};
 												cb(null, i );
 											}, function(err, results){
