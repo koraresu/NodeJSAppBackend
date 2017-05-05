@@ -846,7 +846,7 @@ router.post('/get/friend', multipartMiddleware, function(req, res){
 															"network": profile.network,
 															"statusFriend": statusFriend,
 															"privado": privado,
-															"review": {
+															"review_allow": {
 																allow: review_allow,
 																date_plus: review_date_plus.toString(),
 																date: review_date.toString()
