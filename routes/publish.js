@@ -702,8 +702,18 @@ router.post('/get/review', multipartMiddleware, function(req, res){
 							r = r.populate('profile_id');
 							r.populate('profiles').exec(function(errReview, reviewData){
 								r.exec(function(errReview, reviewData){
-									Generalfunc.response(200, reviewData, function(response){
-										res.json(response);
+									Generalfunc.review_check(profileData, publicProfileData, function(review_allow, review_date_plus, review_date){
+										var a = {
+											"review": reviewData,
+											"review_allow": {
+												allow: review_allow,
+												date_plus: review_date_plus.toString(),
+												date: review_date.toString()
+											}
+										};
+										Generalfunc.response(200, a, function(response){
+											res.json(response);
+										});
 									});
 								});
 							});	
