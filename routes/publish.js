@@ -678,25 +678,40 @@ router.post('/get/review', multipartMiddleware, function(req, res){
 								r.exec(function(errReview, reviewData){
 									Generalfunc.review_check(profileData, publicProfileData, function(review_allow, review_date_plus, review_date){
 										Networkfunc.isFriend(profileData._id, publicProfileData._id, function(status){
-											
-											async.map(reviewData, function(item,cb){
-												var i = {
-													_id: item._id,
-													updatedAt: item.updatedAt,
-													createdAt: item.createdAt,
-													title: item.title,
-													content: item.content,
-													rate: item.rate,
-													profiles: [
+											if(reviewData.length > 0){
+												async.map(reviewData, function(item,cb){
+													var i = {
+														_id: item._id,
+														updatedAt: item.updatedAt,
+														createdAt: item.createdAt,
+														title: item.title,
+														content: item.content,
+														rate: item.rate,
+														profiles: [
 														Profilefunc.compactformat( item.profiles[0] )
-													]
-												};
-												cb(null, i );
-											}, function(err, results){
+														]
+													};
+													cb(null, i );
+												}, function(err, results){
+													var a = {
+														"profile": Profilefunc.compactformat( publicProfileData ),
+														"isFriend": status,
+														"review": results,
+														"review_allow": {
+															allow: review_allow,
+															date_plus: review_date_plus.toString(),
+															date: review_date.toString()
+														}
+													};
+													Generalfunc.response(200, a, function(response){
+														res.json(response);
+													});
+												});
+											}else{
 												var a = {
 													"profile": Profilefunc.compactformat( publicProfileData ),
 													"isFriend": status,
-													"review": results,
+													"review": reviewData,
 													"review_allow": {
 														allow: review_allow,
 														date_plus: review_date_plus.toString(),
@@ -706,7 +721,8 @@ router.post('/get/review', multipartMiddleware, function(req, res){
 												Generalfunc.response(200, a, function(response){
 													res.json(response);
 												});
-											});
+											}
+											
 											
 										});
 									});
@@ -799,18 +815,18 @@ router.post('/write/review', multipartMiddleware, function(req, res){
 											action: "3",
 											data: {}
 										}, function(errHistory, historyData){
-												var suma  = 0;
-												var count = 0;
+											var suma  = 0;
+											var count = 0;
 
-												Review.find({ profile_id: publicProfileData._id }).exec(function(err, review){
-													review.forEach(function(item, index){
-														if(isNumber(item.rate)){
-															suma+= item.rate;
-															count++;
-														}
+											Review.find({ profile_id: publicProfileData._id }).exec(function(err, review){
+												review.forEach(function(item, index){
+													if(isNumber(item.rate)){
+														suma+= item.rate;
+														count++;
+													}
 
-														if((review.length-1) == index){
-															var prom = suma/count;
+													if((review.length-1) == index){
+														var prom = suma/count;
 
 															//
 															publicProfileData.review_score = prom;
@@ -842,9 +858,9 @@ router.post('/write/review', multipartMiddleware, function(req, res){
 															})
 														}
 													});
-												});
-
 											});
+
+										});
 									}else{
 										var suma  = 0;
 										var count = 0;
@@ -869,15 +885,15 @@ router.post('/write/review', multipartMiddleware, function(req, res){
 
 
 															Notificationfunc.add({
-																			tipo: 5,
-																			profile: publicProfileData._id,
-																			profile_emisor: profileData._id,
-																			
-																			review: reviewData._id,
+																tipo: 5,
+																profile: publicProfileData._id,
+																profile_emisor: profileData._id,
+																
+																review: reviewData._id,
 
-																			clicked: false,
-																			status: false,
-																		}, function(status, notificationData){
+																clicked: false,
+																status: false,
+															}, function(status, notificationData){
 
 																Generalfunc.response(200, reviewData, function(response){
 																	res.json(response);
