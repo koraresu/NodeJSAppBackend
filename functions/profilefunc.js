@@ -110,6 +110,19 @@ function formatoProfile(profile_id,cb){
 	
 
 }
+function  compactformat(profileData){
+	return {
+		"_id": profileData._id,
+		"first_name": profileData.first_name,
+		"last_name": profileData.last_name,
+		"public_id": profileData.public_id,
+		"experiences": profileData.experiences,
+		"job": profileData.job,
+		"speciality": profileData.speciality,
+		"profile_pic": profileData.profile_pic,
+		"review_score": Generalfunc.precise_round( profileData.review_score, 1 ),
+	};
+};
 function formato(profileData, userData){
 	var email = "";
 	var verified = "";
@@ -149,9 +162,10 @@ function formato(profileData, userData){
 		"location": location
 	};
 }
-exports.formato = formato 
+exports.compactformat = compactformat;
+exports.formato = formato ;
 
-exports.formatoProfile   = formatoProfile
+exports.formatoProfile   = formatoProfile;
 
 exports.getAll           = function(){
 
