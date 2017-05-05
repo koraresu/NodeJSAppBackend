@@ -673,7 +673,7 @@ router.post('/get/review', multipartMiddleware, function(req, res){
 							r = r.limit(max);
 							//
 							r = r.skip(pages);
-							r = r.populate('profile_id');
+							//r = r.populate('profile_id');
 							r.populate('profiles').exec(function(errReview, reviewData){
 								r.exec(function(errReview, reviewData){
 									Generalfunc.review_check(profileData, publicProfileData, function(review_allow, review_date_plus, review_date){
@@ -706,7 +706,7 @@ router.post('/get/review', multipartMiddleware, function(req, res){
 					r = r.limit(max);
 					//
 					r = r.skip(pages);
-					r = r.populate('profile_id');
+					//r = r.populate('profile_id');
 					r.populate('profiles').exec(function(errReview, reviewData){
 						r.exec(function(errReview, reviewData){
 							var a = {
