@@ -534,7 +534,7 @@ function review_check(me, friend, success){
 	Review.findOne({
 		profile_id: friend._id,
 		profiles: {
-			$in: [ me._id ]
+			$all: [ me._id,friend._id ]
 		}
 	}).populate('profiles').populate('profile_id').sort({updatedAt: -1}).exec(function(errReview, reviewData){
 		if(!errReview && reviewData){
