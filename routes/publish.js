@@ -681,9 +681,15 @@ router.post('/get/review', multipartMiddleware, function(req, res){
 											
 											async.map(reviewData, function(item,cb){
 												var i = {
-													
+													_id: item._id,
+													updatedAt: item.updatedAt,
+													createdAt: item.createdAt,
+													title: item.title
+													content: item.content,
+													rate: item.rate,
+													profile: Profilefunc.compactformat( item.profiles[0] )
 												};
-												cb(null, item );
+												cb(null, i );
 											}, function(err, results){
 												var a = {
 													"profile": Profilefunc.compactformat( publicProfileData ),
