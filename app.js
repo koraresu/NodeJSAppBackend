@@ -35,7 +35,18 @@ var Tokenfunc = require('./functions/tokenfunc');
 var Pushfunc = require('./functions/pushfunc');
 var APNfunc = require('./functions/apnfunc');
 
-
+var domain = "";
+/*
+var firebase = require("firebase");
+firebase.initializeApp({
+  serviceAccount: {
+    projectId: "thehive-9b8ae",
+    clientEmail: "foo@thehive-9b8ae.iam.gserviceaccount.com",
+    privateKey: "-----BEGIN PRIVATE KEY-----\nAIzaSyAnVAS2VQEs_ZHyW_vubuTjMpmA3mEYzlY\n-----END PRIVATE KEY-----\n"
+  },
+  databaseURL: "https://thehive-9b8ae.firebaseio.com"
+});
+*/
 
 var app = express();
 
@@ -53,6 +64,7 @@ app.use(cors());
 // Make io accessible to our router
 app.use(function(req,res,next){
   req.io = io;
+  //req.firebase = firebase;
   next();
 });
 
@@ -162,30 +174,16 @@ gps.on('connection', function(socket){
     }
   });
   socket.on('send_invitation', function(data){
-    console.log( "DATA:" );
-    console.log( data );
-    console.log( "GUID: " + data.guid );
-    console.log( "SECTION: " + data.section );
-    console.log( "PUBLIC_ID: " + data.public_id );
-    
     var guid      = data.guid;
     var public_id = data.public_id;
 
 
     gpsrouter.invite(guid, public_id, function(data, gpsData){
       var s = gpsData.socket;
-
-      console.log( "Socket Broadcast:" + s );
-      console.log( data );
-
       socket.to( s ).emit('gps_invite',data);
 
     }, function(data){
-      console.log("++++");
-      console.log("Emit Result");
-      console.log( data );
       socket.emit('gps_invited',data);
-      console.log("++++");
     },{
       no_token: function(){
         socket.emit('gps_invited',{ error: "Token Invalido"});
@@ -200,15 +198,9 @@ gps.on('connection', function(socket){
   });
   socket.on('accept_invite', function(data){
     gpsrouter.connect(data.profile, data.friend, true, function(data, locationData){
-      console.log("Accept invite");
-      
-      console.log("Profile", data.profile.first_name + " " + data.profile.last_name);
-      console.log("Friend", data.friend.first_name + " " + data.friend.last_name);
-
       var name = data.friend.first_name + " " + data.friend.last_name;
 
       var s = locationData.socket;
-      console.log("GPS RESULT ACC: " + s );
       socket.to( s ).emit('gps_result',{
         message: "Tu amigo " + name + " ha aceptado la invitación."
       });
@@ -216,15 +208,9 @@ gps.on('connection', function(socket){
   });
   socket.on('cancel_invite', function(data){
     gpsrouter.connect(data.profile, data.friend, false, function(data, locationData){
-      console.log("Cancel invite");
-
-      console.log("Profile", data.profile.first_name + " " + data.profile.last_name);
-      console.log("Friend", data.friend.first_name + " " + data.friend.last_name);
-
       var name = data.friend.first_name + " " + data.friend.last_name;
 
       var s = locationData.socket;
-      console.log("GPS RESULT CAN: " + s );
       socket.to( s ).emit('gps_result',{
         message: "Tu amigo " + name + " ha cancelado la invitación."
       });
@@ -256,10 +242,6 @@ io.on('connection', function(socket){
     });
   });
   socket.on('device', function(msg){
-    console.log("DEVICE");
-    console.log("MSG:");
-    console.log( msg );
-    console.log("GUID:" + socket.guid );
     chatrouter.setDevice(socket.guid, msg, function(status, deviceData, profileData){
       console.log( deviceData );
     });
@@ -295,10 +277,8 @@ io.on('connection', function(socket){
         });
 
         /******* Apple Push Notification *****/
-        console.log("sendMessNotification");
-        APNfunc.sendMessNotification(messageData._id, function(profile, num){
-          APNfunc.set_alert_num(num, socket);
-        }, socket);
+        
+        APNfunc.sendMessNotification(messageData._id, function(profile, num){ }, socket);
       }
     });
   });
@@ -306,28 +286,16 @@ io.on('connection', function(socket){
     socket.emit('conversations', socket.rooms);
   });
   socket.on('notification', function(data){
-    console.log( data );
     chatrouter.notification_accept2C(data, function(onlineData, networkData, notificationData, OldNotification){
-      console.log( notificationData);
-      console.log( onlineData );
       if(onlineData != null || onlineData != undefined){
 
         var socketid = onlineData.socket;
         if(socketid != undefined){
-          console.log("Send Notification socket");
-
-          console.log("Socket to Me:" + socket.id );
-
           socket.emit('notification', OldNotification);
           io.to('/#' + socketid).emit('notification', notificationData);
           socket.broadcast.to(socketid).emit('notification', notificationData);
-
-          console.log("/******* Apple Push Notification *****/");
-
-          APNfunc.sendNotification(notificationData._id, function(){
-
-          });
         }
+        APNfunc.sendNotification(notificationData._id, function(){ });
       }
 
 
