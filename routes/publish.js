@@ -723,7 +723,6 @@ router.post('/get/review', multipartMiddleware, function(req, res){
 					r = r.limit(max);
 					//
 					r = r.skip(pages);
-					//r = r.populate('profile_id');
 					r.populate('profiles').exec(function(errReview, reviewData){
 						r.exec(function(errReview, reviewData){
 							var a = {
