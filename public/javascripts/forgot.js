@@ -10,6 +10,10 @@ $(document).on('ready', function(){
 	}, "Debe tener mínimo un número");
 
 	$('.forgot form').validate({
+		submitHandler: function(form,e){
+			console.log("Form", form);
+			console.log("Event", e );
+    	},
 		rules: {
 			password: {
 				required: true,
