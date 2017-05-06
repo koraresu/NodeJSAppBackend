@@ -214,13 +214,16 @@ router.post('/conversation', multipartMiddleware, function(req, res){
 										var udate = moment(item.updatedAt);
 										var cdate = moment(item.createdAt);
 										
+										var m = ( item.type == 1)?"http://thehiveapp.mx:3000/messages/" + item.message:item.message;
+
 										var i = {
 											_id: item._id,
 											updatedAt: udate.tz("America/Mexico_City").format(),
 											createdAt: cdate.tz("America/Mexico_City").format(),
 											conversation: item.conversation,
 											profile_id: item.profile_id,
-											message: item.message
+											message: m,
+											type: item.type
 										};
 										
 										callback( null, { data: i, t: d});
