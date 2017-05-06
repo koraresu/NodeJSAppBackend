@@ -105,13 +105,12 @@ function conversation_format(profile_id, success, fail){
 
 							var last_message = "";
 							if(item.message != undefined){
+								console.log( item );
 								if(item.type == 1){
 									last_message = "🏙";
 								}else{
 									last_message = item.message.message;	
-								}
-								
-
+								}							
 							}
 							readed_conv(profile_id, item._id, function(num){
 								if(num.length > 0){
