@@ -254,7 +254,7 @@ io.on('connection', function(socket){
         var udate = moment( messageData.updatedAt );
         var cdate = moment( messageData.createdAt );
 
-        var m = ( d.type == 1)?"http://thehiveapp.mx:3000/messages/" + messageData.message:messageData.message;
+        var m = ( messageData.type == 1)?"http://thehiveapp.mx:3000/messages/" + messageData.message:messageData.message;
 
         var d = {
           _id: messageData._id,
