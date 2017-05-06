@@ -28,6 +28,7 @@ var chat         = require('./routes/chat');
 var notification = require('./routes/notifications');
 var gps          = require('./routes/gps');
 var test         = require('./routes/test');
+var metrics      = require('./routes/metrics');
 
 var Generalfunc = require('./functions/generalfunc');
 var Networkfunc = require('./functions/networkfunc');
@@ -98,6 +99,7 @@ app.use('/api/search', search);
 app.use('/api/publish', publish);
 app.use('/api/notification', notification);
 
+app.use('/api/metrics', metrics);
 
 //app.use('/admin', admin);
 // catch 404 and forward to error handler

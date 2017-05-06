@@ -608,6 +608,47 @@ function sortbyaccent(array, fn){
 function sortanddistinct(array){
 	
 }
+function activity(profile_id, cb){
+	if(mongoose.Types.ObjectId.isValid( profile_id )){
+		profile_id = mongoose.Types.ObjectId( profile_id );
+		
+		Review.find({
+			profile_id: profile_id
+		}).exec(function(err, revData){
+			History.find({
+				profile_id: profile_id
+			}).exec(function(err, histData){
+				var act = false;
+				if((revData.length > 0) || (histData.length > 0)){
+					act = true;
+				}
+				cb({
+					activity: act,
+					review:{
+						count: revData.length,
+						data: revData
+					},
+					history: {
+						count: histData.length,
+						data: histData
+					}
+				});
+			});
+		});
+	}else{
+		cb({
+			review:{
+				count: 0,
+				data: []
+			},
+			history: {
+				count: 0,
+				data: []
+			}
+		});
+	}	
+};
+exports.activity = activity;
 exports.distinct           = distinct;
 exports.censurar           = censurar;
 exports.review_check       = review_check;
