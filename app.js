@@ -254,15 +254,18 @@ io.on('connection', function(socket){
         var udate = moment( messageData.updatedAt );
         var cdate = moment( messageData.createdAt );
 
+        var m = ( d.type == 1)?"http://thehiveapp.mx:3000/messages/" + messageData.message:messageData.message;
+
         var d = {
           _id: messageData._id,
           updatedAt: udate.tz("America/Mexico_City").format(),
           createdAt: cdate.tz("America/Mexico_City").format(),
           conversation: messageData.conversation,
           profile_id: messageData.profile_id,
-          message: messageData.message,
+          message: m,
           type: messageData.type
         };
+        
         
         var conversation_id = messageData.conversation.toString();
 
