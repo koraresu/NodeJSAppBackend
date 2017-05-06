@@ -260,7 +260,8 @@ io.on('connection', function(socket){
           createdAt: cdate.tz("America/Mexico_City").format(),
           conversation: messageData.conversation,
           profile_id: messageData.profile_id,
-          message: messageData.message
+          message: messageData.message,
+          type: messageData.type
         };
         
         var conversation_id = messageData.conversation.toString();
