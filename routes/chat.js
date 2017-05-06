@@ -570,7 +570,7 @@ router.message = function(data, callback){
 							var name = mongoose.Types.ObjectId();
 							var path = __dirname + "/../public/messages/" + name + ".png";
 							decodeBase64Image(data.image, path);
-							text = '<a href="http://thehiveapp.mx:3000/messages/'+name+'.png" class="image"><img src="http://thehiveapp.mx:3000/messages/'+name+'.png" /></a>';
+							text = name+'.png';
 						}
 						var d = {
 							type: type,
@@ -595,7 +595,7 @@ router.message = function(data, callback){
 										convData.message          = messageData._id;
 										convData.readed           = readed;
 										convData.prop_status      = prop_status;
-										
+
 										convData.save(function(errCon, conData){
 											callback(true, messageData);
 										});	
