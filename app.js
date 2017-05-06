@@ -233,7 +233,7 @@ io.on('connection', function(socket){
         socket.emit('conversationsjoin',roomsData);
 
         Generalfunc.SocketNoReaded(socket.id, function(num){
-          APNfunc.set_alert_num(num, socket);
+          
         }, function(){
 
         });
@@ -325,36 +325,17 @@ io.on('connection', function(socket){
   socket.on('message_readed', function(data){
     console.log("message_readed");
     console.log( data );
-    chatrouter.setReadedMessage(data, function(conversationData){
-      Generalfunc.SocketNoReaded(socket.id, function(num){
-        APNfunc.set_alert_num(num, socket);
-      }, function(){
-
-      });
-      
+    chatrouter.setReadedMessage(data, function(conversationData){      
     }, function(st){
     });
   });
-  socket.on('get_no_readed', function(){
-    Generalfunc.SocketNoReaded(socket.id, function(num){
-      APNfunc.set_alert_num(num, socket);
-    }, function(err){
-      console.log("SocketNoReaded GetNoReaded:" + err);
-      APNfunc.set_alert_num(0, socket);
-    });
-  });
+  socket.on('get_no_readed', function(){ });
   socket.on('notification_readed', function(data){
-
     Generalfunc.NotificationReaded(data, function( results ){
-     Generalfunc.SocketNoReaded(socket.id, function(num){
-      APNfunc.set_alert_num(num, socket);
-    }, function(err){
-      console.log("SocketNoReaded NotificationReaded:" + err);
+    }, function( err ){
+      console.log("NotificationReaded Error");
+      console.log(err);
     });
-   }, function( err ){
-    console.log("NotificationReaded Error");
-    console.log(err);
-  });
   });
   socket.on('disconnect', function () {
     console.log("Disconnect");

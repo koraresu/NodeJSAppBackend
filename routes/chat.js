@@ -567,13 +567,9 @@ router.message = function(data, callback){
 					if(mongoose.Types.ObjectId.isValid(id)){
 						id = mongoose.Types.ObjectId(id);
 						if(type == 1){
-							
 							var name = mongoose.Types.ObjectId();
 							var path = __dirname + "/../public/messages/" + name + ".png";
-							
-							
 							decodeBase64Image(data.image, path);
-
 							text = '<a href="http://thehiveapp.mx:3000/messages/'+name+'.png" class="image"><img src="http://thehiveapp.mx:3000/messages/'+name+'.png" /></a>';
 						}
 						var d = {
@@ -584,27 +580,27 @@ router.message = function(data, callback){
 							status: true
 						};
 						
-						
 						var message = new Message(d);
 						message.save(function(err, mData){
 
 							Message.findOne({ _id: mData._id}).populate('profile_id').exec(function(err, messageData){
 								Conversation.findOne({ _id: id }).populate('profiles').exec(function(errConv, convData){
-
 									if(!errConv && convData){
-										var equal = Generalfunc.profile_equal(profileData._id, convData.profiles);
-										var readed = convData.readed;
-										readed[equal.number] = false;
-										convData.message = messageData._id;
+										var equal                 = Generalfunc.profile_equal(profileData._id, convData.profiles);
+										var readed                = convData.readed;
+										var prop_status           = convData.prop_status;
 
-										convData.readed = readed;
+										readed[equal.number]      = false;
+										prop_status[equal.number] = 1;
+										convData.message          = messageData._id;
+										convData.readed           = readed;
+										convData.prop_status      = prop_status;
 										convData.save(function(errCon, conData){
 											callback(true, messageData);
 										});	
 									}else{
 										callback(true, messageData);	
 									}
-									
 								});
 							});
 						});

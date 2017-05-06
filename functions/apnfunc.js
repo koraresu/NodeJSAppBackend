@@ -108,12 +108,16 @@ function sendNum(profile_id, num, io, success){
 		Profile.findOne({
 			_id: profile_id
 		}).exec(function(errprof, profData){
-			get_sockets(profData._id, function(item, cb){
-
-				io.to(item.socket).emit('set_alert_num', num);
-				cb(null, item.socket);
+			get_devices(profData._id, function(item, cb){
+				tokenItem(item.token, function(token){
+					cb(null, token );
+				});
 			}, function(err, results){
-				success( results );
+				results = Generalfunc.cleanArray( results );
+
+				sendMultiple(function(data){
+					success( data );
+				}, results, "", {}, num);
 			});
 		});
 	}else{
@@ -316,6 +320,7 @@ function sendMultiple(ca, devices, message, payload, badge, sound){
 	if(sound == undefined || sound == null || sound == ""){ sound = "ping.aiff"; };
 	if(payload == undefined){ payload = {}; };
 
+	payload.badge = badge;
 	var note        = new apn.Notification();
 	var deviceToken = devices;
 	note.expiry     = Math.floor(Date.now() / 1000) + 3600; // Expires 1 hour from now.
@@ -342,41 +347,6 @@ function tokenItem(token, cb){
 		cb(token);
 	}
 };
-function set_alert_num(num, io){
-	
-	var guid = io.guid;
-	
-	Tokenfunc.exist(guid, function(status, tokenData){
-		
-		
-		if(status){
-			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
-				
-				
-				sendBadge(profileData._id, num, function(){
-					sendNum(profileData._id, num, io, function(){
-					});
-				});
-				sendBadge(profileData._id, num);
-				sendNum(profileData._id, num, io);
-			});
-		}
-	});
-};
-function set_alert(io){
-	var guid = io.guid;
-
-	Tokenfunc.exist(guid, function(status, tokenData){
-		if(status){
-			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
-				sendBadge(profileData._id, 10);
-				sendNum(profileData._id, 10, io);
-			});
-		}
-	});
-};
-exports.set_alert            = set_alert;
-exports.set_alert_num        = set_alert_num;
 exports.get_interfaz         = get_interfaz;
 exports.socket_to_profile    = socket_to_profile;
 exports.tokenItem            = tokenItem;
