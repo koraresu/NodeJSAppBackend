@@ -595,6 +595,7 @@ router.message = function(data, callback){
 										convData.message          = messageData._id;
 										convData.readed           = readed;
 										convData.prop_status      = prop_status;
+										
 										convData.save(function(errCon, conData){
 											callback(true, messageData);
 										});	
