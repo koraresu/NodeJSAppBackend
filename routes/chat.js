@@ -1038,7 +1038,7 @@ function setActive(conversation, profileID, success){
 
 		convData.update({ $set: { prop_status: prop } }, { upsert: false }, function(err, conv){
 			Conversation.findOne({ _id: conversation }).populate('profiles').exec(function(errConv, convData){
-				SetReadMessage(convData._id, function(messData){
+				setReadMessage(convData._id, function(messData){
 					success(errConv, convData);
 				});
 			});
