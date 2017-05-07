@@ -65,6 +65,7 @@ app.use(cors());
 // Make io accessible to our router
 app.use(function(req,res,next){
   req.io = io;
+  req.pathDir = pathDir;
   //req.firebase = firebase;
   next();
 });
