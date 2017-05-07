@@ -1039,8 +1039,28 @@ function setActive(conversation, profileID, success){
 		convData.update({ $set: { prop_status: prop } }, { upsert: false }, function(err, conv){
 			Conversation.findOne({ _id: conversation }).populate('profiles').exec(function(errConv, convData){
 				
-				
-				success(errConv, convData);
+				Message.find({
+					conversation: convData._id
+				}).distinct("_id",function(err, messData){
+					/*
+					PushEvent.find({
+						message: {
+							$in: messData
+						}
+					}).exec(function(errP, pushData){
+						async.map
+					});
+					PushEvent.update({
+						
+					},{
+						$set: {
+							read: true
+						}
+					}, { upsert: true });
+					*/
+					console.log( messData);
+					success(errConv, convData);
+				});
 			});
 		});
 	});

@@ -79,52 +79,6 @@ router.get('/push/:device_token', function(req, res){
     res.send(results);
   });
 });
-router.get('/check/', function(req, res){
-  var html = "";
-  Experience.find({}).exec(function(errExperience, experienceData){
-    var html = "";
-    async.map(experienceData, function(item, callback){
-      var h = "";  
-      h += '<p style="border-bottom: 1px solid #000;">' + item.company.name + " - " + item.ocupation.name + " - " + item.sector.name ;
-      Profile.findOne({_id: item.profile_id}).exec(function(errProfile, profileData){
-        if(!errProfile && profileData){
-          h += '<p style="background-color:green;">' + profileData._id + " - " + profileData.first_name + " " + profileData.last_name + " - Existe</p>";
-        }else{
-          h += '<p style="background-color:gray;">' + item._id + " - NoExiste</p>";
-        }
-        h += "</p>";
-
-        callback(null, h);
-      });
-    },function(err, results){
-      html = results.join("");
-
-      res.send(html);
-    });
-    
-  });
-
-});
-router.get('/state/get', function(req, res){
-  City.find().sort({ name: 1 }).exec(function(err, city){
-    res.json( city );
-  });
-});
-router.get('/state', function(req, res){
-  var json = getConfig('codebeautify.json');
-  async.map(json, function(item, callback){
-
-    GetInsState(item.entidad, function(errState, state){
-      callback(null, null);
-    });
-  }, function(err, results){
-    State.find().sort({ name: 1 }).exec(function(err, city){
-      res.json( city );
-    });
-    
-  });
-});
-
 router.get('/notification', function(req, res){
   Notificationfunc.add({
     tipo: 5,
