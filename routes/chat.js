@@ -1049,25 +1049,18 @@ function setReadMessage(conversation, success){
 	Message.find({
 		conversation: conversation
 	}).distinct("_id",function(err, messData){
-					/*
-					PushEvent.find({
-						message: {
-							$in: messData
-						}
-					}).exec(function(errP, pushData){
-						async.map
-					});
-					PushEvent.update({
-						
-					},{
-						$set: {
-							read: true
-						}
-					}, { upsert: true });
-					*/
-					console.log( messData);
-					success( messData);
-				});
+		PushEvent.update({
+			message: {
+				$in: messData
+			}
+		},{
+			$set: {
+				read: true
+			}
+		}, { multi: true }, function(err, pushUpdate){
+			success( messData);
+		});
+	});
 }
 router.setReadMessage = setReadMessage;
 router.setActive     = setActive;
