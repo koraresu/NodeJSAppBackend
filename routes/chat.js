@@ -104,9 +104,11 @@ function conversation_format(profile_id, success, fail){
 							};
 
 							var last_message = "";
+							var t = 0;
 							if(item.message != undefined){
 								console.log( item );
-								if(item.type == 1){
+								t = item.message.type;
+								if(t == 1){
 									last_message = "🏙";
 								}else{
 									last_message = item.message.message;	
@@ -124,7 +126,8 @@ function conversation_format(profile_id, success, fail){
 									profile: aj,
 									status: item.prop_status[number],
 									readed: num,
-									date: item.updatedAt
+									date: item.updatedAt,
+									type: t
 								};
 								ca(null, d);
 							}, function(){
