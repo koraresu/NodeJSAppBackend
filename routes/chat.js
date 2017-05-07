@@ -1038,10 +1038,17 @@ function setActive(conversation, profileID, success){
 
 		convData.update({ $set: { prop_status: prop } }, { upsert: false }, function(err, conv){
 			Conversation.findOne({ _id: conversation }).populate('profiles').exec(function(errConv, convData){
-				
-				Message.find({
-					conversation: convData._id
-				}).distinct("_id",function(err, messData){
+				SetReadMessage(convData._id, function(messData){
+					success(errConv, convData);
+				});
+			});
+		});
+	});
+};
+function setReadMessage(conversation, success){
+	Message.find({
+		conversation: conversation
+	}).distinct("_id",function(err, messData){
 					/*
 					PushEvent.find({
 						message: {
@@ -1059,12 +1066,10 @@ function setActive(conversation, profileID, success){
 					}, { upsert: true });
 					*/
 					console.log( messData);
-					success(errConv, convData);
+					success( messData);
 				});
-			});
-		});
-	});
-};
+}
+router.setReadMessage = setReadMessage;
 router.setActive     = setActive;
 router.sendPushtoAll = Generalfunc.sendPushtoAll;
 router.sendPushOne   = Generalfunc.sendPushOne;
