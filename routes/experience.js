@@ -287,14 +287,12 @@ router.post('/company/update', multipartMiddleware, function(req, res){ // Updat
 	var web         = req.body.web;
 	var name        = req.body.name;
 
-	
-
 	if(name == undefined){
 		name = "";
 	}
+	if(ciudad == ""){
 
-	//name = Generalfunc.capitalize( name );
-
+	}
 	
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
@@ -304,11 +302,13 @@ router.post('/company/update', multipartMiddleware, function(req, res){ // Updat
 						id = mongoose.Types.ObjectId(id);
 						Company.findOne({ _id: id }).exec(function(err, companyData){
 							var permiso = true;
+							
 							if(companyData.profile_id != undefined){
 								if(companyData.profile_id.toString() != profileData._id.toString()){
 									permiso = false;
 								}
 							}
+
 							if(permiso){
 								if(description.length <= 200){
 									companyData.description = description;
@@ -340,9 +340,9 @@ router.post('/company/update', multipartMiddleware, function(req, res){ // Updat
 									if(cp != undefined || cp != ""){
 										companyData.address.postalc = cp;
 									}
+									console.log( companyData);
 									companyData.save(function(err, comp){
 										console.log("Company Update error", err );
-										console.log("Company List Error", companyData );
 										Company.findOne({
 											_id: companyData._id
 										}).exec(function(err, companyData){
