@@ -341,6 +341,8 @@ router.post('/company/update', multipartMiddleware, function(req, res){ // Updat
 										companyData.address.postalc = cp;
 									}
 									companyData.save(function(err, comp){
+										console.log("Company Update error", err );
+										console.log("Company List Error", companyData );
 										Company.findOne({
 											_id: companyData._id
 										}).exec(function(err, companyData){
