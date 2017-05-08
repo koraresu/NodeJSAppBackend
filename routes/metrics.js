@@ -300,13 +300,16 @@ router.post('/demografic/age', multipartMiddleware, function(req, res){
 				
 			});
 		});
+	}, function(){
+		res.send("No Permission");
 	});
 });
 router.post('/demografic/distribution', multipartMiddleware, function(req, res){
 
 });
 router.post('/catalogue', multipartMiddleware, function(req, res){
-	metric_check(req, function(token, date_ini, date_end){
+	var token     = req.body.token;
+	if(token == BasicToken){
 		model.profile
 		.find({})
 		.populate('user_id')
@@ -317,7 +320,9 @@ router.post('/catalogue', multipartMiddleware, function(req, res){
 		.exec(function(err, profile){
 			res.json( profile );
 		});
-	});
+	}else{
+		res.send("No Permission");
+	}
 });
 router.post('/profesional/profesions', multipartMiddleware, function(req, res){
 	var all        = [];
