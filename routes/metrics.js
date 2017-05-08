@@ -365,7 +365,7 @@ router.post('/catalogue', multipartMiddleware, function(req, res){
 				var empresa = "";
 
 				if( item.experiences.length > 0){
-					item.experiences.forEach(function(i){
+					async.map(item.experiences, function(i,cb){
 						if(i.company != undefined){
 							if(i.company.name != undefined){
 								empresa = i.company.name;
@@ -383,6 +383,9 @@ router.post('/catalogue', multipartMiddleware, function(req, res){
 							telefono: tel
 						};
 						prop.push( d );
+						cb( null, null);
+					}, function(err, results){
+						callback(null, null);
 					});
 				}else{
 					d = {
@@ -396,6 +399,8 @@ router.post('/catalogue', multipartMiddleware, function(req, res){
 							telefono: tel
 						};
 						prop.push( d );
+						
+						callback(null, null);
 				}
 			}, function(err, results){
 				res.json( prop );
