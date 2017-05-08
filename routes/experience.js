@@ -330,6 +330,8 @@ router.post('/company/update', multipartMiddleware, function(req, res){ // Updat
 									}
 									if(ciudad != undefined || ciudad != ""){
 										companyData.address.ciudad  = ciudad;
+									}else{
+										companyData.address.ciudad  = null;
 									}
 									if(estado != undefined || estado != ""){
 										companyData.address.estado  = estado;
