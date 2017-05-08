@@ -456,6 +456,9 @@ var moment = require('moment-timezone');
 				}
 			});
 		};
+		router.toProfile = function(guid, socket, callback){
+			
+		};
 		router.setDevice = function(guid, deviceID, callback){
 
 			Tokenfunc.exist(guid, function(status, tokenData){

@@ -336,7 +336,15 @@ io.on('connection', function(socket){
     }, function(st){
     });
   });
-  socket.on('get_no_readed', function(){ });
+  socket.on('get_no_readed', function(){
+    var profile = "";
+    chatrouter.toProfile(socket.id, function(online){
+      Generalfunc.NoReaded(online.profiles, function( num ){
+        socket.emit('set_no_readed', num);
+      }, function(){
+      });  
+    });
+  });
   socket.on('notification_readed', function(data){
     Generalfunc.NotificationReaded(data, function( results ){
     }, function( err ){
