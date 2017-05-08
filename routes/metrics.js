@@ -305,6 +305,20 @@ router.post('/demografic/age', multipartMiddleware, function(req, res){
 router.post('/demografic/distribution', multipartMiddleware, function(req, res){
 
 });
+router.post('/catalogue', multipartMiddleware, function(req, res){
+	metric_check(req, function(token, date_ini, date_end){
+		model.profile
+		.find({})
+		.populate('user_id')
+		.populate('experiences')
+		.populate('speciality.id')
+		.populate('job.id')
+		.populate('location.city')
+		.exec(function(err, profile){
+			res.json( profile );
+		});
+	});
+});
 router.post('/profesional/profesions', multipartMiddleware, function(req, res){
 	var all        = [];
 
