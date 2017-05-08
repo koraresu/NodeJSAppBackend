@@ -127,6 +127,7 @@ function formato(profileData, userData){
 	var email = "";
 	var verified = "";
 	var location = {};
+	var f = "";
 	if(userData != undefined || userData != null){
 		if(userData.email != undefined){
 			email = userData.email;
@@ -139,6 +140,11 @@ function formato(profileData, userData){
 	if(profileData.location != undefined){
 		if(profileData.location.city != undefined){
 			location = profileData.location.city;
+		}
+	}
+	if(profileData.facebookId != undefined){
+		if(profileData.facebookId != ""){
+			f = profileData.facebookId;
 		}
 	}
 	return {
@@ -159,7 +165,8 @@ function formato(profileData, userData){
 		"qrcode": profileData.qrcode,
 		"review_score": Generalfunc.precise_round( profileData.review_score, 1 ),
 		"phone": profileData.phone,
-		"location": location
+		"location": location,
+		"facebook": f
 	};
 }
 exports.compactformat = compactformat;
