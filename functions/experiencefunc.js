@@ -245,11 +245,13 @@ exports.sectorGet = function(name, callback){
 	var reg  = new RegExp(text, "i");
 
 	Sector.find({ name: reg  }).distinct('name',function(err, jobData){
-		var njobData = jobData.sort( function(a,b){
-			var x = a.name;
-			return x.localeCompare(b.name);
+		var dist = Generalfunc.distinct(jobData, function(x){
+			return x.name;
 		});
-		callback(err, njobData);
+		var njob = Generalfunc.sortbyaccent( dist, function(x){
+			return x.name;
+		} );
+		callback(err, njob);
 	});
 }
 
