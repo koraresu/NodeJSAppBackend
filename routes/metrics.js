@@ -371,6 +371,7 @@ router.post('/catalogue', multipartMiddleware, function(req, res){
 								empresa = i.company.name;
 							}
 						}
+						//A
 						d = {
 							name: name,
 							profesion: profesion,
