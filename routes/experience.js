@@ -340,7 +340,7 @@ router.post('/company/update', multipartMiddleware, function(req, res){ // Updat
 									if(cp != undefined || cp != ""){
 										companyData.address.postalc = cp;
 									}
-									companyData.save(function(err, companyData){
+									companyData.save(function(err, comp){
 										Company.findOne({
 											_id: companyData._id
 										}).exec(function(err, companyData){
