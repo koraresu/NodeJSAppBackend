@@ -344,6 +344,7 @@ router.post('/company/update', multipartMiddleware, function(req, res){ // Updat
 										Company.findOne({
 											_id: companyData._id
 										}).exec(function(err, companyData){
+											console.log( companyData );
 											Experience.update({
 												"company.id": companyData._id
 											}, {
