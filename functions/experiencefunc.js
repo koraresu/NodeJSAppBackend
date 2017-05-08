@@ -251,7 +251,7 @@ exports.sectorGet = function(name, callback){
 		var njob = Generalfunc.sortbyaccent( dist, function(x){
 			return x.name;
 		} );
-		callback(err, njob);
+		callback(err, jobData);
 	});
 }
 
