@@ -244,12 +244,16 @@ var moment = require('moment-timezone');
 												var x = Generalfunc.profile_ajeno(profileData._id, conversationData.profiles);
 												var title = x.first_name + " " + x.last_name;
 												Generalfunc.NoReaded(profileData._id, function(num){
+													console.log("No ReadedNum", num);
+													console.log("Profile", profileData._id);
+
 													APNfunc.sendNum(profileData._id, num,"",function(){
 														Generalfunc.response(200, { title: title, avatar: x.profile_pic, conversation: conversationData, messages: results}, function(response){
 															res.json(response);
 														});
 													});	
 												}, function(){
+													console.log("No Readed");
 													Generalfunc.response(200, { title: title, avatar: x.profile_pic, conversation: conversationData, messages: results}, function(response){
 														res.json(response);
 													});
@@ -457,7 +461,11 @@ var moment = require('moment-timezone');
 			});
 		};
 		router.toProfile = function(guid, socket, callback){
-			
+			Online.findOne({
+				socket: socket
+			}).exec(function(err, online){
+				callback( online );
+			});
 		};
 		router.setDevice = function(guid, deviceID, callback){
 
