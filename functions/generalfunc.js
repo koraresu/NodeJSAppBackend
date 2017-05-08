@@ -45,8 +45,8 @@ var options = {
     keyId: "822637C6D9",
     teamId: "58GA47LFA6",
   },
-  production: false
-  //production: true
+  //production: false
+  production: true
 };
 var apnProvider = new apn.Provider(options);
 
