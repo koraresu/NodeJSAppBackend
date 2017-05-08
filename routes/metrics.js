@@ -25,8 +25,6 @@ router.get('/:master/:son', function(req, res){
 router.post('/performance/hivers', multipartMiddleware, function(req, res){	
 	metric_check(req, function(token, date_ini, date_end){
 		var run = function(date_ini, date_end, su){
-			console.log("Date Ini", date_ini);
-			console.log("Date End", date_end);
 
 			group = date_group(date_ini, date_end);
 
@@ -263,6 +261,7 @@ router.post('/demografic/age', multipartMiddleware, function(req, res){
 	var label  = [];
 	var value  = [];
 	var colors = [];
+	var percentaje = [];
 	metric_check(req, function(token, date_ini, date_end){
 		model.profile.find({
 			"createdAt": {
@@ -276,7 +275,6 @@ router.post('/demografic/age', multipartMiddleware, function(req, res){
 						var age = _calculateAge( item.birthday );
 						if(age != null){
 							var x = label.indexOf( age );
-							console.log( x );
 							if(x == -1){
 								label.push(age);
 								colors.push( randomColor({ luminosity: 'bright', hue: 'random' }) );
@@ -293,7 +291,13 @@ router.post('/demografic/age', multipartMiddleware, function(req, res){
 					callback(null, null);
 				}
 			}, function(err, results){
-				res.json({ label: label, value: value, color: colors  });
+				async.map(value, function(item, cb){
+					percentaje[percentaje.length] = ((item.val*100)/value.length);
+					cb(null, item);
+				}, function(err, results){
+					res.json({ label: label, value: value, color: colors, percentaje: percentaje  });
+				})
+				
 			});
 		});
 	});
@@ -316,7 +320,7 @@ router.post('/profesional/profesions', multipartMiddleware, function(req, res){
 			}
 		}).exec(function(err, experience){
 			async.map(experience, function(item, callback){
-				console.log( item );
+
 				if(item.ocupation != undefined){
 					if(item.ocupation.name != undefined){
 						all = find_element(all, item.ocupation.name, {
@@ -342,7 +346,6 @@ router.post('/profesional/profesions', multipartMiddleware, function(req, res){
 				});
 				all = Generalfunc.cleanArray(all);
 				async.map(all, function(item, c){
-					console.log( all );
 					if(item != null){
 						label[label.length] = item.name;
 						value[value.length] = item.val;
@@ -363,6 +366,7 @@ router.post('/profesional/review', multipartMiddleware, function(req, res){
 	var label  = [];
 	var value  = [];
 	var color = [];
+	var percentaje = [];
 	metric_check(req, function(token, date_ini, date_end){
 		model.review.find({
 			"createdAt": {
@@ -392,11 +396,11 @@ router.post('/profesional/review', multipartMiddleware, function(req, res){
 				});
 				all = Generalfunc.cleanArray(all);
 				async.map(all, function(item, c){
-					console.log( all );
 					if(item != null){
 						label[label.length] = item.rate;
 						value[value.length] = item.val;
-						color[color.length] = item.color;	
+						color[color.length] = item.color;
+						percentaje[percentaje.length] = ((item.val*100)/all.length);
 					}
 					c(null, item);
 				}, function(err, results){
@@ -491,10 +495,8 @@ function _calculateAge(birthday) { // birthday is a date
 }
 function find_element(array, index,nuevo){
 	var i = array.findIndex(function(element){
-		console.log("Buscar", index + "|" + element.name );
 		return (index == element.name);
 	});
-	console.log("I",i);
 
 	if(i == -1){
 		array.push(nuevo);
