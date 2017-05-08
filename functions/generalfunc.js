@@ -496,7 +496,7 @@ function NoReaded(profile_id, success, fail){
 		}).count(function(err, num){
 			console.log("NoReaded Profile Error", err );
 			console.log("NoReaded Profile Num", num );
-			if(!err && num){
+			if(err == null){
 				success(num);
 			}else{
 				fail(1);

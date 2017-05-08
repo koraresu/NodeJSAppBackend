@@ -460,7 +460,7 @@ var moment = require('moment-timezone');
 				}
 			});
 		};
-		router.toProfile = function(guid, socket, callback){
+		router.toProfile = function(socket, callback){
 			Online.findOne({
 				socket: socket
 			}).exec(function(err, online){
