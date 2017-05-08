@@ -244,14 +244,14 @@ exports.sectorGet = function(name, callback){
 	var text = name;
 	var reg  = new RegExp(text, "i");
 
-	Sector.find({ name: reg  }).distinct('name',function(err, jobData){
+	Sector.find({ name: reg  }).exec(function(err, jobData){
 		var dist = Generalfunc.distinct(jobData, function(x){
 			return x.name;
 		});
 		var njob = Generalfunc.sortbyaccent( dist, function(x){
 			return x.name;
 		} );
-		callback(err, jobData);
+		callback(err, njob);
 	});
 }
 
