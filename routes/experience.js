@@ -313,38 +313,37 @@ router.post('/company/update', multipartMiddleware, function(req, res){ // Updat
 								if(description.length <= 200){
 									companyData.description = description;
 
-									if(name != undefined || name != ""){
+									if(name != undefined){
 										companyData.name    = name;
 									}
-									if(web != undefined || web != ""){
+									if(web != undefined){
 										companyData.website = web;	
 									}
-									if(tel != undefined || tel != ""){
+									if(tel != undefined){
 										companyData.phone   = tel;	
 									}
-									if(calle != undefined || calle != ""){
+									if(calle != undefined){
 										companyData.address.calle   = calle;
 									}
-									if(colonia != undefined || colonia != ""){
+									if(colonia != undefined){
 										companyData.address.colonia = colonia;
 									}
-									if(ciudad != undefined || ciudad != ""){
+									if(ciudad != undefined){
 										companyData.address.ciudad  = ciudad;
 									}else{
 										companyData.address.ciudad  = null;
 									}
-									if(estado != undefined || estado != ""){
+									if(estado != undefined){
 										companyData.address.estado  = estado;
 									}
-									if(numero != undefined || numero != ""){
+									if(numero != undefined){
 										companyData.address.numero  = numero;
 									}
-									if(cp != undefined || cp != ""){
+									if(cp != undefined){
 										companyData.address.postalc = cp;
 									}
 									console.log( companyData);
 									companyData.save(function(err, comp){
-										console.log("Company Update error", err );
 										Company.findOne({
 											_id: companyData._id
 										}).exec(function(err, companyData){
