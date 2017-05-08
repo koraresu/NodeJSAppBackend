@@ -341,29 +341,33 @@ router.post('/company/update', multipartMiddleware, function(req, res){ // Updat
 										companyData.address.postalc = cp;
 									}
 									companyData.save(function(err, companyData){
-										
-										
-										Experience.update({
-											"company.id": companyData._id
-										}, {
-											$set: {
-												"company.name": companyData.name
-											}
-										},{
-											multi: true
-										},function(err, experienceData){
-											
-											
-											Experience.find({
+										Company.findOne({
+											_id: companyData._id
+										}).exec(function(err, companyData){
+											Experience.update({
 												"company.id": companyData._id
-											}).exec(function(err, experienceData){
+											}, {
+												$set: {
+													"company.name": companyData.name
+												}
+											},{
+												multi: true
+											},function(err, experienceData){
 												
 												
-												Generalfunc.response(200, companyData, function(response){
-													res.json(response);
+												Experience.find({
+													"company.id": companyData._id
+												}).exec(function(err, experienceData){
+													
+													
+													Generalfunc.response(200, companyData, function(response){
+														res.json(response);
+													});
 												});
 											});
-										})
+										});
+										
+										
 										/*
 										Generalfunc.response(200, companyData, function(response){
 											res.json(response);
