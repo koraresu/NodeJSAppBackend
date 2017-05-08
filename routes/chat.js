@@ -398,14 +398,20 @@ var moment = require('moment-timezone');
 									}
 								});
 							}else{
-
+								Generalfunc.response(101, {}, function(response){
+						res.json( response );
+					});
 							}
 						}else{
-
+							Generalfunc.response(101, {}, function(response){
+						res.json( response );
+					});
 						}
 					});
 				}else{
-
+					Generalfunc.response(101, {}, function(response){
+						res.json( response );
+					});
 				}
 			});
 		});
@@ -624,13 +630,11 @@ var moment = require('moment-timezone');
 											if(!errConv && convData){
 												var equal                 = Generalfunc.profile_equal(profileData._id, convData.profiles);
 												var readed                = convData.readed;
-												var prop_status           = convData.prop_status;
 
 												readed[equal.number]      = false;
-												prop_status[equal.number] = 1;
 												convData.message          = messageData._id;
 												convData.readed           = readed;
-												convData.prop_status      = prop_status;
+												convData.prop_status      = [1,1];
 
 												convData.save(function(errCon, conData){
 													callback(true, messageData);
