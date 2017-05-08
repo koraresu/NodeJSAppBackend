@@ -376,7 +376,7 @@ router.post('/catalogue', multipartMiddleware, function(req, res){
 							empresa: empresa,
 							ciudad: ciudad,
 							estado: estado,
-							email: email
+							email: email,
 							telefono: tel
 						};
 						prop.push( d );
@@ -395,7 +395,7 @@ router.post('/catalogue', multipartMiddleware, function(req, res){
 						prop.push( d );
 				}
 			}, function(err, results){
-				res.json( profile );
+				res.json( prop );
 			});
 			
 		});
