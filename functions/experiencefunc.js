@@ -240,6 +240,19 @@ exports.companyGet = function(name, callback){
 		callback(err, njob);
 	});
 }
+exports.sectorGet = function(name, callback){
+	var text = name;
+	var reg  = new RegExp(text, "i");
+
+	Sector.find({ name: reg  }).distinct('name',function(err, jobData){
+		var njobData = jobData.sort( function(a,b){
+			var x = a.name;
+			return x.localeCompare(b.name);
+		});
+		callback(err, njobData);
+	});
+}
+
 
 function formatName(text){
 	return text;
