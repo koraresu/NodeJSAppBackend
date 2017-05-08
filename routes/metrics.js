@@ -321,53 +321,55 @@ router.post('/catalogue', multipartMiddleware, function(req, res){
 		.exec(function(err, profile){
 			async.map(profile, function(item, callback){
 				var d = {};
+
+				var name = item.first_name + " " + item.last_name;
+				var profesion = "";
+				if(item.job != undefined){
+					if(item.job.id != undefined){
+						if(item.job.id.name != undefined){
+							profesion = item.job.id.name;
+						}
+					}
+				}
+				var speciality = "";
+				if(item.speciality != undefined){
+					if(item.speciality.id != undefined){
+						if(item.speciality.id.name != undefined){
+							speciality = item.speciality.id.name;
+						}
+					}
+				}
+				var ciudad = "";
+				var estado = "";
+
+				if(item.location != undefined){
+					if(item.location.city != undefined){
+						if(item.location.city.name != undefined){
+							ciudad = item.location.city.name;
+						}
+						if(item.location.city.state != undefined){
+							estado = item.location.city.state;
+						}
+					}
+				}
+				var email = "";
+				if(item.user_id != undefined){
+					if(item.user_id.email != undefined){
+						email = item.user_id.email;
+					}
+				}
+				var tel = "";
+				if( item.phone != undefined){
+					tel = item.phone;
+				}
+				var empresa = "";
+
 				if( item.experiences.length > 0){
 					item.experiences.forEach(function(i){
-						var name = item.first_name + " " + item.last_name;
-						var profesion = "";
-						if(item.job != undefined){
-							if(item.job.id != undefined){
-								if(item.job.id.name != undefined){
-									profesion = item.job.id.name;
-								}
-							}
-						}
-						var speciality = "";
-						if(item.speciality != undefined){
-							if(item.speciality.id != undefined){
-								if(item.speciality.id.name != undefined){
-									speciality = item.speciality.id.name;
-								}
-							}
-						}
-						var empresa = "";
 						if(i.company != undefined){
 							if(i.company.name != undefined){
 								empresa = i.company.name;
 							}
-						}
-						var ciudad = "";
-						var estado = "";
-
-						if(item.location != undefined){
-							if(item.location.city != undefined){
-								if(item.location.city.name != undefined){
-									ciudad = item.location.city.name;
-								}
-								if(item.location.city.state != undefined){
-									estado = item.location.city.state;
-								}
-							}
-						}
-						var email = "";
-						if(item.user_id != undefined){
-							if(item.user_id.email != undefined){
-								email = item.user_id.email;
-							}
-						}
-						var tel = "";
-						if( item.phone != undefined){
-							tel = item.phone;
 						}
 						d = {
 							name: name,
@@ -383,14 +385,14 @@ router.post('/catalogue', multipartMiddleware, function(req, res){
 					});
 				}else{
 					d = {
-							name: item.first_name + " " + item.last_name,
-							profesion: ,
-							especialidad: ,
-							empresa: ,
-							ciudad: ,
-							estado: ,
-							email: ,
-							telefono: ,
+							name: name,
+							profesion: profesion,
+							especialidad: speciality,
+							empresa: empresa,
+							ciudad: ciudad,
+							estado: estado,
+							email: email,
+							telefono: tel
 						};
 						prop.push( d );
 				}
