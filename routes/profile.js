@@ -798,7 +798,9 @@ router.post('/get/friend', multipartMiddleware, function(req, res){
 									}
 									Profilefunc.formatoProfile(profileAnotherData._id,function( profile ){
 										Networkfunc.type(profileData._id, profileAnotherData._id,function(statusIsFriendA, dataTypeFriend){
-
+											console.log("Status", profile.profile.status);
+											console.log("Friend", statusFriend);
+											console.log("IsFriendA", statusIsFriendA);
 											var privado = Profilefunc.private(profile.profile.status, statusFriend, statusIsFriendA);
 											console.log("Privado", privado);
 											Generalfunc.review_check(profileData, profile.profile, function(review_allow, review_date_plus, review_date){
