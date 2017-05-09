@@ -799,7 +799,7 @@ router.post('/get/friend', multipartMiddleware, function(req, res){
 									Profilefunc.formatoProfile(profileAnotherData._id,function( profile ){
 										Networkfunc.type(profileData._id, profileAnotherData._id,function(statusIsFriendA, dataTypeFriend){
 
-											var privado = Generalfunc.private(profile.profile.status, statusFriend, statusIsFriendA);
+											var privado = Profilefunc.private(profile.profile.status, statusFriend, statusIsFriendA);
 
 											Generalfunc.review_check(profileData, profile.profile, function(review_allow, review_date_plus, review_date){
 												var c = {
