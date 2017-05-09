@@ -802,6 +802,11 @@ router.post('/get/friend', multipartMiddleware, function(req, res){
 											var privado = Profilefunc.private(profile.profile.status, statusFriend, statusIsFriendA);
 
 											Generalfunc.review_check(profileData, profile.profile, function(review_allow, review_date_plus, review_date){
+												if(privado){
+													privado = 1;
+												}else{
+													privado = 0;
+												}
 												var c = {
 													"profile": profile.profile,
 													"review": profile.review,
