@@ -313,19 +313,6 @@ router.post('/demografic/distribution', multipartMiddleware, function(req, res){
 				"$lt": date_end
 			}
 		}).populate('location.city').select('location').exec(function(errProfile, profileData){
-			/*
-			model.city.find({}).distinct('state', function(errState, stateData){
-				res.json({ data: results, total: profileCount });
-				async.map(stateData, function(state, cb){
-					count({}, state, profileCount, function( c ){
-						cb(null, c);
-					});
-				}, function(err, results){
-
-					
-				});
-			});
-			*/
 			var t = profileData.length;
 			async.map(profileData, function(item, callback){
 				var state = "null";
@@ -492,6 +479,12 @@ router.post('/catalogue', multipartMiddleware, function(req, res){
 	}
 	if(token == BasicToken){
 		var d         = {};
+
+		if(name != undefined || name != ""){
+			if(mongoose.Types.ObjectId.isValid( name )){
+				d.name = mongoose.Types.ObjectId( name );
+			}
+		}
 		if(empresa != undefined || empresa != ""){
 			if(mongoose.Types.ObjectId.isValid( empresa )){
 				d.empresa = mongoose.Types.ObjectId( empresa );
@@ -502,33 +495,50 @@ router.post('/catalogue', multipartMiddleware, function(req, res){
 				d.ciudad = mongoose.Types.ObjectId( ciudad );
 			}
 		}
+		if(especialidad != undefined || especialidad != ""){
+			if(mongoose.Types.ObjectId.isValid( especialidad )){
+				d.especialidad = mongoose.Types.ObjectId( especialidad );
+			}
+		}
+		if(profesion != undefined || profesion != ""){
+			if(mongoose.Types.ObjectId.isValid( profesion )){
+				d.profesion = mongoose.Types.ObjectId( profesion );
+			}
+		}
+
 		model.experience.find({
 			"company.id": d.empresa
 		}).distinct('_id',function(errExp, expData){
 			model.city.find({
-				"_id": d.ciuda
+				"_id": d.ciudad
 			}).distinct("_id",function(errCity, cityData){
 				model.speciality.find({
 					"_id": d.especialidad
 				}).distinct("_id",function(errSpeciality, specialityData){
 					model.job.find({
-						"_id": d.especialidad
+						"_id": d.profesion
 					}).distinct("_id",function(errJob, jobData){
 						var da = {};
-						if(jobData.length > 0){
+						if(d.profesion != undefined){
 							da["job.id"] = { "$in": jobData };
 						}
-						if(specialityData.length > 0){
+						if(d.especialidad != undefined){
 							da["speciality.id"] = { "$in": specialityData };
 						}
-						if(expData.length > 0){
+						if(d.empresa != undefined){
 							da["experiences"] = { "$in": expData };
 						}
-						if(cityData.length > 0){
+						if(d.ciudad != undefined){
 							da["location.city"] = { "$in": cityData };
 						}
+						if(d.name != undefined){
+							da._id = d.name;
+						}
 						func(da, function(prop){
-							res.json( prop );
+							res.json({
+								data: da,
+								profile: prop
+							});
 						});
 					});
 				});
