@@ -800,13 +800,14 @@ router.post('/get/friend', multipartMiddleware, function(req, res){
 										Networkfunc.type(profileData._id, profileAnotherData._id,function(statusIsFriendA, dataTypeFriend){
 
 											var privado = Profilefunc.private(profile.profile.status, statusFriend, statusIsFriendA);
-
+											console.log("Privado", privado);
 											Generalfunc.review_check(profileData, profile.profile, function(review_allow, review_date_plus, review_date){
 												if(privado){
 													privado = 1;
 												}else{
 													privado = 0;
 												}
+												console.log("PrivadoN", privado);
 												var c = {
 													"profile": profile.profile,
 													"review": profile.review,
