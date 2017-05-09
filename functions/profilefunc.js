@@ -554,6 +554,7 @@ function IsJsonString(str) {
     return true;
 }
 function private(status, statusFriend, statusIsFriendA){
+	var privado = false;
 	switch(status){
 		case 0:
 		switch(statusIsFriendA){
@@ -595,6 +596,7 @@ function private(status, statusFriend, statusIsFriendA){
 		}
 		break;
 	}
+	return privado;
 }
 exports.private = private;
 exports.IsJsonString = IsJsonString
