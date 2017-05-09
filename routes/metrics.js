@@ -305,19 +305,101 @@ router.post('/demografic/age', multipartMiddleware, function(req, res){
 	});
 });
 router.post('/demografic/distribution', multipartMiddleware, function(req, res){
+	metric_check(req, function(token, date_ini, date_end){
+		var prop = [];
+		model.profile.find({
+			"createdAt": {
+				"$gte": date_ini,
+				"$lt": date_end
+			}
+		}).populate('location.city').select('location').exec(function(errProfile, profileData){
+			/*
+			model.city.find({}).distinct('state', function(errState, stateData){
+				res.json({ data: results, total: profileCount });
+				async.map(stateData, function(state, cb){
+					count({}, state, profileCount, function( c ){
+						cb(null, c);
+					});
+				}, function(err, results){
 
+					
+				});
+			});
+			*/
+			var t = profileData.length;
+			async.map(profileData, function(item, callback){
+				var state = "null";
+				if(item.location != undefined){
+					if(item.location.city != undefined){
+						if(item.location.city.state != undefined){
+							state = item.location.city.state.toString();
+						}
+					}
+				}
+
+				var x = prop.findIndex(function(item){
+					return (state == item[0])
+				});
+				if(x == -1){
+					prop.push([
+						state,
+						1,
+						Math.floor((1*100)/t)
+					]);
+				}else{
+					prop[ x ][ 1 ] += 1;
+					prop[ x ][ 2 ] = Math.floor((prop[ x ][1]*100)/t);
+				}
+
+				callback( null, null);
+			}, function(err, results){
+				prop.unshift([
+					"Estado",
+					"Perfiles",
+					"Porcentaje"
+				]);
+				res.json({
+					data: prop,
+					total: profileData.length
+				});
+			});
+			
+		});
+		
+	});
 });
 router.post('/catalogue', multipartMiddleware, function(req, res){
 	var token     = req.body.token;
-	if(token == BasicToken){
+	var max       = req.body.max;
+	var page      = req.body.page;
+	var pages     = 1;
+	/* FILTERS */
+	var name         = req.body.name;
+	var profesion    = req.body.profesion;
+	var empresa      = req.body.empresa;
+	var especialidad = req.body.especialidad;
+	var ciudad       = req.body.ciudad;
+
+
+	var pagination = Generalfunc.pagination(page, max);
+	max = pagination.max;
+	pages = pagination.pages;
+
+	var func = function(d, success){
 		var prop = [];
 		model.profile
-		.find({})
+		.find(d)
 		.populate('user_id')
 		.populate('experiences')
 		.populate('speciality.id')
 		.populate('job.id')
 		.populate('location.city')
+		.skip(pages)
+		.limit(max)
+		.sort({
+			first_name: 1,
+			last_name: 1
+		})
 		.exec(function(err, profile){
 			async.map(profile, function(item, callback){
 				var d = {};
@@ -389,23 +471,68 @@ router.post('/catalogue', multipartMiddleware, function(req, res){
 					});
 				}else{
 					d = {
-							name: name,
-							profesion: profesion,
-							especialidad: speciality,
-							empresa: empresa,
-							ciudad: ciudad,
-							estado: estado,
-							email: email,
-							telefono: tel
-						};
-						prop.push( d );
-						
-						callback(null, null);
+						name: name,
+						profesion: profesion,
+						especialidad: speciality,
+						empresa: empresa,
+						ciudad: ciudad,
+						estado: estado,
+						email: email,
+						telefono: tel
+					};
+					prop.push( d );
+
+					callback(null, null);
 				}
 			}, function(err, results){
-				res.json( prop );
+				success( prop );
 			});
 			
+		});
+	}
+	if(token == BasicToken){
+		var d         = {};
+		if(empresa != undefined || empresa != ""){
+			if(mongoose.Types.ObjectId.isValid( empresa )){
+				d.empresa = mongoose.Types.ObjectId( empresa );
+			}
+		}
+		if(ciudad != undefined || ciudad != ""){
+			if(mongoose.Types.ObjectId.isValid( ciudad )){
+				d.ciudad = mongoose.Types.ObjectId( ciudad );
+			}
+		}
+		model.experience.find({
+			"company.id": d.empresa
+		}).distinct('_id',function(errExp, expData){
+			model.city.find({
+				"_id": d.ciuda
+			}).distinct("_id",function(errCity, cityData){
+				model.speciality.find({
+					"_id": d.especialidad
+				}).distinct("_id",function(errSpeciality, specialityData){
+					model.job.find({
+						"_id": d.especialidad
+					}).distinct("_id",function(errJob, jobData){
+						var da = {};
+						if(jobData.length > 0){
+							da["job.id"] = { "$in": jobData };
+						}
+						if(specialityData.length > 0){
+							da["speciality.id"] = { "$in": specialityData };
+						}
+						if(expData.length > 0){
+							da["experiences"] = { "$in": expData };
+						}
+						if(cityData.length > 0){
+							da["location.city"] = { "$in": cityData };
+						}
+						func(da, function(prop){
+							res.json( prop );
+						});
+					});
+				});
+			});
 		});
 	}else{
 		res.send("No Permission");

@@ -651,7 +651,21 @@ function activity(profile_id, cb){
 		});
 	}	
 };
-exports.activity = activity;
+function isNumber(n) {
+	return !isNaN(parseFloat(n)) && isFinite(n);
+}
+function pagination(page, max){
+	max   = (isNumber(max))?max*1:10;
+	pages = (isNumber(page))?(((page-1)*1)*max):0;
+
+	return {
+		max: max,
+		pages: pages
+	};
+};
+exports.pagination         = pagination;
+exports.isNumber           = isNumber;
+exports.activity           = activity;
 exports.distinct           = distinct;
 exports.censurar           = censurar;
 exports.review_check       = review_check;
