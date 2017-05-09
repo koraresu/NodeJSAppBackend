@@ -790,277 +790,38 @@ router.post('/get/friend', multipartMiddleware, function(req, res){
 						Profilefunc.publicId(public_id, function(anotherStatus, profileAnotherData){
 							if(anotherStatus){
 								Networkfunc.typeFriend(profileData._id, profileAnotherData._id, function(statusFriend){
-
-									console.log(statusFriend)
-									if( statusFriend == 2 || statusFriend == 1){
-										if(statusFriend == 2){
-											Profilefunc.formatoProfile(profileAnotherData._id,function( profile ){
-												Networkfunc.type(profileData._id, profileAnotherData._id,function(statusIsFriendA, dataTypeFriend){
-													var privado = false;
-													switch(profile.profile.status){
-														case 0:
-															switch(statusIsFriendA){
-																case 0:
-																	privado = true;
-																break;
-																case 1:
-																	privado = true;
-																break;
-																case 2:
-																	privado = true;
-																break;
-															}
-														break;
-														case 1:
-															switch(statusIsFriendA){
-																case 0:
-																	privado = false;
-																break;
-																case 1:
-																	privado = true;
-																break;
-																case 2:
-																	privado = true;
-																break;
-															}
-														break;
-														case 2:
-															switch(statusIsFriendA){
-																case 0:
-																	privado = false;
-																break;
-																case 1:
-																	privado = false;
-																break;
-																case 2:
-																	privado = true;
-																break;
-															}
-														break;
-													}
-													Generalfunc.review_check(profileData, profile.profile, function(review_allow, review_date_plus, review_date){
-														var c = {
-															"profile": profile.profile,
-															"review": profile.review,
-															"trabajo": profile.trabajo,
-															"network": profile.network,
-															"statusFriend": statusFriend,
-															"privado": privado,
-															"review_allow": {
-																allow: review_allow,
-																date_plus: review_date_plus.toString(),
-																date: review_date.toString()
-															}
-														};
-														
-														//Generalfunc.response(200, profile, function(response){
-														Generalfunc.response(200, c, function(response){
-															res.json(response);
-														});
-													});
-												});
-
-											});
-										}else{
-
-											Profilefunc.formatoProfile(profileAnotherData._id,function( profile ){
-												Networkfunc.type(profileData._id, profileAnotherData._id,function(statusIsFriendA, dataTypeFriend){
-													var privado = false;
-													switch(profile.profile.status){
-														case 0:
-															switch(statusIsFriendA){
-																case 0:
-																	privado = true;
-																break;
-																case 1:
-																	privado = true;
-																break;
-																case 2:
-																	privado = true;
-																break;
-															}
-														break;
-														case 1:
-															switch(statusIsFriendA){
-																case 0:
-																	privado = false;
-																break;
-																case 1:
-																	privado = true;
-																break;
-																case 2:
-																	privado = true;
-																break;
-															}
-														break;
-														case 2:
-															switch(statusIsFriendA){
-																case 0:
-																	privado = false;
-																break;
-																case 1:
-																	privado = false;
-																break;
-																case 2:
-																	privado = true;
-																break;
-															}
-														break;
-													}
-													Generalfunc.review_check(profileData, profile.profile, function(review_allow, review_date){
-														var c = {
-															"profile": profile.profile,
-															"review": profile.review,
-															"trabajo": profile.trabajo,
-															"network": profile.network,
-															"statusFriend": statusFriend,
-															"privado": privado,
-															"review": {
-																allow: review_allow,
-																date: review_date
-															}
-														};
-														//Generalfunc.response(200, profile, function(response){
-														Generalfunc.response(200, c, function(response){
-															res.json(response);
-														});
-													});
-												});
-											});
-										}
-									}else{
-										if(profileAnotherData.status == 0){
-											Profilefunc.formatoProfile(profileAnotherData._id,function( profile ){
-												Networkfunc.type(profileData._id, profileAnotherData._id,function(statusIsFriendA, dataTypeFriend){
-													var privado = false;
-													switch(profile.profile.status){
-														case 0:
-															switch(statusIsFriendA){
-																case 0:
-																	privado = true;
-																break;
-																case 1:
-																	privado = true;
-																break;
-																case 2:
-																	privado = true;
-																break;
-															}
-														break;
-														case 1:
-															switch(statusIsFriendA){
-																case 0:
-																	privado = false;
-																break;
-																case 1:
-																	privado = true;
-																break;
-																case 2:
-																	privado = true;
-																break;
-															}
-														break;
-														case 2:
-															switch(statusIsFriendA){
-																case 0:
-																	privado = false;
-																break;
-																case 1:
-																	privado = false;
-																break;
-																case 2:
-																	privado = true;
-																break;
-															}
-														break;
-													}
-													Generalfunc.review_check(profileData, profile.profile, function(review_allow, review_date){
-														var c = {
-															"profile": profile.profile,
-															"review": profile.review,
-															"trabajo": profile.trabajo,
-															"network": profile.network,
-															"statusFriend": statusFriend,
-															"privado": privado,
-															"review": {
-																allow: review_allow,
-																date: review_date
-															}
-														};
-														//Generalfunc.response(200, profile, function(response){
-														Generalfunc.response(200, c, function(response){
-															res.json(response);
-														});
-													});
-												});
-											});	
-										}else{
-											Profilefunc.formatoProfile(profileAnotherData._id,function( profile ){
-												Networkfunc.type(profileData._id, profileAnotherData._id,function(statusIsFriendA, dataTypeFriend){
-													var privado = false;
-													switch(profile.profile.status){
-														case 0:
-															switch(statusIsFriendA){
-																case 0:
-																	privado = true;
-																break;
-																case 1:
-																	privado = true;
-																break;
-																case 2:
-																	privado = true;
-																break;
-															}
-														break;
-														case 1:
-															switch(statusIsFriendA){
-																case 0:
-																	privado = false;
-																break;
-																case 1:
-																	privado = true;
-																break;
-																case 2:
-																	privado = true;
-																break;
-															}
-														break;
-														case 2:
-															switch(statusIsFriendA){
-																case 0:
-																	privado = false;
-																break;
-																case 1:
-																	privado = false;
-																break;
-																case 2:
-																	privado = true;
-																break;
-															}
-														break;
-													}
-													Generalfunc.review_check(profileData, profile.profile, function(review_allow, review_date){
-														var c = {
-															"profile": profile.profile,
-															"review": profile.review,
-															"trabajo": profile.trabajo,
-															"network": profile.network,
-															"statusFriend": statusFriend,
-															"privado": privado,
-															"review": {
-																allow: review_allow,
-																date: review_date
-															}
-														};
-														//Generalfunc.response(114, profile, function(response){
-														Generalfunc.response(114, c, function(response){
-															res.json(response);
-														});	
-													});
-												});
-											});
+									var code_http = 200;
+									if( statusFriend == 0){
+										if(profileAnotherData.status != 0){
+											code_http = 114;
 										}
 									}
+									Profilefunc.formatoProfile(profileAnotherData._id,function( profile ){
+										Networkfunc.type(profileData._id, profileAnotherData._id,function(statusIsFriendA, dataTypeFriend){
+
+											var privado = Generalfunc.private(profile.profile.status, statusFriend, statusIsFriendA);
+
+											Generalfunc.review_check(profileData, profile.profile, function(review_allow, review_date_plus, review_date){
+												var c = {
+													"profile": profile.profile,
+													"review": profile.review,
+													"trabajo": profile.trabajo,
+													"network": profile.network,
+													"statusFriend": statusFriend,
+													"privado": privado,
+													"review_allow": {
+														allow: review_allow,
+														date_plus: review_date_plus.toString(),
+														date: review_date.toString()
+													}
+												};
+
+												Generalfunc.response(code_http, c, function(response){
+													res.json(response);
+												});
+											});
+										});
+									});
 								});	
 							}else{
 								Generalfunc.response(101, {}, function(response){

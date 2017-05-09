@@ -183,6 +183,7 @@ exports.get              = function(profile_id,callback){
 exports.insert           = function(){
 
 }
+
 exports.findSkill = function(profile_id, skill, callback){
 	Profile.findOne({ _id: profile_id }, function(errProfile, profileData){
 		var skills = profileData.skills;
@@ -552,6 +553,50 @@ function IsJsonString(str) {
     }
     return true;
 }
+function private(status, statusFriend, statusIsFriendA){
+	switch(status){
+		case 0:
+		switch(statusIsFriendA){
+			case 0:
+			privado = true;
+			break;
+			case 1:
+			privado = true;
+			break;
+			case 2:
+			privado = true;
+			break;
+		}
+		break;
+		case 1:
+		switch(statusIsFriendA){
+			case 0:
+			privado = false;
+			break;
+			case 1:
+			privado = true;
+			break;
+			case 2:
+			privado = true;
+			break;
+		}
+		break;
+		case 2:
+		switch(statusIsFriendA){
+			case 0:
+			privado = false;
+			break;
+			case 1:
+			privado = false;
+			break;
+			case 2:
+			privado = true;
+			break;
+		}
+		break;
+	}
+}
+exports.private = private;
 exports.IsJsonString = IsJsonString
 exports.logs = logs
 exports.permitedData = permitedData
