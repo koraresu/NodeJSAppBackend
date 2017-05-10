@@ -60,6 +60,23 @@ function get_sockets(profile_id, itemFn, resultFn ){
 		async.map(onlineData, itemFn, resultFn);
 	});
 };
+function get_devices(profile_id, itemFn, resultFn){
+	itemFn = (itemFn == undefined)?function(item, callback){ callback(null, item.token);}:itemFn;
+	resultFn = (resultFn == undefined)?function(err, results){ }:resultFn;
+	/*
+	Device.find({
+		profile: profile_id
+	}).exec(function(errDev, devData){
+		async.map(devData, itemFn, resultFn);
+
+	});
+	*/
+	Device.find({
+		profile: profile_id
+	}).distinct('token',function(errDev, devData){
+		resultFn(errDev, devData);
+	});
+}
 function get_devices(profile_id, itemFn, resultFn ){
 	itemFn = (itemFn == undefined)?function(item, callback){ callback(null, item.token);}:itemFn;
 	resultFn = (resultFn == undefined)?function(err, results){ }:resultFn;
