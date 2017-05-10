@@ -77,7 +77,7 @@ function text_create(collection, data ){
 		return { mensaje: data.message };
 	}
 };
-function sendNot(profile_id, title, playload, badge, success){
+function sendNot(profile_id, title, payload, badge, success){
 	console.log("Send Notification");
 	if(mongoose.Types.ObjectId.isValid(profile_id)){
 		console.log("Send Notification Valid Profile");
@@ -95,10 +95,14 @@ function sendNot(profile_id, title, playload, badge, success){
 				}, function(err, results){
 					results = Generalfunc.cleanArray( results );
 					console.log("Send Notification Get Device", results);
+					console.log("Send Notification Num", badge);
+					console.log("Send Notification Title", title);
+					console.log("Send Notification Payload", payload);
+
 					sendMultiple(function(data){
 						console.log("Send Notification sendMultiple", data);
 						success( data );
-					}, results, title, playload, badge);
+					}, results, title, payload, badge);
 				});
 			}else{
 				success( null );

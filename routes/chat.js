@@ -254,7 +254,15 @@ var moment = require('moment-timezone');
 															conversation: conversationData,
 															messages: results
 														}, function(response){
-															res.json(response);
+
+															Generalfunc.response(200, {
+																title: title,
+																avatar: x.profile_pic,
+																conversation: conversationData,
+																messages: results
+															}, function(response){
+																res.json(response);
+															});
 														});
 													});
 												}, function(){
