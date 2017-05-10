@@ -247,15 +247,14 @@ var moment = require('moment-timezone');
 													console.log("No ReadedNum", num);
 													console.log("Profile", profileData._id);
 
-													APNfunc.sendNot(profileData._id, "", {}, num, function(){
-														Generalfunc.response(200, {
-															title: title,
-															avatar: x.profile_pic,
-															conversation: conversationData,
-															messages: results
-														}, function(response){
-															res.json(response);
-														});
+													APNfunc.sendNot(profileData._id, "", {}, num, function(){  });
+													Generalfunc.response(200, {
+														title: title,
+														avatar: x.profile_pic,
+														conversation: conversationData,
+														messages: results
+													}, function(response){
+														res.json(response);
 													});
 												}, function(){
 													console.log("No Readed");
