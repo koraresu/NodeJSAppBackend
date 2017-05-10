@@ -262,6 +262,10 @@ var moment = require('moment-timezone');
 											
 										})
 									});
+								}, function(err){
+									Generalfunc.response(101, {}, function(response){
+										res.json( response );
+									});
 								});
 							}else{
 								Generalfunc.response(101, {}, function(response){
@@ -1057,24 +1061,31 @@ router.mensaje_create = function(data, nombre_emisor, nombre_mensaje){
 	}
 	return { mensaje: message, class: clase };
 };
-function setActive(conversation, profileID, success){
+function setActive(conversation, profileID, success, fail){
 	
 	
-	Conversation.findOne({ _id: conversation }).populate('profiles').exec(function(errConv, convData){
-		
-		
-		var prop = convData.prop_status;
-		var equal = profile_equal(profileID, convData.profiles);
-		
-		prop[equal.number] = 1;
+	Conversation.findOne({
+		_id: conversation
+	}).populate('profiles').exec(function(errConv, convData){
+		if(!errConv && convData){
+			var prop = convData.prop_status;
+			var equal = profile_equal(profileID, convData.profiles);
+			
+			prop[equal.number] = 1;
 
-		convData.update({ $set: { prop_status: prop } }, { upsert: false }, function(err, conv){
-			Conversation.findOne({ _id: conversation }).populate('profiles').exec(function(errConv, convData){
-				setReadMessage(convData._id, function(messData){
-					success(errConv, convData);
+			convData.update({ $set: { prop_status: prop } }, { upsert: false }, function(err, conv){
+				Conversation.findOne({ _id: conversation }).populate('profiles').exec(function(errConv, convData){
+					setReadMessage(convData._id, function(messData){
+						success(errConv, convData);
+					});
 				});
 			});
-		});
+		}else{
+			console.log( errConv );
+			fail(errConv);
+		}
+		
+		
 	});
 };
 function setReadMessage(conversation, success){
