@@ -329,22 +329,25 @@ io.on('connection', function(socket){
 
     });
   });
-  socket.on('message_readed', function(data){
+  var message_readed = function(data){
     console.log("message_readed");
     console.log( data );
-    chatrouter.setReadedMessage(data, function(conversationData){      
+    chatrouter.setReadedMessage(data, function(conversationData){
+
+      chatrouter.TokenNoReaded( data.guid, function(profileData, num){
+        socket.emit('set_no_readed', num);
+      });
+
+      
+
+
+
+
     }, function(st){
     });
-  });
-  socket.on('get_no_readed', function(){
-    var profile = "";
-    chatrouter.toProfile(socket.id, function(online){
-      Generalfunc.NoReaded(online.profiles, function( num ){
-        socket.emit('set_no_readed', num);
-      }, function(){
-      });  
-    });
-  });
+  };
+  socket.on('message_readed', message_readed);
+  socket.on('get_no_readed', message_readed);
   socket.on('notification_readed', function(data){
     Generalfunc.NotificationReaded(data, function( results ){
     }, function( err ){

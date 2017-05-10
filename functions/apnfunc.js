@@ -265,7 +265,7 @@ function sendNotification(id, sucess){
 
 				}, function(err, results){
 					results = Generalfunc.cleanArray( results );
-
+					
 					Generalfunc.NoReaded(notData.profile, function(num){
 						sendMultiple(function(data){
 							sucess( notData.profile, num );

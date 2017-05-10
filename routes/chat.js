@@ -481,6 +481,23 @@ var moment = require('moment-timezone');
 				callback( online );
 			});
 		};
+		router.TokenNoReaded = function(guid, callback){
+			Tokenfunc.exist(guid, function(status, tokenData){
+	        if(status){
+	          Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
+	            Generalfunc.NoReaded(profileData._id, function(num){
+	              APNfunc.sendNot(profileData._id, "", {}, num, function(){
+	              	callback(profileData, num);
+	              });
+	            }, function(){
+	              APNfunc.sendNot(profileData._id, "", {}, 0, function(){
+	              	callback(profileData, 0);
+	              });
+	            });
+	          });
+	        }
+	      });
+		};
 		router.setDevice = function(guid, deviceID, callback){
 
 			Tokenfunc.exist(guid, function(status, tokenData){
