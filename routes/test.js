@@ -129,11 +129,9 @@ router.get('/sendbadge/:num/:profile_id', function(req, res){
   var num = req.params.num;
   var profile_id = req.params.profile_id;
   
-  APNfunc.sendBadge(profile_id, num, function(send_badge){
-    APNfunc.sendNum(profile_id, num, req.io, function(send_num){
-      res.json({ badge: send_badge, num: send_num });
-    });
-
+  num = num*1;
+  APNfunc.sendNot(profile_id, "", {}, num, function(data){
+    res.json( data );
   });
 });
 router.get('/sendpush/message/:message_id', function(req, res){
