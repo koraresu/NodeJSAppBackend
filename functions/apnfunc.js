@@ -78,23 +78,31 @@ function text_create(collection, data ){
 	}
 };
 function sendNot(profile_id, title, playload, badge, success){
-
+	console.log("Send Notification");
 	if(mongoose.Types.ObjectId.isValid(profile_id)){
+		console.log("Send Notification Valid Profile");
 		profile_id = mongoose.Types.ObjectId( profile_id );
 		Profile.findOne({
 			_id: profile_id
 		}).exec(function(errprof, profData){
-			get_devices(profData._id, function(item, cb){
-				tokenItem(item.token, function(token){
-					cb(null, token );
+			console.log("Send Notification Profile Search");
+			if(!errprof && profData){
+				console.log("Send Notification Profile Search Valid");
+				get_devices(profData._id, function(item, cb){
+					tokenItem(item.token, function(token){
+						cb(null, token );
+					});
+				}, function(err, results){
+					results = Generalfunc.cleanArray( results );
+					console.log("Send Notification Get Device", results);
+					sendMultiple(function(data){
+						console.log("Send Notification sendMultiple", data);
+						success( data );
+					}, results, title, playload, badge);
 				});
-			}, function(err, results){
-				results = Generalfunc.cleanArray( results );
-
-				sendMultiple(function(data){
-					success( data );
-				}, results, title, playload, badge);
-			});
+			}else{
+				success( null );
+			}
 		});
 	}else{
 		success(null);
