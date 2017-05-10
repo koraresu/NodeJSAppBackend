@@ -77,7 +77,7 @@ function text_create(collection, data ){
 		return { mensaje: data.message };
 	}
 };
-function sendNot(profile_id, title, payload, badge, success){
+function sendNot(profile_id, title, playload, badge, success){
 
 	if(mongoose.Types.ObjectId.isValid(profile_id)){
 		profile_id = mongoose.Types.ObjectId( profile_id );
