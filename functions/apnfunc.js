@@ -77,6 +77,35 @@ function text_create(collection, data ){
 		return { mensaje: data.message };
 	}
 };
+function sendNot(profile, title, payload, badge, success){
+
+	if(mongoose.Types.ObjectId.isValid(profile_id)){
+		profile_id = mongoose.Types.ObjectId( profile_id );
+		Profile.findOne({
+			_id: profile_id
+		}).exec(function(errprof, profData){
+			get_devices(profData._id, function(item, cb){
+				tokenItem(item.token, function(token){
+					cb(null, token );
+				});
+			}, function(err, results){
+				results = Generalfunc.cleanArray( results );
+
+				sendMultiple(function(data){
+					success( data );
+				}, results, title, playload, badge);
+			});
+		});
+	}else{
+		success(null);
+	}
+
+
+
+	sendMultiple(function(results){
+
+	}, devices, message, payload, badge, sound);
+}
 function profile_notification(collection, notData){
 	if( collection == "notification"){
 		var profile_emisor  = "";
@@ -347,6 +376,7 @@ function tokenItem(token, cb){
 		cb(token);
 	}
 };
+exports.sendNot              = sendNot;
 exports.get_interfaz         = get_interfaz;
 exports.socket_to_profile    = socket_to_profile;
 exports.tokenItem            = tokenItem;
