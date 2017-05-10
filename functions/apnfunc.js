@@ -99,12 +99,6 @@ function sendNot(profile_id, title, payload, badge, success){
 	}else{
 		success(null);
 	}
-
-
-
-	sendMultiple(function(results){
-
-	}, devices, message, payload, badge, sound);
 }
 function profile_notification(collection, notData){
 	if( collection == "notification"){
