@@ -41,7 +41,7 @@ var Notificationfunc = require('../functions/notificationfunc');
 var apnProvider = Generalfunc.apnProvider();
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.redirect('http://thehiveapp.mx/');
 });
 router.get('/bienvenida/:id', function(req, res){
   var id = req.params.id;
