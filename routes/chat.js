@@ -59,6 +59,7 @@ var moment = require('moment-timezone');
 		var City               = model.city;
 		var State              = model.state;
 		var Country            = model.country;
+		var Version            = model.version;
 
 		var apnProvider = Generalfunc.apnProvider();
 		function readed_conv(profile_id, conversation, success, fail){
@@ -505,7 +506,10 @@ var moment = require('moment-timezone');
 					Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
 						if(status){
 
-							Device.find({ profile: profileData._id, token: deviceID }).exec(function(errDevice, deviceData){
+							Device.find({
+								profile: profileData._id,
+								token: deviceID
+							}).exec(function(errDevice, deviceData){
 								if(!errDevice && deviceData){
 									if(deviceData.length > 0){
 										Device.find({ profile: profileData._id }).exec(function(errDevice, deviceData){
@@ -524,11 +528,21 @@ var moment = require('moment-timezone');
 
 										var deviceEl = new Device(d);
 										deviceEl.save(function(err, deviceData){
-											Device.find({ profile: profileData._id }).exec(function(errDevice, deviceData){
-												async.map(deviceData, function(item, ca){
-													ca(null, item.token);
-												}, function(err, results){
-													callback(true, results, profileData );	
+											var ver = new Version({
+												device: deviceData._id,
+												bundle_id: deviceID.bundle.id,
+												bundle_version: deviceID.bundle.version,
+												bundle_app_file: deviceID.bundle.app_file,
+												device_width: deviceID.device.width,
+												device_height: deviceID.device.height
+											});
+											ver.save(function(errver, verData){
+												Device.find({ profile: profileData._id }).exec(function(errDevice, deviceData){
+													async.map(deviceData, function(item, ca){
+														ca(null, item.token);
+													}, function(err, results){
+														callback(true, results, profileData );	
+													});
 												});
 											});
 										});

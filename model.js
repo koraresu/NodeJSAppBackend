@@ -769,6 +769,16 @@ GlosarySchema.post('update', function(doc, next){
 });
 /*******************************************/
 
+var VersionSchema = new Schema({
+  device: { type: Schema.Types.ObjectId, ref: 'Device'},
+  bundle_id: String,
+  bundle_version: String,
+  bundle_app_file: String,
+  device_width: String,
+  device_height: String,
+});
+/*******************************************/
+
 // Company
 exports.company      = db.model( 'Company' , companySchema );
 exports.comp_creator = db.model('CompanyCreator', companyCreatorSchema);
@@ -793,6 +803,7 @@ var history          = db.model( 'History' , HistorySchema );
 exports.history      = history;
 exports.feedback     = db.model( 'Feedback' , FeedbackSchema );
 // Chat
+exports.version      = db.model( 'Version', VersionSchema );
 exports.device       = db.model( 'Device', deviceSchema );
 exports.pushevent    = db.model( 'PushEvent', PushEventSchema );
 exports.push         = db.model( 'Push', PushSchema );
