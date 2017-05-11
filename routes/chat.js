@@ -508,7 +508,7 @@ var moment = require('moment-timezone');
 
 							Device.find({
 								profile: profileData._id,
-								token: deviceID
+								token: deviceID.device_id
 							}).exec(function(errDevice, deviceData){
 								if(!errDevice && deviceData){
 									if(deviceData.length > 0){
