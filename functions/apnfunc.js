@@ -149,10 +149,12 @@ function sendNum(profile_id, num, io, success){
 				});
 			}, function(err, results){
 				results = Generalfunc.cleanArray( results );
-
+				var data_send = {
+					type: 2
+				};
 				sendMultiple(function(data){
 					success( data );
-				}, results, "", {}, num);
+				}, results, "", data_send, num);
 			});
 		});
 	}else{
@@ -176,9 +178,12 @@ function sendBadge(profile_id, num,  success){
 			}, function(err, results){
 				results = Generalfunc.cleanArray( results );
 
+				var data_send = {
+					type: 2
+				};
 				sendMultiple(function(data){
 					success( data );
-				}, results, "", {}, num);
+				}, results, "", data_send, num);
 			});
 			
 		});
@@ -222,15 +227,18 @@ function sendMessNotification(id, success, io){
 							});
 						}, function(err, results){
 							results = Generalfunc.cleanArray( results );
-
+							var data_send = {
+								type: 0,
+								message: messData
+							};
 							Generalfunc.NoReaded(profData._id, function(num){
 								sendMultiple(function(data){
 									callback(null, profData );
-								},results, name+": "+mensaje.mensaje, messData, num);
+								},results, name+": "+mensaje.mensaje, data_send, num);
 							}, function(){
 								sendMultiple(function(data){
 									callback(null, profData );
-								},results, name+": "+mensaje.mensaje, messData);
+								},results, name+": "+mensaje.mensaje, data);
 							});
 						});
 					});
@@ -265,15 +273,18 @@ function sendNotification(id, sucess){
 
 				}, function(err, results){
 					results = Generalfunc.cleanArray( results );
-					
+					var data_send = {
+						type: 1,
+						notification: notData
+					};
 					Generalfunc.NoReaded(notData.profile, function(num){
 						sendMultiple(function(data){
 							sucess( notData.profile, num );
-						},results, mensaje.mensaje, notData, num);
+						},results, mensaje.mensaje, data_send, num);
 					}, function(){
 						sendMultiple(function(data){
 							sucess( notData.profile, 0 );
-						},results, mensaje.mensaje, notData);
+						},results, mensaje.mensaje, data_send);
 					});
 				});
 			});
