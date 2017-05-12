@@ -118,19 +118,24 @@ router.post('/performance/feedback', multipartMiddleware, function(req, res){
 			}
 		}
 		model.feedback.find(d).distinct("content",function(err, a){
-			var text = a.join(' ');
-			text = text.replace(/[0-9]/g, "");
-			text = text.replace(/\?/g,"");
-			text = text.replace(/\!/g,"");
-			text = text.replace(/\¿/g,"");
-			text = text.replace(/\¡/g,"");
-			text = text.replace(/\,/g,"");
-			text = text.replace(/\(/g," ");
-			text = text.replace(/\)/g," ");
-			text = text.replace("  "," ");
-			var obj = density(text);
+			if(!err && a){
+				var text = a.join(' ');
+				text = text.replace(/[0-9]/g, "");
+				text = text.replace(/\?/g,"");
+				text = text.replace(/\!/g,"");
+				text = text.replace(/\¿/g,"");
+				text = text.replace(/\¡/g,"");
+				text = text.replace(/\,/g,"");
+				text = text.replace(/\(/g," ");
+				text = text.replace(/\)/g," ");
+				text = text.replace("  "," ");
+				var obj = density(text);
 
-			res.json( obj.getDensity() );
+				res.json( obj.getDensity() );
+			}else{
+				res.jsoN( {} );
+			}
+			
 		});
 	}, function(){
 		res.send("No Permission");
@@ -167,23 +172,35 @@ router.post('/performance/interactions', multipartMiddleware, function(req, res)
 		async.series([
 			function(callback){
 				model.conversation.find(d).exec(function(err, convData){
-					search_date(convData, label, new_conversations, function(convN){
-						callback( null, convN);
-					});
+					if(!err && convData){
+						search_date(convData, label, new_conversations, function(convN){
+							callback( null, convN);
+						});	
+					}else{
+						callback(null, {});
+					}					
 				});
 			},
 			function(callback){
 				model.network.find(d).exec(function(err, networkData){
-					search_date(networkData, label, networks, function(netN){
-						callback( null, netN);
-					});
+					if(!err && networkData){
+						search_date(networkData, label, networks, function(netN){
+							callback( null, netN);
+						});	
+					}else{
+						callback(null, {});
+					}
 				});
 			},
 			function(callback){
 				model.review.find(d).exec(function(err, reviewData){
-					search_date(reviewData, label, reviews, function(revN){
-						callback( null, revN);
-					});
+					if(!err && networkData){
+						search_date(reviewData, label, reviews, function(revN){
+							callback( null, revN);
+						});
+					}else{
+						callback(null, {});
+					}
 				});
 			},
 			], function(err, results){
@@ -229,9 +246,13 @@ router.post('/performance/publications', multipartMiddleware, function(req, res)
 					}
 				}, d);
 				model.history.find(nd).exec(function(err, newsData){
-					search_date(newsData, label, news, function(newsN){
-						callback( null, newsN);
-					});
+					if(!err && newsData){
+						search_date(newsData, label, news, function(newsN){
+							callback( null, newsN);
+						});
+					}else{
+						callback(null, {});
+					}
 				});
 			},
 			function(callback){
@@ -241,9 +262,13 @@ router.post('/performance/publications', multipartMiddleware, function(req, res)
 					}
 				}, d);
 				model.history.find(gd).exec(function(err, newsData){
-					search_date(newsData, label, news_images, function(galleryN){
-						callback( null, galleryN);
-					});
+					if(!err && newsData){
+						search_date(newsData, label, news_images, function(galleryN){
+							callback( null, galleryN);
+						});
+					}else{
+						callback(null, {});
+					}
 				});
 			},
 			], function(err, results){
@@ -269,36 +294,40 @@ router.post('/demografic/age', multipartMiddleware, function(req, res){
 				"$lt": date_end
 			}
 		}).exec(function(err, profile){
-			async.map(profile, function(item, callback){
-				if(item.birthday != undefined){
-					if(item.birthday != null){
-						var age = _calculateAge( item.birthday );
-						if(age != null){
-							var x = label.indexOf( age );
-							if(x == -1){
-								label.push(age);
-								colors.push( randomColor({ luminosity: 'bright', hue: 'random' }) );
-								value.push(1);
-							}else{
-								value[x] +=1;
+			if(!err && profile){
+				async.map(profile, function(item, callback){
+					if(item.birthday != undefined){
+						if(item.birthday != null){
+							var age = _calculateAge( item.birthday );
+							if(age != null){
+								var x = label.indexOf( age );
+								if(x == -1){
+									label.push(age);
+									colors.push( randomColor({ luminosity: 'bright', hue: 'random' }) );
+									value.push(1);
+								}else{
+									value[x] +=1;
+								}
 							}
+							callback(null, null);
+						}else{
+							callback(null, null);
 						}
-						callback(null, null);
 					}else{
 						callback(null, null);
 					}
-				}else{
-					callback(null, null);
-				}
-			}, function(err, results){
-				async.map(value, function(item, cb){
-					percentaje[percentaje.length] = ((item.val*100)/value.length);
-					cb(null, item);
 				}, function(err, results){
-					res.json({ label: label, value: value, color: colors, percentaje: percentaje  });
-				})
-				
-			});
+					async.map(value, function(item, cb){
+						percentaje[percentaje.length] = ((item.val*100)/value.length);
+						cb(null, item);
+					}, function(err, results){
+						res.json({ label: label, value: value, color: colors, percentaje: percentaje  });
+					})
+					
+				});
+			}else{
+				res.json({ label: [], value: [], color: [], percentaje: []  });
+			}
 		});
 	}, function(){
 		res.send("No Permission");
@@ -313,44 +342,50 @@ router.post('/demografic/distribution', multipartMiddleware, function(req, res){
 				"$lt": date_end
 			}
 		}).populate('location.city').select('location').exec(function(errProfile, profileData){
-			var t = profileData.length;
-			async.map(profileData, function(item, callback){
-				var state = "null";
-				if(item.location != undefined){
-					if(item.location.city != undefined){
-						if(item.location.city.state != undefined){
-							state = item.location.city.state.toString();
+			if(!err && profileData){
+				var t = profileData.length;
+				async.map(profileData, function(item, callback){
+					var state = "null";
+					if(item.location != undefined){
+						if(item.location.city != undefined){
+							if(item.location.city.state != undefined){
+								state = item.location.city.state.toString();
+							}
 						}
 					}
-				}
 
-				var x = prop.findIndex(function(item){
-					return (state == item[0])
-				});
-				if(x == -1){
-					prop.push([
-						state,
-						1,
-						Math.floor((1*100)/t)
+					var x = prop.findIndex(function(item){
+						return (state == item[0])
+					});
+					if(x == -1){
+						prop.push([
+							state,
+							1,
+							Math.floor((1*100)/t)
+						]);
+					}else{
+						prop[ x ][ 1 ] += 1;
+						prop[ x ][ 2 ] = Math.floor((prop[ x ][1]*100)/t);
+					}
+
+					callback( null, null);
+				}, function(err, results){
+					prop.unshift([
+						"Estado",
+						"Perfiles",
+						"Porcentaje"
 					]);
-				}else{
-					prop[ x ][ 1 ] += 1;
-					prop[ x ][ 2 ] = Math.floor((prop[ x ][1]*100)/t);
-				}
-
-				callback( null, null);
-			}, function(err, results){
-				prop.unshift([
-					"Estado",
-					"Perfiles",
-					"Porcentaje"
-				]);
-				res.json({
-					data: prop,
-					total: profileData.length
+					res.json({
+						data: prop,
+						total: profileData.length
+					});
 				});
-			});
-			
+			}else{
+				res.json({
+					data: {},
+					total: 0
+				});
+			}
 		});
 		
 	});
@@ -388,59 +423,76 @@ router.post('/catalogue', multipartMiddleware, function(req, res){
 			last_name: 1
 		})
 		.exec(function(err, profile){
-			async.map(profile, function(item, callback){
-				var d = {};
+			if(!err && profile){
+				async.map(profile, function(item, callback){
+					var d = {};
 
-				var name = item.first_name + " " + item.last_name;
-				var profesion = "";
-				if(item.job != undefined){
-					if(item.job.id != undefined){
-						if(item.job.id.name != undefined){
-							profesion = item.job.id.name;
-						}
-					}
-				}
-				var speciality = "";
-				if(item.speciality != undefined){
-					if(item.speciality.id != undefined){
-						if(item.speciality.id.name != undefined){
-							speciality = item.speciality.id.name;
-						}
-					}
-				}
-				var ciudad = "";
-				var estado = "";
-
-				if(item.location != undefined){
-					if(item.location.city != undefined){
-						if(item.location.city.name != undefined){
-							ciudad = item.location.city.name;
-						}
-						if(item.location.city.state != undefined){
-							estado = item.location.city.state;
-						}
-					}
-				}
-				var email = "";
-				if(item.user_id != undefined){
-					if(item.user_id.email != undefined){
-						email = item.user_id.email;
-					}
-				}
-				var tel = "";
-				if( item.phone != undefined){
-					tel = item.phone;
-				}
-				var empresa = "";
-
-				if( item.experiences.length > 0){
-					async.map(item.experiences, function(i,cb){
-						if(i.company != undefined){
-							if(i.company.name != undefined){
-								empresa = i.company.name;
+					var name = item.first_name + " " + item.last_name;
+					var profesion = "";
+					if(item.job != undefined){
+						if(item.job.id != undefined){
+							if(item.job.id.name != undefined){
+								profesion = item.job.id.name;
 							}
 						}
-						//A
+					}
+					var speciality = "";
+					if(item.speciality != undefined){
+						if(item.speciality.id != undefined){
+							if(item.speciality.id.name != undefined){
+								speciality = item.speciality.id.name;
+							}
+						}
+					}
+					var ciudad = "";
+					var estado = "";
+
+					if(item.location != undefined){
+						if(item.location.city != undefined){
+							if(item.location.city.name != undefined){
+								ciudad = item.location.city.name;
+							}
+							if(item.location.city.state != undefined){
+								estado = item.location.city.state;
+							}
+						}
+					}
+					var email = "";
+					if(item.user_id != undefined){
+						if(item.user_id.email != undefined){
+							email = item.user_id.email;
+						}
+					}
+					var tel = "";
+					if( item.phone != undefined){
+						tel = item.phone;
+					}
+					var empresa = "";
+
+					if( item.experiences.length > 0){
+						async.map(item.experiences, function(i,cb){
+							if(i.company != undefined){
+								if(i.company.name != undefined){
+									empresa = i.company.name;
+								}
+							}
+							//A
+							d = {
+								name: name,
+								profesion: profesion,
+								especialidad: speciality,
+								empresa: empresa,
+								ciudad: ciudad,
+								estado: estado,
+								email: email,
+								telefono: tel
+							};
+							prop.push( d );
+							cb( null, null);
+						}, function(err, results){
+							callback(null, null);
+						});
+					}else{
 						d = {
 							name: name,
 							profesion: profesion,
@@ -452,29 +504,15 @@ router.post('/catalogue', multipartMiddleware, function(req, res){
 							telefono: tel
 						};
 						prop.push( d );
-						cb( null, null);
-					}, function(err, results){
-						callback(null, null);
-					});
-				}else{
-					d = {
-						name: name,
-						profesion: profesion,
-						especialidad: speciality,
-						empresa: empresa,
-						ciudad: ciudad,
-						estado: estado,
-						email: email,
-						telefono: tel
-					};
-					prop.push( d );
 
-					callback(null, null);
-				}
-			}, function(err, results){
-				success( prop );
-			});
-			
+						callback(null, null);
+					}
+				}, function(err, results){
+					success( prop );
+				});
+			}else{
+				success([]);
+			}
 		});
 	}
 	if(token == BasicToken){
@@ -602,7 +640,7 @@ router.post('/profesional/profesions', multipartMiddleware, function(req, res){
 					});
 				});
 			}else{
-				res.json({ });
+				res.json({ label: [], value: [], color: [], percentaje: [] });
 			}
 			
 		});
@@ -622,39 +660,42 @@ router.post('/profesional/review', multipartMiddleware, function(req, res){
 				"$lt": date_end
 			}
 		}).exec(function(err, review){
-			async.map(review, function(item, callback){
-				if(all[item.rate] == undefined){
-					all[item.rate] = {
-						rate: item.rate,
-						color: randomColor({ luminosity: 'bright', hue: 'random' }),
-						val: 1
-					};
-				}else{
-					all[item.rate].val+=1;
-				}
-				callback(null, null);
-			}, function(err, results){
-
-				all.sort(function(a,b){
-					if(a.rate > b.rate){
-						return 0;
+			if(!err && review){
+				async.map(review, function(item, callback){
+					if(all[item.rate] == undefined){
+						all[item.rate] = {
+							rate: item.rate,
+							color: randomColor({ luminosity: 'bright', hue: 'random' }),
+							val: 1
+						};
 					}else{
-						return 1;
+						all[item.rate].val+=1;
 					}
-				});
-				all = Generalfunc.cleanArray(all);
-				async.map(all, function(item, c){
-					if(item != null){
-						label[label.length] = item.rate;
-						value[value.length] = item.val;
-						color[color.length] = item.color;
-						percentaje[percentaje.length] = ((item.val*100)/all.length);
-					}
-					c(null, item);
+					callback(null, null);
 				}, function(err, results){
-					res.json({ label: label, value: value, color: color  });
+					all.sort(function(a,b){
+						if(a.rate > b.rate){
+							return 0;
+						}else{
+							return 1;
+						}
+					});
+					all = Generalfunc.cleanArray(all);
+					async.map(all, function(item, c){
+						if(item != null){
+							label[label.length] = item.rate;
+							value[value.length] = item.val;
+							color[color.length] = item.color;
+							percentaje[percentaje.length] = ((item.val*100)/all.length);
+						}
+						c(null, item);
+					}, function(err, results){
+						res.json({ label: label, value: value, color: color  });
+					});
 				});
-			});
+			}else{
+				res.json({ label: [], value: [], color: []  });
+			}
 		});
 	});
 });
