@@ -203,7 +203,7 @@ router.post('/performance/interactions', multipartMiddleware, function(req, res)
 			},
 			function(callback){
 				model.review.find(d).exec(function(err, reviewData){
-					if(!err && networkData){
+					if(!err && reviewData){
 						search_date(reviewData, label, reviews, function(revN){
 							callback( null, revN);
 						});
@@ -351,7 +351,7 @@ router.post('/demografic/distribution', multipartMiddleware, function(req, res){
 				"$lt": date_end
 			}
 		}).populate('location.city').select('location').exec(function(errProfile, profileData){
-			if(!err && profileData){
+			if(!errProfile && profileData){
 				var t = profileData.length;
 				async.map(profileData, function(item, callback){
 					var state = "null";
