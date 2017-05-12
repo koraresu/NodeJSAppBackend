@@ -562,44 +562,49 @@ router.post('/profesional/profesions', multipartMiddleware, function(req, res){
 				"$lt": date_end
 			}
 		}).exec(function(err, experience){
-			async.map(experience, function(item, callback){
+			if(!err && experience){
+				async.map(experience, function(item, callback){
 
-				if(item.ocupation != undefined){
-					if(item.ocupation.name != undefined){
-						all = find_element(all, item.ocupation.name, {
-							name: item.ocupation.name,
-							color: randomColor({ luminosity: 'bright', hue: 'random' }),
-							val: 1
-						});
-						callback(null, null);	
+					if(item.ocupation != undefined){
+						if(item.ocupation.name != undefined){
+							all = find_element(all, item.ocupation.name, {
+								name: item.ocupation.name,
+								color: randomColor({ luminosity: 'bright', hue: 'random' }),
+								val: 1
+							});
+							callback(null, null);	
+						}else{
+							callback(null, null);
+						}
 					}else{
 						callback(null, null);
 					}
-				}else{
-					callback(null, null);
-				}
-				
-			}, function(err, results){
-				all.sort(function(a,b){
-					if(a.rate > b.rate){
-						return 0;
-					}else{
-						return 1;
-					}
-				});
-				all = Generalfunc.cleanArray(all);
-				async.map(all, function(item, c){
-					if(item != null){
-						label[label.length] = item.name;
-						value[value.length] = item.val;
-						color[color.length] = item.color;
-						percentaje[percentaje.length] = ((item.val*100)/all.length);
-					}
-					c(null, item);
+					
 				}, function(err, results){
-					res.json({ label: label, value: value, color: color, percentaje: percentaje  });
+					all.sort(function(a,b){
+						if(a.rate > b.rate){
+							return 0;
+						}else{
+							return 1;
+						}
+					});
+					all = Generalfunc.cleanArray(all);
+					async.map(all, function(item, c){
+						if(item != null){
+							label[label.length] = item.name;
+							value[value.length] = item.val;
+							color[color.length] = item.color;
+							percentaje[percentaje.length] = ((item.val*100)/all.length);
+						}
+						c(null, item);
+					}, function(err, results){
+						res.json({ label: label, value: value, color: color, percentaje: percentaje  });
+					});
 				});
-			});
+			}else{
+				res.json({ });
+			}
+			
 		});
 	});
 });
