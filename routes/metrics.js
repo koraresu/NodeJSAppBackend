@@ -119,19 +119,28 @@ router.post('/performance/feedback', multipartMiddleware, function(req, res){
 		}
 		model.feedback.find(d).distinct("content",function(err, a){
 			if(!err && a){
-				var text = a.join(' ');
-				text = text.replace(/[0-9]/g, "");
-				text = text.replace(/\?/g,"");
-				text = text.replace(/\!/g,"");
-				text = text.replace(/\¿/g,"");
-				text = text.replace(/\¡/g,"");
-				text = text.replace(/\,/g,"");
-				text = text.replace(/\(/g," ");
-				text = text.replace(/\)/g," ");
-				text = text.replace("  "," ");
-				var obj = density(text);
-
-				res.json( obj.getDensity() );
+				if(a.length > 0){
+					var text = a.join(' ');
+					text = text.replace(/[0-9]/g, "");
+					text = text.replace(/\?/g,"");
+					text = text.replace(/\!/g,"");
+					text = text.replace(/\¿/g,"");
+					text = text.replace(/\¡/g,"");
+					text = text.replace(/\,/g,"");
+					text = text.replace(/\(/g," ");
+					text = text.replace(/\)/g," ");
+					text = text.replace("  "," ");
+					var obj = density(text);
+					if(obj != null){
+						res.json( obj.getDensity() );	
+					}else{
+						res.json({});
+					}
+					
+				}else{
+					res.json({});
+				}
+				
 			}else{
 				res.jsoN( {} );
 			}
