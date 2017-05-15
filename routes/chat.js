@@ -500,58 +500,61 @@ var moment = require('moment-timezone');
 	      });
 		};
 		router.setDevice = function(guid, deviceID, callback){
-
+			var device_id = deviceID.device_id;
 			Tokenfunc.exist(guid, function(status, tokenData){
 				if(status){
 					Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
 						if(status){
-
-							Device.find({
-								profile: profileData._id,
-								token: deviceID.device_id
-							}).exec(function(errDevice, deviceData){
-								if(!errDevice && deviceData){
-									if(deviceData.length > 0){
-										Device.find({ profile: profileData._id }).exec(function(errDevice, deviceData){
-											async.map(deviceData, function(item, ca){
-												ca(null, item.token);
-											}, function(err, results){
-												callback(true, results, profileData );	
+							if(device_id != "" || device_id != null){
+								callback(false, deviceID);
+							}else{
+								Device.find({
+									profile: profileData._id,
+									token: device_id
+								}).exec(function(errDevice, deviceData){
+									if(!errDevice && deviceData){
+										if(deviceData.length > 0){
+											Device.find({ profile: profileData._id }).exec(function(errDevice, deviceData){
+												async.map(deviceData, function(item, ca){
+													ca(null, item.token);
+												}, function(err, results){
+													callback(true, results, profileData );	
+												});
 											});
-										});
-									}else{
-										var d = {
-											profile: profileData._id,
-											token:   deviceID.device_id,
-											active: true
-										}
+										}else{
+											var d = {
+												profile: profileData._id,
+												token:   device_id,
+												active: true,
+											}
 
-										var deviceEl = new Device(d);
-										deviceEl.save(function(err, deviceData){
-											var ver = new Version({
-												device: deviceData._id,
-												bundle_id: deviceID.bundle.id,
-												bundle_version: deviceID.bundle.version,
-												bundle_app_file: deviceID.bundle.app_file,
-												device_width: deviceID.device.width,
-												device_height: deviceID.device.height
-											});
-											ver.save(function(errver, verData){
-												Device.find({ profile: profileData._id }).exec(function(errDevice, deviceData){
-													async.map(deviceData, function(item, ca){
-														ca(null, item.token);
-													}, function(err, results){
-														callback(true, results, profileData );	
+											var deviceEl = new Device(d);
+											deviceEl.save(function(err, deviceData){
+												var ver = new Version({
+													device: deviceData._id,
+													bundle_id: deviceID.bundle.id,
+													bundle_version: deviceID.bundle.version,
+													bundle_app_file: deviceID.bundle.app_file,
+													device_width: deviceID.device.width,
+													device_height: deviceID.device.height
+												});
+												ver.save(function(errver, verData){
+													Device.find({ profile: profileData._id }).exec(function(errDevice, deviceData){
+														async.map(deviceData, function(item, ca){
+															ca(null, item.token);
+														}, function(err, results){
+															callback(true, results, profileData );	
+														});
 													});
 												});
 											});
-										});
+										}
+										
+									}else{
+										callback(false, deviceID);
 									}
-									
-								}else{
-									callback(false, deviceID);
-								}
-							});
+								});
+							}
 						}else{
 							callback(false, deviceID);
 						}
