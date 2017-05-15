@@ -386,12 +386,12 @@ function sendMultiple(ca, devices, message, payload, badge, sound){
 	});
 };
 function tokenItem(token, cb){
-	token = token.trim();
 	if(token == undefined || token == "" || token == null){
 		cb(null);
 	}else{
+		token = token.trim();
 		cb(token);
-	}
+	}	
 };
 exports.sendNot              = sendNot;
 exports.get_interfaz         = get_interfaz;
