@@ -88,7 +88,7 @@ var moment = require('moment-timezone');
 			})
 			.populate('profiles')
 			.populate('message')
-			.sort({ updatedAt: -1 })
+			.sort({ order: -1 })
 			.exec(function(err, conversationData){
 				if(!err && conversationData){
 					async.map(conversationData, function(item, ca){
@@ -388,7 +388,8 @@ var moment = require('moment-timezone');
 													],
 													prop_status: [1,1],
 													readed: [true,true],
-													message: null
+													message: null,
+													order: Date.now()
 												});
 												conversation.save(function(errConversation, conversationData){
 													Conversation.findOne({ _id: conversationData._id }).populate('profiles').exec(function(errConversation, conversationData){
@@ -675,6 +676,7 @@ var moment = require('moment-timezone');
 
 												readed[equal.number]      = false;
 												convData.message          = messageData._id;
+												convData.order            = Date.now();
 												convData.readed           = readed;
 												convData.prop_status      = [1,1];
 

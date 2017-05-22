@@ -343,7 +343,8 @@ var ConversationSchema = new Schema({
   profiles:    [ { type: Schema.Types.ObjectId, ref: 'Profile' } ],
   prop_status: [{ type: Number }], // 2 = Active | 1 = Archive | 0 = Deleted
   readed: [{type: Boolean}], // true = leido || false = no leido
-  message: { type: Schema.Types.ObjectId, ref: 'Message' }
+  message: { type: Schema.Types.ObjectId, ref: 'Message' },
+  order: { type: Date }
 },{
   timestamps: true
 });
