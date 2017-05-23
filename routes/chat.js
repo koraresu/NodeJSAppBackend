@@ -501,14 +501,19 @@ var moment = require('moment-timezone');
 	      });
 		};
 		router.setDevice = function(guid, deviceID, callback){
+			console.log("SetDevice");
 			var device_id = deviceID.device_id;
 			Tokenfunc.exist(guid, function(status, tokenData){
 				if(status){
+					console.log("Token Exists");
 					Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
 						if(status){
+							console.log("TOken Profile Exists");
 							if(device_id != "" || device_id != null){
+								console.log("Device Null or Empty");
 								callback(false, deviceID);
 							}else{
+								console.log("Device Ready Setting");
 								Device.find({
 									profile: profileData._id,
 									token: device_id
@@ -563,10 +568,12 @@ var moment = require('moment-timezone');
 								});
 							}
 						}else{
+							console.log("Token Profile No Exists");
 							callback(false, deviceID);
 						}
 					});
 				}else{
+					console.log("Token No Exists");
 					callback(false, deviceID);
 				}
 			});
