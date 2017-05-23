@@ -503,6 +503,7 @@ var moment = require('moment-timezone');
 		router.setDevice = function(guid, deviceID, callback){
 			console.log("SetDevice");
 			var device_id = deviceID.device_id;
+			console.log( "DeviceID:",device_id );
 			Tokenfunc.exist(guid, function(status, tokenData){
 				if(status){
 					console.log("Token Exists");
