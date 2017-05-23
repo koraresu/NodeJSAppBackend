@@ -510,7 +510,7 @@ var moment = require('moment-timezone');
 					Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
 						if(status){
 							console.log("TOken Profile Exists");
-							if(device_id != "" || device_id != null){
+							if(device_id == "" || device_id == null){
 								console.log("Device Null or Empty");
 								callback(false, deviceID);
 							}else{
