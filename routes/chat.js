@@ -513,8 +513,13 @@ var moment = require('moment-timezone');
 									profile: profileData._id,
 									token: device_id
 								}).exec(function(errDevice, deviceData){
+									console.log(errDevice);
+									console.log(deviceData);
+
 									if(!errDevice && deviceData){
+										console.log(deviceData.length);
 										if(deviceData.length > 0){
+											console.log("Existe");
 											Device.find({ profile: profileData._id }).exec(function(errDevice, deviceData){
 												async.map(deviceData, function(item, ca){
 													ca(null, item.token);
@@ -523,6 +528,7 @@ var moment = require('moment-timezone');
 												});
 											});
 										}else{
+											console.log("No existe, crear");
 											var d = {
 												profile: profileData._id,
 												token:   device_id,
