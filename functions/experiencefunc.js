@@ -228,7 +228,19 @@ exports.experienceSpecialityGet = function(name, callback){
 	var text = name;
 	var reg  = new RegExp(text, "i");
 
-	Speciality.find({ name: reg  }).exec(function(err, jobData){
+	Speciality.find({
+		"$and":[
+			{
+				name: reg
+			},{
+				name: {
+					"$exists" : true,
+					"$ne" : ""
+				}
+			}
+		]
+
+	}).exec(function(err, jobData){
 		var dist = Generalfunc.distinct(jobData, function(x){
 			return x.name;
 		});
@@ -242,7 +254,19 @@ exports.companyGet = function(name, callback){
 	var text = name;
 	var reg  = new RegExp(text, "i");
 
-	Company.find({ name: reg  }).exec(function(err, jobData){
+	Company.find({
+		"$and":[
+			{
+				name: reg
+			},{
+				name: {
+					"$exists" : true,
+					"$ne" : ""
+				}
+			}
+		]
+
+	}).exec(function(err, jobData){
 		var dist = Generalfunc.distinct(jobData, function(x){
 			return x.name;
 		});
@@ -256,7 +280,19 @@ exports.sectorGet = function(name, callback){
 	var text = name;
 	var reg  = new RegExp(text, "i");
 
-	Sector.find({ name: reg  }).exec(function(err, jobData){
+	Sector.find({
+		"$and":[
+			{
+				name: reg
+			},{
+				name: {
+					"$exists" : true,
+					"$ne" : ""
+				}
+			}
+		]
+
+	}).exec(function(err, jobData){
 		var dist = Generalfunc.distinct(jobData, function(x){
 			return x.name;
 		});
