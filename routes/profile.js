@@ -1162,66 +1162,77 @@ router.post('/dedicas', multipartMiddleware, function(req, res){
 	speciality     = speciality.trim();
 	ocupation      = ocupation.trim();
 
+	console.log( speciality );
+	console.log( ocupation );
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
 			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
+
 				Profile.findOne({
 					_id: profileData._id
 				}, function(errProfile, profileData){
 
 					async.series([
 						function(callback) {
-
-							Experiencefunc.specialityExistsOrCreate({
-								name: speciality
-							},{
-								name: speciality
-							}, function(status, specialityData){
-								callback(null,specialityData);
-							});
+							if(speciality != ""){
+								Experiencefunc.specialityExistsOrCreate({
+									name: speciality
+								},{
+									name: speciality
+								}, function(status, specialityData){
+									callback(null,specialityData);
+								});
+							}else{
+								callback(null, null);
+							}
 
 						},
 						function(callback) {
-							Experiencefunc.jobExistsOrCreate({
-								name: ocupation,
-								type: 0
-							},{
-								name: ocupation,
-								type: 0
-							}, function(statusJob, jobData){
-								callback(null, jobData);
-							});
+							if(ocupation != ""){
+								Experiencefunc.jobExistsOrCreate({
+									name: ocupation,
+									type: 0
+								},{
+									name: ocupation,
+									type: 0
+								}, function(statusJob, jobData){
+									callback(null, jobData);
+								});	
+							}else{
+								callback(null, null);
+							}
+							
 						}
 					], function(err, results) {
+
 						var specialityData = results[0];
-						var jobData        = results[1]; 
-
-						var j = profileData.job;
-						var s = profileData.speciality;
-
-						if(ocupation != ""){
-							j.id   = jobData._id;
-							j.name = jobData.name;
+						var jobData        = results[1];
+						
+						if(specialityData != null){
+							profileData.speciality = {
+								"id": specialityData._id,
+								"name": specialityData.name
+							};
 						}
-						if(speciality != ""){
-							s.id   = specialityData._id;
-							s.name = specialityData.name;
+						
+						if(jobData != null){
+							profileData.job = {
+								"id": jobData._id,
+								"name": jobData.name
+							};
 						}
 
-						profileData.job        = j;
-						profileData.speciality = s;
-
-						//profileData.save(function(err, profile){
+						profileData.save(function(err, profile){
 							Profile.findOne({
 								_id: profileData._id
 							}).exec(function(err, profileData){
-								Generalfunc.response(200, profileData, function(response){
-									res.json(response);
-								});
+								res.json( profileData );
 							});
-						//});
+						});
 					});
+
 				});
+
 			});
 		}else{
 			Generalfunc.response(101, {}, function(response){
@@ -1229,7 +1240,6 @@ router.post('/dedicas', multipartMiddleware, function(req, res){
 			});
 		}
 	});
-
 });
 // UPDATE EXPERIENCE
 // Parameter:
