@@ -427,7 +427,10 @@ router.post('/login-facebook', multipartMiddleware, function(req, res){
 					Experiencefunc.get(profileData._id, function(statusExperience, experiences){
 						var exp = statusExperience;	
 						profileData.save(function(errProfile, profileData){
-							Profile.findOne({ _id: profileData._id }).populate('skills').populate('experiences').exec(function(err, profileData){
+							Profile.findOne({ _id: profileData._id })
+							.populate('skills')
+							.populate('experiences')
+							.exec(function(err, profileData){
 								Generalfunc.response(201,{
 									action: 1,
 									token: tokenData.generated_id,
@@ -1156,10 +1159,72 @@ router.post('/dedicas', multipartMiddleware, function(req, res){
 	var speciality = req.body.speciality;
 	var ocupation  = req.body.ocupation;
 
+	speciality     = speciality.trim();
+	ocupation      = ocupation.trim();
+
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
 			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
-				Profile.findOne({ _id: profileData._id}, function(errProfile, profileData){
+				Profile.findOne({
+					_id: profileData._id
+				}, function(errProfile, profileData){
+
+					async.series([
+						function(callback) {
+
+							Experiencefunc.specialityExistsOrCreate({
+								name: speciality
+							},{
+								name: speciality
+							}, function(status, specialityData){
+								callback('speciality',specialityData);
+							});
+
+						},
+						function(callback) {
+							Experiencefunc.jobExistsOrCreate({
+								name: ocupation,
+								type: 0
+							},{
+								name: ocupation,
+								type: 0
+							}, function(statusJob, jobData){
+								callback('job', jobData);
+							});
+						}
+					], function(err, results) {
+						var specialityData = results[0];
+						var jobData        = results[1]; 
+
+						var j = {
+							id: "",
+							name: ""
+						};
+						var s = {
+							id: "",
+							name: ""
+						};
+						
+						if(ocupation != ""){
+							j.id   = jobData._id;
+							j.name = jobData.name;
+						}
+						if(speciality != ""){
+							s.id   = specialityData._id;
+							s.name = specialityData.name;
+						}
+
+						profileData.save(function(err, profile){
+							Profile.findOne({
+								_id: profileData._id
+							}).exec(function(err, profileData){
+								Generalfunc.response(200, profileData, function(response){
+									res.json(response);
+								});
+							});
+						});
+					});
+					/*
 					Experiencefunc.specialityExistsOrCreate({
 						name: speciality
 					},{
@@ -1172,24 +1237,10 @@ router.post('/dedicas', multipartMiddleware, function(req, res){
 							name: ocupation,
 							type: 0
 						}, function(statusJob, jobData){
-							profileData.job = {
-								id: jobData._id,
-								name: jobData.name
-							};
-							profileData.speciality = {
-								id: specialityData._id,
-								name: specialityData.name
-							};
-
-							profileData.save(function(err, profile){
-								Profile.findOne({ _id: profileData._id}).exec(function(err, profileData){
-									Generalfunc.response(200, profileData, function(response){
-										res.json(response);
-									});
-								});
-							});
+							
 						});
 					});
+					*/
 				});
 			});
 		}else{

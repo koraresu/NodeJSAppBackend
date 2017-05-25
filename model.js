@@ -45,11 +45,6 @@ HistorySchema.post('save', function(doc, next){
     next();
   });
 });
-HistorySchema.post('save', function(doc, next){
-  logMiddleware("history","save", doc, function(err, logData){
-    next();
-  });
-});
 HistorySchema.post('remove', function(doc, next){
   logMiddleware("history","remove", doc, function(err, logData){
     next();

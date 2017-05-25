@@ -1,16 +1,16 @@
-var express      = require('express');
-var path         = require('path');
-var favicon      = require('serve-favicon');
-var logger       = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser   = require('body-parser');
-var cors         = require('cors');
-var socket_io    = require('socket.io');
+var express       = require('express');
+var path          = require('path');
+var favicon       = require('serve-favicon');
+var logger        = require('morgan');
+var cookieParser  = require('cookie-parser');
+var bodyParser    = require('body-parser');
+var cors          = require('cors');
+var socket_io     = require('socket.io');
 var cookieSession = require('cookie-session')
-var async = require('async');
-
+var async         = require('async');
+// Moment
 var moment = require('moment-timezone');
-
+// Flash
 var flash = require('connect-flash');
 
 const pathDir = __dirname;
@@ -30,24 +30,11 @@ var gps          = require('./routes/gps');
 var test         = require('./routes/test');
 var metrics      = require('./routes/metrics');
 
-var Generalfunc = require('./functions/generalfunc');
-var Networkfunc = require('./functions/networkfunc');
-var Tokenfunc = require('./functions/tokenfunc');
-var Pushfunc = require('./functions/pushfunc');
-var APNfunc = require('./functions/apnfunc');
-
-var domain = "";
-/*
-var firebase = require("firebase");
-firebase.initializeApp({
-  serviceAccount: {
-    projectId: "thehive-9b8ae",
-    clientEmail: "foo@thehive-9b8ae.iam.gserviceaccount.com",
-    privateKey: "-----BEGIN PRIVATE KEY-----\nAIzaSyAnVAS2VQEs_ZHyW_vubuTjMpmA3mEYzlY\n-----END PRIVATE KEY-----\n"
-  },
-  databaseURL: "https://thehive-9b8ae.firebaseio.com"
-});
-*/
+var Generalfunc  = require('./functions/generalfunc');
+var Networkfunc  = require('./functions/networkfunc');
+var Tokenfunc    = require('./functions/tokenfunc');
+var Pushfunc     = require('./functions/pushfunc');
+var APNfunc      = require('./functions/apnfunc');
 
 var app = express();
 
@@ -58,8 +45,6 @@ app.io           = io;
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(cors());
 // Make io accessible to our router
