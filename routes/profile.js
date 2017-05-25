@@ -1177,7 +1177,7 @@ router.post('/dedicas', multipartMiddleware, function(req, res){
 							},{
 								name: speciality
 							}, function(status, specialityData){
-								callback('speciality',specialityData);
+								callback(null,specialityData);
 							});
 
 						},
@@ -1189,21 +1189,15 @@ router.post('/dedicas', multipartMiddleware, function(req, res){
 								name: ocupation,
 								type: 0
 							}, function(statusJob, jobData){
-								callback('job', jobData);
+								callback(null, jobData);
 							});
 						}
 					], function(err, results) {
 						var specialityData = results[0];
 						var jobData        = results[1]; 
 
-						var j = {
-							id: "",
-							name: ""
-						};
-						var s = {
-							id: "",
-							name: ""
-						};
+						var j = profileData.job;
+						var s = profileData.speciality;
 
 						if(ocupation != ""){
 							j.id   = jobData._id;
@@ -1214,9 +1208,10 @@ router.post('/dedicas', multipartMiddleware, function(req, res){
 							s.name = specialityData.name;
 						}
 
-						profileData.job = j;
+						profileData.job        = j;
 						profileData.speciality = s;
-						profileData.save(function(err, profile){
+
+						//profileData.save(function(err, profile){
 							Profile.findOne({
 								_id: profileData._id
 							}).exec(function(err, profileData){
@@ -1224,25 +1219,8 @@ router.post('/dedicas', multipartMiddleware, function(req, res){
 									res.json(response);
 								});
 							});
-						});
+						//});
 					});
-					/*
-					Experiencefunc.specialityExistsOrCreate({
-						name: speciality
-					},{
-						name: speciality
-					}, function(status, specialityData){
-						Experiencefunc.jobExistsOrCreate({
-							name: ocupation,
-							type: 0
-						},{
-							name: ocupation,
-							type: 0
-						}, function(statusJob, jobData){
-							
-						});
-					});
-					*/
 				});
 			});
 		}else{
