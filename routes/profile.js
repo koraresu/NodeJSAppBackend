@@ -1204,7 +1204,7 @@ router.post('/dedicas', multipartMiddleware, function(req, res){
 							id: "",
 							name: ""
 						};
-						
+
 						if(ocupation != ""){
 							j.id   = jobData._id;
 							j.name = jobData.name;
@@ -1214,6 +1214,8 @@ router.post('/dedicas', multipartMiddleware, function(req, res){
 							s.name = specialityData.name;
 						}
 
+						profileData.job = j;
+						profileData.speciality = s;
 						profileData.save(function(err, profile){
 							Profile.findOne({
 								_id: profileData._id
