@@ -202,7 +202,19 @@ exports.experienceJobGet = function(name, callback){
 	var reg  = new RegExp(text, "i");
 	var array = [];
 	console.log( text );
-	Job.find({ name: reg }).exec(function(err, jobData){
+	Job.find({
+		"$and":[
+			{
+				name: reg
+			},{
+				name: {
+					"$exists" : true,
+					"$ne" : ""
+				}
+			}
+		]
+
+	}).exec(function(err, jobData){
 		var dist = Generalfunc.distinct(jobData, function(x){
 			return x.name;
 		});
