@@ -38,20 +38,21 @@ var Generalfunc = require('./generalfunc');
 var Interfaz    = require('./interfazpushfunc');
 var Tokenfunc   = require('./tokenfunc');
 /**
- * An amazing test function
+ * get_interfaz, Acceso a el Conjunto de Helpers en INterfazPushFunc
  *
- * @param {Object} anotherParameter an object you'd like to see as a string
- * @returns {string}
+ * @returns {Object}
  *
  */
 function get_interfaz(){
 	return Interfaz;
 };
 /**
- * An amazing test function
+ * socket_to_profile, Tomamos el Token del socket y obtenemos el Perfil.
  *
- * @param {Object} anotherParameter an object you'd like to see as a string
- * @returns {string}
+ * @param {Object} socket, socket de un usuario online.
+ * @param {function} success, Callback todo salga bien.
+ * @param {function} fail, Callback Error.
+ * @callback {success|fail}
  *
  */
 function socket_to_profile(socket, success, fail){
@@ -68,10 +69,12 @@ function socket_to_profile(socket, success, fail){
 	});
 }
 /**
- * An amazing test function
+ * get_sockets, Tomamos el ProfileID y Obtenemos los Sockets/Conexiones al tiempo.
  *
- * @param {Object} anotherParameter an object you'd like to see as a string
- * @returns {string}
+ * @param {Object} profile_id, Perfil a Buscar.
+ * @param {function} itemFn, Callback Proceso de cada Elemento.
+ * @param {function} resultFn, Callback Proceso al Finalizar los individuales.
+ * @callback {success|fail}
  *
  */
 function get_sockets(profile_id, itemFn, resultFn ){
@@ -84,10 +87,12 @@ function get_sockets(profile_id, itemFn, resultFn ){
 	});
 };
 /**
- * An amazing test function
+ * get_devices, Tomamos el ProfileID y Obtenemos los Dispositivos.
  *
- * @param {Object} anotherParameter an object you'd like to see as a string
- * @returns {string}
+ * @param {Object} profile_id, Perfil a Buscar.
+ * @param {function} itemFn, Callback Proceso de cada Elemento.
+ * @param {function} resultFn, Callback Proceso al Finalizar los individuales.
+ * @callback {success|fail}
  *
  */
 function get_devices(profile_id, itemFn, resultFn ){
@@ -100,10 +105,11 @@ function get_devices(profile_id, itemFn, resultFn ){
 	});
 };
 /**
- * An amazing test function
+ * text_create, Crear Mensajes Para las Notificaciones.
  *
- * @param {Object} anotherParameter an object you'd like to see as a string
- * @returns {string}
+ * @param {String} collection, Nombre de Coleccion.
+ * @param {Object} data, Datos de la Coleccion.
+ * @return {Object} Json.
  *
  */
 function text_create(collection, data ){
@@ -115,10 +121,14 @@ function text_create(collection, data ){
 	}
 };
 /**
- * An amazing test function
+ * sendNot, Se envian PUSH, Es una Funcion que obtiene todos los elementos.
  *
- * @param {Object} anotherParameter an object you'd like to see as a string
- * @returns {string}
+ * @param {Object} profile_id, ProfileID
+ * @param {Object} title, Mensajes en la Notificacion.
+ * @param {Object} payload, Datos anexados a la Notificacion.
+ * @param {Object} badge, Numero de Elementos No Leidos en la Notificacion.
+ * @param {Object} success, Callback
+ * @callback {success}
  *
  */
 function sendNot(profile_id, title, payload, badge, success){
@@ -157,10 +167,11 @@ function sendNot(profile_id, title, payload, badge, success){
 	}
 };
 /**
- * An amazing test function
+ * profile_notification, Genero el ProfileEmisor, y ProfileMensaje para la creacion de los textos de Notificaciones.
  *
- * @param {Object} anotherParameter an object you'd like to see as a string
- * @returns {string}
+ * @param {String} collection, Nombre de Colección.
+ * @param {String|Integer} notData, Datos de Notificación.
+ * @return {Object} JSON.
  *
  */
 function profile_notification(collection, notData){
@@ -184,10 +195,13 @@ function profile_notification(collection, notData){
 	}
 };
 /**
- * An amazing test function
+ * sendNum, Hacemos PUSH vacios con nuevos No Leidos.(Cuando se debe reducir el numero.) Este solo se usa para asegurar.
  *
- * @param {Object} anotherParameter an object you'd like to see as a string
- * @returns {string}
+ * @param {String} profile_id, ProfileID
+ * @param {String|Integer} num, Cantidad en Badge a Enviar. Si es String, se castea.
+ * @param {String|Integer} io, Socket a enviar. Esto no es necesario.
+ * @param {Object} success, Callback
+ * @callback {success}
  *
  */
 function sendNum(profile_id, num, io, success){
@@ -220,10 +234,12 @@ function sendNum(profile_id, num, io, success){
 	}
 };
 /**
- * An amazing test function
+ * sendBadge, Hacemos PUSH vacios con nuevos No Leidos.(Cuando se debe reducir el numero.)
  *
- * @param {Object} anotherParameter an object you'd like to see as a string
- * @returns {string}
+ * @param {String} profile_id, ProfileID
+ * @param {String|Integer} num, Cantidad en Badge a Enviar. Si es String, se castea.
+ * @param {Object} success, Callback
+ * @callback {success}
  *
  */
 function sendBadge(profile_id, num,  success){
@@ -257,10 +273,12 @@ function sendBadge(profile_id, num,  success){
 	}
 };
 /**
- * An amazing test function
+ * sendMessNotification, Enviamos los PUSH de Mensajes.
  *
- * @param {Object} anotherParameter an object you'd like to see as a string
- * @returns {string}
+ * @param {ObjectID} id, ID de Mensaje
+ * @param {Object} success, Callback
+ * @param {Object} io, objeto de Socket.
+ * @callback {success}
  *
  */
 function sendMessNotification(id, success, io){
@@ -324,10 +342,11 @@ function sendMessNotification(id, success, io){
 	}
 };
 /**
- * An amazing test function
+ * sendNotification, Enviamos los PUSH de Notificaciones, usando el id para procesar todo.
  *
- * @param {Object} anotherParameter an object you'd like to see as a string
- * @returns {string}
+ * @param {Object} id, ID de la notificacion.
+ * @param {function} success, Callback.
+ * @callback {function}
  *
  */
 function sendNotification(id, sucess){
@@ -371,10 +390,12 @@ function sendNotification(id, sucess){
 	}
 };
 /**
- * An amazing test function
+ * add, Crea un Push Event para gestionar los No Leidos.
  *
- * @param {Object} anotherParameter an object you'd like to see as a string
- * @returns {string}
+ * @param {Object} d, Datos para Generar el Push en la DB.
+ * @param {Object} success, Callback todo bien.
+ * @param {Object} fail, Callback Error.
+ * @callback {function}
  *
  */
 function add(d, success, fail){
@@ -388,10 +409,14 @@ function add(d, success, fail){
 	});
 };
 /**
- * An amazing test function
+ * addOrGet, Revisa si un Push Event existe, si no es creado.
  *
- * @param {Object} anotherParameter an object you'd like to see as a string
- * @returns {string}
+ * @param {Object} type, 1 si es Notificacion, 0 si es Mensaje.
+ * @param {Object} id, ID de Notificacion o Mensaje.
+ * @param {ObjectID} profile, ID de Perfil.
+ * @param {Object} success, Callback todo bien.
+ * @param {Object} fail, Callback Error.
+ * @callback {function}
  *
  */
 function addOrGet(type, id, profile, success, fail){
@@ -462,10 +487,15 @@ function sendOne(ca,devices, message, payload, badge, sound){
 	}
 };
 /**
- * An amazing test function
+ * sendMultiple, Envia Los PUSH a los dispositivos.
  *
- * @param {Object} anotherParameter an object you'd like to see as a string
- * @returns {string}
+ * @param {Object} ca, Callback.
+ * @param {Array|String} devices, ID de Dispositivos, ya sea String o Array of Strings.
+ * @param {Object} message, texto para enviarlo en el PUSH.
+ * @param {Object} payload, Datos que se Anexan al PUSH.
+ * @param {Object} badge, Numero de Elementos No Leidos en la Notificacion.
+ * @param {Object} sound, Sonido a enviarlo con el PUSH.
+ * @callback {function} ca.
  *
  */
 function sendMultiple(ca, devices, message, payload, badge, sound){
@@ -493,10 +523,11 @@ function sendMultiple(ca, devices, message, payload, badge, sound){
 	});
 };
 /**
- * An amazing test function
+ * tokenItem, funcion para procesar cada Token de Dispositivos.
  *
- * @param {Object} anotherParameter an object you'd like to see as a string
- * @returns {string}
+ * @param {Object} token, Token de 
+ * @param {function} cb, Callback.
+ * @callback {function} cb.
  *
  */
 function tokenItem(token, cb){
