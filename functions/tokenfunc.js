@@ -69,7 +69,7 @@ exports.toProfile = function(guid, callback){
  *
  * @param {String} guid, Token que envia el App.
  * @param {function} callback.
- * @callback {function}
+ * @callback {Bool|TokenObject}
  *
  */
  function exist(guid, callback){
@@ -87,7 +87,7 @@ exports.toProfile = function(guid, callback){
  *
  * @param {String} guid, Token que envia el App.
  * @param {function} callback.
- * @callback {function}
+ * @callback {TokenObject}
  *
  */
 exports.exist2Callback = function(guid, success, fail){
