@@ -27,7 +27,13 @@ var Message      = model.message;
 var City         = model.city;
 var State        = model.state;
 var Country      = model.country;
-
+/**
+ * chat_message, Formatear un Mensaje.
+ *
+ * @param {MessageObject} message, datos de el mensaje a formatear.
+ * @return {Object} JSON.
+ *
+ */
 exports.chat_message = function(message){
 	
 	return {
@@ -37,7 +43,15 @@ exports.chat_message = function(message){
 		"conversation": message.conversation,
 		"message": message.message
 	};
-}
+};
+/**
+ * news, Formatear una Noticia.
+ *
+ * @param {MessageObject} news, datos de las noticias a formatear.
+ * @param {ProfileObject} profile, datos de los Perfiles.
+ * @return {Object} JSON.
+ *
+ */
 exports.news = function(news, profile, profile_de){
 	
 	profile_de = news.de_id;
@@ -141,9 +155,15 @@ exports.news = function(news, profile, profile_de){
 				"date": news.createdAt
 			};
 		break;
-	}
-	
-}
+	}	
+};
+/**
+ * notification, Formatear una Notificaciones.
+ *
+ * @param {NotificationObject} notificaciones, datos de las notificaciones a formatear.
+ * @return {Object} JSON.
+ *
+ */
 exports.notification = function(notification){
 	var data = {
 		tipo: notification.tipo,
@@ -153,24 +173,53 @@ exports.notification = function(notification){
 		data.busqueda = notification.busqueda;	
 	}
 	return data;
-}
+};
+/**
+ * feedback, Formatear una Feedback.
+ *
+ * @param {FeedbackObject} feedback, datos de las feedback a formatear.
+ * @return {Object} JSON.
+ *
+ */
 exports.feedback = function(feedback){
 	return {
 		"title": feedback.title,
 		"content": feedback.content,
 		"date": feedback.createdAt
 	};
-}
+};
+/**
+ * user, Formatear un Usuario. (***)
+ *
+ * @param {UserObject} user, datos del usuario a formatear.
+ * @return {Object} JSON.
+ *
+ */
 exports.user = function(user){
-
-}
+};
+/**
+ * login, Formatear Login.
+ *
+ * @param {TokenObject} tokenData, datos del token a formatear.
+ * @param {Boolean} verified, 
+ * @param {Array} exp, Datos sobre los Puestos del Perfil.
+ * @return {Object} JSON.
+ *
+ */
 exports.login = function(tokenData, verified, exp){
 	return {
 		token: tokenData.generated_id,
 		verified: verified,
 		experiences: exp,
 	};
-}
+};
+/**
+ * friendProfileFormat, Formatear Amigos.
+ *
+ * @param {TokenObject} profile, datos del Perfil.
+ * @return {Object} JSON.
+ *
+ */
 function friendProfileFormat(profile){
 	if(typeof profile == "undefined" || profile == null){
 		return {};
@@ -187,7 +236,15 @@ function friendProfileFormat(profile){
 			"status": profile.status
 		};
 	}
-}
+};
+/**
+ * MyProfileQueryFormat, Formatear un Perfil en base a una query iniciada.
+ *
+ * @param {TokenObject} query, Consulta.
+ * @param {TokenObject} callback.
+ * @callback {function} callback.
+ *
+ */
 function MyProfileQueryFormat(query, callback){
 	if(typeof profile == "undefined" || profile == null){
 		var data = {};
@@ -216,15 +273,26 @@ function MyProfileQueryFormat(query, callback){
 			});
 				 
 		});
-	}
-	
-}
+	}	
+};
+/**
+ * MyProfileFormat, Formatear un Perfil en base a un id.
+ *
+ * @param {TokenObject} profile, Datos del Perfil a formatear.
+ * @param {TokenObject} callback.
+ * @callback {function} callback.
+ *
+ */
 function MyProfileFormat(profile, callback){
 	if(typeof profile == "undefined" || profile == null){
 		var data = {};
 		callback(data);
 	}else{
-		Profile.findOne({ _id: profile._id }).populate('experiences').populate('skills').populate('user_id','-password').exec(function(errProfile, profile){
+		Profile.findOne({ _id: profile._id })
+		.populate('experiences')
+		.populate('skills')
+		.populate('user_id','-password')
+		.exec(function(errProfile, profile){
 			var data = {
 				"id": profile._id,
 				"first_name": profile.first_name,
@@ -238,9 +306,16 @@ function MyProfileFormat(profile, callback){
 			};
 			callback(errProfile, data);
 		});
-	}
-	
-}
+	}	
+};
+/**
+ * profileNewsFormat, Formatear un Perfil para las noticias.
+ *
+ * @param {TokenObject} profile, Datos del Perfil a formatear.
+ * @param {TokenObject} callback.
+ * @callback {function} callback.
+ *
+ */
 function profileNewsFormat(profile){
 	if(typeof profile == "undefined" || profile == null){
 		return {};
@@ -258,8 +333,15 @@ function profileNewsFormat(profile){
 				"status": profile.status
 			};
 	}
-	
-}
+};
+/**
+ * profileformat, Formatear un Perfil en General.
+ *
+ * @param {TokenObject} profile, Datos del Perfil a formatear.
+ * @param {TokenObject} callback.
+ * @callback {function} callback.
+ *
+ */
 function profileformat(profile){
 	if(typeof profile == "undefined" || profile == null){
 		return {};
@@ -285,7 +367,6 @@ function profileformat(profile){
 			};
 		});
 	}
-	
 }
 exports.profilequeryformat = MyProfileQueryFormat
 exports.profileformat = MyProfileFormat
