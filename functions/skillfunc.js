@@ -31,8 +31,15 @@ var Message      = model.message;
 var City         = model.city;
 var State        = model.state;
 var Country      = model.country;
-
-var get = function(profile_id, callback){
+/**
+ * get,
+ *
+ * @param {String} profile_id,
+ * @param {function} callback,
+ * @callback {Object}
+ *
+ */
+function get(profile_id, callback){
 	Profile.findOne({ _id: profile_id }).populate('skills','name _id').exec(function(errProfile, profileData){
 		if(!errProfile && profileData){
 			callback(true, profileData.skills);
@@ -41,7 +48,16 @@ var get = function(profile_id, callback){
 		}
 	});
 }
-var add = function(profile_id, name, callback){
+/**
+ * add, Crear una Skill en un Perfil.
+ *
+ * @param {ObjectId} profile_id, Perfil a añadir la skill.
+ * @param {String} name, Nombre de la Skill.
+ * @param {function} callback.
+ * @callback {Object}
+ *
+ */
+function add(profile_id, name, callback){
 	
 	var skills = name.split(',');
 	Profile.findOne({ _id: profile_id }, function(errProfile, profileData){
@@ -133,6 +149,15 @@ var add = function(profile_id, name, callback){
 		
 	});
 }
+/**
+ * ExistsOrCreate, Buscar una Skill, en caso de no encontrarla Crearla.
+ *
+ * @param {Query} search, Datos para buscar una Skill.
+ * @param {Object} insert, Datos para insertar una Skill.
+ * @param {function} callback.
+ * @callback {Object}
+ *
+ */
 function ExistsOrCreate(search, insert, callback){
 	Skill.findOne(search, function(err, skillData){
 		if(!err && skillData){
@@ -145,7 +170,17 @@ function ExistsOrCreate(search, insert, callback){
 		}
 	});
 }
-var edit = function(profile_id, from, to, callback){
+/**
+ * edit, Editar una Skill en un Perfil.
+ *
+ * @param {ObjectId} profile_id, Perfil a añadir la skill.
+ * @param {String} from, Nombre del Skill Anterior.
+ * @param {String} to, Nombre del NUevo Skill.
+ * @param {function} callback.
+ * @callback {Object}
+ *
+ */
+function edit(profile_id, from, to, callback){
 	Profile.findOne({ _id: profile_id }, function(errProfile, profileData){
 		ExistsOrCreate({name: from},{ name: from },function(errFromSkill, skillFromData){
 			ExistsOrCreate({ name: to},{ name: to},function(errSkillTo, skillToData){
@@ -171,7 +206,16 @@ var edit = function(profile_id, from, to, callback){
 		});
 	});
 }
-var remove = function(profile_id, name, callback){
+/**
+ * remove, Eliminar una Skill de un Perfil.
+ *
+ * @param {ObjectId} profile_id, Perfil a añadir la skill.
+ * @param {String} name, Nombre del Skill a eliminar.
+ * @param {function} callback.
+ * @callback {Object}
+ *
+ */
+function remove(profile_id, name, callback){
 	Profile.findOne({ _id: profile_id }, function(errProfile, profileData){
 		Skill.findOne({name: name}).exec(function(errSkill, skillData){
 			var skills = profileData.skills;
@@ -188,8 +232,8 @@ var remove = function(profile_id, name, callback){
 		
 	});
 }
-exports.ExistsOrCreate = ExistsOrCreate
-exports.add = add
-exports.edit = edit
-exports.delete = remove
-exports.get = get
+exports.ExistsOrCreate = ExistsOrCreate;
+exports.add            = add;
+exports.edit           = edit;
+exports.delete         = remove;
+exports.get            = get;
