@@ -43,8 +43,16 @@
  var Country      = model.country;
  
 
-
- function getTrabajo(profile_id, callback){
+/**
+ * getTrabajo, Buscar las noticias de tipo "Trabajaron juntos".
+ *
+ * @param {ObjectId} profile_id, ID de Perfil.
+ * @param {function} callback.
+ *
+ * @callback {function}
+ *
+ */
+function getTrabajo(profile_id, callback){
  	var data = [];
  	History.find({
  		profile_id: profile_id,
@@ -63,8 +71,17 @@
  			callback(null, data);
  		}
  	});
- }
- function formatoProfile(profile_id,cb){
+}
+ /**
+ * formatoProfile, Formato de datos para la peticion de Perfil.
+ *
+ * @param {ObjectId} profile_id, ID de Perfil.
+ * @param {function} cb, Callback.
+ *
+ * @callback {function}
+ *
+ */
+function formatoProfile(profile_id,cb){
  	if(typeof profile_id != "object"){
  		profile_id = mongoose.Types.ObjectId(profile_id);
  	}
@@ -100,8 +117,17 @@
  			});
  		});
  	});
- }
- function  compactformat(profileData){
+}
+ /**
+ * compactformat, Formatear poca información.
+ *
+ * @param {ObjectId} profile_id, ID de Perfil.
+ * @param {function} cb, Callback.
+ *
+ * @callback {function}
+ *
+ */
+function  compactformat(profileData){
  	return {
  		"_id": profileData._id,
  		"first_name": profileData.first_name,
@@ -113,8 +139,17 @@
  		"profile_pic": profileData.profile_pic,
  		"review_score": Generalfunc.precise_round( profileData.review_score, 1 ),
  	};
- };
- function formato(profileData, userData){
+};
+ /**
+ * formato, Información completa para el Perfil.
+ *
+ * @param {ProfileObject} profileData.
+ * @param {UserObject} userData.
+ *
+ * @return {Object} JSON.
+ *
+ */
+function formato(profileData, userData){
  	var email = "";
  	var verified = "";
  	var location = {};
