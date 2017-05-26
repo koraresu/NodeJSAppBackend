@@ -1,7 +1,10 @@
+/**
+ * Test File is a file for testing documenation!
+ *
+ * @module JSDocTesting
+ */
 var mongoose    = require('mongoose');
-
 var async       = require('async');
-
 var apn = require('apn');
 
 var model        = require('../model');
@@ -27,17 +30,30 @@ var Conversation = model.conversation;
 var Message      = model.message;
 var Country      = model.country;
 var City         = model.city;
-/* PUSH */
 var Push         = model.push;
 var PushEvent    = model.pushevent;
+
 
 var Generalfunc = require('./generalfunc');
 var Interfaz    = require('./interfazpushfunc');
 var Tokenfunc   = require('./tokenfunc');
-
+/**
+ * An amazing test function
+ *
+ * @param {Object} anotherParameter an object you'd like to see as a string
+ * @returns {string}
+ *
+ */
 function get_interfaz(){
 	return Interfaz;
 };
+/**
+ * An amazing test function
+ *
+ * @param {Object} anotherParameter an object you'd like to see as a string
+ * @returns {string}
+ *
+ */
 function socket_to_profile(socket, success, fail){
 	var guid = socket.guid;
 
@@ -51,6 +67,13 @@ function socket_to_profile(socket, success, fail){
 		}	
 	});
 }
+/**
+ * An amazing test function
+ *
+ * @param {Object} anotherParameter an object you'd like to see as a string
+ * @returns {string}
+ *
+ */
 function get_sockets(profile_id, itemFn, resultFn ){
 	itemFn = (itemFn == undefined)?function(item, callback){ callback(null, item.token);}:itemFn;
 	resultFn = (resultFn == undefined)?function(err, results){ }:resultFn;
@@ -60,6 +83,13 @@ function get_sockets(profile_id, itemFn, resultFn ){
 		async.map(onlineData, itemFn, resultFn);
 	});
 };
+/**
+ * An amazing test function
+ *
+ * @param {Object} anotherParameter an object you'd like to see as a string
+ * @returns {string}
+ *
+ */
 function get_devices(profile_id, itemFn, resultFn ){
 	itemFn = (itemFn == undefined)?function(item, callback){ callback(null, item.token);}:itemFn;
 	resultFn = (resultFn == undefined)?function(err, results){ }:resultFn;
@@ -69,6 +99,13 @@ function get_devices(profile_id, itemFn, resultFn ){
 		async.map(devData, itemFn, resultFn);
 	});
 };
+/**
+ * An amazing test function
+ *
+ * @param {Object} anotherParameter an object you'd like to see as a string
+ * @returns {string}
+ *
+ */
 function text_create(collection, data ){
 	var prof = profile_notification(collection, data);
 	if( collection == "notification"){
@@ -77,6 +114,13 @@ function text_create(collection, data ){
 		return { mensaje: data.message };
 	}
 };
+/**
+ * An amazing test function
+ *
+ * @param {Object} anotherParameter an object you'd like to see as a string
+ * @returns {string}
+ *
+ */
 function sendNot(profile_id, title, payload, badge, success){
 	console.log("Send Notification");
 	if(mongoose.Types.ObjectId.isValid(profile_id)){
@@ -111,7 +155,14 @@ function sendNot(profile_id, title, payload, badge, success){
 	}else{
 		success(null);
 	}
-}
+};
+/**
+ * An amazing test function
+ *
+ * @param {Object} anotherParameter an object you'd like to see as a string
+ * @returns {string}
+ *
+ */
 function profile_notification(collection, notData){
 	if( collection == "notification"){
 		var profile_emisor  = "";
@@ -131,7 +182,14 @@ function profile_notification(collection, notData){
 	}else{
 		return "PruebaMensaje: ";
 	}
-}
+};
+/**
+ * An amazing test function
+ *
+ * @param {Object} anotherParameter an object you'd like to see as a string
+ * @returns {string}
+ *
+ */
 function sendNum(profile_id, num, io, success){
 	if(typeof num == "string"){ num = num * 1; };
 	if(success == undefined){ success = function(){}; };
@@ -160,7 +218,14 @@ function sendNum(profile_id, num, io, success){
 	}else{
 		success(null);
 	}
-}
+};
+/**
+ * An amazing test function
+ *
+ * @param {Object} anotherParameter an object you'd like to see as a string
+ * @returns {string}
+ *
+ */
 function sendBadge(profile_id, num,  success){
 	if(typeof num == "string"){ num = num * 1; };
 	if(mongoose.Types.ObjectId.isValid(profile_id)){
@@ -191,6 +256,13 @@ function sendBadge(profile_id, num,  success){
 		success(null);
 	}
 };
+/**
+ * An amazing test function
+ *
+ * @param {Object} anotherParameter an object you'd like to see as a string
+ * @returns {string}
+ *
+ */
 function sendMessNotification(id, success, io){
 	if(mongoose.Types.ObjectId.isValid(id)){
 		id = mongoose.Types.ObjectId( id );
@@ -251,6 +323,13 @@ function sendMessNotification(id, success, io){
 		success(null);
 	}
 };
+/**
+ * An amazing test function
+ *
+ * @param {Object} anotherParameter an object you'd like to see as a string
+ * @returns {string}
+ *
+ */
 function sendNotification(id, sucess){
 	if(mongoose.Types.ObjectId.isValid(id)){
 		id = mongoose.Types.ObjectId( id );
@@ -291,6 +370,13 @@ function sendNotification(id, sucess){
 		});
 	}
 };
+/**
+ * An amazing test function
+ *
+ * @param {Object} anotherParameter an object you'd like to see as a string
+ * @returns {string}
+ *
+ */
 function add(d, success, fail){
 	var pushevent = new PushEvent( d );
 	pushevent.save(function(err, pushEv){
@@ -301,6 +387,13 @@ function add(d, success, fail){
 		}	
 	});
 };
+/**
+ * An amazing test function
+ *
+ * @param {Object} anotherParameter an object you'd like to see as a string
+ * @returns {string}
+ *
+ */
 function addOrGet(type, id, profile, success, fail){
 	var data = {};
 	var search = {};
@@ -356,11 +449,25 @@ function addOrGet(type, id, profile, success, fail){
 		}
 	});
 };
+/**
+ * An amazing test function
+ *
+ * @param {Object} anotherParameter an object you'd like to see as a string
+ * @returns {string}
+ *
+ */
 function sendOne(ca,devices, message, payload, badge, sound){
 	if(typeof devices == "string"){
 		sendMultiple(ca,devices, message, payload, badge, sound);
 	}
 };
+/**
+ * An amazing test function
+ *
+ * @param {Object} anotherParameter an object you'd like to see as a string
+ * @returns {string}
+ *
+ */
 function sendMultiple(ca, devices, message, payload, badge, sound){
 	if(badge == undefined || badge == null){ badge = 1; };
 	if(sound == undefined || sound == null || sound == ""){ sound = "ping.aiff"; };
@@ -385,6 +492,13 @@ function sendMultiple(ca, devices, message, payload, badge, sound){
 		ca(result);
 	});
 };
+/**
+ * An amazing test function
+ *
+ * @param {Object} anotherParameter an object you'd like to see as a string
+ * @returns {string}
+ *
+ */
 function tokenItem(token, cb){
 	if(token == undefined || token == "" || token == null){
 		cb(null);
@@ -393,6 +507,7 @@ function tokenItem(token, cb){
 		cb(token);
 	}	
 };
+
 exports.sendNot              = sendNot;
 exports.get_interfaz         = get_interfaz;
 exports.socket_to_profile    = socket_to_profile;

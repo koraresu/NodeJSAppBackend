@@ -1,4 +1,8 @@
-
+/**
+ * Test File is a file for testing documenation!
+ *
+ * @module JSDocTesting
+ */
 var mongoose    = require('mongoose');
 var path = require('path');
 var fs = require('fs');
@@ -28,7 +32,14 @@ var State          = model.state;
 var Country        = model.country;
 
 var Generalfunc = require('./generalfunc');
-
+/**
+ * CheckExperience, sirve para buscar una "experience" de un perfil en base a su ocupación, si no existe la ocupación se crea.
+ *
+ * @param {ProfileObject} profileData
+ * @param {Integer} type is the 
+ * @returns {ExperienceObject}
+ *
+ */
 function checkExperience(profileData, type, data, callback){
 	if(type == 0){
 		
@@ -104,7 +115,16 @@ function checkExperience(profileData, type, data, callback){
 			});
 		})
 	}
-}
+};
+/**
+ * insertOrExists, si la "experience" existe, se regresa el documento, si no existe, se crea el documento.
+ *
+ * @param {ProfileObject} profileData 
+ * @param {Integer} type
+ * @param {Object} data
+ * @param {function} callback
+ * @callback {bool,ExperienceObject}
+ */
 exports.insertOrExists = function(profileData, type, data, callback){
 	checkExperience(profileData,type,data, function(statusExperience,experienceData,search){
 		if(statusExperience){
@@ -117,7 +137,15 @@ exports.insertOrExists = function(profileData, type, data, callback){
 			
 		}
 	});
-}
+};
+/**
+ * profileGenerate, Crea el contenido de la propiedad "experience" en el documento "Profile".
+ *
+ * @param {ProfileObject} profileData
+ * @param {function} callback
+ * @callback {ProfileObject}
+ *
+ */
 exports.profileGenerate = function(profileData, callback){
 	profileData.experiences = [];
 	Experience.find({ profile_id: profileData._id}).populate('experiences').populate('skills').exec(function(errExperience, experiencesData){
@@ -128,8 +156,16 @@ exports.profileGenerate = function(profileData, callback){
 			callback(profileData);
 		});
 	});
-
-}
+};
+/**
+ * jobExistsOrCreate, si el "Job" existe, se regresa el documento, si no existe, se crea el documento.
+ *
+ * @param {Object} search, elemento a buscar en la colección.
+ * @param {Object} insert, objeto para insertar en la colección.
+ * @param {function} callback
+ * @callback {bool, JobObject}
+ *
+ */
 function jobExistsOrCreate(search, insert, callback){
 	Job.findOne(search, function(err, job){
 		if(!err && job){
@@ -141,7 +177,16 @@ function jobExistsOrCreate(search, insert, callback){
 			callback(false, job);
 		}
 	});
-}
+};
+/**
+ * sectorExistsOrCreate, si el "Sector" existe, se regresa el documento, si no existe, se crea el documento.
+ *
+ * @param {Object} search, elemento a buscar en la colección.
+ * @param {Object} insert, objeto para insertar en la colección.
+ * @param {function} callback
+ * @callback {bool, JobObject}
+ *
+ */
 function sectorExistsOrCreate(search, insert, callback){
 	Sector.findOne(search, function(err, sector){
 		if(!err && sector){
@@ -153,7 +198,16 @@ function sectorExistsOrCreate(search, insert, callback){
 			callback(false, sector);
 		}
 	});
-}
+};
+/**
+ * specialityExistsOrCreate, si el "Speciality" existe, se regresa el documento, si no existe, se crea el documento.
+ *
+ * @param {Object} search, elemento a buscar en la colección.
+ * @param {Object} insert, objeto para insertar en la colección.
+ * @param {function} callback
+ * @callback {bool, JobObject}
+ *
+ */
 function specialityExistsOrCreate(search, insert, callback){
 	Speciality.findOne(search, function(err, speciality){
 		if(!err && speciality){
@@ -164,7 +218,16 @@ function specialityExistsOrCreate(search, insert, callback){
 			callback(false, speciality);
 		}
 	});
-}
+};
+/**
+ * companyExistsOrCreate, si el "Company" existe, se regresa el documento, si no existe, se crea el documento.
+ *
+ * @param {Object} search, elemento a buscar en la colección.
+ * @param {Object} insert, objeto para insertar en la colección.
+ * @param {function} callback
+ * @callback {bool, JobObject}
+ *
+ */
 function companyExistsOrCreate(search, insert, profileData, callback){
 	Company.findOne(search, function(err, company){
 		if(!err && company){
@@ -182,9 +245,16 @@ function companyExistsOrCreate(search, insert, profileData, callback){
 			});
 		}
 	});
-}
-
-var get = function(profile, callback){
+};
+/**
+ * Get, Obtienes los "experience" de cierto Profile.
+ *
+ * @param {ProfileID} profile
+ * @param {function} callback
+ * @callback {bool,Array[ExperiencesObject]}
+ *
+ */
+function get(profile, callback){
 	Experience.find({ profile_id: profile}).exec( function(err, experiences){
 
 		if(!err && experiences.length > 0){
@@ -196,7 +266,14 @@ var get = function(profile, callback){
 		}
 		
 	});
-}
+};
+/**
+ * An amazing test function
+ *
+ * @param {Object} anotherParameter an object you'd like to see as a string
+ * @returns {string}
+ *
+ */
 exports.experienceJobGet = function(name, callback){
 	var text = name;
 	var reg  = new RegExp(text, "i");
@@ -223,7 +300,14 @@ exports.experienceJobGet = function(name, callback){
 		} );
 		callback(err, njob);
 	});
-}
+};
+/**
+ * An amazing test function
+ *
+ * @param {Object} anotherParameter an object you'd like to see as a string
+ * @returns {string}
+ *
+ */
 exports.experienceSpecialityGet = function(name, callback){
 	var text = name;
 	var reg  = new RegExp(text, "i");
@@ -249,7 +333,14 @@ exports.experienceSpecialityGet = function(name, callback){
 		} );
 		callback(err, njob);
 	});	
-}
+};
+/**
+ * An amazing test function
+ *
+ * @param {Object} anotherParameter an object you'd like to see as a string
+ * @returns {string}
+ *
+ */
 exports.companyGet = function(name, callback){
 	var text = name;
 	var reg  = new RegExp(text, "i");
@@ -275,7 +366,14 @@ exports.companyGet = function(name, callback){
 		} );
 		callback(err, njob);
 	});
-}
+};
+/**
+ * An amazing test function
+ *
+ * @param {Object} anotherParameter an object you'd like to see as a string
+ * @returns {string}
+ *
+ */
 exports.sectorGet = function(name, callback){
 	var text = name;
 	var reg  = new RegExp(text, "i");
@@ -301,12 +399,24 @@ exports.sectorGet = function(name, callback){
 		} );
 		callback(err, njob);
 	});
-}
-
-
+};
+/**
+ * An amazing test function
+ *
+ * @param {Object} anotherParameter an object you'd like to see as a string
+ * @returns {string}
+ *
+ */
 function formatName(text){
 	return text;
-}
+};
+/**
+ * An amazing test function
+ *
+ * @param {Object} anotherParameter an object you'd like to see as a string
+ * @returns {string}
+ *
+ */
 function formatCaseInsensitive(val){
 	return val;
 }

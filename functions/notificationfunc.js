@@ -1,4 +1,8 @@
-
+/**
+ * Test File is a file for testing documenation!
+ *
+ * @module JSDocTesting
+ */
 var mongoose    = require('mongoose');
 var path        = require('path');
 var fs          = require('fs');

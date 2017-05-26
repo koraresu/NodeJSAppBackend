@@ -1,4 +1,9 @@
-var mongoose    = require('mongoose');
+/**
+ * Test File is a file for testing documenation!
+ *
+ * @module JSDocTesting
+ */
+ var mongoose    = require('mongoose');
 
 function prepare(profile_id, message_id, success, fail){
 	if(mongoose.Types.ObjectId.isValid(profile_id)){

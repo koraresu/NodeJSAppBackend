@@ -1,3 +1,8 @@
+/**
+ * Test File is a file for testing documenation!
+ *
+ * @module JSDocTesting
+ */
 var express = require('express');
 
 var model = require('../model');
