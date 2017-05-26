@@ -214,7 +214,7 @@ router.post('/conversations', multipartMiddleware, function(req, res){
  * Route "/conversation", Listar las Conversaciones del Perfil
  * @param {String} guid, Token del Perfil(permiso).
  * @param {String} id, Id de la Conversacion.
- * @return {Object} Acceso a el Objeto de la Libreria de Apple Push Notification ya configurada.
+ * @return {Object} JSON.
  *
  */
 router.post('/conversation', multipartMiddleware, function(req, res){
@@ -321,8 +321,8 @@ router.post('/conversation', multipartMiddleware, function(req, res){
 /**
  * Route "/delete/conversation", Eliminar una Conversación.
  * @param {String} guid, Token del Perfil(permiso).
- * @param {String} id, Id de la Conversacion.
- * @return {Object} Acceso a el Objeto de la Libreria de Apple Push Notification ya configurada.
+ * @param {String} conversation_id, Id de la Conversacion.
+ * @return {Object} JSON.
  *
  */
 router.post('/delete/conversation', multipartMiddleware, function(req, res){
@@ -391,11 +391,10 @@ router.post('/delete/conversation', multipartMiddleware, function(req, res){
 	});
 });
 /**
- * saveImage, Guardar Imagenes.
- * @param {Object} file, Archivo.
- * @param {String} new_path, Direccion donde guardar la imagen.
- * @param {function} callback, 
- * @return {Object} Acceso a el Objeto de la Libreria de Apple Push Notification ya configurada.
+ * Route "/new/conversation", Crear una Conversación.
+ * @param {String} guid, Token del Perfil(permiso).
+ * @param {String} public_id, PublicID de Amigo.
+ * @return {Object} JSON.
  *
  */
 router.post('/new/conversation', multipartMiddleware, function(req, res){
@@ -468,11 +467,10 @@ router.post('/new/conversation', multipartMiddleware, function(req, res){
 	});
 });
 /**
- * saveImage, Guardar Imagenes.
- * @param {Object} file, Archivo.
- * @param {String} new_path, Direccion donde guardar la imagen.
- * @param {function} callback, 
- * @return {Object} Acceso a el Objeto de la Libreria de Apple Push Notification ya configurada.
+ * conversationsJoin, Agregarme el socket a un Room.
+ * @param {Object} socket, Socket del Usuario Conectado.
+ * @param {function} callback.
+ * @return {Bool|ConversationList}
  *
  */
 router.conversationsJoin = function(socket, callback){
@@ -503,11 +501,12 @@ router.conversationsJoin = function(socket, callback){
 	});
 };
 /**
- * saveImage, Guardar Imagenes.
+ * setOnline, Guardar al usuario conectado en la colección "Online".
  * @param {Object} file, Archivo.
- * @param {String} new_path, Direccion donde guardar la imagen.
- * @param {function} callback, 
- * @return {Object} Acceso a el Objeto de la Libreria de Apple Push Notification ya configurada.
+ * @param {String} guid,  Token de Usuario.
+ * @param {String} socket, Socket de Usuario.
+ * @param {function} callback.
+ * @return {Bool,Socket,ProfileObject}
  *
  */
 router.setOnline = function(guid,socket, callback){
@@ -535,11 +534,10 @@ router.setOnline = function(guid,socket, callback){
 	});
 };
 /**
- * saveImage, Guardar Imagenes.
- * @param {Object} file, Archivo.
- * @param {String} new_path, Direccion donde guardar la imagen.
- * @param {function} callback, 
- * @return {Object} Acceso a el Objeto de la Libreria de Apple Push Notification ya configurada.
+ * toProfile, Buscar el socket conectado.  (**)
+ * @param {String} socket, Socket de Usuario.
+ * @param {function} callback.
+ * @return {OnlineObject}
  *
  */
 router.toProfile = function(socket, callback){
@@ -550,11 +548,10 @@ router.toProfile = function(socket, callback){
 	});
 };
 /**
- * saveImage, Guardar Imagenes.
- * @param {Object} file, Archivo.
- * @param {String} new_path, Direccion donde guardar la imagen.
- * @param {function} callback, 
- * @return {Object} Acceso a el Objeto de la Libreria de Apple Push Notification ya configurada.
+ * TokenNoReaded, Obtener la cantidad de notificaciones y mensajes no leido con el token.
+  * @param {String} guid,  Token de Usuario.
+ * @param {function} callback.
+ * @return {ProfileObject,Integer}
  *
  */
 router.TokenNoReaded = function(guid, callback){
@@ -575,11 +572,11 @@ router.TokenNoReaded = function(guid, callback){
 	});
 };
 /**
- * saveImage, Guardar Imagenes.
- * @param {Object} file, Archivo.
- * @param {String} new_path, Direccion donde guardar la imagen.
- * @param {function} callback, 
- * @return {Object} Acceso a el Objeto de la Libreria de Apple Push Notification ya configurada.
+ * setDevice, Guardar el Dispositivo en la colección.
+ * @param {String} guid,  Token de Usuario.
+ * @param {Object} deviceID, Un Json con varios datos del dispositivo donde se esta usando el App.
+ * @param {function} callback.
+ * @return {Bool, [Token],ProfileObject}
  *
  */
 router.setDevice = function(guid, deviceID, callback){
@@ -662,11 +659,10 @@ router.setDevice = function(guid, deviceID, callback){
 	});
 };
 /**
- * saveImage, Guardar Imagenes.
- * @param {Object} file, Archivo.
- * @param {String} new_path, Direccion donde guardar la imagen.
- * @param {function} callback, 
- * @return {Object} Acceso a el Objeto de la Libreria de Apple Push Notification ya configurada.
+ * unsetOnline, Quitar el Usuario de los usuarios Online.  (**)
+ * @param {Object} socket, Socket del Usuario conectado.
+ * @param {function} callback.
+ * @return {Error, Socket}
  *
  */
 router.unsetOnline = function(socket, callback){
@@ -675,17 +671,16 @@ router.unsetOnline = function(socket, callback){
 	});
 };
 /**
- * saveImage, Guardar Imagenes.
- * @param {Object} file, Archivo.
+ * setReadedMessage, Cambiar stado de el Mensaje a Leido.
+ * @param {Object} data, Archivo.
  * @param {String} new_path, Direccion donde guardar la imagen.
- * @param {function} callback, 
- * @return {Object} Acceso a el Objeto de la Libreria de Apple Push Notification ya configurada.
+ * @param {function} success. 
+ * @param {function} fail. 
+ * @return {sucess|fail}
  *
  */
 router.setReadedMessage = function(data, success, fail){
-
 	var guid = data.guid;
-
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
 			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
@@ -718,7 +713,7 @@ router.setReadedMessage = function(data, success, fail){
 									.findOne({
 										_id: data.conversation
 									}).exec(ca);
-								}
+								};
 								Pushfunc.eventsetReaded({
 									type:0,
 									conversation: conversationData
@@ -751,16 +746,13 @@ router.setReadedMessage = function(data, success, fail){
 	});
 };
 /**
- * saveImage, Guardar Imagenes.
- * @param {Object} file, Archivo.
- * @param {String} new_path, Direccion donde guardar la imagen.
- * @param {function} callback, 
- * @return {Object} Acceso a el Objeto de la Libreria de Apple Push Notification ya configurada.
+ * message, Crear el Mensaje y realizar las modificaciones necesarias.
+ * @param {Object} data, Archivo.
+ * @param {function} callback.
+ * @return {callback}
  *
  */
 router.message = function(data, callback){
-
-
 	var guid      = data.guid;
 	var id        = data.conversation
 	var text      = data.message;
@@ -823,11 +815,10 @@ router.message = function(data, callback){
 	});
 };
 /**
- * saveImage, Guardar Imagenes.
- * @param {Object} file, Archivo.
- * @param {String} new_path, Direccion donde guardar la imagen.
- * @param {function} callback, 
- * @return {Object} Acceso a el Objeto de la Libreria de Apple Push Notification ya configurada.
+ * delete, Eliminar el Socket de los usuarios conectados.
+ * @param {Object} socket, Socket del Usuario conectado.
+ * @param {function} callback.
+ * @return {Error, Socket}
  *
  */
 router.delete = function(socket, callback){
@@ -836,11 +827,9 @@ router.delete = function(socket, callback){
 	});
 };
 /**
- * saveImage, Guardar Imagenes.
- * @param {Object} file, Archivo.
- * @param {String} new_path, Direccion donde guardar la imagen.
- * @param {function} callback, 
- * @return {Object} Acceso a el Objeto de la Libreria de Apple Push Notification ya configurada.
+ * clean, limpiar Usuarios Online.(se usa cuando inicia el servidor).
+ * @param {function} callback.
+ * @return {Error}
  *
  */
 router.clean = function(callback){
@@ -849,119 +838,13 @@ router.clean = function(callback){
 	});
 };
 /**
- * saveImage, Guardar Imagenes.
- * @param {Object} file, Archivo.
- * @param {String} new_path, Direccion donde guardar la imagen.
- * @param {function} callback, 
- * @return {Object} Acceso a el Objeto de la Libreria de Apple Push Notification ya configurada.
+ * notification_accept2C, Notificaciones Aceptadas.
+ * @param {Object} data, Datos usados en Notificaciones.
+ * @param {function} success.
+ * @param {function} fail. 
+ * @return {OnlineObject, NetworkObject,NotificationObject}
  *
  */
-router.sendPush = function(deviceToken, message, name, conversation, callback){
-	var note = new apn.Notification();
-	note.expiry = Math.floor(Date.now() / 1000) + 3600; // Expires 1 hour from now.
-	note.badge = 0;
-	note.sound = "ping.aiff";
-	note.alert = message;
-	note.payload = {'messageFrom': name, 'conversation': conversation };
-	note.topic = "com.thehiveapp.thehive";
-	apnProvider.send(note, deviceToken).then( (result) => {
-		if(result.failed[0] != undefined){
-			if(result.failed[0].error != undefined){
-				
-			}
-		}
-		callback(result);
-	});
-};
-/**
- * accept_notification, Guardar Imagenes.
- * @param {Object} file, Archivo.
- * @param {String} new_path, Direccion donde guardar la imagen.
- * @param {function} callback, 
- * @return {Object} Acceso a el Objeto de la Libreria de Apple Push Notification ya configurada.
- *
- */
-router.accept_notification = function(data, callback){
-	var id = data.id;
-	var guid = data.guid;
-	Tokenfunc.exist(guid, function(status, tokenData){
-		if(status){
-			//
-			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
-				if(status){
-					//
-					if(mongoose.Types.ObjectId.isValid(id)){
-						//
-						id = mongoose.Types.ObjectId(id);
-						Notification.findOne({ _id: id }).populate('network').exec(function(err,notificationData){
-							if(!err && notificationData){
-								//
-								//
-								Network.findOne({ _id: notificationData.network._id }).populate('profiles').exec(function(errNetwork, networkData){
-									
-									if(!errNetwork && networkData){
-										
-										networkData.accept = true;
-										networkData.save(function(){
-											notificationData.clicked = true;
-											notificationData.status  = true;
-											notificationData.save(function(err, n){
-												Notification.findOne({ _id: id }).populate('network').exec(function(err,notificationData){
-													
-													
-													var ajeno = profile_ajeno(profileData._id, networkData.profiles);
-													
-													Online.findOne({
-														profiles: ajeno.profile._id
-													}).sort({created_at: -1}).exec(function(errOnline, onlineData){
-														
-														console.log(onlineData)
-														Notification
-														.findOne({ _id: notificationData._id })
-														.select('-__v -updatedAt')
-														.populate('profile')
-														.populate('profile_emisor')
-														.populate('profile_mensaje')
-														.populate('network')
-														.exec(function(err,notificationData){
-															callback(true, onlineData, networkData, notificationData);	
-														});
-													});
-												});
-											});
-										});
-									}else{
-										
-										
-										callback(false, {}, {}, {});
-									}
-								});
-							}
-						});
-					}else{
-						
-						callback(false, {}, {}, {});
-					}
-				}else{
-					
-					callback(false, {}, {}, {});
-				}
-			});
-		}else{
-			
-			callback(false, {}, {}, {});
-		}
-	});
-};
-/**
- * notification_accept2C, Guardar Imagenes.
- * @param {Object} file, Archivo.
- * @param {String} new_path, Direccion donde guardar la imagen.
- * @param {function} callback, 
- * @return {Object} Acceso a el Objeto de la Libreria de Apple Push Notification ya configurada.
- *
- */
-
 router.notification_accept2C = function(data, success, fail){
  	var id = data.id;
  	var guid = data.guid;
@@ -1116,7 +999,6 @@ router.notification_accept2C = function(data, success, fail){
  						}, function(st){
  							fail(4+"!"+st);
  						});
-
  					}else if(notificationData.tipo == 3){
 
 
@@ -1145,11 +1027,11 @@ router.notification_accept2C = function(data, success, fail){
 });
 };
 /**
- * accept_notification, Guardar Imagenes.
- * @param {Object} file, Archivo.
- * @param {String} new_path, Direccion donde guardar la imagen.
- * @param {function} callback, 
- * @return {Object} Acceso a el Objeto de la Libreria de Apple Push Notification ya configurada.
+ * deviceajeno, Buscando Dispositivos Ajenos en una conversación.  (**)
+ * @param {String} conversation, ID de Conversación.
+ * @param {Socket} socket, Socket de Usuario.
+ * @param {function} callback.
+ * @return {Bool,[Token]}
  *
  */
 router.deviceajeno = function(conversation, socket, callback){
@@ -1184,11 +1066,13 @@ router.deviceajeno = function(conversation, socket, callback){
 	});
 };
 /**
- * accept_notification, Guardar Imagenes.
- * @param {Object} file, Archivo.
- * @param {String} new_path, Direccion donde guardar la imagen.
- * @param {function} callback, 
- * @return {Object} Acceso a el Objeto de la Libreria de Apple Push Notification ya configurada.
+ * apple_push. (**)
+ * @param {Object} type, Tipo de Push.
+ * @param {NotificationID|ConversationID} id, ID de el Tipo de PUSH.
+ * @param {Socket} socket, Socket de Usuario.
+ * @param {function} success.
+ * @param {function} fail.
+ * @return {ProfileObject}
  *
  */
 router.apple_push = function(type, id, socket, success, fail){
@@ -1234,7 +1118,7 @@ router.apple_push = function(type, id, socket, success, fail){
 	}	
 };
 /**
- * accept_notification, Guardar Imagenes.
+ * mensaje_create. (**)
  * @param {Object} file, Archivo.
  * @param {String} new_path, Direccion donde guardar la imagen.
  * @param {function} callback, 
@@ -1281,7 +1165,7 @@ router.mensaje_create = function(data, nombre_emisor, nombre_mensaje){
 	return { mensaje: message, class: clase };
 };
 /**
- * accept_notification, Guardar Imagenes.
+ * setActive. (**)
  * @param {Object} file, Archivo.
  * @param {String} new_path, Direccion donde guardar la imagen.
  * @param {function} callback, 
@@ -1316,7 +1200,7 @@ function setActive(conversation, profileID, success, fail){
 	});
 };
 /**
- * accept_notification, Guardar Imagenes.
+ * setReadMessage. (**)
  * @param {Object} file, Archivo.
  * @param {String} new_path, Direccion donde guardar la imagen.
  * @param {function} callback, 
@@ -1346,6 +1230,9 @@ router.sendPushtoAll = Generalfunc.sendPushtoAll;
 router.sendPushOne   = Generalfunc.sendPushOne;
 router.profile_equal = profile_equal
 module.exports = router;
+/**
+ * profile_ajeno, Ya esta escrita en Generalfunc, puede ser remplazada solo tienes que anexar la variable "number".
+ */
 function profile_ajeno(profileID, profiles){
 	var first  = profiles[0];
 	var second = profiles[1];
@@ -1361,6 +1248,9 @@ function profile_ajeno(profileID, profiles){
 	}
 	return { number: number, profile: element };
 }
+/**
+ * profile_equal, Ya esta escrita en Generalfunc, puede ser remplazada solo tienes que anexar la variable "number".
+ */
 function profile_equal(profileID, profiles){
 	var first  = profiles[0];
 	var second = profiles[1];
@@ -1376,6 +1266,12 @@ function profile_equal(profileID, profiles){
 	}
 	return { number: number, profile: element };
 }
+/**
+ * decodeBase64Image, Es el envio de Imagenes, toma la imagen y hace el bitmap de esta.
+ * @param {Object} image, Archivo.
+ * @param {String} path, Direccion.
+ *
+ */
 function decodeBase64Image(image, path) {
 	var fs = require("fs");
 	var bitmap = new Buffer(image, 'base64');
