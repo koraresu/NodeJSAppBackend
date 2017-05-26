@@ -30,7 +30,14 @@ var City         = model.city;
 var State        = model.state;
 var Country      = model.country;
 
-
+/**
+ * toProfile, Obtener el Profile desde un Token.
+ *
+ * @param {String} guid, Token que envia el App.
+ * @param {function} callback.
+ * @callback {function}
+ *
+ */
 exports.toProfile = function(guid, callback){
 	Token.findOne({ generated_id: guid}).exec(function(errToken, token){
 		if(!errToken && token){
@@ -57,7 +64,15 @@ exports.toProfile = function(guid, callback){
 		}
 	});
 }
-exports.exist = function(guid, callback){
+/**
+ * exist, Revisar si el Token Existe.
+ *
+ * @param {String} guid, Token que envia el App.
+ * @param {function} callback.
+ * @callback {function}
+ *
+ */
+ function exist(guid, callback){
 	Token.findOne({ generated_id: guid}, function(errToken, token){
 		if(!errToken && token){
 			callback(true, token);
@@ -66,13 +81,23 @@ exports.exist = function(guid, callback){
 		}
 		
 	});
-}
+};
+/**
+ * exist2Callback, Revisar si el Token Existe.
+ *
+ * @param {String} guid, Token que envia el App.
+ * @param {function} callback.
+ * @callback {function}
+ *
+ */
 exports.exist2Callback = function(guid, success, fail){
-	Token.findOne({ generated_id: guid}, function(errToken, token){
-		if(!errToken && token){
-			success( token );
+	exist(guid, function(status, token){
+		if(status){
+			success(token);
 		}else{
 			fail();
 		}
 	});
 }
+
+exports.exist = exist;
