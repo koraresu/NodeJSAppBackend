@@ -1,7 +1,7 @@
 /**
- * Test File is a file for testing documenation!
+ * Helpers del Apple Push Notification.
  *
- * @module JSDocTesting
+ * @module Helpers
  */
 var mongoose    = require('mongoose');
 var async       = require('async');

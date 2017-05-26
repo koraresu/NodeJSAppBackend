@@ -1,7 +1,7 @@
 /**
- * Test File is a file for testing documenation!
+ * Helpers de Push. Algunas de estas funciones fueron movidas a APNfunc o a InterfazPushFunc.
  *
- * @module JSDocTesting
+ * @module Helpers
  */
 var mongoose    = require('mongoose');
 var path = require('path');

@@ -1,10 +1,19 @@
 /**
- * Test File is a file for testing documenation!
+ * Interfaz para los Push.
  *
- * @module JSDocTesting
+ * @module Helpers
  */
  var mongoose    = require('mongoose');
-
+/**
+ * prepare, Prepara la Interfaz, para poder hacer los PUSH.
+ *
+ * @param {String} profile_id, ID de Perfil.
+ * @param {String} message_id, ID de Mensaje.
+ * @param {function} success, Callback todo bien.
+ * @param {function} fail, Callback Error.
+ * @callback {success|fail}
+ *
+ */
 function prepare(profile_id, message_id, success, fail){
 	if(mongoose.Types.ObjectId.isValid(profile_id)){
 		profile_id = mongoose.Types.ObjectId( profile_id );

@@ -1,7 +1,7 @@
 /**
- * Test File is a file for testing documenation!
+ * Helpers de las Skills.
  *
- * @module JSDocTesting
+ * @module Helpers
  */
 var mongoose    = require('mongoose');
 var path = require('path');
@@ -144,8 +144,7 @@ function ExistsOrCreate(search, insert, callback){
 			});
 		}
 	});
-} 
-var ExistsOrCreate = ExistsOrCreate
+}
 var edit = function(profile_id, from, to, callback){
 	Profile.findOne({ _id: profile_id }, function(errProfile, profileData){
 		ExistsOrCreate({name: from},{ name: from },function(errFromSkill, skillFromData){

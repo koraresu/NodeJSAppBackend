@@ -1,7 +1,7 @@
 /**
- * Test File is a file for testing documenation!
+ * Helpers de las Formatos.
  *
- * @module JSDocTesting
+ * @module Helpers
  */
 var express = require('express');
 

@@ -1,7 +1,7 @@
 /**
- * Test File is a file for testing documenation!
+ * Helpers de las Experience del Perfil.
  *
- * @module JSDocTesting
+ * @module Helpers
  */
 var mongoose    = require('mongoose');
 var path = require('path');

@@ -1,7 +1,7 @@
 /**
- * Test File is a file for testing documenation!
+ * Helpers de Conexiones de Perfiles.
  *
- * @module JSDocTesting
+ * @module Helpers
  */
 var mongoose    = require('mongoose');
 var path = require('path');
@@ -35,8 +35,26 @@ var Country      = model.country;
 var Tokenfunc        = require('./tokenfunc');
 var Notificationfunc = require('./notificationfunc');
 
+
+/**
+ * addReview(***)
+ *
+ */
 function addReview(profile_id_a, public_id, callback){}
+/**
+ * addNetwork(***)
+ *
+ */
 function addNetwork(profile_id_a, public_id, callback){}
+/**
+ * connectCheck, Buscamos sobre una query, en la coleccion de amigos.
+ *
+ * @param {String} find, query a buscar en la colección de Amigos.
+ * @param {function} success, Callback todo bien.
+ * @param {function} fail, Callback Error.
+ * @callback {success|fail}
+ *
+ */
 function connectCheck(find, success, fail){
 	Network.findOne(find).exec(function(err, networkData){
 		Notification.find({
@@ -50,6 +68,16 @@ function connectCheck(find, success, fail){
 		});
 	});
 }
+/**
+ * message, Crear un Mensaje.
+ *
+ * @param {Object} profileData, Data de Perfil.
+ * @param {ObjectId} conv, ID de Conversacion.
+ * @param {String} text, texto para crear Mensaje.
+ * @param {function} callback.
+ * @callback {Bool,MessageObject}
+ *
+ */
 function message(profileData, conv, text, callback){
 	Conversation.findOne({ _id: conv }).exec(function(errConversation, conversationData){
 		if(!errConversation && conversationData){
@@ -71,6 +99,15 @@ function message(profileData, conv, text, callback){
 		}
 	});
 }
+/**
+ * otherProfile, Dividir Perfiles de una Arreglo.(***) Esto ya lo tiene Generalfunc.
+ *
+ * @param {Object} profiles, Arreglo de Perfiles.
+ * @param {ObjectId} profile_id, Perfil a buscar dentro del Arreglo.
+ * @param {function} cb, Callback.
+ * @callback {function}
+ *
+ */
 function otherProfile(profiles, profile_id,cb){
 	var a = "";
 	profiles.forEach(function(item, index){
@@ -84,7 +121,16 @@ function otherProfile(profiles, profile_id,cb){
 		}
 	})
 }
-exports.otherProfile = otherProfile
+
+/**
+ * checkconversation, Obtener Conversacion entre dos personas, si no existe crearla.
+ *
+ * @param {Object} profile_a, Primer Perfil.
+ * @param {ObjectId} profile_b, Segundo Perfil.
+ * @param {function} callback.
+ * @callback {function}
+ *
+ */
 function checkconversation(profile_a, profile_b, callback){
 
 	var generated_id_a = mongoose.Types.ObjectId( profile_a );
@@ -115,6 +161,14 @@ function checkconversation(profile_a, profile_b, callback){
 		}
 	});
 }
+/**
+ * PublicId, Obtener el Perfil buscando por su public_id
+ *
+ * @param {ObjectId} public_id, Public_id del Perfil.
+ * @param {function} callback.
+ * @callback {function}
+ *
+ */
 function PublicId(public_id, callback){
 	
 	
@@ -131,6 +185,14 @@ function PublicId(public_id, callback){
 		}
 	});
 }
+/**
+ * getListFriends, Obtener la lista de Amigos de cierto Perfil.(***) La funcion de abajo es la que se usa.
+ *
+ * @param {ObjectId} profile_id, Perfil a buscar.
+ * @param {function} callback.
+ * @callback {function}
+ *
+ */
 function getListFriends(profile_id,callback){
 	if(typeof profile_id == "object"){
 		var profile_id = mongoose.Types.ObjectId(profile_id);	
@@ -160,6 +222,14 @@ function getListFriends(profile_id,callback){
 		
 	});
 }
+/**
+ * getListFriends, Obtener la lista de Amigos de cierto Perfil.
+ *
+ * @param {ObjectId} profile_id, Perfil a buscar.
+ * @param {function} callback.
+ * @callback {function}
+ *
+ */
 function getFriends(profile_id,callback){
 	if(typeof profile_id == "object"){
 		var profile_id = mongoose.Types.ObjectId(profile_id);	
@@ -193,12 +263,24 @@ function getFriends(profile_id,callback){
 		
 	});
 }
+/**
+ * getNoMyID (***)
+ *
+ */
 function getNoMyID(profilesId, profile_id){
 	var a = profilesId.filter(function(o){
 		return o.toString() != profile_id.toString()
 	});
 	return a;
 }
+/**
+ * isNeightbor, Revisar si el "profile_id" y "another_id" son vecinos.
+ * @param {ProfileObject} profile_id, Perfil a buscar.
+ * @param {ProfileObject} another_id, Perfil a Encontrar.
+ * @param {function} callback.
+ * @callback {type} 0 = No Amigo, No Vecino | 2 = No Amigo, Vecino | 1 = Amigo
+ *
+ */
 function isNeightbor(profile_id, another_id, callback){
 	var lvl = 0;
 
@@ -228,6 +310,14 @@ function isNeightbor(profile_id, another_id, callback){
 		}
 	});
 }
+/**
+ * isFriend, Revisar si el "profile_id" y "another_id" son amigos.
+ * @param {ProfileObject} profile_id, Perfil a buscar.
+ * @param {ProfileObject} another_id, Perfil a Encontrar.
+ * @param {function} callback.
+ * @callback {Bool}
+ *
+ */
 function isFriend(profile_id, another_id, callback){
 	var d = {
 		"profiles": {
@@ -248,6 +338,14 @@ function isFriend(profile_id, another_id, callback){
 		}
 	});	
 }
+/**
+ * typeFriend, Revisar si una solicitud es enviada solamente, o aceptada.
+ * @param {ProfileObject} profile_id, Perfil a buscar.
+ * @param {ProfileObject} another_id, Perfil a Encontrar.
+ * @param {function} callback.
+ * @callback {Numeric} 2 = Aceptado | 1 = Enviada | 0 = No Solicitud
+ *
+ */
 function typeFriend(profile_id, another_id, callback){
 	var d = {
 		"profiles": {
@@ -268,6 +366,14 @@ function typeFriend(profile_id, another_id, callback){
 		}
 	});	
 }
+/**
+ * type, Revisar las conexiones que existen entre estos usuarios. usamos isNeightbor de mas arriba para hacer el proceso.
+ * @param {ProfileObject} profile_id, Perfil a buscar.
+ * @param {ProfileObject} another_id, Perfil a Encontrar.
+ * @param {function} callback.
+ * @callback {Numeric}
+ *
+ */
 function type(profileID, anotherID, callback){
 	getFriends(anotherID._id, function(errNetwork, friends, friendsId){
 		
@@ -293,9 +399,21 @@ function type(profileID, anotherID, callback){
 		}
 	});
 }
+/**
+ * getOne2Callback(***)
+ *
+ */
 function getOne2Callback(search, success, fail){
 
 }
+/**
+ * accept, Aceptar solicitudes de amistad.
+ * @param {Query} search, busqueda hecha en Network, por lo general se busca el arreglo de perfiles.
+ * @param {function} success
+ * @param {function} fail
+ * @callback {success|fail}
+ *
+ */
 function accept(search, success, fail){
 	Network.findOne(search).exec(function(errNetwork, networkData){
 		if(!errNetwork && networkData){
@@ -318,6 +436,14 @@ function accept(search, success, fail){
 		}
 	});
 }
+/**
+ * accept, Negar una solicitudes de amistad.
+ * @param {Query} search, busqueda hecha en Network, por lo general se busca el arreglo de perfiles.
+ * @param {function} success
+ * @param {function} fail
+ * @callback {success|fail}
+ *
+ */
 function ignore(search, success, fail){
 	Network.findOne(search).exec(function(errNetwork, networkData){
 		if(!errNetwork && networkData){
@@ -340,6 +466,14 @@ function ignore(search, success, fail){
 		}
 	});
 }
+/**
+ * recomendar, Recomendar a alguien, creamos las notificaciones necesarias.
+ * @param {Object} data, Datos de la recomendacion.
+ * @param {function} success
+ * @param {function} fail
+ * @callback {success|fail}
+ *
+ */
 function recomendar(data, success, fail){
 	var guid          = data.guid;
 	var public_id     = data.public_id;
@@ -431,13 +565,28 @@ function recomendar(data, success, fail){
 		}
 	});
 }
+/**
+ * create_notificacion_recomendacion, Crea la Notificaciones para la recomendacion
+ * @param {Object} data, Datos de la Notificacion.
+ * @param {function} callback.
+ * @param {function} io, Socket. (***)
+ * @callback {success|fail}
+ *
+ */
 function create_notificacion_recomendacion(data, callback, io){
 	Notificationfunc.add(data, function(status, notificationData){
-		
-		
 		callback(status, notificationData);
 	}, io);
 }
+/**
+ * new_friend, Crea la Notificaciones para la recomendacion
+ * @param {Object} profileData, Datos del Perfil 1 a Conectar.
+ * @param {Object} profileAnotherData, Datos del Perfil 2 a Conectar.
+ * @param {function} success
+ * @param {function} fail
+ * @callback {success|fail}
+ *
+ */
 function new_friend(profileData, profileAnotherData, success, fail){
 	Network.findOne({
 		profiles: {
@@ -467,9 +616,8 @@ function new_friend(profileData, profileAnotherData, success, fail){
 				});
 		}
 	});
-	
 }
-
+exports.otherProfile                      = otherProfile;
 exports.new_friend                        = new_friend;
 exports.create_notificacion_recomendacion = create_notificacion_recomendacion;
 exports.recomendar                        = recomendar;
@@ -487,9 +635,19 @@ exports.checkconversation                 = checkconversation;
 exports.message                           = message;
 exports.addReview                         = addReview;
 exports.addNetwork                        = addNetwork;
+
+/**
+ * trimUnderscores, Eliminar espacios.
+ * @param {String} string, Texto a procesar.
+ * @return {String}
+ *
+ */
 function trimUnderscores(string) {
     return string.split(' ').join('');
 }
+/**
+ * cleanArray, Esta funcion ya esta siendo usada de Generalfunc.(***)
+ */
 function cleanArray(actual) {
 	var newArray = new Array();
 	for (var i = 0; i < actual.length; i++) {
