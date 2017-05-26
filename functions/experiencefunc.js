@@ -268,10 +268,10 @@ function get(profile, callback){
 	});
 };
 /**
- * An amazing test function
+ * experienceJobGet, Buscador de Ocupación o Puesto.
  *
- * @param {Object} anotherParameter an object you'd like to see as a string
- * @returns {string}
+ * @param {String} name, Texto a buscar.
+ * @callback {function} Callback.
  *
  */
 exports.experienceJobGet = function(name, callback){
@@ -302,10 +302,10 @@ exports.experienceJobGet = function(name, callback){
 	});
 };
 /**
- * An amazing test function
+ * experienceSpecialityGet, Buscador de Especialidad
  *
- * @param {Object} anotherParameter an object you'd like to see as a string
- * @returns {string}
+ * @param {String} name, Texto a buscar.
+ * @callback {function} Callback.
  *
  */
 exports.experienceSpecialityGet = function(name, callback){
@@ -335,10 +335,10 @@ exports.experienceSpecialityGet = function(name, callback){
 	});	
 };
 /**
- * An amazing test function
+ * companyGet, Buscador de Compañias
  *
- * @param {Object} anotherParameter an object you'd like to see as a string
- * @returns {string}
+ * @param {String} name, Texto a buscar.
+ * @callback {function} Callback.
  *
  */
 exports.companyGet = function(name, callback){
@@ -368,10 +368,10 @@ exports.companyGet = function(name, callback){
 	});
 };
 /**
- * An amazing test function
+ * sectorGet, Buscador de Sectores.
  *
- * @param {Object} anotherParameter an object you'd like to see as a string
- * @returns {string}
+ * @param {String} name, Texto a buscar.
+ * @callback {function} Callback.
  *
  */
 exports.sectorGet = function(name, callback){
@@ -401,20 +401,20 @@ exports.sectorGet = function(name, callback){
 	});
 };
 /**
- * An amazing test function
+ * formatName, Sirve para formatear.(***)
  *
- * @param {Object} anotherParameter an object you'd like to see as a string
- * @returns {string}
+ * @param {String} text, Texto a formatear.
+ * @return {String}
  *
  */
 function formatName(text){
 	return text;
 };
 /**
- * An amazing test function
+ * formatCaseInsensitive.(***)
  *
- * @param {Object} anotherParameter an object you'd like to see as a string
- * @returns {string}
+ * @param {String} text, Texto a formatear.
+ * @return {String}
  *
  */
 function formatCaseInsensitive(val){
