@@ -38,16 +38,31 @@ var City         = model.city;
 var Country      = model.country;
 
 var Generalfunc = require('./generalfunc');
-
+/**
+ * prepare, Usa la misma funcion que se usa en INterfazpushfunc.
+ *
+ */
 function prepare(profile_id, message_id, success, fail){
 	APNfunc.prepare(profile_id, message_id, success, fail);
 }
+/**
+ * add, Usa la misma funcion que se usa en APNfunc.
+ *
+ */
 function add(d, success, fail){
 	APNfunc.add(d, success, fail);
 }
+/**
+ * addOrGet, Usa la misma funcion que se usa en APNfunc.
+ *
+ */
 function addOrGet(type, id, profile, success, fail){
 	APNfunc.addOrGet(type, id, profile, success, fail);
 }
+/**
+ * createPush, es usada en fucniones que al final no se usan. (**)
+ *
+ */
 function createPush(pushEvent, token,dItem, success, fail){
 	var badge = 0;
 	var d = {
@@ -144,6 +159,16 @@ function createPush(pushEvent, token,dItem, success, fail){
 		}
 	});
 }
+/**
+ * eventsetReaded, Cambiar un Push Event a Leido.
+ *
+ * @param {MessageObject} data, datos del Mensaje.
+ * @param {function} success, Callback todo perfecto.
+ * @param {function} fail, Callback Error.
+ *
+ * @callback {success|fail}.
+ *
+ */
 function eventsetReaded(data, success, fail){
 	if(data.type == 0){
 		var conversation      = data.conversation;
@@ -177,93 +202,8 @@ function eventsetReaded(data, success, fail){
 		success();
 	}
 }
-function send(type, profile_id, dItem, success, fail){
-	var message_id = dItem._id;
-
-	var device = [];
-	prepare(profile_id, message_id, function(profile_id,message_id){
-		addOrGet(type, message_id, profile_id, function(pushEventData){
-
-			get_devices(profile_id, function(item, cb){
-							
-				APNfunc.tokenItem(item.token, function(token){
-					cb(null, token);
-				});
-
-			}, function(err, results){
-				results = Generalfunc.cleanArray( results );
-				sendMultiple(function(data){
-					success(null, data );
-				},results, mensaje.mensaje, dItem);
-			});
-		}, function(err){
-			fail(1);
-		});
-	}, function(profile_id,message_id){
-		fail(0);
-	});
-}
-function getNotProfile(id, socket, success, fail){
-	Notification.findOne({ _id: mongoose.Types.ObjectId(id) })
-	.populate('profile')
-	.populate('profile_emisor')
-	.populate('network')
-	.exec(function(err, notificationData){
-		
-		if(!err && notificationData){
-			Online.findOne({ socket: socket.id }).populate('profiles').exec(function(errOnline, onlineData){
-				if(!errOnline && onlineData){
-					success( notificationData.profile_emisor );
-				}else{
-					fail(1);
-				}
-			});
-		}else{
-			fail(0);
-		}
-	});
-}
-function getConvProfile(id, socket,success, fail){
-	
-	
-
-	if(mongoose.Types.ObjectId.isValid(id)){
-		id = mongoose.Types.ObjectId(id);
-		Message.findOne({ _id: id})
-		.populate('profile_id')
-		.populate('conversation')
-		.exec(function(errMessage, messageData){
-
-		if(!errMessage && messageData){
-			Conversation.findOne({ _id: messageData.conversation._id }).populate('profiles').exec(function(errConversation, conversationData){
-				if(!errConversation && conversationData){
-					Online.findOne({ socket: socket.id }).populate('profiles').exec(function(errOnline, onlineData){
-						if(!errOnline && onlineData){
-							var profiles = conversationData.profiles;
-							var profile = onlineData.profiles;
-							var ajeno = Generalfunc.profile_ajeno(profile._id, profiles);
-							success(ajeno);
-						}else{
-							fail(3);
-						}
-					});
-				}else{
-					fail(2);
-				}
-			});
-		}else{
-			fail(1);
-		}				
-	});	
-	}else{
-		fail(0);
-	}
-}
 exports.eventsetReaded = eventsetReaded;
 exports.prepare    = prepare;
 exports.add        = add;
 exports.addOrGet   = addOrGet;
 exports.createPush = createPush;
-exports.send       = send;
-exports.getNotProfile = getNotProfile;
-exports.getConvProfile = getConvProfile;

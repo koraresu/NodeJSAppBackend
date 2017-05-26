@@ -10,16 +10,15 @@
  var _ = require('underscore');
  var _jade = require('jade');
  var fs = require('fs');
-
- var passwordHash = require('password-hash');
-
  var async = require("async");
 
+ var passwordHash = require('password-hash');
  var Generalfunc = require('./generalfunc');
  var Experiencefunc = require('./experiencefunc');
  var Networkfunc = require('./networkfunc');
 
  var model = require('../model');
+ var format = require('./format');
 
  var Profile     = model.profile;
  var User        = model.user;
@@ -42,8 +41,9 @@
  var City         = model.city;
  var State        = model.state;
  var Country      = model.country;
+ 
 
- var format = require('./format');
+
  function getTrabajo(profile_id, callback){
  	var data = [];
  	History.find({
