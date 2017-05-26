@@ -30,6 +30,16 @@ var City         = model.city;
 var State        = model.state;
 var Country      = model.country;
 
+/**
+ * generate_history, Procesar y Crear Noticias.
+ *
+ * @param {Integer} type, Tipo de Noticia a crear.
+ * @param {ProfileObject} profileData, Datos del Perfil.
+ * @param {String} data, Datos a guardar dependiendo del type.
+ * @param {function} cb, Callback.
+ * @callback {function}
+ *
+ */
 exports.generate_history = function(type, profileData, data, cb){
 	//
 	profile_id = data.profile;
@@ -152,7 +162,14 @@ exports.generate_history = function(type, profileData, data, cb){
 		cb(historyData);
 	});
 }
-
+/**
+ * insert, Crear Noticias.
+ *
+ * @param {String} data, Datos a guardar.
+ * @param {function} callback, Callback.
+ * @callback {function}
+ *
+ */
 exports.insert = function(data, callback){
 	History.findOne({}).sort('-id_numerico').exec(function(err, c){
 		if( c == null){
@@ -181,5 +198,4 @@ exports.insert = function(data, callback){
 		
 		
 	});
-	
 }
