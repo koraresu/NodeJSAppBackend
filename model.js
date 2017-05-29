@@ -3,16 +3,16 @@
  *
  * @module Model
  */
-var mongoose   = require('mongoose');
-
-mongoose.Promise = global.Promise;
-
-var Schema     = mongoose.Schema,
-    //db_lnk          = 'mongodb://matus:pbv3GM4iYUDeMUWxQD54wsLwhInar4ssEDN7o0a1EUXrQ@192.168.33.10:27017/hive',
-    db_lnk          = 'mongodb://localhost:27017/hive',
-    db              = mongoose.createConnection(db_lnk);
-
-
+var mongoose        = require('mongoose');
+mongoose.Promise    = global.Promise;
+var Schema          = mongoose.Schema;
+//var db_lnk        = 'mongodb://matus:pbv3GM4iYUDeMUWxQD54wsLwhInar4ssEDN7o0a1EUXrQ@192.168.33.10:27017/hive';
+var db_lnk          = 'mongodb://localhost:27017/hive';
+var db              = mongoose.createConnection(db_lnk);
+/**
+ * LogSchema, Creamos el Schema para guardar los movimientos en la Base de datos.
+ *
+ */
 var LogSchema = new Schema({
   table: String,
   action: String,
@@ -21,7 +21,6 @@ var LogSchema = new Schema({
   timestamps: true
 });
 var log = db.model( 'Log' , LogSchema );
-
 var logMiddleware = function(collection, action,doc, ca){
   var l = new log({
     table: collection,
@@ -32,7 +31,15 @@ var logMiddleware = function(collection, action,doc, ca){
     ca(err, logData);
   });
 }
-/*******************************************/
+/**
+ * HistorySchema, Creamos el Schema para guardar las Noticias.
+ * @param {Number}   id_numerico, Se creo para asignarselo a el App en Swift.
+ * @param {ObjectId} profile_id, ID del Perfil donde se Mostrara la Noticia.
+ * @param {ObjectId} de_id, ID del Perfil que crea la Noticia.
+ * @param {String}   action, Tipo de Noticia. 1 = Noticia Creada por Usuario | 3 = Cambio de Puesto | 4 = Trabajaron juntos | 5 = Busca Recomendación.
+ * @param {Mixed}    Contenido de la Noticia.
+ *
+ */
 var HistorySchema = new Schema({
   id_numerico: { type: Number },
   profile_id: { type: Schema.Types.ObjectId, ref: 'Profile' },
@@ -57,38 +64,68 @@ HistorySchema.post('update', function(doc, next){
     next();
   });
 });
-/*******************************************/
+/**
+ * profileSchema, Creamos el Schema para guardar las Noticias.
+ * @param {String}       first_name,   Nombre del Perfil.
+ * @param {String}       last_name,    Apellido del Perfil.
+ * @param {String}       profile_pic,  Imagen de Perfil
+ * @param {String}       profile_hive. (***)
+ * @param {String}       qrcode,       Nombre del Archivo del QrCode en el servidor.
+ * @param {Number}       status,       Estado del Perfil.
+ * @param {ObjectId}     user_id       ID del Usuario perteneciente a este Perfil.
+ * @param {Date}         birthday      Fecha de Cumpleaños del Perfil.
+ * @param {String}       facebookId    ID de Facebook.
+ * @param {String}       facebookToken token de Facebook.
+ * @param {Mixed}        facebookData  Datos que Facebook te entrega.
+ * @param {String}       lang          Lenguaje del Perfil (***)
+ * @param {String}       phone         Teléfono del Perfil.
+ * @param {[ObjectId]}   experiences   Id de Puesto/Empresa/Sector.
+ * @param {[ObjectId]}   skills        Habilidades del Perfil.
+ * @param {Mixed}        info          Información del Perfil. (***) Se penso para guardar datos extras.
+ * @param {Mixed}        public_id     Id Publica para referenciar al Usuario.
+ * @param {Array}        speciality    Arreglo, con datos de Especialidad. 
+ *         @param {ObjectId} id        Id de la Especialidad de este Perfil.
+ *         @param {String}   name      Nombre de la Especialidad.Se agrega el nombre para esas veces donde no puedes obtener la especialidad desde el ID.
+ * @param {String}       job           Arreglo, con datos de la Ocupación.
+ *         @param {ObjectId} id        Id de la Ocupación de este Perfil 
+ *         @param {String}   name      Nombre de la Ocupación.Se agrega el nombre para esas veces donde no puedes obtener la Ocupación desde el ID.
+ * @param {Number}       review_score  Calificación promedio de este Perfil.
+ * @param {Boolean}      block         Estado de Baneo del Perfil.
+ * @param {Array}        location      Arreglo, con datos del lugar del Perfil.
+ *         @param {ObjectId} city.     ID de la Ciudad del Perfil.
+ *
+ */
 var profileSchema = new Schema({
-  first_name: String,
-  last_name: String,
-  profile_pic: String,
-  profile_hive: String,
-  qrcode: { type: String },
-  status: { type: Number},
-  user_id: { type: Schema.Types.ObjectId, ref: 'User' },
-  birthday: { type: Date },
-  facebookId: { type: String},
-  facebookToken: { type: String },
-  facebookData: [{ type: Schema.Types.Mixed }],
-  lang: String,
-  phone: String,
-  experiences: [{ type: Schema.Types.ObjectId, ref: 'Experience' }],
-  skills: [{ type: Schema.Types.ObjectId, ref: 'Skill' }],
-  info: [{ type: Schema.Types.Mixed }],
-  public_id: { type: Schema.Types.Mixed },
-  speciality: {
-    id: { type: Schema.Types.ObjectId, ref: 'Speciality' },
-    name: String
-  },
-  job: {
-    id: { type: Schema.Types.ObjectId, ref: 'Job' },
-    name: String
-  },
-  review_score: 0,
-  block: { type: Boolean },
-  location:{
-    city: { type: Schema.Types.ObjectId, ref: 'City' }
-  }
+  first_name:     String,
+  last_name:      String,
+  profile_pic:    String,
+  profile_hive:   String,
+  qrcode:         String,
+  status:         Number,
+  user_id:        { type: Schema.Types.ObjectId, ref: 'User' },
+  birthday:       { type: Date },
+  facebookId:     { type: String},
+  facebookToken:  { type: String },
+  facebookData:   [{ type: Schema.Types.Mixed }],
+  lang:           String,
+  phone:          String,
+  experiences:    [{ type: Schema.Types.ObjectId, ref: 'Experience' }],
+  skills:         [{ type: Schema.Types.ObjectId, ref: 'Skill' }],
+  info:           [{ type: Schema.Types.Mixed }],
+  public_id:      { type: Schema.Types.Mixed },
+  speciality:     {
+                    id: { type: Schema.Types.ObjectId, ref: 'Speciality' },
+                    name: String
+                  },
+  job:            {
+                    id: { type: Schema.Types.ObjectId, ref: 'Job' },
+                    name: String
+                  },
+  review_score:   { type: Number, default: 0 },
+  block:          { type: Boolean },
+  location:       {
+                    city: { type: Schema.Types.ObjectId, ref: 'City' }
+                  }
 },{
   timestamps: true
 });
@@ -107,7 +144,13 @@ profileSchema.post('update', function(doc, next){
     next();
   });
 });
-/*******************************************/
+/**
+ * deviceSchema, Creamos el Schema para guardar los Dispositivos.
+ * @param {String}       token,      Token Generado por el Servidor de Apple(IOS).
+ * @param {String}       profile,    Perfil al cual esta asignado este Dispositivo.
+ * @param {Mixed}        active      Estado de este Dispositivo.
+ *
+ */
 var deviceSchema = new Schema({
   token:   String,
   profile: { type: Schema.Types.ObjectId, ref: 'Profile' },
@@ -129,7 +172,13 @@ deviceSchema.post('update', function(doc, next){
     next();
   });
 });
-/*******************************************/
+/**
+ * ForgotSchema, Creamos el Schema para guardar los Codigo que se Generan para cambiar contraseñas.
+ * @param {String}         generated_id,  Token Generado por el Servidor de Apple(IOS).
+ * @param {ObjectId}       user,          Perfil al cual esta asignado este Dispositivo.
+ * @param {Boolean}        used           Estado de este "Olvidar Contraseña".
+ *
+ */
 var ForgotSchema = new Schema({
   user: { type: Schema.Types.ObjectId, ref: 'User' },
   generated_id: { type: String},
@@ -155,8 +204,13 @@ ForgotSchema.post('update', function(doc, next){
     next();
   });
 });
-
-/*******************************************/
+/**
+ * locationSchema, Creamos el Schema para la Colección Temporal para los usuarios en el Area de GPS de la Aplicación.
+ * @param {String}         coordinates,   Coordenadas a Guadar.
+ * @param {ObjectId}       profile,       Perfil al cual esta asignado esta coordenada.
+ * @param {Boolean}        socket,        Conexion hecha por Socket.IO desde el Dispositivo.
+ *
+ */
 var locationSchema = new Schema({
   coordinates: {
     type: [Number],  // [<longitude>, <latitude>]
@@ -182,7 +236,12 @@ locationSchema.post('update', function(doc, next){
     next();
   });
 });
-/*******************************************/
+/**
+ * CompanyClaimSchema,   Creamos el Schema para la Colección de las peticiones a Reclamar Empresa.
+ * @param {ObjectId}       profile,       Perfil a la cual esta asignado este reclamo.
+ * @param {ObjectId}       company,       Empresa a la cual esta asignada este reclamo.
+ *
+ */
 var CompanyClaimSchema = new Schema({
   profile: { type: Schema.Types.ObjectId, ref: 'Profile' },
   company: { type: Schema.Types.ObjectId, ref: 'Company' }
@@ -204,7 +263,12 @@ CompanyClaimSchema.post('update', function(doc, next){
     next();
   });
 });
-/*******************************************/
+/**
+ * NetworkSchema,            Creamos el Schema para la Colección de las Conexiones entre Perfiles. "Amistad".
+ * @param {Boolean}          accepted,       Estado de esta Conexion. True = Aceptado | False = Rechazado o No Interactuado.
+ * @param {[ObjectId]}       profiles,       Arreglo, Perfiles pertenecientes a esta Conexion.
+ *
+ */
 var NetworkSchema = new Schema({
 	accepted: Boolean,
 	profiles: [{ type: Schema.Types.ObjectId, ref: 'Profile' }]
@@ -226,7 +290,12 @@ NetworkSchema.post('update', function(doc, next){
     next();
   });
 });
-/*******************************************/
+/**
+ * companyCreatorSchema,     Creamos el Schema para la Colección para saber quien es el Creador de Cierta Empresa. A corto plazo esta Colección puede desaparecer.
+ * @param {ObjectId}         company,       Empresa asignada.
+ * @param {ObjectId}         profile,       Perfil Asignado.
+ *
+ */
 var companyCreatorSchema = new Schema({
   company:{ type: Schema.Types.ObjectId, ref: 'Company' },
   profile: { type: Schema.Types.ObjectId, ref: 'Profile' }
