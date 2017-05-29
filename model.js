@@ -317,7 +317,24 @@ companyCreatorSchema.post('update', function(doc, next){
     next();
   });
 });
-/*******************************************/
+/**
+ * companySchema,            Creamos el Schema para la Colección de las Empresas.
+ * @param {Boolean}          name           Nombre de la Empresa
+ * @param {String}           images         Imagen de la Empresa (***) Se penso para insertarle un Logotipo
+ * @param {String}           description    Texto para Describir a la Empresa. Maximo de 200 Caracteres.
+ * @param {String}           website        URL de la pagina de la empresa.
+ * @param {String}           phone          Telefóno de la Empresa.
+ * @param {String}           type           Grupo de la Empresa. (***) Este Campo no se usó.
+ * @param {Array}            address        Dirección de la Empresa.
+ *         @param {String}   calle          Calle de la Empresa.
+ *         @param {String}   colonia        Colonia o Distrito.
+ *         @param {String}   ciudad         Ciudad donde esta la Empresa.
+ *         @param {String}   estado         Estado al que pertenece la Ciudad.
+ *         @param {String}   numero         Numero Interno o Externo.
+ *         @param {String}   postalc        Codigo Postal.
+ * @param {ObjectId}       profile_id       Perfil que reclamó esta Empresa.
+ *
+ */
 var companySchema = new Schema({
   name:  String,
   images: String,
@@ -354,9 +371,23 @@ companySchema.post('update', function(doc, next){
     next();
   });
 });
-/*******************************************/
+/**
+ * experienceSchema,            Creamos el Schema para la Colección de los Puestos para el Perfil.
+ * @param {Number}           type          Tipo de Experiencia. 0 = Independiente | 1 = Empresa
+ * @param {Array}            ocupation     Arreglo, Ocupación de el Perfil.
+ *         @param {ObjectId}   id            ID de la Ocupación.
+ *         @param {String}     name          Nombre de la Ocupación.
+ * @param {Array}            company       Arreglo, Empresa de el Perfil.
+ *         @param {ObjectId}   id            ID de la Empresa.
+ *         @param {String}   name            Nombre de la Empresa.
+ * @param {Array}           sector         Arreglo, Nombre de el Sector de la Empresa.
+ *         @param {ObjectId}   id            ID del Sector.
+ *         @param {String}   name            Nombre del Sector de la Empresa.
+ * @param {ObjectId}       profile_id      Perfil al que se le asigna esta "Experiencia".
+ *
+ */
 var experienceSchema = new Schema({
-  type: Number,  // 0 = Independiente | 1 = Empresa
+  type: Number,
   ocupation: {
     id: { type: Schema.Types.ObjectId, ref: 'jobs' },
     name: String
@@ -388,7 +419,12 @@ experienceSchema.post('update', function(doc, next){
     next();
   });
 });
-/*******************************************/
+/**
+ * OnlineSchema,            Creamos el Schema para la Colección de los Perfiles En linea.
+ * @param {String}         socket          ID del Socket.IO del dispositivo.
+ * @param {ObjectId}       profile_id      Perfil al que se le asigna esta "Experiencia".
+ *
+ */
 var OnlineSchema = new Schema({
   profiles: { type: Schema.Types.ObjectId, ref: 'Profile' },
   socket: { type: Schema.Types.Mixed }
@@ -410,11 +446,19 @@ OnlineSchema.post('update', function(doc, next){
     next();
   });
 });
-/*******************************************/
+/**
+ * ConversationSchema,            Creamos el Schema para la Colección de Conversaciones para el Chat.
+ * @param {[ObjectId]}     profiles       Perfiles Asignados a las Conversaciones.
+ * @param {[Number]}       prop_status    Status(Eliminado) de la Conversación para cada Perfil. 2 = Active | 1 = Archive | 0 = Deleted
+ * @param {[Boolean]}      readed         Status(Leido) de la Conversación para cada Perfil. true = leido || false = no leido
+ * @param {ObjectId}       message        Ultimo Mensaje enviado en esta Conversación.
+ * @param {Date}           order          La Fecha de el Ultimo Mensaje enviado, Esto sirve para ordenar las Conversaciones.
+ *
+ */
 var ConversationSchema = new Schema({
   profiles:    [ { type: Schema.Types.ObjectId, ref: 'Profile' } ],
-  prop_status: [{ type: Number }], // 2 = Active | 1 = Archive | 0 = Deleted
-  readed: [{type: Boolean}], // true = leido || false = no leido
+  prop_status: [{ type: Number }],
+  readed: [{type: Boolean}],
   message: { type: Schema.Types.ObjectId, ref: 'Message' },
   order: { type: Date }
 },{
@@ -435,7 +479,15 @@ ConversationSchema.post('update', function(doc, next){
     next();
   });
 });
-/*******************************************/
+/**
+ * MessageSchema,          Creamos el Schema para la Colección de Conversaciones para el Chat.
+ * @param {ObjectId}     conversation        ID de la conversacion a la que pertenece el mensaje.
+ * @param {ObjectId}       profile_id        ID de el Perfil que envio el mensaje.
+ * @param {[Boolean]}      type              Tipo de Mensaje. 0 = Texto | 1 = Imagen.
+ * @param {ObjectId}       message           Texto enviado en el mensaje.
+ * @param {Date}           status            Estado(Leido).
+ *
+ */
 var MessageSchema = new Schema({
   conversation: { type: Schema.Types.ObjectId, ref: 'Conversation' },
   profile_id: { type: Schema.Types.ObjectId, ref: 'Profile' },
@@ -460,7 +512,13 @@ MessageSchema.post('update', function(doc, next){
     next();
   });
 });
-/*******************************************/
+/**
+ * jobSchema,            Creamos el Schema para la Colección de los Puestos/Profesiones.
+ * @param {String}       name        ID de la conversacion a la que pertenece el mensaje.
+ * @param {Number}       type        Tipo de Trabajo. 0 = Profesion | 1 = Puesto.
+ * @param {ObjectId}     parent      Id del Sector al que pertenece este Puesto/Profesion.
+ *
+ */
 var jobSchema = new Schema({
   name: String,
   type: Number,   // Profesion = 0 || Puesto = 1
@@ -483,7 +541,12 @@ jobSchema.post('update', function(doc, next){
     next();
   });
 });
-/*******************************************/
+/**
+ * FeedbackSchema,       Creamos el Schema para la Colección de Comentarios de la Aplicación.
+ * @param {ObjectId}     profile_id        ID del Perfil que Envio el Comentario.
+ * @param {[Boolean]}    content           Comentario.
+ *
+ */
 var FeedbackSchema = new Schema({
 	profile_id: { type: Schema.Types.ObjectId, ref: 'Profile' },
 	content: { type: String }
@@ -505,7 +568,12 @@ FeedbackSchema.post('update', function(doc, next){
     next();
   });
 });
-/*******************************************/
+/**
+ * FeedbackSchema,       Creamos el Schema para la Colección de Comentarios de la Aplicación.
+ * @param {ObjectId}     profile_id        ID del Perfil que Envio el Comentario.
+ * @param {[Boolean]}    content           Comentario.
+ *
+ */
 var reviewSchema = new Schema({
 	title:      String,
 	content:    String,
@@ -530,7 +598,12 @@ reviewSchema.post('update', function(doc, next){
     next();
   });
 });
-/*******************************************/
+/**
+ * SearchSchema,       Creamos el Schema para Guardar las busquedas hechas por el Usuario.
+ * @param {ObjectId}     profile_id        ID del Perfil que Envio al que le guardas el texto.
+ * @param {String}       text              Texto Buscado.
+ *
+ */
 var SearchSchema = new Schema({
   profile_id: { type: Schema.Types.ObjectId, ref: 'Profile' },
   text: { type: String }
@@ -552,15 +625,17 @@ SearchSchema.post('update', function(doc, next){
     next();
   });
 });
-/*******************************************/
+/**
+ * sectorSchema,       Creamos el Schema para la Colección de los Sectores de los Puestos.
+ * @param {String}       name              Nombre de el Sector.
+ * @param {String}       description       Descripción del Sector. (***) Se penso para describir el Sector.
+ * @param {String}       industry          Nombre para Agrupar los Sectores (***) Se penso para agruparlos. (Medicina|Ingenieria|Agricultura)
+ *
+ */
 var sectorSchema = new Schema({
   name:  String,
-  images: String,
   description: String,
-  website: String,
-  industry: String,
-  type: String,
-  address: String
+  industry: String
 },{
   timestamps: true
 });
@@ -579,9 +654,13 @@ sectorSchema.post('update', function(doc, next){
     next();
   });
 });
-/*******************************************/
+/**
+ * skillsSchema,       Creamos el Schema para la Colección Habilidades.
+ * @param {String}       name              Nombre de la Habilidad.
+ *
+ */
 var skillsSchema = new Schema({
-  name:   { type: String },
+  name:   { type: String }
 },{
   timestamps: true
 });
@@ -600,7 +679,12 @@ skillsSchema.post('update', function(doc, next){
     next();
   });
 });
-/*******************************************/
+/**
+ * specialitySchema,       Creamos el Schema para la Colección Especialidades.
+ * @param {String}       name              Nombre de la Especialidad.
+ * @param {ObjectId}     parent            Profesion de la Especialización.
+ *
+ */
 var specialitySchema = new Schema({
   name: String,
   parent: { type: Schema.Types.ObjectId, ref: 'Job' }
@@ -622,7 +706,12 @@ specialitySchema.post('update', function(doc, next){
     next();
   });
 });
-/*******************************************/
+/**
+ * tokenSchema,       Creamos el Schema para la Colección que guarda los token, para los permisos.
+ * @param {String}       generated_id      Hash creado para el App. Se usa en la mayoria de las peticiones.
+ * @param {ObjectId}     user_id           Usuario al que se le asignó este permiso.
+ *
+ */
 var tokenSchema = new Schema({  
   generated_id: { type: String},
   user_id: { type: Schema.Types.ObjectId, ref: 'User' }
@@ -644,12 +733,19 @@ tokenSchema.post('update', function(doc, next){
     next();
   });
 });
-/*******************************************/
+/**
+ * userSchema,       Creamos el Schema para la Colección que guarda los datos de usuario.
+ * @param {String}       email          Correo de la cuenta.
+ * @param {ObjectId}     password       Contraseña de la Cuenta. Usa sha1 para generar la contraseña.
+ * @param {ObjectId}     verified       Estado de la Cuenta. False = No Verificado | True = Verificado
+ * @param {ObjectId}     type           Tipo de Usuario, si fue creado por Email y Password o por Login de Facebook. 0 = Normal User || 1 = Facebook User
+ *
+ */
 var userSchema = new Schema({
   email: { type: String },
   password: { type: String },
   verified: { type: Boolean},
-  type: { type: Number }   // 0 = Normal User || 1 = Facebook User
+  type: { type: Number }   // 
 },{
   timestamps: true
 });
