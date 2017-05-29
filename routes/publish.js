@@ -44,13 +44,13 @@
 	var State        = model.state;
 	var Country      = model.country;
 
-// Write Comentario
-// Parameter
-//  	Token
-// 		Titulo
-// 		Contenido
-// Return (Formato 1)
-// 		Comentario
+/**
+ * Route "/write/comentario", Insertando Feedback.
+ * @param {String} guid, Token del Perfil(permiso).
+ * @param {String} content, Comentario a insertar.
+ * @return {FeedbackObject}
+ *
+ */
 router.post('/write/comentario', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 	var contenido = req.body.content;
@@ -90,15 +90,16 @@ router.post('/write/comentario', multipartMiddleware, function(req, res){
 		}
 	});
 });
-// Write NEWS
-// Parameter
-//  	Token
-// 		Titulo
-// 		Contenido
-// 		Gallery (Debe ser Arreglo)
-// Return (Formato 1)
-// 		News
-
+/**
+ * save_news, Guardar Noticia. Se usa en la ruta para crear Noticias.
+ * @param {ProfileObject} profileData, 
+ * @param {String} title, Titulo de la noticia. (***)
+ * @param {String} content, Texto a guardar en la noticia.
+ * @param {Array} gallery, arreglo con el nombre de las imagenes.
+ * @param {function} callback.
+ * @return {HistoryObject}
+ *
+ */
 function save_news(profileData, title, content, gallery,callback){
 	if(gallery == null){
 		gallery = [];
@@ -115,7 +116,18 @@ function save_news(profileData, title, content, gallery,callback){
 	}, function(err, historyData){
 		callback(historyData);
 	});
-}
+};
+/**
+ * update_news, Guardar Noticia. Se usa en la ruta para crear Noticias.
+ * @param {ObjectId} id. 
+ * @param {ProfileObject} profileData.
+ * @param {String} title, Titulo de la noticia. (***)
+ * @param {String} content, Texto a guardar en la noticia.
+ * @param {Array} gallery, arreglo con el nombre de las imagenes.
+ * @param {function} callback.
+ * @return {HistoryObject}
+ *
+ */
 function update_news(id, profileData, title, content, gallery,callback){
 	if(gallery == null){
 		gallery = [];
@@ -135,17 +147,21 @@ function update_news(id, profileData, title, content, gallery,callback){
 		});
 	});
 }
+/**
+ * Route "/write/news", Insertando una Noticia.
+ * @param {String} guid, Token del Perfil(permiso).
+ * @param {String} title, Titulo de la noticia. (***)
+ * @param {String} content, Comentario a insertar.
+ * @param {Array} gallery, arreglo con el nombre de las imagenes.
+ * @return {HistoryObject}
+ *
+ */
 router.post('/write/news', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 	var titulo    = req.body.title;
 	var contenido = req.body.content;
 	var gallery   = req.files.gallery;
 	var data = [];
-
-	//
-	//
-
-
 	Tokenfunc.exist(guid, function(status, tokenData){
 
 		if(status){
@@ -210,17 +226,20 @@ router.post('/write/news', multipartMiddleware, function(req, res){
 			});
 		}
 	});
-	
 });
+/**
+ * Route "/write/news", Insertando una Noticia sin Imagenes.
+ * @param {String} guid, Token del Perfil(permiso).
+ * @param {String} title, Titulo de la noticia. (***)
+ * @param {String} content, Comentario a insertar.
+ * @return {HistoryObject}
+ *
+ */
 router.post('/write/news/loi', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 	var titulo    = req.body.title;
 	var contenido = req.body.content;
 	var data = [];
-
-	//
-	//
-	
 
 	Tokenfunc.exist(guid, function(status, tokenData){
 
@@ -244,8 +263,15 @@ router.post('/write/news/loi', multipartMiddleware, function(req, res){
 			});
 		}
 	});
-	
 });
+/**
+ * Route "/write/news/image", Insertando imagenes en una noticia.
+ * @param {String} guid, Token del Perfil(permiso).
+ * @param {String} title, Titulo de la noticia. (***)
+ * @param {String} content, Comentario a insertar.
+ * @return {HistoryObject}
+ *
+ */
 router.post('/write/news/image', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 	var history   = req.body.id;
@@ -319,16 +345,16 @@ router.post('/write/news/image', multipartMiddleware, function(req, res){
 			res.json(response);
 		});
 	}
-
-	
 });
-// GET NEWS
-// Parameter
-//  	Token
-// 		Max (Opcional) Maximo 40
-// 		Page(Opcional)
-// Return (Formato 1)
-// 		News
+/**
+ * Route "/get/news", Obtener Noticias.
+ * @param {String} guid, Token del Perfil(permiso).
+ * @param {String} max, Maximo numero de noticias por pagina.
+ * @param {String} page, Pagina a consultar.
+ * @param {String} action, Tipo de Noticia a consultar.
+ * @return {[HistoryObject]}
+ *
+ */
 router.post('/get/news', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 	var max       = req.body.max;
@@ -336,12 +362,12 @@ router.post('/get/news', multipartMiddleware, function(req, res){
 	var action    = req.body.action;
 	var pages     = 0;
 
-	if(isNumber(max)){
+	if(Generalfunc.isNumber(max)){
 		max = max*1;
 	}else{
 		max = 20;
 	}
-	if(isNumber(page)){
+	if(Generalfunc.isNumber(page)){
 		pages = page*1;
 		pages = (pages*max);
 	}else{
@@ -404,6 +430,16 @@ router.post('/get/news', multipartMiddleware, function(req, res){
 		}
 	});
 });
+/**
+ * Route "/get/news", Obtener Noticias de un Perfil.
+ * @param {String} guid, Token del Perfil(permiso).
+ * @param {String} max, Maximo numero de noticias por pagina.
+ * @param {String} page, Pagina a consultar.
+ * @param {String} action, Tipo de Noticia a consultar.
+ * @param {String} public_id, ID del perfil.
+ * @return {[HistoryObject]}
+ *
+ */
 router.post('/get/news/friend', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 	var max       = req.body.max;
@@ -492,6 +528,13 @@ router.post('/get/news/friend', multipartMiddleware, function(req, res){
 		}
 	});
 });
+/**
+ * Route "//delete/news", Eliminar una noticia.
+ * @param {String} guid, Token del Perfil(permiso).
+ * @param {String} id, ID de la Noticia.
+ * @return {[HistoryObject]}
+ *
+ */
 router.post('/delete/news', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 	var id        = req.body.id;
@@ -533,6 +576,13 @@ router.post('/delete/news', multipartMiddleware, function(req, res){
 		}
 	});
 });
+/**
+ * Route "/get/news/show", Mostrar una Noticia.
+ * @param {String} guid, Token del Perfil(permiso).
+ * @param {String} id, ID de la Noticia.
+ * @return {HistoryObject}
+ *
+ */
 router.post('/get/news/show', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 	var news_id   = req.body.id;
@@ -558,6 +608,16 @@ router.post('/get/news/show', multipartMiddleware, function(req, res){
 		}
 	});
 });
+/**
+ * Route "/update/news", Actualizar una Noticia.
+ * @param {String} guid, Token del Perfil(permiso).
+ * @param {String} id, ID de la Noticia.
+ * @param {String} title,  Titulo nuevo de la noticia. (***)
+ * @param {String} content, Texto nuevo de la Noticia.
+ * @param {Array} gallery, Conjunto de Imagenes.
+ * @return {HistoryObject}
+ *
+ */
 router.post('/update/news', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 	var id        = req.body.id;
@@ -565,9 +625,6 @@ router.post('/update/news', multipartMiddleware, function(req, res){
 	var contenido = req.body.content;
 	var gallery   = req.files.gallery;
 	var data = [];
-
-	//
-	//
 	
 	if(mongoose.Types.ObjectId.isValid(id)){
 		id = mongoose.Types.ObjectId(id);
@@ -641,13 +698,16 @@ router.post('/update/news', multipartMiddleware, function(req, res){
 		}
 	});
 });
-// GET REVIEW
-// Parameter
-//  	Token
-// 		Max (Opcional) Maximo 40
-// 		Page(Opcional)
-// Return (Formato 1)
-// 		News
+
+/**
+ * Route "/get/review", Obtener las Reseñas.
+ * @param {String} guid, Token del Perfil(permiso).
+ * @param {String} public_id, Public Id de otro Perfil. Si quieres obtenerlas de otro perfil.(Opcional)
+ * @param {String} max, Maximo numero de noticias por pagina.(Opcional)
+ * @param {String} page, Pagina a consultar.(Opcional)
+ * @return {ReviewObject}
+ *
+ */
 router.post('/get/review', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 	var public_id = req.body.public_id;
@@ -655,8 +715,8 @@ router.post('/get/review', multipartMiddleware, function(req, res){
 	var page      = req.body.page;
 	var pages     = 1;
 
-	max = (isNumber(max))?max*1:20;
-	pages = (isNumber(page))?((page*1)*max):0;
+	max = (Generalfunc.isNumber(max))?max*1:20;
+	pages = (Generalfunc.isNumber(page))?((page*1)*max):0;
 
 	
 	Tokenfunc.exist(guid, function(status, tokenData){
@@ -779,6 +839,16 @@ router.post('/get/review', multipartMiddleware, function(req, res){
 		}
 	});
 });
+/**
+ * Route "/write/review", Escribir una Reseña.
+ * @param {String} guid, Token del Perfil(permiso).
+ * @param {String} public_id, Public Id de otro Perfil.
+ * @param {String} title, Titulo de la Reseña.
+ * @param {String} content, Contenido de la Reseña.
+ * @param {String} score, Calificación de la Reseña.
+ * @return {ReviewObject}
+ *
+ */
 router.post('/write/review', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 	var public_id = req.body.public_id;
@@ -791,11 +861,6 @@ router.post('/write/review', multipartMiddleware, function(req, res){
 		if(status){
 			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
 				Profilefunc.publicId(public_id, function(statusPublic, publicProfileData){
-
-					//
-					//
-					//
-
 					if(statusPublic){
 
 						var review = new Review({
@@ -835,7 +900,7 @@ router.post('/write/review', multipartMiddleware, function(req, res){
 
 											Review.find({ profile_id: publicProfileData._id }).exec(function(err, review){
 												review.forEach(function(item, index){
-													if(isNumber(item.rate)){
+													if(Generalfunc.isNumber(item.rate)){
 														suma+= item.rate;
 														count++;
 													}
@@ -883,7 +948,7 @@ router.post('/write/review', multipartMiddleware, function(req, res){
 										Review.find({ profile_id: publicProfileData._id }).exec(function(err, review){
 
 											async.map(review, function(item, callback){
-												if(isNumber(item.rate)){
+												if(Generalfunc.isNumber(item.rate)){
 													suma+= item.rate;
 													count++;
 												}
@@ -929,101 +994,107 @@ router.post('/write/review', multipartMiddleware, function(req, res){
 							res.json(response);
 						});
 					}
-					
-				})
-});
-}else{
-	Generalfunc.response(101, {}, function(response){
-		res.json(response);
-	});
-}
-});
-});
-	router.post('/count/review', multipartMiddleware, function(req, res){
-		var guid      = req.body.guid;
-		var public_id = req.body.public_id;
-
-		Tokenfunc.exist(guid, function(status, tokenData){
-			if(status){
-				Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
-					Profilefunc.publicId(public_id, function(statusPublic, publicProfileData){
-						if(statusPublic){
-
-							Review.find({ profile_id: profileData._id }).exec(function(err, reviewData){
-								res.json(reviewData);
-							})
-						}else{
-							var suma  = 0;
-							var count = 0;
-							var find = Review.find({ profile_id: profileData._id });
-							var data = [];
-							find.exec(function(err, reviewData){
-								reviewData.forEach(function(item, index){
-									suma+= item.rate;
-									count++;
-									data[data.length] = item.rate;
-									if((reviewData.length-1) == index){	
-										var prom = suma/count;
-										res.json({
-											avg: prom,
-											sum: suma,
-											count: count,
-											data: data
-										});
-									}
-
-								});
-							})
-						}
-					});
 				});
-			}else{
-				Generalfunc.response(101, { message: "No Token" }, function(response){
-					res.json(response);
-				});
-			}
-		});
+			});
+		}else{
+			Generalfunc.response(101, {}, function(response){
+				res.json(response);
+			});
+		}
 	});
-	router.post('/write/recomendar', multipartMiddleware, function(req, res){
-		var guid      = req.body.guid;
-		var busqueda  = req.body.busqueda;
-		var data = [];
+});
+/**
+ * Route "/count/review", Obtener los datos de las Reseñas de un Perfil.
+ * @param {String} guid, Token del Perfil(permiso).
+ * @param {String} public_id, Public Id de otro Perfil.
+ * @return {Object} { avg, sum, count, data }
+ *
+ */
+router.post('/count/review', multipartMiddleware, function(req, res){
+	var guid      = req.body.guid;
+	var public_id = req.body.public_id;
 
-		Tokenfunc.exist(guid, function(status, tokenData){
-			if(status){
-				Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
-					if(status){
-						Historyfunc.insert({
-							profile_id: profileData._id,
-							action: 4,
-							data: {
-								busqueda: busqueda
-							}
-						}, function(err, historyData){
-							var profile = format.littleProfile(profileData);
-							var d = format.news(historyData, profile, {});
-							Generalfunc.response(200,d, function(response){
-								res.json(response);
-							});
-						});
+	Tokenfunc.exist(guid, function(status, tokenData){
+		if(status){
+			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
+				Profilefunc.publicId(public_id, function(statusPublic, publicProfileData){
+					if(statusPublic){
+
+						Review.find({ profile_id: profileData._id }).exec(function(err, reviewData){
+							res.json(reviewData);
+						})
 					}else{
-						Generalfunc.response(113, {}, function(response){
-							res.json(response);
-						});
+						var suma  = 0;
+						var count = 0;
+						var find = Review.find({ profile_id: profileData._id });
+						var data = [];
+						find.exec(function(err, reviewData){
+							reviewData.forEach(function(item, index){
+								suma+= item.rate;
+								count++;
+								data[data.length] = item.rate;
+								if((reviewData.length-1) == index){	
+									var prom = suma/count;
+									res.json({
+										avg: prom,
+										sum: suma,
+										count: count,
+										data: data
+									});
+								}
+
+							});
+						})
 					}
 				});
-			}else{
-				Generalfunc.response(101, {}, function(response){
-					res.json(response);
-				});
-			}
-		});
+			});
+		}else{
+			Generalfunc.response(101, { message: "No Token" }, function(response){
+				res.json(response);
+			});
+		}
 	});
-	module.exports = router;
+});
+/**
+ * Route "/write/recomendar", Crear Recomendación.
+ * @param {String} guid, Token del Perfil(permiso).
+ * @param {String} busqueda, Busqueda para la que pides una recomendación.
+ * @return {HistoryObject}.
+ *
+ */
+router.post('/write/recomendar', multipartMiddleware, function(req, res){
+	var guid      = req.body.guid;
+	var busqueda  = req.body.busqueda;
+	var data = [];
 
-	function extension(mime){
-
-	}
-	function isNumber(n) {
-		return !isNaN(parseFloat(n)) && isFinite(n);
-	}
+	Tokenfunc.exist(guid, function(status, tokenData){
+		if(status){
+			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
+				if(status){
+					Historyfunc.insert({
+						profile_id: profileData._id,
+						action: 4,
+						data: {
+							busqueda: busqueda
+						}
+					}, function(err, historyData){
+						var profile = format.littleProfile(profileData);
+						var d = format.news(historyData, profile, {});
+						Generalfunc.response(200,d, function(response){
+							res.json(response);
+						});
+					});
+				}else{
+					Generalfunc.response(113, {}, function(response){
+						res.json(response);
+					});
+				}
+			});
+		}else{
+			Generalfunc.response(101, {}, function(response){
+				res.json(response);
+			});
+		}
+	});
+});
+module.exports = router;
