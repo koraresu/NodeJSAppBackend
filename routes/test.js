@@ -1,3 +1,8 @@
+/**
+ * Test sobre el sistema.
+ *
+ * @module Rutas.
+ */
 var express = require('express');
 
 var mongoose    = require('mongoose');
