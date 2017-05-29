@@ -43,6 +43,12 @@ var City         = model.city;
 var State        = model.state;
 var Country      = model.country;
 
+/**
+ * Route "/get", Obtener la lista de Notificaciones.
+ * @param {String} guid, Token del Perfil(permiso).
+ * @return {JSON}
+ *
+ */
 router.post('/get', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 
@@ -86,6 +92,14 @@ router.post('/get', multipartMiddleware, function(req, res){
 		}
 	});
 });
+/**
+ * Route "/accept", Aceptar una Notificación.
+ * @param {String} guid, Token del Perfil(permiso).
+ * @param {String} id, Id de la Notificación.
+ * @param {String} accept, acción de Notificaciones."true" o "false".
+ * @return {JSON}
+ *
+ */
 router.post('/accept', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 	var id        = req.body.id;
@@ -187,6 +201,13 @@ router.post('/accept', multipartMiddleware, function(req, res){
 		}
 	});
 });
+/**
+ * Route "/delete", Eliminar una Notificación.
+ * @param {String} guid, Token del Perfil(permiso).
+ * @param {String} notification, Id de la Notificación.
+ * @return {JSON}
+ *
+ */
 router.post('/delete', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 	var id        = req.body.notification;
