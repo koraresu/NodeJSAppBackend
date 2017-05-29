@@ -1,3 +1,8 @@
+/**
+ * Las rutas de las conexiones entre Usuarios. Network.
+ *
+ * @module Rutas
+ */
 var express = require('express');
 var router = express.Router();
 
@@ -34,26 +39,21 @@ var State        = model.state;
 var Country      = model.country;
 
 var format             = require('../functions/format');
-
-var Generalfunc      = require('../functions/generalfunc');
-var Profilefunc      = require('../functions/profilefunc');
-var Experiencefunc   = require('../functions/experiencefunc');
-var Tokenfunc        = require('../functions/tokenfunc');
-var Skillfunc        = require('../functions/skillfunc');
-var Networkfunc      = require('../functions/networkfunc');
-var Notificationfunc = require('../functions/notificationfunc');
-/* GET home page. */
-
-
-
-
-// CONNECT
-// Parameter:
-//  	Token
-//
-// Return (Formato 14)
-//		Network
-// 		Profile
+var Generalfunc        = require('../functions/generalfunc');
+var Profilefunc        = require('../functions/profilefunc');
+var Experiencefunc     = require('../functions/experiencefunc');
+var Tokenfunc          = require('../functions/tokenfunc');
+var Skillfunc          = require('../functions/skillfunc');
+var Networkfunc        = require('../functions/networkfunc');
+var Notificationfunc   = require('../functions/notificationfunc');
+/**
+ * Route "/connect", Hace la conexion entre el usuario que hizo la peticion, y otro usuario(public_id).
+ * @param {String} guid, Token del Perfil(permiso).
+ * @param {String} public_id, Es el public de otro usuario para hacer la conexion.
+ * @param {String} section, Esta se hizo para diferenciar entre las peticiones de "Agregar Colmena" y de "GPS"(estas se aceptaban por defecto).
+ * @return {Object}  { accepted, public_id}
+ *
+ */
 router.post('/connect', multipartMiddleware, function(req, res){
 	var guid       = req.body.guid;
 	var public_id  = req.body.public_id;
@@ -92,8 +92,6 @@ router.post('/connect', multipartMiddleware, function(req, res){
 								});
 								network.save(function(err, networkData){
 									Network.findOne({ _id: networkData._id}).populate('profiles').exec(function(errNetwork, networkData){
-											
-
 										Notificationfunc.add({
                   							tipo: 3,
                   							profile: profileAnotherData._id,
@@ -129,9 +127,14 @@ router.post('/connect', multipartMiddleware, function(req, res){
 		}
 		});
 	}
-
-
 });
+/**
+ * Route "/connect/all", Es igual, solo que hace el envio de solicitudes a muchos usuarios.
+ * @param {String} guid, Token del Perfil(permiso).
+ * @param {Array[String]} public_id, se reciben los public_id divididos por comas.
+ * @return {Object} resultado del envio de correo.
+ *
+ */
 router.post('/connect/all', multipartMiddleware, function(req, res){
 	var guid       = req.body.guid;
 	var public_id = req.body.public_id;
@@ -223,13 +226,14 @@ router.post('/connect/all', multipartMiddleware, function(req, res){
 			});
 		}
 	});
-
-
-
-
-
-
 });
+/**
+ * Route "/email/invite", Envia invitación por correos.
+ * @param {String} guid, Token del Perfil(permiso).
+ * @param {String} emails, recibo los correos divididos por comas.
+ * @return {Object}  { accepted, public_id}
+ *
+ */
 router.post('/email/invite', multipartMiddleware, function(req, res){
 	var guid       = req.body.guid;
 	var emails     = req.body.emails;
@@ -265,14 +269,13 @@ router.post('/email/invite', multipartMiddleware, function(req, res){
 		}
 	});
 });
-// ACCEPT
-// Parameter:
-//  	Token
-// 		Profile Id
-//
-// Return (Formato 15)
-//		Network
-// 		Profile
+/**
+ * Route "/accept", Aceptas una solicitud de un Amigo. busca en al DB "Network" y en "Notification", los registros entre estos dos.
+ * @param {String} guid, Token del Perfil(permiso).
+ * @param {String} public_id, el public_id de la otra persona.
+ * @return {Object}  { accepted, public_id}
+ *
+ */
 router.post('/accept', multipartMiddleware, function(req, res){
 	var guid       = req.body.guid;
 	var public_id = req.body.public_id;
@@ -345,6 +348,13 @@ router.post('/accept', multipartMiddleware, function(req, res){
 		}
 	});
 });
+/**
+ * Route "/isfriend", Revisa si el usuario que hace la peticion es amigo de otro usuario.
+ * @param {String} guid, Token del Perfil(permiso).
+ * @param {String} public_id, el public_id de la otra persona.
+ * @return {JSON}  Status.
+ *
+ */
 router.post('/isfriend', multipartMiddleware, function(req, res){
 	var guid       = req.body.guid;
 	var public_id = req.body.public_id;
@@ -376,13 +386,13 @@ router.post('/isfriend', multipartMiddleware, function(req, res){
 		}
 	});
 });
-// UNFRIEND
-// Parameter:
-//  	Token
-//
-// Return (Formato 16)
-//		Network
-// 		Profile
+/**
+ * Route "/unfriend", Busca en la db y elimina la "Amistad" entre estos dos.
+ * @param {String} guid, Token del Perfil(permiso).
+ * @param {String} public_id, el public_id de la otra persona.
+ * @return {JSON}  los datos eliminados de network, y el estado.
+ *
+ */
 router.post('/unfriend', multipartMiddleware, function(req, res){
 	var guid       = req.body.guid;
 	var public_id = req.body.public_id;
@@ -432,71 +442,12 @@ router.post('/unfriend', multipartMiddleware, function(req, res){
 		});
 	}
 });
-/*
-	var guid       = req.body.guid;
-	var public_id = req.body.public_id;
-
-	public_id = mongoose.Types.ObjectId(public_id);
-	Tokenfunc.exist(guid, function(errToken, token){
-		if(errToken){
-			Tokenfunc.toProfile(token.generated_id, function(status, userData, profileData, profileInfoData){
-				
-				Networkfunc.PublicId(public_id, function(statusPublic, profileAnotherData){
-					if(statusPublic){
-						var find = {
-							"profiles": {
-								"$all": [profileData._id,profileAnotherData._id],
-							}
-						};
-						Network.findOne(find).exec(function(errNetwork, networkData){
-							if(!errNetwork && networkData){
-								if(networkData != null){
-
-									var log = new Log({
-										message: "unfriend",
-										data: networkData
-									});
-									log.save(function(){
-										networkData.remove(function(err, data){
-											Generalfunc.response(200, networkData, function(response){
-												res.json(response);
-											});
-										});;
-									});
-
-								}else{
-									Generalfunc.response(404, {}, function(response){
-										res.json(response);
-									});
-								}
-							}else{
-								Generalfunc.response(404, {}, function(response){
-									res.json(response);
-								});
-							}
-						});
-					}else{
-						Generalfunc.response(113, {}, function(response){
-							res.json(response);
-						});
-					}
-				});
-			});
-		}else{
-			Generalfunc.response(101, {}, function(response){
-				res.json(response);
-			});
-		}
-	});
-});
-*/
-// GET
-// Parameter:
-//  	Token
-//
-// Return (Formato 16)
-//		Network
-// 		Profile
+/**
+ * Route "/get", Obtienes la lista de "Conexiones de Amigos".
+ * @param {String} guid, Token del Perfil(permiso).
+ * @return {JSON}
+ *
+ */
 router.post('/get', multipartMiddleware, function(req, res){
 	var guid = req.body.guid;
 
@@ -529,18 +480,15 @@ router.post('/get', multipartMiddleware, function(req, res){
 				res.json(response);
 			});
 		}
-	});
-
-	
+	});	
 });
-// EMAIL TO FRIEND
-// Parameter:
-//  	Token
-// 		EMAIL (lista dividida con , )
-//
-// Return (Formato 17)
-//		Profile
-//
+/**
+ * Route "/emailtofriend", Recibe una lista de emails, y los busca en el sistema, si existen regresa el perfil, si no, regresa el correo.
+ * @param {String} guid, Token del Perfil(permiso).
+ * @param {String} emails, lista de emails a buscar separados por comas.
+ * @return {JSON} { profiles, uknown }
+ *
+ */
 router.post('/emailtofriend', multipartMiddleware, function(req, res){
 	var guid       = req.body.guid;
 	var emails     = req.body.emails;
@@ -574,7 +522,7 @@ router.post('/emailtofriend', multipartMiddleware, function(req, res){
 								});
 							}, function(err, results){
 								
-								split = cleanArray(split);
+								split = Generalfunc.cleanArray(split);
 								
 								Generalfunc.response(200, { profiles: results, uknown: split }, function(response){
 									res.json(response);
@@ -599,6 +547,13 @@ router.post('/emailtofriend', multipartMiddleware, function(req, res){
 		}
 	});
 });
+/**
+ * Route "/emailtofriend", Recibe una lista de facebookids, y los busca en el sistema, si existen regresa el perfil, si no, regresa el ID de Facebook.
+ * @param {String} guid, Token del Perfil(permiso).
+ * @param {String} facebookid, lista de facebookid a buscar separados por comas.
+ * @return {JSON} { profiles, uknown }
+ *
+ */
 router.post('/facebooktofriend', multipartMiddleware, function(req, res){
 	var guid       = req.body.guid;
 	var facebookids     = req.body.facebookid;
@@ -633,7 +588,7 @@ router.post('/facebooktofriend', multipartMiddleware, function(req, res){
 										callback(null, x);
 									});
 								}, function(err, results){
-									split = cleanArray(split);
+									split = Generalfunc.cleanArray(split);
 									Generalfunc.response(200, {profiles: results, uknown: split}, function(response){
 										res.json(response);
 									});
@@ -661,8 +616,14 @@ router.post('/facebooktofriend', multipartMiddleware, function(req, res){
 			});
 		}
 	});
-
 });
+/**
+ * Route "/emailtofriend", Recibe una lista de Teléfonos, y los busca en el sistema, si existen regresa el perfil, si no, regresa el teléfono.
+ * @param {String} guid, Token del Perfil(permiso).
+ * @param {String} telefonos, lista de teléfonos a buscar separados por comas.
+ * @return {JSON} { profiles, uknown }
+ *
+ */
 router.post('/phonetofriend', multipartMiddleware, function(req, res){
 	var guid       = req.body.guid;
 	var phones     = req.body.phones;
@@ -703,7 +664,7 @@ router.post('/phonetofriend', multipartMiddleware, function(req, res){
 							});
 						}, function(err, results){
 							
-							split = cleanArray(split);
+							split = Generalfunc.cleanArray(split);
 							Generalfunc.response(200, {profiles: results, uknown: split}, function(response){
 								res.json(response);
 							});
@@ -723,15 +684,10 @@ router.post('/phonetofriend', multipartMiddleware, function(req, res){
 
 	});
 });
-// SEARCH NETWORK
-// Parameter:
-//  	Token
-// 		Text
-// 		ORDER (No Usado)
-//
-// Return (Formato 19)
-//		
-//
+/**
+ * Route "/search/friends". (**)
+ *
+ */
 router.post('/search/friends', multipartMiddleware, function(req, res){
 	var guid       = req.body.guid;
 	var search     = req.body.search;
@@ -776,16 +732,10 @@ router.post('/search/friends', multipartMiddleware, function(req, res){
 		}
 	});
 });
-// REVIEW
-// Parameter:
-//  	Token
-// 		Titulo
-// 		Contenido
-// 		Calificación
-//
-// Return (Formato 20)
-//		
-//
+/**
+ * Route "/review", (**)
+ *
+ */
 router.post('/review', multipartMiddleware, function(req, res){
 	var guid       = req.body.guid;
 	var title   = req.body.title;
@@ -818,13 +768,13 @@ router.post('/review', multipartMiddleware, function(req, res){
 		}
 	});
 });
-// GET REVIEW
-// Parameter:
-//  	Token
-//
-// Return (Formato 20)
-//		
-//
+/**
+ * Route "/review/get", Recibe una lista de Teléfonos, y los busca en el sistema, si existen regresa el perfil, si no, regresa el teléfono.
+ * @param {String} guid, Token del Perfil(permiso).
+ * @param {String} telefonos, lista de teléfonos a buscar separados por comas.
+ * @return {JSON}
+ *
+ */
 router.post('/review/get', multipartMiddleware, function(req, res){
 	var guid       = req.body.guid;
 	var page       = req.body.page;
@@ -833,7 +783,7 @@ router.post('/review/get', multipartMiddleware, function(req, res){
 	if(page == undefined){
 		page = 0;
 	}
-	page = isNormalInteger(page);
+	page = Generalfunc.isNormalInteger(page);
 
 
 	var pagination = 0;
@@ -864,19 +814,20 @@ router.post('/review/get', multipartMiddleware, function(req, res){
 		}
 	});
 });
-// SEND RECOMENDACIÓN
-// Parameter:
-//		Token
-//		Busqueda
-//
-// Return (Formato 21)
-//
-//
+/**
+ * Route "/recomendar", Crear recomendaciones, Sobre una peticion de recomendación.
+ * @param {String} guid, Token del Perfil(permiso).
+ * @param {String} public_id, Id de Usario a quien se lo Recomiendas.
+ * @param {String} recomendar_id, Id de Usuario a Recomendar.
+ * @param {String} history_id, 
+ * @return {JSON}
+ *
+ */
 router.post('/recomendar', multipartMiddleware, function(req, res){
-	var guid          = req.body.guid;
-	var public_id     = req.body.public_id;
-	var p_recomend_id = req.body.recomendar_id;
-	var history_id    = req.body.history_id;
+	var guid           = req.body.guid;
+	var public_id      = req.body.public_id;
+	var p_recomend_id  = req.body.recomendar_id;
+	var history_id     = req.body.history_id;
 
 	var d = {};// Notificación a persona recibe recomendación.
 	var e = {};// Notificación a persona recomiendan. 
@@ -969,26 +920,10 @@ router.post('/recomendar', multipartMiddleware, function(req, res){
 		}
 	});
 });
-
 module.exports = router;
 
 function create_notificacion_recomendacion(data, callback, io){
 	Notificationfunc.add(data, function(status, notificationData){
-		
-		
 		callback(status, notificationData);
 	}, io);
-}
-function cleanArray(actual) {
-	var newArray = new Array();
-	for (var i = 0; i < actual.length; i++) {
-		if (actual[i]) {
-			newArray.push(actual[i]);
-		}
-	}
-	return newArray;
-}
-function isNormalInteger(str) {
-	var n = ~~Number(str);
-	return String(n) === str && n >= 0;
 }

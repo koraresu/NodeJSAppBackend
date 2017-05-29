@@ -938,6 +938,11 @@ function pagination(page, max){
 		pages: pages
 	};
 };
+function isNormalInteger(str) {
+	var n = ~~Number(str);
+	return String(n) === str && n >= 0;
+}
+exports.isNormalInteger    = isNormalInteger;
 exports.pagination         = pagination;
 exports.isNumber           = isNumber;
 exports.activity           = activity;
