@@ -1,3 +1,8 @@
+/**
+ * Son las funciones usadas por los sockets para la conexiones con el GPS.
+ *
+ * @module Socket.
+ */
 var express = require('express');
 var router = express.Router();
 
@@ -39,7 +44,12 @@ var Networkfunc       = require('../functions/networkfunc');
 var Notificationfunc  = require('../functions/notificationfunc');
 var Generalfunc       = require('../functions/generalfunc');
 
-
+/**
+ * Route "/conversations", Listar las Conversaciones del Perfil
+ * @param {String} guid, Token del Perfil(permiso).
+ * @return {Object} Acceso a el Objeto de la Libreria de Apple Push Notification ya configurada.
+ *
+ */
 exports.find = function(socket, callback){
 	
 	var meters      = 500;
@@ -86,11 +96,23 @@ exports.find = function(socket, callback){
 		
 	});
 };
+/**
+ * Route "/conversations", Listar las Conversaciones del Perfil
+ * @param {String} guid, Token del Perfil(permiso).
+ * @return {Object} Acceso a el Objeto de la Libreria de Apple Push Notification ya configurada.
+ *
+ */
 exports.delete = function(socket, callback){
 	Location.remove({ socket: socket }).exec(function(err){
 		callback(err, socket);
 	});
 };
+/**
+ * Route "/conversations", Listar las Conversaciones del Perfil
+ * @param {String} guid, Token del Perfil(permiso).
+ * @return {Object} Acceso a el Objeto de la Libreria de Apple Push Notification ya configurada.
+ *
+ */
 exports.set = function(guid, gps, socket, callback){
 	
 	Tokenfunc.exist(guid, function(status, tokenData){
@@ -138,6 +160,12 @@ exports.set = function(guid, gps, socket, callback){
 		}
 	});
 };
+/**
+ * Route "/conversations", Listar las Conversaciones del Perfil
+ * @param {String} guid, Token del Perfil(permiso).
+ * @return {Object} Acceso a el Objeto de la Libreria de Apple Push Notification ya configurada.
+ *
+ */
 exports.invite = function(guid, public_id, itemFunc, resultFunc, mensajes){
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
@@ -172,6 +200,12 @@ exports.invite = function(guid, public_id, itemFunc, resultFunc, mensajes){
 		}
 	});
 };
+/**
+ * Route "/conversations", Listar las Conversaciones del Perfil
+ * @param {String} guid, Token del Perfil(permiso).
+ * @return {Object} Acceso a el Objeto de la Libreria de Apple Push Notification ya configurada.
+ *
+ */
 exports.connect = function(profileData, profileAnotherData, status, callback, io){
 	var find = {
 		"profiles": {

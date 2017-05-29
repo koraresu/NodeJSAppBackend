@@ -2,3 +2,5 @@
 	- Mongo no permite ordenar correctamente los nombres, para esto hay dos soluciones:
 		- Guardar en otro dato el nombre/titulo/texto en minusculas y sin acentos, y ordenarlo por ese elemento.
 		- No ordenarlo por Mongo, y hacer el ordenamiento por sort.
+2.- Mongo permite joins, pero no en sus versiones menores a la 3.2. Existe el Lookup en los aggregate.
+	- Para eso se agrego moongoose, este te da datos de "referencia" en el schema. 

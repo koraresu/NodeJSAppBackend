@@ -1,7 +1,7 @@
 /**
  * Las rutas de Chat, aqui se hacen las peticiones POST de la aplicación, ademas, se estan exportando algunas fuciones que se usan en los sockets de el chat.
  *
- * @module Helpers
+ * @module Rutas.
  */
 var express = require('express');
 var router = express.Router();

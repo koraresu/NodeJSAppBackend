@@ -1,4 +1,9 @@
-var express = require('express');
+/**
+ * Las peticiones de experiencias.
+ *
+ * @module Rutas.
+ */
+ var express = require('express');
 var router = express.Router();
 
 var mongoose    = require('mongoose');

@@ -1,3 +1,12 @@
+/**
+ * Las rutas de las Peticiones hechas desde el panel de Metricas en el Back.
+ * La mayoria reciben un date_ini, date_end y token.
+ * El token, esta definido como string en el codigo.
+ * Date_ini.- Son valores datos enviados para definir donde iniciara la obtención de información.
+ * Date_end.- Son valores datos enviados para definir donde finalizara la obtención de información.
+ *
+ * @module Rutas
+ */
 var express = require('express');
 var router = express.Router();
 var extend = require('util')._extend;
@@ -13,15 +22,38 @@ var randomColor = require('randomcolor');
 var model = require('../model');
 var Generalfunc = require('../functions/generalfunc');
 var BasicToken = "atGMy5maUEMWPx67ubaPNGyJBWGeWw91XPBMwnCLmNfBk4A9lybdzs4N7bAs";
+/**
+ * Route "/", Es un comodin.
+ * @return {String} "Get Out of Here!!"
+ *
+ */
 router.post('/', function(req, res){
 	res.send("Get Out of Here!!");
 });
+/**
+ * Route "/", Es un comodin.
+ * @return {String} "Get Out of Here!!"
+ *
+ */
 router.get('/', function(req, res){
 	res.send("Get Out of Here!!");
 });
+/**
+ * Route "/[master]/[son]", Cualquier peticion que hagan por get, a metricas, regresara el mismo mensaje comodin.
+ * @return {String} "Get Out of Here!!"
+ *
+ */
 router.get('/:master/:son', function(req, res){
 	res.send("Get Out of Here!!");
 });
+/**
+ * Route "/performance/hivers", Obtiene los Usuarios Activos.
+ * @param {String} date_ini, Fecha de inicio para la obtención de los valores.
+ * @param {String} date_end, Fecha final para limitar los valores.
+ * @param {String} token, string dado de alta como variable.
+ * @return {Object} Formato requerido por la libreria de Graficas.
+ *
+ */
 router.post('/performance/hivers', multipartMiddleware, function(req, res){	
 	metric_check(req, function(token, date_ini, date_end){
 		var run = function(date_ini, date_end, su){
@@ -94,6 +126,14 @@ router.post('/performance/hivers', multipartMiddleware, function(req, res){
 		res.send("No Permission");
 	});
 });
+/**
+ * Route "/performance/feedback", Obtienes la densidad de palabras en el feedback.
+ * @param {String} date_ini, Fecha de inicio para la obtención de los valores.
+ * @param {String} date_end, Fecha final para limitar los valores.
+ * @param {String} token, string dado de alta como variable.
+ * @return {Object} Formato requerido por la libreria de Graficas.
+ *
+ */
 router.post('/performance/feedback', multipartMiddleware, function(req, res){
 	metric_check(req, function(token, date_ini, date_end){
 		var d = {};
@@ -150,6 +190,14 @@ router.post('/performance/feedback', multipartMiddleware, function(req, res){
 		res.send("No Permission");
 	});
 });
+/**
+ * Route "/performance/interactions", Obitnes las Iteracciones entre usuarios, Conexiones, Agregar a Colmena y Conversaciones.
+ * @param {String} date_ini, Fecha de inicio para la obtención de los valores.
+ * @param {String} date_end, Fecha final para limitar los valores.
+ * @param {String} token, string dado de alta como variable.
+ * @return {Object} Formato requerido por la libreria de Graficas.
+ *
+ */
 router.post('/performance/interactions', multipartMiddleware, function(req, res){
 	metric_check(req, function(token, date_ini, date_end){
 		group = date_group(date_ini, date_end);
@@ -224,6 +272,14 @@ router.post('/performance/interactions', multipartMiddleware, function(req, res)
 		res.send("No Permission");
 	});
 });
+/**
+ * Route "/performance/publications", Obitnes las Iteracciones entre usuarios, Noticias.
+ * @param {String} date_ini, Fecha de inicio para la obtención de los valores.
+ * @param {String} date_end, Fecha final para limitar los valores.
+ * @param {String} token, string dado de alta como variable.
+ * @return {Object} Formato requerido por la libreria de Graficas.
+ *
+ */
 router.post('/performance/publications', multipartMiddleware, function(req, res){
 	metric_check(req, function(token, date_ini, date_end){
 		group = date_group(date_ini, date_end);
@@ -291,6 +347,14 @@ router.post('/performance/publications', multipartMiddleware, function(req, res)
 		res.send("No Permission");
 	});
 });
+/**
+ * Route "/demografic/age", Obtiene la distrubución de usuarios por edades.
+ * @param {String} date_ini, Fecha de inicio para la obtención de los valores.
+ * @param {String} date_end, Fecha final para limitar los valores.
+ * @param {String} token, string dado de alta como variable.
+ * @return {Object} Formato requerido por la libreria de Graficas.
+ *
+ */
 router.post('/demografic/age', multipartMiddleware, function(req, res){
 	var label  = [];
 	var value  = [];
@@ -342,6 +406,14 @@ router.post('/demografic/age', multipartMiddleware, function(req, res){
 		res.send("No Permission");
 	});
 });
+/**
+ * Route "/demografic/distribution", Obtiene la distribucion de usuarios por distintos estados.
+ * @param {String} date_ini, Fecha de inicio para la obtención de los valores.
+ * @param {String} date_end, Fecha final para limitar los valores.
+ * @param {String} token, string dado de alta como variable.
+ * @return {Object} Formato requerido por la libreria de Graficas.
+ *
+ */
 router.post('/demografic/distribution', multipartMiddleware, function(req, res){
 	metric_check(req, function(token, date_ini, date_end){
 		var prop = [];
@@ -399,6 +471,14 @@ router.post('/demografic/distribution', multipartMiddleware, function(req, res){
 		
 	});
 });
+/**
+ * Route "/catalogue", Lista de puestos de usuarios, si tiene dos puestos se manejan dos registros en esta lista.
+ * @param {String} date_ini, Fecha de inicio para la obtención de los valores.
+ * @param {String} date_end, Fecha final para limitar los valores.
+ * @param {String} token, string dado de alta como variable.
+ * @return {Object} { name, profesion, especialidad, empresa, ciudad, estado, email, telefono }
+ *
+ */
 router.post('/catalogue', multipartMiddleware, function(req, res){
 	var token     = req.body.token;
 	var max       = req.body.max;
@@ -595,6 +675,14 @@ router.post('/catalogue', multipartMiddleware, function(req, res){
 		res.send("No Permission");
 	}
 });
+/**
+ * Route "/profesional/profesions", Cantidad de Usuarios por Profesion.
+ * @param {String} date_ini, Fecha de inicio para la obtención de los valores.
+ * @param {String} date_end, Fecha final para limitar los valores.
+ * @param {String} token, string dado de alta como variable.
+ * @return {Object} Formato requerido por la libreria de Graficas.
+ *
+ */
 router.post('/profesional/profesions', multipartMiddleware, function(req, res){
 	var all        = [];
 
@@ -655,6 +743,14 @@ router.post('/profesional/profesions', multipartMiddleware, function(req, res){
 		});
 	});
 });
+/**
+ * Route "/profesional/review", Cantidad de Reseñas hechas.
+ * @param {String} date_ini, Fecha de inicio para la obtención de los valores.
+ * @param {String} date_end, Fecha final para limitar los valores.
+ * @param {String} token, string dado de alta como variable.
+ * @return {Object} Formato requerido por la libreria de Graficas.
+ *
+ */
 router.post('/profesional/review', multipartMiddleware, function(req, res){
 	var all    = [];
 
@@ -709,6 +805,12 @@ router.post('/profesional/review', multipartMiddleware, function(req, res){
 	});
 });
 module.exports = router;
+/**
+ * get_date, Obtenemos un String, y lo transformamos en Objeto Date.
+ * @param {String} date. 
+ * @return {Date}
+ *
+ */
 function get_date(date){
 	if(date === undefined){
 		return false;
@@ -724,6 +826,13 @@ function get_date(date){
 		}	
 	}
 };
+/**
+ * date_group, Agrupamos, y generamos los espacios donde vamos a poner los datos.
+ * @param {Date} ini, Fecha de Inicio. 
+ * @param {Date} end, Fecha de Fin.
+ * @return {Object} {date: Array de Fechas, cant: Array de datos "0"}
+ *
+ */
 function date_group(ini, end){
 	var dates      = [];
 	var empty      = [];
@@ -754,6 +863,14 @@ function date_group(ini, end){
 	}
 	return { dates: dates, cant: empty};
 };
+/**
+ * metric_check, sirve para revisar si los datos enviados estan correctos.
+ * @param {String} req, obtienes date_ini, date_end y token.
+ * @param {String} success,
+ * @param {String} fail, 
+ * @return {success|fail}
+ *
+ */
 function metric_check(req, success, fail){
 	var date_ini  = req.body.date_ini;
 	var date_end  = req.body.date_end;

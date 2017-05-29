@@ -45,6 +45,7 @@ var City         = model.city;
 var State        = model.state;
 var Country      = model.country;
 
+
 router.post('/friend/get', multipartMiddleware, function(req, res){
 	var profile_id      = mongoose.Types.ObjectId(req.body.profile_id);
 	Profilefunc.PublicId(profile_id, function(err, profileData, profileInfoData, experiencesData){
@@ -58,8 +59,6 @@ router.post('/friend/get', multipartMiddleware, function(req, res){
 		});
 	});
 });
-
-
 router.post('/message', multipartMiddleware, function(req, res){
 	var text = req.body.text;
 	var profile_a = req.body.a_profile;
@@ -78,25 +77,6 @@ router.post('/check/conversation', multipartMiddleware, function(req, res){
 		})
 	});
 });
-
-/*
-router.post('/search', multipartMiddleware, function(req, res){
-	var search = req.body.search;
-	var reg  = new RegExp(search, "i");
-	var data = [];
-	func.searchProfile(reg, function(status, profileData){
-		profileData.forEach(function(item, index, array, done) {
-			data.push(item);
-			if(index == (profileData.length-1)){
-				func.response(200, {"mi": data}, function(response){
-					res.json(response);
-				})
-			}
-		});
-	});
-});
-*/
-
 router.post('/search', multipartMiddleware, function(req, res){
 	var text = req.body.search;
 	Experience.find({ $text: { $search: text }}, function(err, experiencesData){

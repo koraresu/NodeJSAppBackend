@@ -1,3 +1,8 @@
+/**
+ * Las rutas que se usan para mostrar el contenido en el navegador.
+ *
+ * @module Rutas
+ */
 var express = require('express');
 
 var mongoose    = require('mongoose');
@@ -39,7 +44,6 @@ var Generalfunc = require('../functions/generalfunc');
 var Notificationfunc = require('../functions/notificationfunc');
 
 var apnProvider = Generalfunc.apnProvider();
-/* GET home page. */
 router.get('/', function(req, res, next) {
   res.redirect('http://thehiveapp.mx/');
 });
