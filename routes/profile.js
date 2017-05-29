@@ -20,57 +20,50 @@ var mongoose    = require('mongoose');
 	Nombre de Modelos:
 		Toda las variables de modelo se nombrara, con el nombre del archivo, eliminando _ 
 		y cambiando la siguiente letras al _ por mayuscula. Iniciando la primera letra en mayuscula.
-		*/
-		var Generalfunc = require('../functions/generalfunc');
-		var Profilefunc = require('../functions/profilefunc');
-		var Experiencefunc = require('../functions/experiencefunc');
-		var Networkfunc    = require('../functions/networkfunc');
-		var Tokenfunc = require('../functions/tokenfunc');
-		var Skillfunc = require('../functions/skillfunc');
-		var Historyfunc = require('../functions/historyfunc');
-		var format = require('../functions/format');
+*/
+var Generalfunc = require('../functions/generalfunc');
+var Profilefunc = require('../functions/profilefunc');
+var Experiencefunc = require('../functions/experiencefunc');
+var Networkfunc    = require('../functions/networkfunc');
+var Tokenfunc = require('../functions/tokenfunc');
+var Skillfunc = require('../functions/skillfunc');
+var Historyfunc = require('../functions/historyfunc');
+var format = require('../functions/format');
 
-		var model = require('../model');
-		var Profile     = model.profile;
-		var User        = model.user;
-		var Forgot      = model.forgot;
-		var Token       = model.token;
-		var Job         = model.job;
-		var Company     = model.company;
-		var Experience  = model.experience;
-		var Network     = model.network;
-		var History     = model.history;
-		var Feedback    = model.feedback;
-		var Review      = model.review;
-		var Log         = model.log;
-		var Skill       = model.skill;
-		var Speciality  = model.speciality;
-		var Sector      = model.sector;
-		var Notification = model.notification;
-		var Device       = model.device;
-		var Feedback     = model.feedback;
-		var Conversation = model.conversation;
-		var Message      = model.message;
-		var City         = model.city;
-		var State        = model.state;
-		var Country      = model.country;
-/*
-Nombre de Objectos de Documentos:
-	Todo dato recibido por FUNC, que sea un documento de mongo, se le colocara como nombre de varible el nombre del modelo,
-	seguido de la palabra "Data"*Respetando Mayusculas*, se cambio el modelo ProfileData a ProfileInfo para no tener problemas.
-
-	*/
+var model = require('../model');
+var Profile     = model.profile;
+var User        = model.user;
+var Forgot      = model.forgot;
+var Token       = model.token;
+var Job         = model.job;
+var Company     = model.company;
+var Experience  = model.experience;
+var Network     = model.network;
+var History     = model.history;
+var Feedback    = model.feedback;
+var Review      = model.review;
+var Log         = model.log;
+var Skill       = model.skill;
+var Speciality  = model.speciality;
+var Sector      = model.sector;
+var Notification = model.notification;
+var Device       = model.device;
+var Feedback     = model.feedback;
+var Conversation = model.conversation;
+var Message      = model.message;
+var City         = model.city;
+var State        = model.state;
+var Country      = model.country;
 
 
 
-// LOGIN
-// Parameter
-// 		email     = Email
-// 		password  = Contraseña
-// Return (Formato 1)
-// 		Generated Token
-// 		Verified Status
-// 		Experiences Status
+/**
+ * Route "/login", Obtiene los datos del usuario si el email y contraseña estan en lo correcto.
+ * @param {String} email, Correo de la cuenta.
+ * @param {String} password, Contraseña de la cuenta.
+ * @return {JSON} obtiene los datos de el usuario.
+ *
+ */
 router.post('/login', multipartMiddleware, function(req, res){
 	var email    = req.body.email;
 	var password = req.body.password;
@@ -139,13 +132,13 @@ router.post('/login', multipartMiddleware, function(req, res){
 			});
 		}
 	});
-	
 });
-// LOGOUT
-// Parameter
-// 		guid
-// Return (Formato 1)
-//      devices Deleted
+/**
+ * Route "/logout", Desconecta al usuario. Elimina los Dispositivos de este perfil.
+ * @param {String} guid, Token del Perfil(permiso).
+ * @return {JSON} obtiene los datos de el usuario.
+ *
+ */
 router.post('/logout', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 	Tokenfunc.exist(guid, function(status, tokenData){
@@ -177,11 +170,12 @@ router.post('/logout', multipartMiddleware, function(req, res){
 		}
 	});
 });
-// FORGOT
-// Parameter
-// 		email     = Email
-// Return (Formato 1)
-//      status
+/**
+ * Route "/forgot", Envia el correo cuando se olvide la contraseña.
+ * @param {String} email, Correo de la cuenta.
+ * @return {JSON}
+ *
+ */
 router.post('/forgot', multipartMiddleware, function(req, res){
 	var email    = req.body.email;
 
@@ -219,14 +213,15 @@ router.post('/forgot', multipartMiddleware, function(req, res){
 		}
 	});
 });
-// CREATE
-// Parameter:
-// 		first_name     = Nombre
-// 		last_name      = Apellido
-//		email          = Email
-// 		password       = Contraseña
-// Return (Formato 2)
-// 		Generated Token
+/**
+ * Route "/create", Registrar una cuenta.
+ * @param {String} first_name, Nombre del Perfil.
+ * @param {String} last_name, Apellido del Perfil.
+ * @param {String} email, Correo de la cuenta.
+ * @param {String} password, Contraseña de la cuenta.
+ * @return {JSON}
+ *
+ */
 router.post('/create', multipartMiddleware, function(req, res){
 	
 	var nombre   = req.body.first_name;
@@ -346,8 +341,12 @@ router.post('/create', multipartMiddleware, function(req, res){
 
 		}
 	});
-
 });
+/**
+ * Route "/sendemail", Test. (***)
+ * @return {JSON}
+ *
+ */
 router.post('/sendemail', multipartMiddleware, function(req, res){
 	Profile.findOne({
 		_id: mongoose.Types.ObjectId("578c4e292c5f4fd7322caebd")
@@ -363,20 +362,25 @@ router.post('/sendemail', multipartMiddleware, function(req, res){
 			}			
 		});
 	});
-	
 });
-// CREATE FACEBOOK
-// Parameter:
-// 		first_name     = Nombre
-// 		last_name      = Apellido
-//		email          = Email
-// Return (Formato 2)
-// 		Generated Token
-
+/**
+ * Route "/login-facebook", Login con Facebook.
+ * @param {String} first_name, Nombre del Perfil en Facebook.
+ * @param {String} last_name, Apellido del Perfil en Facebook.
+ * @param {String} gender, Genero del Perfil en Facebook.
+ * @param {String} profilepic, Imagen de Perfil en Facebook.
+ * @param {String} facebook_id, Id de Perfil en Facebook.
+ * @param {String} token,  Token de Perfil en Facebook.
+ * @param {String} name, Nombre completo de Perfil en Facebook.
+ * @param {String} email, Correo de la cuenta.
+ * @param {String} password, Contraseña de la cuenta.
+ * @return {JSON}
+ *
+ */
 router.post('/login-facebook', multipartMiddleware, function(req, res){
 	var email      = req.body.email;
-	var first_name     = req.body.first_name;
-	var last_name   = req.body.last_name;
+	var first_name = req.body.first_name;
+	var last_name  = req.body.last_name;
 	var gender     = req.body.gender;
 	var profilepic = req.body.profilepic;
 	var facebookID = req.body.facebook_id;
@@ -486,11 +490,13 @@ router.post('/login-facebook', multipartMiddleware, function(req, res){
 		}
 	});
 });
-// CHECK FACEBOOK
-// Parameter:
-// 		facebook_id
-// Return (Formato 2)
-// 		
+/**
+ * Route "/check-facebook", Buscamos al usuario de Facebook en el sistema.
+ * @param {String} facebook_id, Id de Perfil en Facebook.
+ * @param {String} email, Correo de la cuenta.
+ * @return {JSON}
+ *
+ */	
 router.post('/check-facebook', multipartMiddleware, function(req, res){
 	var facebookId = req.body.facebook_id;
 	var email      = req.body.email;
@@ -515,15 +521,12 @@ router.post('/check-facebook', multipartMiddleware, function(req, res){
 		}
 	});
 });
-
-// GET
-// Parameter:
-//  	Token
-// Return (Formato 3)
-// 		User
-//		Profile
-//		Profile Info
-//		Experiences
+/**
+ * Route "/get-deep", Obtienes la información amplia del Perfil.
+ * @param {String} guid, Token del Perfil(permiso).
+ * @return {JSON} { profile, user, profile_info, experiences }
+ *
+ */	
 router.post('/get-deep', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 	Tokenfunc.exist(guid, function(status, tokenData){
@@ -557,6 +560,12 @@ router.post('/get-deep', multipartMiddleware, function(req, res){
 		}
 	});
 });
+/**
+ * Route "/get", Obtienes la información del Perfil.
+ * @param {String} guid, Token del Perfil(permiso).
+ * @return {JSON} { profile }
+ *
+ */	
 router.post('/get', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 	Tokenfunc.exist(guid, function(status, tokenData){
@@ -590,18 +599,22 @@ router.post('/get', multipartMiddleware, function(req, res){
 		}
 	});
 });
+/**
+ * Route "/setfacebook", Guardamos los datos de Facebook en la cuenta.
+ * @param {String} guid, Token del Perfil(permiso).
+ * @return {JSON}
+ *
+ */
 router.post('/setfacebook',multipartMiddleware, function(req, res){
-	var guid      = req.body.guid;
-
+	var guid       = req.body.guid;
 	var email      = req.body.email;
-	var first_name     = req.body.first_name;
-	var last_name   = req.body.last_name;
+	var first_name = req.body.first_name;
+	var last_name  = req.body.last_name;
 	var gender     = req.body.gender;
 	var profilepic = req.body.profilepic;
 	var facebookID = req.body.facebook_id;
 	var tokenFB    = req.body.token;
 	var name       = req.body.name;
-
 
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
@@ -611,30 +624,30 @@ router.post('/setfacebook',multipartMiddleware, function(req, res){
 					profileData.facebookToken = tokenFB;
 
 					var facebookData = [
-					{
-						"name": "first_name",
-						"value": first_name
-					},
-					{
-						"name": "last_name",
-						"value": last_name
-					},
-					{
-						"name": "name",
-						"value":name
-					},
-					{
-						"name": "picture",
-						"value": profilepic
-					},
-					{
-						"name": "email",
-						"value": email
-					},
-					{
-						"name": "gender",
-						"value": gender
-					}
+						{
+							"name": "first_name",
+							"value": first_name
+						},
+						{
+							"name": "last_name",
+							"value": last_name
+						},
+						{
+							"name": "name",
+							"value":name
+						},
+						{
+							"name": "picture",
+							"value": profilepic
+						},
+						{
+							"name": "email",
+							"value": email
+						},
+						{
+							"name": "gender",
+							"value": gender
+						}
 					];
 
 					profileData.facebookData = [];
@@ -658,6 +671,14 @@ router.post('/setfacebook',multipartMiddleware, function(req, res){
 		}
 	});
 });
+/**
+ * Route "/get/friends", Buscar conexiones entre perfiles.
+ * @param {String} guid, Token del Perfil(permiso).
+ * @param {String} public_id, Public ID de otro usuario.
+ * @param {String} accepted, Estado de la conexiones a buscar. (true = Aceptado | false = No Aceptado o No Interactuado)
+ * @return {JSON}
+ *
+ */
 router.post('/get/friends', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 	var public_id = req.body.public_id;
@@ -776,8 +797,14 @@ router.post('/get/friends', multipartMiddleware, function(req, res){
 			});
 		}
 	});
-
 });
+/**
+ * Route "/get/friends", Buscar si la conexion entre perfiles.
+ * @param {String} guid, Token del Perfil(permiso).
+ * @param {String} public_id, Public ID de otro usuario.
+ * @return {JSON}
+ *
+ */
 router.post('/get/friend', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 	var public_id = req.body.public_id;
@@ -854,6 +881,13 @@ router.post('/get/friend', multipartMiddleware, function(req, res){
 		});
 	}
 });
+/**
+ * Route "/changepassword", Cambiar contraseña de el perfil.
+ * @param {String} guid, Token del Perfil(permiso).
+ * @param {String} password, Nueva contraseña.
+ * @return {JSON}
+ *
+ */
 router.post('/changepassword', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 	var password  = req.body.password;
@@ -889,6 +923,13 @@ router.post('/changepassword', multipartMiddleware, function(req, res){
 		});
 	}
 });
+/**
+ * Route "/changepassword", Comparamos la contraseña guardada con la contraseña enviada.
+ * @param {String} guid, Token del Perfil(permiso).
+ * @param {String} password, Nueva contraseña.
+ * @return {JSON}
+ *
+ */
 router.post('/checkpassword', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 	var password  = req.body.password;
@@ -929,7 +970,14 @@ router.post('/checkpassword', multipartMiddleware, function(req, res){
 		}
 	});
 });
-
+/**
+ * Route "/registro/experience", Cambiar o Insertar la especialidad y Ocupación del Perfil.
+ * @param {String} guid, Token del Perfil(permiso).
+ * @param {String} speciality, Especialidad a insertar.
+ * @param {String} ocupation, Ocupación a insertar.
+ * @return {JSON}
+ *
+ */
 router.post('/registro/experience', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 	
@@ -983,50 +1031,37 @@ router.post('/registro/experience', multipartMiddleware, function(req, res){
 		}
 	});
 });
-// UPDATE
-// Parameter:
-//  	Token
-//  	Nombre
-//  	Apellido
-//  	Status
-//  	Type
-//  	Company
-//  	Job
-//  	Speciality
-//  	Sector
-//  	Ocupation
-//  	Birthday
-//
-// Return (Formato 4)
-//		Profile
-//		Experiences
-/*
-router.post('/update', multipartMiddleware, function(req, res){
-	var guid      = req.body.guid;
-
-	var nombre    = req.body.first_name;
-	var apellido  = req.body.last_name;
-	var statusReq = req.body.status;
-	var job        = req.body.job;
-	var speciality = req.body.speciality;	
-	var birthday   = req.body.birthday;
-
-});
-*/
+/**
+ * Route "//update", Actualizar el perfil.
+ * @param {String} guid, Token del Perfil(permiso).
+ * @param {String} first_name
+ * @param {String} last_name
+ * @param {String} status
+ * @param {String} birthday
+ * @param {String} phone
+ * @param {String} city
+ * @param {String} type
+ * @param {String} company
+ * @param {String} job
+ * @param {String} speciality
+ * @param {String} sector
+ * @param {String} ocupation
+ * @return {JSON}
+ *
+ */
 router.post('/update', multipartMiddleware, function(req, res){
 	var guid       = req.body.guid;
 
 	var nombre     = req.body.first_name;
 	var apellido   = req.body.last_name;
 	var statusReq  = req.body.status;
-	var job        = Generalfunc.formatName( req.body.job );
-	var speciality = Generalfunc.formatName( req.body.speciality );
 	var birthday   = req.body.birthday;
 	var phone      = req.body.phone;
 	var city       = req.body.city;
 
 	var type       = req.body.type;
 	var company    = req.body.company;
+
 	var job        = Generalfunc.formatName( req.body.job );
 	var speciality = Generalfunc.formatName( req.body.speciality );
 	var sector     = Generalfunc.formatName( req.body.sector );
@@ -1101,19 +1136,18 @@ router.post('/update', multipartMiddleware, function(req, res){
 		}
 	});
 });
-// INSERT EXPERIENCE
-// Parameter:
-//  	Token
-//  	Type
-//  	Company
-//  	Job
-//  	Speciality
-//  	Sector
-//  	Ocupation
-//
-// Return (Formato 5)
-//		Profile
-//		Experiences
+/**
+ * Route "//update", Insertar puesto/empresa/ocupacion y especialidad del perfil.
+ * @param {String} guid, Token del Perfil(permiso).
+ * @param {String} type
+ * @param {String} company
+ * @param {String} job
+ * @param {String} speciality
+ * @param {String} sector
+ * @param {String} ocupation
+ * @return {JSON}
+ *
+ */
 router.post('/experience', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 
@@ -1152,6 +1186,15 @@ router.post('/experience', multipartMiddleware, function(req, res){
 		}
 	});
 });
+/**
+ * Route "//update", Insertar los datos de Especialidad y Ocupacion, en el Registro.
+ * @param {String} guid, Token del Perfil(permiso).
+ * @param {String} type
+ * @param {String} speciality
+ * @param {String} ocupation
+ * @return {JSON}
+ *
+ */
 router.post('/dedicas', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 
@@ -1241,23 +1284,18 @@ router.post('/dedicas', multipartMiddleware, function(req, res){
 		}
 	});
 });
-// UPDATE EXPERIENCE
-// Parameter:
-//  	Token
-//  	Nombre
-//  	Apellido
-//  	Status
-//  	Type
-//  	Company
-//  	Job
-//  	Speciality
-//  	Sector
-//  	Ocupation
-//  	Birthday
-//
-// Return (Formato 5)
-//		Profile
-//		Experiences
+/**
+ * Route "/update-experience", Actualizar puesto/empresa/ocupacion y especialidad del perfil.
+ * @param {String} guid, Token del Perfil(permiso).
+ * @param {String} type
+ * @param {String} company
+ * @param {String} job
+ * @param {String} speciality
+ * @param {String} sector
+ * @param {String} ocupation
+ * @return {JSON}
+ *
+ */
 router.post('/update-experience', multipartMiddleware, function(req, res){
 	var guid       = req.body.guid;
 
@@ -1382,6 +1420,13 @@ router.post('/update-experience', multipartMiddleware, function(req, res){
 		}
 	});
 });
+/**
+ * Route "/delete-experience", Quitamos el puesto/empresa/ocupacion y especialidad de un perfil.
+ * @param {String} guid, Token del Perfil(permiso).
+ * @param {String} id, ID de la Experience del Perfil.
+ * @return {JSON}
+ *
+ */
 router.post('/delete-experience', multipartMiddleware, function(req, res){
 	var guid       = req.body.guid;
 
@@ -1424,13 +1469,13 @@ router.post('/delete-experience', multipartMiddleware, function(req, res){
 		}
 	});
 });
-// ADD SKILL
-// Parameter:
-//  	Token
-//  	Nombre de Skill
-//
-// Return (Formato 6)
-//		Profile
+/**
+ * Route "/addskill", Buscamos una Habilidad en el perfil y si no existe lo insertamos.
+ * @param {String} guid, Token del Perfil(permiso).
+ * @param {String} name, Nombre de la Habilidad.
+ * @return {JSON}
+ *
+ */
 router.post('/addskill', multipartMiddleware, function(req, res){
 	var guid             = req.body.guid;
 	var name             = req.body.name;
@@ -1495,6 +1540,14 @@ router.post('/addskill', multipartMiddleware, function(req, res){
 		
 	});
 });
+/**
+ * Route "/editskill", Editamos una Habilidad en el perfil.
+ * @param {String} guid, Token del Perfil(permiso).
+ * @param {String} from, Nombre de la Habilidad a Cambiar.
+ * @param {String} to, Nombre de la Nueva Habilidad.
+ * @return {JSON}
+ *
+ */
 router.post('/editskill', multipartMiddleware, function(req, res){ // Eliminar skill en el perfil y crear uno nuevo.
 	var guid             = req.body.guid;
 	var from             = req.body.from;
@@ -1521,13 +1574,14 @@ router.post('/editskill', multipartMiddleware, function(req, res){ // Eliminar s
 		});	
 	});
 });
-// DELETE SKILL
-// Parameter:
-//  	Token
-//  	Nombre de Skill
-//
-// Return (Formato 7)
-//		Profile
+/**
+ * Route "/deleteskill", Eliminamos la Habilidad de el Perfil.
+ * @param {String} guid, Token del Perfil(permiso).
+ * @param {String} from, Nombre de la Habilidad a Cambiar.
+ * @param {String} to, Nombre de la Nueva Habilidad.
+ * @return {JSON}
+ *
+ */
 router.post('/deleteskill', multipartMiddleware, function(req, res){
 	var guid             = req.body.guid;
 	var name             = req.body.name;
@@ -1551,12 +1605,12 @@ router.post('/deleteskill', multipartMiddleware, function(req, res){
 		
 	});	
 });
-// VERIFY
-// Parameter:
-//  	Token
-//
-// Return (Formato 8)
-//		Verificado
+/**
+ * Route "/verify", Verificación de la cuenta.
+ * @param {String} guid, Token del Perfil(permiso).
+ * @return {JSON}
+ *
+ */
 router.post('/verify', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 	Tokenfunc.exist(guid, function(status, tokenData){
@@ -1627,16 +1681,17 @@ router.post('/verify', multipartMiddleware, function(req, res){
 		}
 	});
 });
-// SET PROFILE
-// Parameter:
-//  	Token
-// 		File - Profilepic
-//
-// Return (Formato 9)
-//		Profile
+/**
+ * Route "/setprofilepic", Cambiar la Imagen de perfil.
+ * @param {String} guid, Token del Perfil(permiso).
+ * @param {String} profilepic, Archivo.
+ * @param {String} path, Dirección donde poner el archivo. (***)
+ * @return {JSON}
+ *
+ */
 router.post('/setprofilepic', multipartMiddleware, function(req, res){
 	var guid             = req.body.guid;
-	var profilepic      = req.files.profilepic;
+	var profilepic       = req.files.profilepic;
 	var tmp_path         = profilepic.path;
 
 	Tokenfunc.exist(guid, function(status, tokenData){
@@ -1665,15 +1720,12 @@ router.post('/setprofilepic', multipartMiddleware, function(req, res){
 		}
 	});
 });
-// TOKEN EXISTS
-// Parameter:
-//  	Token
-//
-// Return (Formato 13)
-// 		User
-//		Profile
-//		Experiences
-//		Verificado
+/**
+ * Route "/token/exists", Revisar si el Token es Valido.
+ * @param {String} guid, Token del Perfil(permiso).
+ * @return {JSON}
+ *
+ */
 router.post('/token/exists', multipartMiddleware, function(req, res){
 	var guid = req.body.guid;
 
@@ -1743,11 +1795,12 @@ router.post('/token/exists', multipartMiddleware, function(req, res){
 		}
 	});
 });
-// RESEND EMAIL VERIFICATION
-// Parameter:
-//  	Token
-//
-// Return (Formato 13)
+/**
+ * Route "/send/verification", Reenviar el Correo de Verificación.
+ * @param {String} guid, Token del Perfil(permiso).
+ * @return {JSON}
+ *
+ */
 router.post('/send/verification', multipartMiddleware, function(req, res){
 	var guid = req.body.guid;
 
@@ -1779,11 +1832,12 @@ router.post('/send/verification', multipartMiddleware, function(req, res){
 		}
 	});
 });
-// PETICION EMPRESA
-// Parameter:
-//  	Token
-//
-// Return (Formato 14)
+/**
+ * Route "/company/petition", (***)
+ * @param {String} guid, Token del Perfil(permiso).
+ * @return {JSON}
+ *
+ */
 router.post('/company/petition', multipartMiddleware, function(req, res){
 	var guid = req.body.guid;
 	Tokenfunc.exist(guid, function(status, tokenData){
@@ -1802,6 +1856,12 @@ router.post('/company/petition', multipartMiddleware, function(req, res){
 		}
 	});
 });
+/**
+ * Route "/location", (***)
+ * @param {String} guid, Token del Perfil(permiso).
+ * @return {JSON}
+ *
+ */
 router.post('/location', multipartMiddleware, function(req, res){
 	var guid = req.body.guid;
 	var search = req.body.search;
@@ -1830,9 +1890,13 @@ router.post('/location', multipartMiddleware, function(req, res){
 			});
 		}
 	});
-
-
 });
+/**
+ * Route "/qrcode", Generamos el QrCode de un Perfil.
+ * @param {String} guid, Token del Perfil(permiso).
+ * @return {JSON}
+ *
+ */
 router.post('/qrcode',multipartMiddleware, function(req, res){
 	var guid = req.body.guid;
 	Tokenfunc.exist(guid, function(status, tokenData){
@@ -1860,7 +1924,12 @@ router.post('/qrcode',multipartMiddleware, function(req, res){
 });
 
 module.exports = router;
-
+/**
+ * validDate, Revisamos si la variable es un Objeto Date Valido.
+ * @param {Date} d, Objeto Date.
+ * @return {JSON}
+ *
+ */
 function validDate(d){
 	if ( Object.prototype.toString.call(d) === "[object Date]" ) {
 		if ( isNaN( d.getTime() ) ) {  // d.valueOf() could also work
@@ -1872,6 +1941,12 @@ function validDate(d){
 		return false;
 	}
 }
+/**
+ * explDate, Dividimos el string Date, 
+ * @param {String} birthday, Texto birthday que genera la libreria de la Edición de Perfil.
+ * @return {JSON}
+ *
+ */
 function explDate(birthday){
 	var x = birthday.split('-');
 
@@ -1881,6 +1956,15 @@ function explDate(birthday){
 
 	return year+"-"+month+"-"+day;
 }
+/**
+ * insertUpdateExperience, Guardar la Experience en el Perfil
+ * @param {String} err.
+ * @param {ProfileObject} profileData, Objeto Perfil
+ * @param {ExperienceObject} experienceData, Experience del Perfil a insertar.
+ * @param {String} callback.
+ * @return {Object}
+ *
+ */
 function insertUpdateExperience(err, profileData, experienceData, callback){
 	if(!err && experienceData){
 		Experiencefunc.profileGenerate(profileData, function(profileData){
