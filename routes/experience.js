@@ -42,7 +42,11 @@ var Skillfunc = require('../functions/skillfunc');
 var Historyfunc = require('../functions/historyfunc');
 var format = require('../functions/format');
 
-
+/**
+ * Route "/state", Lista de estados. no entra ningun parametro.
+ * @return {Object} Lista de estados.
+ *
+ */
 router.post('/state', multipartMiddleware, function(req, res){
 	City.find().distinct('state', function(error, states){
 		Generalfunc.response(200, states, function(response){
@@ -50,12 +54,19 @@ router.post('/state', multipartMiddleware, function(req, res){
 		});
 	});
 });
+/**
+ * Route "/city", Lista de Ciudades dentro de un Estado.
+ * @param {String} state, Nombre del Estado a buscar.
+ * @return {Object} Lista de Ciudades.
+ *
+ */
 router.post('/city', multipartMiddleware, function(req, res){
 	var state = req.body.state;
 
 	City.find({
 		state: state
 	}).select('_id name').exec(function(error, states){
+		// Ordena los nombres con Acentos. Error 1.
 		var nstates = states.sort( function(a,b){
 			var x = a.name;
 			return x.localeCompare(b.name);
@@ -66,6 +77,22 @@ router.post('/city', multipartMiddleware, function(req, res){
 
 	});
 });
+/**
+ * Route "/company/insert", Crear una empresa.
+ * @param {String} guid, Token.
+ * @param {String} name.
+ * @param {String} telefono.
+ * @param {String} web.
+ * @param {String} description.
+ * @param {String} calle.
+ * @param {String} colonia.
+ * @param {String} ciudad. Se envia en String pero por ObjectId.
+ * @param {String} estado.
+ * @param {String} numero.
+ * @param {String} postal.
+ * @return {Object} Lista de Ciudades.
+ *
+ */
 router.post('/company/insert', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 
@@ -154,19 +181,21 @@ router.post('/company/insert', multipartMiddleware, function(req, res){
 		}
 	});
 });
+/**
+ * Route "/job/get", Obtener la lista de Puestos/Ocupaciones.
+ * @param {String} guid, Token.
+ * @param {String} name, Texto a buscar.
+ * @return {Object} JSON.
+ *
+ */
 router.post('/job/get', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 	var name      = req.body.name;
-	console.log("Job/Get");
 
 	Tokenfunc.exist(guid, function(status, token){
-		console.log("Token");
 		if(status){
-			console.log("Token exists");
 			Experiencefunc.experienceJobGet(name, function(err, jobData){
-				console.log("ExperienceJob");
 				Generalfunc.response(200,jobData, function(response){
-					console.log("Response");
 					res.json(response);
 				})
 			});
@@ -177,6 +206,13 @@ router.post('/job/get', multipartMiddleware, function(req, res){
 		}
 	});
 });
+/**
+ * Route "/speciality/get", Obtener la lista de especialidades.
+ * @param {String} guid, Token.
+ * @param {String} name, Texto a buscar.
+ * @return {Object} JSON.
+ *
+ */
 router.post('/speciality/get', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 	var name      = req.body.name;
@@ -195,7 +231,13 @@ router.post('/speciality/get', multipartMiddleware, function(req, res){
 		}
 	});
 });
-
+/**
+ * Route "/sector/get", Obtener la lista de Sectores.
+ * @param {String} guid, Token.
+ * @param {String} name, Texto a buscar.
+ * @return {Object} JSON.
+ *
+ */
 router.post('/sector/get', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 	var name      = req.body.name;
@@ -214,6 +256,13 @@ router.post('/sector/get', multipartMiddleware, function(req, res){
 		}
 	});
 });
+/**
+ * Route "/company/get", Obtener la lista de Empresa.
+ * @param {String} guid, Token.
+ * @param {String} name, Texto a buscar.
+ * @return {Object} JSON.
+ *
+ */
 router.post('/company/get', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 	var name      = req.body.name;
@@ -232,6 +281,13 @@ router.post('/company/get', multipartMiddleware, function(req, res){
 		}
 	});
 });
+/**
+ * Route "/company/claim", Petición para avisar que cierto usuario mostro el contenido.
+ * @param {String} guid, Token.
+ * @param {String} id, Id de la empresa.
+ * @return {Object} JSON.
+ *
+ */
 router.post('/company/claim', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 	var id        = req.body.id;
@@ -271,6 +327,23 @@ router.post('/company/claim', multipartMiddleware, function(req, res){
 		}
 	});
 });
+/**
+ * Route "/company/update", Petición para actualizar la Empresa.
+ * @param {String} guid, Token.
+ * @param {String} id, Id de Empresa.
+ * @param {String} description, Descripción de la empresa.
+ * @param {String} calle.
+ * @param {String} numero.
+ * @param {String} colonia.
+ * @param {String} cp.
+ * @param {String} estado.
+ * @param {String} ciudad.
+ * @param {String} tel.
+ * @param {String} web.
+ * @param {String} name, El nuevo nombre.
+ * @return {Object} JSON.
+ *
+ */
 router.post('/company/update', multipartMiddleware, function(req, res){ // Update Description
 	var guid        = req.body.guid;
 	var id          = req.body.id;
@@ -409,6 +482,13 @@ router.post('/company/update', multipartMiddleware, function(req, res){ // Updat
 		}
 	});
 });
+/**
+ * Route "/company/getid", Petición obtener los datos de la empresa.
+ * @param {String} guid, Token.
+ * @param {String} id, Id de Empresa.
+ * @return {Object} JSON.
+ *
+ */
 router.post('/company/getid', multipartMiddleware, function(req, res){
 	var guid      = req.body.guid;
 	var id        = req.body.id;
@@ -492,7 +572,6 @@ router.post('/company/getid', multipartMiddleware, function(req, res){
 			res.json(response);
 		});
 	}
-	
 });
 
 module.exports = router;

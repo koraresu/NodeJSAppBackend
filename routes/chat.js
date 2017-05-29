@@ -1,3 +1,8 @@
+/**
+ * Las rutas de Chat, aqui se hacen las peticiones POST de la aplicación, ademas, se estan exportando algunas fuciones que se usan en los sockets de el chat.
+ *
+ * @module Helpers
+ */
 var express = require('express');
 var router = express.Router();
 
@@ -410,18 +415,23 @@ router.post('/new/conversation', multipartMiddleware, function(req, res){
 						Networkfunc.PublicId(public_id, function(statusPublic, profileAnotherData){
 
 							if(statusPublic){
+								// Buscamos la conversación entre los dos usuarios.
 								var find = {
 									"profiles": {
 										"$all": [profileData._id,profileAnotherData._id],
 									}
 								};
 
-								Conversation.findOne(find).populate('profiles').exec(function(errConversation, conversationData){
+								Conversation.findOne(find)
+								.populate('profiles')
+								.exec(function(errConversation, conversationData){
 									if(!errConversation && conversationData){
+										// Si existe. Se entrega por json.
 										Generalfunc.response(200, conversationData, function(response){
 											res.json(response);
 										});
 									}else{
+										// Si no existe, se crea la conversacion.
 										var conversation = new Conversation({
 											profiles: [
 											profileData._id,
@@ -432,8 +442,13 @@ router.post('/new/conversation', multipartMiddleware, function(req, res){
 											message: null,
 											order: Date.now()
 										});
+										// Se guarda.
 										conversation.save(function(errConversation, conversationData){
-											Conversation.findOne({ _id: conversationData._id }).populate('profiles').exec(function(errConversation, conversationData){
+											// Se vuelve a buscar, porque, en ocaciones el save no me regresa el Objeto bien.
+											Conversation.findOne({
+												_id: conversationData._id
+											}).populate('profiles')
+											.exec(function(errConversation, conversationData){
 												Generalfunc.response(200, conversationData, function(response){
 													res.json(response);
 												});
@@ -854,7 +869,6 @@ router.notification_accept2C = function(data, success, fail){
  			Generalfunc.isValid(id, function(id){
  				Notificationfunc.getOne2Callback({ _id: id }, function(notificationData){
  					var bool_Network = function(networkData){
-
  						Notificationfunc.click({ _id: id },stat, function(notificationData){
 
  							var ajeno = profile_ajeno(profileData._id, networkData.profiles);
@@ -989,15 +1003,12 @@ router.notification_accept2C = function(data, success, fail){
  					}
 
  					if(notificationData.tipo == 1){
-
-
-
  						Networkfunc.new_friend(notificationData.profile_emisor, notificationData.profile_mensaje, function(networkData){
  							Network.findOne({ _id: networkData._id}).populate('profiles').exec(function(errNetwork, networkData){
  								bool_uno_Network(networkData);
  							});
  						}, function(st){
- 							fail(4+"!"+st);
+ 							fail(4);
  						});
  					}else if(notificationData.tipo == 3){
 
@@ -1005,11 +1016,11 @@ router.notification_accept2C = function(data, success, fail){
 
  						if(stat == true){
  							Networkfunc.accept({ _id: notificationData.network }, bool_Network, function(st){
- 								fail(4+"!"+st);
+ 								fail(4);
  							});
  						}else{
  							Networkfunc.ignore({ _id: notificationData.network }, bool_Network, function(st){
- 								fail(4+"!"+st);
+ 								fail(4);
  							});
  						}
  					}
@@ -1066,7 +1077,7 @@ router.deviceajeno = function(conversation, socket, callback){
 	});
 };
 /**
- * apple_push. (**)
+ * apple_push, Servia para acomodar los datos listos para ser enviados por el PUSH. Ahora se usan las funciones de APNfunc. (**)
  * @param {Object} type, Tipo de Push.
  * @param {NotificationID|ConversationID} id, ID de el Tipo de PUSH.
  * @param {Socket} socket, Socket de Usuario.
@@ -1118,7 +1129,7 @@ router.apple_push = function(type, id, socket, success, fail){
 	}	
 };
 /**
- * mensaje_create. (**)
+ * mensaje_create.  Servia para crear los mensajes de las Notificaciones.(**)
  * @param {Object} file, Archivo.
  * @param {String} new_path, Direccion donde guardar la imagen.
  * @param {function} callback, 
@@ -1165,11 +1176,7 @@ router.mensaje_create = function(data, nombre_emisor, nombre_mensaje){
 	return { mensaje: message, class: clase };
 };
 /**
- * setActive. (**)
- * @param {Object} file, Archivo.
- * @param {String} new_path, Direccion donde guardar la imagen.
- * @param {function} callback, 
- * @return {Object} Acceso a el Objeto de la Libreria de Apple Push Notification ya configurada.
+ * setActive. Servia para activar una conversacion. (**)
  *
  */
 function setActive(conversation, profileID, success, fail){
@@ -1225,11 +1232,11 @@ function setReadMessage(conversation, success){
 	});
 }
 router.setReadMessage = setReadMessage;
-router.setActive     = setActive;
-router.sendPushtoAll = Generalfunc.sendPushtoAll;
-router.sendPushOne   = Generalfunc.sendPushOne;
-router.profile_equal = profile_equal
-module.exports = router;
+router.setActive      = setActive;
+router.sendPushtoAll  = Generalfunc.sendPushtoAll;
+router.sendPushOne    = Generalfunc.sendPushOne;
+router.profile_equal  = profile_equal
+module.exports        = router;
 /**
  * profile_ajeno, Ya esta escrita en Generalfunc, puede ser remplazada solo tienes que anexar la variable "number".
  */

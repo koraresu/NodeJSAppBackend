@@ -1,0 +1,4 @@
+1.- Mongo no ordena correctamente los Acentos.
+	- Mongo no permite ordenar correctamente los nombres, para esto hay dos soluciones:
+		- Guardar en otro dato el nombre/titulo/texto en minusculas y sin acentos, y ordenarlo por ese elemento.
+		- No ordenarlo por Mongo, y hacer el ordenamiento por sort.
