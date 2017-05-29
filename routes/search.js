@@ -1,3 +1,8 @@
+/**
+ * Las Rutas de las Busquedas.
+ *
+ * @module Rutas.
+ */
 var express = require('express');
 var router = express.Router();
 
@@ -43,6 +48,13 @@ var Skillfunc = require('../functions/skillfunc');
 var Historyfunc = require('../functions/historyfunc');
 var format = require('../functions/format');
 
+/**
+ * Route "/general", Busqueda General. (***)
+ * @param {String} guid, Token del Perfil(permiso).
+ * @param {String} search, Texto Buscado.
+ * @return {[ProfileObject]}
+ *
+ */
 router.post('/general', multipartMiddleware, function(req, res){
 	var text = req.body.search;
 	var guid       = req.body.guid;
@@ -117,13 +129,19 @@ router.post('/general', multipartMiddleware, function(req, res){
 		}
 	});
 });
+/**
+ * Route "/general/network", Busqueda Hechas en la Aplicación.
+ * @param {String} guid, Token del Perfil(permiso).
+ * @param {String} search, Texto Buscado.
+ * @return {[ProfileObject]}
+ *
+ */
 router.post('/general/network', multipartMiddleware, function(req, res){
-	var text = req.body.search;
-	var guid       = req.body.guid;
+	var guid   = req.body.guid;
+	var text   = req.body.search;
 
-
-	text = omitir( text );
-	text = Generalfunc.insensitive( text );
+	text       = omitir( text );
+	text       = Generalfunc.insensitive( text );
 
 	var reg  = new RegExp(text, "i");
 
@@ -262,9 +280,13 @@ router.post('/general/network', multipartMiddleware, function(req, res){
 		}
 	});
 });
-router.post('/friend', multipartMiddleware, function(req, res){
-
-});
+/**
+ * Route "/get", Busquedan Hechas del Usuario. 
+ * @param {String} guid, Token del Perfil(permiso).
+ * @param {String} search, Texto a Buscar.
+ * @return {[SearchObject]}
+ *
+ */
 router.post('/get', multipartMiddleware, function(req, res){
 	var guid       = req.body.guid;
 	Tokenfunc.exist(guid, function(status, tokenData){
@@ -289,6 +311,13 @@ router.post('/get', multipartMiddleware, function(req, res){
 		}
 	});
 });
+/**
+ * Route "/save", Guardar Busquedan Hechas del Usuario.
+ * @param {String} guid, Token del Perfil(permiso).
+ * @param {String} search, Texto a Buscar.
+ * @return {[SearchObject]}
+ *
+ */
 router.post('/save', multipartMiddleware, function(req, res){
 	var guid       = req.body.guid;
 	var text       = req.body.search;
@@ -352,6 +381,12 @@ router.post('/save', multipartMiddleware, function(req, res){
 	});
 });
 module.exports = router;
+/**
+ * omitir, Omitir palabras en las busquedas.
+ * @param {String} text, texto al cual le quitaremos las palabras.
+ * @return {String} texto procesado.
+ *
+ */
 function omitir(text){
 
 	if(text == undefined){
