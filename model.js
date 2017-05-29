@@ -1,3 +1,8 @@
+/**
+ * Schema de la Base de Datos.
+ *
+ * @module Model
+ */
 var mongoose   = require('mongoose');
 
 mongoose.Promise = global.Promise;
@@ -27,10 +32,7 @@ var logMiddleware = function(collection, action,doc, ca){
     ca(err, logData);
   });
 }
-
 /*******************************************/
-
-
 var HistorySchema = new Schema({
   id_numerico: { type: Number },
   profile_id: { type: Schema.Types.ObjectId, ref: 'Profile' },
@@ -95,6 +97,17 @@ profileSchema.post('save', function(doc, next){
     next();
   });
 });
+profileSchema.post('remove', function(doc, next){
+  logMiddleware("profile","remove", doc, function(err, logData){
+    next();
+  });
+});
+profileSchema.post('update', function(doc, next){
+  logMiddleware("profile","update", doc, function(err, logData){
+    next();
+  });
+});
+/*******************************************/
 var deviceSchema = new Schema({
   token:   String,
   profile: { type: Schema.Types.ObjectId, ref: 'Profile' },
@@ -106,7 +119,6 @@ deviceSchema.post('save', function(doc, next){
     next();
   });
 });
-
 deviceSchema.post('remove', function(doc, next){
   logMiddleware("device","remove", doc, function(err, logData){
     next();
@@ -170,7 +182,6 @@ locationSchema.post('update', function(doc, next){
     next();
   });
 });
-
 /*******************************************/
 var CompanyClaimSchema = new Schema({
   profile: { type: Schema.Types.ObjectId, ref: 'Profile' },
@@ -193,7 +204,6 @@ CompanyClaimSchema.post('update', function(doc, next){
     next();
   });
 });
-
 /*******************************************/
 var NetworkSchema = new Schema({
 	accepted: Boolean,
@@ -223,7 +233,6 @@ var companyCreatorSchema = new Schema({
 },{
   timestamps: true
 });
-
 companyCreatorSchema.post('save', function(doc, next){
   logMiddleware("company_creator","save", doc, function(err, logData){
     next();
@@ -310,7 +319,6 @@ experienceSchema.post('update', function(doc, next){
     next();
   });
 });
-
 /*******************************************/
 var OnlineSchema = new Schema({
   profiles: { type: Schema.Types.ObjectId, ref: 'Profile' },
@@ -358,7 +366,6 @@ ConversationSchema.post('update', function(doc, next){
     next();
   });
 });
-
 /*******************************************/
 var MessageSchema = new Schema({
   conversation: { type: Schema.Types.ObjectId, ref: 'Conversation' },
@@ -384,7 +391,6 @@ MessageSchema.post('update', function(doc, next){
     next();
   });
 });
-
 /*******************************************/
 var jobSchema = new Schema({
   name: String,
@@ -408,7 +414,6 @@ jobSchema.post('update', function(doc, next){
     next();
   });
 });
-
 /*******************************************/
 var FeedbackSchema = new Schema({
 	profile_id: { type: Schema.Types.ObjectId, ref: 'Profile' },
@@ -431,7 +436,6 @@ FeedbackSchema.post('update', function(doc, next){
     next();
   });
 });
-
 /*******************************************/
 var reviewSchema = new Schema({
 	title:      String,
@@ -457,7 +461,6 @@ reviewSchema.post('update', function(doc, next){
     next();
   });
 });
-
 /*******************************************/
 var SearchSchema = new Schema({
   profile_id: { type: Schema.Types.ObjectId, ref: 'Profile' },
@@ -480,7 +483,6 @@ SearchSchema.post('update', function(doc, next){
     next();
   });
 });
-
 /*******************************************/
 var sectorSchema = new Schema({
   name:  String,
@@ -493,7 +495,6 @@ var sectorSchema = new Schema({
 },{
   timestamps: true
 });
-
 sectorSchema.post('save', function(doc, next){
   logMiddleware("sector","save", doc, function(err, logData){
     next();
@@ -509,8 +510,6 @@ sectorSchema.post('update', function(doc, next){
     next();
   });
 });
-
-
 /*******************************************/
 var skillsSchema = new Schema({
   name:   { type: String },
@@ -532,7 +531,6 @@ skillsSchema.post('update', function(doc, next){
     next();
   });
 });
-
 /*******************************************/
 var specialitySchema = new Schema({
   name: String,
@@ -555,7 +553,6 @@ specialitySchema.post('update', function(doc, next){
     next();
   });
 });
-
 /*******************************************/
 var tokenSchema = new Schema({  
   generated_id: { type: String},
@@ -578,7 +575,6 @@ tokenSchema.post('update', function(doc, next){
     next();
   });
 });
-
 /*******************************************/
 var userSchema = new Schema({
   email: { type: String },
@@ -644,7 +640,6 @@ var PushEventSchema = new Schema({
   type:  Number,  // 1 = Notificacion | 0 = Mensaje
   notification: { type: Schema.Types.ObjectId, ref: 'Notification' },
   message: { type: Schema.Types.ObjectId, ref: 'Message' },
-  
 },{
   timestamps: true
 });
@@ -670,7 +665,6 @@ var PushSchema = new Schema({
 },{
   timestamps: true
 });
-
 PushSchema.post('save', function(doc, next){
   logMiddleware("push","save", doc, function(err, logData){
     next();
@@ -686,7 +680,6 @@ PushSchema.post('update', function(doc, next){
     next();
   });
 });
-
 /*******************************************/
 var PaisSchema = new Schema({
   name: { type: String }
@@ -706,7 +699,6 @@ PaisSchema.post('update', function(doc, next){
     next();
   });
 });
-
 /*******************************************/
 var CiudadSchema = new Schema({
     "id":    { type: String },
@@ -739,7 +731,6 @@ var EmailSchema = new Schema({
   timestamps: true
 });
 /*******************************************/
-
 var GlosarySchema = new Schema({
   "text": String,
   "replace": String,
@@ -747,7 +738,6 @@ var GlosarySchema = new Schema({
 }, {
   timestamps: true
 });
-
 GlosarySchema.post('save', function(doc, next){
   logMiddleware("glosary","save", doc, function(err, logData){
     next();
@@ -773,43 +763,57 @@ var VersionSchema = new Schema({
   device_width: String,
   device_height: String,
 });
+VersionSchema.post('save', function(doc, next){
+  logMiddleware("version","save", doc, function(err, logData){
+    next();
+  });
+});
+VersionSchema.post('remove', function(doc, next){
+  logMiddleware("version","remove", doc, function(err, logData){
+    next();
+  });
+});
+VersionSchema.post('update', function(doc, next){
+  logMiddleware("version","update", doc, function(err, logData){
+    next();
+  });
+});
 /*******************************************/
-
-// Company
-exports.company      = db.model( 'Company' , companySchema );
-exports.comp_creator = db.model('CompanyCreator', companyCreatorSchema);
-exports.experience   = db.model( 'Experience' , experienceSchema );
-exports.job          = db.model( 'Job' , jobSchema );
-exports.location     = db.model( 'GPS', locationSchema);
+// Experience
+exports.company      = db.model( 'Company',           companySchema );
+exports.comp_creator = db.model('CompanyCreator',     companyCreatorSchema);
+exports.experience   = db.model( 'Experience',        experienceSchema );
+exports.job          = db.model( 'Job',               jobSchema );
+exports.location     = db.model( 'GPS',               locationSchema);
 exports.company_claim     = db.model( 'CompanyClaim', CompanyClaimSchema);
-exports.skill        = db.model( 'Skill' , skillsSchema );
-exports.speciality   = db.model( 'Speciality' , specialitySchema );
-exports.sector       = db.model( 'Sector' , sectorSchema );
+exports.skill        = db.model( 'Skill',             skillsSchema );
+exports.speciality   = db.model( 'Speciality',        specialitySchema );
+exports.sector       = db.model( 'Sector',            sectorSchema );
 // Profile
-exports.profile      = db.model( 'Profile' , profileSchema );
-exports.network      = db.model( 'Network' , NetworkSchema );
-exports.review       = db.model( 'Review' , reviewSchema );
-exports.search       = db.model( 'Search' , SearchSchema );
-exports.token        = db.model( 'Token', tokenSchema );
-exports.user         = db.model( 'User' , userSchema );
-exports.forgot       = db.model( 'Forgot', ForgotSchema);
-exports.notification = db.model( 'Notification', NotificationSchema );
+exports.profile      = db.model( 'Profile',           profileSchema );
+exports.network      = db.model( 'Network',           NetworkSchema );
+exports.review       = db.model( 'Review',            reviewSchema );
+exports.search       = db.model( 'Search',            SearchSchema );
+exports.token        = db.model( 'Token',             tokenSchema );
+exports.user         = db.model( 'User',              userSchema );
+exports.forgot       = db.model( 'Forgot',            ForgotSchema);
+exports.notification = db.model( 'Notification',      NotificationSchema );
 // History
-var history          = db.model( 'History' , HistorySchema );
+var history          = db.model( 'History',           HistorySchema );
 exports.history      = history;
-exports.feedback     = db.model( 'Feedback' , FeedbackSchema );
+exports.feedback     = db.model( 'Feedback',          FeedbackSchema );
 // Chat
-exports.version      = db.model( 'Version', VersionSchema );
-exports.device       = db.model( 'Device', deviceSchema );
-exports.pushevent    = db.model( 'PushEvent', PushEventSchema );
-exports.push         = db.model( 'Push', PushSchema );
-exports.online       = db.model( 'Online', OnlineSchema );
-exports.conversation = db.model( 'Conversation' , ConversationSchema );
-exports.message      = db.model( 'Message' , MessageSchema );
-exports.log          = db.model( 'Log' , LogSchema );
+exports.version      = db.model( 'Version',           VersionSchema );
+exports.device       = db.model( 'Device',            deviceSchema );
+exports.pushevent    = db.model( 'PushEvent',         PushEventSchema );
+exports.push         = db.model( 'Push',              PushSchema );
+exports.online       = db.model( 'Online',            OnlineSchema );
+exports.conversation = db.model( 'Conversation',      ConversationSchema );
+exports.message      = db.model( 'Message',           MessageSchema );
+exports.log          = db.model( 'Log',               LogSchema );
 // Localization
-exports.city         = db.model('City', CiudadSchema);
-
+exports.city         = db.model('City',               CiudadSchema);
+exports.pais         = db.model('Pais',               PaisSchema);
 //Email
-exports.email        = db.model('Email', EmailSchema);
-exports.glosary      = db.model('Glosary', GlosarySchema);
+exports.email        = db.model('Email',              EmailSchema);
+exports.glosary      = db.model('Glosary',            GlosarySchema);
