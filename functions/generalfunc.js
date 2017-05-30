@@ -216,7 +216,7 @@ exports.cleanArray = function(actual) {
  * @param {String} data, Datos a remplazar en el template.
  * @param {String} email, Correo a donde se enviara.
  * @param {String} asunto, Asunto del Correo.
- * @param {function} callback.
+ * @param {function} callback
  * @callback {bool,HTML(si es true)}
  *
  */
@@ -695,7 +695,7 @@ function NoReaded(profile_id, success, fail){
  * profiletosocket, Obtener todos los Sockets relacionados a un Perfil.
  *
  * @param {ObjectId} profile_id, ID de Perfil
- * @param {function} callback.
+ * @param {function} callback
  * @callback {Error,Arreglo de Sockets}.
  *
  */

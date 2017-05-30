@@ -241,8 +241,8 @@ function friendProfileFormat(profile){
  * MyProfileQueryFormat, Formatear un Perfil en base a una query iniciada.
  *
  * @param {TokenObject} query, Consulta.
- * @param {TokenObject} callback.
- * @callback {function} callback.
+ * @param {TokenObject} callback
+ * @callback {function} callback
  *
  */
 function MyProfileQueryFormat(query, callback){
@@ -279,8 +279,8 @@ function MyProfileQueryFormat(query, callback){
  * MyProfileFormat, Formatear un Perfil en base a un id.
  *
  * @param {TokenObject} profile, Datos del Perfil a formatear.
- * @param {TokenObject} callback.
- * @callback {function} callback.
+ * @param {TokenObject} callback
+ * @callback {function} callback
  *
  */
 function MyProfileFormat(profile, callback){
@@ -312,8 +312,8 @@ function MyProfileFormat(profile, callback){
  * profileNewsFormat, Formatear un Perfil para las noticias.
  *
  * @param {TokenObject} profile, Datos del Perfil a formatear.
- * @param {TokenObject} callback.
- * @callback {function} callback.
+ * @param {TokenObject} callback
+ * @callback {function} callback
  *
  */
 function profileNewsFormat(profile){
@@ -338,8 +338,8 @@ function profileNewsFormat(profile){
  * profileformat, Formatear un Perfil en General.
  *
  * @param {TokenObject} profile, Datos del Perfil a formatear.
- * @param {TokenObject} callback.
- * @callback {function} callback.
+ * @param {TokenObject} callback
+ * @callback {function} callback
  *
  */
 function profileformat(profile){

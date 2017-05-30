@@ -579,7 +579,7 @@ function formato(profileData, userData){
  	}
  	return true;
  }
- function private(status, statusFriend, statusIsFriendA){
+ function priv(status, statusFriend, statusIsFriendA){
  	var privado = false;
  	switch(status){
  		case 0:
@@ -624,7 +624,7 @@ function formato(profileData, userData){
  	}
  	return privado;
  }
- exports.private = private;
+ exports.private = priv;
  exports.IsJsonString = IsJsonString
  exports.logs = logs
  exports.permitedData = permitedData

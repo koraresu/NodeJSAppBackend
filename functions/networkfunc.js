@@ -74,7 +74,7 @@ function connectCheck(find, success, fail){
  * @param {Object} profileData, Data de Perfil.
  * @param {ObjectId} conv, ID de Conversacion.
  * @param {String} text, texto para crear Mensaje.
- * @param {function} callback.
+ * @param {function} callback
  * @callback {Bool,MessageObject}
  *
  */
@@ -127,7 +127,7 @@ function otherProfile(profiles, profile_id,cb){
  *
  * @param {Object} profile_a, Primer Perfil.
  * @param {ObjectId} profile_b, Segundo Perfil.
- * @param {function} callback.
+ * @param {function} callback
  * @callback {function}
  *
  */
@@ -165,7 +165,7 @@ function checkconversation(profile_a, profile_b, callback){
  * PublicId, Obtener el Perfil buscando por su public_id
  *
  * @param {ObjectId} public_id, Public_id del Perfil.
- * @param {function} callback.
+ * @param {function} callback
  * @callback {function}
  *
  */
@@ -189,7 +189,7 @@ function PublicId(public_id, callback){
  * getListFriends, Obtener la lista de Amigos de cierto Perfil.(***) La funcion de abajo es la que se usa.
  *
  * @param {ObjectId} profile_id, Perfil a buscar.
- * @param {function} callback.
+ * @param {function} callback
  * @callback {function}
  *
  */
@@ -226,7 +226,7 @@ function getListFriends(profile_id,callback){
  * getListFriends, Obtener la lista de Amigos de cierto Perfil.
  *
  * @param {ObjectId} profile_id, Perfil a buscar.
- * @param {function} callback.
+ * @param {function} callback
  * @callback {function}
  *
  */
@@ -277,7 +277,7 @@ function getNoMyID(profilesId, profile_id){
  * isNeightbor, Revisar si el "profile_id" y "another_id" son vecinos.
  * @param {ProfileObject} profile_id, Perfil a buscar.
  * @param {ProfileObject} another_id, Perfil a Encontrar.
- * @param {function} callback.
+ * @param {function} callback
  * @callback {type} 0 = No Amigo, No Vecino | 2 = No Amigo, Vecino | 1 = Amigo
  *
  */
@@ -314,7 +314,7 @@ function isNeightbor(profile_id, another_id, callback){
  * isFriend, Revisar si el "profile_id" y "another_id" son amigos.
  * @param {ProfileObject} profile_id, Perfil a buscar.
  * @param {ProfileObject} another_id, Perfil a Encontrar.
- * @param {function} callback.
+ * @param {function} callback
  * @callback {Bool}
  *
  */
@@ -342,7 +342,7 @@ function isFriend(profile_id, another_id, callback){
  * typeFriend, Revisar si una solicitud es enviada solamente, o aceptada.
  * @param {ProfileObject} profile_id, Perfil a buscar.
  * @param {ProfileObject} another_id, Perfil a Encontrar.
- * @param {function} callback.
+ * @param {function} callback
  * @callback {Numeric} 2 = Aceptado | 1 = Enviada | 0 = No Solicitud
  *
  */
@@ -370,7 +370,7 @@ function typeFriend(profile_id, another_id, callback){
  * type, Revisar las conexiones que existen entre estos usuarios. usamos isNeightbor de mas arriba para hacer el proceso.
  * @param {ProfileObject} profile_id, Perfil a buscar.
  * @param {ProfileObject} another_id, Perfil a Encontrar.
- * @param {function} callback.
+ * @param {function} callback
  * @callback {Numeric}
  *
  */
@@ -568,8 +568,8 @@ function recomendar(data, success, fail){
 /**
  * create_notificacion_recomendacion, Crea la Notificaciones para la recomendacion
  * @param {Object} data, Datos de la Notificacion.
- * @param {function} callback.
- * @param {function} io, Socket. (***)
+ * @param {function} callback
+ * @param {function} io, Socket (***)
  * @callback {success|fail}
  *
  */

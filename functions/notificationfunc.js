@@ -45,7 +45,7 @@ var APNfunc      = require('./apnfunc');
 /**
  * get, Buscar Notificacion.
  * @param {Query} search, Query con que buscar la Notificacion.
- * @param {function} callback.
+ * @param {function} callback
  * @callback {function}
  *
  */
@@ -66,7 +66,7 @@ exports.get = function(search, callback){
 /**
  * get, Buscar una Notificacion.
  * @param {Query} search, Query con que buscar la Notificacion.
- * @param {function} callback.
+ * @param {function} callback
  * @callback {function}
  *
  */
@@ -163,7 +163,7 @@ exports.addOrGet        = function(search, d, callback){
 /**
  * add, Crear Notificacion.
  * @param {Query} d, Datos para crearla.
- * @param {function} callback.
+ * @param {function} callback
  * @callback {function}
  *
  */
@@ -205,8 +205,8 @@ exports.add = function(d, callback, io){
 /**
  * click, Al Interactuar con una Notificación.
  * @param {Query} search, Datos para buscar la Notificación.
- * @param {Bool} stat, Estado de la Interaccion. Aceptada = True | Rechazada = False.
- * @param {function} callback.
+ * @param {Boolean} stat, Estado de la Interaccion. Aceptada = True | Rechazada = False.
+ * @param {function} callback
  * @callback {function}
  *
  */

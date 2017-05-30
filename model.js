@@ -2,6 +2,7 @@
  * Schema de la Base de Datos.
  *
  * @module Model
+ * @version 2.0
  */
 var mongoose        = require('mongoose');
 mongoose.Promise    = global.Promise;
@@ -11,6 +12,9 @@ var db_lnk          = 'mongodb://localhost:27017/hive';
 var db              = mongoose.createConnection(db_lnk);
 /**
  * Creamos el Schema para guardar los movimientos en la Base de datos.
+ * @param {String} table     El nombre de la colección.
+ * @param {String} action    Evento que se realizó.
+ * @param {Mixed}  data      El documento manipulado.
  *
  */
 var LogSchema = new Schema({

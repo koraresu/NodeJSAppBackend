@@ -47,12 +47,12 @@ function get_interfaz(){
 	return Interfaz;
 };
 /**
- * socket_to_profile, Tomamos el Token del socket y obtenemos el Perfil.
+ * socket_to_profile, Tomamos el Token del socket y obtenemos el Perfil
  *
- * @param {Object} socket, socket de un usuario online.
- * @param {function} success, Callback todo salga bien.
- * @param {function} fail, Callback Error.
- * @callback {success|fail}
+ * @param {Object}       socket    Socket de un usuario online
+ * @param {function}     success   Callback todo salga bien
+ * @param {function}     fail      Callback Error
+ * @callback {function}
  *
  */
 function socket_to_profile(socket, success, fail){
@@ -71,10 +71,10 @@ function socket_to_profile(socket, success, fail){
 /**
  * get_sockets, Tomamos el ProfileID y Obtenemos los Sockets/Conexiones al tiempo.
  *
- * @param {Object} profile_id, Perfil a Buscar.
- * @param {function} itemFn, Callback Proceso de cada Elemento.
- * @param {function} resultFn, Callback Proceso al Finalizar los individuales.
- * @callback {success|fail}
+ * @param {Object}       profile_id   Perfil a Buscar
+ * @param {function}     itemFn       Callback Proceso de cada Elemento
+ * @param {function}     resultFn     Callback Proceso al Finalizar los individuales
+ * @callback {function}
  *
  */
 function get_sockets(profile_id, itemFn, resultFn ){
@@ -89,10 +89,10 @@ function get_sockets(profile_id, itemFn, resultFn ){
 /**
  * get_devices, Tomamos el ProfileID y Obtenemos los Dispositivos.
  *
- * @param {Object} profile_id, Perfil a Buscar.
- * @param {function} itemFn, Callback Proceso de cada Elemento.
- * @param {function} resultFn, Callback Proceso al Finalizar los individuales.
- * @callback {success|fail}
+ * @param {Object}      profile_id    Perfil a Buscar
+ * @param {function}    itemFn        Callback Proceso de cada Elemento
+ * @param {function}    resultFn      Callback Proceso al Finalizar los individuales
+ * @callback {function}
  *
  */
 function get_devices(profile_id, itemFn, resultFn ){
@@ -105,11 +105,11 @@ function get_devices(profile_id, itemFn, resultFn ){
 	});
 };
 /**
- * text_create, Crear Mensajes Para las Notificaciones.
+ * text_create, Crear Mensajes Para las Notificaciones
  *
- * @param {String} collection, Nombre de Coleccion.
- * @param {Object} data, Datos de la Coleccion.
- * @return {Object} Json.
+ * @param {String}    collection   Nombre de Coleccion
+ * @param {Object}    data         Datos de la Coleccion
+ * @return {Object}   Json.
  *
  */
 function text_create(collection, data ){
@@ -123,12 +123,12 @@ function text_create(collection, data ){
 /**
  * sendNot, Se envian PUSH, Es una Funcion que obtiene todos los elementos.
  *
- * @param {Object} profile_id, ProfileID
- * @param {Object} title, Mensajes en la Notificacion.
- * @param {Object} payload, Datos anexados a la Notificacion.
- * @param {Object} badge, Numero de Elementos No Leidos en la Notificacion.
- * @param {Object} success, Callback
- * @callback {success}
+ * @param {Object}       profile_id   ProfileID
+ * @param {Object}       title        Mensajes en la Notificacion
+ * @param {Object}       payload      Datos anexados a la Notificacion
+ * @param {Object}       badge        Numero de Elementos No Leidos en la Notificacion
+ * @param {Object}       success      Callback
+ * @callback {function}
  *
  */
 function sendNot(profile_id, title, payload, badge, success){
@@ -169,9 +169,9 @@ function sendNot(profile_id, title, payload, badge, success){
 /**
  * profile_notification, Genero el ProfileEmisor, y ProfileMensaje para la creacion de los textos de Notificaciones.
  *
- * @param {String} collection, Nombre de Colección.
- * @param {String|Integer} notData, Datos de Notificación.
- * @return {Object} JSON.
+ * @param {String}          collection   Nombre de Colección
+ * @param {String|Integer}  notData      Datos de Notificación
+ * @return {Object}
  *
  */
 function profile_notification(collection, notData){
@@ -197,11 +197,11 @@ function profile_notification(collection, notData){
 /**
  * sendNum, Hacemos PUSH vacios con nuevos No Leidos.(Cuando se debe reducir el numero.) Este solo se usa para asegurar.
  *
- * @param {String} profile_id, ProfileID
- * @param {String|Integer} num, Cantidad en Badge a Enviar. Si es String, se castea.
- * @param {String|Integer} io, Socket a enviar. Esto no es necesario.
- * @param {Object} success, Callback
- * @callback {success}
+ * @param {String}            profile_id   ID de Perfil
+ * @param {String|Integer}    num          Cantidad en Badge a Enviar
+ * @param {String|Integer}    io           Socket a enviar (Esto no es necesario)
+ * @param {Object}            success      Callback
+ * @callback {function}
  *
  */
 function sendNum(profile_id, num, io, success){
@@ -236,10 +236,10 @@ function sendNum(profile_id, num, io, success){
 /**
  * sendBadge, Hacemos PUSH vacios con nuevos No Leidos.(Cuando se debe reducir el numero.)
  *
- * @param {String} profile_id, ProfileID
- * @param {String|Integer} num, Cantidad en Badge a Enviar. Si es String, se castea.
- * @param {Object} success, Callback
- * @callback {success}
+ * @param {String}           profile_id    ProfileID
+ * @param {String|Integer}   num           Cantidad en Badge a Enviar. Si es String, se castea.
+ * @param {Object}           success       Callback
+ * @callback {function}
  *
  */
 function sendBadge(profile_id, num,  success){
@@ -275,10 +275,10 @@ function sendBadge(profile_id, num,  success){
 /**
  * sendMessNotification, Enviamos los PUSH de Mensajes.
  *
- * @param {ObjectID} id, ID de Mensaje
- * @param {Object} success, Callback
- * @param {Object} io, objeto de Socket.
- * @callback {success}
+ * @param {ObjectID}        id       ID de Mensaje
+ * @param {Object}          success  Callback
+ * @param {Object}          io       Objeto de Socket
+ * @callback {function}
  *
  */
 function sendMessNotification(id, success, io){
@@ -344,8 +344,8 @@ function sendMessNotification(id, success, io){
 /**
  * sendNotification, Enviamos los PUSH de Notificaciones, usando el id para procesar todo.
  *
- * @param {Object} id, ID de la notificacion.
- * @param {function} success, Callback.
+ * @param {Object}       id       ID de la notificacion
+ * @param {function}     success  Callback
  * @callback {function}
  *
  */
@@ -392,9 +392,9 @@ function sendNotification(id, sucess){
 /**
  * add, Crea un Push Event para gestionar los No Leidos.
  *
- * @param {Object} d, Datos para Generar el Push en la DB.
- * @param {Object} success, Callback todo bien.
- * @param {Object} fail, Callback Error.
+ * @param {Object}        d        Datos para Generar el Push en la DB
+ * @param {Object}        success  Callback todo bien
+ * @param {Object}        fail     Callback Error
  * @callback {function}
  *
  */
@@ -411,11 +411,11 @@ function add(d, success, fail){
 /**
  * addOrGet, Revisa si un Push Event existe, si no es creado.
  *
- * @param {Object} type, 1 si es Notificacion, 0 si es Mensaje.
- * @param {Object} id, ID de Notificacion o Mensaje.
- * @param {ObjectID} profile, ID de Perfil.
- * @param {Object} success, Callback todo bien.
- * @param {Object} fail, Callback Error.
+ * @param {Object}      type       Tipo de PUSH. 1 = Notificacion | 0 = Mensaje
+ * @param {Object}      id         ID de Notificacion o Mensaje.
+ * @param {ObjectID}    profile    ID de Perfil.
+ * @param {Object}      success    Callback Success
+ * @param {Object}      fail       Callback Error
  * @callback {function}
  *
  */
@@ -475,10 +475,15 @@ function addOrGet(type, id, profile, success, fail){
 	});
 };
 /**
- * An amazing test function
+ * Enviar el PUSH a un solo Device.
  *
- * @param {Object} anotherParameter an object you'd like to see as a string
- * @returns {string}
+ * @param {Object}         ca          Callback
+ * @param {Array|String}   devices     ID de Dispositivo/s
+ * @param {Object}         message     Texto para enviarlo en el PUSH
+ * @param {Object}         payload     Datos que se Anexan al PUSH
+ * @param {Object}         badge       Numero de Elementos No Leidos en la Notificacion
+ * @param {Object}         sound       Sonido a enviarlo con el PUSH
+ * @callback {function}    ca
  *
  */
 function sendOne(ca,devices, message, payload, badge, sound){
@@ -489,13 +494,13 @@ function sendOne(ca,devices, message, payload, badge, sound){
 /**
  * sendMultiple, Envia Los PUSH a los dispositivos.
  *
- * @param {Object} ca, Callback.
- * @param {Array|String} devices, ID de Dispositivos, ya sea String o Array of Strings.
- * @param {Object} message, texto para enviarlo en el PUSH.
- * @param {Object} payload, Datos que se Anexan al PUSH.
- * @param {Object} badge, Numero de Elementos No Leidos en la Notificacion.
- * @param {Object} sound, Sonido a enviarlo con el PUSH.
- * @callback {function} ca.
+ * @param {Object}         ca          Callback
+ * @param {Array|String}   devices     ID de Dispositivos, ya sea String o Array of Strings
+ * @param {Object}         message     Texto para enviarlo en el PUSH
+ * @param {Object}         payload     Datos que se Anexan al PUSH
+ * @param {Object}         badge       Numero de Elementos No Leidos en la Notificacion
+ * @param {Object}         sound       Sonido a enviarlo con el PUSH
+ * @callback {function}    ca
  *
  */
 function sendMultiple(ca, devices, message, payload, badge, sound){
@@ -525,9 +530,9 @@ function sendMultiple(ca, devices, message, payload, badge, sound){
 /**
  * tokenItem, funcion para procesar cada Token de Dispositivos.
  *
- * @param {Object} token, Token de 
- * @param {function} cb, Callback.
- * @callback {function} cb.
+ * @param {Object}        token  Token
+ * @param {function}      cb     Callback
+ * @callback {function}   cb
  *
  */
 function tokenItem(token, cb){

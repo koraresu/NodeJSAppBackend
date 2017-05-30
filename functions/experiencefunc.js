@@ -35,8 +35,10 @@ var Generalfunc = require('./generalfunc');
 /**
  * CheckExperience, sirve para buscar una "experience" de un perfil en base a su ocupación, si no existe la ocupación se crea.
  *
- * @param {ProfileObject} profileData
- * @param {Integer} type is the 
+ * @param {ProfileObject}       profileData
+ * @param {Integer}             type  
+ * @param {Integer}             data  
+ * @param {Integer}             callback  
  * @returns {ExperienceObject}
  *
  */
@@ -119,11 +121,11 @@ function checkExperience(profileData, type, data, callback){
 /**
  * insertOrExists, si la "experience" existe, se regresa el documento, si no existe, se crea el documento.
  *
- * @param {ProfileObject} profileData 
- * @param {Integer} type
- * @param {Object} data
- * @param {function} callback
- * @callback {bool,ExperienceObject}
+ * @param {ProfileObject}   profileData 
+ * @param {Integer}         type
+ * @param {Object}          data
+ * @param {function}        callback
+ * @callback {Boolean,ExperienceObject}
  */
 exports.insertOrExists = function(profileData, type, data, callback){
 	checkExperience(profileData,type,data, function(statusExperience,experienceData,search){
