@@ -10,7 +10,7 @@ var Schema          = mongoose.Schema;
 var db_lnk          = 'mongodb://localhost:27017/hive';
 var db              = mongoose.createConnection(db_lnk);
 /**
- * LogSchema, Creamos el Schema para guardar los movimientos en la Base de datos.
+ * Creamos el Schema para guardar los movimientos en la Base de datos.
  *
  */
 var LogSchema = new Schema({
@@ -32,7 +32,7 @@ var logMiddleware = function(collection, action,doc, ca){
   });
 }
 /**
- * HistorySchema, Creamos el Schema para guardar las Noticias.
+ * Creamos el Schema para guardar las Noticias.
  * @param {Number}   id_numerico, Se creo para asignarselo a el App en Swift.
  * @param {ObjectId} profile_id, ID del Perfil donde se Mostrara la Noticia.
  * @param {ObjectId} de_id, ID del Perfil que crea la Noticia.
@@ -65,34 +65,34 @@ HistorySchema.post('update', function(doc, next){
   });
 });
 /**
- * profileSchema, Creamos el Schema para guardar las Noticias.
- * @param {String}       first_name,   Nombre del Perfil.
- * @param {String}       last_name,    Apellido del Perfil.
- * @param {String}       profile_pic,  Imagen de Perfil
- * @param {String}       profile_hive. (***)
- * @param {String}       qrcode,       Nombre del Archivo del QrCode en el servidor.
- * @param {Number}       status,       Estado del Perfil.
- * @param {ObjectId}     user_id       ID del Usuario perteneciente a este Perfil.
- * @param {Date}         birthday      Fecha de Cumpleaños del Perfil.
- * @param {String}       facebookId    ID de Facebook.
- * @param {String}       facebookToken token de Facebook.
- * @param {Mixed}        facebookData  Datos que Facebook te entrega.
- * @param {String}       lang          Lenguaje del Perfil (***)
- * @param {String}       phone         Teléfono del Perfil.
- * @param {[ObjectId]}   experiences   Id de Puesto/Empresa/Sector.
- * @param {[ObjectId]}   skills        Habilidades del Perfil.
- * @param {Mixed}        info          Información del Perfil. (***) Se penso para guardar datos extras.
- * @param {Mixed}        public_id     Id Publica para referenciar al Usuario.
- * @param {Array}        speciality    Arreglo, con datos de Especialidad. 
- *         @param {ObjectId} id        Id de la Especialidad de este Perfil.
- *         @param {String}   name      Nombre de la Especialidad.Se agrega el nombre para esas veces donde no puedes obtener la especialidad desde el ID.
- * @param {String}       job           Arreglo, con datos de la Ocupación.
- *         @param {ObjectId} id        Id de la Ocupación de este Perfil 
- *         @param {String}   name      Nombre de la Ocupación.Se agrega el nombre para esas veces donde no puedes obtener la Ocupación desde el ID.
- * @param {Number}       review_score  Calificación promedio de este Perfil.
- * @param {Boolean}      block         Estado de Baneo del Perfil.
- * @param {Array}        location      Arreglo, con datos del lugar del Perfil.
- *         @param {ObjectId} city.     ID de la Ciudad del Perfil.
+ * Creamos el Schema para guardar las Noticias.
+ * @param {String}       first_name          Nombre del Perfil.
+ * @param {String}       last_name           Apellido del Perfil.
+ * @param {String}       profile_pic         Imagen de Perfil
+ * @param {String}       profile_hive        (***)
+ * @param {String}       qrcode              Nombre del Archivo del QrCode en el servidor.
+ * @param {Number}       status              Estado del Perfil.
+ * @param {ObjectId}     user_id             ID del Usuario perteneciente a este Perfil.
+ * @param {Date}         birthday            Fecha de Cumpleaños del Perfil.
+ * @param {String}       facebookId          ID de Facebook.
+ * @param {String}       facebookToken       token de Facebook.
+ * @param {Mixed}        facebookData        Datos que Facebook te entrega.
+ * @param {String}       lang                Lenguaje del Perfil (***)
+ * @param {String}       phone               Teléfono del Perfil.
+ * @param {[ObjectId]}   experiences         Id de Puesto/Empresa/Sector.
+ * @param {[ObjectId]}   skills              Habilidades del Perfil.
+ * @param {Mixed}        info                Información del Perfil. (***) Se penso para guardar datos extras.
+ * @param {Mixed}        public_id           Id Publica para referenciar al Usuario.
+ * @param {Array}        speciality          Arreglo, con datos de Especialidad. 
+ * @param {ObjectId}        speciality.id    Id de la Especialidad de este Perfil.
+ * @param {String}          speciality.name  Nombre de la Especialidad.Se agrega el nombre para esas veces donde no puedes obtener la especialidad desde el ID.
+ * @param {String}       job                 Arreglo, con datos de la Ocupación.
+ * @param {ObjectId}        job.id           Id de la Ocupación de este Perfil 
+ * @param {String}          job.name         Nombre de la Ocupación.Se agrega el nombre para esas veces donde no puedes obtener la Ocupación desde el ID.
+ * @param {Number}       review_score        Calificación promedio de este Perfil.
+ * @param {Boolean}      block               Estado de Baneo del Perfil.
+ * @param {Array}        location            Arreglo, con datos del lugar del Perfil.
+ * @param {ObjectId}        location.city    ID de la Ciudad del Perfil.
  *
  */
 var profileSchema = new Schema({
@@ -145,9 +145,9 @@ profileSchema.post('update', function(doc, next){
   });
 });
 /**
- * deviceSchema, Creamos el Schema para guardar los Dispositivos.
- * @param {String}       token,      Token Generado por el Servidor de Apple(IOS).
- * @param {String}       profile,    Perfil al cual esta asignado este Dispositivo.
+ * Creamos el Schema para guardar los Dispositivos.
+ * @param {String}       token       Token Generado por el Servidor de Apple(IOS).
+ * @param {String}       profile     Perfil al cual esta asignado este Dispositivo.
  * @param {Mixed}        active      Estado de este Dispositivo.
  *
  */
@@ -173,9 +173,9 @@ deviceSchema.post('update', function(doc, next){
   });
 });
 /**
- * ForgotSchema, Creamos el Schema para guardar los Codigo que se Generan para cambiar contraseñas.
- * @param {String}         generated_id,  Token Generado por el Servidor de Apple(IOS).
- * @param {ObjectId}       user,          Perfil al cual esta asignado este Dispositivo.
+ * Creamos el Schema para guardar los Codigo que se Generan para cambiar contraseñas.
+ * @param {String}         generated_id   Token Generado por el Servidor de Apple(IOS).
+ * @param {ObjectId}       user           Perfil al cual esta asignado este Dispositivo.
  * @param {Boolean}        used           Estado de este "Olvidar Contraseña".
  *
  */
@@ -205,10 +205,10 @@ ForgotSchema.post('update', function(doc, next){
   });
 });
 /**
- * locationSchema, Creamos el Schema para la Colección Temporal para los usuarios en el Area de GPS de la Aplicación.
- * @param {String}         coordinates,   Coordenadas a Guadar.
- * @param {ObjectId}       profile,       Perfil al cual esta asignado esta coordenada.
- * @param {Boolean}        socket,        Conexion hecha por Socket.IO desde el Dispositivo.
+ * Creamos el Schema para la Colección Temporal para los usuarios en el Area de GPS de la Aplicación.
+ * @param {String}         coordinates    Coordenadas a Guadar.
+ * @param {ObjectId}       profile        Perfil al cual esta asignado esta coordenada.
+ * @param {Boolean}        socket         Conexion hecha por Socket.IO desde el Dispositivo.
  *
  */
 var locationSchema = new Schema({
@@ -237,9 +237,9 @@ locationSchema.post('update', function(doc, next){
   });
 });
 /**
- * CompanyClaimSchema,   Creamos el Schema para la Colección de las peticiones a Reclamar Empresa.
- * @param {ObjectId}       profile,       Perfil a la cual esta asignado este reclamo.
- * @param {ObjectId}       company,       Empresa a la cual esta asignada este reclamo.
+ * Creamos el Schema para la Colección de las peticiones a Reclamar Empresa.
+ * @param {ObjectId}       profile        Perfil a la cual esta asignado este reclamo.
+ * @param {ObjectId}       company        Empresa a la cual esta asignada este reclamo.
  *
  */
 var CompanyClaimSchema = new Schema({
@@ -264,9 +264,9 @@ CompanyClaimSchema.post('update', function(doc, next){
   });
 });
 /**
- * NetworkSchema,            Creamos el Schema para la Colección de las Conexiones entre Perfiles. "Amistad".
- * @param {Boolean}          accepted,       Estado de esta Conexion. True = Aceptado | False = Rechazado o No Interactuado.
- * @param {[ObjectId]}       profiles,       Arreglo, Perfiles pertenecientes a esta Conexion.
+ * Creamos el Schema para la Colección de las Conexiones entre Perfiles. "Amistad".
+ * @param {Boolean}          accepted        Estado de esta Conexion. True = Aceptado | False = Rechazado o No Interactuado.
+ * @param {[ObjectId]}       profiles        Arreglo, Perfiles pertenecientes a esta Conexion.
  *
  */
 var NetworkSchema = new Schema({
@@ -291,9 +291,9 @@ NetworkSchema.post('update', function(doc, next){
   });
 });
 /**
- * companyCreatorSchema,     Creamos el Schema para la Colección para saber quien es el Creador de Cierta Empresa. A corto plazo esta Colección puede desaparecer.
- * @param {ObjectId}         company,       Empresa asignada.
- * @param {ObjectId}         profile,       Perfil Asignado.
+ * Creamos el Schema para la Colección para saber quien es el Creador de Cierta Empresa. A corto plazo esta Colección puede desaparecer.
+ * @param {ObjectId}         company        Empresa asignada.
+ * @param {ObjectId}         profile        Perfil Asignado.
  *
  */
 var companyCreatorSchema = new Schema({
@@ -318,21 +318,21 @@ companyCreatorSchema.post('update', function(doc, next){
   });
 });
 /**
- * companySchema,            Creamos el Schema para la Colección de las Empresas.
- * @param {Boolean}          name           Nombre de la Empresa
- * @param {String}           images         Imagen de la Empresa (***) Se penso para insertarle un Logotipo
- * @param {String}           description    Texto para Describir a la Empresa. Maximo de 200 Caracteres.
- * @param {String}           website        URL de la pagina de la empresa.
- * @param {String}           phone          Telefóno de la Empresa.
- * @param {String}           type           Grupo de la Empresa. (***) Este Campo no se usó.
- * @param {Array}            address        Dirección de la Empresa.
- *         @param {String}   calle          Calle de la Empresa.
- *         @param {String}   colonia        Colonia o Distrito.
- *         @param {String}   ciudad         Ciudad donde esta la Empresa.
- *         @param {String}   estado         Estado al que pertenece la Ciudad.
- *         @param {String}   numero         Numero Interno o Externo.
- *         @param {String}   postalc        Codigo Postal.
- * @param {ObjectId}       profile_id       Perfil que reclamó esta Empresa.
+ * Creamos el Schema para la Colección de las Empresas.
+ * @param {Boolean}     name                 Nombre de la Empresa
+ * @param {String}      images               Imagen de la Empresa (***) Se penso para insertarle un Logotipo
+ * @param {String}      description          Texto para Describir a la Empresa. Maximo de 200 Caracteres.
+ * @param {String}      website              URL de la pagina de la empresa.
+ * @param {String}      phone                Telefóno de la Empresa.
+ * @param {String}      type                 Grupo de la Empresa. (***) Este Campo no se usó.
+ * @param {Array}       address              Dirección de la Empresa.
+ * @param {String}         address.calle     Calle de la Empresa.
+ * @param {String}         address.colonia   Colonia o Distrito.
+ * @param {String}         address.ciudad    Ciudad donde esta la Empresa.
+ * @param {String}         address.estado    Estado al que pertenece la Ciudad.
+ * @param {String}         address.numero    Numero Interno o Externo.
+ * @param {String}         address.postalc   Codigo Postal.
+ * @param {ObjectId}    profile_id           Perfil que reclamó esta Empresa.
  *
  */
 var companySchema = new Schema({
@@ -372,18 +372,18 @@ companySchema.post('update', function(doc, next){
   });
 });
 /**
- * experienceSchema,            Creamos el Schema para la Colección de los Puestos para el Perfil.
- * @param {Number}           type          Tipo de Experiencia. 0 = Independiente | 1 = Empresa
- * @param {Array}            ocupation     Arreglo, Ocupación de el Perfil.
- *         @param {ObjectId}   id            ID de la Ocupación.
- *         @param {String}     name          Nombre de la Ocupación.
- * @param {Array}            company       Arreglo, Empresa de el Perfil.
- *         @param {ObjectId}   id            ID de la Empresa.
- *         @param {String}   name            Nombre de la Empresa.
- * @param {Array}           sector         Arreglo, Nombre de el Sector de la Empresa.
- *         @param {ObjectId}   id            ID del Sector.
- *         @param {String}   name            Nombre del Sector de la Empresa.
- * @param {ObjectId}       profile_id      Perfil al que se le asigna esta "Experiencia".
+ * Creamos el Schema para la Colección de los Puestos para el Perfil.
+ * @param {Number}     type               Tipo de Experiencia. 0 = Independiente | 1 = Empresa
+ * @param {Array}      ocupation          Arreglo, Ocupación de el Perfil.
+ * @param {ObjectId}    ocupation.id      ID de la Ocupación.
+ * @param {String}      ocupation.name    Nombre de la Ocupación.
+ * @param {Array}      company            Arreglo, Empresa de el Perfil.
+ * @param {ObjectId}    company.id        ID de la Empresa.
+ * @param {String}      company.name      Nombre de la Empresa.
+ * @param {Array}      sector             Arreglo, Nombre de el Sector de la Empresa.
+ * @param {ObjectId}    sector.id         ID del Sector.
+ * @param {String}      sector.name       Nombre del Sector de la Empresa.
+ * @param {ObjectId}   profile_id         Perfil al que se le asigna esta "Experiencia".
  *
  */
 var experienceSchema = new Schema({
@@ -420,7 +420,7 @@ experienceSchema.post('update', function(doc, next){
   });
 });
 /**
- * OnlineSchema,            Creamos el Schema para la Colección de los Perfiles En linea.
+ * Creamos el Schema para la Colección de los Perfiles En linea.
  * @param {String}         socket          ID del Socket.IO del dispositivo.
  * @param {ObjectId}       profile_id      Perfil al que se le asigna esta "Experiencia".
  *
@@ -447,7 +447,7 @@ OnlineSchema.post('update', function(doc, next){
   });
 });
 /**
- * ConversationSchema,            Creamos el Schema para la Colección de Conversaciones para el Chat.
+ * Creamos el Schema para la Colección de Conversaciones para el Chat.
  * @param {[ObjectId]}     profiles       Perfiles Asignados a las Conversaciones.
  * @param {[Number]}       prop_status    Status(Eliminado) de la Conversación para cada Perfil. 2 = Active | 1 = Archive | 0 = Deleted
  * @param {[Boolean]}      readed         Status(Leido) de la Conversación para cada Perfil. true = leido || false = no leido
@@ -480,7 +480,7 @@ ConversationSchema.post('update', function(doc, next){
   });
 });
 /**
- * MessageSchema,          Creamos el Schema para la Colección de Conversaciones para el Chat.
+ * Creamos el Schema para la Colección de Conversaciones para el Chat.
  * @param {ObjectId}     conversation        ID de la conversacion a la que pertenece el mensaje.
  * @param {ObjectId}       profile_id        ID de el Perfil que envio el mensaje.
  * @param {[Boolean]}      type              Tipo de Mensaje. 0 = Texto | 1 = Imagen.
@@ -513,7 +513,7 @@ MessageSchema.post('update', function(doc, next){
   });
 });
 /**
- * jobSchema,            Creamos el Schema para la Colección de los Puestos/Profesiones.
+ * Creamos el Schema para la Colección de los Puestos/Profesiones.
  * @param {String}       name        ID de la conversacion a la que pertenece el mensaje.
  * @param {Number}       type        Tipo de Trabajo. 0 = Profesion | 1 = Puesto.
  * @param {ObjectId}     parent      Id del Sector al que pertenece este Puesto/Profesion.
@@ -542,7 +542,7 @@ jobSchema.post('update', function(doc, next){
   });
 });
 /**
- * FeedbackSchema,       Creamos el Schema para la Colección de Comentarios de la Aplicación.
+ * Creamos el Schema para la Colección de Comentarios de la Aplicación.
  * @param {ObjectId}     profile_id        ID del Perfil que Envio el Comentario.
  * @param {[Boolean]}    content           Comentario.
  *
@@ -569,7 +569,7 @@ FeedbackSchema.post('update', function(doc, next){
   });
 });
 /**
- * FeedbackSchema,       Creamos el Schema para la Colección de Comentarios de la Aplicación.
+ * Creamos el Schema para la Colección de Comentarios de la Aplicación.
  * @param {ObjectId}     profile_id        ID del Perfil que Envio el Comentario.
  * @param {[Boolean]}    content           Comentario.
  *
@@ -599,7 +599,7 @@ reviewSchema.post('update', function(doc, next){
   });
 });
 /**
- * SearchSchema,       Creamos el Schema para Guardar las busquedas hechas por el Usuario.
+ * Creamos el Schema para Guardar las busquedas hechas por el Usuario.
  * @param {ObjectId}     profile_id        ID del Perfil que Envio al que le guardas el texto.
  * @param {String}       text              Texto Buscado.
  *
@@ -626,7 +626,7 @@ SearchSchema.post('update', function(doc, next){
   });
 });
 /**
- * sectorSchema,       Creamos el Schema para la Colección de los Sectores de los Puestos.
+ * Creamos el Schema para la Colección de los Sectores de los Puestos.
  * @param {String}       name              Nombre de el Sector.
  * @param {String}       description       Descripción del Sector. (***) Se penso para describir el Sector.
  * @param {String}       industry          Nombre para Agrupar los Sectores (***) Se penso para agruparlos. (Medicina|Ingenieria|Agricultura)
@@ -655,7 +655,7 @@ sectorSchema.post('update', function(doc, next){
   });
 });
 /**
- * skillsSchema,       Creamos el Schema para la Colección Habilidades.
+ * Creamos el Schema para la Colección Habilidades.
  * @param {String}       name              Nombre de la Habilidad.
  *
  */
@@ -680,7 +680,7 @@ skillsSchema.post('update', function(doc, next){
   });
 });
 /**
- * specialitySchema,       Creamos el Schema para la Colección Especialidades.
+ * Creamos el Schema para la Colección Especialidades.
  * @param {String}       name              Nombre de la Especialidad.
  * @param {ObjectId}     parent            Profesion de la Especialización.
  *
@@ -707,7 +707,7 @@ specialitySchema.post('update', function(doc, next){
   });
 });
 /**
- * tokenSchema,       Creamos el Schema para la Colección que guarda los token, para los permisos.
+ * Creamos el Schema para la Colección que guarda los token, para los permisos.
  * @param {String}       generated_id      Hash creado para el App. Se usa en la mayoria de las peticiones.
  * @param {ObjectId}     user_id           Usuario al que se le asignó este permiso.
  *
@@ -734,7 +734,7 @@ tokenSchema.post('update', function(doc, next){
   });
 });
 /**
- * userSchema,       Creamos el Schema para la Colección que guarda los datos de usuario.
+ * Creamos el Schema para la Colección que guarda los datos de usuario.
  * @param {String}       email          Correo de la cuenta.
  * @param {ObjectId}     password       Contraseña de la Cuenta. Usa sha1 para generar la contraseña.
  * @param {ObjectId}     verified       Estado de la Cuenta. False = No Verificado | True = Verificado
@@ -765,9 +765,22 @@ userSchema.post('update', function(doc, next){
   });
 });
 
-/*******************************************/
+/**
+ * Creamos el Schema para la Colección que guarda las Notificaciones de los Usuarios.
+ * @param {Number}       tipo               El tipo de Notificación. -1 = Test | 0 = se ha unido | 1 = recomendación | 2 = te recomiendan | 3 = Envio Solucitud | 4 = Respondio Solicitud | 5 = Review   
+ * @param {ObjectId}     profile            ID del Perfil al que le enviaron la Notificación.
+ * @param {ObjectId}     profile_emisor     ID del Perfil que envio la Notificación.
+ * @param {ObjectId}     profile_mensaje    ID del Perfil que se esta recomendando. 
+ * @param {ObjectId}     busqueda           ID de la Noticia para pedir una recomendación.
+ * @param {ObjectId}     network            ID de la Conexion a Amigos.
+ * @param {ObjectId}     review             ID de la Reseña.
+ * @param {Boolean}      clicked            Status de Interacción con la Notificación.
+ * @param {Boolean}      status             Status de la Notificación y la Busqueda/Conexion/Reseña
+ * @param {Boolean}      deleted            Visto/Oculto
+ *
+ */
 var NotificationSchema = new Schema({
-  tipo: Number, // -1 = Test | 0 = se ha unido | 1 = recomendación | 2 = te recomiendan | 3 = Envio Solucitud | 4 = Respondio Solicitud | 5 = Review
+  tipo: Number, 
   
   profile: { type: Schema.Types.ObjectId, ref: 'Profile' },
   profile_emisor: { type: Schema.Types.ObjectId, ref: 'Profile' },
@@ -777,9 +790,9 @@ var NotificationSchema = new Schema({
   network: { type: Schema.Types.ObjectId, ref: 'Network' },
   review: { type: Schema.Types.ObjectId, ref: 'Review' },
   
-  clicked: false,
-  status: false,
-  deleted: false
+  clicked: { type: Boolean, default: false},
+  status: { type: Boolean, default: false},
+  deleted: { type: Boolean, default: false }
 },{
   timestamps: true
 });
