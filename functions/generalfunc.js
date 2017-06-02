@@ -203,7 +203,7 @@ exports.response = function(type,item, callback){
 exports.cleanArray = function(actual) {
 	var newArray = new Array();
 	for (var i = 0; i < actual.length; i++) {
-		if (actual[i]) {
+		if (actual[i] == true || actual[i] != null) {
 			newArray.push(actual[i]);
 		}
 	}

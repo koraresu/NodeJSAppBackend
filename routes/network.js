@@ -660,10 +660,9 @@ router.post('/phonetofriend', multipartMiddleware, function(req, res){
 									callback(null, x);
 								});
 							}else{
-								callback(null, false);
+								callback(null, null);
 							}
 						}, function(err, results){
-							
 							split = Generalfunc.cleanArray(split);
 							Generalfunc.response(200, {profiles: results, uknown: split}, function(response){
 								res.json(response);
