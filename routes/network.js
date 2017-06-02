@@ -651,20 +651,16 @@ router.post('/phonetofriend', multipartMiddleware, function(req, res){
 								var x = split.indexOf(item.phone);
 								delete split[x];
 
-								
-
 								Networkfunc.isFriend(profileData._id, item._id, function(d){
 									var x = {
 										profile: item,
 										isFriend: d
 									};
 
-									
-
 									callback(null, x);
 								});
 							}else{
-								callback(null, null);
+								callback(null, false);
 							}
 						}, function(err, results){
 							
