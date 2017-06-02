@@ -647,21 +647,25 @@ router.post('/phonetofriend', multipartMiddleware, function(req, res){
 					}).exec(function(profileErr, facebookProfileData){
 
 						async.map(facebookProfileData, function(item, callback){
-							var x = split.indexOf(item.phone);
-							delete split[x];
-
-							
-
-							Networkfunc.isFriend(profileData._id, item._id, function(d){
-								var x = {
-									profile: item,
-									isFriend: d
-								};
+							if(profileData._id.toString() != item._id.toString() ){
+								var x = split.indexOf(item.phone);
+								delete split[x];
 
 								
 
-								callback(null, x);
-							});
+								Networkfunc.isFriend(profileData._id, item._id, function(d){
+									var x = {
+										profile: item,
+										isFriend: d
+									};
+
+									
+
+									callback(null, x);
+								});
+							}else{
+								callback(null, null);
+							}
 						}, function(err, results){
 							
 							split = Generalfunc.cleanArray(split);
