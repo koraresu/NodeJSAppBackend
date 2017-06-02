@@ -201,13 +201,18 @@ exports.response = function(type,item, callback){
  *
  */
 exports.cleanArray = function(actual) {
-	var newArray = new Array();
-	for (var i = 0; i < actual.length; i++) {
-		if (actual[i] == true) {
-			newArray.push(actual[i]);
+	if(actual == null || actual == undefined){
+		return [];
+	}else{
+		var newArray = new Array();
+		for (var i = 0; i < actual.length; i++) {
+			if (actual[i]) {
+				newArray.push(actual[i]);
+			}
 		}
+		return newArray;	
 	}
-	return newArray;
+	
 }
 /**
  * sendMail(Global), Función para el envio de correos en todo el servidor.
