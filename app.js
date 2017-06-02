@@ -34,6 +34,11 @@ var gps          = require('./routes/gps');
 var test         = require('./routes/test');
 var metrics      = require('./routes/metrics');
 
+/**
+ * Quitando el limite del Event Emitter.
+ */
+ require('events').EventEmitter.prototype._maxListeners = 0;
+
 var app = express();
 /**
  * Definimos el Socket_io, y lo agregamos a Express. Ademas de esto, se agrega en bin/www(linea 24).

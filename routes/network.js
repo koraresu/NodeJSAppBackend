@@ -509,20 +509,24 @@ router.post('/emailtofriend', multipartMiddleware, function(req, res){
 
 							async.map(userData, function(item, callback){
 								Profile.findOne({ user_id: item._id }).populate('user_id').exec(function(profileErr, emailProfileData){
-									var x = split.indexOf(emailProfileData.user_id.email);
-									delete split[x];
-									Networkfunc.isFriend(profileData._id, emailProfileData._id, function(d){
-										var x = {
-											profile: emailProfileData,
-											isFriend: d
-										};
+									if(profileData._id.toString() != item._id.toString() ){
+										var x = split.indexOf(emailProfileData.user_id.email);
+										delete split[x];
+										Networkfunc.isFriend(profileData._id, emailProfileData._id, function(d){
+											var x = {
+												profile: emailProfileData,
+												isFriend: d
+											};
 										
-										callback(null, x);
-									});
+											callback(null, x);
+										});
+									}else{
+										callback(null, null);
+									}
 								});
 							}, function(err, results){
-								
-								split = Generalfunc.cleanArray(split);
+								results = Generalfunc.cleanArray( results );
+								split   = Generalfunc.cleanArray( split );
 								
 								Generalfunc.response(200, { profiles: results, uknown: split }, function(response){
 									res.json(response);

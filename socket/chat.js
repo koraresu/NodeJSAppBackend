@@ -167,6 +167,25 @@ io.on('connection', function(socket){
       console.log(err);
     });
   });
+
+  socket.on('console.log', function(data){
+    console.log( data );
+  });
+  socket.on('console.content', function(data){
+    console.log( data );
+  });
+  socket.on('console.custom', function(data){
+    console.log( data );
+  });
+  socket.on('console.login', function(data){
+    console.log( data );
+  });
+  socket.on('console.logout', function(data){
+    console.log( data );
+  });
+  socket.on('console.error', function(data){
+    console.log( data );
+  });
   /**
    * Cuando un dispositivo se desconecta, ya sea por latencia o por cerrar el App, este Evento es Realizado, sirve para eliminar de la lista de 
    * Usuarios conectados. Asi podemos mantener la lista de Usuarios Conectados actualizada en todo momento. Al momento de iniciar el Servidor,

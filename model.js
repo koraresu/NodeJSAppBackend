@@ -961,6 +961,11 @@ VersionSchema.post('update', function(doc, next){
   });
 });
 /*******************************************/
+var LogAppSchema = new Schema({
+  data: { type: Schema.Types.Mixed }
+}, {
+  timestamps: true
+});
 // Experience
 exports.company      = db.model( 'Company',           companySchema );
 exports.comp_creator = db.model('CompanyCreator',     companyCreatorSchema);
@@ -999,3 +1004,5 @@ exports.pais         = db.model('Pais',               PaisSchema);
 //Email
 exports.email        = db.model('Email',              EmailSchema);
 exports.glosary      = db.model('Glosary',            GlosarySchema);
+//
+exports.log_app      = db.model('LogApp',             LogAppSchema);
