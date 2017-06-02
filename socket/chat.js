@@ -6,6 +6,8 @@ var Tokenfunc    = require('../functions/tokenfunc');
 var Pushfunc     = require('../functions/pushfunc');
 var APNfunc      = require('../functions/apnfunc');
 
+var moment = require('moment-timezone');
+
 module.exports = function(io){
 
 chatrouter.clean(function(err){ });
