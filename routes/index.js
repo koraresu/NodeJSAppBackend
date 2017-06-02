@@ -10,7 +10,6 @@ var router = express.Router();
 var _jade = require('jade');
 var fs = require('fs');
 var async = require('async');
-var deep_populate = require('mongoose-deep-populate')(mongoose);
 
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
