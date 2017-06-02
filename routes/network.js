@@ -650,21 +650,22 @@ router.post('/phonetofriend', multipartMiddleware, function(req, res){
 							if(profileData._id.toString() != item._id.toString() ){
 								var x = split.indexOf(item.phone);
 								delete split[x];
-
 								Networkfunc.isFriend(profileData._id, item._id, function(d){
 									var x = {
 										profile: item,
 										isFriend: d
 									};
-
 									callback(null, x);
 								});
 							}else{
-								callback(null, null);
+								callback(null, false);
 							}
 						}, function(err, results){
-							split = Generalfunc.cleanArray(split);
-							Generalfunc.response(200, {profiles: results, uknown: split}, function(response){
+							
+							split   = Generalfunc.cleanArray(split);
+							results = Generalfunc.cleanArray(results);
+
+							Generalfunc.response(200, { profiles: results, uknown: split }, function(response){
 								res.json(response);
 							});
 						});
