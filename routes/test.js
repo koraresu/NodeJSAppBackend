@@ -49,4 +49,12 @@ var apnProvider = Generalfunc.apnProvider();
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
+router.get('/send/num/:profile/:num', function(){
+	var num        = req.params.num;
+	var profile_id = req.params.profile_id;
+
+	APNfunc.sendBadge(profile_id, num, function(data){
+		res.json(data);
+	});
+});
 module.exports = router;
