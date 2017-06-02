@@ -658,15 +658,15 @@ router.post('/phonetofriend', multipartMiddleware, function(req, res){
 									callback(null, x);
 								});
 							}else{
-								callback(x, false);
+								callback(null, null);
 							}
 						}, function(err, results){
 							
 							split   = Generalfunc.cleanArray( split );
 							results = Generalfunc.cleanArray( results );
-							err = Generalfunc.cleanArray( err );
+							err     = Generalfunc.cleanArray( err );
 
-							Generalfunc.response(200, { profiles: results, uknown: split, extra: err }, function(response){
+							Generalfunc.response(200, { profiles: results, uknown: split }, function(response){
 								res.json(response);
 							});
 						});
