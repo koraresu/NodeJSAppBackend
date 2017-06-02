@@ -49,7 +49,7 @@ var apnProvider = Generalfunc.apnProvider();
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
-router.get('/send/num/:profile/:num', function(){
+router.get('/send/num/:profile/:num', function(req, res){
 	var num        = req.params.num;
 	var profile_id = req.params.profile_id;
 
