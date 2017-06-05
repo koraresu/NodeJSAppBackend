@@ -151,19 +151,26 @@ io.on('connection', function(socket){
    * message_readed, Mandamos a cambiar el status de un mensaje a leido, y pedimos los mensajes sin leer que tenemos, para enviarlos a la Aplicación.
    */
   var message_readed = function(data){
-    console.log("socket_chat","message_readed");
-    console.log( data );
     chatrouter.setReadedMessage(data, function(conversationData){
 
       chatrouter.TokenNoReaded( data.guid, function(profileData, num){
         socket.emit('set_no_readed', num);
       });
     }, function(st){
+      
     });
   };
 
-  socket.on('message_readed', message_readed);
-  socket.on('get_no_readed', message_readed);
+  socket.on('message_readed', function(data){
+    console.log("socket_chat","message_readed");
+    console.log( data );
+    message_readed( data ); 
+  });
+  socket.on('get_no_readed', function(data){
+    console.log("socket_chat","get_no_readed");
+    console.log( data );
+    message_readed( data ); 
+  });
 
   /**
    * Igual que en mensajes, Recibimos la orden de cambiar el status de una notificacion, y enviamos los mensajes sin leer.
