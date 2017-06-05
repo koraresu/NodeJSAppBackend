@@ -1003,7 +1003,10 @@ router.notification_accept2C = function(data, success, fail){
  					}
 
  					if(notificationData.tipo == 1){
- 						Networkfunc.new_friend(notificationData.profile, notificationData.profile_mensaje, function(networkData){
+ 						console.log("Notification Accept tipo 1");
+ 						console.log("Profile Emisor", notificationData.profile_emisor.first_name);
+ 						console.log("Profile Mensaje", notificationData.profile_mensaje.first_name);
+ 						Networkfunc.new_friend(notificationData.profile_emisor, notificationData.profile_mensaje, function(networkData){
  							Network.findOne({ _id: networkData._id}).populate('profiles').exec(function(errNetwork, networkData){
  								bool_uno_Network(networkData);
  							});
