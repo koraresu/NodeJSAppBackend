@@ -23,6 +23,7 @@ io.on('connection', function(socket){
    * Al Recibir el mensaje "entra", el App envia un mensaje con el Token. para guardarlo en el Socket.
    */
   socket.on('entrando', function(msg){
+    console.log("socket_chat","entrando");
     socket.guid = msg;
 
     chatrouter.setOnline(msg, socket.id, function(status, socketData, profileData){
@@ -42,6 +43,7 @@ io.on('connection', function(socket){
    * Y al iniciar el App, y estar lista, se envia el Device Token, que es recibido por Apple. Asi, el App puede recibir los PUSH(Mensajes y Notificaciones).
    */
   socket.on('device', function(msg){
+    console.log("socket_chat","device");
     chatrouter.setDevice(socket.guid, msg, function(status, deviceData, profileData){
       console.log( deviceData );
     });
@@ -54,6 +56,7 @@ io.on('connection', function(socket){
    muestra en la parte superior.
    */
   socket.on('message', function(data){
+    console.log("socket_chat","message");
     chatrouter.message(data, function(status, messageData){
       if(status){
         //io.sockets.in(messageData.conversation.toString()).emit('message',{data: messageData, t:true, accion: 'message' });
@@ -97,6 +100,7 @@ io.on('connection', function(socket){
    * Al recibir este emit, se envia una mensaje para darle todos las conversaciones a las que esta dado de alta.
    */
   socket.on('conversations', function(data){
+    console.log("socket_chat","conversations");
     socket.emit('conversations', socket.rooms);
   });
   /**
@@ -104,6 +108,7 @@ io.on('connection', function(socket){
    * y a su vez, se emite un mensaje por socket, y una Notificacion.
    */
   socket.on('notification', function(data){
+    console.log("socket_chat","notification");
     chatrouter.notification_accept2C(data, function(onlineData, networkData, notificationData, OldNotification){
       if(onlineData != null || onlineData != undefined){
 
@@ -124,6 +129,7 @@ io.on('connection', function(socket){
    * esta recomendación.
    */
   socket.on('recomendar', function(data){
+    console.log("socket_chat","recomendar");
     Networkfunc.recomendar(data, function(recomendarData, notificationAnData, notificationData){
       socket.emit('recomendar_response', recomendarData);
       
@@ -145,7 +151,7 @@ io.on('connection', function(socket){
    * message_readed, Mandamos a cambiar el status de un mensaje a leido, y pedimos los mensajes sin leer que tenemos, para enviarlos a la Aplicación.
    */
   var message_readed = function(data){
-    console.log("message_readed");
+    console.log("socket_chat","message_readed");
     console.log( data );
     chatrouter.setReadedMessage(data, function(conversationData){
 
@@ -163,6 +169,7 @@ io.on('connection', function(socket){
    * Igual que en mensajes, Recibimos la orden de cambiar el status de una notificacion, y enviamos los mensajes sin leer.
    */
   socket.on('notification_readed', function(data){
+    console.log("socket_chat","notification_readed");
     Generalfunc.NotificationReaded(data, function( results ){
     }, function( err ){
       console.log("NotificationReaded Error");
@@ -171,21 +178,27 @@ io.on('connection', function(socket){
   });
 
   socket.on('console.log', function(data){
+    console.log("socket_chat","console.log");
     console.log( data );
   });
   socket.on('console.content', function(data){
+    console.log("socket_chat","console.content");
     console.log( data );
   });
   socket.on('console.custom', function(data){
+    console.log("socket_chat","console.custom");
     console.log( data );
   });
   socket.on('console.login', function(data){
+    console.log("socket_chat","console.login");
     console.log( data );
   });
   socket.on('console.logout', function(data){
+    console.log("socket_chat","console.logout");
     console.log( data );
   });
   socket.on('console.error', function(data){
+    console.log("socket_chat","console.error");
     console.log( data );
   });
   /**
@@ -194,7 +207,7 @@ io.on('connection', function(socket){
    * esta es limpiada.
    */
   socket.on('disconnect', function () {
-    console.log("Disconnect");
+    console.log("socket_chat","disconnect");
     chatrouter.delete(socket.id.toString(), function(err, s){
       console.log(s);
     });
