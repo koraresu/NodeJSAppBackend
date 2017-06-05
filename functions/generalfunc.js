@@ -672,14 +672,12 @@ function SocketNoReaded(socket, success, fail){
  *
  */
 function NoReaded(profile_id, success, fail){
-	console.log("NoReaded Profile1", profile_id );
 	if(profile_id._id != undefined){
 		profile_id = profile_id._id;
 	}
-	console.log("NoReaded Profile2", profile_id );
 	if(mongoose.Types.ObjectId.isValid(profile_id)){
 		profile_id = mongoose.Types.ObjectId(profile_id);
-		console.log("NoReaded Profile3", profile_id );
+		console.log("NoReaded Profile", profile_id );
 		PushEvent.find({
 			profile: profile_id,
 			read: false

@@ -109,6 +109,8 @@ io.on('connection', function(socket){
    */
   socket.on('notification', function(data){
     console.log("socket_chat","notification");
+    
+    /*
     chatrouter.notification_accept2C(data, function(onlineData, networkData, notificationData, OldNotification){
       if(onlineData != null || onlineData != undefined){
 
@@ -123,6 +125,7 @@ io.on('connection', function(socket){
     }, function(status){
       console.log("Status:" + status);
     });
+    */
   });
   /**
    * Al recibir una recomendación, accedemos a los helpers y creamos las noticias y notificaciones pertinente. Y geramos las respuestas para 
