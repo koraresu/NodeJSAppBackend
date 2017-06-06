@@ -616,6 +616,7 @@ function new_friend(profileData, profileAnotherData, success, fail){
 		}
 	});
 }
+
 exports.otherProfile                      = otherProfile;
 exports.new_friend                        = new_friend;
 exports.create_notificacion_recomendacion = create_notificacion_recomendacion;

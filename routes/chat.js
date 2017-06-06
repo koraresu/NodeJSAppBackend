@@ -884,6 +884,7 @@ router.clean = function(callback){
 							var tipo = notificationData.tipo;
 							console.log("GetInfo",id);
 							console.log("GetInfo Tipo",tipo);
+
 							switch(tipo){
 								case 1:
 									console.log("Aceptar Recomendación");
@@ -928,6 +929,30 @@ router.clean = function(callback){
 								break;
 								case 3:
 									console.log("Envió Solucitud");
+
+									if(stat == true){
+ 										Networkfunc.accept({ _id: notificationData.network }, function(networkData){
+ 											Notificationfunc.clicked(id, true,function(onlineData, networkData, notNData, notificationData){
+ 												success(notNData);
+ 											}, function(){
+ 												fail();
+ 											});
+
+ 										}, function(st){
+ 											fail(4);
+ 										});
+ 									}else{
+ 										Networkfunc.ignore({ _id: notificationData.network }, function(networkData){
+ 											Notificationfunc.clicked(id, false,function(onlineData, networkData, notNData, notificationData){
+ 												success(notNData);
+ 											}, function(){
+ 												fail();
+ 											});
+ 										}, function(st){
+ 											fail(4);
+ 										});
+ 									}
+
 									success( notificationData );
 								break;
 								default:

@@ -301,6 +301,29 @@ exports.profile_ajeno = function(profileID,profiles){
 	}
 }
 /**
+ * profile_ajeno, Obtiene el perfil Diferente al Perfil Entregado de una Arreglo de Perfiles.
+ *
+ * @param {ObjectId} profileID, ID del Perfil.
+ * @param {Array} profiles, Arreglo de Perfiles.
+ * @return {ProfileObject} Profile.
+ *
+ */
+exports.profile_ajeno_n = function(profileID, profiles){
+	var first  = profiles[0];
+	var second = profiles[1];
+
+	var element;
+	var number = -1;
+	if(first._id.toString() == profileID.toString()){
+		element = second;
+		number = 1;
+	}else{
+		element = first;
+		number = 0;
+	}
+	return { number: number, profile: element };
+};
+/**
  * push, Envia petición de notificaciones a el APN.(No se usa)
  *
  * @callback {Object} Resultado de el Envio.

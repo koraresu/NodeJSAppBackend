@@ -87,7 +87,7 @@ exports.getOne = function(search, callback){
  * @callback {function}
  *
  */
-exports.getOne2Callback = function(search, success, fail){
+ function getOne2Callback(search, success, fail){
 	model.notification.findOne(search)
 	.populate('profile')
 	.populate('profile_emisor')
@@ -100,6 +100,7 @@ exports.getOne2Callback = function(search, success, fail){
 		}
 	});
 };
+exports.getOne2Callback = getOne2Callback;
 /**
  * createOrGet, Buscar un Notificacion si no existe, la crea.
  * @param {Query} search, Query con que buscar la Notificacion.
@@ -270,6 +271,99 @@ exports.click = function(search, stat, success, fail){
 		});
 	});
 };
+
+/**
+ * getOnline.(New)
+ *
+ */
+ function getOnline(ajeno, notificationData, networkData, success){
+ 	Online.findOne({
+ 		profiles: ajeno.profile._id
+ 	}).sort({created_at: -1}).exec(function(errOnline, onlineData){
+ 		Notification
+ 		.findOne({ _id: notificationData._id })
+ 		.select('-__v -updatedAt')
+ 		.populate('profile')
+ 		.populate('profile_emisor')
+ 		.populate('profile_mensaje')
+ 		.populate('network')
+ 		.exec(function(err,notificationData){
+ 			c(onlineData, networkData, notificationData);	
+ 		});
+ 	});
+ };
+exports.getOnline = getOnline;
+/**
+ * clicked.(New)
+ *
+ */
+function clicked(id, stat,success, fail){
+	Notificationfunc.click({ _id: id },stat, function(notificationData){
+		var ajeno = Generalfunc.profile_ajeno_n(profileData._id, networkData.profiles);
+		if(stat){
+			Notificationfunc.addOrGet({
+				tipo: 4,
+				profile: notificationData.profile_emisor,
+				profile_emisor: notificationData.profile,
+				network: networkData._id,
+			},{
+				tipo: 4,
+				profile: notificationData.profile_emisor,
+				profile_emisor: notificationData.profile,
+				network: networkData._id,
+				status: true,
+				clicked: true
+			}, function(status, newNotData){
+				Notificationfunc.getOne2Callback({ _id: newNotData._id }, function(notNewData){
+					getOnline(ajeno, notNewData, networkData, function(onlineData, networkData, notNData){
+						success(onlineData, networkData, notNData, notificationData);
+					});
+				}, function(st){
+					fail( st );
+				});
+			});
+		}
+	});
+}
+exports.clicked = clicked;
+ /**
+ * statAndGet, Set Status, Create New Notification and Get Result.
+ * @param {NotificationObject} notificationData, Enviar el Push de Notificaciones.
+ *
+ */
+ exports.statAndGet = function(stat, notificationData, success, fail){
+ 	if(stat){
+ 		Notificationfunc.addOrGet({
+ 			tipo: 4,
+ 			profile: notificationData.profile_emisor,
+ 			profile_emisor: notificationData.profile,
+ 			network: networkData._id,
+ 		},{
+ 			tipo: 4,
+ 			profile: notificationData.profile_emisor,
+ 			profile_emisor: notificationData.profile,
+ 			network: networkData._id,
+ 			status: true,
+ 			clicked: true
+ 		}, function(status, newNotData){
+ 			getOne2Callback({ _id: newNotData._id }, function(notNewData){
+ 				getOnline(ajeno, notNewData, networkData, function(onlineData, networkData, notNData){
+ 					success(onlineData, networkData, notNData, notificationData);
+ 				});
+ 			}, function(st){
+ 				fail( st );
+ 			});
+ 		});
+ 	}else{
+ 		getOne2Callback({ _id: notificationData._id }, function(notNewData){
+ 			a(ajeno, notNewData, networkData, function(onlineData, networkData, notNData){
+ 				success(onlineData, networkData, notNData, notificationData);
+ 			});
+ 		}, function(st){
+ 			fail( st );
+ 		});
+ 	}
+ }
 /**
  * push, Enviar PUSH de Notificaciones. (**)
  * @param {NotificationObject} notificationData, Enviar el Push de Notificaciones.
