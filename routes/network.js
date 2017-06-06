@@ -513,6 +513,7 @@ router.post('/emailtofriend', multipartMiddleware, function(req, res){
 
 									if(userMeData.email == item.email){
 										delete split[x];
+										callback(null, null);
 									}else{
 										var x = split.indexOf(emailProfileData.user_id.email);
 										delete split[x];
