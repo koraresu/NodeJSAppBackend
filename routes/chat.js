@@ -879,15 +879,34 @@ router.clean = function(callback){
 							switch(tipo){
 								case 1:
 									console.log("Aceptar Recomendación");
+
+									Networkfunc.new_friend(notificationData.profile._id, notificationData.profile_mensaje._id, function(networkData){
+										var accept_notification = {
+											tipo:,
+											profile: notificationData.profile._id,
+											profile_emisor: notificationData.profile_mensaje._id,
+											network: networkData._id
+										};
+										Notificationfunc.addOrGet(accept_notification, accept_notification, function(status, newNotNetData){
+											success( newNotNetData );
+										});
+									}, function(){
+										success( notificationData );
+									});
+
+
+
 								break;
 								case 3:
 									console.log("Envió Solucitud");
+									success( notificationData );
 								break;
 								default:
+									success( notificationData );
 								break;
 							}
 
-							success( notificationData );
+							
 						});
 					}else{
 						fail();
