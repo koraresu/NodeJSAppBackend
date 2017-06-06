@@ -495,8 +495,8 @@ router.post('/emailtofriend', multipartMiddleware, function(req, res){
 
 
 	var split = emails.split(',');
-	
-	
+	split = split.map(Function.prototype.call, String.prototype.trim);
+
 	Tokenfunc.exist(guid, function(errToken, token){
 		if(errToken){
 			Tokenfunc.toProfile(token.generated_id, function(status, userMeData, profileData){
