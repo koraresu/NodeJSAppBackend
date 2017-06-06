@@ -510,7 +510,10 @@ router.post('/emailtofriend', multipartMiddleware, function(req, res){
 							async.map(userData, function(item, callback){
 								Profile.findOne({ user_id: item._id }).populate('user_id').exec(function(profileErr, emailProfileData){
 									console.log( profileData._id.toString() + " | " + item._id.toString() );
-									if(userMeData.email != item.email){
+
+									if(userMeData.email == item.email){
+										delete split[x];
+									}else{
 										var x = split.indexOf(emailProfileData.user_id.email);
 										delete split[x];
 										Networkfunc.isFriend(profileData._id, emailProfileData._id, function(d){
@@ -521,8 +524,6 @@ router.post('/emailtofriend', multipartMiddleware, function(req, res){
 										
 											callback(null, x);
 										});
-									}else{
-										callback(null, null);
 									}
 								});
 							}, function(err, results){
