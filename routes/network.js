@@ -499,7 +499,7 @@ router.post('/emailtofriend', multipartMiddleware, function(req, res){
 	
 	Tokenfunc.exist(guid, function(errToken, token){
 		if(errToken){
-			Tokenfunc.toProfile(token.generated_id, function(status, userData, profileData){
+			Tokenfunc.toProfile(token.generated_id, function(status, userMeData, profileData){
 				if(status){
 					User.find({
 						"email": { $in: split }
@@ -510,7 +510,7 @@ router.post('/emailtofriend', multipartMiddleware, function(req, res){
 							async.map(userData, function(item, callback){
 								Profile.findOne({ user_id: item._id }).populate('user_id').exec(function(profileErr, emailProfileData){
 									console.log( profileData._id.toString() + " | " + item._id.toString() );
-									if(profileData._id.toString() != item._id.toString() ){
+									if(userMeData.email != item.email){
 										var x = split.indexOf(emailProfileData.user_id.email);
 										delete split[x];
 										Networkfunc.isFriend(profileData._id, emailProfileData._id, function(d){
