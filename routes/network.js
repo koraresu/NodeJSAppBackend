@@ -509,6 +509,7 @@ router.post('/emailtofriend', multipartMiddleware, function(req, res){
 
 							async.map(userData, function(item, callback){
 								Profile.findOne({ user_id: item._id }).populate('user_id').exec(function(profileErr, emailProfileData){
+									console.log( profileData._id.toString() + " | " + item._id.toString() );
 									if(profileData._id.toString() != item._id.toString() ){
 										var x = split.indexOf(emailProfileData.user_id.email);
 										delete split[x];

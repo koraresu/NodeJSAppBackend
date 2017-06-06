@@ -874,6 +874,18 @@ router.clean = function(callback){
 						Notificationfunc.get({
 							_id: id
 						}, function(notStatus, notificationData){
+							var id = notificationData._id;
+							var tipo = notificationData.tipo;
+							switch(tipo){
+								case 1:
+									console.log("Aceptar Recomendación");
+								break;
+								case 3:
+									console.log("Envió Solucitud");
+								break;
+								default:
+								break;
+							}
 
 							success( notificationData );
 						});
