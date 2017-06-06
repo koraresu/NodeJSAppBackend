@@ -882,7 +882,7 @@ router.clean = function(callback){
 
 									Networkfunc.new_friend(notificationData.profile._id, notificationData.profile_mensaje._id, function(networkData){
 										var accept_notification = {
-											tipo:,
+											tipo:3,
 											profile: notificationData.profile._id,
 											profile_emisor: notificationData.profile_mensaje._id,
 											network: networkData._id
