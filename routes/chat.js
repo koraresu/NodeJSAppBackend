@@ -891,8 +891,8 @@ router.clean = function(callback){
 									Networkfunc.new_friend(notificationData.profile._id, notificationData.profile_mensaje._id, function(networkData){
 										var accept_notification = {
 											tipo:3,
-											profile: notificationData.profile._id,
-											profile_emisor: notificationData.profile_mensaje._id,
+											profile: notificationData.profile_mensaje._id,
+											profile_emisor: notificationData.profile._id,
 											network: networkData._id
 										};
 										console.log( accept_notification );
