@@ -11,7 +11,7 @@ var moment = require('moment-timezone');
 module.exports = function(io){
 
 chatrouter.clean(function(err){ });
-/**
+  /**
    * Iniciamos la conexion del Socket General, para el manejo del Chat.
    */
 io.on('connection', function(socket){
@@ -109,7 +109,7 @@ io.on('connection', function(socket){
    */
   socket.on('notification', function(data){
     console.log("socket_chat","notification");
-    
+    console.log("socket_notification", data);
     /*
     chatrouter.notification_accept2C(data, function(onlineData, networkData, notificationData, OldNotification){
       if(onlineData != null || onlineData != undefined){

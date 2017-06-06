@@ -504,8 +504,7 @@ function recomendar(data, success, fail){
 						PublicId(p_recomend_id, function(statusRecomend, profileRecomendData){
 							if(statusRecomend){
 
-								d.tipo = 1;
-
+								d.tipo            = 1;
 								d.profile         = profileAnotherData._id;
 								d.profile_emisor  = profileData._id;
 								d.profile_mensaje = profileRecomendData._id;
