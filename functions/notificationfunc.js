@@ -101,6 +101,41 @@ exports.getOne2Callback = function(search, success, fail){
 	});
 };
 /**
+ * createOrGet, Buscar un Notificacion si no existe, la crea.
+ * @param {Query} search, Query con que buscar la Notificacion.
+ * @param {Query} d, Datos para crearla.
+ * @param {function} success.
+ * @param {function} fail.
+ * @callback {function}
+ *
+ */
+exports.createOrGet        = function(search, d, success, fail){
+	if(d == null){
+		fail();
+	}else{
+		Notification.findOne(search).exec(function(err, not){
+			if(!err && not){
+				if(!not.status){
+					not.deleted = false;
+					not.clicked = false;
+				}
+				not.save(function(err, notData){
+					APNfunc.sendNotification(notificationData._id, function(){
+						callback( notificationData );
+					});
+				});
+			}else{
+				var notification = new Notification(d);
+				not.save(function(err, notData){
+					APNfunc.sendNotification(notificationData._id, function(){
+						success( notificationData );
+					});
+				});
+			}
+		});
+	}
+};
+/**
  * addOrGet, Buscar un Notificacion si no existe, la crea.
  * @param {Query} search, Query con que buscar la Notificacion.
  * @param {Query} d, Datos para crearla.

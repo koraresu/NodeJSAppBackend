@@ -896,13 +896,12 @@ router.clean = function(callback){
 											network: networkData._id
 										};
 										console.log( accept_notification );
-										success( notificationData );
-										/*
-										Notificationfunc.addOrGet(accept_notification, accept_notification, function(status, newNotNetData){
+										
+										Notificationfunc.createOrGet(accept_notification, accept_notification, function(status, newNotNetData){
 											console.log(status, newNotNetData);
 											success( newNotNetData );
 										});
-										*/
+										
 									}, function(){
 										success( notificationData );
 									});
