@@ -873,11 +873,16 @@ router.clean = function(callback){
 				if(status){
 					if(mongoose.Types.ObjectId.isValid(id)){
 						id = mongoose.Types.ObjectId(id);
+
+						console.log("IsValid",id);
+
 						Notificationfunc.get({
 							_id: id
 						}, function(notStatus, notificationData){
 							var id = notificationData._id;
 							var tipo = notificationData.tipo;
+							console.log("GetInfo",id);
+							console.log("GetInfo Tipo",tipo);
 							switch(tipo){
 								case 1:
 									console.log("Aceptar Recomendación");
