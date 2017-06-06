@@ -853,6 +853,44 @@ router.clean = function(callback){
 	});
 };
 /**
+ * accept_notification, Notificaciones Aceptadas.
+ * @param {Object} data, Datos usados en Notificaciones.
+ * @param {function} success.
+ * @param {function} fail. 
+ * @return {OnlineObject, NetworkObject,NotificationObject}
+ *
+ */
+ router.accept_notification = function(data, success, fail){
+ 	var id   = data.id;
+ 	var guid = data.guid;
+ 	var stat = data.accept;
+ 	
+ 	Tokenfunc.exist(guid, function(status, tokenData){
+		if(status){
+			Tokenfunc.toProfile(tokenData.generated_id, function(status, userData, profileData, profileInfoData){
+				if(status){
+					if(mongoose.Types.ObjectId.isValid(id)){
+						id = mongoose.Types.ObjectId(id);
+						Notificationfunc.get({
+							_id: id
+						}, function(notStatus, notificationData){
+
+							success( notificationData );
+						});
+					}else{
+						fail();
+					}
+				}else{
+					fail();
+				}
+			});
+		}else{
+			fail();
+		}
+	});
+
+ };
+/**
  * notification_accept2C, Notificaciones Aceptadas.
  * @param {Object} data, Datos usados en Notificaciones.
  * @param {function} success.
@@ -860,6 +898,7 @@ router.clean = function(callback){
  * @return {OnlineObject, NetworkObject,NotificationObject}
  *
  */
+
 router.notification_accept2C = function(data, success, fail){
  	var id = data.id;
  	var guid = data.guid;

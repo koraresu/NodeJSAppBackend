@@ -110,6 +110,11 @@ io.on('connection', function(socket){
   socket.on('notification', function(data){
     console.log("socket_chat","notification");
     console.log("socket_notification", data);
+    chatrouter.accept_notification(data, function(notificationData){
+      console.log( notificationData );
+    }, function(){
+      console.log("Fail Notification");
+    });
     /*
     chatrouter.notification_accept2C(data, function(onlineData, networkData, notificationData, OldNotification){
       if(onlineData != null || onlineData != undefined){
