@@ -113,15 +113,15 @@ exports.createOrGet        = function(search, d, success, fail){
 	if(d == null){
 		fail();
 	}else{
-		Notification.findOne(search).exec(function(err, not){
-			if(!err && not){
-				if(!not.status){
-					not.deleted = false;
-					not.clicked = false;
+		Notification.findOne(search).exec(function(err, notData){
+			if(!err && notData){
+				if(!notData.status){
+					notData.deleted = false;
+					notData.clicked = false;
 				}
-				not.save(function(err, notData){
-					APNfunc.sendNotification(notificationData._id, function(){
-						callback( notificationData );
+				notData.save(function(err, notData){
+					APNfunc.sendNotification(notData._id, function(){
+						success( notData );
 					});
 				});
 			}else{
