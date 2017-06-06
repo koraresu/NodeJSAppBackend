@@ -129,9 +129,9 @@ exports.createOrGet        = function(search, d, success, fail){
 			}else{
 				console.log("No Existe Notificación");
 				var notification = new Notification(d);
-				not.save(function(err, notData){
-					APNfunc.sendNotification(notificationData._id, function(){
-						success( notificationData );
+				notification.save(function(err, notData){
+					APNfunc.sendNotification(notData._id, function(){
+						success( notData );
 					});
 				});
 			}
