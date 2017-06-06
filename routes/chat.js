@@ -864,6 +864,8 @@ router.clean = function(callback){
  	var id   = data.id;
  	var guid = data.guid;
  	var stat = data.accept;
+
+ 	console.log("ID", id);
  	
  	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
@@ -895,9 +897,6 @@ router.clean = function(callback){
 									}, function(){
 										success( notificationData );
 									});
-
-
-
 								break;
 								case 3:
 									console.log("Envió Solucitud");
@@ -911,14 +910,14 @@ router.clean = function(callback){
 							
 						});
 					}else{
-						fail();
+						fail(2);
 					}
 				}else{
-					fail();
+					fail(1);
 				}
 			});
 		}else{
-			fail();
+			fail(0);
 		}
 	});
 

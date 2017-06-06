@@ -112,8 +112,8 @@ io.on('connection', function(socket){
     console.log("socket_notification", data);
     chatrouter.accept_notification(data, function(notificationData){
       
-    }, function(){
-      console.log("Fail Notification");
+    }, function(status){
+      console.log("Fail Notification",status);
     });
     /*
     chatrouter.notification_accept2C(data, function(onlineData, networkData, notificationData, OldNotification){
