@@ -887,7 +887,9 @@ router.clean = function(callback){
 											profile_emisor: notificationData.profile_mensaje._id,
 											network: networkData._id
 										};
+										console.log( accept_notification );
 										Notificationfunc.addOrGet(accept_notification, accept_notification, function(status, newNotNetData){
+											console.log(status, newNotNetData);
 											success( newNotNetData );
 										});
 									}, function(){

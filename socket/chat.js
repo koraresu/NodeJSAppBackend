@@ -111,7 +111,7 @@ io.on('connection', function(socket){
     console.log("socket_chat","notification");
     console.log("socket_notification", data);
     chatrouter.accept_notification(data, function(notificationData){
-      console.log( notificationData );
+      
     }, function(){
       console.log("Fail Notification");
     });
