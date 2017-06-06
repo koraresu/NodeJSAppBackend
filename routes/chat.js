@@ -887,24 +887,44 @@ router.clean = function(callback){
 							switch(tipo){
 								case 1:
 									console.log("Aceptar Recomendación");
+									if(stat){
+										notificationData.status   = true;
+										notificationData.clicked  = true;
+										notificationData.save(function(err, notData){
+											Notificationfunc.getOne({
+												_id: notData._id
+											}, function(notStatus, notificationData){
 
-									Networkfunc.new_friend(notificationData.profile._id, notificationData.profile_mensaje._id, function(networkData){
-										var accept_notification = {
-											tipo:3,
-											profile: notificationData.profile_mensaje._id,
-											profile_emisor: notificationData.profile._id,
-											network: networkData._id
-										};
-										console.log( accept_notification );
-										
-										Notificationfunc.createOrGet(accept_notification, accept_notification, function(status, newNotNetData){
-											console.log(status, newNotNetData);
-											success( newNotNetData );
+												Networkfunc.new_friend(notificationData.profile._id, notificationData.profile_mensaje._id, function(networkData){
+													var accept_notification = {
+														tipo:3,
+														profile: notificationData.profile_mensaje._id,
+														profile_emisor: notificationData.profile._id,
+														network: networkData._id
+													};
+													console.log( accept_notification );
+													
+													Notificationfunc.createOrGet(accept_notification, accept_notification, function(status, newNotNetData){
+														console.log(status, newNotNetData);
+														success( newNotNetData );
+													});
+												}, function(){
+													success( notificationData );
+												});
+											});
 										});
-										
-									}, function(){
-										success( notificationData );
-									});
+									}else{
+										notificationData.status   = false;
+										notificationData.clicked  = true;
+										notificationData.save(function(err, notData){
+											Notificationfunc.getOne({
+												_id: notData._id
+											}, function(notStatus, notificationData){
+												success( notificationData );
+											});
+										});
+									}
+									
 								break;
 								case 3:
 									console.log("Envió Solucitud");
