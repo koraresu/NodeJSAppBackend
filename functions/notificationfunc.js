@@ -115,7 +115,9 @@ exports.createOrGet        = function(search, d, success, fail){
 	}else{
 		Notification.findOne(search).exec(function(err, notData){
 			if(!err && notData){
+				console.log("Existe Notificación");
 				if(!notData.status){
+					console.log("Status True");
 					notData.deleted = false;
 					notData.clicked = false;
 				}
@@ -125,6 +127,7 @@ exports.createOrGet        = function(search, d, success, fail){
 					});
 				});
 			}else{
+				console.log("No Existe Notificación");
 				var notification = new Notification(d);
 				not.save(function(err, notData){
 					APNfunc.sendNotification(notificationData._id, function(){
