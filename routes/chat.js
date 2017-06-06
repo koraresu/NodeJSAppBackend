@@ -879,6 +879,7 @@ router.clean = function(callback){
 						Notificationfunc.get({
 							_id: id
 						}, function(notStatus, notificationData){
+							console.log("Notification", notificationData);
 							var id = notificationData._id;
 							var tipo = notificationData.tipo;
 							console.log("GetInfo",id);
