@@ -876,7 +876,7 @@ router.clean = function(callback){
 
 						console.log("IsValid",id);
 
-						Notificationfunc.get({
+						Notificationfunc.getOne({
 							_id: id
 						}, function(notStatus, notificationData){
 							console.log("Notification", notificationData);
