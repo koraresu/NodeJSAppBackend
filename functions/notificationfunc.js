@@ -394,27 +394,32 @@ function accept_solicitud(notificationData, stat, success){
 			};
 
 			if(stat){
-				addOrGet({
-					tipo: 4,
-					profile: notificationData.profile_emisor,
-					profile_emisor: notificationData.profile,
-					network: networkData._id,
-				},{
-					tipo: 4,
-					profile: notificationData.profile_emisor,
-					profile_emisor: notificationData.profile,
-					network: networkData._id,
-					status: true,
-					clicked: true
-				}, function(status, newNotData){
-					getOne2Callback({ _id: newNotData._id }, function(notNewData){
-						a(ajeno, notNewData, networkData, function(onlineData, networkData, notNData){
-							success(onlineData, networkData, notNData, notificationData);
+				notificationData.clicked = true;
+				notificationData.status  = true;
+				notificationData.save(function(err, notD){
+					addOrGet({
+						tipo: 4,
+						profile: notificationData.profile_emisor,
+						profile_emisor: notificationData.profile,
+						network: networkData._id,
+					},{
+						tipo: 4,
+						profile: notificationData.profile_emisor,
+						profile_emisor: notificationData.profile,
+						network: networkData._id,
+						status: true,
+						clicked: true
+					}, function(status, newNotData){
+						getOne2Callback({ _id: newNotData._id }, function(notNewData){
+							a(ajeno, notNewData, networkData, function(onlineData, networkData, notNData){
+								success(onlineData, networkData, notNData, notificationData);
+							});
+						}, function(st){
+							fail( st );
 						});
-					}, function(st){
-						fail( st );
 					});
 				});
+				
 			}else{
 				getOne2Callback({ _id: notificationData._id }, function(notNewData){
 					a(ajeno, notNewData, networkData, function(onlineData, networkData, notNData){
