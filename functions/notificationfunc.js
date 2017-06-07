@@ -347,7 +347,7 @@ function accept_recomendation(notificationData, stat, success){
 				};
 				console.log( accept_notification );
 				
-				Notificationfunc.createOrGet(accept_notification, accept_notification, function(status, newNotNetData){
+				createOrGet(accept_notification, accept_notification, function(status, newNotNetData){
 					console.log(status, newNotNetData);
 					success( newNotNetData );
 				});
