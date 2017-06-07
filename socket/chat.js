@@ -113,9 +113,9 @@ io.on('connection', function(socket){
     console.log("socket_notification", data);
 
     Notificationfunc.get({
-
-    }, function(){
-
+      _id: data.id
+    }, function(status, notificationData){
+      console.log(notificationData);
     });
   });
   /**
