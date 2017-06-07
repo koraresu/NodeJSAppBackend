@@ -37,7 +37,7 @@ var metrics      = require('./routes/metrics');
 /**
  * Quitando el limite del Event Emitter.
  */
- require('events').EventEmitter.defaultMaxListeners = Infinity; 
+require('events').EventEmitter.defaultMaxListeners = Infinity;
 
 var app = express();
 /**

@@ -70,7 +70,7 @@ exports.get = function(search, callback){
  * @callback {function}
  *
  */
-exports.getOne = function(search, callback){
+ function getOne(search, callback){
 	model.notification.findOne(search).populate('profile').populate('profile_emisor').populate('profile_mensaje').exec(function(errNotification, notificationData){
 		if(!errNotification && notificationData){
 			callback(true, notificationData);
@@ -79,6 +79,7 @@ exports.getOne = function(search, callback){
 		}
 	});
 };
+exports.getOne = getOne;
 /**
  * getOne2Callback, Buscar una Notificacion, usando Success y Fail.
  * @param {Query} search, Query con que buscar la Notificacion.
@@ -248,7 +249,7 @@ exports.add = function(d, callback, io){
  * @callback {function}
  *
  */
-exports.click = function(search, stat, success, fail){
+ function click(search, stat, success, fail){
 	Notification.findOne(search).exec(function(err,notificationData){
 		notificationData.clicked = true;
 		notificationData.status  = stat;
@@ -271,7 +272,7 @@ exports.click = function(search, stat, success, fail){
 		});
 	});
 };
-
+exports.click = click;
 /**
  * getOnline.(New)
  *
@@ -298,7 +299,7 @@ exports.getOnline = getOnline;
  *
  */
 function clicked(id, stat,success, fail){
-	Notificationfunc.click({ _id: id },stat, function(notificationData){
+	click({ _id: id },stat, function(notificationData){
 		var ajeno = Generalfunc.profile_ajeno_n(profileData._id, networkData.profiles);
 		if(stat){
 			Notificationfunc.addOrGet({
@@ -314,7 +315,7 @@ function clicked(id, stat,success, fail){
 				status: true,
 				clicked: true
 			}, function(status, newNotData){
-				Notificationfunc.getOne2Callback({ _id: newNotData._id }, function(notNewData){
+				getOne2Callback({ _id: newNotData._id }, function(notNewData){
 					getOnline(ajeno, notNewData, networkData, function(onlineData, networkData, notNData){
 						success(onlineData, networkData, notNData, notificationData);
 					});
@@ -331,7 +332,7 @@ function accept_recomendation(notificationData, stat, success){
 	notificationData.status   = true;
 	notificationData.clicked  = true;
 	notificationData.save(function(err, notData){
-		Notificationfunc.getOne({
+		getOne({
 			_id: notData._id
 		}, function(notStatus, notificationData){
 			Networkfunc.new_friend(notificationData.profile._id, notificationData.profile_mensaje._id, function(networkData){
@@ -356,7 +357,7 @@ function accept_recomendation(notificationData, stat, success){
 	notificationData.status   = false;
 	notificationData.clicked  = true;
 	notificationData.save(function(err, notData){
-		Notificationfunc.getOne({
+		getOne({
 			_id: notData._id
 		}, function(notStatus, notificationData){
 			success( notificationData );
@@ -367,7 +368,7 @@ function accept_recomendation(notificationData, stat, success){
 exports.accept_recomendation = accept_recomendation;
 function accept_solicitud(notificationData, stat, success){
 	var bool_Network = function(networkData){
-		Notificationfunc.click({ _id: id },stat, function(notificationData){
+		click({ _id: id },stat, function(notificationData){
 
 			var ajeno = profile_ajeno(profileData._id, networkData.profiles);
 
@@ -403,7 +404,7 @@ function accept_solicitud(notificationData, stat, success){
 					status: true,
 					clicked: true
 				}, function(status, newNotData){
-					Notificationfunc.getOne2Callback({ _id: newNotData._id }, function(notNewData){
+					getOne2Callback({ _id: newNotData._id }, function(notNewData){
 						a(ajeno, notNewData, networkData, function(onlineData, networkData, notNData){
 							success(onlineData, networkData, notNData, notificationData);
 						});
@@ -412,7 +413,7 @@ function accept_solicitud(notificationData, stat, success){
 					});
 				});
 			}else{
-				Notificationfunc.getOne2Callback({ _id: notificationData._id }, function(notNewData){
+				getOne2Callback({ _id: notificationData._id }, function(notNewData){
 					a(ajeno, notNewData, networkData, function(onlineData, networkData, notNData){
 						success(onlineData, networkData, notNData, notificationData);
 					});
