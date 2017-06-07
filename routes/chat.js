@@ -112,8 +112,8 @@ function conversation_format(profile_id, success, fail){
 		if(!err && conversationData){
 			async.map(conversationData, function(item, ca){
 				if(item.profiles.length > 1){
-					var equal = profile_equal(profile_id, item.profiles);
-					var ajeno = profile_ajeno(profile_id, item.profiles);
+					var equal = Generalfunc.profile_equal(profile_id, item.profiles);
+					var ajeno = Generalfunc.profile_ajeno_n(profile_id, item.profiles);
 					var number = equal.number;
 
 					if(item.prop_status != undefined){
@@ -343,7 +343,7 @@ router.post('/delete/conversation', multipartMiddleware, function(req, res){
 						Conversation.findOne({ _id: conversation_id }).populate('profiles').exec(function(errConv, conversationData){
 
 
-							var equal = profile_equal(profileData._id, conversationData.profiles);
+							var equal = Generalfunc.profile_equal(profileData._id, conversationData.profiles);
 							var n = equal.number;
 
 
@@ -1259,7 +1259,7 @@ function setActive(conversation, profileID, success, fail){
 	}).populate('profiles').exec(function(errConv, convData){
 		if(!errConv && convData){
 			var prop = convData.prop_status;
-			var equal = profile_equal(profileID, convData.profiles);
+			var equal = Generalfunc.profile_equal(profileID, convData.profiles);
 			
 			prop[equal.number] = 1;
 
@@ -1307,44 +1307,7 @@ router.setReadMessage = setReadMessage;
 router.setActive      = setActive;
 router.sendPushtoAll  = Generalfunc.sendPushtoAll;
 router.sendPushOne    = Generalfunc.sendPushOne;
-router.profile_equal  = profile_equal
 module.exports        = router;
-/**
- * profile_ajeno, Ya esta escrita en Generalfunc, puede ser remplazada solo tienes que anexar la variable "number".
- */
-function profile_ajeno(profileID, profiles){
-	var first  = profiles[0];
-	var second = profiles[1];
-
-	var element;
-	var number = -1;
-	if(first._id.toString() == profileID.toString()){
-		element = second;
-		number = 1;
-	}else{
-		element = first;
-		number = 0;
-	}
-	return { number: number, profile: element };
-}
-/**
- * profile_equal, Ya esta escrita en Generalfunc, puede ser remplazada solo tienes que anexar la variable "number".
- */
-function profile_equal(profileID, profiles){
-	var first  = profiles[0];
-	var second = profiles[1];
-
-	var element;
-	var number = -1;
-	if(first._id.toString() == profileID.toString()){
-		element = first;
-		number = 0;
-	}else{
-		element = second;
-		number = 1;
-	}
-	return { number: number, profile: element };
-}
 /**
  * decodeBase64Image, Es el envio de Imagenes, toma la imagen y hace el bitmap de esta.
  * @param {Object} image, Archivo.
