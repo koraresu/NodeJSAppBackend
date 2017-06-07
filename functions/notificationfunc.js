@@ -326,6 +326,115 @@ function clicked(id, stat,success, fail){
 	});
 }
 exports.clicked = clicked;
+function accept_recomendation(notificationData, stat, success){
+	if(stat){
+	notificationData.status   = true;
+	notificationData.clicked  = true;
+	notificationData.save(function(err, notData){
+		Notificationfunc.getOne({
+			_id: notData._id
+		}, function(notStatus, notificationData){
+			Networkfunc.new_friend(notificationData.profile._id, notificationData.profile_mensaje._id, function(networkData){
+				var accept_notification = {
+					tipo:3,
+					profile: notificationData.profile_mensaje._id,
+					profile_emisor: notificationData.profile._id,
+					network: networkData._id
+				};
+				console.log( accept_notification );
+				
+				Notificationfunc.createOrGet(accept_notification, accept_notification, function(status, newNotNetData){
+					console.log(status, newNotNetData);
+					success( newNotNetData );
+				});
+			}, function(){
+				success( notificationData );
+			});
+		});
+	});
+}else{
+	notificationData.status   = false;
+	notificationData.clicked  = true;
+	notificationData.save(function(err, notData){
+		Notificationfunc.getOne({
+			_id: notData._id
+		}, function(notStatus, notificationData){
+			success( notificationData );
+		});
+	});
+}
+};
+exports.accept_recomendation = accept_recomendation;
+function accept_solicitud(notificationData, stat, success){
+	var bool_Network = function(networkData){
+		Notificationfunc.click({ _id: id },stat, function(notificationData){
+
+			var ajeno = profile_ajeno(profileData._id, networkData.profiles);
+
+
+			var a = function(ajeno, notificationData, networkData,c){
+				Online.findOne({
+					profiles: ajeno.profile._id
+				}).sort({created_at: -1}).exec(function(errOnline, onlineData){
+					Notification
+					.findOne({ _id: notificationData._id })
+					.select('-__v -updatedAt')
+					.populate('profile')
+					.populate('profile_emisor')
+					.populate('profile_mensaje')
+					.populate('network')
+					.exec(function(err,notificationData){
+						c(onlineData, networkData, notificationData);	
+					});
+				});
+			};
+
+			if(stat){
+				Notificationfunc.addOrGet({
+					tipo: 4,
+					profile: notificationData.profile_emisor,
+					profile_emisor: notificationData.profile,
+					network: networkData._id,
+				},{
+					tipo: 4,
+					profile: notificationData.profile_emisor,
+					profile_emisor: notificationData.profile,
+					network: networkData._id,
+					status: true,
+					clicked: true
+				}, function(status, newNotData){
+					Notificationfunc.getOne2Callback({ _id: newNotData._id }, function(notNewData){
+						a(ajeno, notNewData, networkData, function(onlineData, networkData, notNData){
+							success(onlineData, networkData, notNData, notificationData);
+						});
+					}, function(st){
+						fail( st );
+					});
+				});
+			}else{
+				Notificationfunc.getOne2Callback({ _id: notificationData._id }, function(notNewData){
+					a(ajeno, notNewData, networkData, function(onlineData, networkData, notNData){
+						success(onlineData, networkData, notNData, notificationData);
+					});
+				}, function(st){
+					fail( st );
+				});
+			}
+		}, function(st){
+			fail( st );
+		});
+	};
+	if(stat == true){
+		Networkfunc.accept({ _id: notificationData.network }, bool_Network, function(st){
+			fail(4);
+		});
+	}else{
+		Networkfunc.ignore({ _id: notificationData.network }, bool_Network, function(st){
+			fail(4);
+		});
+	}
+};
+exports.accept_solicitud = accept_solicitud;
  /**
  * statAndGet, Set Status, Create New Notification and Get Result.
  * @param {NotificationObject} notificationData, Enviar el Push de Notificaciones.

@@ -888,79 +888,24 @@ router.clean = function(callback){
 							switch(tipo){
 								case 1:
 									console.log("Aceptar Recomendación");
-									if(stat){
-										notificationData.status   = true;
-										notificationData.clicked  = true;
-										notificationData.save(function(err, notData){
-											Notificationfunc.getOne({
-												_id: notData._id
-											}, function(notStatus, notificationData){
-
-												Networkfunc.new_friend(notificationData.profile._id, notificationData.profile_mensaje._id, function(networkData){
-													var accept_notification = {
-														tipo:3,
-														profile: notificationData.profile_mensaje._id,
-														profile_emisor: notificationData.profile._id,
-														network: networkData._id
-													};
-													console.log( accept_notification );
-													
-													Notificationfunc.createOrGet(accept_notification, accept_notification, function(status, newNotNetData){
-														console.log(status, newNotNetData);
-														success( newNotNetData );
-													});
-												}, function(){
-													success( notificationData );
-												});
-											});
-										});
-									}else{
-										notificationData.status   = false;
-										notificationData.clicked  = true;
-										notificationData.save(function(err, notData){
-											Notificationfunc.getOne({
-												_id: notData._id
-											}, function(notStatus, notificationData){
-												success( notificationData );
-											});
-										});
-									}
-									
+									Notificationfunc.accept_recomendation(notificationData, stat, function(notificationData){
+										success(notificationData);
+									}, function(){
+										fail();
+									});
 								break;
 								case 3:
 									console.log("Envió Solucitud");
-
-									if(stat == true){
- 										Networkfunc.accept({ _id: notificationData.network }, function(networkData){
- 											Notificationfunc.clicked(id, true,function(onlineData, networkData, notNData, notificationData){
- 												success(notNData);
- 											}, function(){
- 												fail();
- 											});
-
- 										}, function(st){
- 											fail(4);
- 										});
- 									}else{
- 										Networkfunc.ignore({ _id: notificationData.network }, function(networkData){
- 											Notificationfunc.clicked(id, false,function(onlineData, networkData, notNData, notificationData){
- 												success(notNData);
- 											}, function(){
- 												fail();
- 											});
- 										}, function(st){
- 											fail(4);
- 										});
- 									}
-
-									success( notificationData );
+									Notificationfunc.accept_solicitud(notificationData, stat, function(notificationData){
+										success(notificationData);
+									}, function(){
+										fail();
+									});
 								break;
 								default:
 									success( notificationData );
 								break;
 							}
-
-							
 						});
 					}else{
 						fail(2);
