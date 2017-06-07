@@ -112,7 +112,7 @@ exports.getOne2Callback = getOne2Callback;
  * @callback {function}
  *
  */
-exports.createOrGet        = function(search, d, success, fail){
+function createOrGet(search, d, success, fail){
 	if(d == null){
 		fail();
 	}else{
@@ -141,6 +141,7 @@ exports.createOrGet        = function(search, d, success, fail){
 		});
 	}
 };
+exports.createOrGet = createOrGet;
 /**
  * addOrGet, Buscar un Notificacion si no existe, la crea.
  * @param {Query} search, Query con que buscar la Notificacion.
