@@ -285,10 +285,11 @@ function getNoMyID(profilesId, profile_id){
  */
 function isNeightbor(profile_id, another_id, callback){
 	var lvl = 0;
-	console.log("isNeightbor", profile_id._id );
+	console.log("isNeightbor", profile_id );
 	getFriends(profile_id._id, function(errFirst, firstData, firstIds){
 		if(firstIds.length>0){
 			firstIds.forEach(function(firstItem, firstIndex){
+				console.log("isNeightbor FOreach", firstItem );
 				getFriends(firstItem, function(errSecond, secondData, secondIds){
 
 					var x = secondIds.filter(function(y){
@@ -377,6 +378,7 @@ function typeFriend(profile_id, another_id, callback){
  *
  */
 function type(profileID, anotherID, callback){
+	console.log("type", anotherID);
 	getFriends(anotherID._id, function(errNetwork, friends, friendsId){
 		
 		var its = friendsId.filter(function(o){
