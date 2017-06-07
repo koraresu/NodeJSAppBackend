@@ -150,7 +150,7 @@ exports.createOrGet        = function(search, d, success, fail){
  * @callback {function}
  *
  */
-exports.addOrGet        = function(search, d, callback){
+function addOrGet (search, d, callback){
 	if(d == null){
 		callback(false);
 	}else{
@@ -200,6 +200,7 @@ exports.addOrGet        = function(search, d, callback){
 		
 	}
 };
+exports.addOrGet        = addOrGet;
 /**
  * add, Crear Notificacion.
  * @param {Query} d, Datos para crearla.
@@ -303,7 +304,7 @@ function clicked(id, stat,success, fail){
 	click({ _id: id },stat, function(notificationData){
 		var ajeno = Generalfunc.profile_ajeno_n(profileData._id, networkData.profiles);
 		if(stat){
-			Notificationfunc.addOrGet({
+			addOrGet({
 				tipo: 4,
 				profile: notificationData.profile_emisor,
 				profile_emisor: notificationData.profile,
@@ -392,7 +393,7 @@ function accept_solicitud(notificationData, stat, success){
 			};
 
 			if(stat){
-				Notificationfunc.addOrGet({
+				addOrGet({
 					tipo: 4,
 					profile: notificationData.profile_emisor,
 					profile_emisor: notificationData.profile,
@@ -444,7 +445,7 @@ exports.accept_solicitud = accept_solicitud;
  */
  exports.statAndGet = function(stat, notificationData, success, fail){
  	if(stat){
- 		Notificationfunc.addOrGet({
+ 		addOrGet({
  			tipo: 4,
  			profile: notificationData.profile_emisor,
  			profile_emisor: notificationData.profile,
