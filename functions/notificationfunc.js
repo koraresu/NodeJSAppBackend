@@ -42,6 +42,7 @@ var Country      = model.country;
 var Generalfunc  = require('./generalfunc');
 var Pushfunc     = require('./pushfunc');
 var APNfunc      = require('./apnfunc');
+var Networkfunc  = require('./networkfunc');
 /**
  * get, Buscar Notificacion.
  * @param {Query} search, Query con que buscar la Notificacion.
@@ -366,7 +367,7 @@ function accept_recomendation(notificationData, stat, success){
 }
 };
 exports.accept_recomendation = accept_recomendation;
-function accept_solicitud(notificationData, stat, success, Networkfunc){
+function accept_solicitud(notificationData, stat, success){
 	var bool_Network = function(networkData){
 		click({ _id: id },stat, function(notificationData){
 
