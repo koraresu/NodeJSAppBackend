@@ -996,7 +996,9 @@ router.notification_accept2C = function(data, success, fail){
  						});
  					};
 
- 					var bool_uno_Network = function(networkData){
+ 					var bool_uno_Network = function(data){
+ 						var networkData = data.network;
+ 						var id = data.notification_id;
 
  						Notificationfunc.click({ _id: id },stat, function(notificationData){
 
@@ -1020,42 +1022,26 @@ router.notification_accept2C = function(data, success, fail){
  								});
  							};
 
- 							var search = {};
- 							var insert = {};
+ 							var search = {
+ 								tipo: 3,
+ 								profile: 0,
+ 								profile_emisor: 0,
+ 								network: networkData._id,
+ 							};
+ 							var insert = {
+ 									tipo: 3,
+ 									profile: notificationData.profile_emisor,
+ 									profile_emisor: notificationData.profile,
+ 									network: networkData._id,
+ 									status: false,
+ 									clicked: false
+ 								};
  							if(notificationData.tipo == 1){
- 								search = {
- 									tipo: 3,
- 									profile: notificationData.profile_mensaje,
- 									profile_emisor: notificationData.profile,
- 									network: networkData._id,
- 									status: false,
- 									clicked: false
- 								};
- 								insert = {
- 									tipo: 3,
- 									profile: notificationData.profile_emisor,
- 									profile_emisor: notificationData.profile,
- 									network: networkData._id,
- 									status: false,
- 									clicked: false
- 								};
+ 								search.profile        = notificationData.profile_mensaje;
+ 								search.profile_emisor = notificationData.profile;
  							}else{
- 								search = {
- 									tipo: 3,
- 									profile: notificationData.profile_emisor,
- 									profile_emisor: notificationData.profile,
- 									network: networkData._id,
- 									status: false,
- 									clicked: false
- 								};
- 								insert = {
- 									tipo: 3,
- 									profile: notificationData.profile_emisor,
- 									profile_emisor: notificationData.profile,
- 									network: networkData._id,
- 									status: false,
- 									clicked: false
- 								};
+ 								search.profile         = notificationData.profile_mensaje;
+ 								search.profile_emisor  = notificationData.profile;
  							}
  							Notificationfunc.addOrGet(search, insert, function(status, newNotData){
  								Notificationfunc.getOne2Callback({ _id: newNotData._id }, function(notNewData){
@@ -1076,9 +1062,15 @@ router.notification_accept2C = function(data, success, fail){
  						console.log("Profile", notificationData.profile.first_name);
  						console.log("Profile Emisor", notificationData.profile_emisor.first_name);
  						console.log("Profile Mensaje", notificationData.profile_mensaje.first_name);
+
  						Networkfunc.new_friend(notificationData.profile, notificationData.profile_mensaje, function(networkData){
  							Network.findOne({ _id: networkData._id}).populate('profiles').exec(function(errNetwork, networkData){
- 								bool_uno_Network(networkData);
+ 								bool_uno_Network({
+ 									network: networkData,
+ 									notification_id: notificationData._id,
+
+ 								});
+ 								//bool_uno_Network(networkData);
  							});
  						}, function(st){
  							fail(4);

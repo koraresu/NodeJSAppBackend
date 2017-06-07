@@ -122,7 +122,6 @@ io.on('connection', function(socket){
           io.to('/#' + socketid).emit('notification', notificationData);
           socket.broadcast.to(socketid).emit('notification', notificationData);
         }
-
       }
     }, function(status){
       console.log("Status:" + status);
