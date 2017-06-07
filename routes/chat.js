@@ -1000,7 +1000,7 @@ router.notification_accept2C = function(data, success, fail){
 
  						Notificationfunc.click({ _id: id },stat, function(notificationData){
 
- 							var ajeno = Generalfunc.profile_ajeno(profileData._id, networkData.profiles);
+ 							var ajeno = Generalfunc.profile_ajeno_n(profileData._id, networkData.profiles);
 
 
  							var a = function(ajeno, notificationData, networkData,c){
