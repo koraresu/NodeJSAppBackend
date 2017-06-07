@@ -1307,7 +1307,7 @@ router.setReadMessage = setReadMessage;
 router.setActive      = setActive;
 router.sendPushtoAll  = Generalfunc.sendPushtoAll;
 router.sendPushOne    = Generalfunc.sendPushOne;
-module.exports        = router;,
+module.exports        = router;
 /**
  * decodeBase64Image, Es el envio de Imagenes, toma la imagen y hace el bitmap de esta.
  * @param {Object} image, Archivo.
