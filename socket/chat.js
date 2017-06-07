@@ -173,7 +173,7 @@ io.on('connection', function(socket){
   });
   socket.on('get_no_readed', function(data){
     console.log("socket_chat","get_no_readed");
-    console.log( data );
+    console.log("Socket No Readed", data );
     message_readed( data ); 
   });
 

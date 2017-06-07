@@ -128,11 +128,8 @@ exports.createOrGet        = function(search, d, success, fail){
 				});
 			}else{
 				console.log("No Existe Notificación");
-				var notification = new Notification(d);
-				notification.save(function(err, notData){
-					APNfunc.sendNotification(notData._id, function(){
-						success( notData );
-					});
+				add(d, function(status, notificationData){
+					success( notificationData );
 				});
 			}
 		});
@@ -166,31 +163,13 @@ exports.addOrGet        = function(search, d, callback){
 						}
 					});
 				}else{
-					var notification = new Notification(d);
-					notification.save(function(errNotification, notificationData){
-						
-						
-						if(!errNotification && notificationData){
-							APNfunc.sendNotification(notificationData._id, function(){
-								callback(true, notificationData);
-							});
-						}else{
-							callback(false);
-						}
+					add(d, function(status, notificationData){
+						callback( status, notificationData );
 					});
 				}
 			}else{
-				var notification = new Notification(d);
-				notification.save(function(errNotification, notificationData){
-					
-					
-					if(!errNotification && notificationData){
-						APNfunc.sendNotification(notificationData._id, function(){
-							callback(true, notificationData);	
-						});
-					}else{
-						callback(false);
-					}
+				add(d, function(status, notificationData){
+					callback( status, notificationData );
 				});
 			}
 		});
@@ -204,7 +183,7 @@ exports.addOrGet        = function(search, d, callback){
  * @callback {function}
  *
  */
-exports.add = function(d, callback, io){
+ function add(d, callback, io){
 	if(d == null){
 		callback(false);
 	}else{
@@ -239,6 +218,8 @@ exports.add = function(d, callback, io){
 		});
 	}
 };
+
+exports.add = add;
 /**
  * click, Al Interactuar con una Notificación.
  * @param {Query} search, Datos para buscar la Notificación.
