@@ -232,6 +232,7 @@ function getListFriends(profile_id,callback){
  */
 function getFriends(profile_id,callback){
 	console.log("GETFriends", profile_id);
+	
 	if(mongoose.Types.ObjectId.isValid(profile_id)){
 		var profile_id = mongoose.Types.ObjectId(profile_id);	
 	}
