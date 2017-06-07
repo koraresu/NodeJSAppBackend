@@ -112,23 +112,11 @@ io.on('connection', function(socket){
     console.log("socket_chat","notification");
     console.log("socket_notification", data);
 
-    Notificationfunc.
-    /*
-    chatrouter.notification_accept2C(data, function(onlineData, networkData, notificationData, OldNotification){
-      if(onlineData != null || onlineData != undefined){
+    Notificationfunc.get({
 
-        var socketid = onlineData.socket;
-        if(socketid != undefined){
-          socket.emit('notification', OldNotification);
-          io.to('/#' + socketid).emit('notification', notificationData);
-          socket.broadcast.to(socketid).emit('notification', notificationData);
-        }
-        APNfunc.sendNotification(notificationData._id, function(){ });
-      }
-    }, function(status){
-      console.log("Status:" + status);
+    }, function(){
+
     });
-    */
   });
   /**
    * Al recibir una recomendación, accedemos a los helpers y creamos las noticias y notificaciones pertinente. Y geramos las respuestas para 
