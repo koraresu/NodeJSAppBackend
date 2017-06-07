@@ -1030,8 +1030,8 @@ router.notification_accept2C = function(data, success, fail){
  							};
  							var insert = {
  									tipo: 3,
- 									profile: notificationData.profile_emisor,
- 									profile_emisor: notificationData.profile,
+ 									profile: 0,
+ 									profile_emisor: 0,
  									network: networkData._id,
  									status: false,
  									clicked: false
@@ -1039,9 +1039,15 @@ router.notification_accept2C = function(data, success, fail){
  							if(notificationData.tipo == 1){
  								search.profile        = notificationData.profile_mensaje;
  								search.profile_emisor = notificationData.profile;
+
+ 								insert.profile         = notificationData.profile_mensaje;
+ 								insert.profile_emisor  = notificationData.profile;
  							}else{
  								search.profile         = notificationData.profile_mensaje;
  								search.profile_emisor  = notificationData.profile;
+
+ 								insert.profile         = notificationData.profile_mensaje;
+ 								insert.profile_emisor  = notificationData.profile;
  							}
  							Notificationfunc.addOrGet(search, insert, function(status, newNotData){
  								Notificationfunc.getOne2Callback({ _id: newNotData._id }, function(notNewData){
