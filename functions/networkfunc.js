@@ -232,38 +232,42 @@ function getListFriends(profile_id,callback){
  */
 function getFriends(profile_id,callback){
 	console.log("GETFriends", profile_id);
-
-	if(mongoose.Types.ObjectId.isValid(profile_id)){
-		var profile_id = mongoose.Types.ObjectId(profile_id);	
-	}
-	var data = [];
-	Network.find({
-		"profiles": {
-			"$in": [profile_id]
-		},
-		"accepted": true
-	}).exec(function(errNetwork, networkData){		
-		if(networkData.length > 0){
-			networkData.forEach(function(friend, index, friends){
-
-				var a = friend.profiles.filter(function(o){
-					return o.toString() != profile_id.toString()
-				});
-				a = a[0];
-				
-				data.push(a);
-
-				if((networkData.length-1) == index){
-					callback(errNetwork, friends, data);
-				}
-				
-			});
-		}else{
-			callback(errNetwork, {}, []);
+	if(profile_id == undefined){
+		callback(null, {}, []);
+	}else{
+		if(mongoose.Types.ObjectId.isValid(profile_id)){
+			var profile_id = mongoose.Types.ObjectId(profile_id);	
 		}
-		
-		
-	});
+		var data = [];
+		Network.find({
+			"profiles": {
+				"$in": [profile_id]
+			},
+			"accepted": true
+		}).exec(function(errNetwork, networkData){		
+			if(networkData.length > 0){
+				networkData.forEach(function(friend, index, friends){
+
+					var a = friend.profiles.filter(function(o){
+						return o.toString() != profile_id.toString()
+					});
+					a = a[0];
+					
+					data.push(a);
+
+					if((networkData.length-1) == index){
+						callback(errNetwork, friends, data);
+					}
+					
+				});
+			}else{
+				callback(errNetwork, {}, []);
+			}
+			
+			
+		});
+	}
+	
 }
 /**
  * getNoMyID (***)
