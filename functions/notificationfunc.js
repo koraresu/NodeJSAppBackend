@@ -42,7 +42,6 @@ var Country      = model.country;
 var Generalfunc  = require('./generalfunc');
 var Pushfunc     = require('./pushfunc');
 var APNfunc      = require('./apnfunc');
-var Networkfunc  = require('./networkfunc');
 /**
  * get, Buscar Notificacion.
  * @param {Query} search, Query con que buscar la Notificacion.
@@ -71,7 +70,7 @@ exports.get = function(search, callback){
  * @callback {function}
  *
  */
- function getOne(search, callback){
+exports.getOne = function(search, callback){
 	model.notification.findOne(search).populate('profile').populate('profile_emisor').populate('profile_mensaje').exec(function(errNotification, notificationData){
 		if(!errNotification && notificationData){
 			callback(true, notificationData);
@@ -80,7 +79,6 @@ exports.get = function(search, callback){
 		}
 	});
 };
-exports.getOne = getOne;
 /**
  * getOne2Callback, Buscar una Notificacion, usando Success y Fail.
  * @param {Query} search, Query con que buscar la Notificacion.
@@ -89,7 +87,7 @@ exports.getOne = getOne;
  * @callback {function}
  *
  */
- function getOne2Callback(search, success, fail){
+exports.getOne2Callback = function(search, success, fail){
 	model.notification.findOne(search)
 	.populate('profile')
 	.populate('profile_emisor')
@@ -102,7 +100,6 @@ exports.getOne = getOne;
 		}
 	});
 };
-exports.getOne2Callback = getOne2Callback;
 /**
  * createOrGet, Buscar un Notificacion si no existe, la crea.
  * @param {Query} search, Query con que buscar la Notificacion.
@@ -112,7 +109,7 @@ exports.getOne2Callback = getOne2Callback;
  * @callback {function}
  *
  */
-function createOrGet(search, d, success, fail){
+exports.createOrGet        = function(search, d, success, fail){
 	if(d == null){
 		fail();
 	}else{
@@ -141,7 +138,6 @@ function createOrGet(search, d, success, fail){
 		});
 	}
 };
-exports.createOrGet = createOrGet;
 /**
  * addOrGet, Buscar un Notificacion si no existe, la crea.
  * @param {Query} search, Query con que buscar la Notificacion.
@@ -151,7 +147,7 @@ exports.createOrGet = createOrGet;
  * @callback {function}
  *
  */
-function addOrGet (search, d, callback){
+exports.addOrGet        = function(search, d, callback){
 	if(d == null){
 		callback(false);
 	}else{
@@ -201,7 +197,6 @@ function addOrGet (search, d, callback){
 		
 	}
 };
-exports.addOrGet        = addOrGet;
 /**
  * add, Crear Notificacion.
  * @param {Query} d, Datos para crearla.
@@ -252,7 +247,7 @@ exports.add = function(d, callback, io){
  * @callback {function}
  *
  */
- function click(search, stat, success, fail){
+exports.click = function(search, stat, success, fail){
 	Notification.findOne(search).exec(function(err,notificationData){
 		notificationData.clicked = true;
 		notificationData.status  = stat;
@@ -275,213 +270,6 @@ exports.add = function(d, callback, io){
 		});
 	});
 };
-exports.click = click;
-/**
- * getOnline.(New)
- *
- */
- function getOnline(ajeno, notificationData, networkData, success){
- 	Online.findOne({
- 		profiles: ajeno.profile._id
- 	}).sort({created_at: -1}).exec(function(errOnline, onlineData){
- 		Notification
- 		.findOne({ _id: notificationData._id })
- 		.select('-__v -updatedAt')
- 		.populate('profile')
- 		.populate('profile_emisor')
- 		.populate('profile_mensaje')
- 		.populate('network')
- 		.exec(function(err,notificationData){
- 			c(onlineData, networkData, notificationData);	
- 		});
- 	});
- };
-exports.getOnline = getOnline;
-/**
- * clicked.(New)
- *
- */
-function clicked(id, stat,success, fail){
-	click({ _id: id },stat, function(notificationData){
-		var ajeno = Generalfunc.profile_ajeno_n(profileData._id, networkData.profiles);
-		if(stat){
-			addOrGet({
-				tipo: 4,
-				profile: notificationData.profile_emisor,
-				profile_emisor: notificationData.profile,
-				network: networkData._id,
-			},{
-				tipo: 4,
-				profile: notificationData.profile_emisor,
-				profile_emisor: notificationData.profile,
-				network: networkData._id,
-				status: true,
-				clicked: true
-			}, function(status, newNotData){
-				getOne2Callback({ _id: newNotData._id }, function(notNewData){
-					getOnline(ajeno, notNewData, networkData, function(onlineData, networkData, notNData){
-						success(onlineData, networkData, notNData, notificationData);
-					});
-				}, function(st){
-					fail( st );
-				});
-			});
-		}
-	});
-}
-exports.clicked = clicked;
-function accept_recomendation(notificationData, stat, success){
-	if(stat){
-	notificationData.status   = true;
-	notificationData.clicked  = true;
-	notificationData.save(function(err, notData){
-		getOne({
-			_id: notData._id
-		}, function(notStatus, notificationData){
-			Networkfunc.new_friend(notificationData.profile._id, notificationData.profile_mensaje._id, function(networkData){
-				var accept_notification = {
-					tipo:3,
-					profile: notificationData.profile_mensaje._id,
-					profile_emisor: notificationData.profile._id,
-					network: networkData._id
-				};
-				console.log( accept_notification );
-				
-				createOrGet(accept_notification, accept_notification, function(status, newNotNetData){
-					console.log(status, newNotNetData);
-					success( newNotNetData );
-				});
-			}, function(){
-				success( notificationData );
-			});
-		});
-	});
-}else{
-	notificationData.status   = false;
-	notificationData.clicked  = true;
-	notificationData.save(function(err, notData){
-		getOne({
-			_id: notData._id
-		}, function(notStatus, notificationData){
-			success( notificationData );
-		});
-	});
-}
-};
-exports.accept_recomendation = accept_recomendation;
-function accept_solicitud(notificationData, stat, success){
-	var bool_Network = function(networkData){
-		click({ _id: id },stat, function(notificationData){
-
-			var ajeno = profile_ajeno(profileData._id, networkData.profiles);
-
-
-			var a = function(ajeno, notificationData, networkData,c){
-				Online.findOne({
-					profiles: ajeno.profile._id
-				}).sort({created_at: -1}).exec(function(errOnline, onlineData){
-					Notification
-					.findOne({ _id: notificationData._id })
-					.select('-__v -updatedAt')
-					.populate('profile')
-					.populate('profile_emisor')
-					.populate('profile_mensaje')
-					.populate('network')
-					.exec(function(err,notificationData){
-						c(onlineData, networkData, notificationData);	
-					});
-				});
-			};
-
-			if(stat){
-				notificationData.clicked = true;
-				notificationData.status  = true;
-				notificationData.save(function(err, notD){
-					addOrGet({
-						tipo: 4,
-						profile: notificationData.profile_emisor,
-						profile_emisor: notificationData.profile,
-						network: networkData._id,
-					},{
-						tipo: 4,
-						profile: notificationData.profile_emisor,
-						profile_emisor: notificationData.profile,
-						network: networkData._id,
-						status: true,
-						clicked: true
-					}, function(status, newNotData){
-						getOne2Callback({ _id: newNotData._id }, function(notNewData){
-							a(ajeno, notNewData, networkData, function(onlineData, networkData, notNData){
-								success(onlineData, networkData, notNData, notificationData);
-							});
-						}, function(st){
-							fail( st );
-						});
-					});
-				});
-				
-			}else{
-				getOne2Callback({ _id: notificationData._id }, function(notNewData){
-					a(ajeno, notNewData, networkData, function(onlineData, networkData, notNData){
-						success(onlineData, networkData, notNData, notificationData);
-					});
-				}, function(st){
-					fail( st );
-				});
-			}
-		}, function(st){
-			fail( st );
-		});
-	};
-	if(stat == true){
-		Networkfunc.accept({ _id: notificationData.network }, bool_Network, function(st){
-			fail(4);
-		});
-	}else{
-		Networkfunc.ignore({ _id: notificationData.network }, bool_Network, function(st){
-			fail(4);
-		});
-	}
-};
-exports.accept_solicitud = accept_solicitud;
- /**
- * statAndGet, Set Status, Create New Notification and Get Result.
- * @param {NotificationObject} notificationData, Enviar el Push de Notificaciones.
- *
- */
- exports.statAndGet = function(stat, notificationData, success, fail){
- 	if(stat){
- 		addOrGet({
- 			tipo: 4,
- 			profile: notificationData.profile_emisor,
- 			profile_emisor: notificationData.profile,
- 			network: networkData._id,
- 		},{
- 			tipo: 4,
- 			profile: notificationData.profile_emisor,
- 			profile_emisor: notificationData.profile,
- 			network: networkData._id,
- 			status: true,
- 			clicked: true
- 		}, function(status, newNotData){
- 			getOne2Callback({ _id: newNotData._id }, function(notNewData){
- 				getOnline(ajeno, notNewData, networkData, function(onlineData, networkData, notNData){
- 					success(onlineData, networkData, notNData, notificationData);
- 				});
- 			}, function(st){
- 				fail( st );
- 			});
- 		});
- 	}else{
- 		getOne2Callback({ _id: notificationData._id }, function(notNewData){
- 			a(ajeno, notNewData, networkData, function(onlineData, networkData, notNData){
- 				success(onlineData, networkData, notNData, notificationData);
- 			});
- 		}, function(st){
- 			fail( st );
- 		});
- 	}
- }
 /**
  * push, Enviar PUSH de Notificaciones. (**)
  * @param {NotificationObject} notificationData, Enviar el Push de Notificaciones.
