@@ -900,7 +900,7 @@ router.clean = function(callback){
 										success(notificationData);
 									}, function(){
 										fail();
-									});
+									}, Networkfunc);
 								break;
 								default:
 									success( notificationData );

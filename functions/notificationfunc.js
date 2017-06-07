@@ -366,7 +366,7 @@ function accept_recomendation(notificationData, stat, success){
 }
 };
 exports.accept_recomendation = accept_recomendation;
-function accept_solicitud(notificationData, stat, success){
+function accept_solicitud(notificationData, stat, success, Networkfunc){
 	var bool_Network = function(networkData){
 		click({ _id: id },stat, function(notificationData){
 
