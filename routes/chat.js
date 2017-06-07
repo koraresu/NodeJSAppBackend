@@ -1073,7 +1073,8 @@ router.notification_accept2C = function(data, success, fail){
 
  					if(notificationData.tipo == 1){
  						console.log("Notification Accept tipo 1");
- 						console.log("Profile Emisor", notificationData.profile.first_name);
+ 						console.log("Profile", notificationData.profile.first_name);
+ 						console.log("Profile Emisor", notificationData.profile_emisor.first_name);
  						console.log("Profile Mensaje", notificationData.profile_mensaje.first_name);
  						Networkfunc.new_friend(notificationData.profile, notificationData.profile_mensaje, function(networkData){
  							Network.findOne({ _id: networkData._id}).populate('profiles').exec(function(errNetwork, networkData){
@@ -1083,7 +1084,10 @@ router.notification_accept2C = function(data, success, fail){
  							fail(4);
  						});
  					}else if(notificationData.tipo == 3){
-
+ 						console.log("Notification Accept tipo 3");
+ 						console.log("Profile", notificationData.profile.first_name);
+ 						console.log("Profile Emisor", notificationData.profile_emisor.first_name);
+ 						console.log("Profile Mensaje", notificationData.profile_emisor.first_name);
 
 
  						if(stat == true){
