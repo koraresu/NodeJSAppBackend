@@ -232,7 +232,7 @@ function getListFriends(profile_id,callback){
  */
 function getFriends(profile_id,callback){
 	console.log("GETFriends", profile_id);
-	
+
 	if(mongoose.Types.ObjectId.isValid(profile_id)){
 		var profile_id = mongoose.Types.ObjectId(profile_id);	
 	}
@@ -285,7 +285,7 @@ function getNoMyID(profilesId, profile_id){
  */
 function isNeightbor(profile_id, another_id, callback){
 	var lvl = 0;
-
+	console.log("isNeightbor", profile_id._id );
 	getFriends(profile_id._id, function(errFirst, firstData, firstIds){
 		if(firstIds.length>0){
 			firstIds.forEach(function(firstItem, firstIndex){
