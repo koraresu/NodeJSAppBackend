@@ -940,7 +940,7 @@ router.notification_accept2C = function(data, success, fail){
  					var bool_Network = function(networkData){
  						Notificationfunc.click({ _id: id },stat, function(notificationData){
 
- 							var ajeno = profile_ajeno(profileData._id, networkData.profiles);
+ 							var ajeno = Generalfunc.profile_ajeno_n(profileData._id, networkData.profiles);
 
 
  							var a = function(ajeno, notificationData, networkData,c){
@@ -1170,7 +1170,7 @@ router.apple_push = function(type, id, socket, success, fail){
 					if(!errOnline && onlineData){
 						var profiles = conversationData.profiles;
 						var profile = onlineData.profiles;
-						var ajeno = profile_ajeno(profile._id, profiles);
+						var ajeno = Generalfunc.profile_ajeno_n(profile._id, profiles);
 						success(ajeno);
 					}else{
 						fail(1);
