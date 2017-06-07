@@ -508,6 +508,8 @@ function sendMultiple(ca, devices, message, payload, badge, sound){
 	if(sound == undefined || sound == null || sound == ""){ sound = "ping.aiff"; };
 	if(payload == undefined){ payload = {}; };
 
+	console.log("BADGE",badge);
+
 	payload.badge = badge;
 	var note        = new apn.Notification();
 	var deviceToken = devices;
