@@ -1,10 +1,11 @@
 var chatrouter = require('../routes/chat');
 
-var Generalfunc  = require('../functions/generalfunc');
-var Networkfunc  = require('../functions/networkfunc');
-var Tokenfunc    = require('../functions/tokenfunc');
-var Pushfunc     = require('../functions/pushfunc');
-var APNfunc      = require('../functions/apnfunc');
+var Generalfunc       = require('../functions/generalfunc');
+var Networkfunc       = require('../functions/networkfunc');
+var Tokenfunc         = require('../functions/tokenfunc');
+var Pushfunc          = require('../functions/pushfunc');
+var APNfunc           = require('../functions/apnfunc');
+var Notificationfunc  = require('../functions/notificationfunc');
 
 var moment = require('moment-timezone');
 
@@ -110,6 +111,8 @@ io.on('connection', function(socket){
   socket.on('notification', function(data){
     console.log("socket_chat","notification");
     console.log("socket_notification", data);
+
+    Notificationfunc.
     /*
     chatrouter.notification_accept2C(data, function(onlineData, networkData, notificationData, OldNotification){
       if(onlineData != null || onlineData != undefined){

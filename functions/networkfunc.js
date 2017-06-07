@@ -231,7 +231,8 @@ function getListFriends(profile_id,callback){
  *
  */
 function getFriends(profile_id,callback){
-	if(typeof profile_id == "object"){
+	console.log("GETFriends", profile_id);
+	if(mongoose.Types.ObjectId.isValid(profile_id)){
 		var profile_id = mongoose.Types.ObjectId(profile_id);	
 	}
 	var data = [];
@@ -245,7 +246,7 @@ function getFriends(profile_id,callback){
 			networkData.forEach(function(friend, index, friends){
 
 				var a = friend.profiles.filter(function(o){
-					return o.toString() != profile_id.toString() 
+					return o.toString() != profile_id.toString()
 				});
 				a = a[0];
 				
