@@ -1000,7 +1000,7 @@ router.notification_accept2C = function(data, success, fail){
 
  						Notificationfunc.click({ _id: id },stat, function(notificationData){
 
- 							var ajeno = profile_ajeno(profileData._id, networkData.profiles);
+ 							var ajeno = Generalfunc.profile_ajeno(profileData._id, networkData.profiles);
 
 
  							var a = function(ajeno, notificationData, networkData,c){
@@ -1307,7 +1307,7 @@ router.setReadMessage = setReadMessage;
 router.setActive      = setActive;
 router.sendPushtoAll  = Generalfunc.sendPushtoAll;
 router.sendPushOne    = Generalfunc.sendPushOne;
-module.exports        = router;
+module.exports        = router;,
 /**
  * decodeBase64Image, Es el envio de Imagenes, toma la imagen y hace el bitmap de esta.
  * @param {Object} image, Archivo.
