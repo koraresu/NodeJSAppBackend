@@ -92,7 +92,7 @@ router.post('/connect', multipartMiddleware, function(req, res){
 								});
 								network.save(function(err, networkData){
 									Network.findOne({ _id: networkData._id}).populate('profiles').exec(function(errNetwork, networkData){
-										Notificationfunc.add({
+										Notificationfunc.createOrGet({
                   							tipo: 3,
                   							profile: profileAnotherData._id,
 											profile_emisor: profileData._id,
@@ -107,7 +107,7 @@ router.post('/connect', multipartMiddleware, function(req, res){
 											Generalfunc.response(200, data,  function(response){
 												res.json(response);
 											});	
-                						}, req.app.io);
+                						});
 									});
 								});
 							}
