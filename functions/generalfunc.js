@@ -581,24 +581,19 @@ function NotificationReaded(data, success, fail){
 
 	if(mongoose.Types.ObjectId.isValid( notification_id )){
 		notification_id = mongoose.Types.ObjectId( notification_id );
-		PushEvent.find({ type: 1, notification: notification_id }).exec(function(errPushEvent, pushEventData){
-			async.map(pushEventData, function(item, callback){
-				item.read = true;
-				item.save(function(err, pushevent){
-					if(!err && pushevent){
-						callback(null, item);	
-					}else{
-						callback(err, null);
-					}
-				});
-			}, function(err, results){
-				if(!err){
-					success(results);
-				}else{
-					fail(err);
-				}
-				
-			});
+		PushEvent.update({
+			type: 1,
+			notification: notification_id
+		}, {
+			read: true
+		}, {
+			multi: true
+		}, function(err, numPush){
+			if(!err && numPush){
+				success(results);
+			}else{
+				fail(err);
+			}
 		});
 	}
 }
