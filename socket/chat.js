@@ -160,6 +160,11 @@ io.on('connection', function(socket){
 
       chatrouter.TokenNoReaded( data.guid, function(profileData, num){
         socket.emit('set_no_readed', num);
+
+        APNfunc.sendBadge(profileData._id, num, function(d){
+          console.log("MessageReaded Badge",d);
+        });
+
       });
     }, function(st){
       
