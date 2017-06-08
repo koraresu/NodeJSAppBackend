@@ -565,7 +565,14 @@ function getPush(search, success, fail){
 		}
 	});
 };
-
+function getNum(profile_id, success, fail){
+	getPush({
+		profile: profile_id,
+		read: false
+	}, function(pushEvent){
+		success( pushEvent.length );
+	}, fail);
+}
 exports.sendNot              = sendNot;
 exports.get_interfaz         = get_interfaz;
 exports.socket_to_profile    = socket_to_profile;
@@ -583,3 +590,4 @@ exports.text_create          = text_create;
 exports.profile_notification = profile_notification;
 exports.getPush              = getPush;
 exports.getProfileNoReaded   = getProfileNoReaded;
+exports.getNum               = getNum;

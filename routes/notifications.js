@@ -75,17 +75,18 @@ router.post('/get', multipartMiddleware, function(req, res){
 						.sort('-_id')
 						.exec(function(err, notificationData){
 							not = Generalfunc.cleanArray(notificationData);
-								
-							chatrouter.TokenNoReaded( guid , function(profileData, num){
+							APNfunc.getNum(profileData._id, function(num){
 
 								APNfunc.sendBadge(profileData._id, num, function(d){
-
 									Generalfunc.response(200, notificationData, function(response){
 										res.json(response);
 									});
-
 								});
 
+							}, function(err){
+								Generalfunc.response(404,{}, function(response){
+									res.json(response);
+								});
 							});
 
 						});
