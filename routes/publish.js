@@ -453,7 +453,7 @@ router.post('/get/news/friend', multipartMiddleware, function(req, res){
 	}else{
 		max = 20;
 	}
-	if(isNumber(page)){
+	if(Generalfunc.isNumber(page)){
 		pages = page*1;
 		pages = (pages*max);
 	}else{
