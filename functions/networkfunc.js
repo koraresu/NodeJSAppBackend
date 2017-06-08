@@ -669,7 +669,6 @@ exports.getFriends                        = getFriends;
 exports.getListFriends                    = getListFriends;
 exports.checkconversation                 = checkconversation;
 exports.message                           = message;
-exports.addNetwork                        = addNetwork;
 
 /**
  * trimUnderscores, Eliminar espacios.
