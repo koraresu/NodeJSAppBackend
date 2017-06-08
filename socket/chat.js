@@ -179,7 +179,20 @@ io.on('connection', function(socket){
   socket.on('get_no_readed', function(data){
     console.log("socket_chat","get_no_readed");
     console.log("Socket No Readed", data );
-    message_readed( data ); 
+    Tokenfunc.toProfile(data.guid, function(status, userData, profileData){
+      
+      APNfunc.getPush({
+        profile: profileData._id,
+        type: 1
+      }, function(pushEvent){
+        console.log("PushEvent", pushEvent.length );
+        console.log("PushEvent", pushEvent );
+      }, function(err){
+        console.log("PushEvent err", err);
+      });
+
+    });
+    
   });
 
   /**

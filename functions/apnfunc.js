@@ -545,6 +545,15 @@ function tokenItem(token, cb){
 		cb(token);
 	}	
 };
+function getPush(search, success, fail){
+	PushEvent.find(search).exec(function(err, pushEvent){
+		if(!err && pushEvent){
+			success( pushEvent );
+		}else{
+			fail(err);
+		}
+	});
+};
 
 exports.sendNot              = sendNot;
 exports.get_interfaz         = get_interfaz;
@@ -561,3 +570,4 @@ exports.get_devices          = get_devices;
 exports.get_sockets          = get_sockets;
 exports.text_create          = text_create;
 exports.profile_notification = profile_notification;
+exports.getPush              = getPush;
