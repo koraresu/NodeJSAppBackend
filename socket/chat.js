@@ -207,6 +207,23 @@ io.on('connection', function(socket){
   socket.on('notification_readed', function(data){
     console.log("socket_chat","notification_readed");
     Generalfunc.NotificationReaded(data, function( results ){
+
+      APNfunc.getPush({
+        profile: profileData._id,
+        type: 1,
+        read: false
+      }, function(pushEvent){
+        console.log("PushEvent", pushEvent.length );
+        console.log("PushEvent", pushEvent );
+
+        APNfunc.sendBadge(profileData._id, pushEvent.length, function(d){
+          console.log("SendBadge D:", d );
+        });
+
+      }, function(err){
+        console.log("PushEvent err", err);
+      });
+
     }, function( err ){
       console.log("NotificationReaded Error");
       console.log(err);
