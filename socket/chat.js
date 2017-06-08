@@ -218,17 +218,17 @@ io.on('connection', function(socket){
         }, function(status, NotificationData){
 
           
-
+          var profile_id = NotificationData.profile._id;
 
           APNfunc.getPush({
-            profile: NotificationData.profile._id,
+            profile: profile_id,
             type: 1,
             read: false
           }, function(pushEvent){
             console.log("PushEvent", pushEvent.length );
             console.log("PushEvent", pushEvent );
 
-            APNfunc.sendBadge(profileData._id, pushEvent.length, function(d){
+            APNfunc.sendBadge(profile_id, pushEvent.length, function(d){
               console.log("SendBadge D:", d );
             });
 
