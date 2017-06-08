@@ -18,6 +18,7 @@ var Skillfunc        = require('../functions/skillfunc');
 var Experiencefunc   = require('../functions/experiencefunc');
 var Networkfunc      = require('../functions/networkfunc');
 var Notificationfunc = require('../functions/notificationfunc');
+var APNfunc          = require('../functions/apnfunc');
 var format           = require('../functions/format.js');
 
 var model        = require('../model');
@@ -74,9 +75,19 @@ router.post('/get', multipartMiddleware, function(req, res){
 						.sort('-_id')
 						.exec(function(err, notificationData){
 							not = Generalfunc.cleanArray(notificationData);
-							Generalfunc.response(200, notificationData, function(response){
-								res.json(response);
+								
+							chatrouter.TokenNoReaded( guid , function(profileData, num){
+
+								APNfunc.sendBadge(profileData._id, num, function(d){
+
+									Generalfunc.response(200, notificationData, function(response){
+										res.json(response);
+									});
+
+								});
+
 							});
+
 						});
 					}, function(err){
 						Generalfunc.response(404,{}, function(response){
