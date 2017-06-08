@@ -223,8 +223,8 @@ io.on('connection', function(socket){
             APNfunc.sendBadge(profile_id, pushEvent.length, function(d){
               console.log("SendBadge D:", d );
             });
-            
-          }, function(){
+
+          }, function(err){
             console.log("PushEvent err", err);
           });
 
