@@ -208,28 +208,41 @@ io.on('connection', function(socket){
     console.log("socket_chat","notification_readed");
     console.log("socket notification_readed", data);
     Generalfunc.NotificationReaded(data, function( results ){
+      var id = data.notification;
 
-      Tokenfunc.toProfile(data.guid, function(status, userData, profileData){
-      
-        APNfunc.getPush({
-          profile: profileData._id,
-          type: 1,
-          read: false
-        }, function(pushEvent){
-          console.log("PushEvent", pushEvent.length );
-          console.log("PushEvent", pushEvent );
 
-          APNfunc.sendBadge(profileData._id, pushEvent.length, function(d){
-            console.log("SendBadge D:", d );
+      if(mongoose.Types.ObjectId.isValid(id)){
+        
+        id = mongoose.Types.ObjectId(id);
+        
+        Notificationfunc.getOne({
+          _id: id
+        }, function(status, NotificationData){
+
+          
+
+
+          APNfunc.getPush({
+            profile: NotificationData.profile._id,
+            type: 1,
+            read: false
+          }, function(pushEvent){
+            console.log("PushEvent", pushEvent.length );
+            console.log("PushEvent", pushEvent );
+
+            APNfunc.sendBadge(profileData._id, pushEvent.length, function(d){
+              console.log("SendBadge D:", d );
+            });
+
+          }, function(err){
+            console.log("PushEvent err", err);
           });
 
-        }, function(err){
-          console.log("PushEvent err", err);
+
+
         });
 
-      });
-
-
+      }
     });
   });
 

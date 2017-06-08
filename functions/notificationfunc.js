@@ -71,7 +71,11 @@ exports.get = function(search, callback){
  *
  */
 exports.getOne = function(search, callback){
-	model.notification.findOne(search).populate('profile').populate('profile_emisor').populate('profile_mensaje').exec(function(errNotification, notificationData){
+	model.notification.findOne(search)
+	.populate('profile')
+	.populate('profile_emisor')
+	.populate('profile_mensaje')
+	.exec(function(errNotification, notificationData){
 		if(!errNotification && notificationData){
 			callback(true, notificationData);
 		}else{
