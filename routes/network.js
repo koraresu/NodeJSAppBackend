@@ -93,12 +93,18 @@ router.post('/connect', multipartMiddleware, function(req, res){
 								network.save(function(err, networkData){
 									Network.findOne({ _id: networkData._id}).populate('profiles').exec(function(errNetwork, networkData){
 										Notificationfunc.createOrGet({
+											tipo: 3,
+											profile: profileAnotherData._id,
+											profile_emisor: profileData._id,
+											network: networkData._id
+										},{
                   							tipo: 3,
                   							profile: profileAnotherData._id,
 											profile_emisor: profileData._id,
 											network: networkData._id,
 											clicked: false,
                   							status: false,
+                  							deleted: false
                 						}, function(status, notificationData){
                 							var data = {
 												"accepted": networkData.accepted,
