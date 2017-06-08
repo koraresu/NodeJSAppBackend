@@ -590,7 +590,7 @@ function NotificationReaded(data, success, fail){
 			multi: true
 		}, function(err, numPush){
 			if(!err && numPush){
-				success(results);
+				success(numPush);
 			}else{
 				fail(err);
 			}
