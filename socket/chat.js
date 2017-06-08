@@ -208,25 +208,27 @@ io.on('connection', function(socket){
     console.log("socket_chat","notification_readed");
     Generalfunc.NotificationReaded(data, function( results ){
 
-      APNfunc.getPush({
-        profile: profileData._id,
-        type: 1,
-        read: false
-      }, function(pushEvent){
-        console.log("PushEvent", pushEvent.length );
-        console.log("PushEvent", pushEvent );
+      Tokenfunc.toProfile(data.guid, function(status, userData, profileData){
+      
+        APNfunc.getPush({
+          profile: profileData._id,
+          type: 1,
+          read: false
+        }, function(pushEvent){
+          console.log("PushEvent", pushEvent.length );
+          console.log("PushEvent", pushEvent );
 
-        APNfunc.sendBadge(profileData._id, pushEvent.length, function(d){
-          console.log("SendBadge D:", d );
+          APNfunc.sendBadge(profileData._id, pushEvent.length, function(d){
+            console.log("SendBadge D:", d );
+          });
+
+        }, function(err){
+          console.log("PushEvent err", err);
         });
 
-      }, function(err){
-        console.log("PushEvent err", err);
       });
 
-    }, function( err ){
-      console.log("NotificationReaded Error");
-      console.log(err);
+
     });
   });
 
