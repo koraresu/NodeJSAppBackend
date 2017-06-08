@@ -80,9 +80,7 @@ router.post('/connect', multipartMiddleware, function(req, res){
 								});
 							}else{
 								var accepted = false;
-								if(section == "gps"){
-									accepted = true;
-								}
+								
 								var network = new Network({
 									accepted: accepted,
 									profiles: [
