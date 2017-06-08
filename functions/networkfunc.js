@@ -37,7 +37,7 @@ var Notificationfunc = require('./notificationfunc');
 
 function create(profileData, profileAnotherData, success, fail){
 	var network = new Network({
-		accepted: accepted,
+		accepted: false,
 		profiles: [
 			profileData._id,
 			profileAnotherData._id
