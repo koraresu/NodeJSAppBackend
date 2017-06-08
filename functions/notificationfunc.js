@@ -324,5 +324,22 @@ function send(id, success,io){
 	});	
 };
 
+function setReadedPush(profile_id, success, fail){
+	PushEvent.update({
+		type: 1,
+		profile: profile_id
+	}, {
+		read: true
+	}, {
+		multi: true
+	}, function(err, numPush){
+		if(!err){
+			success(numPush);
+		}else{
+			fail(err);
+		}
+	});
+}
+exports.setReadedPush = setReadedPush;
 exports.send = send;
 exports.push = push;
