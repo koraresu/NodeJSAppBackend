@@ -206,6 +206,7 @@ io.on('connection', function(socket){
    */
   socket.on('notification_readed', function(data){
     console.log("socket_chat","notification_readed");
+    console.log("socket notification_readed", data);
     Generalfunc.NotificationReaded(data, function( results ){
 
       Tokenfunc.toProfile(data.guid, function(status, userData, profileData){
