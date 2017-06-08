@@ -188,6 +188,11 @@ io.on('connection', function(socket){
       }, function(pushEvent){
         console.log("PushEvent", pushEvent.length );
         console.log("PushEvent", pushEvent );
+
+        APNfunc.sendBadge(profileData._id, pushEvent.length, function(d){
+          console.log("SendBadge D:", d );
+        });
+
       }, function(err){
         console.log("PushEvent err", err);
       });
