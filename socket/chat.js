@@ -183,7 +183,8 @@ io.on('connection', function(socket){
       
       APNfunc.getPush({
         profile: profileData._id,
-        type: 1
+        type: 1,
+        read: false
       }, function(pushEvent){
         console.log("PushEvent", pushEvent.length );
         console.log("PushEvent", pushEvent );
