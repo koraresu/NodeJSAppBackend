@@ -56,14 +56,29 @@ router.post('/get', multipartMiddleware, function(req, res){
 		if(status){
 			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
 				if(status){
+
 					Notification
-					.find({ profile: profileData._id })
+					.find({
+						"profile": profileData._id,
+						"deleted":{
+							"$exists": true,
+							"$in": [false]
+						}
+					})
+					//.find({ profile: profileData._id })
 					.select('-__v -updatedAt')
 					.populate('profile')
 					.populate('profile_emisor')
 					.populate('profile_mensaje')
 					.populate('network')
 					.sort('-_id')
+					.exec(function(err, notificationData){
+						not = Generalfunc.cleanArray(notificationData);
+						Generalfunc.response(200, notificationData, function(response){
+							res.json(response);
+						});
+					});
+					/*
 					.exec(function(err,notificationData){
 						async.map(notificationData, function(item, ca){
 							if(item.deleted == undefined){
@@ -83,6 +98,7 @@ router.post('/get', multipartMiddleware, function(req, res){
 						});
 						
 					});
+					*/
 				}else{
 					res.send("No Profile");
 				}
