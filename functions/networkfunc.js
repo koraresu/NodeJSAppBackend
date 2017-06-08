@@ -35,17 +35,45 @@ var Country      = model.country;
 var Tokenfunc        = require('./tokenfunc');
 var Notificationfunc = require('./notificationfunc');
 
+function create(profileData, profileAnotherData, success, fail){
+	var network = new Network({
+		accepted: accepted,
+		profiles: [
+			profileData._id,
+			profileAnotherData._id
+		]
+	});
+	network.save(function(err, networkData){
+		if(!err && networkData){
+			Network.findOne({ _id: networkData._id}).populate('profiles').exec(function(errNetwork, networkData){
+				if(!errNetwork && networkData){
 
-/**
- * addReview(***)
- *
- */
-function addReview(profile_id_a, public_id, callback){}
-/**
- * addNetwork(***)
- *
- */
-function addNetwork(profile_id_a, public_id, callback){}
+					Notificationfunc.createOrGet({
+						tipo: 3,
+						profile: profileAnotherData._id,
+						profile_emisor: profileData._id,
+						network: networkData._id
+					},{
+						tipo: 3,
+						profile: profileAnotherData._id,
+						profile_emisor: profileData._id,
+						network: networkData._id,
+						clicked: false,
+						status: false,
+						deleted: false
+					}, function(status, notificationData){
+						success( networkData, notificationData );
+					});
+				}else{
+					fail( errNetwork );
+				}
+			});	
+		}else{
+			fail( err );
+		}
+	});
+}
+exports.create = create;
 /**
  * connectCheck, Buscamos sobre una query, en la coleccion de amigos.
  *

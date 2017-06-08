@@ -79,44 +79,22 @@ router.post('/connect', multipartMiddleware, function(req, res){
 									res.json(response);
 								});
 							}else{
-								var accepted = false;
-								
-								var network = new Network({
-									accepted: accepted,
-									profiles: [
-									profileData._id,
-									profileAnotherData._id
-									]
-								});
-								network.save(function(err, networkData){
-									Network.findOne({ _id: networkData._id}).populate('profiles').exec(function(errNetwork, networkData){
-										Notificationfunc.createOrGet({
-											tipo: 3,
-											profile: profileAnotherData._id,
-											profile_emisor: profileData._id,
-											network: networkData._id
-										},{
-                  							tipo: 3,
-                  							profile: profileAnotherData._id,
-											profile_emisor: profileData._id,
-											network: networkData._id,
-											clicked: false,
-                  							status: false,
-                  							deleted: false
-                						}, function(status, notificationData){
-                							var data = {
-												"accepted": networkData.accepted,
-												"public_id": profileAnotherData.public_id
-											};
-											Generalfunc.response(200, data,  function(response){
-												res.json(response);
-											});	
-                						});
+								Networkfunc.create(profileData, profileAnotherData, function(networkData, notificationData){
+									var data = {
+										"accepted": networkData.accepted,
+										"public_id": profileAnotherData.public_id,
+										"notificaton": notificationData
+									};
+									Generalfunc.response(200, data,  function(response){
+										res.json(response);
+									});	
+								}, function(err){
+									Generalfunc.response(101, {}, function(response){
+										res.json(response);
 									});
 								});
 							}
 						});
-
 					}else{
 						Generalfunc.response(101, {}, function(response){
 							res.json(response);
