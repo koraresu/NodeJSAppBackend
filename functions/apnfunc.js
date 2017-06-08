@@ -545,6 +545,17 @@ function tokenItem(token, cb){
 		cb(token);
 	}	
 };
+function getProfileNoReaded(profile_id, success, fail){
+	getPush({
+		profile: profile_id,
+		type: 1,
+		read: false
+	}, function(pushEvent){
+		success( pushEvent );
+	}, function(err){
+		fail( err );
+	});
+};
 function getPush(search, success, fail){
 	PushEvent.find(search).exec(function(err, pushEvent){
 		if(!err && pushEvent){
@@ -571,3 +582,4 @@ exports.get_sockets          = get_sockets;
 exports.text_create          = text_create;
 exports.profile_notification = profile_notification;
 exports.getPush              = getPush;
+exports.getProfileNoReaded   = getProfileNoReaded;

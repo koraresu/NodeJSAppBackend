@@ -198,41 +198,33 @@ io.on('connection', function(socket){
       });
 
     });
-    
   });
+
 
   /**
    * Igual que en mensajes, Recibimos la orden de cambiar el status de una notificacion, y enviamos los mensajes sin leer.
    */
   socket.on('notification_readed', function(data){
     console.log("socket_chat","notification_readed");
-    console.log("socket notification_readed", data);
     Generalfunc.NotificationReaded(data, function( results ){
       var id = data.notification;
-
-
       Generalfunc.isValid(id, function(id){
-        
+
         Notificationfunc.getOne({
           _id: id
         }, function(status, NotificationData){
-
           
           var profile_id = NotificationData.profile._id;
+          
 
-          APNfunc.getPush({
-            profile: profile_id,
-            type: 1,
-            read: false
-          }, function(pushEvent){
+          APNfunc.getProfileNoReaded(profile_id, function(pushEvent){
             console.log("PushEvent", pushEvent.length );
-            console.log("PushEvent", pushEvent );
-
+            
             APNfunc.sendBadge(profile_id, pushEvent.length, function(d){
               console.log("SendBadge D:", d );
             });
-
-          }, function(err){
+            
+          }, function(){
             console.log("PushEvent err", err);
           });
 
@@ -241,6 +233,7 @@ io.on('connection', function(socket){
         });
 
       });
+
     });
   });
 
