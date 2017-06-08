@@ -211,9 +211,7 @@ io.on('connection', function(socket){
       var id = data.notification;
 
 
-      if(mongoose.Types.ObjectId.isValid(id)){
-        
-        id = mongoose.Types.ObjectId(id);
+      Generalfunc.isValid(id, function(id){
         
         Notificationfunc.getOne({
           _id: id
@@ -242,7 +240,7 @@ io.on('connection', function(socket){
 
         });
 
-      }
+      });
     });
   });
 
