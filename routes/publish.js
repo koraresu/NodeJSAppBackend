@@ -448,7 +448,7 @@ router.post('/get/news/friend', multipartMiddleware, function(req, res){
 	var pages     = 0;
 	var public_id = req.body.public_id;
 
-	if(isNumber(max)){
+	if(Generalfunc.isNumber(max)){
 		max = max*1;
 	}else{
 		max = 20;
