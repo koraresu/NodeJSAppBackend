@@ -150,40 +150,16 @@ router.post('/connect/all', multipartMiddleware, function(req, res){
 										};
 										callback(null, data);
 									}else{
-										var network = new Network({
-											accepted: false,
-											profiles: [
-											profileData._id,
-											profileAnotherData._id
-											]
-										});
-										network.save(function(err, networkData){
 
-											Notificationfunc.add({
-	                  							tipo: 3,
-	                  							profile: profileAnotherData._id,
-												profile_emisor: profileData._id,
-												network: networkData._id,
-												clicked: true,
-	                  							status: true
-                							}, function(status, notificationData){
-                								Network.findOne({ _id: networkData._id }).populate('profiles').exec(function(err, networkData){
-													var data = {
-														"accepted": networkData.accepted,
-														"public_id": profileAnotherData.public_id,
-														"data": networkData
-													};
-													callback(null, data);
-												});
-                							});
-											var notification = new Notification({
-												tipo: 3,
-												
-											});
-											notification.save(function(errNotification, notificationData){
-												
-												
-											});
+										Networkfunc.create(profileData, profileAnotherData, function(networkData, notificationData){
+											var data = {
+												"accepted": networkData.accepted,
+												"public_id": profileAnotherData.public_id,
+												"notificaton": notificationData
+											};
+											callback(null, data);
+										}, function(err){
+											callback(null, null);
 										});
 									}
 								});
@@ -195,8 +171,8 @@ router.post('/connect/all', multipartMiddleware, function(req, res){
 						callback(null, null);
 					}
 				}, function(err, results){
+					results = Generalfunc.cleanArray( results );
 					Generalfunc.response(200, results, function(response){
-						
 						res.json(response);
 					});
 				});
