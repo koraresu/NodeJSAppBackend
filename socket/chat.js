@@ -206,35 +206,7 @@ io.on('connection', function(socket){
    */
   socket.on('notification_readed', function(data){
     console.log("socket_chat","notification_readed");
-    Generalfunc.NotificationReaded(data, function( results ){
-      var id = data.notification;
-      Generalfunc.isValid(id, function(id){
-
-        Notificationfunc.getOne({
-          _id: id
-        }, function(status, NotificationData){
-          
-          var profile_id = NotificationData.profile._id;
-          
-
-          APNfunc.getProfileNoReaded(profile_id, function(pushEvent){
-            console.log("PushEvent", pushEvent.length );
-            
-            APNfunc.sendBadge(profile_id, pushEvent.length, function(d){
-              console.log("SendBadge D:", d );
-            });
-
-          }, function(err){
-            console.log("PushEvent err", err);
-          });
-
-
-
-        });
-
-      });
-
-    });
+    Generalfunc.NotificationReaded(data, function( results ){ });
   });
 
   socket.on('console.log', function(data){
