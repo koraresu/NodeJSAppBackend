@@ -42,6 +42,7 @@ var Message      = model.message;
 var City         = model.city;
 var State        = model.state;
 var Country      = model.country;
+var PushEvent    = model.pushevent;
 
 /**
  * Route "/get", Obtener la lista de Notificaciones.
