@@ -157,7 +157,8 @@ router.post('/company/insert', multipartMiddleware, function(req, res){
 									estado: estado,
 									numero: numero,
 									postalc: postal
-								}
+								},
+								creator: profileData._id
 							});
 							company.save(function(errC, cData){
 								var creator = new CompanyCreator({
