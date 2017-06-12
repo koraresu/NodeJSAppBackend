@@ -41,7 +41,9 @@ io.on('connection', function(socket){
     });
   });
   /**
-   * Y al iniciar el App, y estar lista, se envia el Device Token, que es recibido por Apple. Asi, el App puede recibir los PUSH(Mensajes y Notificaciones).
+   * Y al iniciar el App, y estar lista, se envia el Device Token, que es recibido por Apple.
+   * Asi, el App puede recibir los PUSH(Mensajes y Notificaciones).
+   * Recibimos tres eventos por parte del Dispositivo, para enviarlo, se creo la variable device_socket, para bloquear esto.
    */
    var device_socket = [];
   socket.on('device', function(msg){
@@ -51,6 +53,7 @@ io.on('connection', function(socket){
     var v = device_socket.indexOf(socket.id);
     if(v == -1){
       device_socket.push( socket.id );
+      v = device_socket.indexOf(socket.id);
       console.log("Its OK");
       console.log( device_socket);
       chatrouter.setDevice(socket.guid, msg, function(deviceList, profileData){
