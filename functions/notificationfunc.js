@@ -213,9 +213,12 @@ exports.addOrGet        = function(search, d, callback){
 			
 			if(!errNotification && notificationData){
 				APNfunc.sendNotification(notificationData._id, function(){
+					callback(true, notificationData);	
+					/*
 					send(notificationData._id, function(){
 						callback(true, notificationData);	
 					},io);
+					*/
 				});
 			}else{
 				callback(false);
