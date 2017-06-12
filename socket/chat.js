@@ -48,9 +48,9 @@ io.on('connection', function(socket){
     console.log("socket_chat","device", new Date().getTime() );
     console.log("socket.id",socket.id, new Date().getTime() );
 
-    device_socket.push( socket.id );
+    var v = device_socket.indexOf(socket.id);
     if(v == -1){
-      var v = device_socket.indexOf(socket.id);
+      device_socket.push( socket.id );
       console.log("Its OK");
       console.log( device_socket);
       chatrouter.setDevice(socket.guid, msg, function(deviceList, profileData){
