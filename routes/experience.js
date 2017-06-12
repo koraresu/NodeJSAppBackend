@@ -161,15 +161,17 @@ router.post('/company/insert', multipartMiddleware, function(req, res){
 								creator: profileData._id
 							});
 							company.save(function(errC, cData){
+								/*
 								var creator = new CompanyCreator({
 									company: cData._id,
 									profile: profileData._id
 								});
-								creator.save(function(err, companyCreatorData){
+								*/
+								//creator.save(function(err, companyCreatorData){
 									Generalfunc.response(200, cData, function(response){
 										res.json( response );
 									});
-								});
+								//});
 							});
 						}
 					});
