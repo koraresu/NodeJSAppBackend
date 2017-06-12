@@ -160,7 +160,7 @@ router.post('/company/insert', multipartMiddleware, function(req, res){
 								}
 							});
 							company.save(function(errC, cData){
-								var creator = new companyCreator({
+								var creator = new CompanyCreator({
 									company: cData._id,
 									profile: profileData._id
 								});
