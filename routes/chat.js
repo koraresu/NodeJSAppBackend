@@ -599,12 +599,11 @@ router.setDevice = function(guid, deviceID, success, fail){
 	console.log("SetDevice");
 	var device_id = deviceID.device_id;
 	console.log( "DeviceID:",device_id );
-	Tokenfunc.exist(guid, function(status, tokenData){
+	Tokenfunc.exist(guid, function(statusT, tokenData){
 		if(status){
-			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
+			Profilefunc.tokenToProfile(tokenData.generated_id,function(statusP, userData, profileData, profileInfoData){
 				if(status){
-					
-					APNfunc.setDevice(profileData, device_id, deviceID, function(status, list, profileData){
+					APNfunc.setDevice(profileData, device_id, deviceID, function(statusD, list, profileData){
 						if(status){
 							success(list);
 						}else{
@@ -612,12 +611,11 @@ router.setDevice = function(guid, deviceID, success, fail){
 						}
 					});
 				}else{
-					fail(false, deviceID);
+					fail();
 				}
 			});
 		}else{
-			console.log("Token No Exists");
-			fail(false, deviceID);
+			fail();
 		}
 	});
 };

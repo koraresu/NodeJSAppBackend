@@ -97,6 +97,8 @@ function get_sockets(profile_id, itemFn, resultFn ){
  *
  */
 function setDevice(profileData, device_id, deviceID, callback){
+	console.log("++++++++++++++++++++++++++++++++++GETTING+DEVICE++++++++++++++++++++++++++++++++");
+	console.log("TOKEN", device_id);
 	get_devices(profileData._id, function(err, results){
 		var search = results.indexOf(device_id);
 		if(search >= 0){
