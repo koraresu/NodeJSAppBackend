@@ -372,6 +372,20 @@ router.post('/unfriend', multipartMiddleware, function(req, res){
 							};
 							Network.findOne(find).exec(function(errNetwork, networkData){
 								Conversation.find(find).remove().exec(function(errConv, convData){
+									Notification.find({
+										"$or": [
+											{
+												"profile": profileData._id,
+    											"profile_emisor": profileAnotherData._id
+											},
+											{
+												"profile": profileAnotherData._id,
+    											"profile_emisor": profileData._id
+											}
+										]
+									}).remove().exec(function(){
+										res.json("H");
+									});
 									/*
 									Network.remove({ _id: networkData._id }, function(err) {
 										if (!err) {
@@ -388,7 +402,7 @@ router.post('/unfriend', multipartMiddleware, function(req, res){
 										}
 									});
 									*/
-									res.json("H");
+									
 								});
 							});
 						}else{
