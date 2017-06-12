@@ -97,27 +97,37 @@ function get_sockets(profile_id, itemFn, resultFn ){
  *
  */
 function setDevice(profileData, device_id, deviceID, callback){
-	var d = {
-		profile: profileData._id,
-		token:   device_id,
-		active: true,
-	}
-	var deviceEl = new Device(d);
-	deviceEl.save(function(err, deviceData){
-		var ver = new Version({
-			device: deviceData._id,
-			bundle_id: deviceID.bundle.id,
-			bundle_version: deviceID.bundle.version,
-			bundle_app_file: deviceID.bundle.app_file,
-			device_width: deviceID.device.width,
-			device_height: deviceID.device.height
-		});
-		ver.save(function(errver, verData){
-			get_devices(profileData._id, function(err, results){
-				callback(true, results, profileData );
+	get_devices(profileData._id, function(err, results){
+		var search = results.indexOf(device_id);
+		if(search >= 0){
+			callback(true, results, profileData);
+		}else{
+			var d = {
+				profile: profileData._id,
+				token:   device_id,
+				active: true,
+			}
+			var deviceEl = new Device(d);
+			deviceEl.save(function(err, deviceData){
+				var ver = new Version({
+					device: deviceData._id,
+					bundle_id: deviceID.bundle.id,
+					bundle_version: deviceID.bundle.version,
+					bundle_app_file: deviceID.bundle.app_file,
+					device_width: deviceID.device.width,
+					device_height: deviceID.device.height
+				});
+				ver.save(function(errver, verData){
+					get_devices(profileData._id, function(err, results){
+						callback(true, results, profileData );
+					});
+				});
 			});
-		});
+		}
 	});
+
+
+	
 }
 /**
  * get_devices, Tomamos el ProfileID y Obtenemos los Dispositivos.

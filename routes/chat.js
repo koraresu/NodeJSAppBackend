@@ -604,27 +604,13 @@ router.setDevice = function(guid, deviceID, success, fail){
 			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
 				if(status){
 					
-					Device.findOne({
-						profile: profileData._id,
-						token: device_id
-					}).exec(function(errDevice, deviceData){
-						console.log("Err", errDevice);
-						console.log("Data", deviceData);
-						if(!errDevice && deviceData){
-							console.log("Existe");
+					APNfunc.setDevice(profileData, device_id, deviceID, function(status, list, profileData){
+						if(status){
+							success(list);
 						}else{
-							console.log("No existe, crear");
-							APNfunc.setDevice(profileData, device_id, deviceID, function(status, list, profileData){
-								if(status){
-									success(list);
-								}else{
-									fail();
-								}
-							});
+							fail();
 						}
-						
 					});
-
 				}else{
 					fail(false, deviceID);
 				}
