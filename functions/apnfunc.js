@@ -113,17 +113,9 @@ function setDevice(profileData, device_id, deviceID, callback){
 			device_height: deviceID.device.height
 		});
 		ver.save(function(errver, verData){
-
-			Device.find({
-				profile: profileData._id
-			}).exec(function(errDevice, deviceData){
-				async.map(deviceData, function(item, ca){
-					ca(null, item.token);
-				}, function(err, results){
-					callback(true, results, profileData );	
-				});
+			get_devices(profileData._id, function(err, results){
+				callback(true, results, profileData );
 			});
-
 		});
 	});
 }
@@ -136,14 +128,21 @@ function setDevice(profileData, device_id, deviceID, callback){
  * @callback {function}
  *
  */
-function get_devices(profile_id, itemFn, resultFn ){
-	itemFn = (itemFn == undefined)?function(item, callback){ callback(null, item.token);}:itemFn;
+function get_devices(profile_id, resultFn){
+	Device.find({
+		profile: profile_id
+	}).distinct('token', function(err, results){
+		resultFn(err, results);
+	});
+	/*
+	
 	resultFn = (resultFn == undefined)?function(err, results){ }:resultFn;
 	Device.find({
 		profile: profile_id
 	}).exec(function(errDev, devData){
 		async.map(devData, itemFn, resultFn);
 	});
+	*/
 };
 /**
  * text_create, Crear Mensajes Para las Notificaciones
@@ -183,11 +182,7 @@ function sendNot(profile_id, title, payload, badge, success){
 			console.log("Send Notification Profile Search");
 			if(!errprof && profData){
 				console.log("Send Notification Profile Search Valid");
-				get_devices(profData._id, function(item, cb){
-					tokenItem(item.token, function(token){
-						cb(null, token );
-					});
-				}, function(err, results){
+				get_devices(profData._id, function(err, results){
 					results = Generalfunc.cleanArray( results );
 					console.log("Send Notification Get Device", results);
 					console.log("Send Notification Num", badge);
@@ -256,11 +251,7 @@ function sendNum(profile_id, num, io, success){
 		Profile.findOne({
 			_id: profile_id
 		}).exec(function(errprof, profData){
-			get_devices(profData._id, function(item, cb){
-				tokenItem(item.token, function(token){
-					cb(null, token );
-				});
-			}, function(err, results){
+			get_devices(profData._id, function(err, results){
 				results = Generalfunc.cleanArray( results );
 				var data_send = {
 					type: 2
@@ -291,13 +282,7 @@ function sendBadge(profile_id, num,  success){
 			_id: profile_id
 		}).exec(function(errprof, profData){
 			
-			get_devices(profData._id, function(item, cb){
-
-				tokenItem(item.token, function(token){
-					cb(null, token );
-				});
-
-			}, function(err, results){
+			get_devices(profData._id, function(err, results){
 				results = Generalfunc.cleanArray( results );
 
 				var data_send = {
@@ -352,11 +337,7 @@ function sendMessNotification(id, success, io){
 						name = messData.profile_id.first_name + " " + messData.profile_id.last_name;	
 					}
 					addOrGet(0, messData._id, profData._id, function(pushEvent){
-						get_devices(profData._id, function(item, cb){
-							tokenItem(item.token, function(token){
-								cb(null, token);
-							});
-						}, function(err, results){
+						get_devices(profData._id, function(err, results){
 							results = Generalfunc.cleanArray( results );
 							var data_send = {
 								type: 0,
@@ -404,13 +385,7 @@ function sendNotification(id, sucess){
 		.exec(function(errNot, notData){
 			var mensaje = text_create("notification",notData);
 			addOrGet(1, notData._id, notData.profile, function(pushEvent){
-				get_devices(notData.profile, function(item, cb){
-
-					tokenItem(item.token, function(token){
-						cb(null, token);
-					});
-
-				}, function(err, results){
+				get_devices(notData.profile, function(err, results){
 					results = Generalfunc.cleanArray( results );
 					var data_send = {
 						type: 1,
