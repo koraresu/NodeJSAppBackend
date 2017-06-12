@@ -45,16 +45,7 @@ io.on('connection', function(socket){
    */
   socket.on('device', function(msg){
     console.log("socket_chat","device");
-    chatrouter.setDevice(socket.guid, msg, function(deviceList, profileData){
-      console.log( deviceList );
-    }, function(){
-      console.log("Fail");
-    });
-    /*
-    chatrouter.setDevice(socket.guid, msg, function(status, deviceData, profileData){
-      console.log( deviceData );
-    });
-    */
+    chatrouter.setDevice(socket.guid, msg, function(deviceList, profileData){}, function(){});
   });
   /**
    * Al escribir un mensaje en el chat, este Evento es Activado, este Guarda el Mensaje en la Coleccion, Genera la URL para el mensaje si es una image
