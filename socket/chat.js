@@ -45,7 +45,8 @@ io.on('connection', function(socket){
    */
   socket.on('device', function(msg){
     console.log("socket_chat","device", new Date().getTime() );
-    console.log("socket.id",socket.id);
+    console.log("socket.id",socket.id, new Date().getTime() );
+
     //chatrouter.setDevice(socket.guid, msg, function(deviceList, profileData){}, function(){});
 
   });
@@ -213,27 +214,27 @@ io.on('connection', function(socket){
 
   socket.on('console.log', function(data){
     console.log("socket_chat","console.log");
-    console.log( data );
+    //console.log( data );
   });
   socket.on('console.content', function(data){
     console.log("socket_chat","console.content");
-    console.log( data );
+    //console.log( data );
   });
   socket.on('console.custom', function(data){
     console.log("socket_chat","console.custom");
-    console.log( data );
+    //console.log( data );
   });
   socket.on('console.login', function(data){
     console.log("socket_chat","console.login");
-    console.log( data );
+    //console.log( data );
   });
   socket.on('console.logout', function(data){
     console.log("socket_chat","console.logout");
-    console.log( data );
+    //console.log( data );
   });
   socket.on('console.error', function(data){
     console.log("socket_chat","console.error");
-    console.log( data );
+    //console.log( data );
   });
   /**
    * Cuando un dispositivo se desconecta, ya sea por latencia o por cerrar el App, este Evento es Realizado, sirve para eliminar de la lista de 
