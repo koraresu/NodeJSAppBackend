@@ -609,11 +609,8 @@ router.setDevice = function(guid, deviceID, success, fail){
 						profile: profileData._id,
 						token: device_id
 					}).exec(function(errDevice, deviceData){
-
-						if(!errDevice){
-							console.log( deviceData);
-						}else{
-						}
+						console.log("Err", errDevice);
+						console.log("Data", deviceData);
 
 					});
 
