@@ -32,7 +32,7 @@ var Country      = model.country;
 var City         = model.city;
 var Push         = model.push;
 var PushEvent    = model.pushevent;
-
+var Version            = model.version;
 
 var Generalfunc = require('./generalfunc');
 var Interfaz    = require('./interfazpushfunc');
