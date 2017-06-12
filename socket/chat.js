@@ -179,6 +179,9 @@ io.on('connection', function(socket){
   socket.on('get_no_readed', function(data){
     console.log("socket_chat","get_no_readed");
     console.log("Socket No Readed", data );
+    
+    console.log( socket.guid );
+
     Tokenfunc.toProfile(data.guid, function(status, userData, profileData){
       
       APNfunc.getPush({
