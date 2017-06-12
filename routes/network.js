@@ -372,7 +372,7 @@ router.post('/unfriend', multipartMiddleware, function(req, res){
 							};
 							Network.findOne(find).exec(function(errNetwork, networkData){
 								Conversation.remove(find, function(errConv, convData){
-									Network.remove({ _id: networkData._id }, function(err) {,
+									Network.remove({ _id: networkData._id }, function(err) {
 										if (!err) {
 											Generalfunc.response(200, {
 												data: networkData,
