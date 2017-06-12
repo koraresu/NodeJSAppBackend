@@ -600,11 +600,11 @@ router.setDevice = function(guid, deviceID, success, fail){
 	var device_id = deviceID.device_id;
 	console.log( "DeviceID:",device_id );
 	Tokenfunc.exist(guid, function(statusT, tokenData){
-		if(status){
+		if(statusT){
 			Profilefunc.tokenToProfile(tokenData.generated_id,function(statusP, userData, profileData, profileInfoData){
-				if(status){
+				if(statusP){
 					APNfunc.setDevice(profileData, device_id, deviceID, function(statusD, list, profileData){
-						if(status){
+						if(statusD){
 							success(list);
 						}else{
 							fail();
