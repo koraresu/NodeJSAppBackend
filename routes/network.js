@@ -371,7 +371,8 @@ router.post('/unfriend', multipartMiddleware, function(req, res){
 								}
 							};
 							Network.findOne(find).exec(function(errNetwork, networkData){
-								Conversation.remove(find, function(errConv, convData){
+								Conversation.find(find).remove().exec(function(errConv, convData){
+									/*
 									Network.remove({ _id: networkData._id }, function(err) {
 										if (!err) {
 											Generalfunc.response(200, {
@@ -386,6 +387,8 @@ router.post('/unfriend', multipartMiddleware, function(req, res){
 											});
 										}
 									});
+									*/
+									res.json("H");
 								});
 							});
 						}else{
