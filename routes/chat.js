@@ -601,7 +601,6 @@ router.setDevice = function(guid, deviceID, success, fail){
 	console.log( "DeviceID:",device_id );
 	Tokenfunc.exist(guid, function(status, tokenData){
 		if(status){
-			console.log("Token Exists");
 			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
 				if(status){
 					
@@ -611,7 +610,13 @@ router.setDevice = function(guid, deviceID, success, fail){
 					}).exec(function(errDevice, deviceData){
 						console.log("Err", errDevice);
 						console.log("Data", deviceData);
-
+						if(!errDevice && deviceData){
+							console.log("Existe");
+						}else{
+							console.log("No existe, crear");
+							APNfunc.setDevice(profileData, device_id, deviceID, callback);
+						}
+						
 					});
 
 				}else{
