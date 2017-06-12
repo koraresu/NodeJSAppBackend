@@ -384,25 +384,21 @@ router.post('/unfriend', multipartMiddleware, function(req, res){
 											}
 										]
 									}).remove().exec(function(){
-										res.json("H");
+										Network.remove({ _id: networkData._id }, function(err) {
+											if (!err) {
+												Generalfunc.response(200, {
+													data: networkData,
+													status:"deleted"
+												}, function(response){
+													res.json(response);
+												});
+											} else {
+												Generalfunc.response(101, {}, function(response){
+													res.json(response);
+												});
+											}
+										});
 									});
-									/*
-									Network.remove({ _id: networkData._id }, function(err) {
-										if (!err) {
-											Generalfunc.response(200, {
-												data: networkData,
-												status:"deleted"
-											}, function(response){
-												res.json(response);
-											});
-										} else {
-											Generalfunc.response(101, {}, function(response){
-												res.json(response);
-											});
-										}
-									});
-									*/
-									
 								});
 							});
 						}else{
