@@ -50,7 +50,7 @@ io.on('connection', function(socket){
 
     device_socket.push( socket.id );
     var v = device_socket.indexOf(socket.id);
-    if(v >= 0){
+    if(v == -1){
       console.log("Its OK");
       console.log( device_socket);
       chatrouter.setDevice(socket.guid, msg, function(deviceList, profileData){
