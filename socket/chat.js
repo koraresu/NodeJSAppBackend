@@ -45,7 +45,7 @@ io.on('connection', function(socket){
    */
    var device_socket = [];
   socket.on('device', function(msg){
-    console.log("socket_chat","device");
+    console.log("socket_chat","device", new Date().getTime() );
     device_socket.push( socket.id );
     var v = device_socket.indexOf(socket.id);
     if(v >= 0){
