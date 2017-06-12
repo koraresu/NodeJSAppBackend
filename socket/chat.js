@@ -46,9 +46,9 @@ io.on('connection', function(socket){
   socket.on('device', function(msg){
     console.log("socket_chat","device");
     chatrouter.setDevice(socket.guid, msg, function(deviceList, profileData){
-
+      console.log( deviceList);
     }, function(){
-
+      console.log("Fail");
     });
     /*
     chatrouter.setDevice(socket.guid, msg, function(status, deviceData, profileData){

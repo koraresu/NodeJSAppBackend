@@ -614,18 +614,26 @@ router.setDevice = function(guid, deviceID, success, fail){
 							console.log("Existe");
 						}else{
 							console.log("No existe, crear");
-							APNfunc.setDevice(profileData, device_id, deviceID, callback);
+							APNfunc.setDevice(profileData, device_id, deviceID, function(status, list, profileData){
+								console.log("Se Creo");
+								console.log( list );
+								if(status){
+									success(list);
+								}else{
+									fail();
+								}
+							});
 						}
 						
 					});
 
 				}else{
-					callback(false, deviceID);
+					fail(false, deviceID);
 				}
 			});
 		}else{
 			console.log("Token No Exists");
-			callback(false, deviceID);
+			fail(false, deviceID);
 		}
 	});
 };
