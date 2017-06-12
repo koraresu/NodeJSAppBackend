@@ -249,8 +249,6 @@ io.on('connection', function(socket){
     //console.log( data );
   });
   socket.on('console.error', function(data){
-    console.log("socket_chat","console.error");
-    console.log( data );
   });
   /**
    * Cuando un dispositivo se desconecta, ya sea por latencia o por cerrar el App, este Evento es Realizado, sirve para eliminar de la lista de 
