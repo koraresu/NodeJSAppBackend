@@ -45,6 +45,7 @@ io.on('connection', function(socket){
    */
   socket.on('device', function(msg){
     console.log("socket_chat","device", new Date().getTime() );
+    console.log("socket.id",socket.id);
     //chatrouter.setDevice(socket.guid, msg, function(deviceList, profileData){}, function(){});
 
   });
