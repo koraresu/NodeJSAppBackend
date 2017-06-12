@@ -87,6 +87,47 @@ function get_sockets(profile_id, itemFn, resultFn ){
 	});
 };
 /**
+ * setDevice, Tomamos el ProfileID y Obtenemos los Sockets/Conexiones al tiempo.
+ *
+ * @param {Object}       profileData  Perfil a Buscar
+ * @param {function}     device_id    Device Token
+ * @param {function}     deviceID     Datos del Dispositivo
+ * @param {function}     callback     Callback Proceso al Finalizar los individuales
+ * @callback {function}
+ *
+ */
+function setDevice(profileData, device_id, deviceID, callback){
+	var d = {
+		profile: profileData._id,
+		token:   device_id,
+		active: true,
+	}
+	var deviceEl = new Device(d);
+	deviceEl.save(function(err, deviceData){
+		var ver = new Version({
+			device: deviceData._id,
+			bundle_id: deviceID.bundle.id,
+			bundle_version: deviceID.bundle.version,
+			bundle_app_file: deviceID.bundle.app_file,
+			device_width: deviceID.device.width,
+			device_height: deviceID.device.height
+		});
+		ver.save(function(errver, verData){
+
+			Device.find({
+				profile: profileData._id
+			}).exec(function(errDevice, deviceData){
+				async.map(deviceData, function(item, ca){
+					ca(null, item.token);
+				}, function(err, results){
+					callback(true, results, profileData );	
+				});
+			});
+
+		});
+	});
+}
+/**
  * get_devices, Tomamos el ProfileID y Obtenemos los Dispositivos.
  *
  * @param {Object}      profile_id    Perfil a Buscar
@@ -591,3 +632,4 @@ exports.profile_notification = profile_notification;
 exports.getPush              = getPush;
 exports.getProfileNoReaded   = getProfileNoReaded;
 exports.getNum               = getNum;
+exports.setDevice            = setDevice;

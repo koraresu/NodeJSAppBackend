@@ -594,7 +594,8 @@ router.TokenNoReaded = function(guid, callback){
  * @return {Bool, [Token],ProfileObject}
  *
  */
-router.setDevice = function(guid, deviceID, callback){
+router.setDevice = function(guid, deviceID, success, fail){
+
 	console.log("SetDevice");
 	var device_id = deviceID.device_id;
 	console.log( "DeviceID:",device_id );
@@ -603,67 +604,20 @@ router.setDevice = function(guid, deviceID, callback){
 			console.log("Token Exists");
 			Profilefunc.tokenToProfile(tokenData.generated_id,function(status, userData, profileData, profileInfoData){
 				if(status){
-					console.log("TOken Profile Exists");
-					if(device_id == "" || device_id == null){
-						console.log("Device Null or Empty");
-						callback(false, deviceID);
-					}else{
-						console.log("Device Ready Setting");
-						Device.find({
-							profile: profileData._id,
-							token: device_id
-						}).exec(function(errDevice, deviceData){
-							console.log(errDevice);
-							console.log(deviceData);
+					
+					Device.findOne({
+						profile: profileData._id,
+						token: device_id
+					}).exec(function(errDevice, deviceData){
 
-							if(!errDevice && deviceData){
-								console.log(deviceData.length);
-								if(deviceData.length > 0){
-									console.log("Existe");
-									Device.find({ profile: profileData._id }).exec(function(errDevice, deviceData){
-										async.map(deviceData, function(item, ca){
-											ca(null, item.token);
-										}, function(err, results){
-											callback(true, results, profileData );	
-										});
-									});
-								}else{
-									console.log("No existe, crear");
-									var d = {
-										profile: profileData._id,
-										token:   device_id,
-										active: true,
-									}
+						if(!errDevice){
+							console.log( deviceData);
+						}else{
+						}
 
-									var deviceEl = new Device(d);
-									deviceEl.save(function(err, deviceData){
-										var ver = new Version({
-											device: deviceData._id,
-											bundle_id: deviceID.bundle.id,
-											bundle_version: deviceID.bundle.version,
-											bundle_app_file: deviceID.bundle.app_file,
-											device_width: deviceID.device.width,
-											device_height: deviceID.device.height
-										});
-										ver.save(function(errver, verData){
-											Device.find({ profile: profileData._id }).exec(function(errDevice, deviceData){
-												async.map(deviceData, function(item, ca){
-													ca(null, item.token);
-												}, function(err, results){
-													callback(true, results, profileData );	
-												});
-											});
-										});
-									});
-								}
+					});
 
-							}else{
-								callback(false, deviceID);
-							}
-						});
-					}
 				}else{
-					console.log("Token Profile No Exists");
 					callback(false, deviceID);
 				}
 			});
