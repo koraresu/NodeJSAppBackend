@@ -53,11 +53,12 @@ io.on('connection', function(socket){
     if(v >= 0){
       console.log("Its OK");
       console.log( device_socket);
-      delete device_socket[v];
-    }else{
-      console.log("Its Not");
-      console.log( device_socket);
-      delete device_socket[v];
+      chatrouter.setDevice(socket.guid, msg, function(deviceList, profileData){
+        delete device_socket[v];
+      }, function(){
+        delete device_socket[v];
+      });
+      
     }
     // chatrouter.setDevice(socket.guid, msg, function(deviceList, profileData){}, function(){});
 
