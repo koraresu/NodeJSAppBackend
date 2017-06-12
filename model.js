@@ -356,6 +356,7 @@ var companySchema = new Schema({
     postalc: String,
   },
   profile_id: { type: Schema.Types.ObjectId, ref: 'Profile' },
+  creator:    { type: Schema.Types.ObjectId, ref: 'Profile' }
 },{
   timestamps: true
 });

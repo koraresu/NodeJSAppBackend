@@ -235,6 +235,7 @@ function companyExistsOrCreate(search, insert, profileData, callback){
 		if(!err && company){
 			callback(true,company);
 		}else{
+			insert.creator = profileData._id;
 			var company = new Company(insert);
 			company.save(function(err, company){
 				var creator = new companyCreator({
