@@ -93,11 +93,25 @@ app.use('/api/publish', publish);
 app.use('/api/notification', notification);
 app.use('/api/metrics', metrics);
 
-app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
+app.use(function(req, res, next){
+  res.status(404);
+
+  // respond with html page
+  if (req.accepts('html')) {
+    res.redirect("http://thehiveapp.mx" + req.originalUrl );
+    return;
+  }
+
+  // respond with json
+  if (req.accepts('json')) {
+    res.send({ error: 'Not found' });
+    return;
+  }
+
+  // default to plain-text. send()
+  res.type('txt').send('Not found');
 });
+
 
 if (app.get('env') === 'development') {
   app.use(function(err, req, res, next) {
